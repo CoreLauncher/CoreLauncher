@@ -3,4 +3,5 @@
     "liveServer.settings.root": "/Frontend/",
     "liveServer.settings.port": 80,
     "liveServer.settings.useBrowserPreview": false,
+    "liveServer.settings.NoBrowser": true
 }
