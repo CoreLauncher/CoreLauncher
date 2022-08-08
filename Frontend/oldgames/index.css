@@ -1,0 +1,54 @@
+body {
+    background-color:  var(--background-primary);
+    color: var(--text-normal);
+}
+
+.header {
+    background-color: var(--background-secondary);
+    /*text-align: center; */
+    padding: 40px;
+  }
+
+.color-default {
+    color: var(--text-normal)
+}
+
+.color-sec {
+    color: var(--text-muted)
+}
+
+.fa-cog {
+    color: 36393f;
+  }
+
+.search-bar {
+    align-content: left;
+}
+
+.round {
+    width: 100%;
+    border-radius: 15px;
+    border: 1px #000 solid;
+    padding: 5px 5px 5px 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.corner {
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    height: 20px;
+    width: 20px;
+    z-index: 10;
+    border-radius: 10px;
+    border: none;
+}
+
+.search {
+    position: relative;
+    width: 190px;
+    height: 30px;
+}
