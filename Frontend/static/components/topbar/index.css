@@ -1,0 +1,63 @@
+/* Global */
+body {
+    background-color: var(--background-secondary-alt) !important;
+}
+
+/* Logo elements */
+.logo-holder {
+    --parent-height: 100px;
+    --height: calc(var(--parent-height) / 2);
+    --from-top: calc((var(--parent-height) - var(--height)) / 2);
+}
+
+.logo-holder {
+    display: inline-block;
+    user-select: none;
+    margin-left: 20px;
+    height: 100%;
+}
+
+.logo-holder .logo-image {
+    height: var(--height);
+    margin-top: var(--from-top);
+    float: left;
+}
+
+.logo-holder .logo-text {
+    position: relative;
+    display: inline-block;
+    height: var(--height);
+    margin-top: var(--from-top);
+    line-height: var(--height);
+    margin-left: 5px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Link elements */
+.link-holder {
+    --parent-height: 100px;
+    --height: calc(var(--parent-height) / 2);
+    --from-top: calc((var(--parent-height) - var(--height)) / 2)
+}
+
+.link-holder {
+    vertical-align: top;
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    margin-left: 50px;
+}
+
+.link-holder a {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+    color: var(--text-link);
+    height: var(--height);
+    line-height: var(--height);
+    margin-top: var(--from-top);
+    
+    font-weight: bold;
+    font-size: 20px;
+}
