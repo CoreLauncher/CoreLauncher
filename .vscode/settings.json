@@ -1,5 +1,5 @@
 {
-    "liveServer.settings.fullReload": true,
+    "liveServer.settings.fullReload": false,
     "liveServer.settings.root": "/Frontend/",
     "liveServer.settings.port": 80,
     "liveServer.settings.useBrowserPreview": false,
