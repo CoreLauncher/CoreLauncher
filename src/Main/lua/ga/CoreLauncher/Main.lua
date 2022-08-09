@@ -21,7 +21,10 @@ CoreLauncher.Window = CoreLauncher.Electron.BrowserWindow(
     {
         icon = CoreLauncher.ApplicationData .. "/favicon.ico",
         title = "CoreLauncher",
-        show = false
+        show = false,
+
+        minWidth = 800,
+        minHeight = 600,
     }
 )
 do
