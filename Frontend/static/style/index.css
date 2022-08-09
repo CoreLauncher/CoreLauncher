@@ -1,5 +1,6 @@
 @import url("./DiscordColors.css");
 @import url("/static/font/index.css");
+@import url("/static/style/Buttons.css");
 
 html, body {
     height: 100%;
