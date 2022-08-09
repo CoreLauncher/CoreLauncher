@@ -1,5 +1,7 @@
 console.log("Loading Core")
 
-let CoreLauncher = {
+window.CoreLauncher = {
     IPC: new OpenIPC("CoreLauncher", "Render"),
 }
+
+console.log("Core Loaded!")
