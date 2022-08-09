@@ -61,3 +61,14 @@ body {
     font-weight: bold;
     font-size: 20px;
 }
+
+/* theme switcher element */
+
+theme-switcher {
+    --parent-height: 100px;
+    --this-height: 30px;
+    --from-top: calc((var(--parent-height) - var(--this-height)) / 2);
+    margin-top: var(--from-top);
+    margin-right: 20px;
+    float: right;
+}
