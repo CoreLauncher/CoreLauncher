@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="/static/style/DiscordColors.css">
+
+        <script>
+            window.addEventListener(
+                "load",
+                function() {
+                    const SwapButton = document.getElementById("swapbutton")
+                    const Html = document.documentElement
+                    SwapButton.addEventListener(
+                        "click",
+                        function() {
+                            if (Html.getAttribute("class") == "theme-dark") {
+                                Html.setAttribute("class", "theme-light")
+                                SwapButton.innerHTML = "Light"
+                            } else {
+                                Html.setAttribute("class", "theme-dark")
+                                SwapButton.innerHTML = "Dark"
+                            }
+                        }
+                    )
+                    
+                }
+            )
+        </script>
+    </head>
+    <body>
+        <button id="swapbutton" style="position: fixed; right:0px; top: 0px">Dark</button><br>
+        <a style="background-color: var(--header-primary)">--header-primary</a><br>
+        <a style="background-color: var(--header-secondary)">--header-secondary</a><br>
+        <a style="background-color: var(--text-normal)">--text-normal</a><br>
+        <a style="background-color: var(--text-muted)">--text-muted</a><br>
+        <a style="background-color: var(--text-link)">--text-link</a><br>
+        <a style="background-color: var(--text-link-low-saturation)">--text-link-low-saturation</a><br>
+        <a style="background-color: var(--text-positive)">--text-positive</a><br>
+        <a style="background-color: var(--text-warning)">--text-warning</a><br>
+        <a style="background-color: var(--text-danger)">--text-danger</a><br>
+        <a style="background-color: var(--text-brand)">--text-brand</a><br>
+        <a style="background-color: var(--interactive-normal)">--interactive-normal</a><br>
+        <a style="background-color: var(--interactive-hover)">--interactive-hover</a><br>
+        <a style="background-color: var(--interactive-active)">--interactive-active</a><br>
+        <a style="background-color: var(--interactive-muted)">--interactive-muted</a><br>
+        <a style="background-color: var(--background-primary)">--background-primary</a><br>
+        <a style="background-color: var(--background-secondary)">--background-secondary</a><br>
+        <a style="background-color: var(--background-secondary-alt)">--background-secondary-alt</a><br>
+        <a style="background-color: var(--background-tertiary)">--background-tertiary</a><br>
+        <a style="background-color: var(--background-accent)">--background-accent</a><br>
+        <a style="background-color: var(--background-floating)">--background-floating</a><br>
+        <a style="background-color: var(--background-nested-floating)">--background-nested-floating</a><br>
+        <a style="background-color: var(--background-mobile-primary)">--background-mobile-primary</a><br>
+        <a style="background-color: var(--background-mobile-secondary)">--background-mobile-secondary</a><br>
+        <a style="background-color: var(--chat-background)">--chat-background</a><br>
+        <a style="background-color: var(--chat-border)">--chat-border</a><br>
+        <a style="background-color: var(--chat-input-container-background)">--chat-input-container-background</a><br>
+        <a style="background-color: var(--background-modifier-hover)">--background-modifier-hover</a><br>
+        <a style="background-color: var(--background-modifier-active)">--background-modifier-active</a><br>
+        <a style="background-color: var(--background-modifier-selected)">--background-modifier-selected</a><br>
+        <a style="background-color: var(--background-modifier-accent)">--background-modifier-accent</a><br>
+        <a style="background-color: var(--info-positive-background)">--info-positive-background</a><br>
+        <a style="background-color: var(--info-positive-foreground)">--info-positive-foreground</a><br>
+        <a style="background-color: var(--info-positive-text)">--info-positive-text</a><br>
+        <a style="background-color: var(--info-warning-background)">--info-warning-background</a><br>
+        <a style="background-color: var(--info-warning-foreground)">--info-warning-foreground</a><br>
+        <a style="background-color: var(--info-warning-text)">--info-warning-text</a><br>
+        <a style="background-color: var(--info-danger-background)">--info-danger-background</a><br>
+        <a style="background-color: var(--info-danger-foreground)">--info-danger-foreground</a><br>
+        <a style="background-color: var(--info-danger-text)">--info-danger-text</a><br>
+        <a style="background-color: var(--info-help-background)">--info-help-background</a><br>
+        <a style="background-color: var(--info-help-foreground)">--info-help-foreground</a><br>
+        <a style="background-color: var(--info-help-text)">--info-help-text</a><br>
+        <a style="background-color: var(--status-positive-background)">--status-positive-background</a><br>
+        <a style="background-color: var(--status-positive-text)">--status-positive-text</a><br>
+        <a style="background-color: var(--status-warning-background)">--status-warning-background</a><br>
+        <a style="background-color: var(--status-warning-text)">--status-warning-text</a><br>
+        <a style="background-color: var(--status-danger-background)">--status-danger-background</a><br>
+        <a style="background-color: var(--status-danger-text)">--status-danger-text</a><br>
+        <a style="background-color: var(--status-danger)">--status-danger</a><br>
+        <a style="background-color: var(--status-positive)">--status-positive</a><br>
+        <a style="background-color: var(--status-warning)">--status-warning</a><br>
+        <a style="background-color: var(--button-danger-background)">--button-danger-background</a><br>
+        <a style="background-color: var(--button-danger-background-hover)">--button-danger-background-hover</a><br>
+        <a style="background-color: var(--button-danger-background-active)">--button-danger-background-active</a><br>
+        <a style="background-color: var(--button-danger-background-disabled)">--button-danger-background-disabled</a><br>
+        <a style="background-color: var(--button-positive-background)">--button-positive-background</a><br>
+        <a style="background-color: var(--button-positive-background-hover)">--button-positive-background-hover</a><br>
+        <a style="background-color: var(--button-positive-background-active)">--button-positive-background-active</a><br>
+        <a style="background-color: var(--button-positive-background-disabled)">--button-positive-background-disabled</a><br>
+        <a style="background-color: var(--button-secondary-background)">--button-secondary-background</a><br>
+        <a style="background-color: var(--button-secondary-background-hover)">--button-secondary-background-hover</a><br>
+        <a style="background-color: var(--button-secondary-background-active)">--button-secondary-background-active</a><br>
+        <a style="background-color: var(--button-secondary-background-disabled)">--button-secondary-background-disabled</a><br>
+        <a style="background-color: var(--button-outline-danger-text)">--button-outline-danger-text</a><br>
+        <a style="background-color: var(--button-outline-danger-border)">--button-outline-danger-border</a><br>
+        <a style="background-color: var(--button-outline-danger-background)">--button-outline-danger-background</a><br>
+        <a style="background-color: var(--button-outline-danger-background-hover)">--button-outline-danger-background-hover</a><br>
+        <a style="background-color: var(--button-outline-danger-text-hover)">--button-outline-danger-text-hover</a><br>
+        <a style="background-color: var(--button-outline-danger-border-hover)">--button-outline-danger-border-hover</a><br>
+        <a style="background-color: var(--button-outline-danger-background-active)">--button-outline-danger-background-active</a><br>
+        <a style="background-color: var(--button-outline-danger-text-active)">--button-outline-danger-text-active</a><br>
+        <a style="background-color: var(--button-outline-danger-border-active)">--button-outline-danger-border-active</a><br>
+        <a style="background-color: var(--button-outline-positive-text)">--button-outline-positive-text</a><br>
+        <a style="background-color: var(--button-outline-positive-border)">--button-outline-positive-border</a><br>
+        <a style="background-color: var(--button-outline-positive-background)">--button-outline-positive-background</a><br>
+        <a style="background-color: var(--button-outline-positive-background-hover)">--button-outline-positive-background-hover</a><br>
+        <a style="background-color: var(--button-outline-positive-text-hover)">--button-outline-positive-text-hover</a><br>
+        <a style="background-color: var(--button-outline-positive-border-hover)">--button-outline-positive-border-hover</a><br>
+        <a style="background-color: var(--button-outline-positive-background-active)">--button-outline-positive-background-active</a><br>
+        <a style="background-color: var(--button-outline-positive-text-active)">--button-outline-positive-text-active</a><br>
+        <a style="background-color: var(--button-outline-positive-border-active)">--button-outline-positive-border-active</a><br>
+        <a style="background-color: var(--button-outline-brand-text)">--button-outline-brand-text</a><br>
+        <a style="background-color: var(--button-outline-brand-border)">--button-outline-brand-border</a><br>
+        <a style="background-color: var(--button-outline-brand-background)">--button-outline-brand-background</a><br>
+        <a style="background-color: var(--button-outline-brand-background-hover)">--button-outline-brand-background-hover</a><br>
+        <a style="background-color: var(--button-outline-brand-text-hover)">--button-outline-brand-text-hover</a><br>
+        <a style="background-color: var(--button-outline-brand-border-hover)">--button-outline-brand-border-hover</a><br>
+        <a style="background-color: var(--button-outline-brand-background-active)">--button-outline-brand-background-active</a><br>
+        <a style="background-color: var(--button-outline-brand-text-active)">--button-outline-brand-text-active</a><br>
+        <a style="background-color: var(--button-outline-brand-border-active)">--button-outline-brand-border-active</a><br>
+        <a style="background-color: var(--button-outline-primary-text)">--button-outline-primary-text</a><br>
+        <a style="background-color: var(--button-outline-primary-border)">--button-outline-primary-border</a><br>
+        <a style="background-color: var(--button-outline-primary-background)">--button-outline-primary-background</a><br>
+        <a style="background-color: var(--button-outline-primary-background-hover)">--button-outline-primary-background-hover</a><br>
+        <a style="background-color: var(--button-outline-primary-text-hover)">--button-outline-primary-text-hover</a><br>
+        <a style="background-color: var(--button-outline-primary-border-hover)">--button-outline-primary-border-hover</a><br>
+        <a style="background-color: var(--button-outline-primary-background-active)">--button-outline-primary-background-active</a><br>
+        <a style="background-color: var(--button-outline-primary-text-active)">--button-outline-primary-text-active</a><br>
+        <a style="background-color: var(--button-outline-primary-border-active)">--button-outline-primary-border-active</a><br>
+        <a style="background-color: var(--modal-background)">--modal-background</a><br>
+        <a style="background-color: var(--modal-footer-background)">--modal-footer-background</a><br>
+        <a style="background-color: var(--scrollbar-thin-thumb)">--scrollbar-thin-thumb</a><br>
+        <a style="background-color: var(--scrollbar-thin-track)">--scrollbar-thin-track</a><br>
+        <a style="background-color: var(--scrollbar-auto-thumb)">--scrollbar-auto-thumb</a><br>
+        <a style="background-color: var(--scrollbar-auto-track)">--scrollbar-auto-track</a><br>
+        <a style="background-color: var(--scrollbar-auto-scrollbar-color-thumb)">--scrollbar-auto-scrollbar-color-thumb</a><br>
+        <a style="background-color: var(--scrollbar-auto-scrollbar-color-track)">--scrollbar-auto-scrollbar-color-track</a><br>
+        <a style="background-color: var(--input-background)">--input-background</a><br>
+        <a style="background-color: var(--input-placeholder-text)">--input-placeholder-text</a><br>
+        <a style="background-color: var(--logo-primary)">--logo-primary</a><br>
+        <a style="background-color: var(--control-brand-foreground)">--control-brand-foreground</a><br>
+        <a style="background-color: var(--control-brand-foreground-new)">--control-brand-foreground-new</a><br>
+        <a style="background-color: var(--background-mentioned)">--background-mentioned</a><br>
+        <a style="background-color: var(--background-mentioned-hover)">--background-mentioned-hover</a><br>
+        <a style="background-color: var(--background-message-hover)">--background-message-hover</a><br>
+        <a style="background-color: var(--background-message-automod)">--background-message-automod</a><br>
+        <a style="background-color: var(--background-message-automod-hover)">--background-message-automod-hover</a><br>
+        <a style="background-color: var(--background-message-highlight)">--background-message-highlight</a><br>
+        <a style="background-color: var(--background-message-highlight-hover)">--background-message-highlight-hover</a><br>
+        <a style="background-color: var(--channels-default)">--channels-default</a><br>
+        <a style="background-color: var(--channel-icon)">--channel-icon</a><br>
+        <a style="background-color: var(--channel-text-area-placeholder)">--channel-text-area-placeholder</a><br>
+        <a style="background-color: var(--channeltextarea-background)">--channeltextarea-background</a><br>
+        <a style="background-color: var(--activity-card-background)">--activity-card-background</a><br>
+        <a style="background-color: var(--textbox-markdown-syntax)">--textbox-markdown-syntax</a><br>
+        <a style="background-color: var(--spoiler-revealed-background)">--spoiler-revealed-background</a><br>
+        <a style="background-color: var(--spoiler-hidden-background)">--spoiler-hidden-background</a><br>
+        <a style="background-color: var(--android-navigation-bar-background)">--android-navigation-bar-background</a><br>
+        <a style="background-color: var(--android-ripple)">--android-ripple</a><br>
+        <a style="background-color: var(--deprecated-card-bg)">--deprecated-card-bg</a><br>
+        <a style="background-color: var(--deprecated-card-editable-bg)">--deprecated-card-editable-bg</a><br>
+        <a style="background-color: var(--deprecated-store-bg)">--deprecated-store-bg</a><br>
+        <a style="background-color: var(--deprecated-quickswitcher-input-background)">--deprecated-quickswitcher-input-background</a><br>
+        <a style="background-color: var(--deprecated-quickswitcher-input-placeholder)">--deprecated-quickswitcher-input-placeholder</a><br>
+        <a style="background-color: var(--deprecated-text-input-bg)">--deprecated-text-input-bg</a><br>
+        <a style="background-color: var(--deprecated-text-input-border)">--deprecated-text-input-border</a><br>
+        <a style="background-color: var(--deprecated-text-input-border-hover)">--deprecated-text-input-border-hover</a><br>
+        <a style="background-color: var(--deprecated-text-input-border-disabled)">--deprecated-text-input-border-disabled</a><br>
+        <a style="background-color: var(--deprecated-text-input-prefix)">--deprecated-text-input-prefix</a><br>
+        
+    </body>
+</html>
