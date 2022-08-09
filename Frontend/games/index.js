@@ -14,6 +14,12 @@ window.addEventListener(
             GameElement.querySelector("#game-name").innerText = Game.Name
             GameElement.querySelector("#game-creator").innerText = Game.Developer.Name
             GameElement.querySelector("#game-creator").setAttribute("href", Game.Developer.Website)
+            GameElement.addEventListener(
+                "click",
+                function() {
+                    location = "/instances/?game=" + Game.ID
+                }
+            )
             GameHolder.appendChild(GameElement)
         });
     }
