@@ -19,5 +19,5 @@ class Topbar extends HTMLElement {
     }
 }
 
-customElements.define('top-bar', Topbar)
+try {customElements.define('top-bar', Topbar)} catch {}
 console.log("Loaded Topbar")
