@@ -1,0 +1,23 @@
+.instances-holder {
+    position: relative;
+    padding: 20px;
+}
+
+.instance-tile {
+    border-radius: 10px;
+    background-color: var(--background-secondary-alt);
+    width: 12.5%;
+    padding: 20px;
+}
+
+.instance-tile:hover {
+    background-color: var(--background-tertiary);
+}
+
+.instance-tile img {
+    width: 100%;
+}
+
+.instance-tile {
+    text-align: center;
+}
