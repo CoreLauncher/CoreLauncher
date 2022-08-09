@@ -10,11 +10,15 @@ _G.CoreLauncher = {
     Electron = Import("Electron.bootstrap").LoadAll(),
     IPC = Import("openipc.connector"):new("CoreLauncher", "Main"),
     ApplicationData = ApplicationDataFolder,
-    Dev = process.env.CORELAUNCHER_DEV == "true"
+    Dev = process.env.CORELAUNCHER_DEV == "true",
+    Games = Import("ga.CoreLauncher.Games")
 }
 
 --Installing
 Import("ga.CoreLauncher.Install.FavIcon")()
+
+--Load Modules
+Import("ga.CoreLauncher.Modules")
 
 --Window settings
 CoreLauncher.Window = CoreLauncher.Electron.BrowserWindow(
