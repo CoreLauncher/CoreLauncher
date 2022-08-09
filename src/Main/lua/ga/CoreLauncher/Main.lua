@@ -37,11 +37,11 @@ do
         CoreLauncher.Electron.Close()
         CoreLauncher.IPC:Disconnect()
     end)
-    Window:RemoveMenu()
     if CoreLauncher.Dev then
         Window:OpenDevTools()
         Window:LoadURL("http://localhost")
     else
+        Window:RemoveMenu()
         -- Load static server
     end
     Window:WaitFor("ready-to-show")
