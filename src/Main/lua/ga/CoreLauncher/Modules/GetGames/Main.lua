@@ -11,3 +11,10 @@ CoreLauncher.IPC:RegisterMessage(
         return Games
     end
 )
+
+CoreLauncher.IPC:RegisterMessage(
+    "GetGame",
+    function(GameId)
+        return CoreLauncher.Games[GameId].Info
+    end
+)
