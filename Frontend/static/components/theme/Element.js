@@ -15,7 +15,6 @@ class ThemeSwitcher extends HTMLElement {
         Iframe.setAttribute("frameborder", 0)
         Iframe.style.height = "100%"
         Iframe.style.width = "100%"
-        console.log(Iframe)
         Shadow.appendChild(Iframe);
     }
 }
