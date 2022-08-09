@@ -1,0 +1,1 @@
+Import("ga.CoreLauncher.Modules.GetGames")
