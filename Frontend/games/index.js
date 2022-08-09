@@ -17,7 +17,7 @@ window.addEventListener(
             GameElement.addEventListener(
                 "click",
                 function() {
-                    location = "/instances/?game=" + Game.ID
+                    location = "/instances/?game=" + Game.Id
                 }
             )
             GameHolder.appendChild(GameElement)
