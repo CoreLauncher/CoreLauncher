@@ -1,0 +1,6 @@
+.theme-light,.theme-dark {
+    --button-blue-background: #4e59d6;
+    --button-blue-background-hover: #3f48ad;
+    --button-blue-background-active: #353d92;
+    --button-blue-background-disabled: #474f98;
+}
