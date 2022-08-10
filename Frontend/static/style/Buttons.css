@@ -1,5 +1,5 @@
 .button {
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 20px;
     padding: 10px;
     border: none;
@@ -54,4 +54,21 @@
 
 .button-danger .button-disabled {
     background-color: var(--button-danger-background-disabled);
+}
+
+/* blue button */
+.button-blue {
+    background-color: var(--button-blue-background);
+}
+
+.button-blue:hover {
+    background-color: var(--button-blue-background-hover);
+}
+
+.button-blue:active {
+    background-color: var(--button-blue-background-active);
+}
+
+.button-blue .button-disabled {
+    background-color: var(--button-blue-background-disabled);
 }
