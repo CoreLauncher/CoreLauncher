@@ -1,0 +1,75 @@
+theme-switcher {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+body {
+    height: auto;
+}
+
+/* holder */
+.holder {
+    margin-top: 10%;
+    height: calc(100% - 15%);
+    width: 75%;
+    left: calc((100% - 75%) / 2);
+    position: relative;
+}
+
+/* title styling */
+.title {
+    font-size: 200%;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+}
+
+/* icon styling */
+.icon-holder {
+    width: 200px;
+    display: block;
+    position: relative;
+    margin:40px auto;
+    display: block;
+}
+
+.icon {
+    width: 100%;
+}
+
+@keyframes Wave {
+    from {
+        transform: rotate(30deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+.hand-icon {
+    position: absolute;
+    height: 75px;
+    left: 10px;
+    bottom: 20px;
+    animation-name: Wave;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    animation-timing-function: ease-in-out;
+    transform-origin: 70% 70%; 
+}
+
+.desc {
+    display: block;
+    position: relative;
+    left: 25%;
+    width: 50%;
+    text-align: center;
+}
+
+.holder button {
+    margin:40px auto;
+    display: block;
+    position: relative;
+}

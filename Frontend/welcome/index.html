@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Mega tags -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Styling -->
+        <link rel="stylesheet" href="/static/style/index.css">
+        <!-- Scripts -->
+        <script src="https://github.com/CoreBytee/open-ipc/releases/latest/download/OpenIPC-HtmlJs.js"></script>
+        <script src="/static/script/index.js" type="module"></script>
+        <script src="/static/script/ThemeManager.js"></script>
+        <script src="/static/components/index.js" type="module"></script>
+        <!-- Local Assets -->
+        <script src="./index.js"></script>
+        <link rel="stylesheet" href="./index.css">
+        <!-- Title -->
+        <title>CoreLauncher - Welcome</title>
+    </head>
+
+    <body>
+        <theme-switcher></theme-switcher>
+        <div class="holder">
+            <div class="icon-holder">
+                <img src="/static/image/favicon.png" class="icon" alt="CoreLauncher Logo">
+                <img src="/static/image/hand.svg" alt="hand" class="hand-icon">
+            </div>
+            <a class="title">Welcome to CoreLauncher!</a>
+            <a class="desc">Before you start using the launcher we would like to ask you to link your discord account so we can deliver the best experience!</a>
+            <button class="button button-primary" style="color: var(--text-normal);" id="connectbutton">Connect <img src="/static/image/discord.png" alt="Discord Logo" style="height: 23px; vertical-align: middle;"> Account</button>
+        </div>
+    </body>
+</html>
