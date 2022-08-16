@@ -22,7 +22,6 @@ end
 
 function Config:SetKey(Key, Value)
     local KeyPartitions = Key:split(".")
-    p(KeyPartitions)
     local Data = self.Data
     for Index, Partition in pairs(KeyPartitions) do
         if Index == #KeyPartitions then
