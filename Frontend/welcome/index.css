@@ -15,6 +15,7 @@ body {
     width: 75%;
     left: calc((100% - 75%) / 2);
     position: relative;
+    padding-bottom: 30px;
 }
 
 /* title styling */
