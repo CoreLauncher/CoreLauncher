@@ -5,7 +5,6 @@ class ThemeSwitcher extends HTMLElement {
     }
 
     connectedCallback() {
-        console.log("hi")
         const Shadow = this.attachShadow({mode: 'open'});
         this.style.height = "30px"
         this.style.width = "60px"

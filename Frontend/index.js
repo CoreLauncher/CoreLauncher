@@ -6,7 +6,6 @@ window.addEventListener(
             "AccountConnected",
             "Discord"
         )
-        console.log(DiscordConnected)
         if (DiscordConnected == true) {
             location = "/games/"
         } else {

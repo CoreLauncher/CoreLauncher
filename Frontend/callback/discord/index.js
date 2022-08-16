@@ -12,13 +12,11 @@ function GetHashQuery() {
     return Data
 }
 
-console.log(GetHashQuery())
 
 window.addEventListener(
     "load",
     async function() {
         const HashQuery = GetHashQuery()
-        console.log(HashQuery)
         if (HashQuery.close == "true") {
             document.getElementById("text").innerText = "You can now close this window!"
         } else {
