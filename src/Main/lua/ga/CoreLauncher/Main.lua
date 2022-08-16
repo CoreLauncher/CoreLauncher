@@ -16,6 +16,7 @@ _G.CoreLauncher = {
 
 --Installing
 Import("ga.CoreLauncher.Install.FavIcon")()
+Import("ga.CoreLauncher.Install.DataFolder")()
 
 --Load Modules
 Import("ga.CoreLauncher.Modules")
