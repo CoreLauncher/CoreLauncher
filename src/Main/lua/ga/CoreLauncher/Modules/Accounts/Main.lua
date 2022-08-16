@@ -1,5 +1,5 @@
 CoreLauncher.IPC:RegisterMessage(
-    "AccountConnected",
+    "IsAccountConnected",
     function(Name)
         return CoreLauncher.Accounts:AccountConnected(Name)
     end

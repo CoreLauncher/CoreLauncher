@@ -3,7 +3,7 @@ window.addEventListener(
     async function() {
         var DiscordConnected = await CoreLauncher.IPC.Send(
             "Main",
-            "AccountConnected",
+            "IsAccountConnected",
             "Discord"
         )
         if (DiscordConnected == true) {
