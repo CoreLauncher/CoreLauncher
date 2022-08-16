@@ -6,13 +6,22 @@ local FS = require("fs")
 local ApplicationDataFolder = TypeWriter.ApplicationData .. "\\CoreLauncher/"
 TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/Electron-Lua-Bootstrap.twr")
 TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/IPC-Bootstrap.twr")
-_G.CoreLauncher = {
-    Electron = Import("Electron.bootstrap").LoadAll(),
-    IPC = Import("openipc.connector"):new("CoreLauncher", "Main"),
-    ApplicationData = ApplicationDataFolder,
-    Dev = process.env.CORELAUNCHER_DEV == "true",
-    Games = Import("ga.CoreLauncher.Games")
-}
+_G.CoreLauncher = {}
+CoreLauncher.Electron = Import("Electron.bootstrap").LoadAll()
+CoreLauncher.IPC = Import("openipc.connector"):new("CoreLauncher", "Main")
+CoreLauncher.ApplicationData = ApplicationDataFolder
+CoreLauncher.Dev = process.env.CORELAUNCHER_DEV == "true"
+CoreLauncher.Games = Import("ga.CoreLauncher.Games")
+CoreLauncher.Config = Import("ga.CoreLauncher.Libraries.Config"):new(ApplicationDataFolder .. "/Data.json")
+CoreLauncher.Accounts = Import("ga.CoreLauncher.Libraries.Accounts"):new()
+
+--Setup config
+do
+    local Config = CoreLauncher.Config
+    Config:SetKeyIfNotExists("Games", {})
+    Config:SetKeyIfNotExists("Settings", {})
+    Config:SetKeyIfNotExists("Accounts", {})
+end
 
 --Installing
 Import("ga.CoreLauncher.Install.FavIcon")()
