@@ -1,6 +1,6 @@
 const Html = document.documentElement
 const Change = function() {
-    Html.setAttribute("class", `theme-${localStorage.Theme}`)
+    Html.setAttribute("class", `theme-${localStorage.Theme || "dark"}`)
 }
 
 Change()
