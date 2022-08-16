@@ -13,5 +13,24 @@ window.addEventListener(
                 )
             }
         )
+
+        var Wait = true
+
+        CoreLauncher.IPC.RegisterMessage(
+            "AccountConnected",
+            async function(Type) {
+                console.log(Type)
+                if (Type == "Discord") {
+                   Wait = false
+                }
+            }
+        )
+
+        while (Wait) {
+            await new Promise(r => setTimeout(r, 1000));
+        }
+        await new Promise(r => setTimeout(r, 1000));
+        location = "/"
     }
 )
+
