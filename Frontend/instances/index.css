@@ -28,10 +28,10 @@
 
 .extra-addbutton {
     display: inline-block;
-    height: 40px;
-    right: -100px;
+    margin-top: calc(var(--from-top) - 4px);
+    position: absolute;
+    right: 5px;
     font-size: 15px;
-    line-height: 20px;
 }
 
 /* Instance styling */
