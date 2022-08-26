@@ -35,8 +35,8 @@ Import("ga.CoreLauncher.Modules")
 --Set RPC
 CoreLauncher.RPC:SetActivity(
     {
-        state = "Launcing games",
-        details = "https://corelauncher.ga",
+        state = "https://corelauncher.ga",
+        details = "Launcing games",
         largeImageKey = "favicon",
         largeImageText = "CoreLauncher",
         smallImageKey = "cubicinc",
