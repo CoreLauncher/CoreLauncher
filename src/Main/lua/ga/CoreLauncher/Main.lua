@@ -6,8 +6,10 @@ local FS = require("fs")
 local ApplicationDataFolder = TypeWriter.ApplicationData .. "\\CoreLauncher/"
 TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/Electron-Lua-Bootstrap.twr")
 TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/IPC-Bootstrap.twr")
+TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/Discord-RPC.twr")
 _G.CoreLauncher = {}
 CoreLauncher.Electron = Import("Electron.bootstrap").LoadAll()
+CoreLauncher.RPC = Import("ga.CoreLauncher.RPC"):new("1008708322922352753")
 CoreLauncher.IPC = Import("openipc.connector"):new("CoreLauncher", "Main")
 CoreLauncher.ApplicationData = ApplicationDataFolder
 CoreLauncher.Dev = process.env.CORELAUNCHER_DEV == "true"
@@ -29,6 +31,28 @@ Import("ga.CoreLauncher.Install.DataFolder")()
 
 --Load Modules
 Import("ga.CoreLauncher.Modules")
+
+--Set RPC
+CoreLauncher.RPC:SetActivity(
+    {
+        state = "Launcing games",
+        details = "https://corelauncher.ga",
+        largeImageKey = "favicon",
+        largeImageText = "CoreLauncher",
+        smallImageKey = "cubicinc",
+        smallImageText = "Developed by Cubic Inc",
+        buttons = {
+            {
+                label = "Website",
+                url = "https://corelauncher.ga"
+            },
+            {
+                label = "Download",
+                url = "https://corelauncher.ga/download"
+            }
+        }
+    }
+)
 
 --Window settings
 CoreLauncher.Window = CoreLauncher.Electron.BrowserWindow(
