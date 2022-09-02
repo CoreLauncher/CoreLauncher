@@ -7,7 +7,7 @@ window.addEventListener(
             "Discord"
         )
         if (DiscordConnected == true) {
-            location = "/games/"
+            location = "/mainpage/"
         } else {
             location = "/welcome/"
         }
