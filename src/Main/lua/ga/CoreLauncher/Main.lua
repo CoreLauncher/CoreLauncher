@@ -3,7 +3,7 @@ print("Hello World!")
 local FS = require("fs")
 
 --Globals
-local ApplicationDataFolder = TypeWriter.ApplicationData .. "\\CoreLauncher/"
+local ApplicationDataFolder = TypeWriter.ApplicationData .. "/CoreLauncher/"
 TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/Electron-Lua-Bootstrap.twr")
 TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/IPC-Bootstrap.twr")
 TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/Discord-RPC.twr")
