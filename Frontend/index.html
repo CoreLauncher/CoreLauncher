@@ -16,10 +16,32 @@
         <script src="./index.js"></script>
         <link rel="stylesheet" href="./index.css">
         <!-- Title -->
-        <title>CoreLauncher - Games</title>
+        <title>CoreLauncher</title>
     </head>
 
     <body>
-        Loading
+        <div class="menubar">
+            <div class="logo-holder">
+                <img src="/static/image/favicon.png" alt="Logo" class="logo-image">
+                <a class="logo-text">CoreLauncher</a>
+            </div>
+            <div class="line"></div>
+            <div class="games-holder" id="games-holder">
+                <div class="game-card" id="game-card">
+                    <div class="block selected-block"></div>
+                    <img src="https://www.minecraft.net/etc.clientlibs/minecraft/clientlibs/main/resources/img/minecraft-creeper-face.jpg" alt="Game icon" class="game-icon" id="game-icon">
+                    <a class="game-label" id="game-label">Minecraft</a>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="buttons-holder">
+                <a class="button-block user-button">
+                    <img src="/static/image/icons/user.svg" alt="User Icon" id="user-icon" class="user-icon button-icon">
+                </a>
+                <a class="button-block settings-button">
+                    <img src="/static/image/icons/sliders.svg" alt="Settings Icon" class="settings-icon button-icon">
+                </a>
+            </div>
+        </div>
     </body>
 </html>
