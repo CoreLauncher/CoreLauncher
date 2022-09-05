@@ -4,13 +4,9 @@
     width: 20%;
     background-color: var(--background-tertiary);
 
-    --logo-height: 75px;
-    --buttons-height: 80px;
-    --games-holder-height: calc(
-        100% - (
-            var(--logo-height) + var(--buttons-height) + 6px
-        )
-    )
+    --logo-height: 10%;
+    --buttons-height: 10%;
+    --games-holder-height: calc(80% - 2px)
 }
 
 /* Logo elements */
