@@ -17,7 +17,6 @@
 }
 
 .logo-holder {
-    display: inline-block;
     width: calc(var(--width) - (var(--margin) * 2));
     height: var(--height);
     padding: var(--margin);
@@ -29,16 +28,15 @@
 }
 
 .logo-holder .logo-image {
-    height: var(--height);
+    height: 100%;
     float: left;
 }
 
 .logo-holder .logo-text {
-    display: inline-block;
-    height: var(--height);
-    line-height: var(--height);
     font-weight: bold;
     font-size: 20px;
+    margin-top: 10%;
+    display: inline-block;
 }
 
 /* Line styling */
