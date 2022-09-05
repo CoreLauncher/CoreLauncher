@@ -70,7 +70,15 @@ do
     Window:on("closed", function()
         CoreLauncher.Electron.Close()
         CoreLauncher.IPC:Disconnect()
+        CoreLauncher.RPC:Disconnect()
     end)
+    local Show = false
+    Window:Once(
+        "ready-to-show",
+        function ()
+            Show = true
+        end
+    )
     if CoreLauncher.Dev then
         Window:OpenDevTools()
         Window:LoadURL("http://localhost")
@@ -78,6 +86,8 @@ do
         Window:RemoveMenu()
         -- Load static server
     end
-    Window:WaitFor("ready-to-show")
+    if Show == false then
+        Window:WaitFor("ready-to-show")
+    end
     Window:Show()
 end

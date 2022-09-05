@@ -1,0 +1,143 @@
+/* Global */
+.menubar { 
+    height: 100%;
+    width: 20%;
+    background-color: var(--background-tertiary);
+
+    --logo-height: 75px;
+    --buttons-height: 80px;
+    --games-holder-height: calc(
+        100% - (
+            var(--logo-height) + var(--buttons-height) + 6px
+        )
+    )
+}
+
+/* Logo elements */
+.logo-holder {
+    --width: 100%;
+    --margin: 10px;
+    --height: calc(var(--logo-height) - (var(--margin) * 2));
+}
+
+.logo-holder {
+    display: inline-block;
+    width: calc(var(--width) - (var(--margin) * 2));
+    height: var(--height);
+    padding: var(--margin);
+    user-select: none;
+}
+
+.logo-holder:hover {
+    background-color: var(--interactive-muted);
+}
+
+.logo-holder .logo-image {
+    height: var(--height);
+    float: left;
+}
+
+.logo-holder .logo-text {
+    display: inline-block;
+    height: var(--height);
+    line-height: var(--height);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Line styling */
+.line {
+    --margin: 5px;
+
+    width: calc(100% - (var(--margin) * 2));
+    height: 1px;
+    background-color: var(--header-secondary);
+    margin-left: var(--margin);
+    margin-right: var(--margin);
+}
+
+/* Games Holder styling */
+.games-holder {
+    height: var(--games-holder-height);
+    width: 100%;
+    display: block;
+}
+
+.games-holder .game-card {
+    --padding: 10px;
+    --width: calc(100% - var(--padding));
+    --height: calc(80px - var(--padding) * 2)
+}
+
+.games-holder .game-card {
+    width: var(--width);
+    height: var(--height);
+    padding: var(--padding);
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 0px;
+    display: inline-block;
+    background-color: var(--background-secondary);
+}
+
+.games-holder .game-card:hover {
+    background-color: var(--interactive-muted);
+}
+
+.games-holder .game-card .block {
+    margin-top: 10px;
+    height: 40px;
+    width: 3%;
+    float: left;
+}
+
+.games-holder .game-card .selected-block {
+    background-color: var(--info-positive-foreground) !important;
+}
+
+.games-holder .game-card .game-icon {
+    height: 40px;
+    margin-top: 10px;
+    margin-left: 5%;
+    float: left;
+
+}
+
+.games-holder .game-card .game-label {
+    display: inline-block;
+    height: 40px;
+    margin-top: 20px;
+    margin-left: 5%;
+}
+
+/* Bottom buttons */
+.buttons-holder {
+    width: 100%;
+    height: var(--buttons-height);
+    position: relative;
+    display: inline-block;
+    bottom: 0px;
+}
+
+.buttons-holder .button-block {
+    width: 49%;
+    height: 100%;
+    display: inline-block;
+    margin-right: 0px;
+    
+    text-align: center;
+}
+
+.buttons-holder .button-block:hover {
+    background-color: var(--interactive-muted);
+}
+
+.buttons-holder .button-icon {
+    height: 80%;
+    margin-top: 7%;
+}
+
+
+.buttons-holder .settings-button {
+    float: right;
+}

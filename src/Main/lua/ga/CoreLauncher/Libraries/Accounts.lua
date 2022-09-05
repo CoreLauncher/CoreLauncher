@@ -45,6 +45,10 @@ function Accounts:Connect(Name)
     OpenInBrowser(URL)
 end
 
+function Accounts:Get(Name)
+    return CoreLauncher.Config:GetKey("Accounts." .. Name)
+end
+
 function Accounts:AccountCallback(Name, Data)
     local Success = AccountTypes[Name].Callback(Data)
     if Success then

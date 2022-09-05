@@ -22,3 +22,10 @@ CoreLauncher.IPC:RegisterMessage(
         Window:setAlwaysOnTop(false)
     end
 )
+
+CoreLauncher.IPC:RegisterMessage(
+    "GetAccount",
+    function (Name)
+        return CoreLauncher.Accounts:Get(Name)
+    end
+)
