@@ -61,8 +61,8 @@ CoreLauncher.Window = CoreLauncher.Electron.BrowserWindow(
         title = "CoreLauncher",
         show = false,
 
-        minWidth = 800,
-        minHeight = 600,
+        minWidth = 1210,
+        minHeight = 800,
     }
 )
 do
