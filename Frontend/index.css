@@ -4,14 +4,10 @@
     width: 20%;
     background-color: var(--background-tertiary);
 
-    --logo-height: 75px;
-    --buttons-height: 80px;
-    --games-holder-height: calc(
-        100% - (
-            var(--logo-height) + var(--buttons-height) + 6px
-        )
-    );
-    position:fixed;
+    --logo-height: 10%;
+    --buttons-height: 10%;
+    --games-holder-height: calc(80% - 2px);
+    position: fixed;
     display: inline-block;
 }
 
@@ -27,7 +23,6 @@
 }
 
 .logo-holder {
-    display: inline-block;
     width: calc(var(--width) - (var(--margin) * 2));
     height: var(--height);
     padding: var(--margin);
@@ -39,16 +34,15 @@
 }
 
 .logo-holder .logo-image {
-    height: var(--height);
+    height: 100%;
     float: left;
 }
 
 .logo-holder .logo-text {
-    display: inline-block;
-    height: var(--height);
-    line-height: var(--height);
     font-weight: bold;
     font-size: 20px;
+    margin-top: 10%;
+    display: inline-block;
 }
 
 /* Line styling */
