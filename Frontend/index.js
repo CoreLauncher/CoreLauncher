@@ -46,7 +46,7 @@ window.addEventListener(
     "load",
     async function() {
         await LoadGameCards()
-        await LoadUI()
         await CheckDiscord()
+        await LoadUI()
     }
 )
