@@ -10,7 +10,13 @@
         100% - (
             var(--logo-height) + var(--buttons-height) + 6px
         )
-    )
+    );
+    position:fixed;
+    display: inline-block;
+}
+
+.mainframe {
+    float: right;
 }
 
 /* Logo elements */
