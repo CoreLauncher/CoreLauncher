@@ -23,7 +23,16 @@
         <div class="menubar">
             <div class="logo-holder">
                 <img src="/static/image/favicon.png" alt="Logo" class="logo-image">
-                <a class="logo-text">CoreLauncher</a>
+                <a class="logo-text" id="logotext">CoreLauncher</a>
+                <script>
+                    const Text = document.getElementById("logotext")
+
+                    function TextChange() {
+                        Text.style.lineHeight = `${Text.offsetHeight}px`
+                    }
+                    TextChange()
+                    new ResizeObserver(TextChange).observe(Text)
+                </script>
             </div>
             <div class="line"></div>
             <div class="games-holder" id="games-holder">
