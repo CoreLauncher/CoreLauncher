@@ -8,13 +8,14 @@ return {
         Developer = {
             Name = "Mojang",
             Website = "https://www.minecraft.net/en-us/"
+        },
+        Pages = {
+            "PlayPage",
+            "InstancePage",
+            "MinecraftSkinsPage"
         }
     },
-    Pages = {
-        "PlayPage",
-        "InstancePage",
-        "MinecraftSkinsPage"
-    },
+    
     Functions = {
 
     }
