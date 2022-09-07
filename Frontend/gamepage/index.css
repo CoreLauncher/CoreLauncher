@@ -1,0 +1,47 @@
+/* Topbar styling */
+.topbar {
+    width: 100%;
+    height: 10%;
+    background-color: var(--background-tertiary);
+    position: relative;
+}
+
+.gametitle {
+    display: inline-block;
+
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.tabbuttons {
+    width: 100%;
+    height: 40%;
+    bottom: 0px;
+    position: absolute;
+}
+
+.tabbutton {
+    display: inline-block;
+    height: 100%;
+    width: auto;
+    position: relative;
+    margin-left: 20px;
+}
+
+.buttonblock {
+    width: 80%;
+    margin-left: 10%;
+    height: 15%;
+    bottom: 0px;
+    position: absolute;
+}
+
+.tabbutton:hover .buttonblock {
+    background-color: var(--interactive-muted);
+}
+
+.selected .buttonblock {
+    background-color: var(--info-positive-foreground) !important
+}
