@@ -28,7 +28,7 @@ window.addEventListener(
                 "click",
                 function() {
                     if (TabElement.classList.contains("selected")) {console.log("already selected"); return}
-                    document.getElementById("tabview").src = `/gamepage/pages/${TabName}`
+                    document.getElementById("tabview").src = `/gamepage/pages/${TabName}/?game=${GameId}`
                     for (const Child of TabHolder.children) {Child.classList.remove("selected")}
                     TabElement.classList.add("selected")
                     console.log(TabElement.classList)
