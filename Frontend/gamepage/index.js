@@ -10,5 +10,6 @@ window.addEventListener(
         )
         console.log(Game)
         document.getElementById("gametitle").innerText = Game.LongName
+        document.getElementById("developername").innerText = `By ${Game.Developer.Name}`
     }
 )
