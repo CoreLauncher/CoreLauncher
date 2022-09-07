@@ -10,6 +10,11 @@ return {
             Website = "https://www.minecraft.net/en-us/"
         }
     },
+    Pages = {
+        "PlayPage",
+        "InstancePage",
+        "MinecraftSkinsPage"
+    },
     Functions = {
 
     }
