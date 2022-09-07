@@ -14,7 +14,7 @@ async function LoadGameCards() {
         GameElement.addEventListener(
             "click",
             function() {
-                location = "/instances/?game=" + Game.Id
+                document.getElementById("mainframe").src = "/gamepage/?game=" + Game.Id
             }
         )
         GameHolder.appendChild(GameElement)
