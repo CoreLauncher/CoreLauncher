@@ -18,3 +18,27 @@
     height: 80%;
     font-size: 4vh;
 }
+
+.currentinstance {
+    height: 80%;
+    width: 20%;
+    top: 10%;
+    left: 1%;
+    position: absolute;
+    background-color: var(--background-primary);
+    border-radius: 5px;
+}
+
+.instanceicon {
+    height: 100%;
+    display: inline-block;
+    float: left;
+}
+
+.instancename {
+    position: absolute;
+}
+
+.instanceversion {
+    color: var(--text-muted);
+}

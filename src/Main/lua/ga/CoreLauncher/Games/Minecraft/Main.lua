@@ -14,7 +14,8 @@ return {
             "PlayPage",
             "InstancePage",
             "MinecraftSkinsPage"
-        }
+        },
+        Instanced = true
     },
     
     Functions = {
