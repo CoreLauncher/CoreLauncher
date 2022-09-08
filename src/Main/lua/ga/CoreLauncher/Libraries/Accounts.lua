@@ -12,8 +12,8 @@ local AccountTypes = {
             Base = "https://discord.com/api/oauth2/authorize?",
             Query = {
                 ["client_id"] = "1008708322922352753",
-                ["redirect_uri"] = "http://localhost/callback/discord",
-                ["response_type"] = "token",
+                ["redirect_uri"] = "http://localhost/callback/discord/",
+                ["response_type"] = "code",
                 ["scope"] = "identify email connections guilds guilds.join"
             }
         },
@@ -56,6 +56,7 @@ end
 function Accounts:Connect(Name)
     local UrlData = AccountTypes[Name].Url
     local URL = UrlData.Base .. QueryEncode(UrlData.Query)
+    p(URL)
     OpenInBrowser(URL)
 end
 
