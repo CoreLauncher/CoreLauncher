@@ -15,8 +15,10 @@ CoreLauncher.ApplicationData = ApplicationDataFolder
 CoreLauncher.Dev = process.env.CORELAUNCHER_DEV == "true"
 CoreLauncher.Games = Import("ga.CoreLauncher.Games")
 CoreLauncher.Config = Import("ga.CoreLauncher.Libraries.Config"):new(ApplicationDataFolder .. "/Data.json")
+CoreLauncher.AuthServices = Import("ga.CoreLauncher.Libraries.AuthServices"):new()
 CoreLauncher.Accounts = Import("ga.CoreLauncher.Libraries.Accounts"):new()
 
+CoreLauncher.Accounts:Connect("MSA")
 --Setup config
 do
     local Config = CoreLauncher.Config
