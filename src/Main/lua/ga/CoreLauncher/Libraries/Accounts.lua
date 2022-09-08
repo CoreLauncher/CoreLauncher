@@ -28,6 +28,20 @@ local AccountTypes = {
             )
             return true
         end
+    },
+    ["MSA"] = {
+        ["Name"] = "Microsoft Authentication",
+        ["Icon"] = "",
+        ["Url"] = {
+            Base = "https://login.live.com/oauth20_authorize.srf?",
+            Query = {
+                ["client_id"] = "54e48db0-6129-4320-82a7-3b0156811a91",
+                ["response_type"] = "code",
+                ["redirect_uri"] = "http://localhost/callback/msa/",
+                ["scope"] = "XboxLive.signin offline_access",
+                ["state"] = "NOT_NEEDED",
+            }
+        }
     }
 }
 
