@@ -4,7 +4,7 @@ window.addEventListener(
         console.log(QueryParameters.code)
         await CoreLauncher.IPC.Send(
             "Main",
-            "AccountCallback",
+            "Accounts.EndFlow",
             {
                 Type: "MSA",
                 Code: QueryParameters.code
