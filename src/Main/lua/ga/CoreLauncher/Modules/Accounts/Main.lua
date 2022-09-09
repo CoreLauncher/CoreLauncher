@@ -1,7 +1,7 @@
 CoreLauncher.IPC:RegisterMessage(
     "Accounts.GetAccount",
     function (Name)
-        return CoreLauncher.Accounts:Get(Name)
+        return CoreLauncher.Accounts:GetAccount(Name)
     end
 )
 
