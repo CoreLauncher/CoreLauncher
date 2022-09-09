@@ -1,3 +1,5 @@
+Import("ga.CoreLauncher.Modules.Accounts.Discord")
+
 CoreLauncher.IPC:RegisterMessage(
     "Accounts.GetAccount",
     function (Name)
@@ -15,6 +17,7 @@ CoreLauncher.IPC:RegisterMessage(
 CoreLauncher.IPC:RegisterMessage(
     "Accounts.StartFlow",
     function (Name)
+        p("a")
         return CoreLauncher.Accounts:StartFlow(Name)
     end
 )
