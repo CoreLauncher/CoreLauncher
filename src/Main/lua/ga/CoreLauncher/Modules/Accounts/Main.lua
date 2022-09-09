@@ -15,11 +15,10 @@ CoreLauncher.IPC:RegisterMessage(
 CoreLauncher.IPC:RegisterMessage(
     "AccountCallback",
     function (Data)
-        CoreLauncher.Accounts:AccountCallback(Data.Type, Data.Data)
-        local Window = CoreLauncher.Window
-        Window:Focus()
-        Window:setAlwaysOnTop(true)
-        Window:setAlwaysOnTop(false)
+        p(Data)
+        CoreLauncher.AuthServices:Resolve(Data.Type, Data.Code)
+        --CoreLauncher.Accounts:AccountCallback(Data.Type, Data.Data)
+        
     end
 )
 
