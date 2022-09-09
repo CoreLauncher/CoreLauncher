@@ -22,11 +22,10 @@ async function LoadGameCards() {
 }
 
 async function LoadUI() {
-    var DiscordUserData = (await CoreLauncher.IPC.Send(
+    var DiscordUserData = await CoreLauncher.IPC.Send(
         "Main",
-        "Accounts.GetAccount",
-        "Discord"
-    )).UserData
+        "Accounts.Discord.GetAccount"
+    )
     console.log(DiscordUserData)
     document.getElementById("user-icon").src = `https://cdn.discordapp.com/avatars/${DiscordUserData.Id}/${DiscordUserData.Avatar}.png`
 }
