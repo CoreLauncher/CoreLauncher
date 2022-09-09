@@ -6,7 +6,7 @@ window.addEventListener(
             "click",
             async function() {
                 console.log("Button clicked")
-                CoreLauncher.IPC.Send(
+                await CoreLauncher.IPC.Send(
                     "Main",
                     "Accounts.StartFlow",
                     "Discord"
