@@ -15,6 +15,9 @@ function Config:GetKey(Key)
     local KeyPartitions = Key:split(".")
     local Data = self.Data
     for _, Partition in pairs(KeyPartitions) do
+        if Data[Partition] == nil then
+            return nil
+        end
         Data = Data[Partition]
     end
     return Data
