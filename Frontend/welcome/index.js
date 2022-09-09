@@ -8,7 +8,7 @@ window.addEventListener(
                 console.log("Button clicked")
                 CoreLauncher.IPC.Send(
                     "Main",
-                    "ConnectAccount",
+                    "Accounts.StartFlow",
                     "Discord"
                 )
             }
@@ -17,7 +17,7 @@ window.addEventListener(
         var Wait = true
 
         CoreLauncher.IPC.RegisterMessage(
-            "AccountConnected",
+            "Accounts.FlowCompleted",
             async function(Type) {
                 console.log(Type)
                 if (Type == "Discord") {

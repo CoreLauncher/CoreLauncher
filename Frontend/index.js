@@ -5,7 +5,7 @@ async function LoadGameCards() {
     const GameHolder = document.getElementById("games-holder")
     const Games = await CoreLauncher.IPC.Send(
         "Main",
-        "GetGames"
+        "Games.GetGames"
     )
     Games.forEach(Game => {
         const GameElement = Template.cloneNode(true)
@@ -24,7 +24,7 @@ async function LoadGameCards() {
 async function LoadUI() {
     var DiscordUserData = (await CoreLauncher.IPC.Send(
         "Main",
-        "GetAccount",
+        "Accounts.GetAccount",
         "Discord"
     )).UserData
     console.log(DiscordUserData)
@@ -34,7 +34,7 @@ async function LoadUI() {
 async function CheckDiscord() {
     var DiscordConnected = await CoreLauncher.IPC.Send(
         "Main",
-        "IsAccountConnected",
+        "Accounts.IsConnected",
         "Discord"
     )
     if (DiscordConnected == true) {} else {

@@ -5,7 +5,7 @@ window.addEventListener(
         const GameId = QueryParameters["game"];
         const Game = await CoreLauncher.IPC.Send(
             "Main",
-            "GetGame",
+            "Games.GetGame",
             GameId
         )
     }

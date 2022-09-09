@@ -22,7 +22,7 @@ window.addEventListener(
         } else {
             await CoreLauncher.IPC.Send(
                 "Main",
-                "AccountCallback",
+                "Accounts.EndFlow",
                 {
                     Type: "Discord",
                     Data: HashQuery

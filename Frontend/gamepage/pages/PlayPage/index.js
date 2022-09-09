@@ -3,7 +3,7 @@ window.addEventListener(
     async function() {
         const Game = await CoreLauncher.IPC.Send(
             "Main",
-            "GetGame",
+            "Games.GetGame",
             QueryParameters.game
         )
         console.log(Game)

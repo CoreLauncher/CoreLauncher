@@ -6,7 +6,7 @@ window.addEventListener(
         const GameHolder = document.getElementById("games-holder")
         const Games = await CoreLauncher.IPC.Send(
             "Main",
-            "GetGames"
+            "Games.GetGames"
         )
         Games.forEach(Game => {
             const GameElement = Template.cloneNode(true)

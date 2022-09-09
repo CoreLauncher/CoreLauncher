@@ -1,5 +1,5 @@
 CoreLauncher.IPC:RegisterMessage(
-    "GetGames",
+    "Games.GetGames",
     function()
         local Games = {}
         for _, Game in pairs(CoreLauncher.Games) do
@@ -13,7 +13,7 @@ CoreLauncher.IPC:RegisterMessage(
 )
 
 CoreLauncher.IPC:RegisterMessage(
-    "GetGame",
+    "Games.GetGame",
     function(GameId)
         return CoreLauncher.Games[GameId].Info
     end
