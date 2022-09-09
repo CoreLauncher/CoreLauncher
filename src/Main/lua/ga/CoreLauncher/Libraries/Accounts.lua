@@ -1,8 +1,11 @@
-local Accounts = Object:extend()
+local Accounts = Class:extend()
 
 local OpenInBrowser = Import("ga.CoreLauncher.Libraries.OpenInBrowser")
 local QueryEncode = require("querystring").stringify
 local Discord = Import("ga.CoreLauncher.Libraries.Discord")
+
+local Json = require("json")
+local Request = require("coro-http").request
 
 local AccountTypes = {
     ["Discord"] = {
@@ -17,17 +20,25 @@ local AccountTypes = {
                 ["scope"] = "identify email connections guilds guilds.join"
             }
         },
-        Callback = function (Data)
-            local UserData = Discord.GetUser(Data.access_token)
-            CoreLauncher.Config:SetKey(
-                "Accounts.Discord",
-                {
-                    TokenData = Data,
-                    UserData = UserData
-                }
-            )
-            return true
-        end
+        Functions = {
+            AccessToken = function (self, Code)
+                local Response, Body = Request(
+                    "GET",
+                    string.format(
+                        "%s/discord/token/?code=%s",
+                        self.Url,
+                        Code
+                    )
+                )
+                return ({Json.decode(Body)})[1]
+            end,
+            RefreshToken = function (self)
+                
+            end,
+            AfterToken = function (self, Data)
+                return Data
+            end
+        }
     },
     ["MSA"] = {
         ["Name"] = "Microsoft Authentication",
@@ -39,39 +50,68 @@ local AccountTypes = {
                 ["response_type"] = "code",
                 ["redirect_uri"] = "http://localhost/callback/msa/",
                 ["response_mode"] = "query",
-                ["scope"] = "XboxLive.signin offline_access",
-                ["state"] = "NOT_NEEDED",
+                ["scope"] = "XboxLive.signin offline_access"
             }
+        },
+        Functions = {
+            AccessToken = function (self, Code)
+                local Response, Body = Request(
+                    "GET",
+                    string.format(
+                        "%s/msa/token/?code=%s",
+                        self.Url,
+                        Code
+                    )
+                )
+                return ({Json.decode(Body)})[1]
+            end,
+            RefreshToken = function (self)
+                
+            end,
+            AfterToken = function (self, Data)
+                Data.ExpiresAt = os.time() + (Data.AccessToken.expires_in - 60)
+                Data.AccessToken.ext_expires_in = nil
+                return Data
+            end
         }
     }
 }
 
-function Accounts:initialize(Path)
-    
+function Accounts:initialize()
+    self.Url = ({[true] = "http://localhost:8423", [false] = "https://auth.corelauncher.ga"})[CoreLauncher.Dev]
 end
 
-function Accounts:AccountConnected(Name)
-    return CoreLauncher.Config:GetKey("Accounts." .. Name) ~= nil
+function Accounts:GetAccount(Name)
+    return CoreLauncher.Config:GetKey("Accounts." .. Name)
 end
 
-function Accounts:Connect(Name)
+function Accounts:IsConnected(Name)
+    return self:GetAccount(Name) ~= nil
+end
+
+function Accounts:StartFlow(Name)
     local UrlData = AccountTypes[Name].Url
     local URL = UrlData.Base .. QueryEncode(UrlData.Query)
     p(URL)
     OpenInBrowser(URL)
 end
 
-function Accounts:Get(Name)
-    return CoreLauncher.Config:GetKey("Accounts." .. Name)
+function Accounts:EndFlow(Name, Code)
+    local TypeFunctions = AccountTypes[Name].Functions
+    p(Code)
+    local AccessToken = TypeFunctions.AccessToken(self, Code)
+    p(AccessToken)
+    local Data = {AccessToken = AccessToken, Type = Name, At = os.time()}
+    local AfterData = TypeFunctions.AfterToken(self, Data)
+    CoreLauncher.Config:SetKey(
+        string.format("Accounts.%s", Name),
+        AfterData
+    )
+    CoreLauncher.IPC:Send("Render", "Accounts.FlowCompleted", Name)
 end
 
-function Accounts:AccountCallback(Name, Data)
-    local Success = AccountTypes[Name].Callback(Data)
-    if Success then
-        coroutine.wrap(function ()
-            CoreLauncher.IPC:Send("Render", "AccountConnected", Name)
-        end)()
-    end
+function Accounts:RefreshAccount(Name)
+    
 end
 
 return Accounts
