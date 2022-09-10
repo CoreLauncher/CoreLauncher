@@ -27,6 +27,7 @@
     height: var(--height);
     padding: var(--margin);
     user-select: none;
+    position: relative;
 }
 
 .logo-selected {
@@ -45,8 +46,9 @@
 .logo-holder .logo-text {
     font-weight: bold;
     font-size: 130%;
-    height: 100%;
     display: inline-block;
+    text-overflow: clip;
+    position: absolute;
 }
 
 /* Line styling */

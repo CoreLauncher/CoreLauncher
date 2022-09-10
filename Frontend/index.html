@@ -22,16 +22,21 @@
     <body>
         <div class="menubar">
             <div class="logo-holder" id="logo-holder">
-                <img src="/static/image/favicon.png" alt="Logo" class="logo-image">
+                <img src="/static/image/favicon.png" alt="Logo" class="logo-image" id="logoimage">
                 <a class="logo-text" id="logotext">CoreLauncher</a>
                 <script>
+                    const Holder = document.getElementById("logo-holder")
+                    const Image = document.getElementById("logoimage")
                     const Text = document.getElementById("logotext")
 
-                    function TextChange() {
+                    function LogoHolderChange() {
+                        Text.style.height = `${Image.offsetHeight}px`
                         Text.style.lineHeight = `${Text.offsetHeight}px`
+                        console.log(Holder.offsetWidth - Image.offsetWidth)
+                        Text.style.width = `${Holder.offsetWidth - Image.offsetWidth}px`
                     }
-                    TextChange()
-                    new ResizeObserver(TextChange).observe(Text)
+                    LogoHolderChange()
+                    new ResizeObserver(LogoHolderChange).observe(Holder)
                 </script>
             </div>
             <div class="line"></div>
