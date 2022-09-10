@@ -85,6 +85,14 @@ function Accounts:GetAccount(Name)
     return CoreLauncher.Config:GetKey("Accounts." .. Name)
 end
 
+function Accounts:GetAccountType(Name)
+    local AccountType = AccountTypes[Name]
+    return {
+        Name = AccountType.Name,
+        Icon = AccountType.Icon
+    }
+end
+
 function Accounts:IsConnected(Name)
     return self:GetAccount(Name) ~= nil
 end
@@ -106,8 +114,7 @@ function Accounts:EndFlow(Name, Code)
         AfterData
     )
     TypeWriter.Logger.Info("Successfully added %s account", Name)
-    p("asdasd")
-    CoreLauncher.IPC:Send("Render", "Accounts.FlowCompleted", Name)
+    CoreLauncher.Window:Reload()
 end
 
 function Accounts:RefreshAccount(Name)

@@ -8,6 +8,13 @@ CoreLauncher.IPC:RegisterMessage(
 )
 
 CoreLauncher.IPC:RegisterMessage(
+    "Accounts.GetAccountType",
+    function (Name)
+        return CoreLauncher.Accounts:GetAccountType(Name)
+    end
+)
+
+CoreLauncher.IPC:RegisterMessage(
     "Accounts.IsConnected",
     function(Name)
         return CoreLauncher.Accounts:IsConnected(Name)
