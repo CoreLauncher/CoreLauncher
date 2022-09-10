@@ -1,13 +1,28 @@
-async function LoadPageButtons() {
-    const GameId = QueryParameters["game"];
-    const Game = await CoreLauncher.IPC.Send(
-        "Main",
-        "Games.GetGame",
-        GameId
-    )
+async function CheckRequiredAccounts(Game) {
+    for (const AccountType of Game.RequiresAccounts) {
+        const Connected = await CoreLauncher.IPC.Send(
+            "Main",
+            "Accounts.IsConnected",
+            AccountType
+        )
+        if (Connected == false) {
+            return AccountType
+        }
+    }
+    return true
+}
+
+async function AlertMissingAccount(Type, Game) {
+    document.getElementById("tabview").src = `/gamepage/missingaccount/?game=${Game.Id}&type=${Type}`
+    document.querySelector("#tabbutton").remove()
+}
+
+async function LoadTitleElements(Game) {
     document.getElementById("gametitle").innerText = Game.LongName
     document.getElementById("developername").innerText = `By ${Game.Developer.Name}`
+}
 
+async function LoadPageButtons(Game) {
     const Template = document.querySelector("#tabbutton")
     Template.remove()
     const TabHolder = document.getElementById("tabholder")
@@ -23,7 +38,7 @@ async function LoadPageButtons() {
             "click",
             function() {
                 if (TabElement.classList.contains("selected")) {console.log("already selected"); return}
-                document.getElementById("tabview").src = `/gamepage/pages/${TabName}/?game=${GameId}`
+                document.getElementById("tabview").src = `/gamepage/pages/${TabName}/?game=${Game.Id}`
                 for (const Child of TabHolder.children) {Child.classList.remove("selected")}
                 TabElement.classList.add("selected")
             }
@@ -40,6 +55,15 @@ async function LoadPageButtons() {
 window.addEventListener(
     "load",
     async function() {
-        await LoadPageButtons()
+        const GameId = QueryParameters["game"];
+        const Game = await CoreLauncher.IPC.Send(
+            "Main",
+            "Games.GetGame",
+            GameId
+        )
+        await LoadTitleElements(Game)
+        const MissingAccountType = await CheckRequiredAccounts(Game)
+        if (MissingAccountType != true) {await AlertMissingAccount(MissingAccountType, Game); return}
+        await LoadPageButtons(Game)
     }
 )
