@@ -6,7 +6,6 @@ window.addEventListener(
             "Games.GetGame",
             QueryParameters.game
         )
-        console.log(Game)
         document.getElementById("bannerimage").src = Game.Banner
     }
 )

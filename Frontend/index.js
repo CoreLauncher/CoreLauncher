@@ -13,9 +13,7 @@ async function RegisterPage(ClickBlock, IndicatorBlock, IndicatorClass, PageUrl,
         "click",
         function() {
             if (SelectedPage == Data) {console.log("Page already selected"); return}
-            console.log(Pages)
             for (const Page of Pages) {
-                console.log(Page)
                 Page.IndicatorBlock.classList.remove(Page.IndicatorClass)
             }
             Data.IndicatorBlock.classList.add(Data.IndicatorClass)
@@ -26,12 +24,10 @@ async function RegisterPage(ClickBlock, IndicatorBlock, IndicatorClass, PageUrl,
     if (Selected == true) {
         ClickBlock.click()
     }
-    console.log(Data)
 }
 
 async function LoadGameCards() {
     const Template = document.querySelector("#game-card")
-    console.log(Template)
     Template.remove()
     const GameHolder = document.getElementById("games-holder")
     const Games = await CoreLauncher.IPC.Send(
@@ -52,7 +48,6 @@ async function LoadUI() {
         "Main",
         "Accounts.Discord.GetAccount"
     )
-    console.log(DiscordUserData)
     document.getElementById("user-icon").src = `https://cdn.discordapp.com/avatars/${DiscordUserData.Id}/${DiscordUserData.Avatar}.png`
 }
 

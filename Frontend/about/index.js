@@ -6,6 +6,5 @@ window.addEventListener(
             "Package.Version"
         )
         document.getElementById("versiondisplay").innerText = `Version ${Version}`
-        console.log(Version)
     }
 )
