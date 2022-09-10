@@ -100,7 +100,6 @@ end
 function Accounts:StartFlow(Name)
     local UrlData = AccountTypes[Name].Url
     local URL = UrlData.Base .. QueryEncode(UrlData.Query)
-    p(URL)
     OpenInBrowser(URL)
 end
 
