@@ -5,12 +5,10 @@ async function LoadPageButtons() {
         "Games.GetGame",
         GameId
     )
-    console.log(Game)
     document.getElementById("gametitle").innerText = Game.LongName
     document.getElementById("developername").innerText = `By ${Game.Developer.Name}`
 
     const Template = document.querySelector("#tabbutton")
-    console.log(Template)
     Template.remove()
     const TabHolder = document.getElementById("tabholder")
     const Tabs = Game.Pages
@@ -28,8 +26,6 @@ async function LoadPageButtons() {
                 document.getElementById("tabview").src = `/gamepage/pages/${TabName}/?game=${GameId}`
                 for (const Child of TabHolder.children) {Child.classList.remove("selected")}
                 TabElement.classList.add("selected")
-                console.log(TabElement.classList)
-                console.log(TabName)
             }
         )
         if (I == 0) {

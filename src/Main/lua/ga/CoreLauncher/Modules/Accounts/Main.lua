@@ -17,7 +17,6 @@ CoreLauncher.IPC:RegisterMessage(
 CoreLauncher.IPC:RegisterMessage(
     "Accounts.StartFlow",
     function (Name)
-        p("a")
         return CoreLauncher.Accounts:StartFlow(Name)
     end
 )

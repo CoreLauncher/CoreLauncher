@@ -106,6 +106,7 @@ function Accounts:EndFlow(Name, Code)
         AfterData
     )
     TypeWriter.Logger.Info("Successfully added %s account", Name)
+    p("asdasd")
     CoreLauncher.IPC:Send("Render", "Accounts.FlowCompleted", Name)
 end
 

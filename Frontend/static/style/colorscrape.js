@@ -142,7 +142,6 @@ var NewLines = []
 Lines.forEach(
     function(Line) {
         var NewLine = Line.split(":")[0].split(" ").join("")
-        console.log(NewLine)
         NewLines.push(NewLine)
     }
 )

@@ -19,7 +19,6 @@ window.addEventListener(
         CoreLauncher.IPC.RegisterMessage(
             "Accounts.FlowCompleted",
             async function(Type) {
-                console.log(Type)
                 if (Type == "Discord") {
                    Wait = false
                 }
