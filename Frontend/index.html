@@ -21,7 +21,7 @@
 
     <body>
         <div class="menubar">
-            <div class="logo-holder">
+            <div class="logo-holder" id="logo-holder">
                 <img src="/static/image/favicon.png" alt="Logo" class="logo-image">
                 <a class="logo-text" id="logotext">CoreLauncher</a>
                 <script>
@@ -37,7 +37,7 @@
             <div class="line"></div>
             <div class="games-holder" id="games-holder">
                 <div class="game-card" id="game-card">
-                    <div class="block selected-block"></div>
+                    <div class="block" id="selectedblock"></div>
                     <img src="https://www.minecraft.net/etc.clientlibs/minecraft/clientlibs/main/resources/img/minecraft-creeper-face.jpg" alt="Game icon" class="game-icon" id="game-icon">
                     <a class="game-label" id="game-label">Minecraft</a>
                 </div>
@@ -52,6 +52,6 @@
                 </a>
             </div>
         </div>
-        <iframe src="/gamepage/?game=MinecraftJava" frameborder="0" height="100%" width="80%" class="mainframe" id="mainframe"></iframe>
+        <iframe src="" frameborder="0" height="100%" width="80%" class="mainframe" id="mainframe"></iframe>
     </body>
 </html>
