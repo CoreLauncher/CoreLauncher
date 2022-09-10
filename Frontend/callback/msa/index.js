@@ -10,5 +10,6 @@ window.addEventListener(
                 Code: QueryParameters.code
             }
         )
+        location.href = "/callback/"
     }
 )
