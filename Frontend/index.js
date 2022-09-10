@@ -68,6 +68,6 @@ window.addEventListener(
         await LoadGameCards()
         await CheckDiscord()
         await LoadUI()
-        RegisterPage(document.getElementById("logo-holder"), document.getElementById("logo-holder"), "logo-selected", "/about/", "About", true)
+        await RegisterPage(document.getElementById("logo-holder"), document.getElementById("logo-holder"), "logo-selected", "/about/", "About", true)
     }
 )
