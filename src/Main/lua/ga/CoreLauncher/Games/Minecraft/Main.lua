@@ -15,6 +15,9 @@ return {
             "InstancePage",
             "MinecraftSkinsPage"
         },
+        RequiresAccounts = {
+            "MSA"
+        },
         Instanced = true
     },
     
