@@ -98,15 +98,14 @@ end
 
 function Accounts:EndFlow(Name, Code)
     local TypeFunctions = AccountTypes[Name].Functions
-    p(Code)
     local AccessToken = TypeFunctions.AccessToken(self, Code)
-    p(AccessToken)
     local Data = {AccessToken = AccessToken, Type = Name, At = os.time()}
     local AfterData = TypeFunctions.AfterToken(self, Data)
     CoreLauncher.Config:SetKey(
         string.format("Accounts.%s", Name),
         AfterData
     )
+    TypeWriter.Logger.Info("Successfully added %s account", Name)
     CoreLauncher.IPC:Send("Render", "Accounts.FlowCompleted", Name)
 end
 
