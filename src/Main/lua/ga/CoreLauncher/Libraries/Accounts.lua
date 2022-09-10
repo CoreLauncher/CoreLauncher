@@ -41,7 +41,7 @@ local AccountTypes = {
         }
     },
     ["MSA"] = {
-        ["Name"] = "Microsoft Authentication",
+        ["Name"] = "Microsoft",
         ["Icon"] = "",
         ["Url"] = {
             Base = "https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?",
