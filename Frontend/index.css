@@ -29,6 +29,10 @@
     user-select: none;
 }
 
+.logo-selected {
+    background-color: var(--background-modifier-hover) !important;
+}
+
 .logo-holder:hover {
     background-color: var(--interactive-muted);
 }
