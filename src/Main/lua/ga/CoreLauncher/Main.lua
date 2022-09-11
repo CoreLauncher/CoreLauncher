@@ -13,6 +13,7 @@ CoreLauncher.RPC = Import("ga.CoreLauncher.RPC"):new("1008708322922352753")
 CoreLauncher.IPC = Import("openipc.connector"):new("CoreLauncher", "Main")
 CoreLauncher.ApplicationData = ApplicationDataFolder
 CoreLauncher.Dev = process.env.CORELAUNCHER_DEV == "true"
+CoreLauncher.Http = Import("ga.CoreLauncher.Libraries.Http")
 CoreLauncher.Games = Import("ga.CoreLauncher.Games")
 CoreLauncher.Config = Import("ga.CoreLauncher.Libraries.Config"):new(ApplicationDataFolder .. "/Data.json")
 CoreLauncher.Accounts = Import("ga.CoreLauncher.Libraries.Accounts"):new()
