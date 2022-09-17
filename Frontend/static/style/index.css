@@ -31,6 +31,6 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--chat-input-container-background);
+    background-color: var(--text-muted);
     border-radius: 10px;
 }
