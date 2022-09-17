@@ -26,6 +26,11 @@ do
     Config:SetKeyIfNotExists("Accounts", {})
 end
 
+--Check Accounts
+do
+    CoreLauncher.Accounts:RefreshAll()
+end
+
 --Installing
 Import("ga.CoreLauncher.Install.FavIcon")()
 Import("ga.CoreLauncher.Install.DataFolder")()

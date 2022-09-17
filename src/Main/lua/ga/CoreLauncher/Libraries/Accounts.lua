@@ -32,10 +32,19 @@ local AccountTypes = {
                 )
                 return ({Json.decode(Body)})[1]
             end,
-            RefreshToken = function (self)
-                
+            RefreshToken = function (self, TokenData)
+                local Response, Body = Request(
+                    "GET",
+                    string.format(
+                        "%s/discord/refresh/?code=%s",
+                        self.Url,
+                        TokenData.refresh_token
+                    )
+                )
+                return ({Json.decode(Body)})[1]
             end,
             AfterToken = function (self, Data)
+                Data.ExpiresAt = os.time() + (Data.AccessToken.expires_in - 60)
                 return Data
             end
         }
@@ -65,8 +74,16 @@ local AccountTypes = {
                 )
                 return ({Json.decode(Body)})[1]
             end,
-            RefreshToken = function (self)
-                
+            RefreshToken = function (self, TokenData)
+                local Response, Body = Request(
+                    "GET",
+                    string.format(
+                        "%s/msa/refresh/?code=%s",
+                        self.Url,
+                        TokenData.refresh_token
+                    )
+                )
+                return ({Json.decode(Body)})[1]
             end,
             AfterToken = function (self, Data)
                 Data.ExpiresAt = os.time() + (Data.AccessToken.expires_in - 60)
@@ -116,8 +133,40 @@ function Accounts:EndFlow(Name, Code)
     CoreLauncher.Window:Reload()
 end
 
+function Accounts:GetConnectedAccounts()
+    local Types = {}
+    for AccountType, AccountData in pairs(CoreLauncher.Config:GetKey("Accounts")) do
+        table.insert(Types, AccountType)
+    end
+    return Types
+end
+
 function Accounts:RefreshAccount(Name)
-    
+    local TypeFunctions = AccountTypes[Name].Functions
+    local OldAccountData = CoreLauncher.Config:GetKey(
+        string.format("Accounts.%s", Name)
+    )
+    if os.time() - OldAccountData.At < 3600 then
+        TypeWriter.Logger.Warn("Failed to refresh %s account (refreshed less than a hour ago)", Name)
+        return
+    end
+    local AccessToken = TypeFunctions.RefreshToken(
+        self,
+        OldAccountData.AccessToken
+    )
+    local Data = {AccessToken = AccessToken, Type = Name, At = os.time()}
+    local AfterData = TypeFunctions.AfterToken(self, Data)
+    CoreLauncher.Config:SetKey(
+        string.format("Accounts.%s", Name),
+        AfterData
+    )
+    TypeWriter.Logger.Info("Successfully refreshed %s account", Name)
+end
+
+function Accounts:RefreshAll()
+    for Index, AccountType in pairs(self:GetConnectedAccounts()) do
+        self:RefreshAccount(AccountType)
+    end
 end
 
 return Accounts
