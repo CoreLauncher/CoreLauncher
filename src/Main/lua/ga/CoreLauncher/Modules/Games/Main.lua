@@ -1,3 +1,5 @@
+Import("ga.CoreLauncher.Modules.Games.Instances")
+
 CoreLauncher.IPC:RegisterMessage(
     "Games.GetGames",
     function()
