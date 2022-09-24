@@ -9,7 +9,7 @@ function Discord.GetUser()
     if Token == nil then
         return nil
     end
-    local Response, Body = Request(
+    local Response, Body = CoreLauncher.Http.JsonRequest(
         "GET",
         "https://discordapp.com/api/users/@me",
         {
@@ -17,7 +17,7 @@ function Discord.GetUser()
             {"Content-Type", "application/json"}
         }
     )
-    return TablePatcher(Json.decode(Body))
+    return TablePatcher(Body)
 end
 
 return Discord
