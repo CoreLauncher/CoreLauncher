@@ -14,7 +14,6 @@ function Discord.GetUser()
         "https://discordapp.com/api/users/@me",
         {
             {"Authorization", "Bearer " .. Token},
-            {"User-Agent", "CoreLauncher"},
             {"Content-Type", "application/json"}
         }
     )
