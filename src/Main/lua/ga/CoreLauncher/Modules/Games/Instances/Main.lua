@@ -17,7 +17,7 @@ CoreLauncher.IPC:RegisterMessage(
     function (Game)
         local Instances = CoreLauncher.Config:GetKey(
             string.format(
-                "Games.%s.Instances"
+                "Games.%s.Instances",
                 Game
             )
         )
@@ -25,7 +25,7 @@ CoreLauncher.IPC:RegisterMessage(
             Instances = {}
             CoreLauncher.Config:SetKey(
                 string.format(
-                    "Games.%s.Instances"
+                    "Games.%s.Instances",
                     Game
                 ),
                 {}
