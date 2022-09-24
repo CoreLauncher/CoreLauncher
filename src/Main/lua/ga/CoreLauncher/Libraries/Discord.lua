@@ -1,7 +1,6 @@
 local Discord = {}
 
 local Json = require("json")
-local Request = require("coro-http").request
 local TablePatcher = Import("ga.CoreLauncher.Libraries.TablePatcher")
 
 function Discord.GetUser()
