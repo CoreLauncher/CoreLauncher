@@ -3,6 +3,7 @@ const urlSearchParams = new URLSearchParams(window.location.search); window.Quer
 window.CoreLauncher = {
     IPC: new OpenIPC("CoreLauncher", (document.currentScript || {getAttribute: function() {return undefined}}).getAttribute("IPC") || "Render"),
 }
+window.p = console.log
 CoreLauncher.ExtLink = async function(Link) {
     await CoreLauncher.IPC.Send(
         "Main",
