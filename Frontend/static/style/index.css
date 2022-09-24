@@ -11,6 +11,7 @@ html, body {
     transition-property: background-color, color;
     transition-duration: 0.3s;
     transition-timing-function: linear;
+    user-select: none;
 }
 
 body {

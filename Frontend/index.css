@@ -26,7 +26,6 @@
     width: calc(var(--width) - (var(--margin) * 2));
     height: var(--height);
     padding: var(--margin);
-    user-select: none;
     position: relative;
 }
 
