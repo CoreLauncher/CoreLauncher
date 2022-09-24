@@ -18,7 +18,8 @@ return { InfoVersion = 1, -- Dont touch this
         Luvit = {
             "creationix/coro-http",
             "creationix/coro-spawn",
-            "creationix/base64"
+            "creationix/base64",
+            "creationix/uuid4"
         },
         Git = {},
         Dua = {}
