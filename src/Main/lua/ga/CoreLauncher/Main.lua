@@ -9,7 +9,7 @@ TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/Electron-Lua-Bootstrap.tw
 TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/Discord-RPC.twr")
 _G.CoreLauncher = {}
 CoreLauncher.Electron = Import("Electron.bootstrap").LoadAll()
---CoreLauncher.RPC = Import("ga.CoreLauncher.RPC"):new("1008708322922352753")
+CoreLauncher.RPC = Import("ga.CoreLauncher.RPC"):new("1008708322922352753")
 CoreLauncher.IPC = Import("openipc.connector"):new("CoreLauncher", "Main")
 CoreLauncher.ApplicationData = ApplicationDataFolder
 CoreLauncher.Dev = process.env.CORELAUNCHER_DEV == "true"
@@ -39,7 +39,7 @@ Import("ga.CoreLauncher.Install.DataFolder")()
 Import("ga.CoreLauncher.Modules")
 
 --Set RPC
---[[CoreLauncher.RPC:SetActivity(
+CoreLauncher.RPC:SetActivity(
     {
         state = "https://corelauncher.ga",
         details = "Launcing games",
@@ -58,7 +58,7 @@ Import("ga.CoreLauncher.Modules")
             }
         }
     }
-)]]
+)
 
 --Window settings
 CoreLauncher.Window = CoreLauncher.Electron.BrowserWindow(
@@ -76,7 +76,7 @@ do
     Window:on("closed", function()
         CoreLauncher.Electron.Close()
         CoreLauncher.IPC:Disconnect()
-        --CoreLauncher.RPC:Disconnect()
+        CoreLauncher.RPC:Disconnect()
     end)
     local Show = false
     Window:Once(
