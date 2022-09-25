@@ -19,3 +19,7 @@ String.prototype.interpolate = function(params) {
     const vals = Object.values(params);
     return new Function(...names, `return \`${this}\`;`)(...vals);
 }
+
+Number.prototype.clamp = function(min, max) {
+    return Math.min(Math.max(this, min), max);
+};
