@@ -88,3 +88,116 @@
     margin-bottom: 10px;
     margin-right: 5px;
 }
+
+/* new mods block */
+.modsourceselect {
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 90%;
+}
+
+.searchbarlabel {
+    margin-right: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.searchoptions {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.searchbar {
+    display: inline-block;
+    overflow: hidden;
+    width: 80%;
+}
+
+.modresult {
+    display: inline-block;
+    height: 150px;
+    width: calc(100% - 40px);
+    background-color: var(--background-tertiary);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.modimage {
+    background-color: var(--background-secondary-alt);
+    height: 100%;
+    border-radius: 20px;
+    display: inline-block;
+    float: left;
+
+}
+
+.modtexts {
+    height: 100%;
+    display: inline-block;
+    width: 70%;
+    position: relative;
+}
+
+.modname {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 30px;
+}
+
+.modauthor {
+    margin-left: 10px;
+}
+
+.moddesc {
+    font-size: 15px;
+}
+
+.moddescholder {
+    display: inline-block;
+    margin-left: 10px;
+    width: 60%;
+}
+
+.modcategories {
+    margin-left: 10px;
+    position: absolute;
+    bottom: 0px;
+    left: 150px;
+}
+
+.buttons {
+    float: right;
+    height: 100%;
+}
+
+.modbutton {
+    float: right;
+}
+
+.viewbrowser {
+    margin-bottom: 10px;
+}
+
+.searchpage {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.searchpage button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.searchpage input {
+    width: 40px;
+    text-align: right !important;
+}
+
+.pageinput::-webkit-outer-spin-button,
+.pageinput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

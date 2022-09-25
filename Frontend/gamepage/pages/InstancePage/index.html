@@ -23,27 +23,28 @@
             <div class="block">
                 <div class="topinfo">
                     <a class="topname">Instances</a>
-                    <button class="button button-primary newinstance">New instance</button>
+                    <button class="button button-primary newinstance" id="newinstancebutton">New instance</button>
                 </div>
                 <div class="line"></div>
-                <div class="instances">
-                    <div class="instance">
-                        <img src="https://us-tuna-sounds-images.voicemod.net/c8785792-4a67-40e6-86cf-40e984b9f3c8-1655527925404.png" alt="" class="instanceimage">
-                        <a class="instancelabel">Instance</a><a class="instanceversion">Vanilla 1.19.2</a>
+                <div class="instances" id="instancesholder">
+                    <div class="instance" id="instance">
+                        <img src="https://us-tuna-sounds-images.voicemod.net/c8785792-4a67-40e6-86cf-40e984b9f3c8-1655527925404.png" alt="" class="instanceimage" id="instanceimage">
+                        <a class="instancelabel" id="instancelabel">Instance</a><a class="instanceversion" id="instanceversion">Vanilla 1.19.2</a>
                     </div>
                 </div>
             </div>
-            <div class="block">
+            <div class="block" id="datablock">
                 <div class="topinfo">
                     <a class="topname">Basic Data</a>
-                    <button class="button button-positive">Save settings</button>
+                    <button class="button button-positive" style="display: inline-block;" id="saveinstancebutton">Save settings</button>
+                    <button class="button button-danger" style="margin-right: 10px; display: inline-block;" id="deleteinstancebutton">Delete instance</button>
                 </div>
                 <div class="line"></div>
                 <div class="dataform" id="dataform">
                 </div>
             </div>
 
-            <div class="block">
+            <div class="block" id="enabledmodsblock">
                 <div class="topinfo">
                     <a class="topname">Enabled Modifications</a>
                 </div>
@@ -51,7 +52,7 @@
                 
             </div>
 
-            <div class="block">
+            <div class="block" id="disabledmodsblock">
                 <div class="topinfo">
                     <a class="topname">Disabled Modifications</a>
                 </div>
@@ -59,12 +60,40 @@
                 
             </div>
 
-            <div class="block">
+            <div class="block" id="newmodsblock">
                 <div class="topinfo">
-                    <a class="topname">Search for new Modifications</a>
+                    <a class="topname">Search for new Modifications</a><select id="modsource" class="modsourceselect"></select>
                 </div>
                 <div class="line"></div>
-                
+                <div class="searchoptions">
+                    <label for="modsearchbar" class="searchbarlabel">Search query</label><input type="text" id="modsearchbar" class="searchbar">
+                </div>
+                <div class="searchpage">
+                    <button class="button button-primary" id="prevpage">Previous page</button>
+                    <input type="number" id="pageinput" class="pageinput" value="1" min="1" placeholder="1">
+                    <a id="pagescount">/100 Pages</a>
+                    <button class="button button-primary" id="nextpage">Next page</button>
+                </div>
+                <div class="searchedmods" id="resultholder">
+                    <div class="modresult" id="modresult">
+                        <div class="modtexts">
+                            <img src="https://cdn.modrinth.com/data/ccKDOlHs/icon.png" alt="" class="modimage" id="modimage">
+                            <a class="modname" id="modname">ModTitle</a><a class="modauthor" id="modauthor">By author</a><br>
+                            <div class="moddescholder">
+                                <a class="moddesc" id="moddesc">A very very long mods description</a>
+                            </div>
+                            <a class="modcategories" id="modcategories">A, list, of, categories</a>
+                        </div>
+                        
+                        <div class="buttons">
+                            <button class="button button-primary modbutton viewbrowser" id="viewbrowserbutton">View in browser</button><br>
+                            <button class="button button-positive modbutton addinstance" id="addinstancebutton">Add to instance</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center">
+                    <button class="button button-primary" onclick="document.getElementById('newmodsblock').scrollIntoView()">Back to top</button>
+                </div>
             </div>
         </div>
     </body>
