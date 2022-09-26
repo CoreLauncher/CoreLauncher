@@ -71,7 +71,7 @@ CoreLauncher.IPC:RegisterMessage(
                 Game,
                 NewInstance.Id
             ),
-            SavedInstances
+            NewInstance
         )
         return NewInstance.Id
     end
@@ -81,24 +81,13 @@ CoreLauncher.IPC:RegisterMessage(
     "Games.Instances.DeleteInstance",
     function (Data)
         local Game = Data.Game
-        local SavedInstances = CoreLauncher.Config:GetKey(
-            string.format(
-                "Games.%s.Instances",
-                Game
-            )
-        )
-        for Index, Instance in pairs(SavedInstances) do
-            if Instance.Id == Data.Id then
-                table.remove(SavedInstances, Index)
-                break
-            end
-        end
         CoreLauncher.Config:SetKey(
             string.format(
-                "Games.%s.Instances",
-                Game
+                "Games.%s.Instances.%s",
+                Game,
+                Data.Id
             ),
-            SavedInstances
+            nil
         )
     end
 )
@@ -110,26 +99,13 @@ CoreLauncher.IPC:RegisterMessage(
         local Properties = Data.Properties
         local InstanceId = Data.Id
 
-        local SavedInstances = CoreLauncher.Config:GetKey(
-            string.format(
-                "Games.%s.Instances",
-                Game
-            )
-        )
-        for Index, Instance in pairs(SavedInstances) do
-            if Instance.Id == InstanceId then
-                Instance.Name = Properties.InstanceName
-                Properties.InstanceName = nil
-                Instance.Properties = Properties
-                break
-            end
-        end
         CoreLauncher.Config:SetKey(
             string.format(
-                "Games.%s.Instances",
-                Game
+                "Games.%s.Instances.%s.Properties",
+                Game,
+                InstanceId
             ),
-            SavedInstances
+            Properties
         )
     end
 )

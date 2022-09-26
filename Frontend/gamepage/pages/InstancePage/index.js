@@ -108,7 +108,8 @@ async function ReloadInstancesList(SelectedId) {
     const InstancesHolder = document.getElementById("instancesholder")
     InstancesHolder.innerHTML = ""
     SelectedInstance = null
-    for (const Instance of Instances) {
+    for (const InstanceId in Instances) {
+        const Instance = Instances[InstanceId]
         const InstanceElement = InstanceTemplate.cloneNode(true)
         InstanceElement.querySelector("#instancelabel").innerText = Instance.Name
         InstanceElement.querySelector("#instanceversion").innerText = Instance.Comment
