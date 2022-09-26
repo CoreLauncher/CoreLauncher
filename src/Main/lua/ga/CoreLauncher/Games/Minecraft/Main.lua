@@ -63,6 +63,9 @@ local Schemas = {
 
 Data.Cache = {}
 Data.Cache.VersionManifest = ({CoreLauncher.Http.JsonRequest("GET", "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json")})[2]
+Data.Cache.ModVersions = {
+    Modrinth = {}
+}
 
 Data.Info = {
     Id = "MinecraftJava",
@@ -161,7 +164,6 @@ Data.Functions = {
                 local SearchProperties = {}
             end,
             Search = function (Query, Properties, Instance, Page)
-                p(Instance)
                 local Facets = {
                     {
                         {"project_type", "mod"}
@@ -204,42 +206,66 @@ Data.Functions = {
                     Hits = {}
                 }
                 for Index, Hit in pairs(Data.hits) do
-                    local Categories = {}
-                    for Index, Category in pairs(Hit.categories) do
-                        table.insert(Categories, Category:sub(1, 1):upper() .. Category:sub(2))
-                    end
                     table.insert(
                         ReturnData.Hits,
-                        {
-                            Source = "Modrinth",
-                            Id = Hit.project_id,
-                            Slug = Hit.slug,
-                            Name = Hit.title,
-                            Author = Hit.author,
-                            Description = Hit.description,
-                            Icon = Hit.icon_url,
-                            Licence = Hit.licence,
-                            Link = "https://modrinth.com/" .. Hit.project_type .. "/" .. Hit.slug,
-                            Envoirments = {
-                                Client = Hit.client_side,
-                                Server = Hit.server_side
-                            },
-                            Categories = Categories
-                        }
+                        Schemas.Modrinth.Mod(Hit)
                     )
                 end
                 return ReturnData
             end,
             GetLatestModVersion = function (Instance, ModId)
+                local Version = Data.Functions.ModSources.Modrinth.GetVersionsSupportedForInstance(Instance, ModId)[1]
+                return Version
+            end,
+            GetVersionsSupportedForInstance = function (Instance, ModId)
+                local Versions = {}
+                local VersionData
+                if Data.Cache.ModVersions.Modrinth[ModId] then
+                    Data = Data.Cache.ModVersions.Modrinth[ModId]
+                else
+                    local Response, GottenData = CoreLauncher.Http.JsonRequest(
+                        "GET",
+                        string.format(
+                            "%s/project/%s/version",
+                            ModrinthBaseUrl,
+                            ModId
+                        )
+                    )
+                    VersionData = GottenData
+                end
+                
+                for Index, Version in pairs(VersionData) do
+                    local ModType = Instance.Properties.ModType
+                    local GameVersion = Instance.Properties.Version
+
+                    local CorrectVersion = table.search(Version.game_versions, GameVersion) ~= nil
+
+                    local CorrectLoader = false
+                    if ModType == "Quilt" then
+                        CorrectLoader = table.search(Version.loaders, "quilt") ~= nil or table.search(Version.loaders, "fabric")
+                    else
+                        CorrectLoader = table.search(Version.loaders, Instance.Properties.ModType:lower()) ~= nil
+                    end
+
+                    if CorrectVersion and CorrectLoader then
+                        table.insert(
+                            Versions,
+                            Schemas.Modrinth.Version(Version)
+                        )
+                    end
+                end
+                return Versions
+            end,
+            GetModById = function (ModId)
                 local Response, Data = CoreLauncher.Http.JsonRequest(
                     "GET",
                     string.format(
-                        "%s/project/%s/version",
+                        "%s/project/%s",
                         ModrinthBaseUrl,
                         ModId
                     )
                 )
-                p(Data)
+                return ModSchemas.Modrinth.Mod(Data)
             end
         }
     }
