@@ -25,6 +25,42 @@ local function GenerateModrinthFacets(Facets)
     return require("json").encode(NewData)
 end
 
+local Schemas = {
+    Modrinth = {
+        Mod = function (Mod)
+            local Categories = {}
+            for Index, Category in pairs(Mod.categories) do
+                table.insert(Categories, Category:sub(1, 1):upper() .. Category:sub(2))
+            end
+            return {
+                Source = "Modrinth",
+                Id = Mod.project_id,
+                Slug = Mod.slug,
+                Name = Mod.title,
+                Author = Mod.author,
+                Description = Mod.description,
+                Icon = Mod.icon_url,
+                Licence = Mod.licence,
+                Link = "https://modrinth.com/" .. Mod.project_type .. "/" .. Mod.slug,
+                Envoirments = {
+                    Client = Mod.client_side,
+                    Server = Mod.server_side
+                },
+                Categories = Categories
+            }
+        end,
+        Version = function (Version)
+            return {
+                Published = Version.date_published,
+                Downloads = Version.downloads,
+                Id = Version.id,
+                Name = Version.name,
+                Tag = Version.version_number
+            }
+        end
+    }
+}
+
 Data.Cache = {}
 Data.Cache.VersionManifest = ({CoreLauncher.Http.JsonRequest("GET", "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json")})[2]
 
