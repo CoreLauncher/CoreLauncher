@@ -4,6 +4,7 @@ var InstanceProperties
 var OnEditBlocks
 var InstanceTemplate
 var ModTemplate
+var ModListTemplate
 var OnInstanceChange
 
 //https://stackoverflow.com/a/7641822
@@ -129,6 +130,7 @@ async function ReloadInstancesList(SelectedId) {
                 }
                 SelectedInstance = Instance
                 OnInstanceChange()
+                await LoadModsList()
                 InstanceElement.classList.add("selectedinstance")
                 for (const PropertyKey in Instance.Properties) {
                     const PropertyValue = Instance.Properties[PropertyKey]
@@ -272,10 +274,14 @@ async function LoadSearchBar() {
                             ModData: {
                                 Source: Mod.Source,
                                 Id: Mod.Id,
-                                Version: "latest"
+                                Version: "latest",
+                                Name: Mod.Name,
+                                Icon: Mod.Icon,
+                                Link: Mod.Link
                             }
                         }
                     )
+                    await LoadModsList()
                 }
             )
             ResultHolder.appendChild(ModElement)
@@ -321,6 +327,47 @@ async function LoadSearchBar() {
     )
 }
 
+async function LoadModsList() {
+    
+    async function LoadFor(Mods, ListElement) {
+        for (const ModId in Mods) {
+            const Mod = Mods[ModId]
+            const ModElement = ModListTemplate.cloneNode(true)
+            p(Mod)
+            ModElement.querySelector("#modimage").src = Mod.Icon
+            ModElement.querySelector("#modname").innerText = Mod.Name
+
+            var SelectedTag
+            for (const Version of Mod.Versions) {
+                p(Version)
+                const Option = document.createElement("option")
+                Option.innerText = Version.Tag
+                Option.value = Version.Tag
+                if (Mod.Version == Version.Id) {
+                    SelectedTag = Version.Tag
+                }
+                ModElement.querySelector("#modversionselect").appendChild(Option)
+            }
+            ModElement.querySelector("#modversionselect").value = SelectedTag
+            ListElement.appendChild(ModElement)
+        }
+    }
+
+    const AllMods = await CoreLauncher.IPC.Send(
+        "Main",
+        "Games.Instances.Modifications.ListMods",
+        {
+            Game: Game.Id,
+            InstanceId: SelectedInstance.Id
+        }
+    )
+    document.getElementById("enabledmodlist").innerHTML = ""
+    document.getElementById("disabledmodlist").innerHTML = ""
+    await LoadFor(AllMods.Enabled , document.getElementById("enabledmodlist"))
+    await LoadFor(AllMods.Disabled, document.getElementById("disabledmodlist"))
+
+}
+
 window.addEventListener(
     "load",
     async function() {
@@ -336,6 +383,8 @@ window.addEventListener(
         InstanceTemplate.remove()
         ModTemplate = document.getElementById("modresult")
         ModTemplate.remove()
+        ModListTemplate = document.getElementById("modtemplate")
+        ModListTemplate.remove()
 
         await LoadPropertiesBlock()
         await ReloadInstancesList()
