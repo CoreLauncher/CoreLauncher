@@ -258,7 +258,25 @@ async function LoadSearchBar() {
                     )
                 }
             )
-            ModElement.querySelector("#addinstancebutton")
+            ModElement.querySelector("#addinstancebutton").addEventListener(
+                "click",
+                async function() {
+                    p(Mod)
+                    await CoreLauncher.IPC.Send(
+                        "Main",
+                        "Games.Instances.Modifications.AddToInstance",
+                        {
+                            Game: Game.Id,
+                            InstanceId: SelectedInstance.Id,
+                            ModData: {
+                                Source: Mod.Source,
+                                Id: Mod.Id,
+                                Version: "latest"
+                            }
+                        }
+                    )
+                }
+            )
             ResultHolder.appendChild(ModElement)
         }
     }

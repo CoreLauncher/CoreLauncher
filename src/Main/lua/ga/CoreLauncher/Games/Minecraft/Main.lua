@@ -156,6 +156,9 @@ Data.Functions = {
                         }
                     )
                 )
+                if Data.hits == nil then
+                    p(Data)
+                end
                 local ReturnData = {
                     HitCount = #Data.hits,
                     TotalHitCount = Data.total_hits,
@@ -190,6 +193,9 @@ Data.Functions = {
                     )
                 end
                 return ReturnData
+            end,
+            GetLatestModVersion = function (Instance, ModId)
+                
             end
         }
     }
