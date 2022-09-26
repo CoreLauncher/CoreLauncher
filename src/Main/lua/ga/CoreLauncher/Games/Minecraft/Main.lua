@@ -2,7 +2,7 @@ local Data = {}
 
 local QueryEncode = require("querystring").stringify
 local ModrinthBaseUrl = string.format(
-    "https://api.modrinth.com/%s/",
+    "https://api.modrinth.com/%s",
     "v2"
 )
 
@@ -147,7 +147,7 @@ Data.Functions = {
                 table.insert(Facets, LoaderFacet)
                 local Response, Data = CoreLauncher.Http.JsonRequest(
                     "GET",
-                    ModrinthBaseUrl .. "search?" .. QueryEncode(
+                    ModrinthBaseUrl .. "/search?" .. QueryEncode(
                         {
                             query = Query,
                             limit = 20,
@@ -195,7 +195,15 @@ Data.Functions = {
                 return ReturnData
             end,
             GetLatestModVersion = function (Instance, ModId)
-                
+                local Response, Data = CoreLauncher.Http.JsonRequest(
+                    "GET",
+                    string.format(
+                        "%s/project/%s/version",
+                        ModrinthBaseUrl,
+                        ModId
+                    )
+                )
+                p(Data)
             end
         }
     }
