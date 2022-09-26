@@ -21,3 +21,20 @@ CoreLauncher.IPC:RegisterMessage(
         return CoreLauncher.Games[Game].Functions.ModSources[ModSource].Search(Query, Properties, Instance, Data.Page)
     end
 )
+
+CoreLauncher.IPC:RegisterMessage(
+    "Games.Instances.Modifications.AddToInstance",
+    function(Data)
+        p(Data)
+        local Game = Data.Game
+        local InstanceId = Data.InstanceId
+        local ModData = Data.ModData
+        local Instance
+        for Index, InstanceL in pairs(CoreLauncher.Config:GetKey(string.format("Games.%s.Instances", Game))) do
+            if InstanceL.Id == InstanceId then
+                Instance = InstanceL
+                break
+            end
+        end
+    end
+)
