@@ -65,17 +65,11 @@ CoreLauncher.IPC:RegisterMessage(
         for PropertyKey, Property in pairs(Properties) do
             NewInstance.Properties[PropertyKey] = Property.Default
         end
-        local SavedInstances = CoreLauncher.Config:GetKey(
-            string.format(
-                "Games.%s.Instances",
-                Game
-            )
-        )
-        table.insert(SavedInstances, NewInstance)
         CoreLauncher.Config:SetKey(
             string.format(
-                "Games.%s.Instances",
-                Game
+                "Games.%s.Instances.%s",
+                Game,
+                NewInstance.Id
             ),
             SavedInstances
         )
