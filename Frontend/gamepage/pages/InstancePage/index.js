@@ -214,7 +214,6 @@ async function LoadModSources() {
         "Games.Instances.Modifications.GetModSources",
         Game.Id
     )
-    p(Sources)
     for (const ModSource of Sources) {
         const Option = document.createElement("option")
         Option.value = ModSource
@@ -240,7 +239,6 @@ async function LoadSearchBar() {
                 Page: PageBar.value
             }
         )
-        p(SearchResponse)
         PageBar.max = SearchResponse.PageCount
         document.getElementById("pagescount").innerText = `/${SearchResponse.PageCount} pages`
         ResultHolder.innerHTML = ""
@@ -297,7 +295,6 @@ async function LoadSearchBar() {
     PageBar.addEventListener(
         "change",
         async function() {
-            p(PageBar.value)
             if (PageBar.value == "") {
                 PageBar.value = 1
             }
