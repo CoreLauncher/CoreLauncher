@@ -35,12 +35,13 @@ CoreLauncher.IPC:RegisterMessage(
                 InstanceId
             )
         )
+        ModData.Enabled = true
         if ModData.Version == "latest" then
-            ModData.Version = CoreLauncher.Games[Game].Functions.ModSources[ModData.Source].GetLatestModVersion(Instance, ModData.Id).id
+            ModData.Version = CoreLauncher.Games[Game].Functions.ModSources[ModData.Source].GetLatestModVersion(Instance, ModData.Id).Id
         end
         CoreLauncher.Config:SetKey(
             string.format(
-                "Games.%s.Instances.%s.Modifications.Enabled.%s",
+                "Games.%s.Instances.%s.Modifications.%s",
                 Game,
                 InstanceId,
                 ModData.Id
@@ -62,19 +63,71 @@ CoreLauncher.IPC:RegisterMessage(
                 InstanceId
             )
         )
-        local function GetFor(ModList)
-            local Return = {}
-            for Index, Mod in pairs(ModList) do
-                Mod = table.deepcopy(Mod)
-                Mod.Versions = CoreLauncher.Games[Game].Functions.ModSources[Mod.Source].GetVersionsSupportedForInstance(Instance, Mod.Id)
-                table.insert(Return, Mod)
-            end
-            return Return
+        local Mods = {}
+        for Index, Mod in pairs(Instance.Modifications) do
+            Mod = table.deepcopy(Mod)
+            Mod.Versions = CoreLauncher.Games[Game].Functions.ModSources[Mod.Source].GetVersionsSupportedForInstance(Instance, Mod.Id)
+            Mods[Mod.Id] = Mod
         end
-        local Mods = {
-            Enabled = GetFor(Instance.Modifications.Enabled),
-            Disabled = GetFor(Instance.Modifications.Disabled)
-        }
         return Mods
+    end
+)
+
+CoreLauncher.IPC:RegisterMessage(
+    "Games.Instances.Modifications.SetModVersionId",
+    function(Data)
+        local Game = Data.Game
+        local InstanceId = Data.InstanceId
+        local ModId = Data.ModId
+        local VersionId = Data.VersionId
+        
+        CoreLauncher.Config:SetKey(
+            string.format(
+                "Games.%s.Instances.%s.Modifications.%s.Version",
+                Game,
+                InstanceId,
+                ModId
+            ),
+            VersionId
+        )
+    end
+)
+
+CoreLauncher.IPC:RegisterMessage(
+    "Games.Instances.Modifications.SetModState",
+    function(Data)
+        local Game = Data.Game
+        local InstanceId = Data.InstanceId
+        local ModId = Data.ModId
+        local State = Data.State
+        
+        CoreLauncher.Config:SetKey(
+            string.format(
+                "Games.%s.Instances.%s.Modifications.%s.Enabled",
+                Game,
+                InstanceId,
+                ModId
+            ),
+            State
+        )
+    end
+)
+
+CoreLauncher.IPC:RegisterMessage(
+    "Games.Instances.Modifications.RemoveMod",
+    function(Data)
+        local Game = Data.Game
+        local InstanceId = Data.InstanceId
+        local ModId = Data.ModId
+        
+        CoreLauncher.Config:SetKey(
+            string.format(
+                "Games.%s.Instances.%s.Modifications.%s",
+                Game,
+                InstanceId,
+                ModId
+            ),
+            nil
+        )
     end
 )
