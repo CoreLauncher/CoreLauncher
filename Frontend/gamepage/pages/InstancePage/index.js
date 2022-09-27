@@ -113,7 +113,7 @@ async function ReloadInstancesList(SelectedId) {
         const Instance = Instances[InstanceId]
         const InstanceElement = InstanceTemplate.cloneNode(true)
         InstanceElement.querySelector("#instancelabel").innerText = Instance.Name
-        InstanceElement.querySelector("#instanceversion").innerText = Instance.Comment
+        InstanceElement.querySelector("#instanceversion").innerText = Instance.Comment + ({[false]: " (Not Editable)"}[Instance.Editable] || "")
         InstanceElement.addEventListener(
             "click",
             async function() {

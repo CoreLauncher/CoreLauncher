@@ -138,9 +138,6 @@ Data.Functions = {
     end,
     GetInstanceComment = function (Instance)
         local Comment = Instance.Properties.ModType .. " " .. Instance.Properties.Version
-        if Instance.Editable == false then
-            Comment = Comment .. " (Not editable)"
-        end
         return Comment
     end,
     GetDefaultInstances = function ()
