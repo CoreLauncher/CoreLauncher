@@ -239,6 +239,14 @@ async function LoadSearchBar() {
                 Page: PageBar.value
             }
         )
+        const ExistingMods = await CoreLauncher.IPC.Send(
+            "Main",
+            "Games.Instances.Modifications.ListMods",
+            {
+                Game: Game.Id,
+                InstanceId: SelectedInstance.Id
+            }
+        )
         PageBar.max = SearchResponse.PageCount
         document.getElementById("pagescount").innerText = `/${SearchResponse.PageCount} pages`
         ResultHolder.innerHTML = ""
@@ -259,26 +267,55 @@ async function LoadSearchBar() {
                     )
                 }
             )
-            ModElement.querySelector("#addinstancebutton").addEventListener(
+            const AddButton = ModElement.querySelector("#addinstancebutton")
+            let IsRemoveButton = false
+            async function SetAddRemoveButton() {
+                AddButton.innerText = "Remove mod"
+                AddButton.classList.remove("button-positive")
+                AddButton.classList.add("button-danger")
+                IsRemoveButton = true
+            }
+            if (ExistingMods[Mod.Id] != null) {
+                await SetAddRemoveButton()
+            }
+            AddButton.addEventListener(
                 "click",
                 async function() {
                     p(Mod)
-                    await CoreLauncher.IPC.Send(
-                        "Main",
-                        "Games.Instances.Modifications.AddToInstance",
-                        {
-                            Game: Game.Id,
-                            InstanceId: SelectedInstance.Id,
-                            ModData: {
-                                Source: Mod.Source,
-                                Id: Mod.Id,
-                                Version: "latest",
-                                Name: Mod.Name,
-                                Icon: Mod.Icon,
-                                Link: Mod.Link
+                    p(IsRemoveButton)
+                    if (IsRemoveButton == true) {
+                        AddButton.innerText = "Add to instance"
+                        AddButton.classList.add("button-positive")
+                        AddButton.classList.remove("button-danger")
+                        IsRemoveButton = false
+                        await CoreLauncher.IPC.Send(
+                            "Main",
+                            "Games.Instances.Modifications.RemoveMod",
+                            {
+                                Game: Game.Id,
+                                InstanceId: SelectedInstance.Id,
+                                ModId: Mod.Id
                             }
-                        }
-                    )
+                        )
+                    } else {
+                        await CoreLauncher.IPC.Send(
+                            "Main",
+                            "Games.Instances.Modifications.AddToInstance",
+                            {
+                                Game: Game.Id,
+                                InstanceId: SelectedInstance.Id,
+                                ModData: {
+                                    Source: Mod.Source,
+                                    Id: Mod.Id,
+                                    Version: "latest",
+                                    Name: Mod.Name,
+                                    Icon: Mod.Icon,
+                                    Link: Mod.Link
+                                }
+                            }
+                        )
+                        await SetAddRemoveButton()
+                    }
                     await LoadModsList()
                 }
             )
@@ -325,32 +362,7 @@ async function LoadSearchBar() {
 }
 
 async function LoadModsList() {
-    
-    async function LoadFor(Mods, ListElement) {
-        for (const ModId in Mods) {
-            const Mod = Mods[ModId]
-            const ModElement = ModListTemplate.cloneNode(true)
-            p(Mod)
-            ModElement.querySelector("#modimage").src = Mod.Icon
-            ModElement.querySelector("#modname").innerText = Mod.Name
-
-            var SelectedTag
-            for (const Version of Mod.Versions) {
-                p(Version)
-                const Option = document.createElement("option")
-                Option.innerText = Version.Tag
-                Option.value = Version.Tag
-                if (Mod.Version == Version.Id) {
-                    SelectedTag = Version.Tag
-                }
-                ModElement.querySelector("#modversionselect").appendChild(Option)
-            }
-            ModElement.querySelector("#modversionselect").value = SelectedTag
-            ListElement.appendChild(ModElement)
-        }
-    }
-
-    const AllMods = await CoreLauncher.IPC.Send(
+    const Mods = await CoreLauncher.IPC.Send(
         "Main",
         "Games.Instances.Modifications.ListMods",
         {
@@ -360,9 +372,92 @@ async function LoadModsList() {
     )
     document.getElementById("enabledmodlist").innerHTML = ""
     document.getElementById("disabledmodlist").innerHTML = ""
-    await LoadFor(AllMods.Enabled , document.getElementById("enabledmodlist"))
-    await LoadFor(AllMods.Disabled, document.getElementById("disabledmodlist"))
+    for (const ModId in Mods) {
+        const Mod = Mods[ModId]
+        const ModElement = ModListTemplate.cloneNode(true)
+        ModElement.querySelector("#modimage").src = Mod.Icon
+        ModElement.querySelector("#modname").innerText = Mod.Name
 
+        var SelectedTag
+        for (const Version of Mod.Versions) {
+            const Option = document.createElement("option")
+            Option.innerText = Version.Tag
+            Option.value = Version.Id
+            if (Mod.Version == Version.Id) {
+                SelectedTag = Version.Id
+            }
+            ModElement.querySelector("#modversionselect").appendChild(Option)
+        }
+        ModElement.querySelector("#modversionselect").value = SelectedTag
+        if (Mod.Version != Mod.Versions[0].Id) {
+            ModElement.querySelector("#warningimage").classList.add("warningenabled")
+        }
+
+        const ModVersionSelect = ModElement.querySelector("#modversionselect")
+        ModVersionSelect.addEventListener(
+            "change",
+            async function() {
+                await CoreLauncher.IPC.Send(
+                    "Main",
+                    "Games.Instances.Modifications.SetModVersionId",
+                    {
+                        Game: Game.Id,
+                        InstanceId: SelectedInstance.Id,
+                        ModId: Mod.Id,
+                        VersionId: ModVersionSelect.value
+                    }
+                )
+                await LoadModsList()
+            }
+        )
+        ModElement.querySelector("#viewinbrowserbutton").addEventListener(
+            "click",
+            async function() {
+                CoreLauncher.IPC.Send(
+                    "Main",
+                    "Other.ExtLink",
+                    Mod.Link
+                )
+            }
+        )
+        ModElement.querySelector("#disablemodbutton").addEventListener(
+            "click",
+            async function() {
+                await CoreLauncher.IPC.Send(
+                    "Main",
+                    "Games.Instances.Modifications.SetModState",
+                    {
+                        Game: Game.Id,
+                        InstanceId: SelectedInstance.Id,
+                        ModId: Mod.Id,
+                        State: !Mod.Enabled
+                    }
+                )
+                await LoadModsList()
+            }
+        )
+        ModElement.querySelector("#removemodbutton").addEventListener(
+            "click",
+            async function() {
+                await CoreLauncher.IPC.Send(
+                    "Main",
+                    "Games.Instances.Modifications.RemoveMod",
+                    {
+                        Game: Game.Id,
+                        InstanceId: SelectedInstance.Id,
+                        ModId: Mod.Id
+                    }
+                )
+                await LoadModsList()
+                await OnInstanceChange()
+            }
+        )
+        if (Mod.Enabled == true) {
+            document.getElementById("enabledmodlist").appendChild(ModElement)
+        } else {
+            document.getElementById("disabledmodlist").appendChild(ModElement)
+        }
+    }
 }
 
 window.addEventListener(

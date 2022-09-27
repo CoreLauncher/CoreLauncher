@@ -61,7 +61,6 @@
 
 .instanceimage {
     height: 100%;
-    display: inline-block;
     float: left;
 }
 
@@ -116,6 +115,16 @@
     height: 100%;
     border-radius: 10px;
     margin-right: 5px;
+}
+
+.modlistmod .warningimage {
+    height: 100%;
+    float: right;
+    visibility: hidden;
+}
+
+.modlistmod .warningenabled {
+    visibility: visible !important;
 }
 
 .modlistmod .modname {
@@ -176,9 +185,7 @@
     background-color: var(--background-secondary-alt);
     height: 100%;
     border-radius: 20px;
-    display: inline-block;
     float: left;
-
 }
 
 .modresult .modtexts {
