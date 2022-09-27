@@ -281,8 +281,6 @@ async function LoadSearchBar() {
             AddButton.addEventListener(
                 "click",
                 async function() {
-                    p(Mod)
-                    p(IsRemoveButton)
                     if (IsRemoveButton == true) {
                         AddButton.innerText = "Add to instance"
                         AddButton.classList.add("button-positive")
@@ -389,9 +387,14 @@ async function LoadModsList() {
             ModElement.querySelector("#modversionselect").appendChild(Option)
         }
         ModElement.querySelector("#modversionselect").value = SelectedTag
-        if (Mod.Version != Mod.Versions[0].Id) {
+        if (Mod.Versions[0] != null) {
+            if (Mod.Version != Mod.Versions[0].Id) {
+                ModElement.querySelector("#warningimage").classList.add("warningenabled")
+            }
+        } else {
             ModElement.querySelector("#warningimage").classList.add("warningenabled")
         }
+       
 
         const ModVersionSelect = ModElement.querySelector("#modversionselect")
         ModVersionSelect.addEventListener(
