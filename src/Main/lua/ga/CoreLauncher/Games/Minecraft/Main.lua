@@ -89,6 +89,22 @@ Data.Info = {
     Instanced = true
 }
 Data.Functions = {
+    LaunchGame = function (Instance)
+        p(Instance)
+        local InstanceVersion = Instance.Properties.Version
+        local VersionManifest
+        for Index, Version in pairs(Data.Cache.VersionManifest.versions) do
+            if Version.id == InstanceVersion then
+                VersionManifest = Version
+                break
+            end
+        end
+        local Response, VersionData = CoreLauncher.Http.JsonRequest(
+            "GET",
+            VersionManifest.url
+        )
+        p(VersionData)
+    end,
     GetInstanceProperties = function ()
         local Properties = {}
         do --Version
