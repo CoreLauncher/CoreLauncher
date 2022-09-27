@@ -221,7 +221,7 @@ Data.Functions = {
                 local Versions = {}
                 local VersionData
                 if Data.Cache.ModVersions.Modrinth[ModId] then
-                    Data = Data.Cache.ModVersions.Modrinth[ModId]
+                    VersionData = Data.Cache.ModVersions.Modrinth[ModId]
                 else
                     local Response, GottenData = CoreLauncher.Http.JsonRequest(
                         "GET",
@@ -231,6 +231,7 @@ Data.Functions = {
                             ModId
                         )
                     )
+                    Data.Cache.ModVersions.Modrinth[ModId] = GottenData
                     VersionData = GottenData
                 end
                 
