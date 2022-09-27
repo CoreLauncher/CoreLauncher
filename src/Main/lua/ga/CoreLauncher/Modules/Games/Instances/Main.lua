@@ -56,10 +56,7 @@ CoreLauncher.IPC:RegisterMessage(
             Removable = true,
             Editable = true,
             Properties = {},
-            Modifications = {
-                Enabled = {},
-                Disabled = {}
-            }
+            Modifications = {}
         }
         local Properties = CoreLauncher.Games[Game].Functions.GetInstanceProperties()
         for PropertyKey, Property in pairs(Properties) do
