@@ -36,7 +36,7 @@ CoreLauncher.IPC:RegisterMessage(
         Instances = table.deepcopy(Instances)
         local Default = CoreLauncher.Games[Game].Functions.GetDefaultInstances()
         for Index, Instance in pairs(Default) do
-            table.insert(Instances, Instance)
+            Instances[Instance.Id] = Instance
         end
         for Index, Instance in pairs(Instances) do
             Instance.Comment = CoreLauncher.Games[Game].Functions.GetInstanceComment(Instance)
