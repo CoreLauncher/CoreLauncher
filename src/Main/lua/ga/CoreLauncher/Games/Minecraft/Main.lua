@@ -102,12 +102,92 @@ local function RulesPass(Rules)
     end
     for _, Rule in pairs(Rules) do
         if Rule.os then
-            if Rule.os.name == RuleOS then
-                return true
+            local Pass = true
+            if Rule.os.name ~= RuleOS and Rule.os.name ~= nil and Pass then
+                Pass = false
             end
+            if Rule.os.arch ~= ({x86_64 = "x86"})[require("uv").os_uname().machine] and Rule.os.arch ~= nil and Pass then
+                Pass = false
+            end
+            if Rule.os.version ~= ({win32 = "^10\\."})[TypeWriter.Os] and Rule.os.version and Pass then
+                Pass = false
+            end
+            return Pass
         end
     end
     return false
+end
+
+local function GetClientData(Type, InstanceVersion)
+    local Getters = {
+        Vanilla = function (Version)
+            for Index, Version in pairs(Data.Cache.VersionManifest.versions) do
+                if Version.id == InstanceVersion then
+                    VersionManifest = Version
+                    break
+                end
+            end
+            local _, VersionData = CoreLauncher.Http.JsonRequest(
+                "GET",
+                VersionManifest.url
+            )
+            return VersionData
+        end,
+        Fabric = function (Version)
+            
+        end,
+        Quilt = function (Version)
+            local LoaderVersion = (
+                {
+                    CoreLauncher.Http.JsonRequest(
+                        "GET",
+                        "https://meta.quiltmc.org/v3/versions/loader/" .. Version
+                    )
+                }
+            )[2][1].loader.version
+            p(LoaderVersion)
+
+            local _, VersionData = CoreLauncher.Http.JsonRequest(
+                "GET",
+                "https://meta.quiltmc.org/v3/versions/loader/" .. Version .. "/" .. LoaderVersion .. "/profile/json"
+            )
+            return VersionData
+        end
+    }
+    local function Inherit(From, To)
+        for Key, Value in pairs(From) do
+            if To[Key] == nil then
+                if type(Value) == "table" then
+                    To[Key] = {}
+                    Inherit(Value, To[Key])
+                else
+                    To[Key] = Value
+                end
+            else
+                if type(To[Key]) == "table" and type(Value) == "table" then
+                    if To[Key][1] ~= nil then
+                        for _, ValueValue in pairs(Value) do
+                            table.insert(To[Key], ValueValue)
+                        end
+                    else
+                        Inherit(Value, To[Key])
+                    end
+                end
+            end
+        end
+    end
+    local LoaderData = Getters[Type](InstanceVersion)
+    local InheritsFrom = LoaderData.inheritsFrom
+    if InheritsFrom then
+        local VanillaData = Getters["Vanilla"](InheritsFrom)
+        p(LoaderData)
+        Inherit(VanillaData, LoaderData)
+        p(LoaderData)
+    end
+    print(
+        require("json").encode(LoaderData)
+    )
+    return LoaderData
 end
 
 local function DownloadAssets(Url, Id)
@@ -142,42 +222,90 @@ local function DownloadAssets(Url, Id)
 end
 
 local function DownloadLogConfig(Data)
+    local Argument
     local FileData = Data.file
     local LogFile = GameDir .. "Assets/log_configs/" .. FileData.id
-    local _, File = CoreLauncher.Http.Request(
-        "GET",
-        FileData.url
-    )
-    FS.writeFileSync(LogFile, File)
-    return JsFormat(
-        Data.argument,
-        {
-            path = PathLib.resolve(LogFile)
-        }
-    )
+    if Data.type == "log4j2-xml" then
+        FS.writeFileSync(LogFile, TypeWriter.LoadedPackages["CoreLauncher"].Resources["/better-client-1.12.xml"])
+
+    else
+        if FS.existsSync(LogFile) == false then
+            local _, File = CoreLauncher.Http.Request(
+                "GET",
+                FileData.url
+            )
+            FS.writeFileSync(LogFile, File)
+            Argument = JsFormat(
+                Data.argument,
+                {
+                    path = PathLib.resolve(LogFile)
+                }
+            )
+        end
+    end
+    
+    return Argument
 end
 
 local function DownloadLibraries(Libraries, ClassPath)
     for _, Library in pairs(Libraries) do
         if RulesPass(Library.rules) then
-            local FileInfo = Library.downloads.artifact
-            local Path = GameDir .. "Libraries/" .. FileInfo.path
-            local DirPath = PathLib.resolve(Path, "..")
-            CFS.mkdirp(DirPath)
-            if FS.existsSync(Path) == false then
-                local _, FileData = CoreLauncher.Http.Request(
-                    "GET",
-                    FileInfo.url
+            if Library.downloads then
+                local FileInfo = Library.downloads.artifact
+                local Path = GameDir .. "Libraries/" .. FileInfo.path
+                local DirPath = PathLib.resolve(Path, "..")
+                CFS.mkdirp(DirPath)
+                if FS.existsSync(Path) == false then
+                    local _, FileData = CoreLauncher.Http.Request(
+                        "GET",
+                        FileInfo.url
+                    )
+                    FS.writeFileSync(Path, FileData)
+                end
+                table.insert(ClassPath, Path)
+            else
+                p(Library.name)
+                local Split = Library.name:split(":")
+                local Author = Split[1]
+                local Package = Split[2]
+                local Version = Split[3]
+                local FileName = string.format(
+                    "%s-%s.jar",
+                    Package,
+                    Version
                 )
-                FS.writeFileSync(Path, FileData)
+                local PathName = string.format(
+                    "%s/%s/%s",
+                    table.concat(Author:split("."), "/"),
+                    Package,
+                    Version
+                )
+                local Url = string.format(
+                    "%s%s/%s",
+                    Library.url,
+                    PathName,
+                    FileName
+                )
+                p(FileName)
+                p(PathName)
+                p(Url)
+                local FilePath = GameDir .. "Libraries/" .. PathName .. "/" .. FileName
+                p(FilePath)
+                if FS.existsSync(FilePath) == false then
+                    local _, File = CoreLauncher.Http.Request(
+                        "GET",
+                        Url
+                    )
+                    CFS.mkdirp(GameDir .. "Libraries/" .. PathName .. "/")
+                    FS.writeFileSync(FilePath, File)
+                end
+                table.insert(ClassPath, FilePath)
             end
-            table.insert(ClassPath, Path)
         end
     end
 end
 
 local function DownloadClient(FileInfo, Name, ClassPath)
-    p(FileInfo)
     local FilePath = GameDir .. "Clients/" .. Name .. ".jar"
     if FS.existsSync(FilePath) == false then
         local _, FileData = CoreLauncher.Http.Request(
@@ -283,14 +411,31 @@ end
 local function ParseArguments(ArgumentList, Data)
     local Return = {}
     for _, Argument in pairs(ArgumentList) do
-        p(Argument)
         if type(Argument) == "string" then
             table.insert(Return, JsFormat(Argument, Data))
         else
+            if RulesPass(Argument.rules) then
+                if type(Argument.value) == "table" then
+                    for _, Value in pairs(Argument.value) do
+                        table.insert(Return, JsFormat(Value, Data))
+                    end
+                else
+                    table.insert(Return, JsFormat(Argument.value, Data))
+                end
+            end
         end
     end
-    p(Return)
     return Return
+end
+
+local function InsertIntoTable(Value, Tbl)
+    if type(Value) == "table" then
+        for _, TblValue in pairs(Value) do
+            table.insert(Tbl, TblValue)
+        end
+    else
+        table.insert(Tbl, Value)
+    end
 end
 
 Data.Cache = {}
@@ -324,18 +469,7 @@ Data.Functions = {
     LaunchGame = function (Instance)
         p(Instance)
         local InstanceVersion = Instance.Properties.Version
-        local VersionManifest
-        for Index, Version in pairs(Data.Cache.VersionManifest.versions) do
-            if Version.id == InstanceVersion then
-                VersionManifest = Version
-                break
-            end
-        end
-        local Response, VersionData = CoreLauncher.Http.JsonRequest(
-            "GET",
-            VersionManifest.url
-        )
-        p(VersionData)
+        local VersionData = GetClientData(Instance.Properties.ModType, InstanceVersion)
         local ClassPath = {}
         local AssetDir = DownloadAssets(VersionData.assetIndex.url, VersionData.assetIndex.id)
         local LogArg = DownloadLogConfig(VersionData.logging.client)
@@ -352,7 +486,7 @@ Data.Functions = {
         local ArgumentParameters = {
             auth_player_name = AuthData.UserName,
             version_name = VersionData.id,
-            game_directory = GameDir .. "Instances/" .. Instance.Id,
+            game_directory = GameDir .. "Instances/" .. Instance.Id .. "/",
             assets_root = AssetDir,
             assets_index_name = VersionData.assets,
             auth_uuid = AuthData.UUID,
@@ -367,31 +501,36 @@ Data.Functions = {
             launcher_version = TypeWriter.LoadedPackages["CoreLauncher"].Package.Version,
             classpath = table.concat(FormattedClassPath, ";")
         }
-        local Arguments = {
+        local ParsedArguments = {
             Game = ParseArguments(VersionData.arguments.game, ArgumentParameters),
             JVM = ParseArguments(VersionData.arguments.jvm, ArgumentParameters)
         }
-        p({table.unpack(Arguments.JVM),
-        LogArg, VersionData.mainClass,
-        table.unpack(Arguments.Game)})
+        
+        local Arguments = {}
+        InsertIntoTable(ParsedArguments.JVM, Arguments)
+        InsertIntoTable(LogArg, Arguments)
+        InsertIntoTable(VersionData.mainClass, Arguments)
+        InsertIntoTable(ParsedArguments.Game, Arguments)
         local Result, Error = require("coro-spawn")(
             "java.exe",
             {
-                args = {
-                    table.unpack(Arguments.JVM),
-                    LogArg, VersionData.mainClass,
-                    table.unpack(Arguments.Game)
-                },
+                args = Arguments,
                 stdio = {
                     process.stdin.handle,
-                    process.stdout.handle,
+                    true, --process.stdout.handle,
                     process.stderr.handle
-                }
+                },
+                cwd = ArgumentParameters.game_directory
             }
         )
-        p(Error)
+        for LogMessage in Result.stdout.read do
+            for _, Line in pairs(LogMessage:Split("\n")) do
+                local SplitMessage = Line:split(" ")
+                table.remove(SplitMessage, 1)
+                TypeWriter.Logger.Info("Game (MinecraftJava) > %s", table.concat(SplitMessage, " "))
+            end
+        end
         Result.waitExit()
-        p("don")
     end,
     GetInstanceProperties = function ()
         local Properties = {}
@@ -415,8 +554,8 @@ Data.Functions = {
                 "Vanilla",
                 "Fabric",
                 "Quilt",
-                "Forge",
-                "OptiFine"
+                --"Forge",
+                --"OptiFine"
             }
             Properties.ModType = {
                 Label = "Mod loader",
