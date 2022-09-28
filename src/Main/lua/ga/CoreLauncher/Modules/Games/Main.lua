@@ -26,14 +26,11 @@ CoreLauncher.IPC:RegisterMessage(
     function(Data)
         local Game = Data.Game
         local InstanceId = Data.InstanceId
-        local Instance = CoreLauncher.Config:GetKey(
-            string.format(
-                "Games.%s.Instances.%s",
-                Game,
-                InstanceId
-            )
-        )
-        p(Instance)
+        local Instance = CoreLauncher.IPC:Send(
+            "Main",
+            "Games.Instances.GetInstances", 
+            Game
+        )[InstanceId]
         CoreLauncher.Games[Game].Functions.LaunchGame(Instance)
     end
 )
