@@ -1,10 +1,25 @@
 local Data = {}
 
 local QueryEncode = require("querystring").stringify
+local FS = require("fs")
+local CFS = require("coro-fs")
+local PathLib = require("path")
 local ModrinthBaseUrl = string.format(
     "https://api.modrinth.com/%s",
     "v2"
 )
+local GameDir = string.format(
+    "%s/CoreLauncher/Games/MinecraftJava/",
+    TypeWriter.ApplicationData
+)
+FS.mkdirSync(GameDir .. "Assets/")
+FS.mkdirSync(GameDir .. "Assets/indexes")
+FS.mkdirSync(GameDir .. "Assets/log_configs")
+FS.mkdirSync(GameDir .. "Assets/objects")
+FS.mkdirSync(GameDir .. "Assets/skins")
+FS.mkdirSync(GameDir .. "Libraries")
+FS.mkdirSync(GameDir .. "Clients")
+FS.mkdirSync(GameDir .. "Instances")
 
 local function GenerateModrinthFacets(Facets)
     local NewData = {}
@@ -23,6 +38,19 @@ local function GenerateModrinthFacets(Facets)
         table.insert(NewData, NewFacetBlock)
     end
     return require("json").encode(NewData)
+end
+
+local function JsFormat(Str, Replacements)
+    for ReplaceKey, Replacement in pairs(Replacements) do
+        Str = string.gsub(
+            Str,
+            string.format(
+                "${%s}", ReplaceKey
+            ),
+            Replacement
+        )
+    end
+    return Str
 end
 
 local Schemas = {
@@ -60,6 +88,210 @@ local Schemas = {
         end
     }
 }
+
+local RuleOS = (
+    {
+        win32 = "windows",
+        linux = "linux",
+        darwin = "osx"
+    }
+)[TypeWriter.Os]
+local function RulesPass(Rules)
+    if Rules == nil then
+        return true
+    end
+    for _, Rule in pairs(Rules) do
+        if Rule.os then
+            if Rule.os.name == RuleOS then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+local function DownloadAssets(Url, Id)
+    local _, AssetIndex = CoreLauncher.Http.JsonRequest(
+        "GET",
+        Url
+    )
+    local ObjectFolder = GameDir .. "Assets/objects/"
+    local Current = 1
+    local All = Asset
+    for _, Asset in pairs(AssetIndex.objects) do
+        local Prefix = Asset.hash:sub(1, 2)
+        local Hash = Asset.hash
+        local AssetFolder = ObjectFolder .. Prefix .. "/"
+        FS.mkdirSync(AssetFolder)
+        local AssetPath = AssetFolder .. Hash
+        if FS.existsSync(AssetPath) == false then
+            local _, AssetData = CoreLauncher.Http.Request(
+                "GET",
+                string.format(
+                    "%s/%s/%s",
+                    "http://resources.download.minecraft.net",
+                    Prefix,
+                    Hash
+                )
+            )
+            FS.writeFileSync(AssetPath, AssetData)
+        end 
+    end
+    FS.writeFileSync(GameDir .. "Assets/indexes/" .. Id .. ".json", require("json").encode(AssetIndex))
+    return GameDir .. "Assets/"
+end
+
+local function DownloadLogConfig(Data)
+    local FileData = Data.file
+    local LogFile = GameDir .. "Assets/log_configs/" .. FileData.id
+    local _, File = CoreLauncher.Http.Request(
+        "GET",
+        FileData.url
+    )
+    FS.writeFileSync(LogFile, File)
+    return JsFormat(
+        Data.argument,
+        {
+            path = PathLib.resolve(LogFile)
+        }
+    )
+end
+
+local function DownloadLibraries(Libraries, ClassPath)
+    for _, Library in pairs(Libraries) do
+        if RulesPass(Library.rules) then
+            local FileInfo = Library.downloads.artifact
+            local Path = GameDir .. "Libraries/" .. FileInfo.path
+            local DirPath = PathLib.resolve(Path, "..")
+            CFS.mkdirp(DirPath)
+            if FS.existsSync(Path) == false then
+                local _, FileData = CoreLauncher.Http.Request(
+                    "GET",
+                    FileInfo.url
+                )
+                FS.writeFileSync(Path, FileData)
+            end
+            table.insert(ClassPath, Path)
+        end
+    end
+end
+
+local function DownloadClient(FileInfo, Name, ClassPath)
+    p(FileInfo)
+    local FilePath = GameDir .. "Clients/" .. Name .. ".jar"
+    if FS.existsSync(FilePath) == false then
+        local _, FileData = CoreLauncher.Http.Request(
+            "GET",
+            FileInfo.url
+        )
+        FS.writeFileSync(FilePath, FileData)
+    end
+    table.insert(ClassPath, FilePath)
+    return FilePath
+end
+
+local function GetAuthData()
+    local XBLToken
+    local UHS
+    do
+        local _, Response = CoreLauncher.Http.JsonRequest(
+            "POST",
+            "https://user.auth.xboxlive.com/user/authenticate",
+            {
+                {"Content-Type", "application/json"},
+                {"Accept", "application/json"}
+            },
+            {
+                ["Properties"] = {
+                    ["AuthMethod"] = "RPS",
+                    ["SiteName"] = "user.auth.xboxlive.com",
+                    ["RpsTicket"] = "d=" .. CoreLauncher.Accounts:GetAccount("MSA").AccessToken.access_token
+                },
+                ["RelyingParty"] = "http://auth.xboxlive.com",
+                ["TokenType"] = "JWT"
+            }
+        )
+        XBLToken = Response.Token
+        UHS = Response.DisplayClaims.xui[1].uhs
+    end
+
+    local XSTSToken
+    do
+        local _, Response = CoreLauncher.Http.JsonRequest(
+            "POST",
+            "https://xsts.auth.xboxlive.com/xsts/authorize",
+            {
+                {"Content-Type", "application/json"},
+                {"Accept", "application/json"}
+            },
+            {
+                ["Properties"] = {
+                    ["SandboxId"] = "RETAIL",
+                    ["UserTokens"] = {
+                        XBLToken
+                    }
+                },
+                ["RelyingParty"] = "rp://api.minecraftservices.com/",
+                ["TokenType"] = "JWT"
+            }
+        )
+        XSTSToken = Response.Token
+    end
+
+    local MojangToken
+    do
+        local _, Response = CoreLauncher.Http.JsonRequest(
+            "POST",
+            "https://api.minecraftservices.com/authentication/login_with_xbox",
+            {
+                {"Content-Type", "application/json"}
+            },
+            {
+                ["identityToken"] = string.format(
+                    "XBL3.0 x=%s;%s",
+                    UHS,
+                    XSTSToken
+                ),
+                ["ensureLegacyEnabled"] = true
+            }
+        )
+        MojangToken = Response.access_token
+    end
+
+    local UserName
+    local UUID
+    do
+        local _, Response = CoreLauncher.Http.JsonRequest(
+            "GET",
+            "https://api.minecraftservices.com/minecraft/profile",
+            {
+                {"Content-Type", "application/json"},
+                {"Authorization", "Bearer " .. MojangToken}
+            }
+        )
+        UserName = Response.name
+        UUID = Response.id
+    end
+
+    return {
+        UserName = UserName,
+        UUID = UUID,
+        Token = MojangToken
+    }
+end
+
+local function ParseArguments(ArgumentList, Data)
+    local Return = {}
+    for _, Argument in pairs(ArgumentList) do
+        p(Argument)
+        if type(Argument) == "string" then
+            table.insert(Return, JsFormat(Argument, Data))
+        else
+        end
+    end
+    p(Return)
+    return Return
+end
 
 Data.Cache = {}
 Data.Cache.VersionManifest = ({CoreLauncher.Http.JsonRequest("GET", "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json")})[2]
@@ -104,6 +336,62 @@ Data.Functions = {
             VersionManifest.url
         )
         p(VersionData)
+        local ClassPath = {}
+        local AssetDir = DownloadAssets(VersionData.assetIndex.url, VersionData.assetIndex.id)
+        local LogArg = DownloadLogConfig(VersionData.logging.client)
+        DownloadLibraries(VersionData.libraries, ClassPath)
+        DownloadClient(VersionData.downloads.client, VersionData.id, ClassPath)
+        FS.mkdirSync(GameDir .. "Instances/" .. Instance.Id)
+        local BinDir = GameDir .. "bin/"
+        FS.mkdirSync(BinDir)
+        local AuthData = GetAuthData()
+        local FormattedClassPath = {}
+        for _, Path in pairs(ClassPath) do
+            table.insert(FormattedClassPath, PathLib.resolve(Path))
+        end
+        local ArgumentParameters = {
+            auth_player_name = AuthData.UserName,
+            version_name = VersionData.id,
+            game_directory = GameDir .. "Instances/" .. Instance.Id,
+            assets_root = AssetDir,
+            assets_index_name = VersionData.assets,
+            auth_uuid = AuthData.UUID,
+            auth_access_token = AuthData.Token,
+            clientid = "",
+            auth_xuid = "",
+            user_type = "MSA",
+            version_type = VersionData.type,
+
+            natives_directory = BinDir,
+            launcher_name = "CoreLauncher",
+            launcher_version = TypeWriter.LoadedPackages["CoreLauncher"].Package.Version,
+            classpath = table.concat(FormattedClassPath, ";")
+        }
+        local Arguments = {
+            Game = ParseArguments(VersionData.arguments.game, ArgumentParameters),
+            JVM = ParseArguments(VersionData.arguments.jvm, ArgumentParameters)
+        }
+        p({table.unpack(Arguments.JVM),
+        LogArg, VersionData.mainClass,
+        table.unpack(Arguments.Game)})
+        local Result, Error = require("coro-spawn")(
+            "java.exe",
+            {
+                args = {
+                    table.unpack(Arguments.JVM),
+                    LogArg, VersionData.mainClass,
+                    table.unpack(Arguments.Game)
+                },
+                stdio = {
+                    process.stdin.handle,
+                    process.stdout.handle,
+                    process.stderr.handle
+                }
+            }
+        )
+        p(Error)
+        Result.waitExit()
+        p("don")
     end,
     GetInstanceProperties = function ()
         local Properties = {}
