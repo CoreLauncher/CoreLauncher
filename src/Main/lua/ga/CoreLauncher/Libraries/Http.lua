@@ -31,6 +31,9 @@ function Http.Request(Method, Url, Headers, Body, Options)
 end
 
 function Http.JsonRequest(Method, Url, Headers, Body, Options)
+    if type(Body) == "table" then
+        Body = Json.encode(Body)
+    end
     local Response, Body = Http.Request(Method, Url, Headers, Body, Options)
     return Response, ({Json.decode(Body)})[1]
 end
