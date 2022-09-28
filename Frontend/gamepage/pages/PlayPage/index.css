@@ -29,16 +29,49 @@
     border-radius: 5px;
 }
 
-.instanceicon {
-    height: 100%;
-    display: inline-block;
-    float: left;
-}
-
-.instancename {
+.loadingbar {
     position: absolute;
+    width: 90%;
+    height: 80%;
+    top: 10%;
+    left: 5%;
+    visibility: hidden;
+    background-color: var(--background-primary);
+    border-radius: 20px;
 }
 
-.instanceversion {
-    color: var(--text-muted);
+.stagetext {
+    position: absolute;
+    height: 25%;
+    width: auto;
+    top: 25%;
+    left: 20px;
+}
+
+.progresstext {
+    position: absolute;
+    height: 25%;
+    width: auto;
+    top: 50%;
+    left: 20px;
+}
+
+.barfiller {
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    background-color: var(--status-positive);
+    border-radius: 20px;
+}
+
+.loadingbarvisible .playbutton {
+    visibility: hidden;
+}
+
+.loadingbarvisible .currentinstance {
+    visibility: hidden;
+}
+
+.loadingbarvisible .loadingbar {
+    visibility: visible;
 }
