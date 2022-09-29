@@ -37,7 +37,7 @@
     left: 5%;
     visibility: hidden;
     background-color: var(--background-primary);
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
 }
 
