@@ -191,13 +191,15 @@ local function GetClientData(Type, InstanceVersion)
 end
 
 local function DownloadAssets(Url, Id)
+    CoreLauncher.ProgressBar:SetStage("Downloading assets")
+    CoreLauncher.ProgressBar:Reset()
     local _, AssetIndex = CoreLauncher.Http.JsonRequest(
         "GET",
         Url
     )
     local ObjectFolder = GameDir .. "Assets/objects/"
     local Current = 1
-    local All = Asset
+    local All = table.count(AssetIndex.objects)
     for _, Asset in pairs(AssetIndex.objects) do
         local Prefix = Asset.hash:sub(1, 2)
         local Hash = Asset.hash
@@ -205,17 +207,22 @@ local function DownloadAssets(Url, Id)
         FS.mkdirSync(AssetFolder)
         local AssetPath = AssetFolder .. Hash
         if FS.existsSync(AssetPath) == false then
+            local Url = string.format(
+                "%s/%s/%s",
+                "http://resources.download.minecraft.net",
+                Prefix,
+                Hash
+            )
+            TypeWriter.Logger.Info("Downloading " .. Url)
             local _, AssetData = CoreLauncher.Http.Request(
                 "GET",
-                string.format(
-                    "%s/%s/%s",
-                    "http://resources.download.minecraft.net",
-                    Prefix,
-                    Hash
-                )
+                Url
             )
             FS.writeFileSync(AssetPath, AssetData)
-        end 
+        end
+        CoreLauncher.ProgressBar:SetProgress(Current, All)
+        CoreLauncher.ProgressBar:Update()
+        Current = Current + 1
     end
     FS.writeFileSync(GameDir .. "Assets/indexes/" .. Id .. ".json", require("json").encode(AssetIndex))
     return GameDir .. "Assets/"
