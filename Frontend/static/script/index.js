@@ -23,3 +23,7 @@ String.prototype.interpolate = function(params) {
 Number.prototype.clamp = function(min, max) {
     return Math.min(Math.max(this, min), max);
 };
+
+function Sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
