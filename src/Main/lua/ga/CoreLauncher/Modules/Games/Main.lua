@@ -60,3 +60,23 @@ CoreLauncher.IPC:RegisterMessage(
         CoreLauncher.Games[Game].Functions.LaunchGame(Instance)
     end
 )
+
+CoreLauncher.IPC:RegisterMessage(
+    "Games.KillGame",
+    function(Data)
+        if CoreLauncher.Game.Process ~= nil then
+            require("uv").process_kill(CoreLauncher.Game.Process.handle)
+            TypeWriter.Logger.Info("Killed game")
+        end
+    end
+)
+
+CoreLauncher.IPC:RegisterMessage(
+    "Games.GetState",
+    function()
+        return {
+            Running = CoreLauncher.Game.IsRunning,
+            GameId = CoreLauncher.Game.RunningId
+        }
+    end
+)
