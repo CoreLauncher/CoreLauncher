@@ -21,16 +21,42 @@ CoreLauncher.IPC:RegisterMessage(
     end
 )
 
+local function GetInstances(Game)
+    local Instances = CoreLauncher.Config:GetKey(
+        string.format(
+            "Games.%s.Instances",
+            Game
+        )
+    )
+    if Instances == nil then
+        Instances = {}
+        CoreLauncher.Config:SetKey(
+            string.format(
+                "Games.%s.Instances",
+                Game
+            ),
+            {}
+        )
+    end
+    Instances = table.deepcopy(Instances)
+    local Default = CoreLauncher.Games[Game].Functions.GetDefaultInstances()
+    for Index, Instance in pairs(Default) do
+        Instances[Instance.Id] = Instance
+    end
+    for Index, Instance in pairs(Instances) do
+        Instance.Comment = CoreLauncher.Games[Game].Functions.GetInstanceComment(Instance)
+        Instance.Properties.InstanceName = Instance.Name
+    end
+    return Instances
+end
+
 CoreLauncher.IPC:RegisterMessage(
     "Games.LaunchGame",
     function(Data)
         local Game = Data.Game
+        p(Game)
         local InstanceId = Data.InstanceId
-        local Instance = CoreLauncher.IPC:Send(
-            "Main",
-            "Games.Instances.GetInstances", 
-            Game
-        )[InstanceId]
+        local Instance = GetInstances(Game)[InstanceId]
         CoreLauncher.Games[Game].Functions.LaunchGame(Instance)
     end
 )
