@@ -400,6 +400,14 @@ async function LoadModsList() {
         ModVersionSelect.addEventListener(
             "change",
             async function() {
+                p(Mod.Versions)
+                var Version
+                for (const ItVersion of Mod.Versions) {
+                    if (ItVersion.Id == ModVersionSelect.value) {
+                        Version = ItVersion
+                        break
+                    }
+                }
                 await CoreLauncher.IPC.Send(
                     "Main",
                     "Games.Instances.Modifications.SetModVersionId",
@@ -407,7 +415,11 @@ async function LoadModsList() {
                         Game: Game.Id,
                         InstanceId: SelectedInstance.Id,
                         ModId: Mod.Id,
-                        VersionId: ModVersionSelect.value
+                        ModData: {
+                            VersionId: ModVersionSelect.value,
+                            Url: Version.Url,
+                            Hash: Version.Hash
+                        }
                     }
                 )
                 await LoadModsList()
