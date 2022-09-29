@@ -79,6 +79,7 @@ CoreLauncher.Window = CoreLauncher.Electron.BrowserWindow(
 do
     local Window = CoreLauncher.Window
     Window:on("closed", function()
+        TypeWriter.Logger.Info("Closing")
         CoreLauncher.Electron.Close()
         CoreLauncher.IPC:Disconnect()
         CoreLauncher.RPC:Disconnect()
