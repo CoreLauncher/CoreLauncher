@@ -20,6 +20,7 @@ FS.mkdirSync(GameDir .. "Assets/skins")
 FS.mkdirSync(GameDir .. "Libraries")
 FS.mkdirSync(GameDir .. "Clients")
 FS.mkdirSync(GameDir .. "Instances")
+FS.mkdirSync(GameDir .. "ModCache")
 
 local function GenerateModrinthFacets(Facets)
     local NewData = {}
@@ -83,7 +84,9 @@ local Schemas = {
                 Downloads = Version.downloads,
                 Id = Version.id,
                 Name = Version.name,
-                Tag = Version.version_number
+                Tag = Version.version_number,
+                Url = Version.files[1].url,
+                Hash = Version.files[1].hashes.sha1
             }
         end
     }
@@ -324,6 +327,31 @@ local function DownloadClient(FileInfo, Name, ClassPath)
     return FilePath
 end
 
+local function DownloadMods(Mods, ModFolder)
+    local ModCacheFolder = GameDir .. "ModCache/"
+    CoreLauncher.ProgressBar:SetStage("Downloading mods")
+    CoreLauncher.ProgressBar:Reset()
+    p(Mods)
+    for ModId, ModInfo in pairs(Mods) do
+        p(ModInfo)
+        local File
+        if FS.existsSync(ModCacheFolder .. ModInfo.Hash) then
+            File = FS.readFileSync(ModCacheFolder .. ModInfo.Hash)
+        else
+            local _, FileData = CoreLauncher.Http.Request(
+                "GET",
+                ModInfo.Url
+            )
+            FS.writeFileSync(ModCacheFolder .. ModInfo.Hash, FileData)
+            File = FileData
+        end
+        FS.writeFileSync(ModFolder .. ModInfo.Hash .. ".jar", File)
+    end
+    for FileName in FS.scandirSync(ModFolder) do
+        p(FileName)
+    end
+end
+
 local function GetAuthData()
     local XBLToken
     local UHS
@@ -374,6 +402,8 @@ local function GetAuthData()
 
     local MojangToken
     do
+        local ExpiresAt = CoreLauncher.Config:GetKey("Games.MinecraftJava.AccessToken.ExpiresAt")
+        p(ExpiresAt)
         local _, Response = CoreLauncher.Http.JsonRequest(
             "POST",
             "https://api.minecraftservices.com/authentication/login_with_xbox",
@@ -391,6 +421,14 @@ local function GetAuthData()
         )
         p(Response)
         MojangToken = Response.access_token
+        CoreLauncher.Config:SetKey(
+            "Games.MinecraftJava.AccessToken",
+            {
+                At = os.time(),
+                ExpiresAt = Response.expires_in + os.time() - 2000,
+                Token = Response.access_token
+            }
+        )
     end
 
     local UserName
@@ -483,8 +521,10 @@ Data.Functions = {
         DownloadLibraries(VersionData.libraries, ClassPath)
         DownloadClient(VersionData.downloads.client, VersionData.id, ClassPath)
         FS.mkdirSync(GameDir .. "Instances/" .. Instance.Id)
+        FS.mkdirSync(GameDir .. "Instances/" .. Instance.Id .. "/mods")
         local BinDir = GameDir .. "bin/"
         FS.mkdirSync(BinDir)
+        DownloadMods(Instance.Modifications, GameDir .. "Instances/" .. Instance.Id .. "/mods/")
         local AuthData = GetAuthData()
         local FormattedClassPath = {}
         for _, Path in pairs(ClassPath) do
@@ -639,17 +679,22 @@ Data.Functions = {
                     )
                 end
                 table.insert(Facets, LoaderFacet)
-                local Response, Data = CoreLauncher.Http.JsonRequest(
-                    "GET",
-                    ModrinthBaseUrl .. "/search?" .. QueryEncode(
-                        {
-                            query = Query,
-                            limit = 20,
-                            facets = GenerateModrinthFacets(Facets),
-                            offset = (Page - 1) * 20
-                        }
+                local Data = {error = "meilisearch_error"}
+                while Data.error == "meilisearch_error" do
+                    local _, ResponseData = CoreLauncher.Http.JsonRequest(
+                        "GET",
+                        ModrinthBaseUrl .. "/search?" .. QueryEncode(
+                            {
+                                query = Query,
+                                limit = 20,
+                                facets = GenerateModrinthFacets(Facets),
+                                offset = (Page - 1) * 20
+                            }
+                        )
                     )
-                )
+                    Data = ResponseData
+                end
+                
                 if Data.hits == nil then
                     p(Data)
                 end
