@@ -145,7 +145,6 @@ local function GetClientData(Type, InstanceVersion)
                     )
                 }
             )[2][1].loader.version
-            p(LoaderVersion)
 
             local _, VersionData = CoreLauncher.Http.JsonRequest(
                 "GET",
@@ -180,13 +179,8 @@ local function GetClientData(Type, InstanceVersion)
     local InheritsFrom = LoaderData.inheritsFrom
     if InheritsFrom then
         local VanillaData = Getters["Vanilla"](InheritsFrom)
-        p(LoaderData)
         Inherit(VanillaData, LoaderData)
-        p(LoaderData)
     end
-    print(
-        require("json").encode(LoaderData)
-    )
     return LoaderData
 end
 
@@ -255,7 +249,14 @@ local function DownloadLogConfig(Data)
 end
 
 local function DownloadLibraries(Libraries, ClassPath)
+    CoreLauncher.ProgressBar:SetStage("Downloading libraries")
+    CoreLauncher.ProgressBar:Reset()
+    local Count = 1
+    local All = #Libraries
     for _, Library in pairs(Libraries) do
+        CoreLauncher.ProgressBar:SetProgress(Count, All)
+        CoreLauncher.ProgressBar:Update()
+        Count = Count + 1
         if RulesPass(Library.rules) then
             if Library.downloads then
                 local FileInfo = Library.downloads.artifact
@@ -271,7 +272,6 @@ local function DownloadLibraries(Libraries, ClassPath)
                 end
                 table.insert(ClassPath, Path)
             else
-                p(Library.name)
                 local Split = Library.name:split(":")
                 local Author = Split[1]
                 local Package = Split[2]
@@ -293,11 +293,7 @@ local function DownloadLibraries(Libraries, ClassPath)
                     PathName,
                     FileName
                 )
-                p(FileName)
-                p(PathName)
-                p(Url)
                 local FilePath = GameDir .. "Libraries/" .. PathName .. "/" .. FileName
-                p(FilePath)
                 if FS.existsSync(FilePath) == false then
                     local _, File = CoreLauncher.Http.Request(
                         "GET",
@@ -313,6 +309,8 @@ local function DownloadLibraries(Libraries, ClassPath)
 end
 
 local function DownloadClient(FileInfo, Name, ClassPath)
+    CoreLauncher.ProgressBar:SetStage("Downloading client")
+    CoreLauncher.ProgressBar:Reset()
     local FilePath = GameDir .. "Clients/" .. Name .. ".jar"
     if FS.existsSync(FilePath) == false then
         local _, FileData = CoreLauncher.Http.Request(
@@ -322,6 +320,7 @@ local function DownloadClient(FileInfo, Name, ClassPath)
         FS.writeFileSync(FilePath, FileData)
     end
     table.insert(ClassPath, FilePath)
+    CoreLauncher.ProgressBar:SetProgress(1, 1)
     return FilePath
 end
 
@@ -390,6 +389,7 @@ local function GetAuthData()
                 ["ensureLegacyEnabled"] = true
             }
         )
+        p(Response)
         MojangToken = Response.access_token
     end
 
@@ -530,14 +530,23 @@ Data.Functions = {
                 cwd = ArgumentParameters.game_directory
             }
         )
-        for LogMessage in Result.stdout.read do
-            for _, Line in pairs(LogMessage:Split("\n")) do
-                local SplitMessage = Line:split(" ")
-                table.remove(SplitMessage, 1)
-                TypeWriter.Logger.Info("Game (MinecraftJava) > %s", table.concat(SplitMessage, " "))
+        CoreLauncher.Game.IsRunning = true
+        CoreLauncher.Game.RunningId = "MinecraftJava"
+        CoreLauncher.Game.Process = Result
+        coroutine.wrap(function ()
+            for LogMessage in Result.stdout.read do
+                for _, Line in pairs(LogMessage:Split("\n")) do
+                    local SplitMessage = Line:split(" ")
+                    table.remove(SplitMessage, 1)
+                    TypeWriter.Logger.Info("Game (MinecraftJava) > %s", table.concat(SplitMessage, " "))
+                end
             end
-        end
-        Result.waitExit()
+            Result.waitExit()
+            CoreLauncher.Game.IsRunning = false
+            CoreLauncher.Game.RunningId = ""
+            CoreLauncher.Game.Process = nil
+            TypeWriter.Logger.Info("Game closed")
+        end)()
     end,
     GetInstanceProperties = function ()
         local Properties = {}
@@ -559,7 +568,7 @@ Data.Functions = {
         do -- ModType
             local ModTypes = {
                 "Vanilla",
-                "Fabric",
+                --"Fabric",
                 "Quilt",
                 --"Forge",
                 --"OptiFine"
