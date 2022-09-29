@@ -54,7 +54,6 @@ CoreLauncher.IPC:RegisterMessage(
     "Games.LaunchGame",
     function(Data)
         local Game = Data.Game
-        p(Game)
         local InstanceId = Data.InstanceId
         local Instance = GetInstances(Game)[InstanceId]
         CoreLauncher.Games[Game].Functions.LaunchGame(Instance)
