@@ -38,6 +38,7 @@
     visibility: hidden;
     background-color: var(--background-primary);
     border-radius: 20px;
+    overflow: hidden;
 }
 
 .stagetext {
@@ -59,9 +60,10 @@
 .barfiller {
     position: absolute;
     height: 100%;
-    width: 50%;
     background-color: var(--status-positive);
-    border-radius: 20px;
+    transition-property: width, width;
+    transition-duration: 0.3s;
+    transition-timing-function: linear;
 }
 
 .loadingbarvisible .playbutton {

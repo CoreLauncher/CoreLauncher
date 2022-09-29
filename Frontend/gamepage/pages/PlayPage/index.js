@@ -1,6 +1,20 @@
 window.addEventListener(
     "load",
     async function() {
+        const PlayBar = document.getElementById("playbar")
+        const BarFiller = document.getElementById("barfiller")
+        const StageText = document.getElementById("stagetext")
+        const ProgressText = document.getElementById("progresstext")
+        CoreLauncher.IPC.RegisterMessage(
+            "ProgressBar.Update",
+            async function(Data) {
+                p(Data)
+                BarFiller.style.width = `${Data.Percent}%`
+                StageText.innerText = Data.Stage
+                ProgressText.innerText = `${Data.Count}/${Data.Total} (${Math.floor(Data.Percent)}%)`
+            }
+        )
+
         const Game = await CoreLauncher.IPC.Send(
             "Main",
             "Games.GetGame",
@@ -37,6 +51,7 @@ window.addEventListener(
                         InstanceId: CurrentInstance.value
                     }
                 )
+                p("Sent")
             }
         )
     }
