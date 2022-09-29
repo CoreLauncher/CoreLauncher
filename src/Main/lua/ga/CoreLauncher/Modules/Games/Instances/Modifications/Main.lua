@@ -22,6 +22,7 @@ CoreLauncher.IPC:RegisterMessage(
     end
 )
 
+local GetUUID = require("uuid4").getUUID
 CoreLauncher.IPC:RegisterMessage(
     "Games.Instances.Modifications.AddToInstance",
     function(Data)
@@ -36,8 +37,12 @@ CoreLauncher.IPC:RegisterMessage(
             )
         )
         ModData.Enabled = true
+        ModData.UUID = GetUUID()
         if ModData.Version == "latest" then
-            ModData.Version = CoreLauncher.Games[Game].Functions.ModSources[ModData.Source].GetLatestModVersion(Instance, ModData.Id).Id
+            local VersionData = CoreLauncher.Games[Game].Functions.ModSources[ModData.Source].GetLatestModVersion(Instance, ModData.Id)
+            ModData.Version = VersionData.Id
+            ModData.Url = VersionData.Url
+            ModData.Hash = VersionData.Hash
         end
         CoreLauncher.Config:SetKey(
             string.format(
@@ -78,18 +83,32 @@ CoreLauncher.IPC:RegisterMessage(
     function(Data)
         local Game = Data.Game
         local InstanceId = Data.InstanceId
+        local ModData = Data.ModData
         local ModId = Data.ModId
-        local VersionId = Data.VersionId
+
+        local Mod = CoreLauncher.Config:GetKey(
+            string.format(
+                "Games.%s.Instances.%s.Modifications.%s",
+                Game,
+                InstanceId,
+                ModId
+            )
+        )
         
+        Mod.Version = ModData.VersionId
+        Mod.Hash = ModData.Hash
+        Mod.Url = ModData.Url
+
         CoreLauncher.Config:SetKey(
             string.format(
-                "Games.%s.Instances.%s.Modifications.%s.Version",
+                "Games.%s.Instances.%s.Modifications.%s",
                 Game,
                 InstanceId,
                 ModId
             ),
-            VersionId
+            Mod
         )
+        
     end
 )
 
