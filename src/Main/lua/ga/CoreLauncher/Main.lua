@@ -2,20 +2,24 @@ print("Hello World!")
 --Imports
 local FS = require("fs")
 
+
+
 --Globals
-local ApplicationDataFolder = TypeWriter.ApplicationData .. "/CoreLauncher/"
-TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/IPC-Bootstrap.twr")
-TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/Electron-Lua-Bootstrap.twr")
-TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. "/Discord-RPC.twr")
+local Resources = TypeWriter.LoadedPackages["CoreLauncher"].Resources
+TypeWriter.Runtime.LoadJson(Resources["/Libraries/Discord-RPC.twr"])
+TypeWriter.Runtime.LoadJson(Resources["/Libraries/Electron-Lua-Bootstrap.twr"])
+TypeWriter.Runtime.LoadJson(Resources["/Libraries/IPC-Bootstrap.twr"])
+TypeWriter.Runtime.LoadJson(Resources["/Libraries/Static.twr"])
+
 _G.CoreLauncher = {}
 CoreLauncher.Electron = Import("Electron.bootstrap").LoadAll()
 CoreLauncher.RPC = Import("ga.CoreLauncher.RPC"):new("1008708322922352753")
 CoreLauncher.IPC = Import("openipc.connector"):new("CoreLauncher", "Main")
-CoreLauncher.ApplicationData = ApplicationDataFolder
+CoreLauncher.ApplicationData = TypeWriter.ApplicationData .. "/CoreLauncher/"
 CoreLauncher.Dev = process.env.CORELAUNCHER_DEV == "true"
 CoreLauncher.Http = Import("ga.CoreLauncher.Libraries.Http")
 CoreLauncher.Games = Import("ga.CoreLauncher.Games")
-CoreLauncher.Config = Import("ga.CoreLauncher.Libraries.Config"):new(ApplicationDataFolder .. "/Data.json")
+CoreLauncher.Config = Import("ga.CoreLauncher.Libraries.Config"):new(CoreLauncher.ApplicationData .. "/Data.json")
 CoreLauncher.Accounts = Import("ga.CoreLauncher.Libraries.Accounts"):new()
 CoreLauncher.ProgressBar = Import("ga.CoreLauncher.Libraries.ProgressBar"):new()
 CoreLauncher.Game = {
@@ -31,14 +35,14 @@ do
     Config:SetKeyIfNotExists("Accounts", {})
 end
 
+--Installs
+Import("ga.CoreLauncher.Install.FavIcon")()
+Import("ga.CoreLauncher.Install.DataFolder")()
+
 --Check Accounts
 do
     CoreLauncher.Accounts:RefreshAll()
 end
-
---Installing
-Import("ga.CoreLauncher.Install.FavIcon")()
-Import("ga.CoreLauncher.Install.DataFolder")()
 
 --Load Modules
 Import("ga.CoreLauncher.Modules")
