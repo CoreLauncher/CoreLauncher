@@ -15,7 +15,7 @@ local AccountTypes = {
             Base = "https://discord.com/api/oauth2/authorize?",
             Query = {
                 ["client_id"] = "1008708322922352753",
-                ["redirect_uri"] = "http://localhost/callback/discord/",
+                ["redirect_uri"] = "http://localhost:9874/callback/discord/",
                 ["response_type"] = "code",
                 ["scope"] = "identify email connections guilds guilds.join"
             }
@@ -57,7 +57,7 @@ local AccountTypes = {
             Query = {
                 ["client_id"] = "54e48db0-6129-4320-82a7-3b0156811a91",
                 ["response_type"] = "code",
-                ["redirect_uri"] = "http://localhost/callback/msa/",
+                ["redirect_uri"] = "http://localhost:9874/callback/msa/",
                 ["response_mode"] = "query",
                 ["scope"] = "XboxLive.signin offline_access"
             }

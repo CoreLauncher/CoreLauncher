@@ -93,11 +93,12 @@ do
     )
     if CoreLauncher.Dev then
         Window:OpenDevTools()
-        Window:LoadURL("http://localhost")
     else
         Window:RemoveMenu()
         -- Load static server
+
     end
+    Window:LoadURL("http://localhost:9874")
     Window:Show()
 
     if Show == false then
