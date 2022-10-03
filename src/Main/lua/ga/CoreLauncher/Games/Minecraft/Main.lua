@@ -260,25 +260,29 @@ local function DownloadLibraries(Libraries, ClassPath)
         CoreLauncher.ProgressBar:SetProgress(Count, All)
         CoreLauncher.ProgressBar:Update()
         Count = Count + 1
+        local Url
+        local Path
+        local DirPath
         if RulesPass(Library.rules) then
             if Library.downloads then
                 local FileInfo = Library.downloads.artifact
-                local Path = GameDir .. "Libraries/" .. FileInfo.path
-                local DirPath = PathLib.resolve(Path, "..")
-                CFS.mkdirp(DirPath)
-                if FS.existsSync(Path) == false then
-                    local _, FileData = CoreLauncher.Http.Request(
-                        "GET",
-                        FileInfo.url
-                    )
-                    FS.writeFileSync(Path, FileData)
-                end
-                table.insert(ClassPath, PathLib.resolve(Path))
+                Url = FileInfo.url
+                Path = GameDir .. "Libraries/" .. FileInfo.path
+                DirPath = PathLib.resolve(Path, "..")
             else
                 local Split = Library.name:split(":")
                 local Author = Split[1]
                 local Package = Split[2]
                 local Version = Split[3]
+                local LibUrl = Library.url
+                if Package == "hashed" and Author == "org.quiltmc" then
+                    Author = "net.fabricmc"
+                    Package = "intermediary"
+                    LibUrl = "https://maven.fabricmc.net/"
+                end
+                p(Author)
+                p(Package)
+                p(Version)
                 local FileName = string.format(
                     "%s-%s.jar",
                     Package,
@@ -290,23 +294,26 @@ local function DownloadLibraries(Libraries, ClassPath)
                     Package,
                     Version
                 )
-                local Url = string.format(
+                Url = string.format(
                     "%s%s/%s",
                     Library.url,
                     PathName,
                     FileName
                 )
-                local FilePath = GameDir .. "Libraries/" .. PathName .. "/" .. FileName
-                if FS.existsSync(FilePath) == false then
-                    local _, File = CoreLauncher.Http.Request(
-                        "GET",
-                        Url
-                    )
-                    CFS.mkdirp(GameDir .. "Libraries/" .. PathName .. "/")
-                    FS.writeFileSync(FilePath, File)
-                end
-                table.insert(ClassPath, PathLib.resolve(FilePath))
+                DirPath = GameDir .. "Libraries/" .. PathName .. "/"
+                Path = DirPath .. "/" .. FileName
             end
+        end
+        if Url then
+            CFS.mkdirp(DirPath)
+            if FS.existsSync(Path) == false then
+                local _, FileData = CoreLauncher.Http.Request(
+                    "GET",
+                    Url
+                )
+                FS.writeFileSync(Path, FileData)
+            end
+            table.insert(ClassPath, PathLib.resolve(Path))
         end
     end
 end
