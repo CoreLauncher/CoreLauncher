@@ -657,7 +657,8 @@ Data.Functions = {
                     Version = Data.Cache.VersionManifest.latest.release,
                     ModType = "Vanilla",
                     Memory = 4
-                }
+                },
+                Modifications = {}
             }
         }
     end,
