@@ -1,0 +1,63 @@
+{
+  "BuildInfo":{
+    "Date":"Tue Aug  9 16:43:46 2022",
+    "TypeWriter":{
+      "Name":"TypeWriter",
+      "Version":"4.6.1",
+      "Licence":"MIT"
+    }
+  },
+  "Package":{
+    "ID":"Electron-Lua-Bootstrap",
+    "Version":"1.0.0",
+    "Entrypoints":{
+      "Main":"Electron.bootstrap.Test"
+    },
+    "InfoVersion":1,
+    "Author":{
+      "Contributors":[],
+      "Developers":["CoreByte"]
+    },
+    "Contact":{
+      "Website":"https://cubic-inc.ga",
+      "Socials":[],
+      "Source":"https://github.com/Dot-lua/TypeWriter/"
+    },
+    "Dependencies":{
+      "Git":[],
+      "Luvit":["creationix/coro-http","luvit/secure-socket","creationix/coro-spawn","creationix/coro-fs"],
+      "Dua":[]
+    },
+    "Description":"Electron-Lua-Bootstrap",
+    "Name":"Electron-Lua-Bootstrap"
+  },
+  "Code":{
+    "Electron.bootstrap.Main":{
+      "Code":"return {\r\n    Download = Import(\"Electron.bootstrap.Stages.Download\"),\r\n    LoadAll = Import(\"Electron.bootstrap.Stages.LoadAll\"),\r\n}",
+      "Type":"Code"
+    },
+    "Electron.bootstrap":{
+      "RedirectTo":"Electron.bootstrap.Main",
+      "Type":"Redirect"
+    },
+    "Electron.bootstrap.Test":{
+      "Code":"Import(\"Electron.bootstrap\").LoadAll()",
+      "Type":"Code"
+    },
+    "Electron.bootstrap.Stages.Download":{
+      "Code":"local Request = require(\"coro-http\").request\r\nlocal Json = require(\"json\")\r\nlocal FS = require(\"fs\")\r\n\r\nlocal ApplicationDataFolder = TypeWriter.ApplicationData .. \"/Electron-Lua/\"\r\nlocal LatestReleaseURL = \"https://api.github.com/repos/CoreBytee/Electron-Lua/releases/latest\"\r\nlocal FileUrl = \"https://github.com/CoreBytee/Electron-Lua/releases/download/%s/%s\"\r\n\r\nlocal function IsConnected()\r\n    local Success = pcall(Request, \"GET\", \"https://github.com/CoreBytee/Electron-Lua\")\r\n    return Success\r\nend\r\n\r\nlocal function GetLatestTag()\r\n    local Response, Body = Request(\r\n        \"GET\",\r\n        LatestReleaseURL,\r\n        {\r\n            {\"User-Agent\", \"Electron-Lua (https://github.com/CoreBytee/Electron-Lua)\"}\r\n        }\r\n    )\r\n    return Json.parse(Body).tag_name\r\nend\r\n\r\nlocal Files = {\r\n    \"Electron.zip\",\r\n    \"Electron-Lua.twr\",\r\n    \"Electron-Lua-Bootstrap.twr\"\r\n}\r\n\r\nlocal function DownloadFiles(Tag)\r\n    for Index, FileName in pairs(Files) do\r\n        TypeWriter.Logger.Info(\"Electron > Downloading \" .. FileName .. \"...\")\r\n        local Response, Body = Request(\r\n            \"GET\",\r\n            string.format(\r\n                FileUrl,\r\n                Tag,\r\n                FileName\r\n            ),\r\n            {\r\n                {\"User-Agent\", \"Electron-Lua (https://github.com/CoreBytee/Electron-Lua)\"}\r\n            }\r\n        )\r\n        FS.writeFileSync(ApplicationDataFolder .. FileName, Body)\r\n    end\r\nend\r\n\r\nreturn function ()\r\n    local MustFinish = FS.existsSync(ApplicationDataFolder .. \"/Version.txt\") == false\r\n    FS.mkdirSync(ApplicationDataFolder)\r\n    if IsConnected() == false then\r\n        TypeWriter.Logger.Error(\"Not connected to the internet.\")\r\n        if MustFinish == true then\r\n            process:exit(0)\r\n        end\r\n        return false\r\n    end\r\n\r\n    local Tag = GetLatestTag()\r\n\r\n    local CurrentVersion = FS.readFileSync(ApplicationDataFolder .. \"/Version.txt\")\r\n    if CurrentVersion ~= Tag then\r\n        local rmrf = require(\"coro-fs\").rmrf\r\n        for Index, FileName in pairs(FS.readdirSync(ApplicationDataFolder)) do\r\n            local FilePath = ApplicationDataFolder .. \"/\" .. FileName\r\n            local Success = rmrf(FilePath)\r\n            if Success == nil then\r\n                FS.unlinkSync(FilePath)\r\n            end\r\n        end\r\n        DownloadFiles(Tag)\r\n        FS.mkdirSync(ApplicationDataFolder .. \"/Electron/\")\r\n        Import(\"Electron.bootstrap.Unzip\")(ApplicationDataFolder .. \"/Electron.zip\", ApplicationDataFolder .. \"/Electron/\")\r\n        local Response, Body = Request(\r\n            \"GET\",\r\n            \"https://github.com/CoreBytee/open-ipc/releases/latest/download/IPC-Bootstrap.twr\"\r\n        )\r\n        FS.writeFileSync(ApplicationDataFolder .. \"/IPC-Bootstrap.twr\", Body)\r\n\r\n        local Response, Body = Request(\r\n            \"GET\",\r\n            \"https://github.com/CoreBytee/get-node/releases/latest/download/Get-Node.twr\"\r\n        )\r\n        FS.writeFileSync(ApplicationDataFolder .. \"/Get-Node.twr\", Body)\r\n\r\n        FS.writeFileSync(ApplicationDataFolder .. \"/Version.txt\", Tag)\r\n\r\n    end\r\n\r\n    \r\n\r\n    return true\r\nend",
+      "Type":"Code"
+    },
+    "Electron.bootstrap.Unzip":{
+      "Code":"return function (From, To)\r\n    local Result = require(\"coro-spawn\")(\r\n        \"tar\",\r\n        {\r\n            args = {\r\n                \"-xf\",\r\n                From,\r\n                \"-C\", To\r\n            }\r\n        }\r\n    )\r\n    Result.waitExit()\r\nend",
+      "Type":"Code"
+    },
+    "Electron.bootstrap.Stages.LoadAll":{
+      "Code":"local FS = require(\"fs\")\r\n\r\nlocal ApplicationDataFolder = TypeWriter.ApplicationData .. \"/Electron-Lua/\"\r\n\r\nreturn function (SkipUpdate)\r\n    if SkipUpdate ~= true or FS.existsSync(ApplicationDataFolder .. \"/Version.txt\") == false then\r\n        Import(\"Electron.bootstrap.Stages.Download\")()\r\n    end\r\n    TypeWriter.Runtime.LoadFile(ApplicationDataFolder .. \"/Electron-Lua.twr\")\r\n    return Import(\"Electron\")\r\nend",
+      "Type":"Code"
+    }
+  },
+  "Resources":{
+    "/package.info.lua":"-- See https://github.com/Dot-lua/TypeWriter/wiki/package.info.lua-format for more info\r\n\r\nreturn { InfoVersion = 1, -- Dont touch this\r\n\r\n    ID = \"Electron-Lua-Bootstrap\", -- A unique id \r\n    Name = \"Electron-Lua-Bootstrap\",\r\n    Description = \"Electron-Lua-Bootstrap\",\r\n    Version = \"1.0.0\",\r\n\r\n    Author = {\r\n        Developers = {\r\n            \"CoreByte\"\r\n        },\r\n        Contributors = {}\r\n    },\r\n\r\n    Dependencies = {\r\n        Luvit = {\r\n            \"creationix/coro-http\",\r\n            \"luvit/secure-socket\",\r\n            \"creationix/coro-spawn\",\r\n            \"creationix/coro-fs\"\r\n        },\r\n        Git = {},\r\n        Dua = {}\r\n    },\r\n\r\n    Contact = {\r\n        Website = \"https://cubic-inc.ga\",\r\n        Source = \"https://github.com/Dot-lua/TypeWriter/\",\r\n        Socials = {}\r\n    },\r\n\r\n    Entrypoints = {\r\n        Main = \"Electron.bootstrap.Test\"\r\n    }\r\n\r\n}\r\n"
+  }
+}

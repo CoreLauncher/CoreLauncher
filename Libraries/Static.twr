@@ -1,0 +1,59 @@
+{
+  "BuildInfo":{
+    "Date":"Mon Oct  3 20:16:40 2022",
+    "TypeWriter":{
+      "Name":"TypeWriter",
+      "Version":"4.6.1",
+      "Licence":"MIT"
+    }
+  },
+  "Package":{
+    "Dependencies":{
+      "Luvit":["voronianski/utopia","luvit/http","creationix/mime"],
+      "Dua":[],
+      "Git":[]
+    },
+    "Name":"Static",
+    "Version":"1.0.0",
+    "Description":"Static for BrowserView",
+    "ID":"Static",
+    "Entrypoints":{
+      "Main":"ga.corebyte.Static.Test"
+    },
+    "InfoVersion":1,
+    "Author":{
+      "Contributors":[],
+      "Developers":["CoreByte"]
+    },
+    "Contact":{
+      "Website":"",
+      "Source":"",
+      "Socials":[]
+    }
+  },
+  "Code":{
+    "ga.corebyte.Static.Main":{
+      "Code":"return Import(\"ga.corebyte.Static.Server\")",
+      "Type":"Code"
+    },
+    "ga.corebyte.Static":{
+      "Type":"Redirect",
+      "RedirectTo":"ga.corebyte.Static.Main"
+    },
+    "ga.corebyte.Static.External.Static":{
+      "Code":"local path = require('path')\r\nlocal fs = require('fs')\r\nlocal os = require('os')\r\nlocal parseUrl = require('url').parse\r\nlocal decodeURI = require('querystring').urldecode\r\nlocal mimes = require('mime')\r\n\r\n-- static files middleware\r\n-- root - directory path required\r\n-- options:\r\n--  `maxAge` - browser cache maxAge in milliseconds, defaults to 0\r\n--  `index` - default file name, defaults to 'index.html'\r\n--  `hidden` - allow transfer of hidden files, defaults to false\r\n\r\nfunction static(root, options)\r\n\tif not root then error('root is required') end\r\n\r\n\troot = path.normalize(root)\r\n\r\n\toptions = options or {}\r\n\toptions.index = options.index or 'index.html'\r\n\toptions.maxAge = options.maxAge or 0\r\n\r\n\treturn function(req, res, nxt)\r\n\t\tif req.method ~= 'GET' and req.method ~= 'HEAD' then return nxt() end\r\n\r\n\t\tlocal function serveFiles(route)\r\n\t\t\tfs.open(route, 'r', function(err, fd)\r\n\t\t\t\tif err then return nxt() end\r\n\r\n\t\t\t\tfs.fstat(fd, function(err, stat)\r\n\t\t\t\t\tif err then\r\n\t\t\t\t\t\tfs.close(fd)\r\n\t\t\t\t\t\treturn nxt(err)\r\n\t\t\t\t\tend\r\n\r\n\t\t\t\t\tlocal headers\r\n\t\t\t\t\tlocal code = 200\r\n\t\t\t\t\tlocal etag = stat.size .. '-' .. stat.mtime.sec\r\n\r\n\t\t\t\t\tif etag == req.headers['if-none-match'] then code = 304 end\r\n\r\n\t\t\t\t\tres:setHeader('Content-Type', mimes.getType(route))\r\n\t\t\t\t\tres:setHeader('Content-Length', stat.size)\r\n\t\t\t\t\tres:setHeader('Last-Modified', os.date(\"!%a, %d %b %Y %H:%M:%S GMT\", stat.mtime.sec))\r\n\t\t\t\t\tres:setHeader('Etag', etag)\r\n\t\t\t\t\tres:setHeader('Cache-Control', 'public, max-age=' .. (options.maxAge / 1000))\r\n\r\n\t\t\t\t\t-- skip directories\r\n\t\t\t\t\tif stat.is_directory then\r\n\t\t\t\t\t\tfs.close(fd)\r\n\t\t\t\t\t\tres:writeHead(302)\r\n\t\t\t\t\t\tres:setHeader('Location', req.url .. '/')\r\n\t\t\t\t\t\treturn res:finish()\r\n\t\t\t\t\tend\r\n\r\n\t\t\t\t\t-- skip hidden files if no option specified\r\n\t\t\t\t\tif not options.hidden and '.' == path.basename(route):sub(1, 1) then\r\n\t\t\t\t\t\tfs.close(fd)\r\n\t\t\t\t\t\treturn nxt()\r\n\t\t\t\t\tend\r\n\r\n\t\t\t\t\tres:writeHead(code)\r\n\r\n\t\t\t\t\tif req.method == 'HEAD' or code == 304 then\r\n\t\t\t\t\t\tfs.close(fd)\r\n\t\t\t\t\t\treturn res:finish()\r\n\t\t\t\t\tend\r\n\r\n\t\t\t\t\tfs.createReadStream(route, { fd = fd }):pipe(res)\r\n\t\t\t\tend)\r\n\t\t\tend)\r\n\t\tend\r\n\r\n\t\tlocal url = parseUrl(req.url)\r\n\t\tlocal file = decodeURI(url.pathname)\r\n\t\tlocal filePath = path.normalize(path.join(root, file))\r\n\r\n\t\tlocal Sub = filePath:sub(#filePath)\r\n\t\tif options.index and Sub == '/' or Sub == '\\\\' then\r\n\t\t\tserveFiles(path.join(filePath, options.index))\r\n\t\telse\r\n\t\t\tserveFiles(filePath)\r\n\t\tend\r\n\tend\r\nend\r\n\r\nreturn static\r\n",
+      "Type":"Code"
+    },
+    "ga.corebyte.Static.Test":{
+      "Code":"p(Import(\"ga.corebyte.Static\")())",
+      "Type":"Code"
+    },
+    "ga.corebyte.Static.Server":{
+      "Code":"return function (Settings)\r\n    local Settings = Settings or {}\r\n    Settings.Host = Settings.Host or \"0.0.0.0\"\r\n    Settings.Port = Settings.Port or 80\r\n    Settings.Path = Settings.Path or require(\"path\").resolve(\"./\")\r\n\r\n    local App = require('utopia'):new()\r\n    local Static = Import(\"ga.corebyte.Static.External.Static\")\r\n    local Path = require(\"path\")\r\n\r\n    App:use(\r\n        Static(\r\n            Path.resolve(Settings.Path) .. \"/\"\r\n        )\r\n    )\r\n\r\n    local Server = App:listen(Settings.Port, Settings.Host)\r\n    return string.format(\"http://localhost:%s/\", Settings.Port), App, function ()\r\n        Server:destroy()\r\n    end\r\nend",
+      "Type":"Code"
+    }
+  },
+  "Resources":{
+    "/package.info.lua":"-- See https://github.com/Dot-lua/TypeWriter/wiki/package.info.lua-format for more info\r\n\r\nreturn { InfoVersion = 1, -- Dont touch this\r\n\r\n    ID = \"Static\", -- A unique id \r\n    Name = \"Static\",\r\n    Description = \"Static for BrowserView\",\r\n    Version = \"1.0.0\",\r\n\r\n    Author = {\r\n        Developers = {\r\n            \"CoreByte\"\r\n        },\r\n        Contributors = {}\r\n    },\r\n\r\n    Dependencies = {\r\n        Luvit = {\r\n            \"voronianski/utopia\",\r\n            \"luvit/http\",\r\n            \"creationix/mime\"\r\n        },\r\n        Git = {},\r\n        Dua = {}\r\n    },\r\n\r\n    Contact = {\r\n        Website = \"\",\r\n        Source = \"\",\r\n        Socials = {}\r\n    },\r\n\r\n    Entrypoints = {\r\n        Main = \"ga.corebyte.Static.Test\"\r\n    }\r\n\r\n}\r\n"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "BuildInfo":{
+    "TypeWriter":{
+      "Version":"4.7.1",
+      "Licence":"MIT",
+      "Name":"TypeWriter"
+    },
+    "Date":"Mon Sep 26 12:41:27 2022"
+  },
+  "Package":{
+    "Dependencies":{
+      "Git":[],
+      "Luvit":["creationix/coro-http","creationix/coro-spawn","creationix/coro-fs","creationix/base64"],
+      "Dua":[]
+    },
+    "Name":"Discord-RPC",
+    "Description":"A Discord-RPC",
+    "ID":"Discord-RPC",
+    "Entrypoints":{
+      "Main":"ga.CoreLauncher.RPC.Test"
+    },
+    "Contact":{
+      "Source":"https://github.com/Dot-lua/TypeWriter/",
+      "Socials":[],
+      "Website":"https://cubic-inc.ga"
+    },
+    "Author":{
+      "Contributors":[],
+      "Developers":["CoreByte"]
+    },
+    "InfoVersion":1,
+    "Version":"1.0.0"
+  },
+  "Code":{
+    "ga.CoreLauncher.RPC.Lib.Unzip":{
+      "Code":"local Spawn = require(\"coro-spawn\")\nlocal Path = require(\"path\")\nlocal FS = require(\"fs\")\n\nreturn function (From, To)\n    FS.mkdirSync(To)\n    local Result, Error = Spawn(\n        \"tar\",\n        {\n            args = {\n                \"-xf\", Path.resolve(From),\n                \"-C\", Path.resolve(To)\n            }\n        }\n    )\n    Result.waitExit()\nend",
+      "Type":"Code"
+    },
+    "ga.CoreLauncher.RPC":{
+      "Type":"Redirect",
+      "RedirectTo":"ga.CoreLauncher.RPC.Main"
+    },
+    "ga.CoreLauncher.RPC.Lib.NPM":{
+      "Code":"local Spawn = require(\"coro-spawn\")\nreturn function (NodePath)\n    return function (Path)\n        local Result = Spawn(\n            NodePath .. \"/npm\" .. (({[\"win32\"] = \".cmd\"})[TypeWriter.Os] or \"\"),\n            {\n                args = {\n                    \"install\",\n                    \"--omit=dev\"\n                },\n                cwd = Path,\n                stdio = {\n                    process.stdin.handle,\n                    process.stdout.handle,\n                    process.stderr.handle,\n                }\n            }\n        )\n        Result.waitExit()\n    end\nend\n",
+      "Type":"Code"
+    },
+    "ga.CoreLauncher.RPC.Main":{
+      "Code":"local FS = require(\"fs\")\nlocal Request = require(\"coro-http\").request\n\nlocal ApplicationData = TypeWriter.ApplicationData .. \"/Discord-RPC/\"\nFS.mkdirSync(ApplicationData)\n\nlocal GetNodeFile = ApplicationData .. \"Get-Node.twr\"\nlocal OpenIPCFile = ApplicationData .. \"Open-IPC.twr\"\n\nlocal NodePath\nlocal function LoadLibraries()\n    TypeWriter.Runtime.LoadInternal(\"BetterEmitter\")\n    TypeWriter.Runtime.LoadFile(GetNodeFile)\n    TypeWriter.Runtime.LoadFile(OpenIPCFile)\n    NodePath = FS.readFileSync(ApplicationData .. \"/NodePath.txt\")\n    TypeWriter.Runtime.LoadFile(TypeWriter.ApplicationData .. \"/Open-IPC/IPC-Connector.twr\")\nend\n\nlocal ExtractedVersion = FS.readFileSync(ApplicationData .. \"version.txt\")\nlocal CurrentVersion = TypeWriter.LoadedPackages[\"Discord-RPC\"].Package.Version\np(CurrentVersion)\n\nif CurrentVersion ~= ExtractedVersion then\n    TypeWriter.Logger.Info(\"Updating Libraries\")\n    local Success, Error = pcall(\n        function ()\n            local _, GetNode = Request(\n                \"GET\",\n                \"https://github.com/corebytee/get-node/releases/latest/download/Get-Node.twr\"\n            )\n            FS.writeFileSync(GetNodeFile, GetNode)\n\n            local _, OpenIPC = Request(\n                \"GET\",\n                \"https://github.com/CoreBytee/open-ipc/releases/latest/download/IPC-Bootstrap.twr\"\n            )\n            FS.writeFileSync(OpenIPCFile, OpenIPC)\n        end\n    )\n    if Success == false then\n        error(\"Failed to download dependencies \" .. Error)\n    end\n    LoadLibraries()\n    \n    TypeWriter.Logger.Info(\"Updating Extracting Libraries\")\n    NodePath = Import(\"ga.corebyte.get-node\").Download()\n    local IPClient = Import(\"openipc.bootstrap\").LoadAll()\n    FS.writeFileSync(ApplicationData .. \"/NodePath.txt\", NodePath)\n\n    TypeWriter.Logger.Info(\"Updating files\")\n    local NodeFiles = ApplicationData .. \"/Node/\"\n    require(\"coro-fs\").rmrf(NodeFiles)\n    local Files = {\n        \"index.js\",\n        \"OpenIPC-NodeJs.zip\",\n        \"package.json\",\n    }\n    FS.mkdirSync(NodeFiles)\n    for Index, FilePath in pairs(Files) do\n        local FileData = TypeWriter.LoadedPackages[\"Discord-RPC\"].Resources[\"/Node/\" .. FilePath]\n        FS.writeFileSync(NodeFiles .. FilePath, FileData)\n    end\n\n    TypeWriter.Logger.Info(\"Unpacking files\")\n    Import(\"ga.CoreLauncher.RPC.Lib.Unzip\")(NodeFiles .. \"/OpenIPC-NodeJs.zip\", NodeFiles .. \"/OpenIPC\")\n    FS.writeFileSync(ApplicationData .. \"version.txt\", CurrentVersion)\n\n    TypeWriter.Logger.Info(\"Installing npm libraries\")\n    local NPM = Import(\"ga.CoreLauncher.RPC.Lib.NPM\")(NodePath)\n    NPM(NodeFiles)\n    NPM(NodeFiles .. \"/OpenIPC\")\nelse\n    LoadLibraries()\nend\n\nreturn Import(\"ga.CoreLauncher.RPC.RPC\")(NodePath, ApplicationData)\n",
+      "Type":"Code"
+    },
+    "ga.CoreLauncher.RPC.Test":{
+      "Code":"print(\"Hello World!\")\nlocal RPC = Import(\"ga.CoreLauncher.RPC\"):new(\"791927279357657088\")\np(RPC:SetActivity(\n    {\n        state = string.random(16),\n        buttons = {\n            {\n                label = \"test\",\n                url = \"https://cubic-inc.ga\"\n            }\n        }\n    }\n))\n\nWait(1)\np(\"exit\")\n\nRPC:Disconnect()",
+      "Type":"Code"
+    },
+    "ga.CoreLauncher.RPC.RPC":{
+      "Code":"return function (NodePath, ApplicationData)\n    local Emitter = Import(\"ga.corebyte.BetterEmitter\")\n    local Spawn = require(\"coro-spawn\")\n    local Json = require(\"json\")\n    local Base = require(\"base64\")\n\n    local RPC = Emitter:extend()\n\n    function RPC:initialize(ClientId)\n        local Data = {}\n        Data.SessionId = string.random(32)\n        Data.Channel = \"DiscordRPC-\" .. Data.SessionId\n        Data.ClientId = ClientId\n        self.Data = Data\n        self.IPC = Import(\"openipc.connector\"):new(Data.Channel, \"Main\")\n        local Result = Spawn(\n            NodePath .. \"/node\",\n            {\n                args = {\n                    \".\", Base.encode(Json.encode(Data))\n                },\n                cwd = ApplicationData .. \"/Node/\",\n                stdio = {\n                    process.stdin.handle,\n                    process.stdout.handle,\n                    process.stderr.handle,\n                }\n            }\n        )\n        self.NodeProcess = Result\n        self.IPC:RegisterMessage(\n            \"Connected\",\n            function ()\n                self:Emit(\"ConnectedNode\")\n            end\n        )\n        self:WaitFor(\"ConnectedNode\")\n    end\n\n    function RPC:SetActivity(Activity)\n        return self.IPC:Send(\"Node\", \"SetActivity\", Activity)\n    end\n\n    function RPC:ClearActivity()\n        return self.IPC:Send(\"Node\", \"ClearActivity\")\n    end\n\n    function RPC:Disconnect()\n        self:ClearActivity()\n        self.IPC:Send(\"Node\", \"Disconnect\")\n        self.IPC:Disconnect()\n        require(\"uv\").process_kill(self.NodeProcess.handle)\n    end\n\n    return RPC\nend",
+      "Type":"Code"
+    }
+  },
+  "Resources":{
+    "/package.info.lua":"-- See https://github.com/Dot-lua/TypeWriter/wiki/package.info.lua-format for more info\n\nreturn { InfoVersion = 1, -- Dont touch this\n\n    ID = \"Discord-RPC\", -- A unique id \n    Name = \"Discord-RPC\",\n    Description = \"A Discord-RPC\",\n    Version = \"1.0.0\",\n\n    Author = {\n        Developers = {\n            \"CoreByte\"\n        },\n        Contributors = {}\n    },\n\n    Dependencies = {\n        Luvit = {\n            \"creationix/coro-http\",\n            \"creationix/coro-spawn\",\n            \"creationix/coro-fs\",\n            \"creationix/base64\",\n        },\n        Git = {},\n        Dua = {}\n    },\n\n    Contact = {\n        Website = \"https://cubic-inc.ga\",\n        Source = \"https://github.com/Dot-lua/TypeWriter/\",\n        Socials = {}\n    },\n\n    Entrypoints = {\n        Main = \"ga.CoreLauncher.RPC.Test\"\n    }\n\n}\n",
+    "/Node/OpenIPC-NodeJs.zip":"PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000·†\u0006U¹y”{÷\u0000\u0000\u0000™\u0002\u0000\u0000\u0015\u0000\u0000\u0000lib\\WaitForEmitter.js’Ánƒ0\f†ï•ú\u000eQ/\rRÙ\u0003tâØw˜´s\u0014\\5\u0012$ÌvÚN\u0015ï¾$\u0014F\u0004“æ\u000bğù·ı'X;K,NW°|j\r3 ¨\u0004\u00977\br\u0007‘Ó®ØntÒ}*Ão\u000e“|¦Ûß\u0002/Ï\u000eËTPvèZC°\u000fu¡²QDSås\u0006Ü\u0019lMùàÇv#B¤Qè5;”Å\bcï  ×ôÃCÑ·Õc{™ú\u001dÄ‡iÁùğòP\u001b­\u0018²Fæ,äS\"ªJXß4Y>\u0006\u0002{´BÅ£eç–¹.\u0006_\f\u001d–x0³ä“©•Üc‰ú\u001c\u0015¿Ÿ³Ì\u007fí®X]³ù—Å\u0015{<\\äq¼ô\\1³XLÿ­{ÑºÚ7ğ\u0002÷Î!SØ¦|E~\u0000PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000²„\tU•Ê´1\u0004\u0000\u0000À\f\u0000\u0000\b\u0000\u0000\u0000index.jsµVmsâ6\u0010ş\u0019şƒÊ´\u0013Ópö‘Kh–ÎÜaÒãz\u0014hÓ—éô\u0014Y€/Æâ$\u0011B3ü÷îÊïÆ$é‡úƒ­ñ¾=»ûh%&B¥É5õõ…ı¥¯5—¤K$ÿ¼ö%·m'ğoœ¢Üş¤\u001bµ#\u0016™ò›‰`·\\ç¬êëĞ¿ãRÑàÅ†ß(#~Á\u0002Ÿ‡º\u000e†µ#ÇYh½R\u001dÇQš²[\u0001Ê³@ll&–\u000euZ¯Î^Ÿ¶kG³uÈ´/B2¦¡'–\u0013-ıpn\u0005<œëEƒ<Ô\b<wTB`µ\u000e4É.9>ÎÄlA%e€\\eâ7o{nÿâÇwƒ÷?}¸\u001c®~\u001eO¦¿üzıÛï\u007fĞ\u001bæñÙ|á\u007fº\r–¡X}–J¯ï6÷Û\u007f^¶N_·¿ùöu¥ó\u000f\u0006\u00188Ï~Ù\u0011ØH{&$±Œ\u000fJ/¿ƒÏ÷$R€õÉ\tIsÂ'Îé¤à\u000e—o´uIõ\u0086Š\t\u0019-¥©Õ _“ÌA\u0019X£\u0011ÉvÑGr½–a\u001c¦v´Ã¾°€*E\u0006+Ö3Í\"ü^óĞSe~Ä(\r\u0001äši€Ñ[Ğ0äA“\fé’\u0017òPë\u0015—V#û¡\u0017¾²c}¨C¼*ÉÑ\r\bñS’¼ƒ\\\u0003le—<\u0018Ğ‰\u0014\u000b;\u0005I¢k´órc§kÈ7\u0019}­\u001bäc \u0018\r\u0016BéÎéy»}îÜµ\u001cH3äL;_>ÄPw°D`»å¬Ro¶\u0000âğ\u0010‚¤\u001c¶\nUÁ'\u0005ks(¬UïE¸WÏùİ=\u0012‚\u0005Bñÿ\u0016Ãõ\u0015«\nS¥;6\f©7ÉÃàª÷·;˜ôFÃa¿7í»\u001d\u0002}ç»gÂ\\r¥è\u001cRµ\rY\u000e®G5İƒŒ}t‹¿üY¤k›—\u0006ZîYáãbˆ\rp•\u0014•­R¢;Â\u0003(Ü\u0001\u000f9[\u0011œ²}\u0005`Î„Ç=0\u007f?\u0019\rí\u0015•Š[îÁ\u0002G$\u001e„0ğĞ\u007fl]]Ï„Ã)Ù£*ùÜW°\u001b/£êZÈÈ&¹ˆk[¨Oaßü‰Š\u007f\u0001ĞDµÒ{\u0019`Á\u001f¶ÃµãÀÓí\nZÛ%\t]ö:c¢—\u0018U®L4Œ*ÓÇ`Å\u0004\\;N\u0001¶ğ:\bö\u0002â\\\u0012\u0001·\u00031·ê#Ø†@_ò\u0003™J\u001f\u001a¤\u0005Y\u0018G„’Pàˆƒ**È‘$4µ¾R\r„h¢<\u001f'² ÊÏ\u0005î¤L¬„\u000eÕC%\fr!Å\u0012¿\u00138;yÈò\u0001s\u000e®¥¯¹UÄR\u001bPo\u0016ÿWĞz*:I¨}a\u0012¹“CQ¡†€;¹\f+TrŒè¤|8¸u\u001a•Ä3™\u0012\u000b}4É\u0015İ\u0006‚z…\u000eG×¸Æåig\"\u001bÛ¢ vÔI\u00163-\u001b^’So;Ñ\u0014 }Ñ%­=ªå[\u0014‘Oñ¼M\u001aHÁ9k™Ñ¡ÌÈñg[\u000bslTWi‚êS\u0011\u001d·ÕuB>&í„J\u0015®P­öÿF3\u0000õ\u0018Å$XœJ…\u001cSíD\t?E½\u0004òSÜÃ'âÓ¡›v5\u001d]8rJ\u0000²\u0003Í­<—â«V¶½pt%ëç`Dff\bíòqŒîğ@Ş\u000b\u001e\u0007>p~7\tşïÇ£q| çøZyDÆşrPğµÇò\u0012Y³;Gñ~R¹\u0011ÌÆÊXo|-…·†ÎïWBj¼Û¥WÔ\u007f\u0001PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000‘¢\u0006UÎd²æ~\u0000\u0000\u0000·\u0000\u0000\u0000\f\u0000\u0000\u0000package.jsonm1\u000eƒ0\fE÷œ\"ÊŒ£B\u0017Ô¹ç¨\u0004ÁHV©ƒ’4\b!î^7TL]ß\u007fÿÛ›ÒÚ\f8#\u000fÈ0š›Ş„\t}3e\f±›`Á>z÷Ä\u0004n\"ä$yÔöb\u001bS\u001dîÒQ‚Ñ\u0007À,9ÌÁ¿(âÏ\u0013óôba­mmm\u0004íÕq?ßÿ¾ˆW\u001a×Ò¹–oGíê\u0003PK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000·†\u0006U¹y”{÷\u0000\u0000\u0000™\u0002\u0000\u0000\u0015\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000lib\\WaitForEmitter.jsPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000²„\tU•Ê´1\u0004\u0000\u0000À\f\u0000\u0000\b\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000*\u0001\u0000\u0000index.jsPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000‘¢\u0006UÎd²æ~\u0000\u0000\u0000·\u0000\u0000\u0000\f\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0005\u0000\u0000package.jsonPK\u0005\u0006\u0000\u0000\u0000\u0000\u0003\u0000\u0003\u0000³\u0000\u0000\u0000)\u0006\u0000\u0000\u0000\u0000",
+    "/Node/package.json":"{\n  \"dependencies\": {\n    \"@xhayper/discord-rpc\": \"^0.0.12-beta\"\n  }\n}\n",
+    "/Node/index.js":"(async function() {\n    const LaunchArgs = JSON.parse(Buffer.from(process.argv[2], \"base64\"))\n    const RPC = new (require(\"@xhayper/discord-rpc\").Client)({clientId: LaunchArgs.ClientId})\n    await RPC.login()\n    const IpcConnection = new (require(\"./OpenIPC/index.js\"))(LaunchArgs.Channel, \"Node\")\n\n    IpcConnection.RegisterMessage(\n        \"SetActivity\",\n        async function(Activity) {\n            return await RPC.user?.setActivity(\n                Activity\n            );\n        }\n    )\n\n    IpcConnection.RegisterMessage(\n        \"ClearActivity\",\n        async function() {\n            return await RPC.user?.clearActivity();\n        }\n    )\n\n    IpcConnection.RegisterMessage(\n        \"Disconnect\",\n        async function() {\n            await RPC.destroy()\n        }\n    )\n\n    IpcConnection.Send(\"Main\", \"Connected\")\n})()"
+  }
+}
