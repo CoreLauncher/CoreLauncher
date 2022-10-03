@@ -318,6 +318,7 @@ end
 local function DownloadClient(FileInfo, Name, ClassPath)
     CoreLauncher.ProgressBar:SetStage("Downloading client")
     CoreLauncher.ProgressBar:Reset()
+    CoreLauncher.ProgressBar:Update()
     local FilePath = GameDir .. "Clients/" .. Name .. ".jar"
     if FS.existsSync(FilePath) == false then
         local _, FileData = CoreLauncher.Http.Request(
@@ -335,11 +336,16 @@ local function DownloadMods(Mods, ModFolder)
     local ModCacheFolder = GameDir .. "ModCache/"
     CoreLauncher.ProgressBar:SetStage("Downloading mods")
     CoreLauncher.ProgressBar:Reset()
+    local All = table.count(Mods)
+    local Count = 1
     for ModId, ModInfo in pairs(Mods) do
+        CoreLauncher.ProgressBar:SetProgress(Count, All)
+        CoreLauncher.ProgressBar:Update()
         local File
         if FS.existsSync(ModCacheFolder .. ModInfo.Hash) then
             File = FS.readFileSync(ModCacheFolder .. ModInfo.Hash)
         else
+            TypeWriter.Logger.Info("Downloading modfile %s", ModInfo.Url)
             local _, FileData = CoreLauncher.Http.Request(
                 "GET",
                 ModInfo.Url
@@ -348,8 +354,25 @@ local function DownloadMods(Mods, ModFolder)
             File = FileData
         end
         FS.writeFileSync(ModFolder .. ModInfo.Hash .. ".jar", File)
+        Count = Count + 1
     end
     for FileName in FS.scandirSync(ModFolder) do
+        local FileHash = PathLib.basename(FileName, ".jar")
+        local Found = false
+        for _, Mod in pairs(Mods) do
+            if Mod.Hash == FileHash then
+                if Mod.Enabled == true then
+                    Found = true
+                    break
+                else
+                end
+            end
+        end
+        if Found == false then
+            local File = ModFolder .. FileName
+            TypeWriter.Logger.Info("Removing removed mod file %s", File)
+            FS.unlinkSync(File)
+        end
     end
 end
 
