@@ -527,20 +527,20 @@ Data.Functions = {
         local ArgumentParameters = {
             auth_player_name = AuthData.UserName,
             version_name = VersionData.id,
-            game_directory = GameDir .. "Instances/" .. Instance.Id .. "/",
+            game_directory = PathLib.resolve(GameDir .. "Instances/" .. Instance.Id .. "/"),
             assets_root = AssetDir,
             assets_index_name = VersionData.assets,
             auth_uuid = AuthData.UUID,
             auth_access_token = AuthData.Token,
             clientid = "",
             auth_xuid = "",
-            user_type = "MSA",
+            user_type = "msa",
             version_type = VersionData.type,
 
-            natives_directory = BinDir,
+            natives_directory = ".",
             launcher_name = "CoreLauncher",
             launcher_version = TypeWriter.LoadedPackages["CoreLauncher"].Package.Version,
-            classpath = table.concat(FormattedClassPath, ";")
+            classpath = table.concat(FormattedClassPath, ";") .. ";"
         }
         local ParsedArguments = {
             Game = ParseArguments(VersionData.arguments.game, ArgumentParameters),
