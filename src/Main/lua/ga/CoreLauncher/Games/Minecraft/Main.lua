@@ -216,9 +216,9 @@ local function DownloadAssets(Url, Id)
                 Url
             )
             FS.writeFileSync(AssetPath, AssetData)
+            CoreLauncher.ProgressBar:SetProgress(Current, All)
+            CoreLauncher.ProgressBar:Update()
         end
-        CoreLauncher.ProgressBar:SetProgress(Current, All)
-        CoreLauncher.ProgressBar:Update()
         Current = Current + 1
     end
     FS.writeFileSync(GameDir .. "Assets/indexes/" .. Id .. ".json", require("json").encode(AssetIndex))
