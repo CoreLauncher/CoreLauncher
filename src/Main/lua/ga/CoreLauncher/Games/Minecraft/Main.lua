@@ -400,7 +400,6 @@ local function GetAuthData()
     local MojangToken
     do
         local ExpiresAt = CoreLauncher.Config:GetKey("Games.MinecraftJava.AccessToken.ExpiresAt")
-        p(ExpiresAt)
         local _, Response = CoreLauncher.Http.JsonRequest(
             "POST",
             "https://api.minecraftservices.com/authentication/login_with_xbox",
@@ -416,7 +415,6 @@ local function GetAuthData()
                 ["ensureLegacyEnabled"] = true
             }
         )
-        p(Response)
         MojangToken = Response.access_token
         CoreLauncher.Config:SetKey(
             "Games.MinecraftJava.AccessToken",
@@ -509,7 +507,6 @@ Data.Info = {
 }
 Data.Functions = {
     LaunchGame = function (Instance)
-        p(Instance)
         local InstanceVersion = Instance.Properties.Version
         local VersionData = GetClientData(Instance.Properties.ModType, InstanceVersion)
         local ClassPath = {}
