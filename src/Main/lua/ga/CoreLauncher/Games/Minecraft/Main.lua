@@ -702,9 +702,6 @@ Data.Functions = {
                     Data = ResponseData
                 end
                 
-                if Data.hits == nil then
-                    p(Data)
-                end
                 local ReturnData = {
                     HitCount = #Data.hits,
                     TotalHitCount = Data.total_hits,
