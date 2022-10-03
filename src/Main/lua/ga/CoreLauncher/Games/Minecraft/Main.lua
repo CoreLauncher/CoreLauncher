@@ -331,9 +331,7 @@ local function DownloadMods(Mods, ModFolder)
     local ModCacheFolder = GameDir .. "ModCache/"
     CoreLauncher.ProgressBar:SetStage("Downloading mods")
     CoreLauncher.ProgressBar:Reset()
-    p(Mods)
     for ModId, ModInfo in pairs(Mods) do
-        p(ModInfo)
         local File
         if FS.existsSync(ModCacheFolder .. ModInfo.Hash) then
             File = FS.readFileSync(ModCacheFolder .. ModInfo.Hash)
@@ -348,7 +346,6 @@ local function DownloadMods(Mods, ModFolder)
         FS.writeFileSync(ModFolder .. ModInfo.Hash .. ".jar", File)
     end
     for FileName in FS.scandirSync(ModFolder) do
-        p(FileName)
     end
 end
 
