@@ -280,9 +280,6 @@ local function DownloadLibraries(Libraries, ClassPath)
                     Package = "intermediary"
                     LibUrl = "https://maven.fabricmc.net/"
                 end
-                p(Author)
-                p(Package)
-                p(Version)
                 local FileName = string.format(
                     "%s-%s.jar",
                     Package,
