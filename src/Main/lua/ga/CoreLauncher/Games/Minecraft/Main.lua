@@ -273,7 +273,7 @@ local function DownloadLibraries(Libraries, ClassPath)
                     )
                     FS.writeFileSync(Path, FileData)
                 end
-                table.insert(ClassPath, Path)
+                table.insert(ClassPath, PathLib.resolve(Path))
             else
                 local Split = Library.name:split(":")
                 local Author = Split[1]
@@ -305,7 +305,7 @@ local function DownloadLibraries(Libraries, ClassPath)
                     CFS.mkdirp(GameDir .. "Libraries/" .. PathName .. "/")
                     FS.writeFileSync(FilePath, File)
                 end
-                table.insert(ClassPath, FilePath)
+                table.insert(ClassPath, PathLib.resolve(FilePath))
             end
         end
     end
