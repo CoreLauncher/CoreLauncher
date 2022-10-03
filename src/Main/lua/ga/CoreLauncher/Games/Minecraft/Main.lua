@@ -578,8 +578,14 @@ Data.Functions = {
             for LogMessage in Result.stdout.read do
                 for _, Line in pairs(LogMessage:Split("\n")) do
                     local SplitMessage = Line:split(" ")
-                    table.remove(SplitMessage, 1)
-                    TypeWriter.Logger.Info("Game (MinecraftJava) > %s", table.concat(SplitMessage, " "))
+                    local LogLine
+                    if SplitMessage[1]:sub(1, 1) == "[" then
+                        table.remove(SplitMessage, 1)
+                        LogLine = table.concat(SplitMessage, " ")
+                    else
+                        LogLine = Line
+                    end
+                    TypeWriter.Logger.Info("Game (MinecraftJava) > %s", LogLine)
                 end
             end
             Result.waitExit()
