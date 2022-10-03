@@ -558,7 +558,7 @@ Data.Functions = {
                 args = Arguments,
                 stdio = {
                     process.stdin.handle,
-                    true, --process.stdout.handle,
+                    true,
                     process.stderr.handle
                 },
                 cwd = ArgumentParameters.game_directory
