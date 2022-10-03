@@ -127,6 +127,11 @@
     visibility: visible !important;
 }
 
+.modversionselect {
+    display: inline-block;
+    width: 30%;
+}
+
 .modlistmod .modname {
     display: inline-block;
     height: 100%;
