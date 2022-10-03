@@ -239,13 +239,13 @@ local function DownloadLogConfig(Data)
                 FileData.url
             )
             FS.writeFileSync(LogFile, File)
-            Argument = JsFormat(
-                Data.argument,
-                {
-                    path = PathLib.resolve(LogFile)
-                }
-            )
         end
+        Argument = JsFormat(
+            Data.argument,
+            {
+                path = PathLib.resolve(LogFile)
+            }
+        )
     end
     
     return Argument
