@@ -550,6 +550,13 @@ Data.Functions = {
         local Arguments = {}
         InsertIntoTable(ParsedArguments.JVM, Arguments)
         InsertIntoTable(LogArg, Arguments)
+        InsertIntoTable("-Xmx2G", Arguments)
+        InsertIntoTable("-XX:+UnlockExperimentalVMOptions", Arguments)
+        InsertIntoTable("-XX:+UseG1GC", Arguments)
+        InsertIntoTable("-XX:G1NewSizePercent=20", Arguments)
+        InsertIntoTable("-XX:G1ReservePercent=20", Arguments)
+        InsertIntoTable("-XX:MaxGCPauseMillis=50", Arguments)
+        InsertIntoTable("-XX:G1HeapRegionSize=32M", Arguments)
         InsertIntoTable(VersionData.mainClass, Arguments)
         InsertIntoTable(ParsedArguments.Game, Arguments)
         local Result, Error = require("coro-spawn")(
