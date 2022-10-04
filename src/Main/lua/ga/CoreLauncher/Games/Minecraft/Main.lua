@@ -568,7 +568,7 @@ Data.Functions = {
             natives_directory = ".",
             launcher_name = "CoreLauncher",
             launcher_version = TypeWriter.LoadedPackages["CoreLauncher"].Package.Version,
-            classpath = table.concat(FormattedClassPath, ";") .. ";"
+            classpath = table.concat(FormattedClassPath, ({[true] = ";", [false] = ":"})[TypeWriter.Os == "win32"])
         }
         local ParsedArguments = {
             Game = ParseArguments(VersionData.arguments.game, ArgumentParameters),
