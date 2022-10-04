@@ -588,7 +588,7 @@ Data.Functions = {
         InsertIntoTable(VersionData.mainClass, Arguments)
         InsertIntoTable(ParsedArguments.Game, Arguments)
         local Result, Error = require("coro-spawn")(
-            "java.exe",
+            "java",
             {
                 args = Arguments,
                 stdio = {
