@@ -293,7 +293,7 @@ local function DownloadLibraries(Libraries, ClassPath)
                 )
                 Url = string.format(
                     "%s%s/%s",
-                    Library.url,
+                    LibUrl,
                     PathName,
                     FileName
                 )
