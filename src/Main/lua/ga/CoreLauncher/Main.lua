@@ -100,10 +100,15 @@ do
     else
         Window:RemoveMenu()
         -- Load static server
-
+        p(Import("ga.corebyte.Static")(
+            {
+                Port = 9874,
+                Path = CoreLauncher.ApplicationData .. "/App/"
+            }
+        ))
     end
-    Window:LoadURL("http://localhost:9874")
     Window:Show()
+    Window:LoadURL("http://localhost:9874/")
 
     if Show == false then
         Window:WaitFor("ready-to-show")
