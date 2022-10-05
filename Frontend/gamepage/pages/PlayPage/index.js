@@ -16,7 +16,7 @@ async function GetGameState() {
             PlayButton.classList.remove("button-positive")
             PlayButton.classList.add("button-danger")
             p("Running")
-            PlayButton.innerText = "Kill Game"
+            PlayButton.innerText = "Close Game"
         } else {
             PlayButton.classList.add("button-positive")
             PlayButton.classList.remove("button-danger")
