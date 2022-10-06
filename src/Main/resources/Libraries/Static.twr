@@ -1,15 +1,20 @@
 {
   "BuildInfo":{
-    "Date":"Thu Oct  6 10:59:27 2022",
     "TypeWriter":{
+      "Licence":"MIT",
       "Name":"TypeWriter",
-      "Version":"4.7.1",
-      "Licence":"MIT"
-    }
+      "Version":"4.7.1"
+    },
+    "Date":"Thu Oct  6 12:16:47 2022"
   },
   "Package":{
+    "Dependencies":{
+      "Git":[],
+      "Luvit":["creationix/weblit","creationix/coro-spawn","creationix/mime","luvit/json","luvit/url"],
+      "Dua":[]
+    },
     "Name":"Static",
-    "Version":"1.0.0",
+    "ID":"Static",
     "InfoVersion":1,
     "Description":"Static server",
     "Author":{
@@ -19,17 +24,12 @@
     "Entrypoints":{
       "Main":"ga.corebyte.Static.Test"
     },
-    "Dependencies":{
-      "Git":[],
-      "Luvit":["creationix/weblit","creationix/coro-spawn","creationix/mime","luvit/json","luvit/url"],
-      "Dua":[]
-    },
+    "Version":"1.0.0",
     "Contact":{
       "Source":"",
       "Socials":[],
       "Website":""
-    },
-    "ID":"Static"
+    }
   },
   "Code":{
     "ga.corebyte.Static.Main":{
@@ -45,12 +45,12 @@
       "Type":"Code"
     },
     "ga.corebyte.Static":{
-      "RedirectTo":"ga.corebyte.Static.Main",
-      "Type":"Redirect"
+      "Type":"Redirect",
+      "RedirectTo":"ga.corebyte.Static.Main"
     }
   },
   "Resources":{
-    "/Server.twr":"{\n  \"BuildInfo\":{\n    \"Date\":\"Thu Oct  6 10:59:26 2022\",\n    \"TypeWriter\":{\n      \"Name\":\"TypeWriter\",\n      \"Version\":\"4.7.1\",\n      \"Licence\":\"MIT\"\n    }\n  },\n  \"Package\":{\n    \"Author\":{\n      \"Contributors\":[],\n      \"Developers\":[\"CoreByte\"]\n    },\n    \"InfoVersion\":1,\n    \"Dependencies\":{\n      \"Git\":[],\n      \"Luvit\":[\"creationix/weblit\",\"creationix/coro-spawn\",\"creationix/mime\",\"luvit/json\",\"luvit/url\"],\n      \"Dua\":[]\n    },\n    \"Version\":\"1.0.0\",\n    \"Entrypoints\":{\n      \"Main\":\"ga.corebyte.Server\"\n    },\n    \"Description\":\"Static\",\n    \"Contact\":{\n      \"Socials\":[],\n      \"Website\":\"\",\n      \"Source\":\"\"\n    },\n    \"Name\":\"Static-Server\",\n    \"ID\":\"Static-Server\"\n  },\n  \"Code\":{\n    \"ga.corebyte.Server.Main\":{\n      \"Code\":\"local App = require('weblit-app')\\nlocal Arguments = require(\\\"json\\\").decode(\\n    TypeWriter.ArgumentParser:GetArgument(\\\"serverargs\\\", \\\"serverargs\\\")\\n)\\n\\nApp.bind(\\n    {\\n        host = Arguments.Host,\\n        port = Arguments.Port\\n    }\\n)\\n\\nApp.use(\\n    Import(\\\"ga.corebyte.Server.Static\\\")(\\n        Arguments.Path\\n    )\\n)\\n\\nApp.start()\",\n      \"Type\":\"Code\"\n    },\n    \"ga.corebyte.Server\":{\n      \"RedirectTo\":\"ga.corebyte.Server.Main\",\n      \"Type\":\"Redirect\"\n    },\n    \"ga.corebyte.Server.Static\":{\n      \"Code\":\"local Path = require(\\\"path\\\")\\nlocal FS = require(\\\"fs\\\")\\nlocal Mimes = require('mime')\\n\\nlocal UrlParse = require('url').parse\\nlocal DecodeUrl = require('querystring').urldecode\\nlocal function ParseURL(Url)\\n    return DecodeUrl(UrlParse(Url).pathname)\\nend\\n\\nreturn function (Root)\\n    Root = Path.normalize(Root)\\n    local Index = \\\"index.html\\\"\\n\\n    return function (Request, Response, Next)\\n        if Request.method ~= 'GET' and Request.method ~= 'HEAD' then return Next() end\\n        local Url = ParseURL(Request.path)\\n\\n        local function ServeFiles(ServeUrl)\\n            local Stat = FS.statSync(ServeUrl)\\n            if Stat.type == \\\"directory\\\" then\\n                return ServeFiles(ServeUrl .. Index)\\n            end\\n\\n            if FS.existsSync(ServeUrl) then\\n                p(ServeUrl)\\n                Response.headers[\\\"Content-Type\\\"] = Mimes.getType(ServeUrl)\\n                Response.headers[\\\"Content-Length\\\"] = Stat.size\\n                Response.headers[\\\"Cache-Control\\\"] = 'public, max-age=' .. 0\\n                Response.code = 200\\n                Response.body = ({FS.readFileSync(ServeUrl)})[1]\\n            else\\n                Response.code = 404\\n            end\\n        end\\n\\n        ServeFiles(Path.join(Root, Url))\\n    end\\nend\",\n      \"Type\":\"Code\"\n    }\n  },\n  \"Resources\":{\n    \"/package.info.lua\":\"-- See https://github.com/Dot-lua/TypeWriter/wiki/package.info.lua-format for more info\\n\\nreturn { InfoVersion = 1, -- Dont touch this\\n\\n    ID = \\\"Static-Server\\\", -- A unique id \\n    Name = \\\"Static-Server\\\",\\n    Description = \\\"Static\\\",\\n    Version = \\\"1.0.0\\\",\\n\\n    Author = {\\n        Developers = {\\n            \\\"CoreByte\\\"\\n        },\\n        Contributors = {}\\n    },\\n\\n    Dependencies = {\\n        Luvit = {\\n            \\\"creationix/weblit\\\",\\n            \\\"creationix/coro-spawn\\\",\\n            \\\"creationix/mime\\\",\\n            \\\"luvit/json\\\",\\n            \\\"luvit/url\\\"\\n        },\\n        Git = {},\\n        Dua = {}\\n    },\\n\\n    Contact = {\\n        Website = \\\"\\\",\\n        Source = \\\"\\\",\\n        Socials = {}\\n    },\\n\\n    Entrypoints = {\\n        Main = \\\"ga.corebyte.Server\\\"\\n    }\\n\\n}\\n\"\n  }\n}",
+    "/Server.twr":"{\n  \"BuildInfo\":{\n    \"Date\":\"Thu Oct  6 12:16:46 2022\",\n    \"TypeWriter\":{\n      \"Name\":\"TypeWriter\",\n      \"Version\":\"4.7.1\",\n      \"Licence\":\"MIT\"\n    }\n  },\n  \"Package\":{\n    \"Author\":{\n      \"Developers\":[\"CoreByte\"],\n      \"Contributors\":[]\n    },\n    \"Name\":\"Static-Server\",\n    \"Version\":\"1.0.0\",\n    \"Dependencies\":{\n      \"Dua\":[],\n      \"Git\":[],\n      \"Luvit\":[\"creationix/weblit\",\"creationix/coro-spawn\",\"creationix/mime\",\"luvit/json\",\"luvit/url\"]\n    },\n    \"ID\":\"Static-Server\",\n    \"Description\":\"Static\",\n    \"Entrypoints\":{\n      \"Main\":\"ga.corebyte.Server\"\n    },\n    \"Contact\":{\n      \"Source\":\"\",\n      \"Socials\":[],\n      \"Website\":\"\"\n    },\n    \"InfoVersion\":1\n  },\n  \"Code\":{\n    \"ga.corebyte.Server.Static\":{\n      \"Code\":\"local Path = require(\\\"path\\\")\\nlocal FS = require(\\\"fs\\\")\\nlocal Mimes = require('mime')\\n\\nlocal UrlParse = require('url').parse\\nlocal DecodeUrl = require('querystring').urldecode\\nlocal function ParseURL(Url)\\n    return DecodeUrl(UrlParse(Url).pathname)\\nend\\n\\nreturn function (Root)\\n    Root = Path.normalize(Root)\\n    local Index = \\\"index.html\\\"\\n\\n    return function (Request, Response, Next)\\n        if Request.method ~= 'GET' and Request.method ~= 'HEAD' then return Next() end\\n        local Url = ParseURL(Request.path)\\n\\n        local function ServeFiles(ServeUrl)\\n            local Stat = FS.statSync(ServeUrl)\\n            if Stat.type == \\\"directory\\\" then\\n                return ServeFiles(ServeUrl .. Index)\\n            end\\n\\n            if FS.existsSync(ServeUrl) then\\n                Response.headers[\\\"Content-Type\\\"] = Mimes.getType(ServeUrl)\\n                Response.headers[\\\"Content-Length\\\"] = Stat.size\\n                Response.headers[\\\"Cache-Control\\\"] = 'public, max-age=' .. 0\\n                Response.code = 200\\n                Response.body = ({FS.readFileSync(ServeUrl)})[1]\\n            else\\n                Response.code = 404\\n            end\\n        end\\n\\n        ServeFiles(Path.join(Root, Url))\\n    end\\nend\",\n      \"Type\":\"Code\"\n    },\n    \"ga.corebyte.Server.Main\":{\n      \"Code\":\"local App = require('weblit-app')\\nlocal Arguments = require(\\\"json\\\").decode(\\n    TypeWriter.ArgumentParser:GetArgument(\\\"serverargs\\\", \\\"serverargs\\\")\\n)\\n\\nApp.bind(\\n    {\\n        host = Arguments.Host,\\n        port = Arguments.Port\\n    }\\n)\\n\\nApp.use(\\n    Import(\\\"ga.corebyte.Server.Static\\\")(\\n        Arguments.Path\\n    )\\n)\\n\\nApp.start()\",\n      \"Type\":\"Code\"\n    },\n    \"ga.corebyte.Server\":{\n      \"Type\":\"Redirect\",\n      \"RedirectTo\":\"ga.corebyte.Server.Main\"\n    }\n  },\n  \"Resources\":{\n    \"/package.info.lua\":\"-- See https://github.com/Dot-lua/TypeWriter/wiki/package.info.lua-format for more info\\n\\nreturn { InfoVersion = 1, -- Dont touch this\\n\\n    ID = \\\"Static-Server\\\", -- A unique id \\n    Name = \\\"Static-Server\\\",\\n    Description = \\\"Static\\\",\\n    Version = \\\"1.0.0\\\",\\n\\n    Author = {\\n        Developers = {\\n            \\\"CoreByte\\\"\\n        },\\n        Contributors = {}\\n    },\\n\\n    Dependencies = {\\n        Luvit = {\\n            \\\"creationix/weblit\\\",\\n            \\\"creationix/coro-spawn\\\",\\n            \\\"creationix/mime\\\",\\n            \\\"luvit/json\\\",\\n            \\\"luvit/url\\\"\\n        },\\n        Git = {},\\n        Dua = {}\\n    },\\n\\n    Contact = {\\n        Website = \\\"\\\",\\n        Source = \\\"\\\",\\n        Socials = {}\\n    },\\n\\n    Entrypoints = {\\n        Main = \\\"ga.corebyte.Server\\\"\\n    }\\n\\n}\\n\"\n  }\n}",
     "/package.info.lua":"-- See https://github.com/Dot-lua/TypeWriter/wiki/package.info.lua-format for more info\n\nreturn { InfoVersion = 1, -- Dont touch this\n\n    ID = \"Static\", -- A unique id \n    Name = \"Static\",\n    Description = \"Static server\",\n    Version = \"1.0.0\",\n\n    Author = {\n        Developers = {\n            \"CoreByte\"\n        },\n        Contributors = {}\n    },\n\n    Dependencies = {\n        Luvit = {\n            \"creationix/weblit\",\n            \"creationix/coro-spawn\",\n            \"creationix/mime\",\n            \"luvit/json\",\n            \"luvit/url\"\n        },\n        Git = {},\n        Dua = {}\n    },\n\n    Contact = {\n        Website = \"\",\n        Source = \"\",\n        Socials = {}\n    },\n\n    Entrypoints = {\n        Main = \"ga.corebyte.Static.Test\"\n    }\n\n}\n"
   }
 }
