@@ -1,16 +1,17 @@
 print("Hello World!")
 --Imports
 local FS = require("fs")
+local ApplicationData = TypeWriter.ApplicationData .. "/CoreLauncher/"
+FS.mkdirSync(ApplicationData)
 
-
-
---Globals
+--Load Libraries
 local Resources = TypeWriter.LoadedPackages["CoreLauncher"].Resources
 TypeWriter.Runtime.LoadJson(Resources["/Libraries/Discord-RPC.twr"])
 TypeWriter.Runtime.LoadJson(Resources["/Libraries/Electron-Lua-Bootstrap.twr"])
 TypeWriter.Runtime.LoadJson(Resources["/Libraries/IPC-Bootstrap.twr"])
 TypeWriter.Runtime.LoadJson(Resources["/Libraries/Static.twr"])
 
+--Globals
 _G.CoreLauncher = {}
 CoreLauncher.Electron = Import("Electron.bootstrap").LoadAll()
 CoreLauncher.RPC = Import("ga.CoreLauncher.RPC"):new("1008708322922352753")
@@ -38,6 +39,7 @@ end
 --Installs
 Import("ga.CoreLauncher.Install.FavIcon")()
 Import("ga.CoreLauncher.Install.DataFolder")()
+Import("ga.CoreLauncher.Install.ExtractFrontend")()
 
 --Check Accounts
 do
@@ -82,11 +84,15 @@ CoreLauncher.Window = CoreLauncher.Electron.BrowserWindow(
 )
 do
     local Window = CoreLauncher.Window
+    local StopStatic
     Window:on("closed", function()
         TypeWriter.Logger.Info("Closing")
         CoreLauncher.Electron.Close()
         CoreLauncher.IPC:Disconnect()
         CoreLauncher.RPC:Disconnect()
+        if StopStatic then
+            StopStatic()
+        end
     end)
     local Show = false
     Window:Once(
@@ -100,14 +106,14 @@ do
     else
         Window:RemoveMenu()
         -- Load static server
-        p(Import("ga.corebyte.Static")(
+        local _, Stop = Import("ga.corebyte.Static")(
             {
                 Port = 9874,
                 Path = CoreLauncher.ApplicationData .. "/App/"
             }
-        ))
+        )
+        StopStatic = Stop
     end
-    Window:Show()
     Window:LoadURL("http://localhost:9874/")
 
     if Show == false then
