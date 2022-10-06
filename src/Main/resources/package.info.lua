@@ -19,7 +19,9 @@ return { InfoVersion = 1, -- Dont touch this
             "creationix/coro-http",
             "creationix/coro-spawn",
             "creationix/base64",
-            "creationix/uuid4"
+            "creationix/uuid4",
+            "creationix/coro-fs",
+            "luvit/secure-socket",
         },
         Git = {},
         Dua = {}
