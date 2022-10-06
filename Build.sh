@@ -1,4 +1,4 @@
 #!/bin/zsh
-zip -vr ./src/Main/resources/Frontend.zip ./Frontend/
+zip -vr ./src/Main/resources/App.zip ./Frontend/*
 TypeWriter build
-rm ./src/Main/resources/Frontend.zip
+#rm ./src/Main/resources/App.zip
