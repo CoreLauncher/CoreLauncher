@@ -1,11 +1,15 @@
+local Spawn = require("coro-spawn")
+local Path = require("path")
+local FS = require("fs")
+
 return function (From, To)
-    local Result = require("coro-spawn")(
+    FS.mkdirSync(To)
+    local Result, Error = Spawn(
         "tar",
         {
             args = {
-                "-xf",
-                From,
-                "-C", To
+                "-xf", Path.resolve(From),
+                "-C", Path.resolve(To)
             },
             stdio = {
                 process.stdin.handle,
