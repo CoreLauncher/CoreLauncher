@@ -113,6 +113,22 @@ do
             }
         )
         StopStatic = Stop
+        local Found = false
+        while Found == false do
+            local Success, Response = pcall(
+                function ()
+                    local Response = CoreLauncher.Http.Request(
+                        "GET",
+                        "http://localhost:9874/Ping.txt"
+                    )
+                    return Response
+                end
+            )
+            if Success and Response.code == 200 then
+                Found = true
+            end
+            Sleep(50)
+        end
     end
     Window:LoadURL("http://localhost:9874/")
 
