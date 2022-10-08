@@ -5,7 +5,7 @@ return { InfoVersion = 1, -- Dont touch this
     ID = "CoreLauncher", -- A unique id 
     Name = "CoreLauncher",
     Description = "CoreLauncher",
-    Version = "1.0.0-alpha.7",
+    Version = "1.0.0-alpha.8",
 
     Author = {
         Developers = {
