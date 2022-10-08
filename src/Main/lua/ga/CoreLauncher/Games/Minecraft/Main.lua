@@ -578,7 +578,7 @@ Data.Functions = {
         local Arguments = {}
         InsertIntoTable(ParsedArguments.JVM, Arguments)
         InsertIntoTable(LogArg, Arguments)
-        InsertIntoTable("-Xmx2G", Arguments)
+        InsertIntoTable("-Xmx" .. math.floor(Instance.Properties.Memory) .. "G", Arguments)
         InsertIntoTable("-XX:+UnlockExperimentalVMOptions", Arguments)
         InsertIntoTable("-XX:+UseG1GC", Arguments)
         InsertIntoTable("-XX:G1NewSizePercent=20", Arguments)
