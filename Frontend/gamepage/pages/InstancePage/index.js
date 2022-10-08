@@ -205,6 +205,28 @@ async function LoadButtonCallbacks() {
             await ReloadInstancesList()
         }
     )
+
+    document.getElementById("exportinstancebutton").addEventListener(
+        "click",
+        async function(E) {
+            p(E.ctrlKey && E.shiftKey && E.altKey)
+            const File = await CoreLauncher.IPC.Send(
+                "Main",
+                "Games.Instances.Export",
+                {
+                    Game: Game.Id,
+                    InstanceId: SelectedInstance.Id,
+                    Server: E.ctrlKey && E.shiftKey && E.altKey
+                }
+            )
+            p(File)
+            const Download = document.createElement("a")
+            Download.href = File
+            Download.download = `${SelectedInstance.Name}.clpack`
+            await Download.click()
+            Download.remove()
+        }
+    )
 }
 
 async function LoadModSources() {
