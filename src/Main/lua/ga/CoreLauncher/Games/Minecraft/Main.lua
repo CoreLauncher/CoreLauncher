@@ -303,8 +303,8 @@ local function DownloadLibraries(Libraries, ClassPath)
         end
         if Url then
             CFS.mkdirp(DirPath)
-            TypeWriter.Logger.Info("Downloading library %s", Url)
             if FS.existsSync(Path) == false then
+                TypeWriter.Logger.Info("Downloading library %s", Url)
                 local _, FileData = CoreLauncher.Http.Request(
                     "GET",
                     Url
