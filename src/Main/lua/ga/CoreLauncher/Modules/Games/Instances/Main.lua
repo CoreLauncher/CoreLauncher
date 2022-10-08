@@ -115,3 +115,20 @@ CoreLauncher.IPC:RegisterMessage(
         )
     end
 )
+
+CoreLauncher.IPC:RegisterMessage(
+    "Games.Instances.Export",
+    function (Data)
+        local Game = Data.Game
+        local InstanceId = Data.InstanceId
+        local IsServer = Data.Server
+        local Instance = CoreLauncher.Config:GetKey(
+            string.format(
+                "Games.%s.Instances.%s",
+                Game,
+                InstanceId
+            )
+        )
+        return CoreLauncher.Games[Game].Functions.Files.Export(Instance, IsServer)
+    end
+)
