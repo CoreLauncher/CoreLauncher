@@ -232,7 +232,7 @@ async function LoadSearchBar() {
             "Games.Instances.Modifications.Search",
             {
                 Game: Game.Id,
-                Source: "Modrinth",
+                Source: document.getElementById("modsource").value,
                 Query: SearchBar.value,
                 SearchProperties: {},
                 Instance: SelectedInstance,
