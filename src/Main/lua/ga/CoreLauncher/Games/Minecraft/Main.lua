@@ -855,7 +855,7 @@ Data.Functions = {
                 local SearchProperties = {}
             end,
             Search = function (Query, Properties, Instance, Page)
-                
+                local PageSize = 20
                 local Response, Data = CoreLauncher.Http.JsonRequest(
                     "GET",
                     CurseforgeBaseUrl .. "/mods/search?" .. QueryEncode(
@@ -867,7 +867,7 @@ Data.Functions = {
                             sortOrder = "desc",
                             pageSize = 20,
                             searchFilter = Query,
-                            index = (Page - 1) * 20
+                            index = (Page - 1) * PageSize
                         }
                     )
                 )
