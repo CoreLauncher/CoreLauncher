@@ -104,5 +104,14 @@ CoreLauncher.IPC:RegisterMessage(
             ),
             Properties
         )
+
+        CoreLauncher.Config:SetKey(
+            string.format(
+                "Games.%s.Instances.%s.Name",
+                Game,
+                InstanceId
+            ),
+            Properties.InstanceName
+        )
     end
 )
