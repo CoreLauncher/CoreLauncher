@@ -91,6 +91,44 @@ local Schemas = {
                 Hash = Version.files[1].hashes.sha1
             }
         end
+    },
+    Curseforge = {
+        Mod = function (Mod)
+            local Categories = {}
+            for Index, Category in pairs(Mod.categories) do
+                table.insert(
+                    Categories,
+                    Category.name
+                )
+            end
+            return {
+                Source = "Curseforge",
+                Id = Mod.id,
+                Slug = Mod.slug,
+                Name = Mod.name,
+                Author = Mod.authors[1].name,
+                Description = Mod.summary,
+                Icon = Mod.logo.url,
+                Licence = "Unknown",
+                Link = Mod.links.websiteUrl,
+                Envoirments = {
+                    Client = "Unknown",
+                    Server = "Unknown"
+                },
+                Categories = Categories
+            }
+        end,
+        Version = function (Version)
+            return {
+                Published = Version.fileDate,
+                Downloads = Version.downloadCount,
+                Id = Version.id,
+                Name = Version.displayName,
+                Tag = Version.displayName,
+                Url = Version.downloadUrl,
+                Hash = Version.hashes[1].value
+            }
+        end
     }
 }
 
@@ -511,7 +549,14 @@ end
 Data.Cache = {}
 Data.Cache.VersionManifest = ({CoreLauncher.Http.JsonRequest("GET", "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json")})[2]
 Data.Cache.ModVersions = {
-    Modrinth = {}
+    Modrinth = {},
+    Curseforge = {}
+}
+
+local CurseforgeModLoaderTypes = {
+    Forge = 1,
+    Fabric = 4,
+    Quilt = 5,
 }
 
 Data.Info = {
@@ -803,6 +848,77 @@ Data.Functions = {
                     )
                 )
                 return ModSchemas.Modrinth.Mod(Data)
+            end
+        },
+        Curseforge = {
+            GetSearchProperties = function ()
+                local SearchProperties = {}
+            end,
+            Search = function (Query, Properties, Instance, Page)
+                
+                local Response, Data = CoreLauncher.Http.JsonRequest(
+                    "GET",
+                    CurseforgeBaseUrl .. "/mods/search?" .. QueryEncode(
+                        {
+                            gameId = 432,
+                            modLoaderType = CurseforgeModLoaderTypes[Instance.Properties.ModType],
+                            gameVersion = Instance.Properties.Version,
+                            sortField = 2,
+                            sortOrder = "desc",
+                            pageSize = 20,
+                            searchFilter = Query,
+                            index = (Page - 1) * 20
+                        }
+                    )
+                )
+
+                local ReturnData = {
+                    HitCount = #Data.data,
+                    TotalHitCount = Data.pagination.totalCount,
+                    Limit = Data.pagination.resultCount,
+                    Offset = Data.pagination.index,
+                    PageCount = math.ceil(Data.pagination.totalCount / 20),
+                    Hits = {}
+                }
+                for Index, Hit in pairs(Data.data) do
+                    table.insert(
+                        ReturnData.Hits,
+                        Schemas.Curseforge.Mod(Hit)
+                    )
+                end
+                return ReturnData
+            end,
+            GetLatestModVersion = function (Instance, ModId)
+                local Version = Data.Functions.ModSources.Curseforge.GetVersionsSupportedForInstance(Instance, ModId)[1]
+                return Version
+            end,
+            GetVersionsSupportedForInstance = function (Instance, ModId)
+                local Response, Data = CoreLauncher.Http.JsonRequest(
+                    "GET",
+                    string.format(
+                        "%s/mods/%s/files?%s",
+                        CurseforgeBaseUrl,
+                        ModId,
+                        QueryEncode(
+                            {
+                                gameVersion	= Instance.Properties.Version,
+                                modLoaderType = CurseforgeModLoaderTypes[Instance.Properties.ModType]
+                            }
+                        )
+                    )
+                )
+
+                local Versions = {}
+                for _, Version in pairs(Data.data) do
+                    table.insert(
+                        Versions,
+                        Schemas.Curseforge.Version(Version)
+                    )
+                end
+                return Versions
+            end,
+            GetModById = function (ModId)
+                
             end
         }
     }
