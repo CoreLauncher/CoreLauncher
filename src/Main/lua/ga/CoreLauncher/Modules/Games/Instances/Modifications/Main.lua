@@ -70,13 +70,7 @@ CoreLauncher.IPC:RegisterMessage(
                 InstanceId
             )
         )
-        local Mods = {}
-        for Index, Mod in pairs(Instance.Modifications) do
-            Mod = table.deepcopy(Mod)
-            Mod.Versions = CoreLauncher.Games[Game].Functions.ModSources[Mod.Source].GetVersionsSupportedForInstance(Instance, Mod.Id)
-            Mods[Mod.Id] = Mod
-        end
-        return Mods
+        return Instance.Modifications
     end
 )
 
