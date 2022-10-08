@@ -19,5 +19,6 @@ return function ()
         Import("ga.CoreLauncher.Libraries.Unzip")(FrontEndZip, CoreLauncher.ApplicationData)
         FS.renameSync(CoreLauncher.ApplicationData .. "/Frontend/", FrontEndFolder)
         FS.writeFileSync(VersionFile, CoreLauncherVersion)
+        FS.unlinkSync(FrontEndZip)
     end
 end
