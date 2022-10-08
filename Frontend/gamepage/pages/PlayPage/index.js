@@ -34,7 +34,6 @@ async function LoadProgressBar() {
     CoreLauncher.IPC.RegisterMessage(
         "ProgressBar.Update",
         async function(Data) {
-            p(Data)
             BarFiller.style.width = `${Data.Percent}%`
             StageText.innerText = Data.Stage
             ProgressText.innerText = `${Data.Count}/${Data.Total} (${Math.floor(Data.Percent)}%)`
