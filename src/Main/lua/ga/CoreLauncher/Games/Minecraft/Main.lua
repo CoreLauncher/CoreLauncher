@@ -8,6 +8,8 @@ local ModrinthBaseUrl = string.format(
     "https://api.modrinth.com/%s",
     "v2"
 )
+local CurseforgeBaseUrl = "https://cfproxy.fly.dev/v1" -- https://github.com/bmpm-mc/cfproxy
+
 local GameDir = string.format(
     "%s/CoreLauncher/Games/MinecraftJava/",
     TypeWriter.ApplicationData
