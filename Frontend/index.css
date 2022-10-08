@@ -147,3 +147,7 @@
 .buttons-holder .settings-button {
     float: right;
 }
+
+.buttons-holder .user-icon {
+    border-radius: 100%
+}
