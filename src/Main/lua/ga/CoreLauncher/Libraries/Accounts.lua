@@ -44,7 +44,6 @@ local AccountTypes = {
                 return ({Json.decode(Body)})[1]
             end,
             AfterToken = function (self, Data)
-                p(Data)
                 Data.ExpiresAt = os.time() + (Data.AccessToken.expires_in - 60)
                 return Data
             end

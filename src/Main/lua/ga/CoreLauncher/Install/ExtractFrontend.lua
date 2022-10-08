@@ -13,7 +13,6 @@ return function ()
     if WrittenVersion ~= CoreLauncherVersion then
         TypeWriter.Logger.Warn("Found frontend version is outdated")
         TypeWriter.Logger.Warn("Deleting old frontend")
-        p(FrontEndFolder)
         require("coro-fs").rmrf(FrontEndFolder)
         FS.writeFileSync(FrontEndZip, TypeWriter.LoadedPackages["CoreLauncher"].Resources["/App.zip"])
         Import("ga.CoreLauncher.Libraries.Unzip")(FrontEndZip, CoreLauncher.ApplicationData)
