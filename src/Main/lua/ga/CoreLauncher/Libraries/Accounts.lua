@@ -44,6 +44,7 @@ local AccountTypes = {
                 return ({Json.decode(Body)})[1]
             end,
             AfterToken = function (self, Data)
+                p(Data)
                 Data.ExpiresAt = os.time() + (Data.AccessToken.expires_in - 60)
                 return Data
             end
@@ -95,7 +96,7 @@ local AccountTypes = {
 }
 
 function Accounts:initialize()
-    self.Url = ({[true] = "http://localhost:8423", [false] = "https://auth.corelauncher.ga"})[CoreLauncher.Dev]
+    self.Url = ({[true] = "http://localhost:8423", [false] = "https://auth.corelauncher.ga"})[false] -- CoreLauncher.Dev]
 end
 
 function Accounts:GetAccount(Name)
