@@ -376,7 +376,6 @@ async function LoadModsList() {
         ModElement.querySelector("#modimage").src = Mod.Icon
         ModElement.querySelector("#modname").innerText = Mod.Name
         const ModVersionSelect = ModElement.querySelector("#modversionselect")
-        p(Mod)
 
         const SelectedOption = document.createElement("option")
         SelectedOption.value = Mod.Version
@@ -400,7 +399,6 @@ async function LoadModsList() {
                         Mod: Mod
                     }
                 )
-                p(Versions)
                 for (const Version of Versions) {
                     if (Version.Id != Mod.Version) {
                         const Option = document.createElement("option")
@@ -415,7 +413,6 @@ async function LoadModsList() {
         ModVersionSelect.addEventListener(
             "change",
             async function() {
-                p(Mod.Versions)
                 var Version
                 for (const ItVersion of Versions) {
                     if (ItVersion.Id == ModVersionSelect.value) {
