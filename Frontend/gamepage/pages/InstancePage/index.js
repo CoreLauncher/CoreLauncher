@@ -337,6 +337,10 @@ async function LoadSearchBar() {
             OnChange()
         }
     )
+    document.getElementById("modsource").addEventListener(
+        "change",
+        OnChange
+    )
 
     OnInstanceChange = OnChange
 
