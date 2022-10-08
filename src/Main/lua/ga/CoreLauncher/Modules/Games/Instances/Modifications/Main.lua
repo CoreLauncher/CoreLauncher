@@ -41,6 +41,8 @@ CoreLauncher.IPC:RegisterMessage(
         if ModData.Version == "latest" then
             local VersionData = CoreLauncher.Games[Game].Functions.ModSources[ModData.Source].GetLatestModVersion(Instance, ModData.Id)
             ModData.Version = VersionData.Id
+            ModData.VersionName = VersionData.Name
+            ModData.VersionIsLatest = true
             ModData.Url = VersionData.Url
             ModData.Hash = VersionData.Hash
         end
@@ -79,6 +81,29 @@ CoreLauncher.IPC:RegisterMessage(
 )
 
 CoreLauncher.IPC:RegisterMessage(
+    "Games.Instances.Modifications.GetModVersions",
+    function(Data)
+        local Game = Data.Game
+        local Mod = Data.Mod
+        local InstanceId = Data.InstanceId
+        local Instance = CoreLauncher.Config:GetKey(
+            string.format(
+                "Games.%s.Instances.%s",
+                Game,
+                InstanceId
+            )
+        )
+        
+        local Versions = CoreLauncher.Games[Game].Functions.ModSources[Mod.Source].GetVersionsSupportedForInstance(Instance, Mod.Id)
+        Versions[1].Latest = true
+        for _, Version in pairs(Versions) do
+            if Version.Latest ~= true then Version.Latest = false end
+        end
+        return Versions
+    end
+)
+
+CoreLauncher.IPC:RegisterMessage(
     "Games.Instances.Modifications.SetModVersionId",
     function(Data)
         local Game = Data.Game
@@ -96,6 +121,8 @@ CoreLauncher.IPC:RegisterMessage(
         )
         
         Mod.Version = ModData.VersionId
+        Mod.VersionName = ModData.VersionName
+        Mod.VersionIsLatest = ModData.Latest
         Mod.Hash = ModData.Hash
         Mod.Url = ModData.Url
 

@@ -375,34 +375,49 @@ async function LoadModsList() {
         const ModElement = ModListTemplate.cloneNode(true)
         ModElement.querySelector("#modimage").src = Mod.Icon
         ModElement.querySelector("#modname").innerText = Mod.Name
+        const ModVersionSelect = ModElement.querySelector("#modversionselect")
+        p(Mod)
 
-        var SelectedTag
-        for (const Version of Mod.Versions) {
-            const Option = document.createElement("option")
-            Option.innerText = Version.Tag
-            Option.value = Version.Id
-            if (Mod.Version == Version.Id) {
-                SelectedTag = Version.Id
-            }
-            ModElement.querySelector("#modversionselect").appendChild(Option)
-        }
-        ModElement.querySelector("#modversionselect").value = SelectedTag
-        if (Mod.Versions[0] != null) {
-            if (Mod.Version != Mod.Versions[0].Id) {
-                ModElement.querySelector("#warningimage").classList.add("warningenabled")
-            }
-        } else {
+        const SelectedOption = document.createElement("option")
+        SelectedOption.value = Mod.Version
+        SelectedOption.innerText = Mod.VersionName
+        ModVersionSelect.appendChild(SelectedOption)
+        if (Mod.VersionIsLatest == false) {
             ModElement.querySelector("#warningimage").classList.add("warningenabled")
         }
-       
 
-        const ModVersionSelect = ModElement.querySelector("#modversionselect")
+        let Versions
+        ModVersionSelect.addEventListener(
+            "click",
+            async function() {
+                if (Versions) {p("Versions already gotten"); return}
+                Versions = await CoreLauncher.IPC.Send(
+                    "Main",
+                    "Games.Instances.Modifications.GetModVersions",
+                    {
+                        Game: Game.Id,
+                        InstanceId: SelectedInstance.Id,
+                        Mod: Mod
+                    }
+                )
+                p(Versions)
+                for (const Version of Versions) {
+                    if (Version.Id != Mod.Version) {
+                        const Option = document.createElement("option")
+                        Option.value = Version.Id
+                        Option.innerText = Version.Name
+                        ModVersionSelect.appendChild(Option)
+                    }
+                }
+            }
+        )
+
         ModVersionSelect.addEventListener(
             "change",
             async function() {
                 p(Mod.Versions)
                 var Version
-                for (const ItVersion of Mod.Versions) {
+                for (const ItVersion of Versions) {
                     if (ItVersion.Id == ModVersionSelect.value) {
                         Version = ItVersion
                         break
@@ -417,6 +432,8 @@ async function LoadModsList() {
                         ModId: Mod.Id,
                         ModData: {
                             VersionId: ModVersionSelect.value,
+                            VersionName: Version.Name,
+                            Latest: Version.Latest,
                             Url: Version.Url,
                             Hash: Version.Hash
                         }
