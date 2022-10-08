@@ -556,7 +556,7 @@ Data.Cache.ModVersions = {
 local CurseforgeModLoaderTypes = {
     Forge = 1,
     Fabric = 4,
-    Quilt = 5,
+    Quilt = "[4, 5]", --Quilt is 5 but we also want 4 for fabric
 }
 
 Data.Info = {
@@ -855,7 +855,6 @@ Data.Functions = {
                 local SearchProperties = {}
             end,
             Search = function (Query, Properties, Instance, Page)
-                local PageSize = 20
                 local Response, Data = CoreLauncher.Http.JsonRequest(
                     "GET",
                     CurseforgeBaseUrl .. "/mods/search?" .. QueryEncode(
@@ -867,7 +866,7 @@ Data.Functions = {
                             sortOrder = "desc",
                             pageSize = 20,
                             searchFilter = Query,
-                            index = (Page - 1) * PageSize
+                            index = (Page - 1) * 20
                         }
                     )
                 )
