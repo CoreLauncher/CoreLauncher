@@ -737,6 +737,44 @@ Data.Functions = {
             }
         }
     end,
+    Files = {
+        Import = function ()
+            
+        end,
+        Export = function (Instance, Server)
+            local ExportsFolder = GameDir .. "Exports/"
+            FS.mkdirSync(ExportsFolder)
+            local ExportId = string.random(64)
+            local ExportFolder = GameDir .. "Exports/" .. ExportId
+            FS.mkdirSync(ExportFolder)
+            if Server then
+                
+            else
+                FS.writeFileSync(
+                    ExportFolder .. "/InstanceData.json",
+                    require("json").encode(Instance)
+                )
+            end
+            local ExportFile = ExportsFolder .. ExportId .. ".tar"
+            local Result = require("coro-spawn")(
+                "tar",
+                {
+                    args = {
+                        "cf", ExportId .. ".tar", ExportId
+                    },
+                    cwd = ExportsFolder,
+                    stdio = {
+                        process.stdin.handle,
+                        process.stdout.handle,
+                        process.stderr.handle
+                    }
+                }
+            )
+            Result.waitExit()
+            local FileData = "data:@file/x-tar;base64," .. require("base64").encode(FS.readFileSync(ExportFile))
+            return FileData
+        end
+    },
     ModSources = {
         Modrinth = {
             GetSearchProperties = function ()
@@ -870,6 +908,9 @@ Data.Functions = {
                         }
                     )
                 )
+                if Data == nil then
+                    p(Response)
+                end
 
                 local ReturnData = {
                     HitCount = #Data.data,
