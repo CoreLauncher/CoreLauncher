@@ -15,7 +15,6 @@ async function GetGameState() {
         if (State.Running) {
             PlayButton.classList.remove("button-positive")
             PlayButton.classList.add("button-danger")
-            p("Running")
             PlayButton.innerText = "Close Game"
         } else {
             PlayButton.classList.add("button-positive")
@@ -47,7 +46,6 @@ async function LoadProgressBar() {
 }
 
 async function LoadInstanceDropdown() {
-    p(Instances)
     const CurrentInstance = document.getElementById("currentinstance")
     for (const InstanceID in Instances) {
         const Instance = Instances[InstanceID]
