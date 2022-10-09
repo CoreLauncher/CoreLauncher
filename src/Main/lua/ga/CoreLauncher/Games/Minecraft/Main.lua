@@ -386,15 +386,24 @@ local function DownloadMods(Mods, ModFolder)
         if FS.existsSync(ModCacheFolder .. ModInfo.Hash) then
             File = FS.readFileSync(ModCacheFolder .. ModInfo.Hash)
         else
-            TypeWriter.Logger.Info("Downloading modfile %s", ModInfo.Url)
-            local _, FileData = CoreLauncher.Http.Request(
-                "GET",
-                ModInfo.Url
-            )
-            FS.writeFileSync(ModCacheFolder .. ModInfo.Hash, FileData)
-            File = FileData
+            if ModInfo.Url == nil then
+                TypeWriter.Logger.Error("Mod %s (ID:%s) is missing a download url", ModInfo.Name, ModInfo.Id)
+            else
+                TypeWriter.Logger.Info("Downloading modfile %s", ModInfo.Url)
+                local _, FileData = CoreLauncher.Http.Request(
+                    "GET",
+                    ModInfo.Url
+                )
+                FS.writeFileSync(ModCacheFolder .. ModInfo.Hash, FileData)
+                File = FileData
+            end
         end
-        FS.writeFileSync(ModFolder .. ModInfo.Hash .. ".jar", File)
+        local FilePath = ModFolder .. ModInfo.Hash .. ".jar" 
+        if File ~= nil then
+            FS.writeFileSync(FilePath, File)
+        else
+            TypeWriter.Logger.Error("Skipping file write for %s", FilePath)
+        end
         Count = Count + 1
     end
     for FileName in FS.scandirSync(ModFolder) do
@@ -971,6 +980,7 @@ Data.Functions = {
             end,
             GetLatestModVersion = function (Instance, ModId)
                 local Version = Data.Functions.ModSources.Curseforge.GetVersionsSupportedForInstance(Instance, ModId)[1]
+                p(Version)
                 return Version
             end,
             GetVersionsSupportedForInstance = function (Instance, ModId)
