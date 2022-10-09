@@ -227,6 +227,38 @@ async function LoadButtonCallbacks() {
             Download.remove()
         }
     )
+
+    const Input = document.createElement("input")
+    Input.type = "file"
+    Input.accept = ".clpack"
+    document.getElementById("importinstancebutton").addEventListener(
+        "click",
+        async function() {
+            Input.click()
+        }
+    )
+    Input.addEventListener(
+        "change",
+        async function() {
+            var R = new FileReader()
+            R.readAsText(Input.files[0])
+            R.onload = async function(File) {
+                p(File.type)
+                p(File)
+                if (File.type != "load") {return}
+                await CoreLauncher.IPC.Send(
+                    "Main",
+                    "Games.Instances.Import",
+                    { 
+                        Game: Game.Id,
+                        File: R.result
+                    }
+                )
+                Input.value = null
+                await ReloadInstancesList()
+            }
+        }
+    )
 }
 
 async function LoadModSources() {
