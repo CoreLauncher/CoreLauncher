@@ -770,7 +770,6 @@ Data.Functions = {
             end
             local InstanceData = require("json").decode(FileData)
             InstanceData.Id = require("uuid4").getUUID()
-            p(InstanceData.Id)
             CoreLauncher.Config:SetKey(
                 string.format(
                     "Games.%s.Instances.%s",
