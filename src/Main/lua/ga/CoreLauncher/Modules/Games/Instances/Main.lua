@@ -129,6 +129,17 @@ CoreLauncher.IPC:RegisterMessage(
                 InstanceId
             )
         )
+
         return CoreLauncher.Games[Game].Functions.Files.Export(Instance, IsServer)
+    end
+)
+
+CoreLauncher.IPC:RegisterMessage(
+    "Games.Instances.Import",
+    function (Data)
+        local Game = Data.Game
+        local File = Data.File
+
+        return CoreLauncher.Games[Game].Functions.Files.Import(File)
     end
 )

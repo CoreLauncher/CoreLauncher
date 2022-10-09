@@ -738,8 +738,48 @@ Data.Functions = {
         }
     end,
     Files = {
-        Import = function ()
-            
+        Import = function (File)
+            local ImportsFolder = GameDir .. "Imports/"
+            FS.mkdirSync(ImportsFolder)
+            local ImportId = string.random(64)
+            local ImportFolder = GameDir .. "Imports/" .. ImportId
+            FS.mkdirSync(ImportFolder)
+            local ImportFile = ImportFolder .. "/Import.tar"
+            FS.writeFileSync(ImportFile, File)
+            Import("ga.CoreLauncher.Libraries.Unzip")(ImportFile, ImportFolder)
+            local function Dispose()
+                CFS.rmrf(ImportFolder)
+            end
+            local ExtractedFolder
+            for _, FileName in pairs(FS.readdirSync(ImportFolder)) do
+                if FileName ~= "Import.tar" then
+                    ExtractedFolder = ImportFolder .. "/" .. FileName .. "/"
+                    break
+                end
+            end
+            if not ExtractedFolder then
+                TypeWriter.Logger.Error("Could not find unpacked folder")
+                Dispose()
+                return
+            end
+            local FileData = FS.readFileSync(ExtractedFolder .. "/InstanceData.json")
+            if not FileData then
+                TypeWriter.Logger.Error("Could not read file of imported pack")
+                Dispose()
+                return
+            end
+            local InstanceData = require("json").decode(FileData)
+            InstanceData.Id = require("uuid4").getUUID()
+            p(InstanceData.Id)
+            CoreLauncher.Config:SetKey(
+                string.format(
+                    "Games.%s.Instances.%s",
+                    "MinecraftJava",
+                    InstanceData.Id
+                ),
+                InstanceData
+            )
+            Dispose()
         end,
         Export = function (Instance, Server)
             local ExportsFolder = GameDir .. "Exports/"
@@ -772,6 +812,8 @@ Data.Functions = {
             )
             Result.waitExit()
             local FileData = "data:@file/x-tar;base64," .. require("base64").encode(FS.readFileSync(ExportFile))
+            FS.unlinkSync(ExportFile)
+            CFS.rmrf(ExportFolder)
             return FileData
         end
     },
