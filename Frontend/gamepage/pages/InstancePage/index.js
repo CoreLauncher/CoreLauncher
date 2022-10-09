@@ -274,6 +274,7 @@ async function LoadModSources() {
         Option.innerText = ModSource
         SourcesSelect.appendChild(Option)
     }
+    SourcesSelect.value = "Modrinth"
 }
 
 async function LoadSearchBar() {
@@ -418,7 +419,7 @@ async function LoadSearchBar() {
 }
 
 async function LoadModsList() {
-    const Mods = await CoreLauncher.IPC.Send(
+    const ModsObject = await CoreLauncher.IPC.Send(
         "Main",
         "Games.Instances.Modifications.ListMods",
         {
@@ -426,10 +427,18 @@ async function LoadModsList() {
             InstanceId: SelectedInstance.Id
         }
     )
+    var Mods = Object.values(ModsObject)
+    p(Mods)
+    Mods = Mods.sort(
+        function(a, b) {
+            var textA = a.Name.toUpperCase();
+            var textB = b.Name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        }
+    )
     document.getElementById("enabledmodlist").innerHTML = ""
     document.getElementById("disabledmodlist").innerHTML = ""
-    for (const ModId in Mods) {
-        const Mod = Mods[ModId]
+    for (const Mod of Mods) {
         const ModElement = ModListTemplate.cloneNode(true)
         ModElement.querySelector("#modimage").src = Mod.Icon
         ModElement.querySelector("#modname").innerText = Mod.Name
