@@ -129,6 +129,37 @@ local Schemas = {
                 Hash = Version.hashes[1].value
             }
         end
+    },
+    Url = {
+        Mod = function (Mod)
+            return {
+                Source = "Url",
+                Id = require("base64").encode(Mod.Url),
+                Slug = Mod.Url,
+                Name = Mod.Url,
+                Author = "A url",
+                Description = "From a url",
+                Icon = "https://site-assets.fontawesome.com/releases/v6.2.0/svgs/solid/link.svg",
+                Licence = "Unknown",
+                Link = Mod.Url,
+                Envoirments = {
+                    Client = "Unknown",
+                    Server = "Unknown"
+                },
+                Categories = {}
+            }
+        end,
+        Version = function (Version)
+            return {
+                Published = "",
+                Downloads = 0,
+                Id = "",
+                Name = "File",
+                Tag = "File",
+                Url = Version.Url,
+                Hash = require("md5").sumhexa(Version.Url)
+            }
+        end
     }
 }
 
@@ -925,17 +956,6 @@ Data.Functions = {
                     end
                 end
                 return Versions
-            end,
-            GetModById = function (ModId)
-                local Response, Data = CoreLauncher.Http.JsonRequest(
-                    "GET",
-                    string.format(
-                        "%s/project/%s",
-                        ModrinthBaseUrl,
-                        ModId
-                    )
-                )
-                return ModSchemas.Modrinth.Mod(Data)
             end
         },
         Curseforge = {
@@ -1007,9 +1027,59 @@ Data.Functions = {
                     )
                 end
                 return Versions
+            end
+        },
+        Url = {
+            GetSearchProperties = function ()
+                local SearchProperties = {}
             end,
-            GetModById = function (ModId)
+            Search = function (Query, Properties, Instance, Page)
+                local ReturnData = {
+                    HitCount = 0,
+                    TotalHitCount = 0,
+                    Limit = 20,
+                    Offset = 0,
+                    PageCount = 1,
+                    Hits = {}
+                }
+
+                if #Query == 0 then
+                    return ReturnData
+                end
+                local ParsedUrl = require("url").parse(Query)
+                if ParsedUrl.host == nil then
+                    return ReturnData
+                end
                 
+                
+                table.insert(
+                    ReturnData.Hits,
+                    Schemas.Url.Mod(
+                        {
+                            Url = Query
+                        }
+                    )
+                )
+                ReturnData.HitCount = 1
+                ReturnData.TotalHitCount = 1
+                return ReturnData
+            end,
+            GetLatestModVersion = function (Instance, ModId)
+                local Version = Data.Functions.ModSources.Url.GetVersionsSupportedForInstance(Instance, ModId)[1]
+                p(Version)
+                return Version
+            end,
+            GetVersionsSupportedForInstance = function (Instance, ModId)
+                local Versions = {}
+                table.insert(
+                    Versions,
+                    Schemas.Url.Version(
+                        {
+                            Url = require("base64").decode(ModId)
+                        }
+                    )
+                )
+                return Versions
             end
         }
     }
