@@ -21,6 +21,7 @@ return { InfoVersion = 1, -- Dont touch this
             "creationix/base64",
             "creationix/uuid4",
             "creationix/coro-fs",
+            "creationix/md5",
             "luvit/secure-socket",
         },
         Git = {},
