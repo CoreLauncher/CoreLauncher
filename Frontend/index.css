@@ -1,0 +1,96 @@
+.topbar {
+    --height: 50px;
+    --logo-width: 200px;
+    --window-width: 150px
+}
+
+/* #region basic */
+.topbar {
+    background-color: var(--background-tertiary);
+    height: var(--height);
+    position: relative;
+}
+
+.topbar .line {
+    --line-div: calc(var(--height) / 10);
+    height: calc(var(--line-div) * 8);
+    width: 1px;
+    margin-top: calc(var(--line-div));
+    background-color: var(--header-secondary);
+    float: left;
+}
+
+/* #endregion */
+/* #region logo */
+.topbar .logo {
+    width: var(--logo-width);
+    float: left;
+}
+
+.topbar .logo .image {
+    float: left;
+    height: var(--height);
+}
+
+.topbar .logo .text {
+    display: inline-block;
+    height: var(--height);
+    line-height: var(--height);
+    font-weight: bold;
+    font-size: 20px;
+}
+/* #endregion */
+/* #region gameslist */
+.topbar .gameslist {
+    float: left;
+    width: var(--width);
+    height: var(--height);
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+}
+
+.topbar .gameslist::-webkit-scrollbar {
+    display: none;
+}
+
+.topbar .gameslist .game {
+    display: inline-block;
+    height: var(--height);
+    width: var(--height);
+}
+
+.topbar .gameslist img {
+    height: 100%;
+    float: left;
+    width: 100%;
+}
+/* #endregion */
+/* #region windowcontrol */
+
+.topbar .windowcontrol {
+    float: right;
+    width: var(--window-width);
+    height: var(--height);
+    color: white;
+    --padding: 15px;
+    --size: calc(var(--height) - (var(--padding) * 2));
+}
+
+.topbar .windowcontrol .button {
+    height: var(--size);
+    width: var(--size);
+    padding: var(--padding);
+    float: left;
+}
+
+.topbar .windowcontrol .button:hover {
+    background-color: var(--background-secondary);
+}
+
+.topbar .windowcontrol img {
+    height: var(--size);
+    filter: invert(100%) sepia(0%) saturate(2364%) hue-rotate(237deg) brightness(115%) contrast(101%);
+}
+/* #endregion */
