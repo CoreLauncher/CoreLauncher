@@ -7,13 +7,13 @@ FS.mkdirSync(ApplicationData)
 --Load Libraries
 local Resources = TypeWriter.LoadedPackages["CoreLauncher"].Resources
 TypeWriter.Runtime.LoadJson(Resources["/Libraries/Discord-RPC.twr"])
-TypeWriter.Runtime.LoadJson(Resources["/Libraries/Electron-Lua-Bootstrap.twr"])
-TypeWriter.Runtime.LoadJson(Resources["/Libraries/IPC-Bootstrap.twr"])
+TypeWriter.Runtime.LoadJson(Resources["/Libraries/Electron-Lua.twr"])
+TypeWriter.Runtime.LoadJson(Resources["/Libraries/OpenIPC-TypeWriter.twr"])
 TypeWriter.Runtime.LoadJson(Resources["/Libraries/Static.twr"])
 
 --Globals
 _G.CoreLauncher = {}
-CoreLauncher.Electron = Import("Electron.bootstrap").LoadAll()
+CoreLauncher.Electron = Import("Electron")
 CoreLauncher.RPC = Import("ga.CoreLauncher.RPC"):new("1008708322922352753")
 CoreLauncher.IPC = Import("openipc.connector"):new("CoreLauncher", "Main")
 CoreLauncher.ApplicationData = TypeWriter.ApplicationData .. "/CoreLauncher/"
