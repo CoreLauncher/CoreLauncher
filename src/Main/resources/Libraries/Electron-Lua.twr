@@ -1,41 +1,37 @@
 {
   "BuildInfo":{
+    "Date":"Sat Oct 15 21:44:17 2022",
     "TypeWriter":{
-      "Version":"4.7.3",
       "Licence":"MIT",
-      "Name":"TypeWriter"
-    },
-    "Date":"Sat Oct 15 17:24:23 2022"
+      "Name":"TypeWriter",
+      "Version":"4.7.3"
+    }
   },
   "Package":{
-    "ID":"Electron-Lua",
-    "Dependencies":{
-      "Luvit":["creationix/coro-spawn","creationix/coro-fs","creationix/base64"],
-      "Dua":[],
-      "Git":[]
+    "Contact":{
+      "Source":"https://github.com/Dot-lua/TypeWriter/",
+      "Socials":[],
+      "Website":"https://cubic-inc.ga"
     },
-    "InfoVersion":1,
-    "Description":"A Electron-Lua",
-    "Name":"Electron-Lua",
-    "Version":"2.0.0",
+    "ID":"Electron-Lua",
     "Entrypoints":{
       "Main":"Electron.Test"
     },
-    "Contact":{
-      "Website":"https://cubic-inc.ga",
-      "Socials":[],
-      "Source":"https://github.com/Dot-lua/TypeWriter/"
-    },
+    "Name":"Electron-Lua",
+    "InfoVersion":1,
+    "Description":"A Electron-Lua",
     "Author":{
       "Contributors":[],
       "Developers":["CoreByte"]
+    },
+    "Version":"2.0.0",
+    "Dependencies":{
+      "Dua":[],
+      "Git":[],
+      "Luvit":["creationix/coro-spawn","creationix/coro-fs","creationix/base64"]
     }
   },
   "Code":{
-    "Electron.Main":{
-      "Code":"local Resources = TypeWriter.LoadedPackages[\"Electron-Lua\"].Resources\r\nTypeWriter.Runtime.LoadJson(Resources[\"/OpenIPC-TypeWriter.twr\"])\r\nTypeWriter.Runtime.LoadJson(Resources[\"/Get-Node.twr\"])\r\nTypeWriter.Runtime.LoadInternal(\"BetterEmitter\")\r\n\r\nlocal NodePath, NodeVersion = Import(\"ga.corebyte.get-node\").Download()\r\nlocal IPClient = Import(\"openipc.connector\")\r\nlocal Emitter = Import(\"ga.corebyte.BetterEmitter\")\r\nlocal FS = require(\"FS\")\r\n\r\nlocal ApplicationData = TypeWriter.ApplicationData .. \"/Electron-Lua/\"\r\ndo\r\n    local ThisVersion = TypeWriter.LoadedPackages[\"Electron-Lua\"].Package.Version\r\n    local ExtractVersionFile = ApplicationData .. \"/ExtractVersion.txt\"\r\n    local ThatVersion = FS.readFileSync(ExtractVersionFile)\r\n    if ThisVersion ~= ThatVersion then\r\n        TypeWriter.Logger.Warn(\"Invalid electron install found, installing.\")\r\n        local ExtractFolder = ApplicationData .. \"/Electron/\"\r\n        local ElectonArchive = ApplicationData .. \"/Electron.zip\"\r\n        require(\"coro-fs\").rmrf(ExtractFolder)\r\n        FS.writeFileSync(\r\n            ElectonArchive,\r\n            Resources[\"/Electron.zip\"]\r\n        )\r\n        Import(\"Electron.Unzip\")(ElectonArchive, ExtractFolder)\r\n        FS.writeFileSync(ExtractVersionFile, ThisVersion)\r\n    end\r\nend\r\n\r\nlocal Data = {\r\n    SessionId = string.random(32),\r\n    IsDev = TypeWriter.ArgumentParser:GetArgument(\"is-dev\", \"is-dev\", \"false\") == \"true\",\r\n    ElectronLocation = ApplicationData .. \"/Electron/\",\r\n}\r\nif Data.IsDev == true then\r\n    Data.ElectronLocation = \"./Electron/\"\r\nend\r\nData.IPC = IPClient:new(\"Electron-\" .. Data.SessionId, \"Main\")\r\nlocal IPC = Data.IPC\r\n\r\nlocal Spawn = require(\"coro-spawn\")\r\nif FS.existsSync(Data.ElectronLocation .. \"/node_modules/\") == false then\r\n    TypeWriter.Logger.Info(\"Installing node dependencies...\")\r\n    local function InstallDeps(Location)\r\n        local Result = Spawn(\r\n            NodePath .. \"/npm\" .. (({[\"win32\"] = \".cmd\"})[TypeWriter.Os] or \"\"),\r\n            {\r\n                args = {\r\n                    \"install\",\r\n                    \"--omit=dev\"\r\n                },\r\n                cwd = Location,\r\n                stdio = {\r\n                    process.stdin.handle,\r\n                    process.stdout.handle,\r\n                    process.stderr.handle,\r\n                }\r\n            }\r\n        )\r\n        Result.waitExit()\r\n    end\r\n    InstallDeps(Data.ElectronLocation)\r\n    InstallDeps(Data.ElectronLocation .. \"/lib/OpenIPC/\")\r\nend\r\n\r\nlocal MadeObjects = {}\r\nIPC:RegisterMessage(\r\n    \"ObjectEvent\",\r\n    function(Message)\r\n        local Object = MadeObjects[Message.ObjectId]\r\n        if Object ~= nil then\r\n            Object:Emit(Message.Name, table.unpack(Message.Data))\r\n        end\r\n    end\r\n)\r\n\r\nlocal ReadyEmitter = Emitter:new()\r\nIPC:RegisterMessage(\r\n    \"AppReady\",\r\n    function ()\r\n        ReadyEmitter:Emit(\"ready\")\r\n    end\r\n)\r\n\r\nlocal Result, Error = Spawn(\r\n    NodePath .. \"/npm\" .. (({[\"win32\"] = \".cmd\"})[TypeWriter.Os] or \"\"),\r\n    {\r\n        args = {\r\n            \"run\", \"start\", require(\"base64\").encode(require(\"json\").encode(\r\n                {\r\n                    SessionId = Data.SessionId,\r\n                    IsDev = Data.IsDev,\r\n                    ElectronLocation = Data.ElectronLocation,\r\n                }\r\n            ))\r\n        },\r\n        cwd = Data.ElectronLocation,\r\n        stdio = {\r\n            process.stdin.handle,\r\n            process.stdout.handle,\r\n            process.stderr.handle,\r\n        }\r\n    }\r\n)\r\nReadyEmitter:WaitFor(\"ready\")\r\n\r\nlocal Objects = {\r\n    BrowserWindow = Import(\"Electron.Objects.BrowserWindow\")\r\n}\r\nlocal ObjectWrappers = {}\r\nfor Index, Object in pairs(Objects) do\r\n    ObjectWrappers[Index] = function (...)\r\n        local NewId = string.random(64)\r\n        local NewObject = Object:new(Data, NewId, ...)\r\n        MadeObjects[NewId] = NewObject\r\n        return NewObject\r\n    end\r\nend\r\nObjectWrappers.Close = function ()\r\n    IPC:Send(\"Node\", \"Close\")\r\n    IPC:Disconnect()\r\nend\r\nreturn ObjectWrappers",
-      "Type":"Code"
-    },
     "Electron.Test":{
       "Code":"local Electron = Import(\"Electron\")\r\nlocal Window = Electron.BrowserWindow()\r\nWindow:LoadURL(\"https://cubic-inc.ga\")\r\nWindow:openDevTools()\r\nWindow:SetTitle(\"Electron-Lua\")\r\nWindow:SetMenu(nil, \"\")",
       "Type":"Code"
@@ -44,12 +40,16 @@
       "Code":"return function (From, To)\r\n    require(\"fs\").mkdirSync(To)\r\n    local Result = require(\"coro-spawn\")(\r\n        \"tar\",\r\n        {\r\n            args = {\r\n                \"-xf\",\r\n                From,\r\n                \"-C\", To\r\n            }\r\n        }\r\n    )\r\n    Result.waitExit()\r\nend",
       "Type":"Code"
     },
+    "Electron.Objects.BrowserWindow":{
+      "Code":"local Emitter = Import(\"ga.corebyte.BetterEmitter\")\r\nlocal BrowserWindow = Emitter:extend()\r\n\r\nlocal IgnoreMethods = {\r\n    ['setMaxListeners'] = true,\r\n    ['getMaxListeners'] = true,\r\n    ['addListener'] = true,\r\n    ['on'] = true,\r\n    [\"emit\"] = true,\r\n    ['prependListener'] = true,\r\n    ['once'] = true,\r\n    ['prependOnceListener'] = true,\r\n    ['removeListener'] = true,\r\n    ['off'] = true,\r\n    ['removeAllListeners'] = true,\r\n    ['listeners'] = true,\r\n    ['rawListeners'] = true,\r\n    ['listenerCount'] = true,\r\n    ['eventNames'] = true,\r\n    ['__defineGetter__'] = true,\r\n    ['__defineSetter__'] = true,\r\n    ['hasOwnProperty'] = true,\r\n    ['__lookupGetter__'] = true,\r\n    ['__lookupSetter__'] = true,\r\n    ['isPrototypeOf'] = true,\r\n    ['propertyIsEnumerable'] = true,\r\n    ['toString'] = true,\r\n    ['valueOf'] = true,\r\n    ['toLocaleString'] = true,\r\n    [\"_init\"] = true,\r\n    ['_setTouchBarItems'] = true,\r\n    ['_refreshTouchBarItem'] = true,\r\n    ['_setEscapeTouchBarItem'] = true,\r\n}\r\n\r\nlocal function TitleCase(Str)\r\n    return Str:gsub(\"^%l\", string.upper)\r\nend\r\n\r\nfunction BrowserWindow:initialize(Data, Id, Options)\r\n    self.Data = Data\r\n    self.Id = Id\r\n    if Options == nil then\r\n        Options = {}\r\n    end\r\n    self.Options = Options\r\n    local ObjectData = Data.IPC:Send(\r\n        \"Node\",\r\n        \"CreateObject\",\r\n        {\r\n            Type = \"BrowserWindow\",\r\n            Options = Options,\r\n            Id = Id\r\n        }\r\n    )\r\n\r\n    local function AddMethod(Name, Method)\r\n        self[Name] = function (self, ...)\r\n            return Data.IPC:Send(\r\n                \"Node\",\r\n                \"CallMethod\",\r\n                {\r\n                    ObjectId = self.Id,\r\n                    Method = Method,\r\n                    Args = {...}\r\n                }\r\n            )\r\n        end\r\n    end\r\n    for Index, Method in pairs(ObjectData.Methods) do\r\n        if IgnoreMethods[Method] ~= true then\r\n            AddMethod(TitleCase(Method), Method)\r\n            AddMethod(Method, Method)\r\n        end\r\n    end\r\nend\r\n\r\nreturn BrowserWindow",
+      "Type":"Code"
+    },
     "Electron":{
       "Type":"Redirect",
       "RedirectTo":"Electron.Main"
     },
-    "Electron.Objects.BrowserWindow":{
-      "Code":"local Emitter = Import(\"ga.corebyte.BetterEmitter\")\r\nlocal BrowserWindow = Emitter:extend()\r\n\r\nlocal IgnoreMethods = {\r\n    ['setMaxListeners'] = true,\r\n    ['getMaxListeners'] = true,\r\n    ['addListener'] = true,\r\n    ['on'] = true,\r\n    [\"emit\"] = true,\r\n    ['prependListener'] = true,\r\n    ['once'] = true,\r\n    ['prependOnceListener'] = true,\r\n    ['removeListener'] = true,\r\n    ['off'] = true,\r\n    ['removeAllListeners'] = true,\r\n    ['listeners'] = true,\r\n    ['rawListeners'] = true,\r\n    ['listenerCount'] = true,\r\n    ['eventNames'] = true,\r\n    ['__defineGetter__'] = true,\r\n    ['__defineSetter__'] = true,\r\n    ['hasOwnProperty'] = true,\r\n    ['__lookupGetter__'] = true,\r\n    ['__lookupSetter__'] = true,\r\n    ['isPrototypeOf'] = true,\r\n    ['propertyIsEnumerable'] = true,\r\n    ['toString'] = true,\r\n    ['valueOf'] = true,\r\n    ['toLocaleString'] = true,\r\n    [\"_init\"] = true,\r\n    ['_setTouchBarItems'] = true,\r\n    ['_refreshTouchBarItem'] = true,\r\n    ['_setEscapeTouchBarItem'] = true,\r\n}\r\n\r\nlocal function TitleCase(Str)\r\n    return Str:gsub(\"^%l\", string.upper)\r\nend\r\n\r\nfunction BrowserWindow:initialize(Data, Id, Options)\r\n    self.Data = Data\r\n    self.Id = Id\r\n    if Options == nil then\r\n        Options = {}\r\n    end\r\n    self.Options = Options\r\n    local ObjectData = Data.IPC:Send(\r\n        \"Node\",\r\n        \"CreateObject\",\r\n        {\r\n            Type = \"BrowserWindow\",\r\n            Options = Options,\r\n            Id = Id\r\n        }\r\n    )\r\n\r\n    local function AddMethod(Name, Method)\r\n        self[Name] = function (self, ...)\r\n            return Data.IPC:Send(\r\n                \"Node\",\r\n                \"CallMethod\",\r\n                {\r\n                    ObjectId = self.Id,\r\n                    Method = Method,\r\n                    Args = {...}\r\n                }\r\n            )\r\n        end\r\n    end\r\n    for Index, Method in pairs(ObjectData.Methods) do\r\n        if IgnoreMethods[Method] ~= true then\r\n            AddMethod(TitleCase(Method), Method)\r\n            AddMethod(Method, Method)\r\n        end\r\n    end\r\nend\r\n\r\nreturn BrowserWindow",
+    "Electron.Main":{
+      "Code":"local Resources = TypeWriter.LoadedPackages[\"Electron-Lua\"].Resources\r\nTypeWriter.Runtime.LoadJson(Resources[\"/OpenIPC-TypeWriter.twr\"])\r\nTypeWriter.Runtime.LoadJson(Resources[\"/Get-Node.twr\"])\r\nTypeWriter.Runtime.LoadInternal(\"BetterEmitter\")\r\n\r\nlocal NodePath, NodeVersion = Import(\"ga.corebyte.get-node\").Download()\r\nlocal IPClient = Import(\"openipc.connector\")\r\nlocal Emitter = Import(\"ga.corebyte.BetterEmitter\")\r\nlocal FS = require(\"FS\")\r\n\r\nlocal ApplicationData = TypeWriter.ApplicationData .. \"/Electron-Lua/\"\r\nFS.mkdirSync(ApplicationData)\r\ndo\r\n    local ThisVersion = TypeWriter.LoadedPackages[\"Electron-Lua\"].Package.Version\r\n    local ExtractVersionFile = ApplicationData .. \"/ExtractVersion.txt\"\r\n    local ThatVersion = FS.readFileSync(ExtractVersionFile)\r\n    if ThisVersion ~= ThatVersion then\r\n        TypeWriter.Logger.Warn(\"Invalid electron install found, installing.\")\r\n        local ExtractFolder = ApplicationData .. \"/Electron/\"\r\n        local ElectonArchive = ApplicationData .. \"/Electron.zip\"\r\n        require(\"coro-fs\").rmrf(ExtractFolder)\r\n        FS.writeFileSync(\r\n            ElectonArchive,\r\n            Resources[\"/Electron.zip\"]\r\n        )\r\n        Import(\"Electron.Unzip\")(ElectonArchive, ExtractFolder)\r\n        FS.writeFileSync(ExtractVersionFile, ThisVersion)\r\n    end\r\nend\r\n\r\nlocal Data = {\r\n    SessionId = string.random(32),\r\n    IsDev = TypeWriter.ArgumentParser:GetArgument(\"is-dev\", \"is-dev\", \"false\") == \"true\",\r\n    ElectronLocation = ApplicationData .. \"/Electron/\",\r\n}\r\nif Data.IsDev == true then\r\n    Data.ElectronLocation = \"./Electron/\"\r\nend\r\nData.IPC = IPClient:new(\"Electron-\" .. Data.SessionId, \"Main\")\r\nlocal IPC = Data.IPC\r\n\r\nlocal Spawn = require(\"coro-spawn\")\r\nif FS.existsSync(Data.ElectronLocation .. \"/node_modules/\") == false then\r\n    TypeWriter.Logger.Info(\"Installing node dependencies...\")\r\n    local function InstallDeps(Location)\r\n        local Result = Spawn(\r\n            NodePath .. \"/npm\" .. (({[\"win32\"] = \".cmd\"})[TypeWriter.Os] or \"\"),\r\n            {\r\n                args = {\r\n                    \"install\",\r\n                    \"--omit=dev\"\r\n                },\r\n                cwd = Location,\r\n                stdio = {\r\n                    process.stdin.handle,\r\n                    process.stdout.handle,\r\n                    process.stderr.handle,\r\n                }\r\n            }\r\n        )\r\n        Result.waitExit()\r\n    end\r\n    InstallDeps(Data.ElectronLocation)\r\n    InstallDeps(Data.ElectronLocation .. \"/lib/OpenIPC/\")\r\nend\r\n\r\nlocal MadeObjects = {}\r\nIPC:RegisterMessage(\r\n    \"ObjectEvent\",\r\n    function(Message)\r\n        local Object = MadeObjects[Message.ObjectId]\r\n        if Object ~= nil then\r\n            Object:Emit(Message.Name, table.unpack(Message.Data))\r\n        end\r\n    end\r\n)\r\n\r\nlocal ReadyEmitter = Emitter:new()\r\nIPC:RegisterMessage(\r\n    \"AppReady\",\r\n    function ()\r\n        ReadyEmitter:Emit(\"ready\")\r\n    end\r\n)\r\n\r\nlocal Result, Error = Spawn(\r\n    NodePath .. \"/npm\" .. (({[\"win32\"] = \".cmd\"})[TypeWriter.Os] or \"\"),\r\n    {\r\n        args = {\r\n            \"run\", \"start\", require(\"base64\").encode(require(\"json\").encode(\r\n                {\r\n                    SessionId = Data.SessionId,\r\n                    IsDev = Data.IsDev,\r\n                    ElectronLocation = Data.ElectronLocation,\r\n                }\r\n            ))\r\n        },\r\n        cwd = Data.ElectronLocation,\r\n        stdio = {\r\n            process.stdin.handle,\r\n            process.stdout.handle,\r\n            process.stderr.handle,\r\n        }\r\n    }\r\n)\r\nReadyEmitter:WaitFor(\"ready\")\r\n\r\nlocal Objects = {\r\n    BrowserWindow = Import(\"Electron.Objects.BrowserWindow\")\r\n}\r\nlocal ObjectWrappers = {}\r\nfor Index, Object in pairs(Objects) do\r\n    ObjectWrappers[Index] = function (...)\r\n        local NewId = string.random(64)\r\n        local NewObject = Object:new(Data, NewId, ...)\r\n        MadeObjects[NewId] = NewObject\r\n        return NewObject\r\n    end\r\nend\r\nObjectWrappers.Close = function ()\r\n    IPC:Send(\"Node\", \"Close\")\r\n    IPC:Disconnect()\r\nend\r\nreturn ObjectWrappers",
       "Type":"Code"
     }
   },
