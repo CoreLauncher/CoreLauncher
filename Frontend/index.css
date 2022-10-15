@@ -29,7 +29,13 @@
 
 .topbar .logo .image {
     float: left;
-    height: var(--height);
+    --img-padding: 5px;
+    --img-padding-half: calc(var(--img-padding) / 2);
+    --size: calc(var(--height) - var(--img-padding));
+    height: var(--size);
+    width: var(--size);
+    margin-top: var(--img-padding-half);
+    margin-left: var(--img-padding-half);
 }
 
 .topbar .logo .text {
@@ -59,12 +65,27 @@
     display: inline-block;
     height: var(--height);
     width: var(--height);
+    position: relative;
 }
 
-.topbar .gameslist img {
-    height: 100%;
-    float: left;
-    width: 100%;
+.topbar .gameslist .game img {
+    height: 80%;
+    width: 80%;
+    margin-top: 10%;
+    margin-left: 10%;
+}
+
+.topbar .gameslist .game .selectedline {
+    width: 80%;
+    height: 5%;
+    position: absolute;
+    left: 10%;
+    bottom: 5%;
+    border-radius: 100px;
+}
+
+.topbar .gameslist .game.selected .selectedline {
+    background-color: var(--info-positive-foreground);
 }
 /* #endregion */
 /* #region windowcontrol */
@@ -93,4 +114,7 @@
     height: var(--size);
     filter: invert(100%) sepia(0%) saturate(2364%) hue-rotate(237deg) brightness(115%) contrast(101%);
 }
+/* #endregion */
+/* #region tasklist */
+
 /* #endregion */
