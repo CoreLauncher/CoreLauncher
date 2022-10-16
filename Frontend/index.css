@@ -25,6 +25,7 @@
 .topbar .logo {
     width: var(--logo-width);
     float: left;
+    -webkit-app-region: drag;
 }
 
 .topbar .logo .image {
