@@ -28,3 +28,39 @@ window.addEventListener(
     }
 )
 //#endregion
+//#region Window control
+window.addEventListener(
+    "load",
+    async function() {
+        document.getElementById("minimizebutton").addEventListener(
+            "click",
+            async function() {
+                CoreLauncher.IPC.Send(
+                    "Main",
+                    "Window.Minimize"
+                )
+            }
+        )
+
+        document.getElementById("maximizebutton").addEventListener(
+            "click",
+            async function() {
+                CoreLauncher.IPC.Send(
+                    "Main",
+                    "Window.Maximize"
+                )
+            }
+        )
+
+        document.getElementById("closebutton").addEventListener(
+            "click",
+            async function() {
+                CoreLauncher.IPC.Send(
+                    "Main",
+                    "Window.Close"
+                )
+            }
+        )
+    }
+)
+//#endregion
