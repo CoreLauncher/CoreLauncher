@@ -90,7 +90,6 @@
 }
 /* #endregion */
 /* #region windowcontrol */
-
 .topbar .windowcontrol {
     float: right;
     width: var(--window-width);
