@@ -10,6 +10,10 @@ html, body {
     font-family: Inter;
 }
 
+img {
+    pointer-events: none;
+}
+
 body {
     background-color: var(--background-primary);
 }
