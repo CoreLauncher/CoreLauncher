@@ -1,7 +1,13 @@
+:root {
+    --topbar-height: 50px;
+    --tasklist-height: 20px;
+    --content-height: calc(100% - var(--topbar-height) - var(--tasklist-height))
+}
+
 .topbar {
-    --height: 50px;
+    --height: var(--topbar-height);
     --logo-width: 200px;
-    --window-width: 150px
+    --window-width: 150px;
 }
 
 /* #region basic */
