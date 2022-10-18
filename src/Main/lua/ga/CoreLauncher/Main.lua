@@ -48,3 +48,93 @@ CoreLauncher.RPC:SetActivity(
         }
     }
 )
+
+do -- Window
+    local WindowState = CoreLauncher.Config:GetKey("WindowState")
+    CoreLauncher.Window = CoreLauncher.Electron.BrowserWindow(
+        {
+            icon = CoreLauncher.ApplicationData .. "/favicon.ico",
+            title = "CoreLauncher",
+            show = false,
+
+            minWidth = 1000,
+            minHeight = 600,
+            frame = false,
+            fullscreenable = false,
+        }
+    )
+
+    local Window = CoreLauncher.Window
+    Window:SetSize(WindowState.Width, WindowState.Height)
+    Window:SetPosition(WindowState.X, WindowState.Y)
+
+    local function SaveStateChange()
+        local Bounds = Window:getBounds()
+        if type(Bounds) ~= "table" then return end
+        WindowState.Width = Bounds.width
+        WindowState.Height = Bounds.height
+        WindowState.X = Bounds.x
+        WindowState.Y = Bounds.y
+    end
+    Window:on("resize", SaveStateChange)
+    Window:on("move", SaveStateChange)
+    Window:on("maximize", SaveStateChange)
+    Window:on("unmaximize", SaveStateChange)
+
+    local StopStatic
+    Window:on(
+        "closed",
+        function()
+            TypeWriter.Logger.Info("Closing")
+            CoreLauncher.Config:SetKey("WindowState", WindowState)
+            CoreLauncher.Electron.Close()
+            CoreLauncher.IPC:Disconnect()
+            CoreLauncher.RPC:Disconnect()
+            if StopStatic then
+                StopStatic()
+            end
+        end
+    )
+    local Show = false
+    Window:Once(
+        "ready-to-show",
+        function ()
+            Show = true
+        end
+    )
+    if CoreLauncher.Dev then
+    else
+        Window:RemoveMenu()
+        -- Load static server
+        local _, Stop = Import("ga.corebyte.Static")(
+            {
+                Port = 9874,
+                Path = CoreLauncher.ApplicationData .. "/App/"
+            }
+        )
+        StopStatic = Stop
+        local Found = false
+        while Found == false do
+            local Success, Response = pcall(
+                function ()
+                    local Response = CoreLauncher.Http.Request(
+                        "GET",
+                        "http://localhost:9874/Ping.txt"
+                    )
+                    return Response
+                end
+            )
+            if Success and Response.code == 200 then
+                Found = true
+            end
+            Sleep(50)
+        end
+    end
+    Window:LoadURL("http://localhost:9874/")
+
+    if Show == false then
+        Window:WaitFor("ready-to-show")
+    end
+    Window:OpenDevTools()
+    Window:Show()
+end
