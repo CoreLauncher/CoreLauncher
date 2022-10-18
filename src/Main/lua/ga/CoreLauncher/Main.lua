@@ -24,3 +24,6 @@ CoreLauncher.Http = Import("ga.CoreLauncher.Libraries.Http")
 CoreLauncher.Config = Import("ga.CoreLauncher.Libraries.Config"):new(CoreLauncher.ApplicationData .. "/Data2.json")
 CoreLauncher.Games = Import("ga.CoreLauncher.Games")
 CoreLauncher.API = Import("ga.CoreLauncher.API")
+
+Import("ga.CoreLauncher.Install")
+Import("ga.CoreLauncher.Modules")
