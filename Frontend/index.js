@@ -66,6 +66,7 @@ window.addEventListener(
         )
     }
 )
+//#endregion
 //#region gameslist
 window.addEventListener(
     "load",
