@@ -10,7 +10,11 @@ Data.Info = {
     Developer = {
         Name = "Mojang",
         Website = "https://www.minecraft.net/en-us/"
+    },
+    Accounts = {
+        "MSA"
     }
+    Instanced = true
 }
 
 return Data
