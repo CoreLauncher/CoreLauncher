@@ -66,4 +66,25 @@ window.addEventListener(
         )
     }
 )
+//#region gameslist
+window.addEventListener(
+    "load",
+    async function() {
+        const Template = document.getElementById("game")
+        const GameList = document.getElementById("topbargameslist")
+        Template.remove()
+
+        const Games = await CoreLauncher.IPC.Send(
+            "Main",
+            "Games.List"
+        )
+
+        for (const GameId in Games) {
+            const Game = Games[GameId]
+            const GameElement = Template.cloneNode(true)
+            GameElement.querySelector(".icon").src = Game.Icon
+            GameList.appendChild(GameElement)
+        }
+    }
+)
 //#endregion
