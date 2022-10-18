@@ -122,5 +122,48 @@
 }
 /* #endregion */
 /* #region tasklist */
+.loadingbar {
+    --line-height: 1px;
+    --height: var(--tasklist-height);
+    --content-height: calc(var(--height) - var(--line-height))
+}
 
+.loadingbar {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: var(--height);
+    background-color: var(--background-tertiary);
+}
+
+.loadingbar .line {
+    height: var(--line-height);
+    width: 100%;
+    background-color: var(--header-secondary);
+}
+
+.loadingbar .state {
+    position: absolute;
+    display: block;
+    height: calc(var(--content-height) - 1px);
+    margin-left: 10px;
+    font-size: calc(var(--content-height) / 1.25);
+    z-index: 100;
+}
+
+.loadingbar .progress {
+    position: absolute;
+    height: var(--content-height);
+    width: 50%;
+    background-color: var(--text-positive);
+    z-index: 0;
+}
+
+.loadingbar .details {
+    position: absolute;
+    right: 0px;
+    height: var(--content-height);
+    filter: invert(100%) sepia(4%) saturate(15%) hue-rotate(114deg) brightness(106%) contrast(103%);
+    cursor: pointer;
+}
 /* #endregion */
