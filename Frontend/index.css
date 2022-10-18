@@ -167,3 +167,13 @@
     cursor: pointer;
 }
 /* #endregion */
+/* #region container*/
+.container {
+    height: var(--content-height);
+}
+
+.container .mainframe {
+    height: 100%;
+    width: 100%;
+}
+/* #endregion */
