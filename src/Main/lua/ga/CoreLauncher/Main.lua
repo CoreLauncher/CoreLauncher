@@ -27,3 +27,24 @@ CoreLauncher.API = Import("ga.CoreLauncher.API")
 
 Import("ga.CoreLauncher.Install")
 Import("ga.CoreLauncher.Modules")
+
+CoreLauncher.RPC:SetActivity(
+    {
+        state = "https://corelauncher.ga",
+        details = "Launcing games",
+        largeImageKey = "favicon",
+        largeImageText = "CoreLauncher",
+        smallImageKey = "cubicinc",
+        smallImageText = "Developed by Cubic Inc",
+        buttons = {
+            {
+                label = "Website",
+                url = "https://corelauncher.ga"
+            },
+            {
+                label = "Download",
+                url = "https://corelauncher.ga/download"
+            }
+        }
+    }
+)
