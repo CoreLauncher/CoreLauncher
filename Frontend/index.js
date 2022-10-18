@@ -118,7 +118,8 @@ window.addEventListener(
                 GameElement,
                 "selected",
                 `/pages/instancepage?gameid=${GameId}`,
-                `GamePage${GameId}`
+                `GamePage${GameId}`,
+                true
             )
             GameList.appendChild(GameElement)
         }
