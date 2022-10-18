@@ -5,8 +5,11 @@ window.addEventListener(
         const Logo = document.getElementById("topbarlogo")
         const GamesList = document.getElementById("topbargameslist")
         const WindowControl = document.getElementById("topbarwindowcontrol")
-        async function Resize() {
+        async function Resize(R) {
             GamesList.style.setProperty("--width", `${document.body.offsetWidth - Logo.offsetWidth - WindowControl.offsetWidth - 2}px`)
+            if (R != true) {
+                await setTimeout(Resize, 1, true)
+            }
         }
         addEventListener(
             "resize",
