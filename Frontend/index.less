@@ -54,6 +54,10 @@
         white-space: nowrap;
         scroll-behavior: smooth;
 
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
         .game {
             display: inline-block;
             height: @height;
@@ -75,11 +79,11 @@
                 bottom: 5%;
                 border-radius: 100px;
             }
-        }
-    }
 
-    .gameslist::-webkit-scrollbar {
-        display: none;
+            &.selected .selectedline {
+                background-color: var(--text-positive);
+            }
+        }
     }
 
     .windowcontrol {
