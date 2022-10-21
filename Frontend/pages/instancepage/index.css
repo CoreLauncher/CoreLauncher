@@ -1,0 +1,86 @@
+:root {
+    --instances-per-row: 3;
+    --margin-between-instance: 10px;
+    --instance-height: 150px;
+    --half-margin: calc(var(--margin-between-instance) / 2);
+}
+
+.container {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+    top: 10%;
+}
+
+/* #region shelf */
+.container .shelf {
+    --top-height: 50px;
+    --instances-height: calc(100% - var(--top-height));
+
+    width: 100%;
+    height: 300px;
+}
+
+.container .top {
+    --name-width: 190px;
+    --controls-width: 110px;
+    --line-margin: 10px;
+    --line-width: calc(
+        100% - var(--name-width) - var(--controls-width) - (var(--line-margin) * 2)
+    );
+
+    height: var(--top-height);
+}
+
+.container .top .name {
+    height: var(--top-height);
+    line-height: var(--top-height);
+    font-size: calc(var(--top-height) / 2);
+    float: left;
+}
+
+.container .top .line {
+    --height: 5px;
+    background-color: var(--header-secondary);
+    height: var(--height);
+    border-radius: 5px;
+    width: var(--line-width);
+    margin-left: var(--line-margin);
+    margin-right: var(--line-margin);
+    float: left;
+    margin-top: calc(var(--top-height) / 2 - var(--height) / 2);
+}
+
+.container .top .controls {
+    height: var(--top-height);
+    vertical-align: middle;
+    float: left;
+}
+
+.container .top .controls img {
+    height: calc(var(--top-height) / 1.5);
+    display: inline-block;
+    margin-top: calc(var(--top-height) / 6);
+    filter: invert(100%) sepia(0%) saturate(2364%) hue-rotate(237deg) brightness(115%) contrast(101%);
+    color: var(--background-secondary);
+}
+
+.container .instances {
+    height: var(--instances-height);
+}
+
+/* #endregion */
+
+
+
+.container .instance {
+    width: calc(
+        (100% / var(--instances-per-row)) - (var(--half-margin) * var(--instances-per-row)) + var(--half-margin)
+    );
+    height: var(--instance-height);
+    background-color: var(--background-secondary-alt);
+    float: right;
+    margin-right: var(--half-margin);
+    margin-left: var(--half-margin);
+    border-radius: 10px;
+}
