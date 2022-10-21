@@ -13,7 +13,7 @@ Data.Info = {
     },
     Accounts = {
         "MSA"
-    }
+    },
     Instanced = true
 }
 
