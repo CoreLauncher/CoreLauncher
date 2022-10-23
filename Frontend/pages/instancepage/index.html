@@ -23,17 +23,40 @@
                     <a class="name">Recently played</a>
                     <div class="line"></div>
                     <div class="controls">
-                        <img style="transform: rotate(-90deg);" src="/assets/image/icon/chevron-up.svg">
-                        <img src="/assets/image/icon/chevron-up.svg">
-                        <img style="transform: rotate(90deg);" src="/assets/image/icon/chevron-up.svg">
+                        <button><img style="transform: rotate(-90deg);" src="/assets/image/icon/chevron-up.svg"></button>
+                        <button onclick="this.parentNode.parentNode.parentNode.classList.toggle('expanded')"><img src="/assets/image/icon/chevron-up.svg"></button>
+                        <button><img style="transform: rotate(90deg);" src="/assets/image/icon/chevron-up.svg"></button>
                     </div>
                 </div>
                 <div class="instances">
-
+                    <div class="instance">
+                        <div class="icon"></div>
+                        <div class="info">
+                            <a class="name">Instance Name</a>
+                            <div class="context">
+                                <img src="/assets/image/icon/ellipsis-vertical.svg">
+                                <div class="contextmenu">
+                                    <div class="button">
+                                        <img src="/assets/image/icon/circle-play.svg" class="contexticon">
+                                        <a class="label">Play</a>
+                                    </div>
+                                    <div class="button">
+                                        <img src="/assets/image/icon/pen.svg" class="contexticon">
+                                        <a class="label">Edit instance</a>
+                                    </div>
+                                    <div class="button">
+                                        <img src="/assets/image/icon/file-export.svg" class="contexticon">
+                                        <a class="label">Export instance</a>
+                                    </div>
+                                    <div class="button">
+                                        <img src="/assets/image/icon/circle-xmark.svg" class="contexticon">
+                                        <a class="label">Delete instance</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="instance">
-                
             </div>
         </div>
     </body>

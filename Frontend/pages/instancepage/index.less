@@ -13,6 +13,7 @@
 .container .shelf {
     @top-height: 50px;
     @instances-height: calc(100% - @top-height);
+    display: block;
 
     width: 100%;
     height: 300px;
@@ -35,6 +36,7 @@
         }
         .line {
             @height: 5px;
+            display: block;
             background-color: var(--header-secondary);
             height: @height;
             border-radius: 5px;
@@ -46,8 +48,17 @@
         }
         .controls {
             height: @top-height;
-            vertical-align: middle;
             float: left;
+
+            >button {
+                background: none;
+                color: inherit;
+                border: none;
+                padding: 0;
+                font: inherit;
+                cursor: pointer;
+                outline: inherit;
+            }
 
             img {
                 height: calc(@top-height / 1.5);
@@ -55,24 +66,79 @@
                 margin-top: calc(@top-height / 6);
                 filter: invert(100%) sepia(0%) saturate(2364%) hue-rotate(237deg) brightness(115%) contrast(101%);
                 color: var(--background-secondary);
-            }
+            } 
         }
     }
     .instances {
-        height: @instances-height;
+        height: auto;
+        white-space: nowrap;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .instance {
+            @instance-width: 200px;
+            @margin: 20px;
+            background-color: var(--background-secondary-alt);
+            display: inline-block;
+            height: 100%;
+            width: @instance-width;
+            border-radius: 15px;
+            margin-right: 20px;
+            margin-bottom: $margin-right;
+
+            .icon {
+                height: @instance-width;
+                background-image: url(https://cdn.modrinth.com/placeholder.svg);
+                background-position: center;
+                background-size: cover;
+                border-radius: inherit;
+            }
+            
+            .info {
+                @info-height: calc(100% - @instance-width);
+
+                height: @info-height;
+                position: relative;
+
+                .name {
+                    position: absolute;
+                    top: 25%;
+                    left: 5%;
+                }
+
+                .context {
+                    @margin: 5px;
+                    @size: calc(50px - @margin * 2);
+
+                    float: right;
+                    height: @size;
+                    width: @size;
+                    margin: @margin;
+                    display: block;
+                    background-color: var(--background-tertiary);
+                    border-radius: 100%;
+                    position: relative;
+                    >img {
+                        @margin: 5px;
+                        @size: calc(100% - @margin * 2);
+
+                        height: @size;
+                        width: @size;
+                        margin: @margin;
+                        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(167deg) brightness(104%) contrast(105%);
+                    }
+                }
+            }
+        }
     }
-}
 
-
-
-.container .instance {
-    width: calc(
-        (100% / @instances-per-row) - (@half-margin * @instances-per-row) + @half-margin
-    );
-    height: @instance-height;
-    background-color: var(--background-secondary-alt);
-    float: right;
-    margin-right: @half-margin;
-    margin-left: @half-margin;
-    border-radius: 10px;
+    &.expanded .instance {
+        display: block;
+        float: left;
+    }
 }
