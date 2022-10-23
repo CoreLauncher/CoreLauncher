@@ -24,3 +24,14 @@ Number.prototype.clamp = function(min, max) {
 function Sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+//#region context menu
+window.addEventListener(
+    "load",
+    async function() {
+        const Menu = document.createElement("div")
+        Menu.classList.add("contextmenu")
+        document.body.appendChild(Menu)
+    }
+)
+//#endregion

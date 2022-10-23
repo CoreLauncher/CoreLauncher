@@ -1,19 +1,17 @@
 @import url("../font/index.css");
-@import url("./DiscordColors.css");
-
-html, body {
-    height: 100%;
-    width: 100%;
-    user-select: none;
-    margin: 0;
-    color: var(--text-normal);
-    font-family: Inter;
-}
-
-img {
-    pointer-events: none;
-}
-
+@import url("DiscordColors.css");
+html,
 body {
-    background-color: var(--background-primary);
+  height: 100%;
+  width: 100%;
+  user-select: none;
+  margin: 0;
+  color: var(--text-normal);
+  font-family: Inter;
+}
+img {
+  pointer-events: none;
+}
+body {
+  background-color: var(--background-primary);
 }
