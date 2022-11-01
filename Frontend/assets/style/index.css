@@ -15,3 +15,39 @@ img {
 body {
   background-color: var(--background-primary);
 }
+* {
+  box-sizing: border-box;
+}
+.contextmenu {
+  display: block;
+  position: absolute;
+  background-color: var(--background-floating);
+  padding: 10px;
+  border-radius: 10px;
+  max-height: 500px;
+  width: auto;
+  top: 0px;
+  left: 0px;
+}
+.contextmenu .contextbutton {
+  height: 30px;
+  width: auto;
+  display: block;
+  padding: 3px;
+}
+.contextmenu .contextbutton:hover {
+  background-color: var(--background-nested-floating);
+  border-radius: 5px;
+}
+.contextmenu .contextbutton .contextlabel {
+  height: calc(30px - 3px * 2);
+  vertical-align: 30px;
+  float: left;
+}
+.contextmenu .contextbutton .contextimage {
+  height: 100%;
+  display: block;
+  float: right;
+  margin-left: 5px;
+  filter: invert(100%) sepia(0%) saturate(2364%) hue-rotate(237deg) brightness(115%) contrast(101%);
+}
