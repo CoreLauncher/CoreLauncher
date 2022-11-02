@@ -65,8 +65,10 @@ do -- Window
     )
 
     local Window = CoreLauncher.Window
-    Window:SetSize(WindowState.Width, WindowState.Height)
-    Window:SetPosition(WindowState.X, WindowState.Y)
+    if WindowState.Width then
+        Window:SetSize(WindowState.Width, WindowState.Height)
+        Window:SetPosition(WindowState.X, WindowState.Y)
+    end
 
     local function SaveStateChange()
         local Bounds = Window:getBounds()
