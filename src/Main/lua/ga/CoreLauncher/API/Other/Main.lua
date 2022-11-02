@@ -17,3 +17,30 @@ function Other.OpenInBrowser(Link)
     )
     Result.waitExit()
 end
+
+local ReleaseCache
+function Other.GetLatestRelease(UseCache)
+    if UseCache == nil then
+        UseCache = true
+    end
+    local Data
+    if UseCache then
+        Data = ReleaseCache
+    end
+    if Data == nil then
+        local Response, ReturnData = CoreLauncher.Http.JsonRequest(
+            "GET",
+            "https://api.github.com/repos/CoreLauncher/CoreLauncher/releases/latest"
+        )
+        Data = ReturnData
+    end
+    
+    return {
+        Name = Data.name,
+        Tag = Data.tag_name,
+        Body = Data.body,
+        PublishedDate = Data.published_at
+    }
+end
+
+return Other
