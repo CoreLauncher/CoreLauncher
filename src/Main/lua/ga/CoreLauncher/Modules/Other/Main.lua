@@ -13,9 +13,15 @@ CoreLauncher.IPC:RegisterMessage(
         local LastShown = CoreLauncher.Config:GetKey("Updates.LastShown")
         local LastReleased = Release.Tag
 
-        p(LastShown)
-        p(LastReleased)
-
         local NeedsToBeShown = LastShown ~= LastReleased
+        if LastShown == nil then
+            NeedsToBeShown = false
+        end
+
+        CoreLauncher.Config:SetKey("Updates.LastShown", LastReleased)
+        return {
+            NeedsToBeShown = NeedsToBeShown,
+            Release = Release
+        }
     end
 )
