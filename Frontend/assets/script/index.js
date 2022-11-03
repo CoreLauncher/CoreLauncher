@@ -29,7 +29,7 @@ if (IsInIframe) {
     window.CoreLauncher = window.top.CoreLauncher
 } else {
     window.CoreLauncher = {
-        IPC: new OpenIPC("CoreLauncher", (document.currentScript || {getAttribute: function() {return undefined}}).getAttribute("IPC") || "Render"),
+        IPC: new OpenIPC("CoreLauncher", "Render"),
     }
     CoreLauncher.ExtLink = async function(Link) {
         await CoreLauncher.IPC.Send(
