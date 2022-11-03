@@ -33,6 +33,7 @@ function Other.GetLatestRelease(UseCache)
             "https://api.github.com/repos/CoreLauncher/CoreLauncher/releases/latest"
         )
         Data = ReturnData
+        ReleaseCache = ReturnData
     end
     
     return {
