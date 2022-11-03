@@ -26,8 +26,12 @@ end
 function Config:SetKey(Key, Value)
     local KeyPartitions = Key:split(".")
     local Data = self.Data
+    local SaveNeeded = false
     for Index, Partition in pairs(KeyPartitions) do
         if Index == #KeyPartitions then
+            if Data[Partition] ~= Value then
+                SaveNeeded = true
+            end
             Data[Partition] = Value
         else
             if Data[Partition] == nil then
@@ -36,7 +40,9 @@ function Config:SetKey(Key, Value)
             Data = Data[Partition]
         end
     end
-    self:Save()
+    if SaveNeeded then
+        self:Save()        
+    end
     return true
 end
 
