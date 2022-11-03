@@ -2,6 +2,8 @@ const IsInIframe = window.self !== window.top
 const urlSearchParams = new URLSearchParams(window.location.search); window.QueryParameters = Object.fromEntries(urlSearchParams.entries());
 window.p = console.log
 
+import API from "/assets/script/API/index.js"
+
 //#region Mouse pos
 if (IsInIframe) {
     window.MousePosition = window.top.MousePosition
@@ -30,6 +32,7 @@ if (IsInIframe) {
 } else {
     window.CoreLauncher = {
         IPC: new OpenIPC("CoreLauncher", "Render"),
+        API: API
     }
     CoreLauncher.ExtLink = async function(Link) {
         await CoreLauncher.IPC.Send(
