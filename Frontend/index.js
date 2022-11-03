@@ -126,3 +126,19 @@ window.addEventListener(
     }
 )
 //#endregion
+//#region Update notif
+window.addEventListener(
+    "load",
+    async function() {
+        const Info = await CoreLauncher.IPC.Send(
+            "Main",
+            "Other.NeedToShowRelease"
+        )
+        CoreLauncher.API.NotificationService.Show(
+            "ReleaseInfo",
+            "/notifications/updateinfo/",
+            `New update (${Info.Release.Name}@${Info.Release.Tag})`
+        )
+    }
+)
+//#endregion
