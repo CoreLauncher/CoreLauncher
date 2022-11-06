@@ -134,11 +134,14 @@ window.addEventListener(
             "Main",
             "Other.NeedToShowRelease"
         )
-        CoreLauncher.API.NotificationService.Show(
-            "ReleaseInfo",
-            "/notifications/updateinfo/",
-            `New update (${Info.Release.Name}@${Info.Release.Tag})`
-        )
+        if (Info.NeedsToBeShown) {
+            CoreLauncher.API.NotificationService.Show(
+                "ReleaseInfo",
+                "/notifications/updateinfo/",
+                `New update (${Info.Release.Name}@${Info.Release.Tag})`
+            )
+        }
+        
     }
 )
 //#endregion
