@@ -36,7 +36,7 @@ local AccountTypes = {
             end,
             AfterToken = function (TokenData)
                 local ReturnData = {
-                    Scope = TokenData.Scope,
+                    Scope = TokenData.scope,
                     AccessToken = TokenData.access_token,
                     RefreshToken = TokenData.refresh_token,
                     CreatedAt = os.time(),
