@@ -3,15 +3,35 @@ local Other = {}
 local Spawn = require("coro-spawn")
 
 function Other.OpenInBrowser(Link)
-    local Command = {
-        [true] = "start",
-        [false] = "open"
-    }
-    local Result = Spawn(
-        Command[TypeWriter.Os == "win32"],
+    local Command
+    local Arguments = {}
+    if TypeWriter.Os == "win32" then
+        Command = "powershell.exe"
+        
+        table.insert(Arguments, "-NoProfile")
+		table.insert(Arguments, "-NonInteractive")
+		table.insert(Arguments, "-ExecutionPolicy")
+		table.insert(Arguments, "Bypass")
+		table.insert(Arguments, "-Command")
+		table.insert(
+            Arguments,
+            string.format(
+                "Start '%s'", Link
+            )
+        )
+    else
+        Command = "open"
+        table.insert(Arguments, Link)
+    end
+
+    local Result, Error = Spawn(
+        Command,
         {
-            args = {
-                Link
+            args = Arguments,
+            stdio = {
+                process.stdin.handle,
+                process.stdout.handle,
+                process.stderr.handle
             }
         }
     )
