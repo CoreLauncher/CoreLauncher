@@ -22,10 +22,12 @@ CoreLauncher.ApplicationData = TypeWriter.ApplicationData .. "/CoreLauncher/"
 CoreLauncher.Dev = process.env.CORELAUNCHER_DEV == "true"
 CoreLauncher.Http = Import("ga.CoreLauncher.Libraries.Http")
 CoreLauncher.Config = Import("ga.CoreLauncher.Libraries.Config"):new(CoreLauncher.ApplicationData .. "/Data2.json")
+CoreLauncher.Accounts = Import("ga.CoreLauncher.Libraries.Accounts"):new()
 CoreLauncher.Games = Import("ga.CoreLauncher.Games")
 CoreLauncher.API = Import("ga.CoreLauncher.API")
 
 Import("ga.CoreLauncher.Install")
+CoreLauncher.Accounts:RefreshAll()
 Import("ga.CoreLauncher.Modules")
 
 CoreLauncher.RPC:SetActivity(
