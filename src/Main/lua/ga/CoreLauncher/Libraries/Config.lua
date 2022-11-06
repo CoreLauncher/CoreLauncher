@@ -20,6 +20,9 @@ function Config:GetKey(Key)
         end
         Data = Data[Partition]
     end
+    if type(Data) == "table" then
+        Data = table.deepcopy(Data)
+    end
     return Data
 end
 
