@@ -7,15 +7,22 @@ function NotificationLabel() {
     return document.getElementById("notificationlabel")
 }
 function NotificationFrame() {
-    p("load")
     return document.getElementById("notiframe")
+}
+function CloseButton() {
+    return document.getElementById("notificationclosebutton")
 }
 
 var ShownNotification
-NotificationService.Show = function (Id, Url, Label, Nonce) {
+NotificationService.Show = function (Id, Url, Label, Nonce, Closable = true) {
     NotificationFrame().src = Url
     NotificationLabel().innerText = Label
     Container().classList.add("notifshown")
+    if (Closable) {
+        CloseButton().style.display = ""
+    } else {
+        CloseButton().style.display = "none"
+    }
     ShownNotification = {
         Id: Id,
         Url: Url,
