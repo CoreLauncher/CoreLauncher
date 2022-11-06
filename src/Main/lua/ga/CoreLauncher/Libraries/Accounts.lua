@@ -75,9 +75,7 @@ end
 function Accounts:EndFlow(Id, Code)
     local TypeTasks = AccountTypes[Id].Tasks
     local TokenData = TypeTasks.ResolveCode(Code)
-    p(TokenData)
     local ResolvedTokenData = TypeTasks.AfterToken(TokenData)
-    p(ResolvedTokenData)
     CoreLauncher.Config:SetKey(
         string.format(
             "Accounts.%s.Connected.%s",
