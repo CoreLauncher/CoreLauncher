@@ -15,6 +15,7 @@ local AccountTypes = {
                 ["client_id"] = "1008708322922352753",
                 ["redirect_uri"] = "http://localhost:9874/callbacks/accounts/",
                 ["state"] = "Discord",
+                ["prompt"] = "none",
                 ["response_type"] = "code",
                 ["scope"] = "identify email connections guilds guilds.join"
             }
@@ -29,6 +30,7 @@ local AccountTypes = {
                         Code
                     )
                 )
+                p(TokenData)
                 return TokenData
             end,
             RefreshToken = function (TokenData)
@@ -90,8 +92,23 @@ function Accounts:EndFlow(Id, Code)
         ),
         ResolvedTokenData.Id
     )
-    TypeWriter.Logger.Info("Successfully added %s account", Name)
+    TypeWriter.Logger.Info("Successfully added %s account", Id)
     CoreLauncher.Window:Reload()
+end
+
+function Accounts:GetAccounts(Id)
+    return CoreLauncher.Config:GetKey(
+        "Accounts.%s.Connected",
+        Id
+    )
+end
+
+function Accounts:GetAccount(Id)
+    local UsingAccount
+end
+
+function Accounts:Has(Id)
+    
 end
 
 function Accounts:RefreshAll()
