@@ -34,7 +34,15 @@ local AccountTypes = {
                 return TokenData
             end,
             RefreshToken = function (TokenData)
-                
+                local Response, TokenData = CoreLauncher.Http.JsonRequest(
+                    "GET",
+                    string.format(
+                        "%s/discord/refresh/?code=%s",
+                        BaseUrl,
+                        TokenData.RefreshToken
+                    )
+                )
+                return TokenData
             end,
             AfterToken = function (TokenData)
                 local ReturnData = {
@@ -100,15 +108,28 @@ function Accounts:GetAccounts(Id)
     return CoreLauncher.Config:GetKey(
         "Accounts.%s.Connected",
         Id
-    )
+    ) or {}
 end
 
 function Accounts:GetAccount(Id)
-    local UsingAccount
+    local UsingAccount = CoreLauncher.Config:GetKey(
+        "Accounts.%s.Using",
+        Id
+    )
+    local Account = self:GetAccounts(Id)[UsingAccount]
+    return Account
 end
 
 function Accounts:Has(Id)
-    
+    return self:GetAccount(Id) ~= nil
+end
+
+function Accounts:GetAccountTypes()
+    local Types = {}
+    for AccountType in pairs(AccountTypes) do
+        table.insert(Types, AccountType)
+    end
+    return Types
 end
 
 function Accounts:RefreshAll()
