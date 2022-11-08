@@ -1,6 +1,8 @@
+Import("ga.CoreLauncher.Modules.Accounts.Discord")
+
 local function SelfCall(Obj, Func)
     return function (...)
-        Obj[Func](Obj, ...)
+        return Obj[Func](Obj, ...)
     end
 end
 
@@ -15,4 +17,9 @@ CoreLauncher.IPC:RegisterMessage(
         p(Data)
         CoreLauncher.Accounts:EndFlow(Data.Type, Data.Code)
     end
+)
+
+CoreLauncher.IPC:RegisterMessage(
+    "Accounts.Has",
+    SelfCall(CoreLauncher.Accounts, "Has")
 )
