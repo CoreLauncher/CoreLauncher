@@ -126,21 +126,44 @@ window.addEventListener(
     }
 )
 //#endregion
-//#region Update notif
+//#region Show notifications
 window.addEventListener(
     "load",
     async function() {
-        const Info = await CoreLauncher.IPC.Send(
-            "Main",
-            "Other.NeedToShowRelease"
-        )
-        if (Info.NeedsToBeShown) {
-            CoreLauncher.API.NotificationService.Show(
-                "ReleaseInfo",
-                "/notifications/updateinfo/",
-                `New update (${Info.Release.Name}@${Info.Release.Tag})`
+        {
+            const Info = await CoreLauncher.IPC.Send(
+                "Main",
+                "Other.NeedToShowRelease"
             )
+            if (Info.NeedsToBeShown) {
+                CoreLauncher.API.NotificationService.Show(
+                    "ReleaseInfo",
+                    "/notifications/updateinfo/",
+                    `New update (${Info.Release.Name}@${Info.Release.Tag})`
+                )
+            }
         }
+        {
+            const IsDiscordConnected = await CoreLauncher.IPC.Send(
+                "Main",
+                "Accounts.Has",
+                "Discord"
+            )
+            if (IsDiscordConnected == false) {
+                CoreLauncher.API.NotificationService.Show(
+                    "Welcome",
+                    "/notifications/welcome/",
+                    "Welcome to CoreLauncher!",
+                    "",
+                    false
+                )
+            } else {
+                CoreLauncher.DiscordConnected = true
+            }
+        }
+    }
+)
+//#endregion
 //#region Load user ico
 window.addEventListener(
     "load",
