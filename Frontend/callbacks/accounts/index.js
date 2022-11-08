@@ -9,5 +9,6 @@ window.addEventListener(
                 Code: QueryParameters.code
             }
         )
+        location.pathname = "/callbacks/"
     }
 )
