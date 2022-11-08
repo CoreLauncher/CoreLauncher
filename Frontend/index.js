@@ -141,6 +141,10 @@ window.addEventListener(
                 `New update (${Info.Release.Name}@${Info.Release.Tag})`
             )
         }
+//#region Load user ico
+window.addEventListener(
+    "load",
+    async function() {
         
     }
 )
