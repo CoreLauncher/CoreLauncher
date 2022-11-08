@@ -11,7 +11,8 @@ function Config:initialize(Path)
     self.Data = Json.decode(FS.readFileSync(Path))
 end
 
-function Config:GetKey(Key)
+function Config:GetKey(...)
+    local Key = string.format(...)
     local KeyPartitions = Key:split(".")
     local Data = self.Data
     for _, Partition in pairs(KeyPartitions) do
