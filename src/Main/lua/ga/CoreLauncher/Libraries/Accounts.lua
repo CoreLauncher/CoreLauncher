@@ -118,6 +118,7 @@ local AccountTypes = {
                 local ReturnData = {
                     Scope = TokenData.scope,
                     CreatedAt = os.time(),
+                    AccessToken = TokenData.access_token,
                     ExpiresAt = TokenData.expires_in + os.time(),
                     RefreshToken = TokenData.refresh_token,
                     TokenType = TokenData.token_type
