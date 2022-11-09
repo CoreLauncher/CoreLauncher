@@ -136,33 +136,38 @@ function Accounts:RefreshAll()
     for AccountTypeId, AccountType in pairs(AccountTypes) do
         local TypeTasks = AccountType.Tasks
         for _, Account in pairs(self:GetAccounts(AccountTypeId)) do
-            local TokenData = TypeTasks.RefreshToken(Account)
-            local ResolvedTokenData = TypeTasks.AfterToken(TokenData)
-            if ResolvedTokenData then
-                CoreLauncher.Config:SetKey(
-                    string.format(
-                        "Accounts.%s.Connected.%s",
-                        AccountTypeId, ResolvedTokenData.Id
-                    ),
-                    ResolvedTokenData
-                )
-                CoreLauncher.Config:SetKey(
-                    string.format(
-                        "Accounts.%s.Using",
-                        AccountTypeId
-                    ),
-                    ResolvedTokenData.Id
-                )
-                TypeWriter.Logger.Info("Successfully refreshed %s account (%s)", AccountTypeId, ResolvedTokenData.Id)
+            if not (os.time() - Account.CreatedAt < 3600) then
+                local TokenData = TypeTasks.RefreshToken(Account)
+                local ResolvedTokenData = TypeTasks.AfterToken(TokenData)
+                p(ResolvedTokenData)
+                if ResolvedTokenData then
+                    CoreLauncher.Config:SetKey(
+                        string.format(
+                            "Accounts.%s.Connected.%s",
+                            AccountTypeId, ResolvedTokenData.Id
+                        ),
+                        ResolvedTokenData
+                    )
+                    CoreLauncher.Config:SetKey(
+                        string.format(
+                            "Accounts.%s.Using",
+                            AccountTypeId
+                        ),
+                        ResolvedTokenData.Id
+                    )
+                    TypeWriter.Logger.Info("Successfully refreshed %s account (%s)", AccountTypeId, ResolvedTokenData.Id)
+                else
+                    CoreLauncher.Config:SetKey(
+                        string.format(
+                            "Accounts.%s.Connected.%s",
+                            AccountTypeId, Account.Id
+                        ),
+                        nil
+                    )
+                    TypeWriter.Logger.Warn("Failed to refresh %s account (%s)", AccountTypeId, Account.Id)
+                end
             else
-                CoreLauncher.Config:SetKey(
-                    string.format(
-                        "Accounts.%s.Connected.%s",
-                        Id, Account.Id
-                    ),
-                    nil
-                )
-                TypeWriter.Logger.Warn("Failed to refresh %s account (%s)", AccountTypeId, Account.Id)
+                TypeWriter.Logger.Warn("Failed to refresh %s account (refreshed less than a hour ago)", AccountTypeId)
             end
         end
     end
