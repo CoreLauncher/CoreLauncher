@@ -10,27 +10,52 @@ body {
     left: calc((100% - 75%) / 2);
     position: relative;
     padding-bottom: 30px;
-}
+    
+    .icon-holder {
+        width: 200px;
+        display: block;
+        position: relative;
+        margin:40px auto;
+        display: block;
 
-/* title styling */
-.title {
-    font-size: 200%;
-    text-align: center;
-    width: 100%;
-    display: inline-block;
-}
+        .icon {
+            width: 100%;
+        }
 
-/* icon styling */
-.icon-holder {
-    width: 200px;
-    display: block;
-    position: relative;
-    margin:40px auto;
-    display: block;
-}
+        .hand-icon {
+            position: absolute;
+            height: 75px;
+            left: 10px;
+            bottom: 20px;
+            animation-name: Wave;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate-reverse;
+            animation-timing-function: ease-in-out;
+            transform-origin: 70% 70%; 
+        }
+    }
 
-.icon {
-    width: 100%;
+    .title {
+        font-size: 200%;
+        text-align: center;
+        width: 100%;
+        display: inline-block;
+    }
+
+    .desc {
+        display: block;
+        position: relative;
+        left: 25%;
+        width: 50%;
+        text-align: center;
+    }
+
+    button {
+        margin:40px auto;
+        display: block;
+        position: relative;
+    }
 }
 
 @keyframes Wave {
@@ -40,31 +65,4 @@ body {
     to {
         transform: rotate(0deg);
     }
-}
-
-.hand-icon {
-    position: absolute;
-    height: 75px;
-    left: 10px;
-    bottom: 20px;
-    animation-name: Wave;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate-reverse;
-    animation-timing-function: ease-in-out;
-    transform-origin: 70% 70%; 
-}
-
-.desc {
-    display: block;
-    position: relative;
-    left: 25%;
-    width: 50%;
-    text-align: center;
-}
-
-.holder button {
-    margin:40px auto;
-    display: block;
-    position: relative;
 }
