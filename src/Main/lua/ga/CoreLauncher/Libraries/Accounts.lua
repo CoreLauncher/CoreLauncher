@@ -45,6 +45,9 @@ local AccountTypes = {
                 return TokenData
             end,
             AfterToken = function (TokenData)
+                if TokenData.error then
+                    return nil
+                end
                 local ReturnData = {
                     Scope = TokenData.scope,
                     AccessToken = TokenData.access_token,
