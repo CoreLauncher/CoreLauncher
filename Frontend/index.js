@@ -168,7 +168,11 @@ window.addEventListener(
 window.addEventListener(
     "load",
     async function() {
-        
+        const UserIcon = await CoreLauncher.IPC.Send(
+            "Main",
+            "Accounts.Discord.GetUserIcon"
+        )
+        document.getElementById("profilebutton").childNodes[0].src = UserIcon
     }
 )
 //#endregion
