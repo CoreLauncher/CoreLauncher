@@ -70,6 +70,58 @@ local AccountTypes = {
                 return ReturnData
             end
         }
+    },
+    ["MSA"] = {
+        Information = {
+            Name = "MSA"
+        },
+        FlowUrl = {
+            Base = "https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?",
+            Query = {
+                ["client_id"] = "54e48db0-6129-4320-82a7-3b0156811a91",
+                ["response_type"] = "code",
+                ["redirect_uri"] = "http://localhost:9874/callbacks/accounts/",
+                ["response_mode"] = "query",
+                ["scope"] = "XboxLive.signin offline_access",
+                ["state"] = "MSA"
+            }
+        },
+        Tasks = {
+            ResolveCode = function (Code)
+                local Response, TokenData = CoreLauncher.Http.JsonRequest(
+                    "GET",
+                    string.format(
+                        "%s/msa/token/?code=%s",
+                        BaseUrl,
+                        Code
+                    )
+                )
+                p(TokenData)
+                return TokenData
+            end,
+            RefreshToken = function (TokenData)
+                local Response, TokenData = CoreLauncher.Http.JsonRequest(
+                    "GET",
+                    string.format(
+                        "%s/msa/refresh/?code=%s",
+                        BaseUrl,
+                        TokenData.RefreshToken
+                    )
+                )
+                return TokenData
+            end,
+            AfterToken = function (TokenData)
+                p(TokenData)
+                local ReturnData = {
+                    Scope = TokenData.scope,
+                    CreatedAt = os.time(),
+                    ExpiresAt = TokenData.expires_in + os.time(),
+                    RefreshToken = TokenData.refresh_token,
+                    TokenType = TokenData.token_type
+                }
+                return ReturnData
+            end
+        }
     }
 }
 
