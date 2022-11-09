@@ -172,7 +172,9 @@ window.addEventListener(
             "Main",
             "Accounts.Discord.GetUserIcon"
         )
-        document.getElementById("profilebutton").childNodes[0].src = UserIcon
+        if (UserIcon) {
+            document.getElementById("profilebutton").childNodes[0].src = UserIcon
+        }
     }
 )
 //#endregion

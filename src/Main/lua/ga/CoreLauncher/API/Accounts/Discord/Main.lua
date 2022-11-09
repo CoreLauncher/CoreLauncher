@@ -32,6 +32,9 @@ end
 
 function Discord.GetUserIcon()
     local UserData = Discord.GetUser()
+    if UserData == nil then
+        return
+    end
     return string.format(
         "https://cdn.discordapp.com/avatars/%s/%s.png",
         UserData.id,
