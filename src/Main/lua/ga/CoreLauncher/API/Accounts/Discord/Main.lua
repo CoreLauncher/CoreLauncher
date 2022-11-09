@@ -4,7 +4,6 @@ local Cache
 function Discord.GetUser()
     local UserData
     if Cache then
-        p(Cache)
         UserData = Cache
     else
         local AccountData = CoreLauncher.Accounts:GetAccount("Discord")
