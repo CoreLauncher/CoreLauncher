@@ -74,9 +74,9 @@ local AccountTypes = {
             end
         }
     },
-    ["MSA"] = {
+    ["XboxLive"] = {
         Information = {
-            Name = "MSA"
+            Name = "XboxLive"
         },
         FlowUrl = {
             Base = "https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?",
@@ -85,7 +85,7 @@ local AccountTypes = {
                 ["response_type"] = "code",
                 ["redirect_uri"] = "http://localhost:9874/callbacks/accounts/",
                 ["response_mode"] = "query",
-                ["scope"] = "XboxLive.signin offline_access",
+                ["scope"] = "XboxLive.signin XboxLive.offline_access",
                 ["state"] = "MSA"
             }
         },
