@@ -85,8 +85,8 @@ local AccountTypes = {
                 ["response_type"] = "code",
                 ["redirect_uri"] = "http://localhost:9874/callbacks/accounts/",
                 ["response_mode"] = "query",
-                ["scope"] = "XboxLive.signin XboxLive.offline_access",
-                ["state"] = "MSA"
+                ["scope"] = "XboxLive.signin offline_access",
+                ["state"] = "XboxLive"
             }
         },
         Tasks = {
@@ -99,7 +99,6 @@ local AccountTypes = {
                         Code
                     )
                 )
-                p(TokenData)
                 return TokenData
             end,
             RefreshToken = function (TokenData)
@@ -108,21 +107,80 @@ local AccountTypes = {
                     string.format(
                         "%s/msa/refresh/?code=%s",
                         BaseUrl,
-                        TokenData.RefreshToken
+                        TokenData.MSA.RefreshToken
                     )
                 )
                 return TokenData
             end,
             AfterToken = function (TokenData)
-                p(TokenData)
                 local ReturnData = {
-                    Scope = TokenData.scope,
+                    MSA = {
+                        Scope = TokenData.scope,
+                        AccessToken = TokenData.access_token,
+                        RefreshToken = TokenData.refresh_token,
+                        TokenType = TokenData.token_type
+                    },
                     CreatedAt = os.time(),
-                    AccessToken = TokenData.access_token,
                     ExpiresAt = TokenData.expires_in + os.time(),
-                    RefreshToken = TokenData.refresh_token,
-                    TokenType = TokenData.token_type
                 }
+                local _, XboxAuthData = CoreLauncher.Http.JsonRequest(
+                    "POST",
+                    "https://user.auth.xboxlive.com/user/authenticate",
+                    {
+                        {"Accept", "application/json"},
+                        {"Content-Type", "application/json"}
+                    },
+                    {
+                        ["Properties"] = {
+                            ["AuthMethod"] = "RPS",
+                            ["SiteName"] = "user.auth.xboxlive.com",
+                            ["RpsTicket"] = string.format(
+                                "d=%s",
+                                ReturnData.MSA.AccessToken
+                            )
+                        },
+                        ["RelyingParty"] = "http://auth.xboxlive.com",
+                        ["TokenType"] = "JWT"
+                    }
+                )
+                ReturnData.AccessToken = XboxAuthData.Token
+                local _, XboxXSTSData = CoreLauncher.Http.JsonRequest(
+                    "POST",
+                    "https://xsts.auth.xboxlive.com/xsts/authorize",
+                    {
+                        {"Accept", "application/json"},
+                        {"Content-Type", "application/json"}
+                    },
+                    {
+                        ["Properties"] = {
+                            ["SandboxId"] = "RETAIL",
+                            ["UserTokens"] = {
+                                ReturnData.AccessToken
+                            }
+                        },
+                        ["RelyingParty"] = "http://xboxlive.com",
+                        ["TokenType"] = "JWT"
+                    }
+                )
+                local _, XboxUserData = CoreLauncher.Http.JsonRequest(
+                    "GET",
+                    "https://userpresence.xboxlive.com/users/me?level=user",
+                    {
+                        {
+                            "Authorization",
+                            string.format(
+                                "XBL3.0 x=%s;%s",
+                                XboxAuthData.DisplayClaims.xui[1].uhs,
+                                XboxXSTSData.Token
+                            )
+                        },
+                        {"x-xbl-contract-version", "3"},
+                        {"Accept", "application/json"},
+                        {"Accept-Language", "en-US"},
+                        {"Host", "presencebeta.xboxlive.com"}
+                    }
+                )
+                ReturnData.Id = XboxUserData.xuid
                 return ReturnData
             end
         }
