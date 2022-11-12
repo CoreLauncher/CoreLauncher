@@ -14,7 +14,6 @@ CoreLauncher.IPC:RegisterMessage(
 CoreLauncher.IPC:RegisterMessage(
     "Accounts.EndFlow",
     function (Data)
-        p(Data)
         CoreLauncher.Accounts:EndFlow(Data.Type, Data.Code)
     end
 )

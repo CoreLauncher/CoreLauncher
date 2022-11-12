@@ -30,7 +30,6 @@ local AccountTypes = {
                         Code
                     )
                 )
-                p(TokenData)
                 return TokenData
             end,
             RefreshToken = function (TokenData)
@@ -253,7 +252,6 @@ function Accounts:RefreshAll()
             if not (os.time() - Account.CreatedAt < 3600) then
                 local TokenData = TypeTasks.RefreshToken(Account)
                 local ResolvedTokenData = TypeTasks.AfterToken(TokenData)
-                p(ResolvedTokenData)
                 if ResolvedTokenData then
                     CoreLauncher.Config:SetKey(
                         string.format(
