@@ -196,12 +196,12 @@
         transition: top 0.2s ease-in-out;
 
         background-color: var(--background-tertiary);
-        padding: 50px;
+        padding: 20px;
         padding-top: 20px;
-        border-radius: 20px;
+        border-radius: 10px;
 
-        @header-height: 50px;
-        @header-margin: 20px;
+        @header-height: 40px;
+        @header-margin: 10px;
 
         .notificationheader {
             @height: @header-height;
@@ -236,6 +236,7 @@
         .notiframe {
             height: calc(100% - @header-height - @header-margin);
             width: 100%;
+            border-radius: 10px;
         }
     }
 }
