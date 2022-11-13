@@ -20,7 +20,7 @@
         <div class="container">
             <div class="shelf">
                 <div class="top">
-                    <a class="name">Recently played</a>
+                    <a class="name">All instances</a>
                     <div class="line"></div>
                     <div class="controls">
                         <button><img style="transform: rotate(-90deg);" src="/assets/image/icon/chevron-up.svg"></button>
@@ -28,8 +28,8 @@
                         <button><img style="transform: rotate(90deg);" src="/assets/image/icon/chevron-up.svg"></button>
                     </div>
                 </div>
-                <div class="instances">
-                    <div class="instance">
+                <div class="instances" id="instancesholder">
+                    <div class="instance" id="instancetemplate">
                         <div class="icon" onclick="ShowContextMenu([{Label: 'Hello', Image: 'https\://site-assets.fontawesome.com/releases/v6.2.0/svgs/solid/ghost.svg'}])"></div>
                         <div class="info">
                             <a class="name">Instance Name</a>
