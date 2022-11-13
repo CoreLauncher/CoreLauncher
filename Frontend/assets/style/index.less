@@ -30,6 +30,44 @@ button {
     border: none;
 }
 
+//#region Scrollbars 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-modifier-selected);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--background-modifier-active);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--background-modifier-accent); 
+}
+//#endregion
+//#region Inputs
+select {
+    padding: 5px 35px 5px 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px none var(--button-outline-primary-border);
+    background-color: var(--button-secondary-background);
+    color: var(--text-normal);
+}
+
+input {
+    padding: 5px 5px 5px 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px none var(--button-outline-primary-border);
+    background-color: var(--button-secondary-background);
+    color: var(--text-normal);
+}
+//#endregion
 //#region context menu
 .contextmenu {
     display: block;
