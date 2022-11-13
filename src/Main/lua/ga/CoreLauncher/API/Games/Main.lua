@@ -1,4 +1,5 @@
 local Games = {}
+Games.Instances = Import("ga.CoreLauncher.API.Games.Instances")
 
 function Games.List()
     local ReturnData = {}
