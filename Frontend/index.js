@@ -117,7 +117,7 @@ window.addEventListener(
                 GameElement,
                 GameElement,
                 "selected",
-                `/pages/instancepage?gameid=${GameId}`,
+                `/pages/instancepage/?gameid=${GameId}`,
                 `GamePage${GameId}`,
                 true
             )
