@@ -46,7 +46,6 @@ function Instances.GetInstances(GameId)
     for _, Instance in pairs(SavedInstances) do
         for PropertyKey, PropertyGetter in pairs(CoreLauncher.Games[GameId].Functions.Properties) do
             local PropertyData = PropertyGetter()
-            p(PropertyData)
             if Instance.Properties[PropertyKey] == nil then
                 Instance.Properties[PropertyKey] = PropertyData.Default
             end
