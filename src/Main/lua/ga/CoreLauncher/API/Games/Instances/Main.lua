@@ -35,4 +35,26 @@ function Instances.CreateInstance(GameId, Data)
     )
 end
 
+function Instances.GetInstances(GameId)
+    local Instances = {}
+
+    local SavedInstances = CoreLauncher.Config:GetKey(
+        "Games.%s.Instances",
+        GameId
+    ) or {}
+
+    for _, Instance in pairs(SavedInstances) do
+        for PropertyKey, PropertyGetter in pairs(CoreLauncher.Games[GameId].Functions.Properties) do
+            local PropertyData = PropertyGetter()
+            p(PropertyData)
+            if Instance.Properties[PropertyKey] == nil then
+                Instance.Properties[PropertyKey] = PropertyData.Default
+            end
+        end
+        table.insert(Instances, Instance)
+    end
+
+    return Instances
+end
+
 return Instances
