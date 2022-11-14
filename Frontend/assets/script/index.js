@@ -60,7 +60,7 @@ function Sleep(ms) {
 //#endregion
 //#region Close context menu on background click
 window.addEventListener(
-    "mouseup",
+    "click",
     async function() {
         await CoreLauncher.API.ContextService.HideContextMenu()
     }
