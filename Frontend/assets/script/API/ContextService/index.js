@@ -9,6 +9,12 @@ ContextService.ShowMenu = async function(Buttons, X = MousePosition.X, Y = Mouse
     for (const ContextButton of Buttons) {
         const ContextButtonElement = document.createElement("div")
         ContextButtonElement.classList.add("contextbutton")
+        ContextButtonElement.addEventListener(
+            "click",
+            async function() {
+                ContextButton.Callback()
+            }
+        )
 
         const ContextLabel = document.createElement("a")
         ContextLabel.innerText = ContextButton.Label
