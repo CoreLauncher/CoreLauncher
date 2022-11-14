@@ -1,0 +1,49 @@
+@topbar-height: 40px;
+@container-height: calc(100% - @topbar-height);
+
+.topbar {
+    @margin: 40px;
+
+    background-color: var(--background-floating);
+    display: block;
+
+    margin-left: @margin;
+    margin-top: 4px;
+
+    height: calc(@topbar-height - $margin-top);
+    width: calc(100% - @margin * 2);
+    border-radius: 10px;
+
+    .containertab {
+        @margin: 8px;
+        @height-remove: 10px;
+        @height: calc(@topbar-height - $margin-top - @height-remove);
+        display: inline-block;
+        height: @height;
+        width: auto;
+
+        margin-left: @margin;
+        margin-right: @margin;
+        margin-top: calc(@height-remove / 2);
+        padding: 8px;
+        line-height: calc(@height - $padding * 2);
+        border-radius: 10px;
+
+        background-color: var(--background-tertiary);
+
+        cursor: pointer;
+
+        &.selected {
+            background-color: var(--background-primary);
+        }
+    }
+}
+
+.container {
+    display: block;
+    height: @container-height;
+    width: 100%;
+
+    position: absolute;
+    bottom: 0px;
+}

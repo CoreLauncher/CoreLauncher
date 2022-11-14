@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-dark">
+    <head>
+        <!-- Mega tags -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Styling -->
+        <link rel="stylesheet" href="/assets/style/index.css">
+        <!-- Scripts -->
+        <script src="/assets/script/index.js" type="module"></script>
+        <!-- Local Assets -->
+        <script src="./index.js"></script>
+        <link rel="stylesheet" href="./index.css">
+        <!-- Title -->
+        <title>CoreLauncher</title>
+        <!-- Templates -->
+    </head>
+    <body>
+        <div class="container">
+            <input type="text" name="" id="instancename" class="instancename" placeholder="Instance name">
+
+            <div class="versionselection">
+                <div id="versiontemplate" class="version">
+                    <div class="versionindicator"></div>
+                    <a class="versionlabel">Quilt</a>
+                </div>
+
+                <div class="versionselector">
+                    <a class="versionselectorlabel">Loader Type</a>
+                    <div class="versions" id="loadertype">
+                        
+                    </div>
+                </div>
+                <div class="versionselector">
+                    <a class="versionselectorlabel">Game version</a>
+                    <div class="versions" id="gameversion">
+
+                    </div>
+                </div>
+                <div class="versionselector">
+                    <a class="versionselectorlabel">Loader Version</a>
+                    <div class="versions" id="loaderversion">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="betacontainer">
+            <input type="checkbox" name="" id="showbeta"><label for="showbeta">Show Beta versions</label>
+        </div>
+        <button class="createbutton button button-danger" id="createbutton">
+            Create instance
+        </button>
+    </body>
+</html>

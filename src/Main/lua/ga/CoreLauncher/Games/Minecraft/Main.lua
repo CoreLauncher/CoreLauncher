@@ -27,12 +27,14 @@ Data.Functions = {
                 {
                     Name = "Vanilla",
                     Beta = false,
-                    Id = "Vanilla"
+                    Id = "Vanilla",
+                    Modded = false
                 },
                 {
                     Name = "Quilt",
                     Beta = false,
-                    Id = "Quilt"
+                    Id = "Quilt",
+                    Modded = true
                 }
             }
         end,
