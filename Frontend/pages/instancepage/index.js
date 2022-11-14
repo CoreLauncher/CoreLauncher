@@ -36,9 +36,17 @@ window.addEventListener(
             const InstanceElement = InstanceTemplate.cloneNode(true)
             InstanceElement.querySelector(".name").innerText = Instance.Name
             InstanceElement.addEventListener(
-                "load",
+                "click",
                 async function() {
-                    
+                    CoreLauncher.API.ContextService.ShowMenu(
+                        [
+                            {Label: "Play", Image: "/assets/image/icon/circle-play.svg"},
+                            {Label: "Play offline", Image: "/assets/image/icon/circle-play.svg"},
+                            {Label: "Edit instance", Image: "/assets/image/icon/pen.svg"},
+                            {Label: "Export instance", Image: "/assets/image/icon/file-export.svg"},
+                            {Label: "Delete instance", Image: "/assets/image/icon/circle-xmark.svg"},
+                        ]
+                    )
                 }
             )
             InstancesHolder.appendChild(InstanceElement)
