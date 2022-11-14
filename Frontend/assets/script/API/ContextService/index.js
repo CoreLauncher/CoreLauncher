@@ -12,7 +12,7 @@ ContextService.ShowMenu = async function(Buttons, X = MousePosition.X, Y = Mouse
         ContextButtonElement.addEventListener(
             "click",
             async function() {
-                ContextButton.Callback()
+                await ContextButton.Callback()
             }
         )
 
