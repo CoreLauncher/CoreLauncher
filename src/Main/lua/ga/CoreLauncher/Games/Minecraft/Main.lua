@@ -56,7 +56,6 @@ Data.Functions = {
                 end
             elseif LoaderType == "Quilt" then
                 for _, Version in pairs(Data.Cache.QuiltGameVersions) do
-                    p(Version)
                     table.insert(
                         Versions,
                         {
