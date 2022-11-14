@@ -58,3 +58,11 @@ function Sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 //#endregion
+//#region Close context menu on background click
+window.addEventListener(
+    "mouseup",
+    async function() {
+        await CoreLauncher.API.ContextService.HideContextMenu()
+    }
+)
+//#endregion

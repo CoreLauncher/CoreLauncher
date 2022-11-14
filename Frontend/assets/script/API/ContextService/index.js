@@ -4,7 +4,7 @@ const Menu = document.createElement("div")
 Menu.classList.add("contextmenu")
 document.body.appendChild(Menu)
 
-ContextService.ShowContextMenu = async function(Buttons, X = MousePosition.X, Y = MousePosition.Y) {
+ContextService.ShowMenu = async function(Buttons, X = MousePosition.X, Y = MousePosition.Y) {
     Menu.innerHTML = ''
     for (const ContextButton of Buttons) {
         const ContextButtonElement = document.createElement("div")
@@ -27,7 +27,7 @@ ContextService.ShowContextMenu = async function(Buttons, X = MousePosition.X, Y 
 }
 
 ContextService.HideContextMenu = async function() {
-    ShowContextMenu(
+    ContextService.ShowMenu(
         [],
         -500,
         -500
@@ -35,11 +35,5 @@ ContextService.HideContextMenu = async function() {
 }
 ContextService.HideContextMenu()
 
-window.addEventListener(
-    "mouseup",
-    async function() {
-        await HideContextMenu()
-    }
-)
 
 export default ContextService
