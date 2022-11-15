@@ -1,47 +1,36 @@
-@topbar-height: 40px;
+@topbar-height: 45px;
+@topbar-margin: 4px;
 @container-height: calc(100% - @topbar-height);
 
 .topbar {
-    @margin: 40px;
-
+    height: calc(@topbar-height - @topbar-margin * 2);
+    width: 90%;
+    display: inline-block;
     background-color: var(--background-floating);
-    display: block;
     position: absolute;
-
-    left: @margin;
-    top: 4px;
-
-    height: calc(@topbar-height - $top);
-    width: calc(100% - @margin * 2);
+    left: 5%;
+    top: @topbar-margin;
+    background-clip: content-box;
     border-radius: 10px;
 
     .containertab {
-        @margin: 8px;
-        @height-remove: 10px;
-        @height: calc(@topbar-height - $top - @height-remove);
         display: inline-block;
-        height: @height;
-        width: auto;
-
-        margin-left: @margin;
-        margin-right: @margin;
-        margin-top: calc(@height-remove / 2);
-        padding: 8px;
-        line-height: calc(@height - $padding * 2);
+        height: 100%;
+        padding: 4px;
+        background-color: var(--background-tertiary);
+        background-clip: content-box;
         border-radius: 10px;
 
-        background-color: var(--background-tertiary);
-
-        cursor: pointer;
-
-        &.selected {
-            background-color: var(--background-primary);
+        a {
+            @margin: 4px;
+            margin-left: @margin;
+            margin-right: @margin;
         }
     }
 }
 
 .container {
-    display: block;
+    display: inline-block;
     height: @container-height;
     width: 100%;
 
