@@ -22,9 +22,12 @@
         border-radius: 10px;
 
         a {
-            @margin: 4px;
+            @margin: 8px;
             margin-left: @margin;
             margin-right: @margin;
+            height: 100%;
+            display: block;
+            line-height: calc(@topbar-height - @topbar-margin * 2 - 8px);
         }
     }
 }
@@ -36,4 +39,5 @@
 
     position: absolute;
     bottom: 0px;
+    padding: 30px;
 }
