@@ -8,11 +8,11 @@ window.addEventListener(
             },
             {
                 Label: "Mods",
-                Page: "Basic"
+                Page: "Mods"
             },
             {
                 Label: "Advanced",
-                Page: "Basic"
+                Page: "Advanced"
             }
         ]
 
@@ -22,12 +22,19 @@ window.addEventListener(
         TabTemplate.remove()
 
         var Selected = false
+        var SelectedTab = ""
         for (const Tab of Tabs) {
             const TabElement = TabTemplate.cloneNode(true)
             TabElement.innerHTML = `<a>${Tab.Label}</a>`
             TabElement.addEventListener(
                 "click",
                 async function() {
+                    if (SelectedTab == Tab.Page) {
+                        p("page already selected")
+                        return
+                    }
+                    SelectedTab = Tab.Page
+
                     ContainerFrame.src = `/notifications/editinstance/pages/${Tab.Page}/`
 
                     Topbar.childNodes.forEach(
@@ -45,6 +52,7 @@ window.addEventListener(
 
             Topbar.appendChild(TabElement)
             if (Selected == false) {
+                Selected = true
                 TabElement.click()
             }
         }
