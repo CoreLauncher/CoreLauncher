@@ -56,4 +56,17 @@ function Instances.GetInstances(GameId)
     return Instances
 end
 
+function Instances.GetInstance(GameId, InstanceId)
+    local FoundInstance
+
+    for _, Instance in pairs(Instances.GetInstances(GameId)) do
+        if Instance.Id == InstanceId then
+            FoundInstance = Instance
+            break
+        end
+    end
+
+    return FoundInstance
+end
+
 return Instances

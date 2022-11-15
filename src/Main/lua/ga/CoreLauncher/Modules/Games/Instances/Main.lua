@@ -18,3 +18,10 @@ CoreLauncher.IPC:RegisterMessage(
         return CoreLauncher.API.Games.Instances.GetInstances(Data.GameId)
     end
 )
+
+CoreLauncher.IPC:RegisterMessage(
+    "Games.Instances.GetInstance",
+    function (Data)
+        return CoreLauncher.API.Games.Instances.GetInstance(Data.GameId, Data.InstanceId)
+    end
+)
