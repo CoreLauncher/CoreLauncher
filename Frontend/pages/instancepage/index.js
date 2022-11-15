@@ -31,7 +31,7 @@ window.addEventListener(
                 GameId: QueryParameters.gameid
             }
         )
-        p(Instances)
+
         for (const Instance of Instances) {
             const InstanceElement = InstanceTemplate.cloneNode(true)
             InstanceElement.querySelector(".name").innerText = Instance.Name
@@ -72,7 +72,6 @@ window.addEventListener(
                 }
             )
             InstancesHolder.appendChild(InstanceElement)
-            p(Instance)
         }
     }
 )
