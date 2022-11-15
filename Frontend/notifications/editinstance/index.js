@@ -28,12 +28,13 @@ window.addEventListener(
             TabElement.addEventListener(
                 "click",
                 async function() {
-                    ContainerFrame.src = `/notifications/editinstances/pages/${Tab.Page}/`
+                    ContainerFrame.src = `/notifications/editinstance/pages/${Tab.Page}/`
 
                     Topbar.childNodes.forEach(
                         function(Element) {
-                            p(Element.classList)
-                            p(Element)
+                            if (!Element.classList) {
+                                return
+                            }
                             Element.classList.remove("selected")
                         }
                     )
