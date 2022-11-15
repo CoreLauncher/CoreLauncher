@@ -6,18 +6,19 @@
 
     background-color: var(--background-floating);
     display: block;
+    position: absolute;
 
-    margin-left: @margin;
-    margin-top: 4px;
+    left: @margin;
+    top: 4px;
 
-    height: calc(@topbar-height - $margin-top);
+    height: calc(@topbar-height - $top);
     width: calc(100% - @margin * 2);
     border-radius: 10px;
 
     .containertab {
         @margin: 8px;
         @height-remove: 10px;
-        @height: calc(@topbar-height - $margin-top - @height-remove);
+        @height: calc(@topbar-height - $top - @height-remove);
         display: inline-block;
         height: @height;
         width: auto;
