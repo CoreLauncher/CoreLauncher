@@ -98,12 +98,9 @@ window.addEventListener(
             }
         )
 
-        p(Properties)
-
         const PropertyHolder = document.getElementById("properties")
         for (const PropertyKey in Properties) {
             const Property = Properties[PropertyKey]
-            p(Property)
 
             const ElementId = `InstanceProperty_${PropertyKey}`
             var Input
@@ -125,7 +122,6 @@ window.addEventListener(
             Input.addEventListener(
                 "change",
                 async function() {
-                    p(Input.value)
                     if (Input.value == "" || !Input.value) {
                         Input.value = Property.Default
                     }
