@@ -86,6 +86,14 @@ Data.Functions = {
                         Id = "Latest"
                     }
                 )
+                table.insert(
+                    Versions,
+                    {
+                        Name = "Latest Beta",
+                        Beta = true,
+                        Id = "LatestBeta"
+                    }
+                )
             end
             if Loader == "Vanilla" then
                 table.insert(
