@@ -69,4 +69,40 @@ function Instances.GetInstance(GameId, InstanceId)
     return FoundInstance
 end
 
+function Instances.GetAvailableProperties(GameId)
+    local Properties = {}
+
+    for PropertyKey, PropertyGetter in pairs(CoreLauncher.Games[GameId].Functions.Properties) do
+        Properties[PropertyKey] = PropertyGetter()
+    end
+    
+    return Properties
+end
+
+function Instances.SetProperty(GameId, InstanceId, PropertyType, PropertyKey, PropertyValue)
+    if PropertyType ~= "DefaultProperties" and PropertyType ~= "Properties" and PropertyType ~= "Name" then
+        TypeWriter.Logger.Error("Invalid parameters for Instances.SetProperty")
+        return
+    end
+
+    if PropertyType == "Name" then
+        CoreLauncher.Config:SetKey(
+            string.format(
+                "Games.%s.Instances.%s.%s",
+                GameId, InstanceId, "Name"
+            ),
+            PropertyValue
+        )
+    else
+        CoreLauncher.Config:SetKey(
+            string.format(
+                "Games.%s.Instances.%s.%s.%s",
+                GameId, InstanceId, PropertyType, PropertyKey
+            ),
+            PropertyValue
+        )
+    end
+    
+end
+
 return Instances

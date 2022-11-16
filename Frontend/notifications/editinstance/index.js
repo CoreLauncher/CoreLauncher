@@ -35,7 +35,7 @@ window.addEventListener(
                     }
                     SelectedTab = Tab.Page
 
-                    ContainerFrame.src = `/notifications/editinstance/pages/${Tab.Page}/`
+                    ContainerFrame.src = `/notifications/editinstance/pages/${Tab.Page}/?gameid=${QueryParameters.gameid}&instanceid=${QueryParameters.instanceid}`
 
                     Topbar.childNodes.forEach(
                         function(Element) {

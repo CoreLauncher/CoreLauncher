@@ -25,3 +25,17 @@ CoreLauncher.IPC:RegisterMessage(
         return CoreLauncher.API.Games.Instances.GetInstance(Data.GameId, Data.InstanceId)
     end
 )
+
+CoreLauncher.IPC:RegisterMessage(
+    "Games.Instances.GetAvailableProperties",
+    function (Data)
+        return CoreLauncher.API.Games.Instances.GetAvailableProperties(Data.GameId)
+    end
+)
+
+CoreLauncher.IPC:RegisterMessage(
+    "Games.Instances.SetProperty",
+    function (Data)
+        return CoreLauncher.API.Games.Instances.SetProperty(Data.GameId, Data.InstanceId, Data.PropertyType, Data.PropertyKey, Data.PropertyValue)
+    end
+)
