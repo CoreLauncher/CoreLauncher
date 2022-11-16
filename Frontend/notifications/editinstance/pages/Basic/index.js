@@ -45,8 +45,6 @@ window.addEventListener(
             }
         )
 
-        p(LoaderVersions)
-
         const LoaderVersionSelect = document.getElementById("instanceloaderversion")
         LoaderVersionSelect.innerHTML = ""
         for (const Version of LoaderVersions) {
