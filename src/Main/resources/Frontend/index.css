@@ -1,0 +1,190 @@
+.topbar {
+  background-color: var(--background-tertiary);
+  height: 50px;
+  position: relative;
+}
+.topbar .line {
+  height: calc(calc(50px / 10) * 8);
+  width: 1px;
+  margin-top: calc(calc(50px / 10));
+  background-color: var(--header-secondary);
+  float: left;
+}
+.topbar .logo {
+  width: 200px;
+  float: left;
+  -webkit-app-region: drag;
+}
+.topbar .logo .image {
+  float: left;
+  height: calc(50px - 5px);
+  width: calc(50px - 5px);
+  margin-top: calc(5px / 2);
+  margin-left: calc(5px / 2);
+}
+.topbar .logo .text {
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  font-weight: bold;
+  font-size: 20px;
+}
+.topbar .gameslist {
+  float: left;
+  width: var(--width);
+  height: 50px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+}
+.topbar .gameslist::-webkit-scrollbar {
+  display: none;
+}
+.topbar .gameslist .game {
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  position: relative;
+}
+.topbar .gameslist .game img {
+  height: 80%;
+  width: 80%;
+  margin-top: 10%;
+  margin-left: 10%;
+}
+.topbar .gameslist .game .selectedline {
+  width: 80%;
+  height: 5%;
+  position: absolute;
+  left: 10%;
+  bottom: 5%;
+  border-radius: 100px;
+}
+.topbar .gameslist .game.selected .selectedline {
+  background-color: var(--text-positive);
+}
+.topbar .windowcontrol {
+  float: right;
+  width: 251px;
+  height: 50px;
+  color: white;
+}
+.topbar .windowcontrol .button {
+  height: 50px;
+  width: 50px;
+  padding: 15px;
+  float: left;
+}
+.topbar .windowcontrol .button:hover {
+  background-color: var(--background-secondary);
+}
+.topbar .windowcontrol img {
+  height: 100%;
+  filter: invert(100%) sepia(0%) saturate(2364%) hue-rotate(237deg) brightness(115%) contrast(101%);
+}
+.topbar .windowcontrol #profilebutton {
+  padding: 5px;
+}
+.topbar .windowcontrol #profilebutton img {
+  filter: none;
+  height: 100%;
+  border-radius: 100%;
+}
+.loadingbar {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 20px;
+  background-color: var(--background-tertiary);
+}
+.loadingbar .line {
+  height: 1px;
+  width: 100%;
+  background-color: var(--header-secondary);
+}
+.loadingbar .state {
+  position: absolute;
+  display: block;
+  height: calc(calc(20px - 1px) - 1px);
+  margin-left: 10px;
+  font-size: calc(calc(20px - 1px) / 1.25);
+  z-index: 100;
+}
+.loadingbar .progress {
+  position: absolute;
+  height: calc(20px - 1px);
+  width: 50%;
+  background-color: var(--text-positive);
+  z-index: 0;
+}
+.loadingbar .details {
+  position: absolute;
+  right: 0px;
+  height: calc(20px - 1px);
+  filter: invert(100%) sepia(4%) saturate(15%) hue-rotate(114deg) brightness(106%) contrast(103%);
+  cursor: pointer;
+}
+.container {
+  height: calc(100% - 50px - 20px);
+  position: relative;
+}
+.container .mainframe {
+  height: 100%;
+  width: 100%;
+  filter: blur(0px);
+  transition: filter 0.5s ease-in-out;
+}
+.container.notifshown .mainframe {
+  filter: blur(10px);
+  pointer-events: none;
+}
+.container.notifshown .nofificationcontainer {
+  top: 10%;
+}
+.container .nofificationcontainer {
+  position: absolute;
+  height: 80%;
+  width: 80%;
+  top: 110%;
+  left: 10%;
+  transition: top 0.2s ease-in-out;
+  background-color: var(--background-tertiary);
+  padding: 20px;
+  padding-top: 20px;
+  border-radius: 10px;
+}
+.container .nofificationcontainer .notificationheader {
+  height: 40px;
+  margin-bottom: 10px;
+}
+.container .nofificationcontainer .notificationheader .notificationlabel {
+  height: 40px;
+  line-height: 40px;
+  font-size: calc(40px / 2);
+  display: block;
+  width: auto;
+  float: left;
+}
+.container .nofificationcontainer .notificationheader .notificationclosebutton {
+  height: 40px;
+  width: 40px;
+  float: right;
+  border-radius: 20px;
+  background-color: transparent;
+  background-color: var(--button-secondary-background);
+}
+.container .nofificationcontainer .notificationheader .notificationclosebutton img {
+  filter: invert(100%) sepia(0%) saturate(2364%) hue-rotate(237deg) brightness(115%) contrast(101%);
+}
+.container .nofificationcontainer .notificationheader .notificationclosebutton:hover {
+  background-color: var(--button-secondary-background-hover);
+}
+.container .nofificationcontainer .notiframe {
+  height: calc(100% - 40px - 10px);
+  width: 100%;
+  border-radius: 10px;
+}
+body {
+  overflow: hidden;
+}

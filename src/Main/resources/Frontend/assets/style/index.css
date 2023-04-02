@@ -1,0 +1,90 @@
+@import url("../font/index.css");
+@import url("DiscordColors.css");
+@import url("Buttons.css");
+html,
+body {
+  height: 100%;
+  width: 100%;
+  user-select: none;
+  margin: 0;
+  color: var(--text-normal);
+  font-family: Inter;
+}
+img {
+  pointer-events: none;
+}
+body {
+  background-color: var(--background-primary);
+}
+* {
+  box-sizing: border-box;
+}
+button {
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 10px;
+  border: none;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background-modifier-selected);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--background-modifier-active);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--background-modifier-accent);
+}
+select {
+  padding: 5px 35px 5px 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px none var(--button-outline-primary-border);
+  background-color: var(--button-secondary-background);
+  color: var(--text-normal);
+}
+input {
+  padding: 5px 5px 5px 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px none var(--button-outline-primary-border);
+  background-color: var(--button-secondary-background);
+  color: var(--text-normal);
+}
+.contextmenu {
+  display: block;
+  position: absolute;
+  background-color: var(--background-floating);
+  padding: 10px;
+  border-radius: 10px;
+  max-height: 500px;
+  width: auto;
+  top: 0px;
+  left: 0px;
+}
+.contextmenu .contextbutton {
+  height: 30px;
+  width: auto;
+  display: block;
+  padding: 3px;
+}
+.contextmenu .contextbutton:hover {
+  background-color: var(--background-nested-floating);
+  border-radius: 5px;
+}
+.contextmenu .contextbutton .contextlabel {
+  height: calc(30px - 3px * 2);
+  vertical-align: 30px;
+  float: left;
+}
+.contextmenu .contextbutton .contextimage {
+  height: 100%;
+  display: block;
+  float: right;
+  margin-left: 5px;
+  filter: invert(100%) sepia(0%) saturate(2364%) hue-rotate(237deg) brightness(115%) contrast(101%);
+}
