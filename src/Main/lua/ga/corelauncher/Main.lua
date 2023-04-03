@@ -1,1 +1,9 @@
-print("Hello lua world")
+Import("ga.corelauncher.LoadLibraries")()
+
+_G.CoreLauncher = {}
+CoreLauncher.Electron = Import("electronhelper")
+CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
+
+Await(CoreLauncher.ElectronApplication:whenReady())
+
+print("a")
