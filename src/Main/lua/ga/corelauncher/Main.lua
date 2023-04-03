@@ -1,1 +1,1 @@
-Import("ga.corelauncher.LoadLibraries")()
+print("Hello lua world")
