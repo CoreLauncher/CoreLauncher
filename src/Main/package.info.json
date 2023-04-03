@@ -18,6 +18,6 @@
         
     ],
 	"Entrypoints": {
-		"Main": "ga.corelauncher"
+		"Main": "ga.corelauncher.ApplicationLoader"
 	}
 }
