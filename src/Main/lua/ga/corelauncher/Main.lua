@@ -11,9 +11,11 @@ end
 
 _G.CoreLauncher = {}
 CoreLauncher.DevMode = js.global.process.env.CORELAUNCHER_DEV == "true"
+
 CoreLauncher.Electron = Import("electronhelper")
 CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
 Await(CoreLauncher.ElectronApplication:whenReady())
+
 CoreLauncher.BrowserWindow = jsnew(
     CoreLauncher.Electron.BrowserWindow,
     Object(
@@ -21,14 +23,23 @@ CoreLauncher.BrowserWindow = jsnew(
             show = false,
             autoHideMenuBar = true,
             center = true,
-            frame = false
+            frame = false,
+            resizable = false,
+            width = 275,
+            height = 400
         }
     )
 )
-CoreLauncher.StaticServer = Import("me.corebyte.static")("", 9875, "CoreLauncher", "Frontend")
-CoreLauncher.BrowserWindow:loadURL("http://localhost:9875")
+if CoreLauncher.DevMode then
+    TypeWriter.Logger:Warning("We are running in dev env")
+    TypeWriter.Logger:Warning("Skipping webserver")
+    CoreLauncher.BrowserWindow:loadURL("http://localhost:9874")
+    CoreLauncher.BrowserWindow:openDevTools()
+else
+    CoreLauncher.StaticServer = Import("me.corebyte.static")("", 9875, "CoreLauncher", "Frontend")
+    CoreLauncher.BrowserWindow:loadURL("http://localhost:9875")
+end
+
 CoreLauncher.BrowserWindow:on("ready-to-show", function()
     CoreLauncher.BrowserWindow:show()
 end)
-
-print("a")
