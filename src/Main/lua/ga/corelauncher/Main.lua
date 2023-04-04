@@ -10,6 +10,7 @@ local function Object(t)
 end
 
 _G.CoreLauncher = {}
+CoreLauncher.DevMode = js.global.process.env.CORELAUNCHER_DEV == "true"
 CoreLauncher.Electron = Import("electronhelper")
 CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
 Await(CoreLauncher.ElectronApplication:whenReady())
