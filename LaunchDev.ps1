@@ -1,2 +1,2 @@
 $env:CORELAUNCHER_DEV="true"
-TypeWriter.exe executebuild
+TypeWriter.exe run
