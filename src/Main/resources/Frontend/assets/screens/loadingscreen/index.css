@@ -1,0 +1,19 @@
+.screen.loadingscreen .holder {
+  position: absolute;
+  width: 235px;
+  height: 360px;
+  margin: 20px;
+  -webkit-app-region: drag;
+}
+.screen.loadingscreen img {
+  width: 60%;
+  margin: 20%;
+  margin-bottom: 30px;
+}
+.screen.loadingscreen a {
+  font-weight: bold;
+  text-transform: capitalize;
+  width: 100%;
+  display: block;
+  text-align: center;
+}
