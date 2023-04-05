@@ -15,8 +15,12 @@
 		"Socials": {}
 	},
 	"Dependencies": [
-        
-    ],
+		{
+			"Source": "NPM",
+			"Package": "fs-extra",
+			"Version": "11.1.1"
+		}
+	],
 	"Entrypoints": {
 		"Main": "ga.corelauncher"
 	}
