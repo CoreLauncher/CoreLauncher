@@ -1,4 +1,4 @@
-const FS = require("fs")
+const FS = require("fs-extra")
 
 class DataBase {
 
@@ -41,3 +41,5 @@ class DataBase {
         }
     }
 }
+
+module.exports = DataBase
