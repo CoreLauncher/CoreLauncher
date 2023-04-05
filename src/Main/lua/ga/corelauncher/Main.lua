@@ -11,6 +11,9 @@ end
 
 _G.CoreLauncher = {}
 CoreLauncher.DevMode = js.global.process.env.CORELAUNCHER_DEV == "true"
+CoreLauncher.ApplicationData = TypeWriter.ApplicationData .. "/CoreLauncher/"
+
+CoreLauncher.DataBase = js.new(Import("ga.corelauncher.DataBase"), CoreLauncher.ApplicationData .. "/Database.json")
 
 CoreLauncher.Electron = Import("electronhelper")
 CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
