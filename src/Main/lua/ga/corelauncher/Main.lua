@@ -34,7 +34,7 @@ if CoreLauncher.DevMode then
     TypeWriter.Logger:Warning("We are running in dev env")
     TypeWriter.Logger:Warning("Skipping webserver")
     CoreLauncher.BrowserWindow:loadURL("http://localhost:9874")
-    CoreLauncher.BrowserWindow:openDevTools()
+    --CoreLauncher.BrowserWindow:openDevTools()
 else
     CoreLauncher.StaticServer = Import("me.corebyte.static")("", 9875, "CoreLauncher", "Frontend")
     CoreLauncher.BrowserWindow:loadURL("http://localhost:9875")
