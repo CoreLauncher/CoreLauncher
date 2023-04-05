@@ -1,9 +1,15 @@
 .screen.loadingscreen {
     .holder {
         position: absolute;
-        width: 275px-$margin*2;
-        height: 400px-$margin*2;
-        margin: 20px;
+
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        @smaller: 20px;
+        width: 275px-@smaller*2;
+        height: 400px-@smaller*2;
+        margin: auto;
         -webkit-app-region: drag;
     }
     img {
