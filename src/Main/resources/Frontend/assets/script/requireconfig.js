@@ -1,11 +1,9 @@
 requirejs.config(
     {
-        baseUrl: "/assets/script/",
-        paths: {
-            "CoreLauncher": "./",
-        }
+        baseUrl: `${location.origin}/assets/script/`,
+        paths: {},
     }
 )
 
 console.log(1)
-requirejs(["CoreLauncher/index.js"], function() {})
+require(["index"], function() {})
