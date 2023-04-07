@@ -1,6 +1,6 @@
 @import url("DiscordColors.css");
 @import url("../font/index.css");
-@import url("../screens/index.css");
+@import url("../../screens/index.css");
 html,
 body {
   height: 100%;
