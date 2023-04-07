@@ -2,11 +2,7 @@ define(
     Export
 )
 
-function Export(require) {
-    
-
-    console.log("a")
-
+function Export() {
     globalThis.CoreLauncher = {}
     CoreLauncher.ScreenManager = require("ScreenManager")
 }
