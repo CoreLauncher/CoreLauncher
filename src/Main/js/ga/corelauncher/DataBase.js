@@ -24,14 +24,19 @@ class DataBase {
 
     SetKey(Key, Value) {
         const KeyParts = Key.split(".")
-        let Data = this.Data
+        var Data = this.Data
+        var Index = 0
         for (const KeyPart of KeyParts) {
+            if (Index === KeyParts.length - 1) {
+                Data[KeyPart] = Value
+                break
+            }
             if (Data[KeyPart] === undefined) {
                 Data[KeyPart] = {}
             }
             Data = Data[KeyPart]
+            Index++
         }
-        Data = Value
         FS.writeJSONSync(this.Path, this.Data)
     }
 
