@@ -5,5 +5,10 @@ requirejs.config(
     }
 )
 
-console.log(1)
-require(["index"], function() {})
+require(
+    ['ext/domReady'],
+    function () {
+        console.log("DOM is ready")
+        require(["index"], function() {})
+    }
+)
