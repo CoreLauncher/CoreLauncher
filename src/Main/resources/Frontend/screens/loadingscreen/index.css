@@ -1,3 +1,6 @@
+.screen.loadingscreen {
+  transition: visibility 0.5s, opacity 0.5s;
+}
 .screen.loadingscreen .holder {
   position: absolute;
   top: 50%;
