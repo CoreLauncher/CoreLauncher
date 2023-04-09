@@ -51,19 +51,19 @@ class Screen {
     }
 
     Show() {
-        if (this.ScreenConfig.Show) {
+        if (this.ScreenConfig.Show != undefined) {
             this.ScreenConfig.Show()
         } else {
-            this.Object.style.visibilty = "visible"
+            this.Object.style.visibility = "visible"
         }
         this.State = true
     }
 
     Hide() {
-        if (this.ScreenConfig.Hide) {
+        if (this.ScreenConfig.Hide != undefined) {
             this.ScreenConfig.Hide()
         } else {
-            this.Object.style.visibilty = "hidden"
+            this.Object.style.visibility = "hidden"
         }
 
         this.State = false
