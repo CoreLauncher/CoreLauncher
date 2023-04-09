@@ -57,6 +57,8 @@ CoreLauncher.BrowserWindow:on(
 )
 
 CoreLauncher.BrowserWindow:on("resize", function()
-    print(CoreLauncher.BrowserWindow:getSize())
+    local Size = CoreLauncher.BrowserWindow:getSize()
+    CoreLauncher.DataBase:SetKey("Window.Width", Size[0])
+    CoreLauncher.DataBase:SetKey("Window.Height", Size[1])
 end)
 
