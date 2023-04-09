@@ -9,16 +9,6 @@ local function Object(t)
 	return o
 end
 
-function easeInOutQuad(x)
-    if x < 0.5 then
-        return 2 * x * x
-    else
-        return 1 - ((-2 * x + 2) ^ 2) / 2
-    end
-end
-  
-  
-
 local FS = TypeWriter:JsRequire("fs-extra")
 
 _G.CoreLauncher = {}
@@ -56,24 +46,15 @@ else
     CoreLauncher.BrowserWindow:loadURL("http://localhost:9875")
 end
 
-CoreLauncher.BrowserWindow:on("ready-to-show", function()
-    CoreLauncher.BrowserWindow:show()
-    Wait(2)
-
-    local Width = 1000 - 275
-    local Height = 600 - 400
-    for I = 0, 1, 0.005 do
-        local SizeFactor = easeInOutQuad(I)
-        local NewWidth = math.ceil(Width * SizeFactor) + 275
-        local NewHeight = math.ceil(Height * SizeFactor) + 400
-        print(SizeFactor)
-        print(NewWidth, NewHeight)
-        CoreLauncher.BrowserWindow:setSize(NewWidth, NewHeight)
-        Wait(0.0005)
+CoreLauncher.BrowserWindow:on(
+    "ready-to-show",
+    function()
+        CoreLauncher.BrowserWindow:show()
+        CoreLauncher.BrowserWindow:center()
+        CoreLauncher.BrowserWindow:setResizable(true)
+        CoreLauncher.BrowserWindow:setSize(1000, 600)
     end
-end)
-
-
+)
 
 CoreLauncher.BrowserWindow:on("resize", function()
     print(CoreLauncher.BrowserWindow:getSize())
