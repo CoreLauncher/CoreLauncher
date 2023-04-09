@@ -1,9 +1,3 @@
-define(
-    Export
-)
+const Screen = {}
 
-function Export() {
-    const Screen = {}
-
-    return Screen
-}
+export default Screen
