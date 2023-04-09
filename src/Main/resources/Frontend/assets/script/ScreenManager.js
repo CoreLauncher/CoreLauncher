@@ -51,7 +51,7 @@ class Screen {
     }
 
     Show() {
-        if (this.ScreenConfig.Show != undefined) {
+        if (this.ScreenConfig.Show) {
             this.ScreenConfig.Show()
         } else {
             this.Object.style.visibility = "visible"
@@ -60,7 +60,7 @@ class Screen {
     }
 
     Hide() {
-        if (this.ScreenConfig.Hide != undefined) {
+        if (this.ScreenConfig.Hide) {
             this.ScreenConfig.Hide()
         } else {
             this.Object.style.visibility = "hidden"
