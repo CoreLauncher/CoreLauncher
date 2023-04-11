@@ -15,15 +15,14 @@ class Screen {
         this.IsDefaultScreen = Object.classList.contains("defaultscreen")
         this.ParentScreen = ParentScreen
 
+        this.ScreenConfig = require(`/screens/${this.Name}/screenconfig.js`)
+
         if (this.IsDefaultScreen) {
-            Object.style.visibility = "visible"
-            this.State = true
+            this.Show(true)
         } else {
-            Object.style.visibility = "hidden"
-            this.State = false
+            this.Hide(true)
         }
 
-        this.ScreenConfig = require(`/screens/${this.Name}/screenconfig.js`)
 
         const This = this
         document.querySelectorAll(`.${this.Name} > .screen`).forEach(
@@ -50,17 +49,22 @@ class Screen {
         )[0]
     }
 
-    Show() {
-        if (this.ScreenConfig.Show) {
+    Show(NoAnimation = false) {
+        if (this.ScreenConfig.Show && !NoAnimation) {
             this.ScreenConfig.Show()
         } else {
             this.Object.style.visibility = "visible"
         }
         this.State = true
+        console.log(this.ParentScreen)
+        if (this.ParentScreen.CurrentScreen) {
+            this.ParentScreen.CurrentScreen.Hide()
+        }
+        this.ParentScreen.CurrentScreen = this
     }
 
-    Hide() {
-        if (this.ScreenConfig.Hide) {
+    Hide(NoAnimation = false) {
+        if (this.ScreenConfig.Hide && !NoAnimation) {
             this.ScreenConfig.Hide()
         } else {
             this.Object.style.visibility = "hidden"
@@ -87,7 +91,7 @@ ScreenManager.Screens = {}
 ScreenManager.ScanScreens = async function () {
     document.querySelectorAll("body > .screen").forEach(
         function (Element) {
-            const ScreenObject = new Screen(Element)
+            const ScreenObject = new Screen(Element, ScreenManager)
             ScreenManager.Screens[ScreenObject.Name] = ScreenObject
         }
     )
