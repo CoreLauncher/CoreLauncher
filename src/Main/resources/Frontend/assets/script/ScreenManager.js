@@ -56,7 +56,6 @@ class Screen {
             this.Object.style.visibility = "visible"
         }
         this.State = true
-        console.log(this.ParentScreen)
         if (this.ParentScreen.CurrentScreen) {
             this.ParentScreen.CurrentScreen.Hide()
         }
