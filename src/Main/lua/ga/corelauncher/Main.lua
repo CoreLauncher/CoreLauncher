@@ -50,9 +50,9 @@ CoreLauncher.BrowserWindow:on(
     "ready-to-show",
     function()
         CoreLauncher.BrowserWindow:show()
-        CoreLauncher.BrowserWindow:center()
         CoreLauncher.BrowserWindow:setResizable(true)
         CoreLauncher.BrowserWindow:setSize(1000, 600)
+        CoreLauncher.BrowserWindow:center()
     end
 )
 
