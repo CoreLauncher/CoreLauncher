@@ -16,8 +16,10 @@ img {
 body {
   background-color: var(--background-primary);
 }
-* {
-  box-sizing: border-box;
+*,
+*:before,
+*:after {
+  box-sizing: border-box !important;
 }
 button {
   border-radius: 5px;
