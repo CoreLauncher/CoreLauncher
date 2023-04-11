@@ -1,3 +1,65 @@
 .screen.main {
     
 }
+
+.topbar {
+    @topbar-height: 30px;
+
+    height: @topbar-height;
+    width: 100%;
+    background-color: var(--background-tertiary);
+    //-webkit-app-region: drag;
+
+    .holder {
+        @holder-padding: 4px;
+        @holder-height: @topbar-height - (@holder-padding * 2);
+
+        height: 100%;
+        width: 50%;
+        padding: @holder-padding;
+        float: left;
+
+        img {
+            height: @holder-height;
+            width: @holder-height;
+            margin-right: 10px;
+            float: left;
+        }
+    
+        a {
+            color: var(--background-accent);
+            font-weight: bold;
+            height: 100%;
+            line-height: @holder-height;
+            float: left;
+        }
+    }
+
+    .windowcontrol {
+        float: right;
+        //-webkit-app-region: no-drag;
+
+        div {
+            height: @topbar-height;
+            width: @topbar-height;
+            text-align: center;
+            float: right;
+            cursor: pointer;
+
+            //-webkit-app-region: no-drag;
+
+            svg {
+                margin: 8px;
+                fill: var(--background-accent);
+                //transition: margin 0.2s, fill 0.2s;
+            }
+
+            svg:hover {
+                margin: 4px !important;
+                fill: var(--interactive-normal);
+            }
+        }
+
+    }
+
+}

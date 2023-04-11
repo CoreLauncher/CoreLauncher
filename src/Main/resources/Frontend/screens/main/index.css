@@ -1,0 +1,42 @@
+.topbar {
+  height: 30px;
+  width: 100%;
+  background-color: var(--background-tertiary);
+}
+.topbar .holder {
+  height: 100%;
+  width: 50%;
+  padding: 4px;
+  float: left;
+}
+.topbar .holder img {
+  height: 22px;
+  width: 22px;
+  margin-right: 10px;
+  float: left;
+}
+.topbar .holder a {
+  color: var(--background-accent);
+  font-weight: bold;
+  height: 100%;
+  line-height: 22px;
+  float: left;
+}
+.topbar .windowcontrol {
+  float: right;
+}
+.topbar .windowcontrol div {
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  float: right;
+  cursor: pointer;
+}
+.topbar .windowcontrol div svg {
+  margin: 8px;
+  fill: var(--background-accent);
+}
+.topbar .windowcontrol div svg:hover {
+  margin: 4px !important;
+  fill: var(--interactive-normal);
+}
