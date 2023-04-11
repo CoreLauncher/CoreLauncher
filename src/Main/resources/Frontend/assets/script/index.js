@@ -1,8 +1,10 @@
 
+
 globalThis.CoreLauncher = {}
 CoreLauncher.ScreenManager = await require("./ScreenManager.js")
-console.log(CoreLauncher.ScreenManager)
 await CoreLauncher.ScreenManager.ScanScreens()
+const deSVG = await require("./lib/desvg.js")
+deSVG("img", true)
 CoreLauncher.ScreenManager.GetScreen("main").Show()
 
-export default ""
+export default "index"
