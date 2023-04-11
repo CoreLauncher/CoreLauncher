@@ -37,7 +37,7 @@ class DataBase {
             Data = Data[KeyPart]
             Index++
         }
-        FS.writeJSONSync(this.Path, this.Data)
+        FS.writeJSONSync(this.Path, this.Data, {spaces: 4})
     }
 
     SetKeyIfNotExists(Key, Value) {
