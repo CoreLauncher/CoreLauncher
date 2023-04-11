@@ -29,10 +29,10 @@ CoreLauncher.BrowserWindow = jsnew(
             show = false,
             autoHideMenuBar = true,
             center = true,
-            frame = false,
             resizable = false,
             width = 275,
-            height = 400
+            height = 400,
+            titleBarStyle = "hidden"
         }
     )
 )
