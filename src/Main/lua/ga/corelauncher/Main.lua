@@ -19,7 +19,9 @@ _G.CoreLauncher = {}
 js.global.CoreLauncher = _G.CoreLauncher
 CoreLauncher.DevMode = js.global.process.env.CORELAUNCHER_DEV == "true"
 CoreLauncher.ApplicationData = TypeWriter.ApplicationData .. "/CoreLauncher/"
+CoreLauncher.PluginsFolder = CoreLauncher.ApplicationData .. "/Plugins/"
 FS:ensureDirSync(CoreLauncher.ApplicationData)
+FS:ensureDirSync(CoreLauncher.PluginsFolder)
 
 CoreLauncher.DataBase = js.new(Import("ga.corelauncher.DataBase"), CoreLauncher.ApplicationData .. "/Database.json")
 
