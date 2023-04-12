@@ -1,5 +1,6 @@
 
-
+await require("./lib/globals/sleep.js")
+await require("./lib/globals/clamp.js")
 globalThis.CoreLauncher = {}
 CoreLauncher.ScreenManager = await require("./ScreenManager.js")
 await CoreLauncher.ScreenManager.ScanScreens()
