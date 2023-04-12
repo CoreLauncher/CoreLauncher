@@ -24,6 +24,8 @@ FS:ensureDirSync(CoreLauncher.ApplicationData)
 FS:ensureDirSync(CoreLauncher.PluginsFolder)
 
 CoreLauncher.DataBase = js.new(Import("ga.corelauncher.DataBase"), CoreLauncher.ApplicationData .. "/Database.json")
+CoreLauncher.PluginManager = Import("ga.corelauncher.PluginManager")
+CoreLauncher.GameManager = Import("ga.corelauncher.Helpers.GameManager")
 
 CoreLauncher.Electron = Import("electronhelper")
 CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
