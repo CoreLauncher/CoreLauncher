@@ -13,7 +13,7 @@ local FS = TypeWriter:JsRequire("fs-extra")
 
 
 _G.Inspect = function (O)
-    print(Import("ga.corelauncher.inspect")(O))
+    print(Import("ga.corelauncher.Helpers.inspect")(O))
 end
 _G.CoreLauncher = {}
 js.global.CoreLauncher = _G.CoreLauncher
@@ -24,7 +24,7 @@ FS:ensureDirSync(CoreLauncher.ApplicationData)
 FS:ensureDirSync(CoreLauncher.PluginsFolder)
 
 CoreLauncher.DataBase = js.new(Import("ga.corelauncher.DataBase"), CoreLauncher.ApplicationData .. "/Database.json")
-CoreLauncher.PluginManager = Import("ga.corelauncher.PluginManager")
+CoreLauncher.PluginManager = Import("ga.corelauncher.Helpers.PluginManager")
 CoreLauncher.GameManager = Import("ga.corelauncher.Helpers.GameManager")
 
 CoreLauncher.Electron = Import("electronhelper")
@@ -40,10 +40,10 @@ CoreLauncher.BrowserWindow = jsnew(
             frame = false,
             center = true,
             resizable = false,
-            width = 275,
-            height = 400,
             titleBarStyle = "hidden",
 
+            width = 275,
+            height = 400,
             maxWidth = 1000,
             maxHeight = 600,
 
