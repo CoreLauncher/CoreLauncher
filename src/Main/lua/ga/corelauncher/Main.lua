@@ -62,6 +62,7 @@ pcall(function (...)
     end
 )
 end)()
+Import("ga.corelauncher.ipc.pipes.gamemanager")
 
 if CoreLauncher.DevMode then
     TypeWriter.Logger:Warning("We are running in dev env")
