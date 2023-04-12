@@ -11,6 +11,10 @@ end
 
 local FS = TypeWriter:JsRequire("fs-extra")
 
+
+_G.Inspect = function (O)
+    print(Import("ga.corelauncher.inspect")(O))
+end
 _G.CoreLauncher = {}
 js.global.CoreLauncher = _G.CoreLauncher
 CoreLauncher.DevMode = js.global.process.env.CORELAUNCHER_DEV == "true"
