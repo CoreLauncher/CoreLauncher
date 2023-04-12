@@ -57,15 +57,6 @@ CoreLauncher.BrowserWindow = jsnew(
     )
 )
 
-p(pcall)
-pcall(function (...)
-    CoreLauncher.IPCMain:on(
-    "a",
-    function ()
-        console.log("aaaaaaaa")
-    end
-)
-end)()
 Import("ga.corelauncher.ipc.pipes.gamemanager")
 
 if CoreLauncher.DevMode then
