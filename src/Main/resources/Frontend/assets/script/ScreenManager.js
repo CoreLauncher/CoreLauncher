@@ -15,22 +15,27 @@ class Screen {
         this.IsDefaultScreen = Object.classList.contains("defaultscreen")
         this.ParentScreen = ParentScreen
 
-        this.ScreenConfig = require(`/screens/${this.Name}/screenconfig.js`)
-
         if (this.IsDefaultScreen) {
             this.Show(true)
         } else {
             this.Hide(true)
         }
 
+        for (const Element of document.querySelectorAll(`.${this.Name} > .screen`)) {
+            const ScreenObject = new Screen(Element, This)
+            this.ChildScreens[ScreenObject.Name] = ScreenObject
+        }
+    }
 
-        const This = this
-        document.querySelectorAll(`.${this.Name} > .screen`).forEach(
-            function (Element) {
-                const ScreenObject = new Screen(Element, This)
-                This.ChildScreens[ScreenObject.Name] = ScreenObject
-            }
-        )
+    async FetchConfig() {
+        this.ScreenConfig = await require(`/screens/${this.Name}/screenconfig.js`)
+        if (this.ScreenConfig.Init) {
+            this.ScreenConfig.Init(this.Object)
+        }
+        for (const ScreenObjectKey in this.ChildScreens) {
+            const ScreenObject = this.ChildScreens[ScreenObjectKey]
+            await ScreenObject.FetchConfig()
+        }
     }
 
     GetScreen(Name) {
@@ -50,8 +55,8 @@ class Screen {
     }
 
     Show(NoAnimation = false) {
-        if (this.ScreenConfig.Show && !NoAnimation) {
-            this.ScreenConfig.Show()
+        if (this.ScreenConfig && this.ScreenConfig.Show && !NoAnimation) {
+            this.ScreenConfig.Show(this.Object)
         } else {
             this.Object.style.visibility = "visible"
         }
@@ -63,8 +68,8 @@ class Screen {
     }
 
     Hide(NoAnimation = false) {
-        if (this.ScreenConfig.Hide && !NoAnimation) {
-            this.ScreenConfig.Hide()
+        if (this.ScreenConfig && this.ScreenConfig.Hide && !NoAnimation) {
+            this.ScreenConfig.Hide(this.Object)
         } else {
             this.Object.style.visibility = "hidden"
         }
@@ -88,12 +93,11 @@ ScreenManager.CurrentScreen = null
 ScreenManager.Screens = {}
 
 ScreenManager.ScanScreens = async function () {
-    document.querySelectorAll("body > .screen").forEach(
-        function (Element) {
-            const ScreenObject = new Screen(Element, ScreenManager)
-            ScreenManager.Screens[ScreenObject.Name] = ScreenObject
-        }
-    )
+    for (const Element of document.querySelectorAll("body > .screen")) {
+        const ScreenObject = new Screen(Element, ScreenManager)
+        await ScreenObject.FetchConfig()
+        ScreenManager.Screens[ScreenObject.Name] = ScreenObject
+    }
 }
 
 ScreenManager.GetScreen = function (Name) {
