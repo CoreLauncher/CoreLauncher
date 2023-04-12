@@ -3,6 +3,6 @@ const ContextBridge = Electron.contextBridge
 const IPCRenderer = Electron.ipcRenderer
 console.log(Electron)
 
-IPCRenderer.send("a")
+console.log(IPCRenderer.invoke("pipes.gamemanager"))
 
 console.log("hi")
