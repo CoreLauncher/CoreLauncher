@@ -12,6 +12,7 @@ end
 local FS = TypeWriter:JsRequire("fs-extra")
 
 _G.CoreLauncher = {}
+js.global.CoreLauncher = _G.CoreLauncher
 CoreLauncher.DevMode = js.global.process.env.CORELAUNCHER_DEV == "true"
 CoreLauncher.ApplicationData = TypeWriter.ApplicationData .. "/CoreLauncher/"
 FS:ensureDirSync(CoreLauncher.ApplicationData)
@@ -22,6 +23,7 @@ CoreLauncher.Electron = Import("electronhelper")
 CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
 Await(CoreLauncher.ElectronApplication:whenReady())
 
+CoreLauncher.IPCMain = CoreLauncher.Electron.ipcMain
 CoreLauncher.BrowserWindow = jsnew(
     CoreLauncher.Electron.BrowserWindow,
     Object(
@@ -36,9 +38,27 @@ CoreLauncher.BrowserWindow = jsnew(
 
             maxWidth = 1000,
             maxHeight = 600,
+
+            webPreferences = Object(
+                {
+                    contextIsolation = false,
+                    preload = TypeWriter.ResourceManager:GetFilePath("CoreLauncher", "/Frontend/preload.js")
+                }
+            )
         }
     )
 )
+
+p(pcall)
+pcall(function (...)
+    CoreLauncher.IPCMain:on(
+    "a",
+    function ()
+        console.log("aaaaaaaa")
+    end
+)
+end)()
+
 if CoreLauncher.DevMode then
     TypeWriter.Logger:Warning("We are running in dev env")
     TypeWriter.Logger:Warning("Skipping webserver")
