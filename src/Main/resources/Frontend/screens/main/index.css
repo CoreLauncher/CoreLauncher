@@ -1,3 +1,24 @@
+.screen.main .gameslist .icons {
+  float: left;
+  height: 100%;
+  width: 30px;
+}
+.screen.main .gameslist .names {
+  display: inline-block;
+  height: 100%;
+  width: 100px;
+  resize: horizontal;
+  background-color: var(--background-secondary-alt);
+}
+.screen.main .gameslist .names .dragline {
+  height: 100%;
+  width: 3px;
+  float: right;
+}
+.screen.main .gameslist .names .dragline:hover {
+  cursor: ew-resize;
+  background-color: var(--interactive-normal);
+}
 .topbar {
   height: 30px;
   width: 100%;
@@ -31,6 +52,8 @@
   height: 30px;
   width: 30px;
   text-align: center;
+  float: right;
+  cursor: pointer;
   -webkit-app-region: no-drag;
 }
 .topbar .windowcontrol div svg {
@@ -40,5 +63,5 @@
 }
 .topbar .windowcontrol div:hover svg {
   fill: var(--interactive-normal);
-  margin: 4px;
+  margin: 7px;
 }

@@ -1,5 +1,37 @@
 .screen.main {
-    
+    .gameslist {
+        height: 100%;
+        max-width: fit-content;
+
+        background-color: var(--background-tertiary);
+
+        .icons {
+            float: left;
+            height: 100%;
+            width: 30px;
+        }
+
+        .names {
+            display: inline-block;
+            height: 100%;
+            width: 100px;
+
+            resize: horizontal;
+            background-color: var(--background-secondary-alt);
+
+            .dragline {
+                height: 100%;
+                width: 3px;
+                float: right;
+                
+
+                &:hover {
+                    cursor: ew-resize;
+                    background-color: var(--interactive-normal);
+                }
+            }
+        }
+    }
 }
 
 .topbar {
@@ -43,7 +75,8 @@
             height: @topbar-height;
             width: @topbar-height;
             text-align: center;
-
+            float: right;
+            cursor: pointer;
 
             -webkit-app-region: no-drag;
 
@@ -57,7 +90,7 @@
             &:hover {
                 svg {
                     fill: var(--interactive-normal);
-                    margin: 4px;
+                    margin: 7px;
                 }
             }
 
