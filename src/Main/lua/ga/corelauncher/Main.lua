@@ -1,6 +1,6 @@
 Import("ga.corelauncher.LoadLibraries")()
 
-local function Object(t)
+_G.Object = function (t)
 	local o = js.new(js.global.Object)
 	for k, v in pairs(t) do
 		assert(type(k) == "string" or js.typeof(k) == "symbol", "JavaScript only has string and symbol keys")
