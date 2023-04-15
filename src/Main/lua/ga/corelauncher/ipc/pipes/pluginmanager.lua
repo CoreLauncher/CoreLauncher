@@ -1,8 +1,8 @@
 local PipeObject = Import("ga.corelauncher.Helpers.PipeObject")
 
 CoreLauncher.IPCMain:handle(
-    "pipes.gamemanager",
+    "pipes.pluginmanager",
     function ()
-        return PipeObject(CoreLauncher.GameManager)
+        return PipeObject(CoreLauncher.PluginManager)
     end
 )
