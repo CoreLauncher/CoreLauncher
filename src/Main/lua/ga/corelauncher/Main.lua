@@ -1,9 +1,16 @@
 Import("ga.corelauncher.LoadLibraries")()
 
 _G.Object = function (t)
+    if type(t) ~= "table" then
+        return t
+    end
+
 	local o = js.new(js.global.Object)
 	for k, v in pairs(t) do
 		assert(type(k) == "string" or js.typeof(k) == "symbol", "JavaScript only has string and symbol keys")
+        if type(v) == "table" then
+            v = Object(v)
+        end
 		o[k] = v
 	end
 	return o
