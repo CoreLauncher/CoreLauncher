@@ -49,7 +49,6 @@ CoreLauncher.BrowserWindow = jsnew(
 
             webPreferences = Object(
                 {
-                    contextIsolation = false,
                     preload = TypeWriter.ResourceManager:GetFilePath("CoreLauncher", "/Frontend/preload.js")
                 }
             )
