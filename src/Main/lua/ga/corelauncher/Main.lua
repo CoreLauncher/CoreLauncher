@@ -63,7 +63,9 @@ CoreLauncher.BrowserWindow = jsnew(
     )
 )
 
+Import("ga.corelauncher.ipc.pipes.database")
 Import("ga.corelauncher.ipc.pipes.gamemanager")
+Import("ga.corelauncher.ipc.pipes.pluginmanager")
 
 if CoreLauncher.DevMode then
     TypeWriter.Logger:Warning("We are running in dev env")
