@@ -56,7 +56,7 @@ class Screen {
     async FetchConfig() {
         this.ScreenConfig = await require(`${this.RequirePath}/screenconfig.js`)
         if (this.ScreenConfig.Init) {
-            await this.ScreenConfig.Init(this.Object)
+            await this.ScreenConfig.Init(this.Object, this)
         }
         for (const ScreenObjectKey in this.ChildScreens) {
             const ScreenObject = this.ChildScreens[ScreenObjectKey]
@@ -82,7 +82,7 @@ class Screen {
 
     async Show(NoAnimation = false) {
         if (this.ScreenConfig && this.ScreenConfig.Show && !NoAnimation) {
-            await this.ScreenConfig.Show(this.Object)
+            await this.ScreenConfig.Show(this.Object, this)
         } else {
             this.Object.style.visibility = "visible"
         }
@@ -95,7 +95,7 @@ class Screen {
 
     async Hide(NoAnimation = false) {
         if (this.ScreenConfig && this.ScreenConfig.Hide && !NoAnimation) {
-            await this.ScreenConfig.Hide(this.Object)
+            await this.ScreenConfig.Hide(this.Object, this)
         } else {
             this.Object.style.visibility = "hidden"
         }
