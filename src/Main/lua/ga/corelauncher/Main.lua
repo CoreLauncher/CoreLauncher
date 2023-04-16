@@ -77,12 +77,13 @@ else
     CoreLauncher.BrowserWindow:loadURL("http://localhost:9875")
 end
 
-CoreLauncher.BrowserWindow:on(
+CoreLauncher.BrowserWindow:once(
     "ready-to-show",
     function()
         CoreLauncher.BrowserWindow:show()
 
         CoreLauncher.PluginManager:LoadPlugins(CoreLauncher.PluginsFolder)
+        CoreLauncher.GameManager:LoadGames(CoreLauncher.PluginManager:ListGames())
 
         CoreLauncher.BrowserWindow:setResizable(true)
         CoreLauncher.BrowserWindow:setSize(1000, 600)
