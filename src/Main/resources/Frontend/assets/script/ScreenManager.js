@@ -7,6 +7,27 @@ function GetScreenName(Element) {
     }
 }
 
+function GetParentWithClass(Element, ClassName) {
+    const ParentElement = Element.parentElement
+    if (ParentElement == null) {return null}
+    if (ParentElement.classList.contains(ClassName)) {
+        return ParentElement
+    } else {
+        return GetParentWithClass(ParentElement, ClassName)
+    }
+}
+
+function GetDirectChildScreens(Element) {
+    return Array.from(
+        Element.querySelectorAll(".screen")
+    ).filter(
+        function (ChildElement) {
+            const ParentWithClass = GetParentWithClass(ChildElement, "screen")
+            return ParentWithClass == Element || ParentWithClass == null
+        }
+    )
+}
+
 class Screen {
     constructor(Object, ParentScreen = null) {
         this.Name = GetScreenName(Object)
@@ -14,6 +35,11 @@ class Screen {
         this.ChildScreens = {}
         this.IsDefaultScreen = Object.classList.contains("defaultscreen")
         this.ParentScreen = ParentScreen
+        if (this.ParentScreen.IsManager) {
+            this.RequirePath = `${this.ParentScreen.RequirePath}/${this.Name}`
+        } else {
+            this.RequirePath = `${this.ParentScreen.RequirePath}/subscreens/${this.Name}`
+        }
 
         if (this.IsDefaultScreen) {
             this.Show(true)
@@ -21,14 +47,14 @@ class Screen {
             this.Hide(true)
         }
 
-        for (const Element of document.querySelectorAll(`.${this.Name} > .screen`)) {
-            const ScreenObject = new Screen(Element, This)
+        for (const Element of GetDirectChildScreens(Object)) {
+            const ScreenObject = new Screen(Element, this)
             this.ChildScreens[ScreenObject.Name] = ScreenObject
         }
     }
 
     async FetchConfig() {
-        this.ScreenConfig = await require(`/screens/${this.Name}/screenconfig.js`)
+        this.ScreenConfig = await require(`${this.RequirePath}/screenconfig.js`)
         if (this.ScreenConfig.Init) {
             await this.ScreenConfig.Init(this.Object)
         }
@@ -91,9 +117,11 @@ class Screen {
 const ScreenManager = {}
 ScreenManager.CurrentScreen = null
 ScreenManager.Screens = {}
+ScreenManager.IsManager = true
+ScreenManager.RequirePath = `/screens`
 
 ScreenManager.ScanScreens = async function () {
-    for (const Element of document.querySelectorAll("body > .screen")) {
+    for (const Element of GetDirectChildScreens(document.body)) {
         const ScreenObject = new Screen(Element, ScreenManager)
         await ScreenObject.FetchConfig()
         ScreenManager.Screens[ScreenObject.Name] = ScreenObject
