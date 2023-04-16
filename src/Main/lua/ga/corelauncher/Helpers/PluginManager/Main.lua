@@ -1,4 +1,5 @@
 local PluginManager = {}
+PluginManager.Plugins = {}
 
 local FS = TypeWriter:JsRequire("fs-extra")
 
@@ -17,6 +18,17 @@ function PluginManager:LoadPlugins(PluginsFolder)
         end
     end
 end
+
+function PluginManager:ListGames()
+    local Games = {}
+
+    for PluginId, Plugin in pairs(self.Plugins) do
+        for _, Game in pairs(Plugin.Games) do
+            Games[Game.Id] = Game
+        end
+    end
+
+    return Games
 end
 
 return PluginManager
