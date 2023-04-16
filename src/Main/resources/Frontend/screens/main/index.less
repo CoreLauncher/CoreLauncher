@@ -1,14 +1,33 @@
 .screen.main {
     .gameslist {
+        float: left;
         height: 100%;
         max-width: fit-content;
 
         background-color: var(--background-tertiary);
 
         .icons {
+            @icons-size: 30px;
             float: left;
             height: 100%;
-            width: 30px;
+            width: @icons-size;
+
+            div {
+                width: @icons-size;
+                height: @icons-size;
+                &:hover, &.hover, &.selected {
+                    cursor: pointer;
+                    background-color: var(--background-secondary-alt);
+                }
+
+                img {
+                    @margin: 2px;
+                    margin: @margin;
+                    width: calc(100% - (@margin * 2));
+                    position: relative;
+                }
+            }
+            
         }
 
         .names {
@@ -25,12 +44,39 @@
                 float: right;
                 
 
-                &:hover {
+                &:hover, &.dragging {
                     cursor: ew-resize;
                     background-color: var(--interactive-normal);
                 }
             }
+
+            div {
+                @name-height: 30px;
+                width: 100%;
+                height: @name-height;
+                &:hover, &.hover, &.selected {
+                    cursor: pointer;
+                    background-color: var(--background-secondary);
+                }
+
+                a {
+                    margin-left: 10px;
+                    display: block;
+                    height: @name-height;
+                    line-height: @name-height;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+            }
         }
+    }
+
+    .playscreenholder {
+        float: right;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
     }
 }
 

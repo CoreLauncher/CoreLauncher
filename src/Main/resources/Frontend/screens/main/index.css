@@ -1,4 +1,6 @@
+@import url("subscreens/genericinstanced/index.css");
 .screen.main .gameslist {
+  float: left;
   height: 100%;
   max-width: fit-content;
   background-color: var(--background-tertiary);
@@ -7,6 +9,21 @@
   float: left;
   height: 100%;
   width: 30px;
+}
+.screen.main .gameslist .icons div {
+  width: 30px;
+  height: 30px;
+}
+.screen.main .gameslist .icons div:hover,
+.screen.main .gameslist .icons div.hover,
+.screen.main .gameslist .icons div.selected {
+  cursor: pointer;
+  background-color: var(--background-secondary-alt);
+}
+.screen.main .gameslist .icons div img {
+  margin: 2px;
+  width: calc(100% - (2px * 2));
+  position: relative;
 }
 .screen.main .gameslist .names {
   display: inline-block;
@@ -20,9 +37,35 @@
   width: 3px;
   float: right;
 }
-.screen.main .gameslist .names .dragline:hover {
+.screen.main .gameslist .names .dragline:hover,
+.screen.main .gameslist .names .dragline.dragging {
   cursor: ew-resize;
   background-color: var(--interactive-normal);
+}
+.screen.main .gameslist .names div {
+  width: 100%;
+  height: 30px;
+}
+.screen.main .gameslist .names div:hover,
+.screen.main .gameslist .names div.hover,
+.screen.main .gameslist .names div.selected {
+  cursor: pointer;
+  background-color: var(--background-secondary);
+}
+.screen.main .gameslist .names div a {
+  margin-left: 10px;
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.screen.main .playscreenholder {
+  float: right;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 .topbar {
   height: 30px;
