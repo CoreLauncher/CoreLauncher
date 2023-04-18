@@ -6,6 +6,8 @@ Screen.Show = function(E) {
 
 Screen.Hide = function(E) {
     E.style.opacity = 0
+    E.style.zIndex = -1
+    E.classList.add("hidden")
 }
 
 export default Screen
