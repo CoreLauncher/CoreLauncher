@@ -83,9 +83,4 @@ Screen.Init = async function(ScreenElement) {
     
 }
 
-Screen.Show = async function(ScreenElement, Screen) {
-    ScreenElement.style.visibility = "visible"
-    Screen.GetScreen("genericinstanced").Show()
-}
-
 export default Screen
