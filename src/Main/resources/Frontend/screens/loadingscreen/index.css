@@ -1,5 +1,7 @@
 .screen.loadingscreen {
   transition: visibility 0.3s, opacity 0.3s;
+  z-index: 1000000;
+  background-color: var(--background-primary);
 }
 .screen.loadingscreen .holder {
   position: absolute;
@@ -22,4 +24,7 @@
   width: 100%;
   display: block;
   text-align: center;
+}
+.screen.loadingscreen.hidden .holder {
+  -webkit-app-region: no-drag;
 }
