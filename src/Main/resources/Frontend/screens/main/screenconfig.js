@@ -31,7 +31,7 @@ Screen.Init = async function(ScreenElement) {
                 if (Width < MinWidth) {
                     Width = 0
                 } else {
-                    Width = Math.clamp(Width, MinWidth, 500)
+                    Width = Math.clamp(Width, MinWidth, 300)
                 }
                 SetWidth(Width)
             }
