@@ -80,9 +80,9 @@ class Screen {
         )[0]
     }
 
-    async Show(NoAnimation = false) {
+    async Show(NoAnimation = false, Data) {
         if (this.ScreenConfig && this.ScreenConfig.Show && !NoAnimation) {
-            await this.ScreenConfig.Show(this.Object, this)
+            await this.ScreenConfig.Show(this.Object, this, Data)
         } else {
             this.Object.style.visibility = "visible"
         }
