@@ -55,12 +55,12 @@ class Screen {
 
     async FetchConfig() {
         this.ScreenConfig = await require(`${this.RequirePath}/screenconfig.js`)
-        if (this.ScreenConfig.Init) {
-            await this.ScreenConfig.Init(this.Object, this)
-        }
         for (const ScreenObjectKey in this.ChildScreens) {
             const ScreenObject = this.ChildScreens[ScreenObjectKey]
             await ScreenObject.FetchConfig()
+        }
+        if (this.ScreenConfig.Init) {
+            await this.ScreenConfig.Init(this.Object, this)
         }
     }
 
