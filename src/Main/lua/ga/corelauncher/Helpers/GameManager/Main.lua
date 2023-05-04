@@ -26,4 +26,14 @@ function GameManager:GetGameIconBase64(GameId)
     return Base64Img:base64Sync(IconPath)
 end
 
+function GameManager:GetGameBanner(GameId)
+    local BannerPath = TypeWriter.ResourceManager:GetFilePath(self:GetGame(GameId).Banner)
+    return FS:readFileSync(BannerPath, "utf8")
+end
+
+function GameManager:GetGameBannerBase64(GameId)
+    local BannerPath = TypeWriter.ResourceManager:GetFilePath(self:GetGame(GameId).Banner)
+    return Base64Img:base64Sync(BannerPath)
+end
+
 return GameManager
