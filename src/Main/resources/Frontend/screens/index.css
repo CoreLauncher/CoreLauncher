@@ -1,8 +1,13 @@
 @import url("loadingscreen/index.css");
 @import url("main/index.css");
+@import url("settingswindow/index.css");
 .screen {
   width: 100%;
-  height: calc(100% - 30px);
+  height: 100%;
+  display: block;
+}
+body > .screen {
+  height: calc(100% - 30px) !important;
   position: absolute;
   top: 30px;
   left: 0;
