@@ -1,5 +1,3 @@
-Import("ga.corelauncher.LoadLibraries")()
-
 _G.Object = function (t)
     if type(t) ~= "table" then
         return t
@@ -34,7 +32,7 @@ CoreLauncher.DataBase = js.new(Import("ga.corelauncher.DataBase"), CoreLauncher.
 CoreLauncher.PluginManager = Import("ga.corelauncher.Helpers.PluginManager")
 CoreLauncher.GameManager = Import("ga.corelauncher.Helpers.GameManager")
 
-CoreLauncher.Electron = Import("electronhelper")
+CoreLauncher.Electron = Import("electronhelper")()
 CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
 Await(CoreLauncher.ElectronApplication:whenReady())
 

@@ -37,6 +37,6 @@
 		}
 	],
 	"Entrypoints": {
-		"Main": "ga.corelauncher"
+		"Main": "ga.corelauncher.LoadLibraries"
 	}
 }
