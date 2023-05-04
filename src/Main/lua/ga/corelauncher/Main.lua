@@ -44,13 +44,12 @@ CoreLauncher.BrowserWindow = jsnew(
             show = false,
             frame = false,
             center = true,
-            resizable = false,
             titleBarStyle = "hidden",
 
             width = 275,
             height = 400,
-            maxWidth = 1000,
-            maxHeight = 600,
+            minWidth = 1000,
+            minHeight = 600,
 
             webPreferences = Object(
                 {
@@ -60,6 +59,7 @@ CoreLauncher.BrowserWindow = jsnew(
         }
     )
 )
+CoreLauncher.BrowserWindow:setResizable(false)
 
 Import("ga.corelauncher.ipc.pipes.database")
 Import("ga.corelauncher.ipc.pipes.gamemanager")
