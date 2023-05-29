@@ -1,6 +1,7 @@
 local PluginManager = {}
 PluginManager.Plugins = {}
 
+local Base64Img = TypeWriter:JsRequire("base64-img")
 local FS = TypeWriter:JsRequire("fs-extra")
 
 function PluginManager:LoadPlugins(PluginsFolder)
