@@ -88,11 +88,13 @@ class Screen {
     }
 
     async Show(NoAnimation = false, Data) {
+        if (this.ScreenConfig && this.ScreenConfig.ApplyShowStyle) {
+            await this.ShowStyle()
+        }
         if (this.ScreenConfig && this.ScreenConfig.Show && !NoAnimation) {
             await this.ScreenConfig.Show(this.Object, this, Data)
-        } else {
-            this.Object.style.visibility = "visible"
         }
+        
         this.State = true
         if (this.ParentScreen.CurrentScreen) {
             this.ParentScreen.CurrentScreen.Hide()
