@@ -6,7 +6,7 @@ local FS = TypeWriter:JsRequire("fs-extra")
 function PluginManager:LoadPlugins(PluginsFolder)
     TypeWriter.Logger:Information("Loading plugins from " .. PluginsFolder)
     local Files = FS:readdirSync(PluginsFolder)
-    
+
     for FileName in js.of(Files) do
         TypeWriter.Logger:Information("Loading plugin " .. FileName)
         local FilePath = PluginsFolder .. "/" .. FileName
