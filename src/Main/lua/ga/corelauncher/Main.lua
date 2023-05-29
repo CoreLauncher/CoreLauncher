@@ -61,6 +61,7 @@ CoreLauncher.PluginsFolder = CoreLauncher.ApplicationData .. "/Plugins/"
 FS:ensureDirSync(CoreLauncher.ApplicationData)
 FS:ensureDirSync(CoreLauncher.PluginsFolder)
 
+CoreLauncher.AccountManager = Import("ga.corelauncher.Helpers.AccountManager")
 CoreLauncher.DataBase = js.new(Import("ga.corelauncher.DataBase"), CoreLauncher.ApplicationData .. "/Database.json")
 CoreLauncher.PluginManager = Import("ga.corelauncher.Helpers.PluginManager")
 CoreLauncher.GameManager = Import("ga.corelauncher.Helpers.GameManager")
