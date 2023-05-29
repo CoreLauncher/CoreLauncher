@@ -97,6 +97,7 @@ class Screen {
         
         this.State = true
         if (this.ParentScreen.CurrentScreen) {
+            if (this.ParentScreen.CurrentScreen == this) { return }
             this.ParentScreen.CurrentScreen.Hide()
         }
         this.ParentScreen.CurrentScreen = this
