@@ -15,7 +15,41 @@ _G.Object = function (t)
 end
 
 local FS = TypeWriter:JsRequire("fs-extra")
+_G.Array = function (t)
+    if type(t) ~= "table" then
+        return t
+    end
 
+    local a = js.new(js.global.Array)
+    for i, v in ipairs(t) do
+        if type(v) == "table" then
+            v = Object(v)
+        end
+        a[i-1] = v
+    end
+    return a
+end
+
+_G.ToJs = function (o)
+    if type(o) ~= "table" then
+        return o
+    end
+
+    local FirstKey
+
+    for K, _ in pairs(o) do
+        FirstKey = K
+        break
+    end
+
+    if (type(FirstKey) == "number") then
+        return Array(o)
+    else
+        return Object(o)
+    end
+end
+
+local FS = TypeWriter:JsRequire("fs-extra")
 
 _G.Inspect = function (O)
     print(Import("ga.corelauncher.Helpers.inspect")(O))

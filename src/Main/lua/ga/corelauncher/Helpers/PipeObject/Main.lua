@@ -29,9 +29,10 @@ local function CreateFunctionPipe(Key, Value, Parent)
             if type(Args[2]) == "userdata" then
                 Args = ShiftArray(Args)
                 table.remove(Args, 1)
-                return Object(Value(Parent, table.unpack(Args)))
+                return ToJs(Value(Parent, table.unpack(Args)))
             end
-            return Object(Value(Parent, table.unpack(Args, 2)))
+
+            return ToJs(Value(Parent, table.unpack(Args, 2)))
         end
     )
     return Object({PipeType = "function", PipeHandle = PipeHandle})
