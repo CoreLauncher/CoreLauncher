@@ -40,7 +40,7 @@
 .screen.main .gameslist .names .dragline:hover,
 .screen.main .gameslist .names .dragline.dragging {
   cursor: ew-resize;
-  background-color: var(--interactive-normal);
+  background-color: var(--background-floating);
 }
 .screen.main .gameslist .names div {
   width: 100%;
@@ -71,6 +71,7 @@
   height: 30px;
   width: 100%;
   background-color: var(--background-tertiary);
+  z-index: 50000;
   -webkit-app-region: drag;
 }
 .topbar .holder {
@@ -86,7 +87,7 @@
   float: left;
 }
 .topbar .holder a {
-  color: var(--background-accent);
+  color: var(--background-floating);
   font-weight: bold;
   height: 100%;
   line-height: 22px;
@@ -107,7 +108,7 @@
 .topbar .windowcontrol div svg {
   transition: margin 0.1s, fill 0.1s;
   margin: 8px;
-  fill: var(--background-accent);
+  fill: var(--button-floating);
 }
 .topbar .windowcontrol div:hover svg {
   fill: var(--hover-color);
