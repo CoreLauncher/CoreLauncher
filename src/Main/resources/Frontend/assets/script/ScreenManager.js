@@ -41,12 +41,6 @@ class Screen {
             this.RequirePath = `${this.ParentScreen.RequirePath}/subscreens/${this.Name}`
         }
 
-        if (this.IsDefaultScreen) {
-            this.Show(true)
-        } else {
-            this.Hide(true)
-        }
-
         for (const Element of GetDirectChildScreens(Object)) {
             const ScreenObject = new Screen(Element, this)
             this.ChildScreens[ScreenObject.Name] = ScreenObject
@@ -59,6 +53,13 @@ class Screen {
             const ScreenObject = this.ChildScreens[ScreenObjectKey]
             await ScreenObject.FetchConfig()
         }
+
+        if (this.IsDefaultScreen) {
+            this.Show(true)
+        } else {
+            this.Hide(true)
+        }
+
         if (this.ScreenConfig.Init) {
             await this.ScreenConfig.Init(this.Object, this)
         }
