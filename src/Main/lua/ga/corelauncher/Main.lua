@@ -14,7 +14,6 @@ _G.Object = function (t)
 	return o
 end
 
-local FS = TypeWriter:JsRequire("fs-extra")
 _G.Array = function (t)
     if type(t) ~= "table" then
         return t
