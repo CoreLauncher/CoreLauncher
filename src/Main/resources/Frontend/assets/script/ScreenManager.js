@@ -49,6 +49,12 @@ class Screen {
 
     async FetchConfig() {
         this.ScreenConfig = await require(`${this.RequirePath}/screenconfig.js`)
+        if (this.ScreenConfig.ApplyShowStyle == undefined) {
+            this.ScreenConfig.ApplyShowStyle = true
+        }
+        if (this.ScreenConfig.ApplyHideStyle == undefined) {
+            this.ScreenConfig.ApplyHideStyle = true
+        }
         for (const ScreenObjectKey in this.ChildScreens) {
             const ScreenObject = this.ChildScreens[ScreenObjectKey]
             await ScreenObject.FetchConfig()
@@ -94,14 +100,27 @@ class Screen {
         this.ParentScreen.CurrentScreen = this
     }
 
+    async ShowStyle() {
+        this.Object.style.visibility = "visible"
+        this.Object.style.display = null
+        this.Object.style.zIndex = "1"
+    }
+
     async Hide(NoAnimation = false) {
         if (this.ScreenConfig && this.ScreenConfig.Hide && !NoAnimation) {
             await this.ScreenConfig.Hide(this.Object, this)
-        } else {
-            this.Object.style.visibility = "hidden"
+        }
+        if (this.ScreenConfig && this.ScreenConfig.ApplyHideStyle) {
+            await this.HideStyle()
         }
 
         this.State = false
+    }
+
+    async HideStyle() {
+        this.Object.style.visibility = "hidden"
+        this.Object.style.display = "none"
+        this.Object.style.zIndex = "0"
     }
 
     Toggle() {
