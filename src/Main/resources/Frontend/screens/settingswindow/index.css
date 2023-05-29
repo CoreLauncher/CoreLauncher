@@ -1,0 +1,130 @@
+@import url("subscreens/about/index.css");
+@import url("subscreens/accounts/index.css");
+@import url("subscreens/changelog/index.css");
+@import url("subscreens/instances/index.css");
+@import url("subscreens/plugins/index.css");
+.transitionbackground {
+  transition: opacity 0.2s;
+  opacity: 1;
+  width: 100%;
+  display: inline-block;
+  background-color: var(--background-primary);
+  z-index: 4500;
+  pointer-events: none;
+}
+.transitionbackground.hidden {
+  opacity: 0;
+}
+.screen.settingswindow {
+  transform-origin: center;
+  transform: scale(1);
+  transition: transform 0.2s;
+  z-index: 5000 !important;
+  visibility: visible;
+}
+.screen.settingswindow * {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+.screen.settingswindow.hidden {
+  transform: scale(0.8);
+}
+.screen.settingswindow.hidden * {
+  opacity: 0;
+}
+.screen.settingswindow .closebutton {
+  --color: var(--background-tertiary);
+  transition: transform 0.1s;
+  transform-origin: center center;
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  border-color: var(--color);
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 50px;
+  width: 45px;
+  height: 45px;
+  top: 75px;
+  right: 75px;
+}
+.screen.settingswindow .closebutton:hover {
+  --color: var(--background-floating);
+  transform: scale(1.1);
+}
+.screen.settingswindow .closebutton svg {
+  margin: 10px;
+  width: calc(100% - 10px * 2);
+  height: calc(100% - 10px * 2);
+  fill: var(--color);
+}
+.screen.settingswindow .closebutton a {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: var(--color);
+  font-weight: bold;
+}
+.screen.settingswindow .settingslist,
+.screen.settingswindow .settingsbody {
+  float: left;
+  margin-top: 100px;
+  margin-right: 0px;
+}
+.screen.settingswindow .settingslist {
+  margin-left: 100px;
+  width: 200px;
+}
+.screen.settingswindow .settingslist .tag {
+  width: calc(100% - 20px);
+  height: 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: right;
+  display: block;
+  margin-right: 20px;
+  margin-bottom: 3px;
+}
+.screen.settingswindow .settingslist .settingstab {
+  height: 30px;
+  width: 100%;
+  background-color: var(--background-secondary);
+  border-radius: 8px;
+  margin-bottom: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.screen.settingswindow .settingslist .settingstab .title,
+.screen.settingswindow .settingslist .settingstab .indicator {
+  float: right;
+  height: 100%;
+  width: 100%;
+  text-align: right;
+  line-height: 30px;
+  font-size: 13px;
+  font-weight: bold;
+  transition: right 0.1s;
+  position: absolute;
+}
+.screen.settingswindow .settingslist .settingstab .title {
+  right: 20px;
+  text-transform: uppercase;
+}
+.screen.settingswindow .settingslist .settingstab .indicator {
+  position: absolute;
+  right: -50px;
+}
+.screen.settingswindow .settingslist .settingstab:hover:not(.active) .title {
+  right: 30px;
+}
+.screen.settingswindow .settingslist .settingstab.active .title {
+  right: 40px;
+}
+.screen.settingswindow .settingslist .settingstab.active .indicator {
+  right: 20px;
+}
+.screen.settingswindow .settingsbody {
+  width: 50%;
+  margin-left: 20px;
+}
