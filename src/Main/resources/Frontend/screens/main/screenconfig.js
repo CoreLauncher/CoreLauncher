@@ -1,6 +1,34 @@
 const Screen = {}
 
 Screen.Init = async function(ScreenElement) {
+    { // Window control
+        const TopbarElement = document.querySelector('.topbar')
+        const WindowControl = TopbarElement.querySelector('.windowcontrol')
+
+        const CloseButton = WindowControl.querySelector('.close')
+        CloseButton.addEventListener(
+            'click', 
+            CoreLauncher.WindowControl.Close
+        )
+
+        const MinimizeButton = WindowControl.querySelector('.minimize')
+        MinimizeButton.addEventListener(
+            'click',
+            CoreLauncher.WindowControl.Minimize
+        )
+
+        const MaximizeButton = WindowControl.querySelector('.maximize')
+        MaximizeButton.addEventListener(
+            'click',
+            CoreLauncher.WindowControl.Maximize
+        )
+
+        const SettingsButton = WindowControl.querySelector('.settings')
+        SettingsButton.addEventListener(
+            'click',
+            CoreLauncher.OpenSettings
+        )
+    }
 
     { // Dragline
         const HoverLine = ScreenElement.querySelector('.dragline')

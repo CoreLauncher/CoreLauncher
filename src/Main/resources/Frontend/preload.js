@@ -22,7 +22,6 @@ function ReObjectPipe(PipeObject) {
     return TransformedObject
 }
 
-
 (
     async function() {
         ContextBridge.exposeInMainWorld(
@@ -31,8 +30,8 @@ function ReObjectPipe(PipeObject) {
                 DataBase: ReObjectPipe(await IPCRenderer.invoke("pipes.database")),
                 GameManager: ReObjectPipe(await IPCRenderer.invoke("pipes.gamemanager")),
                 PluginManager: ReObjectPipe(await IPCRenderer.invoke("pipes.pluginmanager")),
+                WindowControl: ReObjectPipe(await IPCRenderer.invoke("pipes.windowcontrol")),
             }
         )
-    
     }
 )()
