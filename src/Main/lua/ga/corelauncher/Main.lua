@@ -117,6 +117,7 @@ CoreLauncher.BrowserWindow:once(
 
         CoreLauncher.PluginManager:LoadPlugins(CoreLauncher.PluginsFolder)
         CoreLauncher.GameManager:LoadGames(CoreLauncher.PluginManager:ListGames())
+        CoreLauncher.AccountManager:LoadAccountTypes(CoreLauncher.PluginManager:ListAccountTypes())
 
         CoreLauncher.BrowserWindow:setResizable(true)
         CoreLauncher.BrowserWindow:setSize(1000, 600)
