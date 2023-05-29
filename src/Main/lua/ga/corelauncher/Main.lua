@@ -98,6 +98,7 @@ CoreLauncher.BrowserWindow:setResizable(false)
 Import("ga.corelauncher.ipc.pipes.database")
 Import("ga.corelauncher.ipc.pipes.gamemanager")
 Import("ga.corelauncher.ipc.pipes.pluginmanager")
+Import("ga.corelauncher.ipc.pipes.windowcontrol")
 
 if CoreLauncher.DevMode then
     TypeWriter.Logger:Warning("We are running in dev env")
