@@ -23,9 +23,11 @@ function PluginManager:ListGames()
     local Games = {}
 
     for PluginId, Plugin in pairs(self.Plugins) do
+        if not Plugin.Games then goto continue end
         for _, Game in pairs(Plugin.Games) do
             Games[Game.Id] = Game
         end
+        ::continue::
     end
 
     return Games
