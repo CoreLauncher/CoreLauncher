@@ -95,6 +95,7 @@ CoreLauncher.BrowserWindow = jsnew(
 )
 CoreLauncher.BrowserWindow:setResizable(false)
 
+Import("ga.corelauncher.ipc.pipes.accountmanager")
 Import("ga.corelauncher.ipc.pipes.database")
 Import("ga.corelauncher.ipc.pipes.gamemanager")
 Import("ga.corelauncher.ipc.pipes.pluginmanager")

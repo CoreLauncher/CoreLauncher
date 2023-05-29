@@ -27,6 +27,7 @@ function ReObjectPipe(PipeObject) {
         ContextBridge.exposeInMainWorld(
             "CoreLauncherManagers",
             {
+                AccountManager: ReObjectPipe(await IPCRenderer.invoke("pipes.accountmanager")),
                 DataBase: ReObjectPipe(await IPCRenderer.invoke("pipes.database")),
                 GameManager: ReObjectPipe(await IPCRenderer.invoke("pipes.gamemanager")),
                 PluginManager: ReObjectPipe(await IPCRenderer.invoke("pipes.pluginmanager")),

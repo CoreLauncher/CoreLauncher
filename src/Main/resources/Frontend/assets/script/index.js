@@ -4,6 +4,7 @@ await require("./lib/globals/RemoveClassFromChildren.js")
 await require("./lib/globals/clamp.js")
 globalThis.CoreLauncher = {}
 CoreLauncher.ScreenManager = await require("./ScreenManager.js")
+CoreLauncher.AccountManager = CoreLauncherManagers.AccountManager
 CoreLauncher.DataBase = CoreLauncherManagers.DataBase
 CoreLauncher.GameManager = CoreLauncherManagers.GameManager
 CoreLauncher.PluginManager = CoreLauncherManagers.PluginManager
