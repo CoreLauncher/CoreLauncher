@@ -131,7 +131,9 @@ class Screen {
         }
     }
 
-
+    GetState() {
+        return this.State
+    }
 }
 
 const ScreenManager = {}
