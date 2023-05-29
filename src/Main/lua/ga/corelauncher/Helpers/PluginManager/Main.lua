@@ -31,4 +31,16 @@ function PluginManager:ListGames()
     return Games
 end
 
-return PluginManager
+return PluginManager    local AccountTypes = {}
+
+    for PluginId, Plugin in pairs(self.Plugins) do
+        if not Plugin.AccountTypes then goto continue end
+        for _, AccountType in pairs(Plugin.AccountTypes) do
+            AccountTypes[AccountType.Id] = AccountType
+        end
+        ::continue::
+    end
+
+    return AccountTypes
+end
+
