@@ -1,6 +1,7 @@
 const Screen = {}
 
-Screen.Init = async function(ScreenElement) {
+Screen.Init = async function(ScreenElement, Screen) {
+
     { // Window control
         const TopbarElement = document.querySelector('.topbar')
         const WindowControl = TopbarElement.querySelector('.windowcontrol')
@@ -71,10 +72,12 @@ Screen.Init = async function(ScreenElement) {
         const Icons = ScreenElement.querySelector('.icons')
 
         const GamesList = await CoreLauncher.GameManager.ListGames()
+        const SelectedGame = await CoreLauncher.DataBase.GetKey("States.GamesList.SelectedGame")
         console.log(GamesList)
 
         for (const GameId in GamesList) {
             const Game = GamesList[GameId]
+            console.log(Game)
 
             var IconHolder
             { // Icon
@@ -105,6 +108,28 @@ Screen.Init = async function(ScreenElement) {
             }
             HoverOther(IconHolder, NameHolder)
             HoverOther(NameHolder, IconHolder)
+
+            function Select() {
+                if (IconHolder.classList.contains('selected')) {
+                    return
+                }
+
+                RemoveClassFromChildren(IconHolder.parentElement, 'selected')
+                RemoveClassFromChildren(NameHolder.parentElement, 'selected')
+
+                IconHolder.classList.add('selected')
+                NameHolder.classList.add('selected')
+
+                CoreLauncher.DataBase.SetKey("States.GamesList.SelectedGame", GameId)
+                Screen.GetScreen(Game.PlayScreenType).Show(false, Game)
+            }
+
+            if (GameId == SelectedGame) {
+                Select()
+            }
+
+            IconHolder.addEventListener('click', Select)
+            NameHolder.addEventListener('click', Select)
             
         }
     }
