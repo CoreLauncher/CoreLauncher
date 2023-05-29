@@ -6,6 +6,8 @@ CoreLauncher.ScreenManager = await require("./ScreenManager.js")
 CoreLauncher.GameManager = CoreLauncherManagers.GameManager
 CoreLauncher.PluginManager = CoreLauncherManagers.PluginManager
 
+CoreLauncher.OpenGameSettings = await require("./lib/OpenGameSettings.js")
+CoreLauncher.OpenSettings = await require("./lib/OpenSettings.js")
 
 await CoreLauncher.ScreenManager.ScanScreens()
 
