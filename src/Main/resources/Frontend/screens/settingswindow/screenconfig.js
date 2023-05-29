@@ -37,14 +37,11 @@ Screen.Init = function(ScreenElement, Screen) {
 
 //Screen.ApplyShowStyle = false
 Screen.Show = async function(ScreenElement, Screen, Data) {
-    console.log(Data)
-
     const TabsContainer = ScreenElement.querySelector(".settingslist")
     TabsContainer.innerHTML = ""
 
     var DefaultFound = false
     for (const TabsGroup of Data.Tabs) {
-        console.log(TabsGroup)
 
         const GroupLabel = document.createElement("a")
         GroupLabel.classList.add("tag")
@@ -52,7 +49,6 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
         TabsContainer.appendChild(GroupLabel)
 
         for (const Tab of TabsGroup.Tabs) {
-            console.log(Tab)
 
             const TabElement = document.createElement("div")
             TabElement.classList.add("settingstab")

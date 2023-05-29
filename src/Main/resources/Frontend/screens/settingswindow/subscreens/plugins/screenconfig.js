@@ -9,7 +9,6 @@ Screen.Init = async function(ScreenElement, Screen) {
 
     const PluginIds = await CoreLauncher.PluginManager.ListPluginIds()
     for (const PluginId of PluginIds) {
-        console.log(PluginId)
         const Plugin = await CoreLauncher.PluginManager.GetPluginInformation(PluginId)
         const PluginElement = PluginTemplate.cloneNode(true)
 

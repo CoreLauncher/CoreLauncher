@@ -73,11 +73,9 @@ Screen.Init = async function(ScreenElement, Screen) {
 
         const GamesList = await CoreLauncher.GameManager.ListGames()
         const SelectedGame = await CoreLauncher.DataBase.GetKey("States.GamesList.SelectedGame")
-        console.log(GamesList)
 
         for (const GameId in GamesList) {
             const Game = GamesList[GameId]
-            console.log(Game)
 
             var IconHolder
             { // Icon
