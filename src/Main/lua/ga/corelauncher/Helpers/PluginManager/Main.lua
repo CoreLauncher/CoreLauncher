@@ -44,3 +44,39 @@ return PluginManager    local AccountTypes = {}
     return AccountTypes
 end
 
+--#region Plugin Information
+function PluginManager:ListPluginIds()
+    local PluginIds = {}
+
+    for PluginId, Plugin in pairs(self.Plugins) do
+        table.insert(PluginIds, PluginId)
+    end
+
+    return PluginIds
+end
+
+function PluginManager:GetPluginInformation(PluginId)
+    local Plugin = self.Plugins[PluginId]
+
+    return {
+        Name = Plugin.Name,
+        Creator = Plugin.Creator,
+        CreatorLink = Plugin.CreatorLink,
+        Source = Plugin.Source,
+        Version = Plugin.Version,
+        Description = Plugin.Description
+    }
+end
+
+function PluginManager:GetPluginIcon(PluginId)
+    local IconPath = TypeWriter.ResourceManager:GetFilePath(self.Plugins[PluginId].Icon)
+    return FS:readFileSync(IconPath, "utf8")
+end
+
+function PluginManager:GetPluginIconBase64(PluginId)
+    local IconPath = TypeWriter.ResourceManager:GetFilePath(self.Plugins[PluginId].Icon)
+    return Base64Img:base64Sync(IconPath)
+end
+--#endregion
+
+return PluginManager
