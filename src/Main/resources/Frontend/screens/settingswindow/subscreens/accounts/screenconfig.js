@@ -24,6 +24,15 @@ Screen.Init = async function (ScreenElement, Screen) {
         AccountTypeElement.querySelector("img").src = await CoreLauncher.AccountManager.GetAccountTypeIconBase64(AccountTypeId)
         AccountTypeElement.querySelector("a").innerText = AccountType.Name
         AccountTypeList.appendChild(AccountTypeElement)
+
+        AccountTypeElement.addEventListener(
+            "click",
+            async function () {
+                CoreLauncher.WindowControl.OpenExternal(
+                    AccountType.StartScopeLink
+                )
+            }
+        )
     }
 
 }
