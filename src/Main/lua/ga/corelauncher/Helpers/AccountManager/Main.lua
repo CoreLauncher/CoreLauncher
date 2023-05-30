@@ -16,6 +16,9 @@ function AccountManager:ListAccountTypes()
     return self.AccountTypes
 end
 
+function AccountManager:StartScope(Type)
+    CoreLauncher.Electron.shell:openExternal(self.AccountTypes[Type].StartScopeLink)
+end
 --#region Icons getting
 function AccountManager:GetAccountTypeIcon(AccountTypeId)
     local IconPath = TypeWriter.ResourceManager:GetFilePath(self.AccountTypes[AccountTypeId].Icon)

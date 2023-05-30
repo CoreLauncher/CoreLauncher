@@ -28,9 +28,7 @@ Screen.Init = async function (ScreenElement, Screen) {
         AccountTypeElement.addEventListener(
             "click",
             async function () {
-                CoreLauncher.WindowControl.OpenExternal(
-                    AccountType.StartScopeLink
-                )
+                CoreLauncher.AccountManager.StartScope(AccountTypeId)
             }
         )
     }
