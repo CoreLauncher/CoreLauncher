@@ -9,7 +9,16 @@ function AccountManager:LoadAccountTypes(AccountTypes)
 end
 
 function AccountManager:LoadAccounts(AccountList)
-    
+
+end
+
+function AccountManager:GetAccountTypeInfo(AccountType)
+    local AccountTypeData = self.AccountTypes[AccountType]
+    return {
+        Id = AccountTypeData.Id,
+        Name = AccountTypeData.Name,
+        StartScopeLink = AccountTypeData.StartScopeLink,
+    }
 end
 
 function AccountManager:ListAccountTypes()
