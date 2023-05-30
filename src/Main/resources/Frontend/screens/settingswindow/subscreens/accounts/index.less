@@ -1,4 +1,40 @@
-
 .screen.settingswindow .screen.accounts {
+    .newaccountlist {
+        .accounttype {
+            display: inline-block;
+            height: 50px;
+            width: 50px;
+            background-color: var(--background-primary);
+            padding: 7px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-right: 10px;
+            position: relative;
 
+            cursor: pointer;
+
+            transition: width 0.2s ease-in-out;
+
+            img {
+                height: 100%;
+                margin-right: 20px;
+                float: left;
+            }
+
+            a {
+                display: inline-block;
+                height: 100%;
+                line-height: 36px;
+                margin-right: 10px;
+            }
+
+            &:hover {
+                width: var(--hover-width);
+            }
+
+            &.fullwidth {
+                width: auto;
+            }
+        }
+    }
 }
