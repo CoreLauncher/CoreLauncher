@@ -53,6 +53,7 @@ function AccountManager:GetAccountTypeIconBase64(AccountTypeId)
     local IconPath = TypeWriter.ResourceManager:GetFilePath(self.AccountTypes[AccountTypeId].Icon)
     return Base64Img:base64Sync(IconPath)
 end
+
 --#endregion
 
 return AccountManager
