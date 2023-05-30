@@ -75,7 +75,7 @@ local Base64 = TypeWriter:JsRequire("js-base64")
 local Json = Js.global.JSON
 
 _G.Inspect = function (O)
-    print(Import("ga.corelauncher.Helpers.inspect")(O))
+    print(Import("ga.corelauncher.Helpers.inspect")(ToLua(O)))
 end
 _G.CoreLauncher = {}
 js.global.CoreLauncher = _G.CoreLauncher
