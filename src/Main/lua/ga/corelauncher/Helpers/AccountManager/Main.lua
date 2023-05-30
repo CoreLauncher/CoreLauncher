@@ -22,7 +22,11 @@ function AccountManager:GetAccountTypeInfo(AccountType)
 end
 
 function AccountManager:ListAccountTypes()
-    return self.AccountTypes
+    local AccountTypes = {}
+    for _, AccountType in pairs(self.AccountTypes) do
+        AccountTypes[AccountType.Id] = self:GetAccountTypeInfo(AccountType.Id)
+    end
+    return AccountTypes
 end
 
 function AccountManager:StartScope(Type)
