@@ -16,6 +16,7 @@ function AccountManager:ListAccountTypes()
     return self.AccountTypes
 end
 
+--#region Icons getting
 function AccountManager:GetAccountTypeIcon(AccountTypeId)
     local IconPath = TypeWriter.ResourceManager:GetFilePath(self.AccountTypes[AccountTypeId].Icon)
     return FS:readFileSync(IconPath, "utf8")
@@ -25,5 +26,6 @@ function AccountManager:GetAccountTypeIconBase64(AccountTypeId)
     local IconPath = TypeWriter.ResourceManager:GetFilePath(self.AccountTypes[AccountTypeId].Icon)
     return Base64Img:base64Sync(IconPath)
 end
+--#endregion
 
 return AccountManager
