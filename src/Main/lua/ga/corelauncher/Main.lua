@@ -48,6 +48,28 @@ _G.ToJs = function (o)
     end
 end
 
+_G.ToLua = function (o)
+    if type(o) ~= "userdata" then
+        return o
+    end
+
+    if js.typeof(o) == "object" then
+        local t = {}
+        for k, v in pairs(o) do
+            t[k] = ToLua(v)
+        end
+        return t
+    elseif js.typeof(o) == "array" then
+        local t = {}
+        for i = 0, o.length - 1 do
+            t[i+1] = ToLua(o[i])
+        end
+        return t
+    else
+        return o
+    end
+end
+
 local FS = TypeWriter:JsRequire("fs-extra")
 
 _G.Inspect = function (O)
