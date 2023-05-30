@@ -71,6 +71,8 @@ _G.ToLua = function (o)
 end
 
 local FS = TypeWriter:JsRequire("fs-extra")
+local Base64 = TypeWriter:JsRequire("js-base64")
+local Json = Js.global.JSON
 
 _G.Inspect = function (O)
     print(Import("ga.corelauncher.Helpers.inspect")(O))
