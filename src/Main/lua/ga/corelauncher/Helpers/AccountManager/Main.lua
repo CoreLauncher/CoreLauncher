@@ -19,6 +19,17 @@ end
 function AccountManager:StartScope(Type)
     CoreLauncher.Electron.shell:openExternal(self.AccountTypes[Type].StartScopeLink)
 end
+
+function AccountManager:ScopeFinished(Type, Data)
+    TypeWriter.Logger:Information("Scope finished for " .. Type .. " account type")
+
+    if self.AccountTypes[Type].ScopeFinishedCallback ~= nil then
+        self.AccountTypes[Type].ScopeFinishedCallback(Data)
+    else
+        TypeWriter.Logger:Warning("No callback for " .. Type .. " account type")
+    end
+end
+
 --#region Icons getting
 function AccountManager:GetAccountTypeIcon(AccountTypeId)
     local IconPath = TypeWriter.ResourceManager:GetFilePath(self.AccountTypes[AccountTypeId].Icon)
