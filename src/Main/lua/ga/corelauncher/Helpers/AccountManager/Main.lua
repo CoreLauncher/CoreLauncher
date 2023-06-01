@@ -3,6 +3,7 @@ AccountManager.AccountTypes = {}
 AccountManager.Accounts = {}
 
 local Base64Img = TypeWriter:JsRequire("base64-img")
+local UUID = TypeWriter:JsRequire("uuid").v4
 
 function AccountManager:LoadAccountTypes(AccountTypes)
     self.AccountTypes = AccountTypes
@@ -41,6 +42,17 @@ function AccountManager:ScopeFinished(Type, Data)
     else
         TypeWriter.Logger:Warning("No callback for " .. Type .. " account type")
     end
+end
+
+function AccountManager:SaveScopeData(Type, Data)
+    TypeWriter.Logger:Information("Saving scope data for " .. Type .. " account type")
+    local AccountData = {
+        Type = Type,
+        ConnectedAt = os.time(os.date("!*t")),
+        Data = Data,
+        UUID = UUID()
+    }
+    CoreLauncher.DataBase:SetKey("Accounts." .. AccountData.UUID, ToJs(AccountData))
 end
 
 --#region Icons getting
