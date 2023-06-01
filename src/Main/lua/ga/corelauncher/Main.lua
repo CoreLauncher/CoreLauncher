@@ -125,13 +125,28 @@ Import("ga.corelauncher.ipc.pipes.gamemanager")
 Import("ga.corelauncher.ipc.pipes.pluginmanager")
 Import("ga.corelauncher.ipc.pipes.windowcontrol")
 
+CoreLauncher.StaticServer = Import("me.corebyte.static")(
+    "",
+    9875,
+    "CoreLauncher",
+    "Frontend",
+    nil,
+    function (_, Request, Response)
+        if Request.path ~= "/AccountCallback.txt" then return end
+        if Request.query == nil then return end
+        local Data = Json:parse(
+            Base64:decode(Request.query.d)
+        )
+        CoreLauncher.AccountManager:ScopeFinished(Data.Type, Data.Data)
+        CoreLauncher.BrowserWindow:restore()
+    end
+)
+
 if CoreLauncher.DevMode then
     TypeWriter.Logger:Warning("We are running in dev env")
-    TypeWriter.Logger:Warning("Skipping webserver")
     CoreLauncher.BrowserWindow:loadURL("http://localhost:9874")
     CoreLauncher.BrowserWindow:openDevTools()
 else
-    CoreLauncher.StaticServer = Import("me.corebyte.static")("", 9875, "CoreLauncher", "Frontend")
     CoreLauncher.BrowserWindow:loadURL("http://localhost:9875")
 end
 
