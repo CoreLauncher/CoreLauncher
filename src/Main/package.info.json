@@ -34,6 +34,11 @@
 			"Source": "NPM",
 			"Package": "base64-img",
 			"Version": "1.0.4"
+		},
+		{
+			"Source": "NPM",
+			"Package": "uuid",
+			"Version": "9.0.0"
 		}
 	],
 	"Entrypoints": {
