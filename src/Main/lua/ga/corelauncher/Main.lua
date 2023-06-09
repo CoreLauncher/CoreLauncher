@@ -137,7 +137,7 @@ CoreLauncher.StaticServer = Import("me.corebyte.static")(
         local Data = Json:parse(
             Base64:decode(Request.query.d)
         )
-        CoreLauncher.AccountManager:ScopeFinished(Data.Type, Data.Data)
+        CoreLauncher.AccountManager:FinishedConnection(Data.Type, Data.Data)
         CoreLauncher.BrowserWindow:restore()
     end
 )

@@ -28,7 +28,7 @@ Screen.Init = async function (ScreenElement, Screen) {
         AccountTypeElement.addEventListener(
             "click",
             async function () {
-                CoreLauncher.AccountManager.StartScope(AccountTypeId)
+                CoreLauncher.AccountManager.StartConnection(AccountTypeId)
             }
         )
     }

@@ -17,8 +17,7 @@ function AccountManager:GetAccountTypeInfo(AccountType)
     local AccountTypeData = self.AccountTypes[AccountType]
     return {
         Id = AccountTypeData.Id,
-        Name = AccountTypeData.Name,
-        StartScopeLink = AccountTypeData.StartScopeLink,
+        Name = AccountTypeData.Name
     }
 end
 
@@ -30,15 +29,15 @@ function AccountManager:ListAccountTypes()
     return AccountTypes
 end
 
-function AccountManager:StartScope(Type)
-    CoreLauncher.Electron.shell:openExternal(self.AccountTypes[Type].StartScopeLink)
+function AccountManager:StartConnection(Type)
+    self.AccountTypes[Type].StartConnection()
 end
 
-function AccountManager:ScopeFinished(Type, Data)
+function AccountManager:FinishedConnection(Type, Data)
     TypeWriter.Logger:Information("Scope finished for " .. Type .. " account type")
 
-    if self.AccountTypes[Type].ScopeFinishedCallback ~= nil then
-        self.AccountTypes[Type].ScopeFinishedCallback(Data)
+    if self.AccountTypes[Type].FinishedConnection ~= nil then
+        self.AccountTypes[Type].FinishedConnection(Data)
     else
         TypeWriter.Logger:Warning("No callback for " .. Type .. " account type")
     end
