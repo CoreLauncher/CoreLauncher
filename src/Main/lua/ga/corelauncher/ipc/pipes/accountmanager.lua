@@ -1,4 +1,4 @@
-local PipeObject = Import("ga.corelauncher.Helpers.PipeObject")
+local PipeObject = Import("ga.corelauncher.Libraries.PipeObject")
 
 CoreLauncher.IPCMain:handle(
     "pipes.accountmanager",

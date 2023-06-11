@@ -43,15 +43,25 @@ function AccountManager:FinishedConnection(Type, Data)
     end
 end
 
-function AccountManager:SaveScopeData(Type, Data)
+function AccountManager:SaveScopeData(Type, TokenData, DisplayData)
     TypeWriter.Logger:Information("Saving scope data for " .. Type .. " account type")
     local AccountData = {
         Type = Type,
         ConnectedAt = os.time(os.date("!*t")),
-        Data = Data,
+        TokenData = TokenData,
+        DisplayData = DisplayData,
         UUID = UUID()
     }
     CoreLauncher.DataBase:SetKey("Accounts." .. AccountData.UUID, ToJs(AccountData))
+end
+
+function AccountManager:ListAccounts()
+    local AccountsObject = CoreLauncher.DataBase:GetKey("Accounts")
+    local Accounts = {}
+    for _, AccountData in pairs(AccountsObject) do
+        table.insert(Accounts, AccountData)
+    end
+    return Accounts
 end
 
 --#region Icons getting

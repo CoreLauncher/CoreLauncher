@@ -1,20 +1,20 @@
-_G.Object = function (t)
+_G.Object = function(t)
     if type(t) ~= "table" then
         return t
     end
 
-	local o = js.new(js.global.Object)
-	for k, v in pairs(t) do
-		assert(type(k) == "string" or js.typeof(k) == "symbol", "JavaScript only has string and symbol keys")
+    local o = js.new(js.global.Object)
+    for k, v in pairs(t) do
+        assert(type(k) == "string" or js.typeof(k) == "symbol", "JavaScript only has string and symbol keys")
         if type(v) == "table" then
             v = Object(v)
         end
-		o[k] = v
-	end
-	return o
+        o[k] = v
+    end
+    return o
 end
 
-_G.Array = function (t)
+_G.Array = function(t)
     if type(t) ~= "table" then
         return t
     end
@@ -24,12 +24,12 @@ _G.Array = function (t)
         if type(v) == "table" then
             v = Object(v)
         end
-        a[i-1] = v
+        a[i - 1] = v
     end
     return a
 end
 
-_G.ToJs = function (o)
+_G.ToJs = function(o)
     if type(o) ~= "table" then
         return o
     end
@@ -48,9 +48,13 @@ _G.ToJs = function (o)
     end
 end
 
-_G.ToLua = function (o)
+_G.ToLua = function(o)
     if type(o) ~= "userdata" then
         return o
+    elseif type(o) == "table" then
+        for Key, Value in pairs(o) do
+            ToLua(Value)
+        end
     end
 
     if js.typeof(o) == "object" then
@@ -62,7 +66,7 @@ _G.ToLua = function (o)
     elseif js.typeof(o) == "array" then
         local t = {}
         for i = 0, o.length - 1 do
-            t[i+1] = ToLua(o[i])
+            t[i + 1] = ToLua(o[i])
         end
         return t
     else
@@ -74,8 +78,8 @@ local FS = TypeWriter:JsRequire("fs-extra")
 local Base64 = TypeWriter:JsRequire("js-base64")
 local Json = Js.global.JSON
 
-_G.Inspect = function (O)
-    print(Import("ga.corelauncher.Helpers.inspect")(ToLua(O)))
+_G.Inspect = function(O)
+    print(Import("ga.corelauncher.Libraries.Inspect")(ToLua(O)))
 end
 _G.CoreLauncher = {}
 js.global.CoreLauncher = _G.CoreLauncher
@@ -85,10 +89,11 @@ CoreLauncher.PluginsFolder = CoreLauncher.ApplicationData .. "/Plugins/"
 FS:ensureDirSync(CoreLauncher.ApplicationData)
 FS:ensureDirSync(CoreLauncher.PluginsFolder)
 
-CoreLauncher.AccountManager = Import("ga.corelauncher.Helpers.AccountManager")
+CoreLauncher.AccountManager = Import("ga.corelauncher.Classes.AccountManager")
 CoreLauncher.DataBase = js.new(Import("ga.corelauncher.DataBase"), CoreLauncher.ApplicationData .. "/Database.json")
-CoreLauncher.PluginManager = Import("ga.corelauncher.Helpers.PluginManager")
-CoreLauncher.GameManager = Import("ga.corelauncher.Helpers.GameManager")
+CoreLauncher.PluginManager = Import("ga.corelauncher.Classes.PluginManager")
+CoreLauncher.GameManager = Import("ga.corelauncher.Classes.GameManager")
+CoreLauncher.WindowControl = Import("ga.corelauncher.Classes.WindowControl")
 
 CoreLauncher.Electron = Import("electronhelper")()
 CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
@@ -131,7 +136,7 @@ CoreLauncher.StaticServer = Import("me.corebyte.static")(
     "CoreLauncher",
     "Frontend",
     nil,
-    function (_, Request, Response)
+    function(_, Request, Response)
         if Request.path ~= "/AccountCallback.txt" then return end
         if Request.query == nil then return end
         local Data = Json:parse(
@@ -170,4 +175,3 @@ CoreLauncher.BrowserWindow:on("resize", function()
     CoreLauncher.DataBase:SetKey("Window.Width", Size[0])
     CoreLauncher.DataBase:SetKey("Window.Height", Size[1])
 end)
-

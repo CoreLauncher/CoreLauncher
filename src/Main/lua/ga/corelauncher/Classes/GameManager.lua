@@ -16,6 +16,7 @@ function GameManager:GetGame(GameId)
     return self:ListGames()[GameId]
 end
 
+--#region Icon getting
 function GameManager:GetGameIcon(GameId)
     local IconPath = TypeWriter.ResourceManager:GetFilePath(self:GetGame(GameId).Icon)
     return FS:readFileSync(IconPath, "utf8")
@@ -25,7 +26,9 @@ function GameManager:GetGameIconBase64(GameId)
     local IconPath = TypeWriter.ResourceManager:GetFilePath(self:GetGame(GameId).Icon)
     return Base64Img:base64Sync(IconPath)
 end
+--#endregion
 
+--#region Banner getting
 function GameManager:GetGameBanner(GameId)
     local BannerPath = TypeWriter.ResourceManager:GetFilePath(self:GetGame(GameId).Banner)
     return FS:readFileSync(BannerPath, "utf8")
@@ -34,6 +37,19 @@ end
 function GameManager:GetGameBannerBase64(GameId)
     local BannerPath = TypeWriter.ResourceManager:GetFilePath(self:GetGame(GameId).Banner)
     return Base64Img:base64Sync(BannerPath)
+end
+--#endregion
+
+function GameManager:GetValidAccounts(GameId)
+    local Accounts = CoreLauncher.AccountManager:ListAccounts()
+    local ValidAccounts = {}
+    for _, Account in pairs(Accounts) do
+        local IsAccountValid = self:GetGame(GameId).IsAccountValid(Account)
+        if IsAccountValid then
+            table.insert(ValidAccounts, Account)
+        end
+    end
+    return ValidAccounts
 end
 
 return GameManager

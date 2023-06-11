@@ -1,4 +1,5 @@
 local Md5Anything = TypeWriter:JsRequire("hash-anything").md5
+local CloneObject = Import("ga.corelauncher.Libraries.CloneObject")
 
 local function RandomString(Length)
     local Characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -10,7 +11,7 @@ local function RandomString(Length)
     return String
 end
 
-local ShiftArray = function (Array)
+local ShiftArray = function(Array)
     local NewArray = {}
     for Index, Value in pairs(Array) do
         if Index ~= 1 then
@@ -24,18 +25,29 @@ local function CreateFunctionPipe(Key, Value, Parent)
     local PipeHandle = "PipeFunction." .. RandomString(64)
     CoreLauncher.IPCMain:handle(
         PipeHandle,
-        function (...)
-            local Args = {...}
+        function(...)
+            local Args = { ... }
+            local ReturnValue
             if type(Args[2]) == "userdata" then
                 Args = ShiftArray(Args)
                 table.remove(Args, 1)
-                return ToJs(Value(Parent, table.unpack(Args)))
+                ReturnValue = Value(
+                    Parent, table.unpack(Args)
+                )
+            else
+                ReturnValue = Value(
+                    Parent, table.unpack(Args, 2)
+                )
             end
 
-            return ToJs(Value(Parent, table.unpack(Args, 2)))
+            return ToJs(
+                CloneObject(
+                    ReturnValue
+                )
+            )
         end
     )
-    return Object({PipeType = "function", PipeHandle = PipeHandle})
+    return Object({ PipeType = "function", PipeHandle = PipeHandle })
 end
 
 local function IgnoreProperty(Key)
@@ -83,10 +95,11 @@ local function PipeObject(Obj, IsSub)
         end
     end
 
+    local ReturnValue = Object(CloneObject(PipedObject))
     if not IsSub then
-        PipeCache[ObjectHash] = Object(PipedObject)
+        PipeCache[ObjectHash] = ReturnValue
     end
-    return Object(PipedObject)
+    return ReturnValue
 end
 
 return PipeObject

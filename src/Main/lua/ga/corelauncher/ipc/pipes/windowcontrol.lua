@@ -1,9 +1,8 @@
-local PipeObject = Import("ga.corelauncher.Helpers.PipeObject")
-local WindowControl = Import("ga.corelauncher.Helpers.WindowControl")
+local PipeObject = Import("ga.corelauncher.Libraries.PipeObject")
 
 CoreLauncher.IPCMain:handle(
     "pipes.windowcontrol",
     function ()
-        return PipeObject(WindowControl)
+        return PipeObject(CoreLauncher.WindowControl)
     end
 )
