@@ -3,20 +3,20 @@ const Screen = {}
 Screen.Init = async function (ScreenElement, Screen) {
     const AccountTypes = await CoreLauncher.AccountManager.ListAccountTypes()
     console.log(AccountTypes)
-    const AccountTypeListBlock = ScreenElement.querySelector(".newaccountlist")
-    const AccountTypeList = AccountTypeListBlock.querySelector(".accounttypes")
+    const NewAccountBlock = ScreenElement.querySelector(".newaccountblock")
+    const AccountTypeList = NewAccountBlock.querySelector(".accounttypes")
 
     if (Object.keys(AccountTypes).length == 0) {
         const WarningBlock = ScreenElement.querySelector(".noaccountsblock")
         WarningBlock.style.display = null
         WarningBlock.style.visibility = null
 
-        AccountTypeListBlock.style.display = "none"
-        AccountTypeListBlock.style.visibility = "hidden"
+        NewAccountBlock.style.display = "none"
+        NewAccountBlock.style.visibility = "hidden"
         return
     }
 
-    const AccountTypeElementTemplate = AccountTypeListBlock.querySelector(".accounttype")
+    const AccountTypeElementTemplate = NewAccountBlock.querySelector(".accounttype")
     AccountTypeElementTemplate.remove()
     for (const AccountTypeId in AccountTypes) {
         const AccountType = AccountTypes[AccountTypeId]
