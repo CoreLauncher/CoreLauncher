@@ -8,7 +8,7 @@ async function OpenGameSettings(Game) {
     }
     SettingsData.Tabs.push(GameSettingsGroup)
 
-    if (Game.IsUsingInstances) {
+    if (Game.UsesInstances) {
         GameSettingsGroup.Tabs.push(
             {
                 Name: "Instances",
