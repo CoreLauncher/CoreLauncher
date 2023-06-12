@@ -119,6 +119,8 @@ Screen.Init = async function(ScreenElement, Screen) {
                 NameHolder.classList.add('selected')
 
                 CoreLauncher.DataBase.SetKey("States.GamesList.SelectedGame", GameId)
+                console.log(`Selected game: ${Game}`)
+                console.log(Game)
                 Screen.GetScreen(Game.PlayScreenType).Show(false, Game)
             }
 
