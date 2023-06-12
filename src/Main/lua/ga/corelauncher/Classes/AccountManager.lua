@@ -57,6 +57,9 @@ end
 
 function AccountManager:ListAccounts()
     local AccountsObject = CoreLauncher.DataBase:GetKey("Accounts")
+    if AccountsObject == nil then
+        return {}
+    end
     local Accounts = {}
     for _, AccountData in pairs(AccountsObject) do
         table.insert(Accounts, AccountData)
