@@ -80,7 +80,7 @@ button,
 .button-default,
 .button-floating {
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s !important;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
