@@ -1,4 +1,4 @@
-.screen.settingswindow .screen.accounts .newaccountlist .accounttype {
+.screen.settingswindow .screen.accounts .newaccountblock .accounttype {
   display: inline-block;
   height: 50px;
   width: 50px;
@@ -11,20 +11,75 @@
   cursor: pointer;
   transition: width 0.2s ease-in-out;
 }
-.screen.settingswindow .screen.accounts .newaccountlist .accounttype img {
+.screen.settingswindow .screen.accounts .newaccountblock .accounttype img {
   height: 100%;
   margin-right: 20px;
   float: left;
 }
-.screen.settingswindow .screen.accounts .newaccountlist .accounttype a {
+.screen.settingswindow .screen.accounts .newaccountblock .accounttype a {
   display: inline-block;
   height: 100%;
   line-height: 36px;
   margin-right: 10px;
 }
-.screen.settingswindow .screen.accounts .newaccountlist .accounttype:hover {
+.screen.settingswindow .screen.accounts .newaccountblock .accounttype:hover {
   width: var(--hover-width);
 }
-.screen.settingswindow .screen.accounts .newaccountlist .accounttype.fullwidth {
+.screen.settingswindow .screen.accounts .newaccountblock .accounttype.fullwidth {
   width: auto;
+}
+.screen.settingswindow .screen.accounts .accountlist {
+  margin-top: 20px;
+}
+.screen.settingswindow .screen.accounts .accountlist .account {
+  background-color: var(--background-tertiary);
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+.screen.settingswindow .screen.accounts .accountlist .account .primaryinfo .icon {
+  height: 50px;
+  width: 50px;
+  background-color: var(--background-primary);
+  border-radius: 10px;
+  float: left;
+  margin-right: 10px;
+}
+.screen.settingswindow .screen.accounts .accountlist .account .primaryinfo .name,
+.screen.settingswindow .screen.accounts .accountlist .account .primaryinfo .accounttype {
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+}
+.screen.settingswindow .screen.accounts .accountlist .account .primaryinfo .accounttype {
+  margin-left: 10px;
+  font-size: 10px;
+}
+.screen.settingswindow .screen.accounts .accountlist .account .primaryinfo .removebutton {
+  float: right;
+  height: 50px;
+  width: 50px;
+  background-color: var(--background-primary);
+}
+.screen.settingswindow .screen.accounts .accountlist .account .primaryinfo .removebutton:hover {
+  background-color: var(--button-negative-hover);
+}
+.screen.settingswindow .screen.accounts .accountlist .account .secondaryinfo .idindicator,
+.screen.settingswindow .screen.accounts .accountlist .account .secondaryinfo .id,
+.screen.settingswindow .screen.accounts .accountlist .account .secondaryinfo .createdat,
+.screen.settingswindow .screen.accounts .accountlist .account .secondaryinfo .connectedat,
+.screen.settingswindow .screen.accounts .accountlist .account .secondaryinfo .expiresat {
+  font-size: 11px;
+}
+.screen.settingswindow .screen.accounts .accountlist .account .secondaryinfo .id {
+  user-select: all;
+}
+.screen.settingswindow .screen.accounts .accountlist .account .secondaryinfo .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 5px;
+  background-color: var(--background-primary);
 }

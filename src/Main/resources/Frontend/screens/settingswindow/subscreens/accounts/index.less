@@ -1,5 +1,5 @@
 .screen.settingswindow .screen.accounts {
-    .newaccountlist {
+    .newaccountblock {
         .accounttype {
             display: inline-block;
             height: 50px;
@@ -35,6 +35,77 @@
             &.fullwidth {
                 width: auto;
             }
+        }
+    }
+
+    .accountlist {
+        margin-top: 20px;
+
+        .account {
+            background-color: var(--background-tertiary);
+            width: 100%;
+            padding: 10px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+
+            .primaryinfo {
+                .icon {
+                    height: 50px;
+                    width: 50px;
+                    background-color: var(--background-primary);
+                    border-radius: 10px;
+                    float: left;
+                    margin-right: 10px;
+                }
+
+                .name,
+                .accounttype {
+                    display: inline-block;
+                    height: 50px;
+                    line-height: 50px;
+                }
+
+                .accounttype {
+                    margin-left: 10px;
+                    font-size: 10px;
+                }
+
+                .removebutton {
+                    float: right;
+                    height: 50px;
+                    width: 50px;
+                    background-color: var(--background-primary);
+
+                    &:hover {
+                        background-color: var(--button-negative-hover);
+                    }
+                }
+            }
+
+            .secondaryinfo {
+                .idindicator,
+                .id,
+                .createdat,
+                .connectedat,
+                .expiresat {
+                    font-size: 11px;
+                }
+
+                .id {
+                    user-select: all;
+                }
+
+                .dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    display: inline-block;
+                    margin: 0 5px;
+                    background-color: var(--background-primary);
+                }
+            }
+
+
         }
     }
 }

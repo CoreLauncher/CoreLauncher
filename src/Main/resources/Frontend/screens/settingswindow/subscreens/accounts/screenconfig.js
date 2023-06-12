@@ -1,10 +1,62 @@
 const Screen = {}
 
+var NewAccountBlock
+var AccountTypeList
+var AccountTypeTemplate
+var AccountList
+var AccountTemplate
+
+async function ReloadAccountList() {
+    AccountList.innerHTML = ""
+
+    const Accounts = await CoreLauncher.AccountManager.ListAccounts()
+
+    for (const Account of Accounts) {
+        console.log(Account)
+        const AccountElement = AccountTemplate.cloneNode(true)
+
+        AccountElement.querySelector(".icon").src = Account.DisplayData.Icon
+        AccountElement.querySelector(".name").innerText = Account.DisplayData.Name
+        AccountElement.querySelector(".accounttype").innerText = `(${Account.Type})`
+        AccountElement.querySelector(".id").innerText = Account.DisplayData.Id
+
+        if (Account.DisplayData.CreatedAt) {
+            AccountElement.querySelector(".createdat").innerText = Account.DisplayData.ConnectedAt
+        } else {
+            AccountElement.querySelector(".createdat").innerText = "Created at: Unknown"
+        }
+
+        if (Account.ConnectedAt) {
+            const ConnectedAt = new Date(Account.ConnectedAt)
+            AccountElement.querySelector(".connectedat").innerText = `Connected at: ${ConnectedAt.toLocaleString()}`
+        } else {
+            AccountElement.querySelector(".connectedat").innerText = "Connected at: Unknown"
+        }
+
+        if (Account.DisplayData.ExpiresAt) {
+            const ExpiresAt = new Date(Account.DisplayData.ExpiresAt)
+            AccountElement.querySelector(".expiresat").innerText = `Expires at: ${ExpiresAt.toLocaleString()}`
+        } else if (Account.DisplayData.ExpiresAt == false) {
+                AccountElement.querySelector(".expiresat").innerText = "Expires: Never"
+        } else {
+            AccountElement.querySelector(".expiresat").innerText = "Expires at: Unknown"
+        }
+
+        AccountList.appendChild(AccountElement)
+    }
+}
+
 Screen.Init = async function (ScreenElement, Screen) {
+    NewAccountBlock = ScreenElement.querySelector(".newaccountblock")
+    AccountTypeList = NewAccountBlock.querySelector(".accounttypes")
+    AccountTypeTemplate = NewAccountBlock.querySelector(".accounttype")
+    AccountTypeTemplate.remove()
+    AccountList = ScreenElement.querySelector(".accountlist")
+    AccountTemplate = AccountList.querySelector(".account")
+    AccountTemplate.remove()
+
     const AccountTypes = await CoreLauncher.AccountManager.ListAccountTypes()
     console.log(AccountTypes)
-    const NewAccountBlock = ScreenElement.querySelector(".newaccountblock")
-    const AccountTypeList = NewAccountBlock.querySelector(".accounttypes")
 
     if (Object.keys(AccountTypes).length == 0) {
         const WarningBlock = ScreenElement.querySelector(".noaccountsblock")
@@ -16,11 +68,9 @@ Screen.Init = async function (ScreenElement, Screen) {
         return
     }
 
-    const AccountTypeElementTemplate = NewAccountBlock.querySelector(".accounttype")
-    AccountTypeElementTemplate.remove()
     for (const AccountTypeId in AccountTypes) {
         const AccountType = AccountTypes[AccountTypeId]
-        const AccountTypeElement = AccountTypeElementTemplate.cloneNode(true)
+        const AccountTypeElement = AccountTypeTemplate.cloneNode(true)
         AccountTypeElement.querySelector("img").src = await CoreLauncher.AccountManager.GetAccountTypeIconBase64(AccountTypeId)
         AccountTypeElement.querySelector("a").innerText = AccountType.Name
         AccountTypeList.appendChild(AccountTypeElement)
@@ -35,6 +85,8 @@ Screen.Init = async function (ScreenElement, Screen) {
 
 }
 
+
+
 Screen.Show = async function (ScreenElement, Screen) {
     ScreenElement.querySelectorAll(".accounttype.fullwidth").forEach(
         function (Element) {
@@ -42,6 +94,8 @@ Screen.Show = async function (ScreenElement, Screen) {
             Element.classList.remove("fullwidth")
         }
     )
+
+    await ReloadAccountList()
 }
 
 export default Screen
