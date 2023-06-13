@@ -44,7 +44,7 @@ function AccountManager:FinishedConnection(Type, Data)
 end
 
 function AccountManager:SaveAccountData(Type, TokenData, DisplayData)
-    TypeWriter.Logger:Information("Saving scope data for " .. Type .. " account type")
+    TypeWriter.Logger:Information("Saving account data for " .. Type .. " account type")
     local AccountData = {
         Type = Type,
         ConnectedAt = os.time(os.date("!*t")),
