@@ -43,7 +43,7 @@ function AccountManager:FinishedConnection(Type, Data)
     end
 end
 
-function AccountManager:SaveScopeData(Type, TokenData, DisplayData)
+function AccountManager:SaveAccountData(Type, TokenData, DisplayData)
     TypeWriter.Logger:Information("Saving scope data for " .. Type .. " account type")
     local AccountData = {
         Type = Type,
@@ -53,6 +53,10 @@ function AccountManager:SaveScopeData(Type, TokenData, DisplayData)
         UUID = UUID()
     }
     CoreLauncher.DataBase:SetKey("Accounts." .. AccountData.UUID, ToJs(AccountData))
+end
+
+function AccountManager:RemoveAccount(UUID)
+    CoreLauncher.DataBase:SetKey("Accounts." .. UUID, nil)
 end
 
 function AccountManager:ListAccounts()

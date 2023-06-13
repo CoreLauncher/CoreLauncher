@@ -9,7 +9,10 @@ var AccountTemplate
 async function ReloadAccountList() {
     AccountList.innerHTML = ""
 
-    const Accounts = await CoreLauncher.AccountManager.ListAccounts()
+    var Accounts = await CoreLauncher.AccountManager.ListAccounts()
+    if (!Array.isArray(Accounts)) {
+        Accounts = []
+    }
 
     for (const Account of Accounts) {
         console.log(Account)
@@ -41,6 +44,14 @@ async function ReloadAccountList() {
         } else {
             AccountElement.querySelector(".expiresat").innerText = "Expires at: Unknown"
         }
+
+        AccountElement.querySelector(".removebutton").addEventListener(
+            "click",
+            async function () {
+                await CoreLauncher.AccountManager.RemoveAccount(Account.UUID)
+                await ReloadAccountList()
+            }
+        )
 
         AccountList.appendChild(AccountElement)
     }
@@ -78,7 +89,8 @@ Screen.Init = async function (ScreenElement, Screen) {
         AccountTypeElement.addEventListener(
             "click",
             async function () {
-                CoreLauncher.AccountManager.StartConnection(AccountTypeId)
+                await CoreLauncher.AccountManager.StartConnection(AccountTypeId)
+                await ReloadAccountList()
             }
         )
     }
