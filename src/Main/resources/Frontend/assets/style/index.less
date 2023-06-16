@@ -12,6 +12,15 @@ body {
     background-color: var(--background-primary);
 }
 
+.floatfix {
+    &::after {
+        content: " ";
+        display: block;
+        height: 0;
+        clear: both;
+    }
+}
+
 //#region Scrollbars 
 ::-webkit-scrollbar {
     width: 10px;
