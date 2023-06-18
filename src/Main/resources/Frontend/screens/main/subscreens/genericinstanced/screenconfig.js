@@ -34,11 +34,9 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
 
         AccountSelector.innerHTML = ""
         var Accounts = await CoreLauncher.GameManager.GetValidAccounts(Game.Id)
-        console.log(Accounts)
         if (!Array.isArray(Accounts)) { Accounts = [] }
 
         for (const Account of Accounts) {
-            console.log(Account)
             const OptionElement = document.createElement("option")
             OptionElement.value = Account.Id
             OptionElement.innerText = Account.DisplayData.Name

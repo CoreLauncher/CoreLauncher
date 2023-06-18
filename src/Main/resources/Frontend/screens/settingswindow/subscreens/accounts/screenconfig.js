@@ -15,7 +15,6 @@ async function ReloadAccountList() {
     }
 
     for (const Account of Accounts) {
-        console.log(Account)
         const AccountElement = AccountTemplate.cloneNode(true)
 
         AccountElement.querySelector(".icon").src = Account.DisplayData.Icon
@@ -67,7 +66,6 @@ Screen.Init = async function (ScreenElement, Screen) {
     AccountTemplate.remove()
 
     const AccountTypes = await CoreLauncher.AccountManager.ListAccountTypes()
-    console.log(AccountTypes)
 
     if (Object.keys(AccountTypes).length == 0) {
         const WarningBlock = ScreenElement.querySelector(".noaccountsblock")
