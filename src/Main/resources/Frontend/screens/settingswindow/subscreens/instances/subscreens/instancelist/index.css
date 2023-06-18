@@ -1,0 +1,33 @@
+.screen.settingswindow .screen.instances .screen.instancelist .createinstancebutton {
+  float: right;
+}
+.screen.settingswindow .screen.instances .screen.instancelist .instancelist {
+  margin-top: 10px;
+}
+.screen.settingswindow .screen.instances .screen.instancelist .instancelist .instance {
+  background-color: var(--background-tertiary);
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+.screen.settingswindow .screen.instances .screen.instancelist .instancelist .instance .icon {
+  height: 50px;
+  width: 50px;
+  background-color: var(--background-primary);
+  border-radius: 10px;
+  float: left;
+  margin-right: 10px;
+}
+.screen.settingswindow .screen.instances .screen.instancelist .instancelist .instance .name {
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+}
+.screen.settingswindow .screen.instances .screen.instancelist .instancelist .instance .settingsbutton {
+  width: 50px;
+  height: 50px;
+  float: right;
+  padding: 12px;
+  fill: white;
+}
