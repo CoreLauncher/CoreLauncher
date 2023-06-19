@@ -27,7 +27,6 @@ local function CreateFunctionPipe(Key, Value, Parent)
         PipeHandle,
         function(...)
             local Args = { ... }
-            local ReturnValue
             local ParsedArgs
             if type(Args[2]) == "userdata" then
                 Args = ShiftArray(Args)
@@ -37,6 +36,7 @@ local function CreateFunctionPipe(Key, Value, Parent)
                 ParsedArgs = {table.unpack(Args, 2)}
             end
 
+            local ReturnValue
             if type(Value) == "function" then
                 ReturnValue = coroutine.wrap(Value)(
                     Parent, table.unpack(Args)
