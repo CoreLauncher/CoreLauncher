@@ -39,6 +39,11 @@
 			"Source": "NPM",
 			"Package": "uuid",
 			"Version": "9.0.0"
+		},
+        {
+			"Source": "NPM",
+			"Package": "node-fetch",
+			"Version": "2.6.11"
 		}
 	],
 	"Entrypoints": {
