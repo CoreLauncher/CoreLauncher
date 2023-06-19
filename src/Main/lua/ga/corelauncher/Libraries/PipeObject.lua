@@ -28,15 +28,22 @@ local function CreateFunctionPipe(Key, Value, Parent)
         function(...)
             local Args = { ... }
             local ReturnValue
+            local ParsedArgs
             if type(Args[2]) == "userdata" then
                 Args = ShiftArray(Args)
                 table.remove(Args, 1)
-                ReturnValue = Value(
+                ParsedArgs = Args
+            else
+                ParsedArgs = {table.unpack(Args, 2)}
+            end
+
+            if type(Value) == "function" then
+                ReturnValue = coroutine.wrap(Value)(
                     Parent, table.unpack(Args)
                 )
             else
                 ReturnValue = Value(
-                    Parent, table.unpack(Args, 2)
+                    Parent, table.unpack(Args)
                 )
             end
 
