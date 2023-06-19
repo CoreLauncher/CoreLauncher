@@ -7,7 +7,7 @@ _G.Object = function(t)
     for k, v in pairs(t) do
         assert(type(k) == "string" or js.typeof(k) == "symbol", "JavaScript only has string and symbol keys")
         if type(v) == "table" then
-            v = Object(v)
+            v = ToJs(v)
         end
         o[k] = v
     end
@@ -22,7 +22,7 @@ _G.Array = function(t)
     local a = js.new(js.global.Array)
     for i, v in ipairs(t) do
         if type(v) == "table" then
-            v = Object(v)
+            v = ToJs(v)
         end
         a[i - 1] = v
     end
