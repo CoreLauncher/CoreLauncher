@@ -1,6 +1,3 @@
-local Md5Anything = TypeWriter:JsRequire("hash-anything").md5
-local CloneObject = Import("ga.corelauncher.Libraries.CloneObject")
-
 local function RandomString(Length)
     local Characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     local String = ""
@@ -11,102 +8,44 @@ local function RandomString(Length)
     return String
 end
 
-local ShiftArray = function(Array)
-    local NewArray = {}
-    for Index, Value in pairs(Array) do
-        if Index ~= 1 then
-            NewArray[Index - 1] = Value
+local function GetObjectFunctions(Object)
+    local Functions = {}
+
+    for Key, Value in pairs(TypeWriter.JavaScript.Global.Object:getOwnPropertyNames(TypeWriter.JavaScript.Global.Object:getPrototypeOf(Object))) do
+        if Value ~= "constructor" and Value ~= "length" then
+            Functions[Value] = Object[Value]
         end
     end
-    return NewArray
-end
 
-local function CreateFunctionPipe(Key, Value, Parent)
-    local PipeHandle = "PipeFunction." .. RandomString(64)
-    CoreLauncher.IPCMain:handle(
-        PipeHandle,
-        function(...)
-            local Args = { ... }
-            local ParsedArgs
-            if type(Args[2]) == "userdata" then
-                Args = ShiftArray(Args)
-                table.remove(Args, 1)
-                ParsedArgs = Args
-            else
-                ParsedArgs = {table.unpack(Args, 2)}
-            end
-
-            local ReturnValue
-            if type(Value) == "function" then
-                ReturnValue = coroutine.wrap(Value)(
-                    Parent, table.unpack(Args)
-                )
-            else
-                ReturnValue = Value(
-                    Parent, table.unpack(Args)
-                )
-            end
-
-            return ToJs(
-                CloneObject(
-                    ReturnValue
-                )
-            )
-        end
-    )
-    return Object({ PipeType = "function", PipeHandle = PipeHandle })
-end
-
-local function IgnoreProperty(Key)
-    local Properties = {
-        ["constructor"] = true,
-        ["__defineGetter__"] = true,
-        ["__defineSetter__"] = true,
-        ["hasOwnProperty"] = true,
-        ["__lookupGetter__"] = true,
-        ["__lookupSetter__"] = true,
-        ["isPrototypeOf"] = true,
-        ["propertyIsEnumerable"] = true,
-        ["toString"] = true,
-        ["valueOf"] = true,
-        ["toLocaleString"] = true,
-    }
-    return Properties[Key] ~= nil
+    return Functions
 end
 
 local PipeCache = {}
-local function PipeObject(Obj, IsSub)
-    local ObjectHash = Md5Anything(Obj)
-    if PipeCache[ObjectHash] and not IsSub then
-        return PipeCache[ObjectHash]
-    end
-
+local function PipeObject(Name, Object)
     local PipedObject = {}
 
-    if js.typeof(Obj) == "object" then
-        local Keys = js.global.Object:getOwnPropertyNames(js.global.Object:getPrototypeOf(Obj))
-        for _, FuncName in pairs(Keys) do
-            if js.typeof(Obj[FuncName]) == "function" and IgnoreProperty(FuncName) == false then
-                PipedObject[FuncName] = CreateFunctionPipe(FuncName, Obj[FuncName], Obj)
-            end
-        end
-    end
-
-    for Key, Value in pairs(Obj) do
-        if type(Value) == "function" or js.typeof(Value) == "function" then
-            PipedObject[Key] = CreateFunctionPipe(Key, Value, Obj)
-        elseif type(Value) == "table" or js.typeof(Value) == "object" then
-            PipedObject[Key] = PipeObject(Value, true)
+    for Key, Value in pairs(GetObjectFunctions(Object)) do
+        if PipeCache[Value] then
+            PipedObject[Key] = PipeCache[Value]
         else
-            PipedObject[Key] = Value
+            local PipeHandle = "PipeFunction." .. Name .. "." .. Key .. "." .. RandomString(16)
+            print(Key, Value, PipeHandle)
+    
+            CoreLauncher.IPCMain.handle(
+                PipeHandle,
+                function(...)
+                    local Arguments = { ... }
+                    table.remove(Arguments, 1)
+                    return Value(table.unpack(Arguments))
+                end
+            )
+    
+            PipedObject[Key] = { PipeType = "function", PipeHandle = PipeHandle }
+            PipeCache[Value] = PipedObject[Key]
         end
     end
 
-    local ReturnValue = Object(CloneObject(PipedObject))
-    if not IsSub then
-        PipeCache[ObjectHash] = ReturnValue
-    end
-    return ReturnValue
+    return PipedObject
 end
 
 return PipeObject
