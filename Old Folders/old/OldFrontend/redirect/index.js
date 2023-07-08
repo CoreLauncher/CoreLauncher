@@ -1,1 +1,0 @@
-location = atob(location.hash.split("#")[1])
