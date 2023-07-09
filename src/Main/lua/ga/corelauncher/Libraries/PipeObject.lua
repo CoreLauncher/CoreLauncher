@@ -20,6 +20,29 @@ local function GetObjectFunctions(Object)
     return Functions
 end
 
+local function CloneWithoutFunctions(Object)
+    if type(Object) ~= "table" and TypeWriter.JavaScript.TypeOf(Object) ~= "object" then
+        return Object
+    end
+
+    if Object == nil then
+        return nil
+    end
+
+    local Cloned = {}
+    for Key, Value in pairs(Object) do
+        if type(Value) == "function" or TypeWriter.JavaScript.TypeOf(Value) == "function" or Key == "length" then
+        
+        elseif type(Value) == "table" or TypeWriter.JavaScript.TypeOf(Value) == "object" then
+            Cloned[Key] = CloneWithoutFunctions(Value)
+        else
+            Cloned[Key] = Value
+        end
+    end
+
+    return Cloned
+end
+
 local PipeCache = {}
 local function PipeObject(Name, Object)
     local PipedObject = {}
@@ -29,14 +52,13 @@ local function PipeObject(Name, Object)
             PipedObject[Key] = PipeCache[Value]
         else
             local PipeHandle = "PipeFunction." .. Name .. "." .. Key .. "." .. RandomString(16)
-            print(Key, Value, PipeHandle)
     
             CoreLauncher.IPCMain.handle(
                 PipeHandle,
                 function(...)
                     local Arguments = { ... }
                     table.remove(Arguments, 1)
-                    return Value(table.unpack(Arguments))
+                    return CloneWithoutFunctions(Value(table.unpack(Arguments)))
                 end
             )
     
