@@ -1,24 +1,29 @@
-local WindowControl = {}
+local WindowControl = Import("ga.corelauncher.Libraries.ClassCreator")(
+    "WindowControl",
+    function (self)
+        
+    end,
+    {
+        Close = function(self)
+            CoreLauncher.BrowserWindow:close()
+        end,
 
-function WindowControl:Close()
-    CoreLauncher.BrowserWindow:close()
-end
+        Minimize = function(self)
+            CoreLauncher.BrowserWindow:minimize()
+        end,
 
-function WindowControl:Minimize()
-    CoreLauncher.BrowserWindow:minimize()
-end
+        Maximize = function(self)
+            CoreLauncher.BrowserWindow:maximize()
+        end,
 
-function WindowControl:Maximize()
-    CoreLauncher.BrowserWindow:maximize()
-end
-
-function WindowControl:Restore()
-    CoreLauncher.BrowserWindow:restore()
-end
-
-function WindowControl:OpenExternal(Url) 
-    CoreLauncher.Electron.shell:openExternal(Url)
-end
-
+        Restore = function(self)
+            CoreLauncher.BrowserWindow:restore()
+        end,
+        
+        OpenExternal = function(self, Url)
+            CoreLauncher.Electron.shell:openExternal(Url)
+        end
+    }
+)
 
 return WindowControl

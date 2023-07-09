@@ -1,86 +1,84 @@
-local PluginManager = {}
-PluginManager.Plugins = {}
+local Base64Img = TypeWriter.JavaScript:Require("base64-img")
+local FS = TypeWriter.JavaScript:Require("fs-extra")
 
-local Base64Img = TypeWriter:JsRequire("base64-img")
-local FS = TypeWriter:JsRequire("fs-extra")
+local PluginManager = Import("ga.corelauncher.Libraries.ClassCreator")(
+    "PluginManager",
+    function(self)
+        self.Plugins = {}
+    end,
+    {
+        LoadPlugins = function(self, PluginsFolder)
+            TypeWriter.Logger:Information("Loading plugins from " .. PluginsFolder)
+            local Files = FS:readdirSync(PluginsFolder)
 
-function PluginManager:LoadPlugins(PluginsFolder)
-    TypeWriter.Logger:Information("Loading plugins from " .. PluginsFolder)
-    local Files = FS:readdirSync(PluginsFolder)
+            for _, FileName in ipairs(Files) do
+                TypeWriter.Logger:Information("Loading plugin " .. FileName)
+                local FilePath = PluginsFolder .. "/" .. FileName
+                local Plugin = TypeWriter.LoadFile(FilePath)
+                if Plugin.Entrypoints.CoreLauncherPlugin then
+                    TypeWriter.Logger:Information("Plugin " .. FileName .. " is a CoreLauncher plugin")
+                    local PluginData = TypeWriter:LoadEntrypoint(Plugin.Id, "CoreLauncherPlugin")
+                    self.Plugins[Plugin.Id] = PluginData
+                end
+            end
+        end,
 
-    for FileName in js.of(Files) do
-        TypeWriter.Logger:Information("Loading plugin " .. FileName)
-        local FilePath = PluginsFolder .. "/" .. FileName
-        local Plugin = TypeWriter:LoadFile(FilePath)
-        if Plugin.Entrypoints.CoreLauncherPlugin then
-            TypeWriter.Logger:Information("Plugin " .. FileName .. " is a CoreLauncher plugin")
-            local PluginData = TypeWriter:LoadEntrypoint(Plugin.Id, "CoreLauncherPlugin")
-            self.Plugins[Plugin.Id] = PluginData
-        end
-    end
-end
+        ListGames = function(self)
+            local Games = {}
 
-function PluginManager:ListGames()
-    local Games = {}
+            for PluginId, Plugin in pairs(self.Plugins) do
+                if not Plugin.Games then goto continue end
+                for _, Game in ipairs(Plugin.Games) do
+                    Games[Game.Id] = Game
+                end
+                ::continue::
+            end
 
-    for PluginId, Plugin in pairs(self.Plugins) do
-        if not Plugin.Games then goto continue end
-        for _, Game in pairs(Plugin.Games) do
-            Games[Game.Id] = Game
-        end
-        ::continue::
-    end
+            return Games
+        end,
 
-    return Games
-end
+        ListAccountTypes = function(self)
+            local AccountTypes = {}
 
-function PluginManager:ListAccountTypes()
-    local AccountTypes = {}
+            for PluginId, Plugin in pairs(self.Plugins) do
+                if not Plugin.AccountTypes then goto continue end
+                for _, AccountType in ipairs(Plugin.AccountTypes) do
+                    AccountTypes[AccountType.Id] = AccountType
+                end
+                ::continue::
+            end
 
-    for PluginId, Plugin in pairs(self.Plugins) do
-        if not Plugin.AccountTypes then goto continue end
-        for _, AccountType in pairs(Plugin.AccountTypes) do
-            AccountTypes[AccountType.Id] = AccountType
-        end
-        ::continue::
-    end
+            return AccountTypes
+        end,
 
-    return AccountTypes
-end
+        --#region Plugin Information
+        ListPluginIds = function(self)
+            local PluginIds = {}
 
---#region Plugin Information
-function PluginManager:ListPluginIds()
-    local PluginIds = {}
+            for PluginId, Plugin in pairs(self.Plugins) do
+                table.insert(PluginIds, PluginId)
+            end
 
-    for PluginId, Plugin in pairs(self.Plugins) do
-        table.insert(PluginIds, PluginId)
-    end
+            return PluginIds
+        end,
 
-    return PluginIds
-end
+        GetPluginInformation = function(self, PluginId)
+            return self.Plugins[PluginId]
+        end,
 
-function PluginManager:GetPluginInformation(PluginId)
-    local Plugin = self.Plugins[PluginId]
+        GetPluginIcon = function(self, PluginId)
+            local IconPath = TypeWriter.ResourceManager:GetFilePath(self:GetPluginInformation(PluginId).Icon)
+            return FS:readFileSync(IconPath, "utf8")
+        end,
 
-    return {
-        Name = Plugin.Name,
-        Creator = Plugin.Creator,
-        CreatorLink = Plugin.CreatorLink,
-        Source = Plugin.Source,
-        Version = Plugin.Version,
-        Description = Plugin.Description
+        GetPluginIconBase64 = function(self, PluginId)
+            local IconPath = TypeWriter.ResourceManager:GetFilePath(self:GetPluginInformation(PluginId).Icon)
+            return Base64Img:base64Sync(IconPath)
+        end,
+        --#endregion
+
+
     }
-end
-
-function PluginManager:GetPluginIcon(PluginId)
-    local IconPath = TypeWriter.ResourceManager:GetFilePath(self.Plugins[PluginId].Icon)
-    return FS:readFileSync(IconPath, "utf8")
-end
-
-function PluginManager:GetPluginIconBase64(PluginId)
-    local IconPath = TypeWriter.ResourceManager:GetFilePath(self.Plugins[PluginId].Icon)
-    return Base64Img:base64Sync(IconPath)
-end
---#endregion
+)
 
 return PluginManager
