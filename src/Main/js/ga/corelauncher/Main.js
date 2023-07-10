@@ -1,3 +1,8 @@
+    CoreLauncher.DataBase = new (Import("ga.corelauncher.Classes.DataBase"))(`${CoreLauncher.ApplicationData}/Database.json`)
+    CoreLauncher.PluginManager = new (Import("ga.corelauncher.Classes.PluginManager"))(CoreLauncher.PluginsFolder)
+    CoreLauncher.AccountManager = new (Import("ga.corelauncher.Classes.AccountManager"))(CoreLauncher.PluginManager.ListAccountTypes())
+    CoreLauncher.GameManager = new (Import("ga.corelauncher.Classes.GameManager"))(CoreLauncher.PluginManager.ListGames())
+    CoreLauncher.WindowControl = new (Import("ga.corelauncher.Classes.WindowControl"))
     Import("ga.corelauncher.IPC.Pipes.AccountManager")
     Import("ga.corelauncher.IPC.Pipes.DataBase")
     Import("ga.corelauncher.IPC.Pipes.GameManager")
