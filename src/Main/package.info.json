@@ -23,6 +23,6 @@
 		"npm+node-fetch@2.6.11"
 	],
 	"Entrypoints": {
-		"Main": "ga.corelauncher.LoadLibraries"
+		"Main": "ga.corelauncher"
 	}
 }
