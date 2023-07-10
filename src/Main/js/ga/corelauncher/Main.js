@@ -15,16 +15,17 @@ async function Main() {
     CoreLauncher.GameManager = new (Import("ga.corelauncher.Classes.GameManager"))(CoreLauncher.PluginManager.ListGames())
     CoreLauncher.WindowControl = new (Import("ga.corelauncher.Classes.WindowControl"))
 
-    CoreLauncher.Electron = Import("electronhelper")(
-        "CoreLauncher",
+    CoreLauncher.Electron = await (Import("electronhelper"))(
         {
+            Id: "CoreLauncher",
             Name: "CoreLauncher",
             Icon: {
-                win32: "CoreLauncher:/ico.ico"
+                Windows: "CoreLauncher:/ico.ico"
             },
             // Load: "ga.corelauncher"
         }
     )
+    console.log(CoreLauncher.Electron)
     CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
     await CoreLauncher.ElectronApplication.whenReady()
 
