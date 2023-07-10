@@ -1,0 +1,5 @@
+    Import("ga.corelauncher.IPC.Pipes.AccountManager")
+    Import("ga.corelauncher.IPC.Pipes.DataBase")
+    Import("ga.corelauncher.IPC.Pipes.GameManager")
+    Import("ga.corelauncher.IPC.Pipes.PluginManager")
+    Import("ga.corelauncher.IPC.Pipes.WindowControl")
