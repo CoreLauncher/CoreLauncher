@@ -16,9 +16,9 @@ local PluginManager = Import("ga.corelauncher.Libraries.ClassCreator")(
                 local FilePath = PluginsFolder .. "/" .. FileName
                 local Plugin = TypeWriter.LoadFile(FilePath)
                 if Plugin.Entrypoints.CoreLauncherPlugin then
-                    TypeWriter.Logger:Information("Plugin " .. FileName .. " is a CoreLauncher plugin")
-                    local PluginData = TypeWriter:LoadEntrypoint(Plugin.Id, "CoreLauncherPlugin")
-                    self.Plugins[Plugin.Id] = PluginData
+                    TypeWriter.Logger.Information("Plugin " .. FileName .. " is a CoreLauncher plugin")
+                    -- local PluginData = TypeWriter.LoadEntrypointAsync(Plugin.Id, "CoreLauncherPlugin"):await()
+                    -- self.Plugins[Plugin.Id] = PluginData
                 end
             end
         end,

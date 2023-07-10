@@ -157,11 +157,11 @@ CoreLauncher.AccountManager:LoadAccountTypes(CoreLauncher.PluginManager:ListAcco
 CoreLauncher.BrowserWindow.once(
     "ready-to-show",
     function()
-        CoreLauncher.BrowserWindow:show()
+        CoreLauncher.BrowserWindow.show()
 
-        CoreLauncher.BrowserWindow:setResizable(true)
-        CoreLauncher.BrowserWindow:setSize(1000, 600)
-        CoreLauncher.BrowserWindow:center()
+        CoreLauncher.BrowserWindow.setResizable(true)
+        CoreLauncher.BrowserWindow.setSize(1000, 600)
+        CoreLauncher.BrowserWindow.center()
     end
 )
 
