@@ -21,11 +21,9 @@ async function Main() {
             Name: "CoreLauncher",
             Icon: {
                 Windows: "CoreLauncher:/ico.ico"
-            },
-            // Load: "ga.corelauncher"
+            }
         }
     )
-    console.log(CoreLauncher.Electron)
     CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
     await CoreLauncher.ElectronApplication.whenReady()
 
