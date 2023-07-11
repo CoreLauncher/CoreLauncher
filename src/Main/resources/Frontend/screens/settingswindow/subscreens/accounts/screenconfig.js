@@ -10,9 +10,6 @@ async function ReloadAccountList() {
     AccountList.innerHTML = ""
 
     var Accounts = await CoreLauncher.AccountManager.ListAccounts()
-    if (!Array.isArray(Accounts)) {
-        Accounts = []
-    }
 
     for (const Account of Accounts) {
         const AccountElement = AccountTemplate.cloneNode(true)
