@@ -83,6 +83,7 @@ async function LoadSelectorValues(Index) {
 Screen.Show = async function (ScreenElement, Screen, Data) {
     Game = Data
 
+    //#region Version selector loading
     const Versions = await CoreLauncher.GameManager.ListInstanceVersions(Game)
     VersionList.innerHTML = ""
 
@@ -96,6 +97,7 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
     }
 
     await LoadSelectorValues(0)
+    //#endregion
 }
 
 export default Screen
