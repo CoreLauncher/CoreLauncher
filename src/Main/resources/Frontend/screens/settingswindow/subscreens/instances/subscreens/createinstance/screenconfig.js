@@ -50,9 +50,7 @@ async function LoadSelectorValues(Index) {
     VersionSelector.classList.add("isloading")
     VersionSelector.classList.remove("isempty")
 
-    console.log(Game, VersionSelector.dataset.versionid, ListSelectorValues())
     const VersionEntries = await CoreLauncher.GameManager.ListInstanceVersionValues(Game, VersionSelector.dataset.versionid, ListSelectorValues())
-    console.log(VersionEntries, "a")
 
     for (const EntryId in VersionEntries) {
         const EntryValue = VersionEntries[EntryId]
@@ -87,7 +85,6 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
 
     const Versions = await CoreLauncher.GameManager.ListInstanceVersions(Game)
     VersionList.innerHTML = ""
-    console.log(Versions)
 
     for (const VersionIndex in Versions) {
         const Version = Versions[VersionIndex]
