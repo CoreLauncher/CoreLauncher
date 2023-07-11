@@ -61,7 +61,7 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
 
             const IndicatorElement = document.createElement("a")
             IndicatorElement.classList.add("indicator")
-            IndicatorElement.innerText = "<"
+            IndicatorElement.innerText = "◀"
             TabElement.appendChild(IndicatorElement)
 
             TabElement.addEventListener(
