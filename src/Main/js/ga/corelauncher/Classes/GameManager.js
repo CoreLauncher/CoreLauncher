@@ -38,6 +38,10 @@ class GameManager {
         return ObtainedValues
     }
 
+    ListInstanceProperties(GameId) {
+        return this.Games[GameId].InstanceProperties
+    }
+
 }
 
 module.exports = GameManager

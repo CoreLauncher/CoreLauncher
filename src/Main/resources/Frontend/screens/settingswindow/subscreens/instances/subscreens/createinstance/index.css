@@ -1,3 +1,14 @@
+.screen.settingswindow .screen.instances .screen.createinstance .createbutton,
+.screen.settingswindow .screen.instances .screen.createinstance .cancelbutton {
+  float: right;
+  margin-left: 10px;
+}
+.screen.settingswindow .screen.instances .screen.createinstance .issuesdisplay {
+  margin-top: 20px;
+}
+.screen.settingswindow .screen.instances .screen.createinstance .issuesdisplay .issuestobefixed {
+  margin-left: 20px;
+}
 .screen.settingswindow .screen.instances .screen.createinstance .versionlist {
   height: 300px;
 }
@@ -7,6 +18,8 @@
   position: relative;
   float: left;
   margin-right: 10px;
+  background-color: var(--background-secondary-alt);
+  border-radius: 10px;
 }
 .screen.settingswindow .screen.instances .screen.createinstance .versionlist .versionselector .versionname {
   height: 10%;
@@ -68,4 +81,14 @@
 }
 .screen.settingswindow .screen.instances .screen.createinstance .versioncomment {
   font-size: 12px;
+}
+.screen.settingswindow .screen.instances .screen.createinstance .instanceproperties {
+  margin-top: 20px;
+  width: 100%;
+}
+.screen.settingswindow .screen.instances .screen.createinstance .instanceproperties .row {
+  margin-bottom: 10px;
+}
+.screen.settingswindow .screen.instances .screen.createinstance .instanceproperties .row {
+  width: 100%;
 }

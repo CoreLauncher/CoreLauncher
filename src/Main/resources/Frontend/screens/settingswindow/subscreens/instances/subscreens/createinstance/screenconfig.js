@@ -4,6 +4,80 @@ var Game
 var VersionSelectorTemplate
 var VersionList
 Screen.Init = function (ScreenElement, Screen) {
+    // Create button
+    const CreateButton = ScreenElement.querySelector(".createbutton")
+    CreateButton.addEventListener(
+        "click",
+        async function () {
+            const InstanceProperties = await CoreLauncher.GameManager.ListInstanceProperties(Game)
+            const InstancePropertiesValues = CoreLauncher.Properties.Collect(InstanceProperties, ScreenElement.querySelector(".instanceproperties"))
+            console.log(InstancePropertiesValues)
+
+            const InstanceVersionTypes = await CoreLauncher.GameManager.ListInstanceVersions(Game)
+            const InstanceVersions = ListSelectorValues()
+            console.log(InstanceVersions)
+
+            //#region Gather issues
+            const IssuesDisplay = ScreenElement.querySelector(".issuesdisplay")
+            const Issues = []
+            for (const VersionKey in InstanceVersions) {
+                const VersionValue = InstanceVersions[VersionKey]
+                const VersionData = InstanceVersionTypes.find(Version => Version.Id == VersionKey)
+                if (VersionValue == undefined) {
+                    Issues.push(
+                        {
+                            Message: `The following version is not selected: "${VersionData.Name}"`,
+                            Element: ListVersionSelectors().find(VersionSelector => VersionSelector.dataset.versionid == VersionKey)
+                        }
+                    )
+                }
+            }
+            //#endregion
+
+            //#region Show issues
+            if (Issues.length != 0) {
+                IssuesDisplay.style.display = null
+                const IssuesHolder = IssuesDisplay.querySelector(".issuestobefixed")
+                IssuesHolder.innerHTML = ""
+
+                for (const Issue of Issues) {
+                    const IssueElement = document.createElement("a")
+                    IssueElement.innerText = `↪ ${Issue.Message}`
+                    IssuesHolder.appendChild(IssueElement)
+
+                    const LineBreak = document.createElement("br")
+                    IssuesHolder.appendChild(LineBreak)
+                }
+
+                for (const Issue of Issues) {
+                    UserFocus(
+                        Issue.Element,
+                        1, 10,
+                        200, 0, 0
+                    )
+                }
+
+                return
+            } else {
+                IssuesDisplay.style.display = "none"
+            }
+            //#endregion
+
+
+            const InstanceNameElement = ScreenElement.querySelector(".instancename")
+
+            const CompiledData = {
+                Game: Game,
+                Name: InstanceNameElement.value == "" ? "New Instance" : InstanceNameElement.value,
+                Properties: InstancePropertiesValues,
+                Versions: InstanceVersions
+            }
+
+            console.log(CompiledData)
+        }
+    )
+
+    // Cancel button
     ScreenElement.querySelector(".cancelbutton").addEventListener(
         "click",
         function () {
@@ -83,6 +157,8 @@ async function LoadSelectorValues(Index) {
 Screen.Show = async function (ScreenElement, Screen, Data) {
     Game = Data
 
+    ScreenElement.querySelector(".issuesdisplay").style.display = "none"
+
     //#region Version selector loading
     const Versions = await CoreLauncher.GameManager.ListInstanceVersions(Game)
     VersionList.innerHTML = ""
@@ -97,6 +173,14 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
     }
 
     await LoadSelectorValues(0)
+    //#endregion
+
+    //#region Instance properties
+    const PropertyHolder = ScreenElement.querySelector(".instanceproperties")
+    const InstanceProperties = await CoreLauncher.GameManager.ListInstanceProperties(Game)
+    PropertyHolder.innerHTML = ""
+
+    CoreLauncher.Properties.Render(InstanceProperties, PropertyHolder)
     //#endregion
 }
 

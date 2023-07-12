@@ -1,6 +1,20 @@
 
 .screen.settingswindow .screen.instances .screen.createinstance {
 
+    .createbutton, .cancelbutton {
+        float: right;
+        margin-left: 10px;
+    }
+
+    .issuesdisplay {
+        margin-top: 20px;
+        .issuestobefixed {
+            margin-left: 20px;
+        }
+    }
+
+    
+
     .versionlist {
         height: 300px;
 
@@ -10,6 +24,8 @@
             position: relative;
             float: left;
             margin-right: 10px;
+            background-color: var(--background-secondary-alt);
+            border-radius: 10px;
 
             .versionname {
                 height: 10%;
@@ -93,6 +109,22 @@
 
     .versioncomment {
         font-size: 12px;
+    }
+
+    .instanceproperties {
+        margin-top: 20px;
+        width: 100%;
+
+        .row {
+            margin-bottom: 10px;
+        }
+
+        .row {
+            width: 100%;
+            
+        }
+
+
     }
 
 }
