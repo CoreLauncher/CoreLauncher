@@ -20,7 +20,8 @@ async function Main() {
             Id: "CoreLauncher",
             Name: "CoreLauncher",
             Icon: {
-                Windows: "CoreLauncher:/ico.ico"
+                Windows: "CoreLauncher:/ico.ico",
+                MacOs: "CoreLauncher:/ico.icns",
             }
         }
     )
