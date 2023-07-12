@@ -2,6 +2,8 @@
 await require("./lib/globals/sleep.js")
 await require("./lib/globals/RemoveClassFromChildren.js")
 await require("./lib/globals/clamp.js")
+await require("./lib/globals/UserFocus.js")
+
 globalThis.CoreLauncher = {}
 CoreLauncher.ScreenManager = await require("./ScreenManager.js")
 CoreLauncher.AccountManager = CoreLauncherManagers.AccountManager
@@ -9,8 +11,13 @@ CoreLauncher.DataBase = CoreLauncherManagers.DataBase
 CoreLauncher.GameManager = CoreLauncherManagers.GameManager
 CoreLauncher.PluginManager = CoreLauncherManagers.PluginManager
 CoreLauncher.WindowControl = CoreLauncherManagers.WindowControl
+
 CoreLauncher.OpenGameSettings = await require("./lib/OpenGameSettings.js")
 CoreLauncher.OpenSettings = await require("./lib/OpenSettings.js")
+CoreLauncher.Properties = {
+    Render: await require("./lib/properties/Render.js"),
+    Collect: await require("./lib/properties/Collect.js")
+}
 
 await CoreLauncher.ScreenManager.ScanScreens()
 
