@@ -14,12 +14,17 @@ CoreLauncher.GameManager = CoreLauncherManagers.GameManager
 CoreLauncher.PluginManager = CoreLauncherManagers.PluginManager
 CoreLauncher.WindowControl = CoreLauncherManagers.WindowControl
 
-CoreLauncher.OpenGameSettings = await require("./lib/settings/OpenGameSettings.js")
-CoreLauncher.OpenSettings = await require("./lib/settings/OpenSettings.js")
+CoreLauncher.Settings = {
+    OpenGameSettings: await require("./lib/settings/OpenGameSettings.js"),
+    OpenSettings: await require("./lib/settings/OpenSettings.js"),
+    OpenInstanceSettings: await require("./lib/settings/OpenInstanceSettings.js")
+}
+
 CoreLauncher.Properties = {
     Render: await require("./lib/properties/Render.js"),
     Collect: await require("./lib/properties/Collect.js")
 }
+
 CoreLauncher.HtmlHelper = {
     CleanString: function(S) {
         return DOMPurify.sanitize(S, {ALLOWED_TAGS:[]})

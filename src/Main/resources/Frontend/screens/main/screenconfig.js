@@ -27,7 +27,7 @@ Screen.Init = async function(ScreenElement, Screen) {
         const SettingsButton = WindowControl.querySelector('.settings')
         SettingsButton.addEventListener(
             'click',
-            CoreLauncher.OpenSettings
+            CoreLauncher.Settings.OpenSettings
         )
     }
 
