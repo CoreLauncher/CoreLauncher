@@ -1,4 +1,5 @@
 const ResourceBase64 = Import("ga.corelauncher.Libraries.ResourceBase64")
+const UUID = require("uuid").v4
 
 class GameManager {
     constructor(Games) {
@@ -80,6 +81,11 @@ class GameManager {
 
         CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceData.UUID}`, InstanceData)
     }
+
+    ListInstances(GameId) {
+        return Object.values(CoreLauncher.DataBase.GetKey(`Game.${GameId}.Instances`))
+    }
+
     
 
 }
