@@ -1,18 +1,13 @@
 function LoadProperty(Data, Parent) {
     if (Data.Prefix) {
         const PrefixElement = document.createElement("a")
-        PrefixElement.innerText = Data.Prefix
+        PrefixElement.innerHTML = CoreLauncher.HtmlHelper.CoreLauncherMarkdown(Data.Prefix)
         Parent.appendChild(PrefixElement)
     }
 
     var Element
-    
-    if (Data.Type == "Row") {
-        Element = document.createElement("div")
-        Element.classList.add("row")
 
-        RenderProperties(Data.Properties, Element)
-    } else if (Data.Type == "Number") {
+    if (Data.Type == "Number") {
         Element = document.createElement("input")
         Element.type = "number"
         if (Data.FillDefault == true) { Element.value = Data.Default }
@@ -33,6 +28,11 @@ function LoadProperty(Data, Parent) {
                 if (Value > Data.Max) { Element.value = Data.Max }
             }
         )
+    } else if (Data.Type == "Boolean") {
+        Element = document.createElement("div")
+        Element.classList.add("switchinput")
+        Element.setAttribute("onclick", "this.dataset.value=( this.dataset.value == 'true' ? 'false' : 'true' ); const ChangeEvent = new Event('change'); this.dispatchEvent(ChangeEvent);")
+        if (Data.FillDefault == true && Data.Default == true) { Element.click() }
     }
 
     if (Element) {
@@ -42,14 +42,30 @@ function LoadProperty(Data, Parent) {
 
     if (Data.Suffix) {
         const SuffixElement = document.createElement("a")
-        SuffixElement.innerText = Data.Suffix
+        SuffixElement.innerHTML = CoreLauncher.HtmlHelper.CoreLauncherMarkdown(Data.Suffix)
         Parent.appendChild(SuffixElement)
     }
+
+    return Element
 }
 
-function RenderProperties(PropertyList, Parent) {
-    for (const Property of PropertyList) {
-        LoadProperty(Property, Parent)
+function RenderProperties(PropertyList, Parent, OnChange) {
+    for (const PropertyRow of PropertyList) {
+        const RowElement = document.createElement("div")
+        RowElement.classList.add("row")
+        Parent.appendChild(RowElement)
+
+        for (const Property of PropertyRow) {
+            const Element = LoadProperty(Property, RowElement, OnChange)
+            if (OnChange) {
+                Element.addEventListener(
+                    "change",
+                    function () {
+                        OnChange(Property, Element)
+                    }
+                )
+            }
+        }
     }
 }
 
