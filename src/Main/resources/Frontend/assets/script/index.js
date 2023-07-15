@@ -14,8 +14,8 @@ CoreLauncher.GameManager = CoreLauncherManagers.GameManager
 CoreLauncher.PluginManager = CoreLauncherManagers.PluginManager
 CoreLauncher.WindowControl = CoreLauncherManagers.WindowControl
 
-CoreLauncher.OpenGameSettings = await require("./lib/OpenGameSettings.js")
-CoreLauncher.OpenSettings = await require("./lib/OpenSettings.js")
+CoreLauncher.OpenGameSettings = await require("./lib/settings/OpenGameSettings.js")
+CoreLauncher.OpenSettings = await require("./lib/settings/OpenSettings.js")
 CoreLauncher.Properties = {
     Render: await require("./lib/properties/Render.js"),
     Collect: await require("./lib/properties/Collect.js")
