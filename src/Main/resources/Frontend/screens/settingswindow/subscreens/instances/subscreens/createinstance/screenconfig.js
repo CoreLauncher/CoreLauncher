@@ -160,6 +160,7 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
     Game = Data
 
     ScreenElement.querySelector(".issuesdisplay").style.display = "none"
+    ScreenElement.querySelector(".instancename").value = ""
 
     //#region Version selector loading
     const Versions = await CoreLauncher.GameManager.ListInstanceVersions(Game)
