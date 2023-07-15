@@ -74,6 +74,8 @@ Screen.Init = function (ScreenElement, Screen) {
             }
 
             console.log(CompiledData)
+
+            await CoreLauncher.GameManager.CreateInstance(Game, CompiledData)
         }
     )
 
