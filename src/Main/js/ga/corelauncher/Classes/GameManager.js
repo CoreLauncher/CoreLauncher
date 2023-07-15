@@ -3,6 +3,12 @@ const ResourceBase64 = Import("ga.corelauncher.Libraries.ResourceBase64")
 class GameManager {
     constructor(Games) {
         this.Games = Games
+
+        for (const GameId in Games) {
+            CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${GameId}.Properties`, this.ListDefaultGameProperties(GameId))
+            CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${GameId}.Instances`, {})
+
+        }
     }
 
     ListGames() {
