@@ -4,7 +4,13 @@ async function OpenGameSettings(Game) {
 
     const GameSettingsGroup = {
         Name: "Game Settings",
-        Tabs: []
+        Tabs: [
+            {
+                Name: "Game Information",
+                Screen: "gameinfo",
+                Data: [Game.Id]
+            }
+        ]
     }
     SettingsData.Tabs.push(GameSettingsGroup)
 
