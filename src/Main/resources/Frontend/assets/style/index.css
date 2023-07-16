@@ -70,7 +70,7 @@ body {
   background-color: var(--block-negative);
   transition: left 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
-.switchinput[data-value="true"]::after {
+.switchinput[value="true"]::after {
   left: 34px;
   background-color: var(--block-positive);
 }
