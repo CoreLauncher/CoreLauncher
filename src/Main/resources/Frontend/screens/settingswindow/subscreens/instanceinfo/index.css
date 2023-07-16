@@ -1,0 +1,13 @@
+.screen.settingswindow .screen.instanceinfo .gametitle,
+.screen.settingswindow .screen.instanceinfo .settingstitle {
+  font-weight: bold;
+}
+.screen.settingswindow .screen.instanceinfo .instancetitle {
+  font-size: 30px;
+}
+.screen.settingswindow .screen.instanceinfo .propertiestitle {
+  font-size: 20px;
+}
+.screen.settingswindow .screen.instanceinfo .propertiesholder {
+  width: 100%;
+}
