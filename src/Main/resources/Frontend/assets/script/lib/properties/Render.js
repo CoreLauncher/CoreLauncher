@@ -55,6 +55,8 @@ function LoadProperty(Data, Parent, PrefillData={}) {
 }
 
 function RenderProperties(PropertyList, Parent, OnChange, PrefillData) {
+    Parent.innerHTML = ""
+
     for (const PropertyRow of PropertyList) {
         const RowElement = document.createElement("div")
         RowElement.classList.add("propertiesrow")
@@ -67,7 +69,7 @@ function RenderProperties(PropertyList, Parent, OnChange, PrefillData) {
                 Element.addEventListener(
                     "change",
                     function () {
-                        OnChange(Property, Element)
+                        OnChange(Property, PropertyList, Element, Parent)
                     }
                 )
             }
