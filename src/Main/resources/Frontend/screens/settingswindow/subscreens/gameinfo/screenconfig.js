@@ -9,16 +9,19 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
     ScreenElement.querySelector(".gametitle").innerText = Game.Name
     ScreenElement.querySelector(".gamedescription").innerText = Game.Description
 
-    const GameProperties = await CoreLauncher.GameManager.ListGameProperties(GameId)
-
-    const PropertiesHolder = ScreenElement.querySelector(".propertiesholder")
-    PropertiesHolder.innerHTML = ""
     CoreLauncher.Properties.Render(
-        GameProperties,
-        PropertiesHolder,
-        async function(Property) {
-            console.log(CoreLauncher.Properties.Collect(GameProperties, PropertiesHolder))
-            await CoreLauncher.GameManager.SetGameProperties(GameId, CoreLauncher.Properties.Collect(GameProperties, PropertiesHolder))
+        await CoreLauncher.GameManager.ListGameProperties(GameId),
+        ScreenElement.querySelector(".propertiesholder"),
+        async function(Property, PropertyList, Element, PropertiesHolder) {
+            console.log(`Property ${Property.Id} changed to ${Element.getAttribute("value")}`)
+
+            await CoreLauncher.GameManager.SetGameProperties(
+                GameId,
+                CoreLauncher.Properties.Collect(
+                    PropertyList,
+                    PropertiesHolder
+                )
+            )
         },
         await CoreLauncher.GameManager.GetGameProperties(GameId)
     )
