@@ -57,7 +57,7 @@ function LoadProperty(Data, Parent, PrefillData={}) {
 function RenderProperties(PropertyList, Parent, OnChange, PrefillData) {
     for (const PropertyRow of PropertyList) {
         const RowElement = document.createElement("div")
-        RowElement.classList.add("row")
+        RowElement.classList.add("propertiesrow")
         Parent.appendChild(RowElement)
 
         for (const Property of PropertyRow) {
