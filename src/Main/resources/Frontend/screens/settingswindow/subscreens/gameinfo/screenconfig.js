@@ -19,7 +19,8 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
         async function(Property) {
             console.log(CoreLauncher.Properties.Collect(GameProperties, PropertiesHolder))
             await CoreLauncher.GameManager.SetGameProperties(GameId, CoreLauncher.Properties.Collect(GameProperties, PropertiesHolder))
-        }
+        },
+        await CoreLauncher.GameManager.GetGameProperties(GameId)
     )
 }
 

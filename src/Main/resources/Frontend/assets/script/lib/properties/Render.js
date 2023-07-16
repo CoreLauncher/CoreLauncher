@@ -1,4 +1,4 @@
-function LoadProperty(Data, Parent) {
+function LoadProperty(Data, Parent, PrefillData={}) {
     if (Data.Prefix) {
         const PrefixElement = document.createElement("a")
         PrefixElement.innerHTML = CoreLauncher.HtmlHelper.CoreLauncherMarkdown(Data.Prefix)
@@ -31,11 +31,16 @@ function LoadProperty(Data, Parent) {
     } else if (Data.Type == "Boolean") {
         Element = document.createElement("div")
         Element.classList.add("switchinput")
-        Element.setAttribute("onclick", "this.dataset.value=( this.dataset.value == 'true' ? 'false' : 'true' ); const ChangeEvent = new Event('change'); this.dispatchEvent(ChangeEvent);")
+        Element.setAttribute(
+            "onclick",
+            `this.setAttribute('value', ( this.getAttribute('value') == 'true' ? 'false' : 'true' )); const ChangeEvent = new Event('change'); this.dispatchEvent(ChangeEvent);`
+        )
         if (Data.FillDefault == true && Data.Default == true) { Element.click() }
     }
 
     if (Element) {
+        console.log(PrefillData, Data.Id)
+        if (PrefillData[Data.Id] != undefined) { Element.setAttribute("value", PrefillData[Data.Id]) }
         Element.id = `renderedproperty_${Data.Id}`
         Parent.appendChild(Element)
     }
@@ -49,14 +54,15 @@ function LoadProperty(Data, Parent) {
     return Element
 }
 
-function RenderProperties(PropertyList, Parent, OnChange) {
+function RenderProperties(PropertyList, Parent, OnChange, PrefillData) {
     for (const PropertyRow of PropertyList) {
         const RowElement = document.createElement("div")
         RowElement.classList.add("row")
         Parent.appendChild(RowElement)
 
         for (const Property of PropertyRow) {
-            const Element = LoadProperty(Property, RowElement, OnChange)
+            const Element = LoadProperty(Property, RowElement, PrefillData)
+
             if (OnChange) {
                 Element.addEventListener(
                     "change",

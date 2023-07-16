@@ -57,6 +57,10 @@ class GameManager {
     SetGameProperties(GameId, Properties) {
         CoreLauncher.DataBase.SetKey(`Game.${GameId}.Properties`, Properties)
     }
+
+    GetGameProperties(GameId) {
+        return CoreLauncher.DataBase.GetKey(`Game.${GameId}.Properties`)
+    }
     //#endregion
 
     ListInstanceVersions(GameId) {

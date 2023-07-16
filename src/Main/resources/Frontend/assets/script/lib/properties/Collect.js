@@ -2,7 +2,7 @@ function GetProperty(Data, Parent) {
     const Element = Parent.querySelector(`#renderedproperty_${Data.Id}`)
     if (!Element) { return }
 
-    var Value = Element.value || Element.dataset.value
+    var Value = Element.getAttribute("value")
     if (Value == "" || Value == undefined) { Value = Data.Default }
     if (Data.Type == "Number") { Value = Number(Value) }
     if (Data.Type == "Boolean") { Value = Value == "true" }
