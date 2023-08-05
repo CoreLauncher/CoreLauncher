@@ -90,6 +90,14 @@ class GameManager {
         return Object.values(CoreLauncher.DataBase.GetKey(`Game.${GameId}.Instances`))
     }
 
+    GetInstance(GameId, InstanceId) {
+        return CoreLauncher.DataBase.GetKey(`Game.${GameId}.Instances.${InstanceId}`)
+    }
+
+    GetInstanceProperties(GameId, InstanceId) {
+        return this.GetInstance(GameId, InstanceId).Properties
+    }
+
     
 
 }
