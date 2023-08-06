@@ -45,6 +45,10 @@ class DataBase {
             this.SetKey(Key, Value)
         }
     }
+
+    RemoveKey(Key) {
+        this.SetKey(Key, undefined)
+    }
 }
 
 module.exports = DataBase
