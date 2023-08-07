@@ -28,7 +28,11 @@ class DataBase {
         var Index = 0
         for (const KeyPart of KeyParts) {
             if (Index === KeyParts.length - 1) {
-                Data[KeyPart] = Value
+                if (Value === undefined) {
+                    delete Data[KeyPart]
+                } else {
+                    Data[KeyPart] = Value    
+                }
                 break
             }
             if (Data[KeyPart] === undefined) {
