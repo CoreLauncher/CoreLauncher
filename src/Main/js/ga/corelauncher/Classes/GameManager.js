@@ -74,8 +74,10 @@ class GameManager {
         return ObtainedValues
     }
 
-    ListInstanceProperties(GameId) {
-        return this.Games[GameId].InstanceProperties
+    ListInstanceProperties(GameId, Rows = true) {
+        const Properties = this.Games[GameId].InstanceProperties
+        if (Rows) { return Properties }
+        return Properties.flat()
     }
 
     CreateInstance(GameId, InstanceData) {
