@@ -10,7 +10,7 @@ function LoadProperty(Data, Parent, PrefillData={}) {
     if (Data.Type == "Number") {
         Element = document.createElement("input")
         Element.type = "number"
-        if (Data.PreFillDefault == true) { Element.value = Data.Default }
+        if (Data.FillDefault == true) { Element.value = Data.Default }
         Element.placeholder = Data.Default
         if (Data.Placeholder != undefined) { Element.placeholder = Data.Placeholder }
 
@@ -35,7 +35,7 @@ function LoadProperty(Data, Parent, PrefillData={}) {
             "onclick",
             `this.setAttribute('value', ( this.getAttribute('value') == 'true' ? 'false' : 'true' )); const ChangeEvent = new Event('change'); this.dispatchEvent(ChangeEvent);`
         )
-        if (Data.PreFillDefault == true && Data.Default == true) { Element.click() }
+        if (Data.FillDefault == true && Data.Default == true) { Element.click() }
     }
 
     if (Element) {
