@@ -3,7 +3,11 @@ function GetProperty(Data, Parent) {
     if (!Element) { return }
 
     var Value = Element.getAttribute("value")
-    if (Value == "" || Value == undefined) { Value = Data.Default }
+    if (Value == "" || Value == undefined) {
+        Value = null
+        if (Data.SaveDefault == true) { Value = Data.Default }
+        return Value
+    }
     if (Data.Type == "Number") { Value = Number(Value) }
     if (Data.Type == "Boolean") { Value = Value == "true" }
 
