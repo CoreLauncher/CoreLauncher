@@ -76,6 +76,7 @@ Screen.Init = function (ScreenElement, Screen) {
             console.log(CompiledData)
 
             await CoreLauncher.GameManager.CreateInstance(Game, CompiledData)
+            Screen.ParentScreen.GetScreen("instancelist").Show(false, Game)
         }
     )
 
