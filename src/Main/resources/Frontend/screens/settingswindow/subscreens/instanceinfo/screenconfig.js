@@ -26,7 +26,7 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
                 )
             )
         },
-        await CoreLauncher.GameManager.GetInstanceProperties(GameId, InstanceId)
+        await CoreLauncher.GameManager.GetInstanceProperties(GameId, InstanceId, false)
     )
     
 }
