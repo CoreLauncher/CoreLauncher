@@ -96,7 +96,23 @@ class GameManager {
         return CoreLauncher.DataBase.GetKey(`Game.${GameId}.Instances.${InstanceId}`)
     }
 
-    GetInstanceProperties(GameId, InstanceId) {
+    GetInstanceProperties(GameId, InstanceId, FillDefaults = true) {
+        const Properties = this.GetInstance(GameId, InstanceId).Properties
+        if (!FillDefaults) {
+            return Properties
+        }
+        var ReturnProperties = {}
+        const DefaultProperties = this.ListInstanceProperties(GameId, false)
+
+        for (const Property of DefaultProperties) {
+            console.log(Property)
+            if (Properties[Property.Id] == null) {
+                ReturnProperties[Property.Id] = Property.Default
+            } else {
+                ReturnProperties[Property.Id] = Properties[Property.Id]
+            }
+        }
+
         return this.GetInstance(GameId, InstanceId).Properties
     }
 
