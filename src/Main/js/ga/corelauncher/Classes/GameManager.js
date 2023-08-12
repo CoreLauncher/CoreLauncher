@@ -116,6 +116,10 @@ class GameManager {
         return this.GetInstance(GameId, InstanceId).Properties
     }
 
+    SetInstanceProperties(GameId, InstanceId, Properties) {
+        CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceId}.Properties`, Properties)
+    }
+
     
 
 }
