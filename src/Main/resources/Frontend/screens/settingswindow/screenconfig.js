@@ -1,6 +1,7 @@
 const Screen = {}
 
 var TransitionBackground = null
+var ReturnData
 
 Screen.Init = function(ScreenElement, Screen) {
     TransitionBackground = document.createElement("div")
@@ -15,6 +16,12 @@ Screen.Init = function(ScreenElement, Screen) {
 
     function Close() {
         if (Screen.GetState() == false) { return }
+        if (ReturnData) {
+            ReturnData.Screen.Show(false, ReturnData.Data)
+            ReturnData = undefined
+            return
+        }
+
         CoreLauncher.ScreenManager.GetScreen("main").Show()
     }
 
@@ -37,19 +44,18 @@ Screen.Init = function(ScreenElement, Screen) {
 
 //Screen.ApplyShowStyle = false
 Screen.Show = async function(ScreenElement, Screen, Data) {
+    ReturnData = Data.ReturnScreen
     const TabsContainer = ScreenElement.querySelector(".settingslist")
     TabsContainer.innerHTML = ""
 
     var DefaultFound = false
     for (const TabsGroup of Data.Tabs) {
-
         const GroupLabel = document.createElement("a")
         GroupLabel.classList.add("tag")
         GroupLabel.innerText = TabsGroup.Name
         TabsContainer.appendChild(GroupLabel)
 
         for (const Tab of TabsGroup.Tabs) {
-
             const TabElement = document.createElement("div")
             TabElement.classList.add("settingstab")
             TabsContainer.appendChild(TabElement)
@@ -75,6 +81,7 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
 
             if (Tab.Default == true) {
                 TabElement.click()
+                DefaultFound = true
             }
         }
     }
