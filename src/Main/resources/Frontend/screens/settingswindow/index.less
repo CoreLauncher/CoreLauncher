@@ -54,6 +54,20 @@
             transform: scale(1.1);
         }
 
+        &.isreturn {
+            .closeicon {
+                display: none;
+            }
+
+            .returnicon {
+                display: block;
+            }
+        }
+
+        .returnicon {
+            display: none;
+        }
+
         cursor: pointer;
 
         display: block;
@@ -82,6 +96,9 @@
             text-align: center;
             color: var(--color);
             font-weight: bold;
+            position: absolute;
+            top: 45px;
+            margin-top: 3px
         }
     }
 

@@ -45,6 +45,14 @@ Screen.Init = function(ScreenElement, Screen) {
 //Screen.ApplyShowStyle = false
 Screen.Show = async function(ScreenElement, Screen, Data) {
     ReturnData = Data.ReturnScreen
+
+    const CloseButton = ScreenElement.querySelector('.closebutton')
+    if (ReturnData) {
+        CloseButton.classList.add("isreturn")
+    } else {
+        CloseButton.classList.remove("isreturn")
+    }
+
     const TabsContainer = ScreenElement.querySelector(".settingslist")
     TabsContainer.innerHTML = ""
 
