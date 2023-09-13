@@ -33,10 +33,11 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
         await CoreLauncher.GameManager.ListInstanceProperties(GameId),
         ScreenElement.querySelector(".propertiesholder"),
         async function(Property, PropertyList, Element, PropertiesHolder) {
-            console.log(`Property ${Property.Id} changed to ${Element.getAttribute("value")}`)
+            console.log(`Property ${Property.Id} changed to ${Element.value}`)
 
             await CoreLauncher.GameManager.SetInstanceProperties(
                 GameId,
+                InstanceId,
                 CoreLauncher.Properties.Collect(
                     PropertyList,
                     PropertiesHolder
