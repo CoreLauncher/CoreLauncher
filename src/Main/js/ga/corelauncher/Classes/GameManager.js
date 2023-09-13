@@ -81,10 +81,7 @@ class GameManager {
     }
 
     CreateInstance(GameId, InstanceData) {
-        console.log(GameId, InstanceData)
-
         InstanceData.UUID = UUID()
-
         CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceData.UUID}`, InstanceData)
     }
 
