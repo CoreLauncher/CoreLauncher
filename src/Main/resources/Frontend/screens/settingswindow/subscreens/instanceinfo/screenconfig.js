@@ -10,6 +10,13 @@ Screen.Init = async function(ScreenElement, Screen) {
             CoreLauncher.Settings.OpenGameSettings(GameId, true, true)
         }
     )
+
+    ScreenElement.querySelector(".instancetitle").addEventListener(
+        "change",
+        async function() {
+            await CoreLauncher.GameManager.SetInstanceName(GameId, InstanceId, this.value)
+        }
+    )
 }
 
 Screen.Show = async function(ScreenElement, Screen, Data) {

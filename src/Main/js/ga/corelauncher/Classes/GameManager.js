@@ -121,6 +121,10 @@ class GameManager {
         CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceId}.Properties`, Properties)
     }
 
+    SetInstanceName(GameId, InstanceId, Name) {
+        CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceId}.Name`, Name)
+    }
+
     
 
 }
