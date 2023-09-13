@@ -20,6 +20,7 @@
   background-color: var(--background-tertiary);
   display: inline-block;
   margin-right: 10px;
+  margin-top: 10px;
 }
 .screen.settingswindow .screen.instanceinfo .versionsholder .version .versionheader {
   line-height: 30px;
