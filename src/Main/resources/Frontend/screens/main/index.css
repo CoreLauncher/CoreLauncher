@@ -68,6 +68,7 @@
   overflow: hidden;
 }
 .topbar {
+  position: fixed;
   height: 30px;
   width: 100%;
   background-color: var(--background-tertiary);
