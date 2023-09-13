@@ -67,6 +67,10 @@ class GameManager {
         return this.Games[GameId].InstanceVersions
     }
 
+    SetInstanceVersion(GameId, InstanceId, VersionId, VersionValue) {
+        CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceId}.Versions.${VersionId}`, VersionValue)
+    }
+
     async ListInstanceVersionValues(GameId, InstanceVersionId, Values) {
         const InstanceVersions = this.ListInstanceVersions(GameId)
         const InstanceVersion = InstanceVersions.filter(InstanceVersion => InstanceVersion.Id == InstanceVersionId)[0]
