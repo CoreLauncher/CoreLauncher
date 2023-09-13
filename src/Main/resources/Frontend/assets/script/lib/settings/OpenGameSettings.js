@@ -1,4 +1,4 @@
-async function OpenGameSettings(GameId, Show=true) {
+async function OpenGameSettings(GameId, Show=true, InstancesDefault=false) {
     const SettingsData = {}
     SettingsData.Tabs = []
 
@@ -21,7 +21,8 @@ async function OpenGameSettings(GameId, Show=true) {
             {
                 Name: "Instances",
                 Screen: "instances",
-                Data: [GameId]
+                Data: [GameId],
+                Default: InstancesDefault
             }
         )
     }
