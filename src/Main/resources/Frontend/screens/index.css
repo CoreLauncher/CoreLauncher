@@ -6,10 +6,21 @@
   height: 100%;
   display: block;
 }
-body > .screen,
+.taskmanager-expanded {
+  --taskmanager-height: 200px;
+}
+body {
+  overflow: hidden;
+  --taskmanager-height: 30px;
+}
+.screenholder {
+  overflow: auto;
+}
+.screenholder,
 .screenstyles {
-  height: calc(100% - 30px) !important;
+  height: calc(100% - 30px - var(--taskmanager-height)) !important;
   position: absolute;
+  width: 100%;
   top: 30px;
   left: 0;
 }
