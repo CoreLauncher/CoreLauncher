@@ -106,7 +106,6 @@ class GameManager {
         const DefaultProperties = this.ListInstanceProperties(GameId, false)
 
         for (const Property of DefaultProperties) {
-            console.log(Property)
             if (Properties[Property.Id] == null) {
                 ReturnProperties[Property.Id] = Property.Default
             } else {
