@@ -2,6 +2,16 @@ const Screen = {}
 
 var GameId
 var InstanceId
+Screen.Init = async function(ScreenElement, Screen) {
+    ScreenElement.querySelector(".deletebutton").addEventListener(
+        "click",
+        async function() {
+            await CoreLauncher.GameManager.RemoveInstance(GameId, InstanceId)
+            CoreLauncher.Settings.OpenGameSettings(GameId, true, true)
+        }
+    )
+}
+
 Screen.Show = async function(ScreenElement, Screen, Data) {
     GameId = Data[0]
     InstanceId = Data[1]

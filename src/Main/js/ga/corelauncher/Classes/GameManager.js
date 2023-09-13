@@ -88,6 +88,10 @@ class GameManager {
         CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceData.UUID}`, InstanceData)
     }
 
+    RemoveInstance(GameId, InstanceId) {
+        CoreLauncher.DataBase.RemoveKey(`Game.${GameId}.Instances.${InstanceId}`)
+    }
+
     ListInstances(GameId) {
         return Object.values(CoreLauncher.DataBase.GetKey(`Game.${GameId}.Instances`))
     }
