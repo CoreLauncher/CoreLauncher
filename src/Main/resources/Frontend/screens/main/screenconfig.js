@@ -31,6 +31,21 @@ Screen.Init = async function(ScreenElement, Screen) {
         )
     }
 
+    { // Task Manager
+        const TaskManagerElement = document.querySelector('.taskmanager')
+        const SizeIconElement = TaskManagerElement.querySelector('.sizeicon')
+        const TaskHolderElement = TaskManagerElement.querySelector('.taskholder')
+
+        SizeIconElement.addEventListener(
+            "click",
+            function () {
+                document.body.classList.toggle("taskmanager-expanded")
+                TaskManagerElement.classList.toggle("expanded")
+            }
+        )
+
+    }
+
     { // Dragline
         const HoverLine = ScreenElement.querySelector('.dragline')
         const Names = ScreenElement.querySelector('.names')
