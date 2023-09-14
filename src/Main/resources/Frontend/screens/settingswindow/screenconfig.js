@@ -101,9 +101,11 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
     ScreenElement.classList.remove("hidden")
     TransitionBackground.classList.remove("hidden")
     await sleep(200)
+    TransitionBackground.style.display = "none"
 }
 
 Screen.Hide = async function(ScreenElement) {
+    TransitionBackground.style.display = "block"
     ScreenElement.classList.add("hidden")
     TransitionBackground.classList.add("hidden")
     await sleep(200)
