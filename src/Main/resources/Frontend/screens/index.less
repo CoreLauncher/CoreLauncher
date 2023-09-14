@@ -21,7 +21,13 @@ body {
     overflow: auto;
 }
 
+.screenholder > .screen {
+    height: calc(100% + var(--taskmanager-height) - 30px) !important;
+    width: calc(100%);
+}
+
 .screenholder, .screenstyles {
+    transition: height 0.2s;
     height: calc(100% - 30px - var(--taskmanager-height)) !important;
     position: absolute;
     width: 100%;
