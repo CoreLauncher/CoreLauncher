@@ -2,6 +2,9 @@ const Screen = {}
 
 Screen.Init = async function(ScreenElement, Screen) {
 
+    var SetNamesWidth
+    var GetNamesWidth
+
     { // Window control
         const TopbarElement = document.querySelector('.topbar')
         const WindowControl = TopbarElement.querySelector('.windowcontrol')
@@ -46,6 +49,22 @@ Screen.Init = async function(ScreenElement, Screen) {
 
     }
 
+    { // Burger menu
+        const TopbarElement = document.querySelector('.topbar')
+        const BurgerMenu = TopbarElement.querySelector('.imageholder')
+
+        BurgerMenu.addEventListener(
+            "click",
+            function () {
+                if (GetNamesWidth() == 0) {
+                    SetNamesWidth(300)
+                } else {
+                    SetNamesWidth(0)
+                }
+            }
+        )
+    }
+
     { // Dragline
         const HoverLine = ScreenElement.querySelector('.dragline')
         const Names = ScreenElement.querySelector('.names')
@@ -67,7 +86,14 @@ Screen.Init = async function(ScreenElement, Screen) {
             PlayScreenHolder.style.width = `calc(100% - ${Width + 30}px)`
             Names.style.width = `${Width}px`
         }
+        SetNamesWidth = SetWidth
         SetWidth(0)
+
+        function GetWidth() {
+            return Names.getBoundingClientRect().width
+        }
+        GetNamesWidth = GetWidth
+
 
         document.addEventListener('mousemove', function (e) {
             if (Dragging) {

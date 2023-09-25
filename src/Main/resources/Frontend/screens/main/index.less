@@ -36,6 +36,7 @@
             display: inline-block;
             height: 100%;
             width: 100px;
+            transition: width 0.2s;
 
             resize: horizontal;
             background-color: var(--background-secondary-alt);
@@ -78,6 +79,7 @@
         float: right;
         height: 100%;
         width: 100%;
+        transition: width 0.2s;
         overflow: hidden;
     }
 }
@@ -93,27 +95,51 @@
     -webkit-app-region: drag;
 
     .holder {
-        @holder-padding: 4px;
-        @holder-height: @topbar-height - (@holder-padding * 2);
-
         height: 100%;
-        width: 50%;
-        padding: @holder-padding;
-        float: left;
+        display: inline-block;
 
-        img {
-            height: @holder-height;
-            width: @holder-height;
-            margin-right: 10px;
+        .imageholder {
+            height: 100%;
+            width: @topbar-height;
+            padding: 4px;
             float: left;
+
+            -webkit-app-region: none;
+            cursor: pointer;
+
+            &:hover {
+                .logo {
+                    display: none;
+                }
+
+                .bars {
+                    display: block;
+                }
+            }
+
+            .logo, .bars {
+                height: 100%;
+                width: 100%;
+            }
+
+            .bars {
+                display: none;
+                fill: var(--background-floating);
+                -webkit-app-region: none;
+            }
         }
-    
+
         a {
+            @margin: 4px;
+            margin-top: @margin;
+            margin-bottom: @margin;
+
             color: var(--background-floating);
             font-weight: bold;
             height: 100%;
-            line-height: @holder-height;
+            line-height: @topbar-height - (@margin * 2);
             float: left;
+
         }
     }
 

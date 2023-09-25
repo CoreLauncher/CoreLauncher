@@ -29,6 +29,7 @@
   display: inline-block;
   height: 100%;
   width: 100px;
+  transition: width 0.2s;
   resize: horizontal;
   background-color: var(--background-secondary-alt);
 }
@@ -65,6 +66,7 @@
   float: right;
   height: 100%;
   width: 100%;
+  transition: width 0.2s;
   overflow: hidden;
 }
 .topbar {
@@ -77,17 +79,35 @@
 }
 .topbar .holder {
   height: 100%;
-  width: 50%;
+  display: inline-block;
+}
+.topbar .holder .imageholder {
+  height: 100%;
+  width: 30px;
   padding: 4px;
   float: left;
+  -webkit-app-region: none;
+  cursor: pointer;
 }
-.topbar .holder img {
-  height: 22px;
-  width: 22px;
-  margin-right: 10px;
-  float: left;
+.topbar .holder .imageholder:hover .logo {
+  display: none;
+}
+.topbar .holder .imageholder:hover .bars {
+  display: block;
+}
+.topbar .holder .imageholder .logo,
+.topbar .holder .imageholder .bars {
+  height: 100%;
+  width: 100%;
+}
+.topbar .holder .imageholder .bars {
+  display: none;
+  fill: var(--background-floating);
+  -webkit-app-region: none;
 }
 .topbar .holder a {
+  margin-top: 4px;
+  margin-bottom: 4px;
   color: var(--background-floating);
   font-weight: bold;
   height: 100%;
