@@ -27,7 +27,7 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
         InstanceElement.querySelector(".name").innerText = Instance.Name
         InstanceElement.querySelector(".icon").src = await CoreLauncher.GameManager.GetGameIconBase64(GameId)
 
-        InstanceElement.addEventListener(
+        InstanceElement.querySelector(".settingsbutton").addEventListener(
             "click",
             function () {
                 CoreLauncher.Settings.OpenInstanceSettings(GameId, Instance.UUID)

@@ -7,7 +7,7 @@ Screen.Init = async function (ScreenElement) {
     ScreenElement.querySelector(".settingsbutton").addEventListener(
         "click",
         async function () {
-            await CoreLauncher.Settings.OpenGameSettings(Game)
+            await CoreLauncher.Settings.OpenGameSettings(Game.Id)
         }
     )
 

@@ -12,6 +12,7 @@ CoreLauncher.AccountManager = CoreLauncherManagers.AccountManager
 CoreLauncher.DataBase = CoreLauncherManagers.DataBase
 CoreLauncher.GameManager = CoreLauncherManagers.GameManager
 CoreLauncher.PluginManager = CoreLauncherManagers.PluginManager
+CoreLauncher.TaskManager = CoreLauncherManagers.TaskManager
 CoreLauncher.WindowControl = CoreLauncherManagers.WindowControl
 
 CoreLauncher.Settings = {
@@ -58,9 +59,9 @@ await CoreLauncher.ScreenManager.ScanScreens()
 const deSVG = await require("./lib/desvg.js")
 deSVG("img", true)
 
-await sleep(1000)
+// await sleep(1000)
 CoreLauncher.ScreenManager.GetScreen("main").Show()
-await sleep(0.3 * 1000)
+// await sleep(0.3 * 1000)
 document.getElementById("topbar").style.visibility = "visible"
 
 export default "index"

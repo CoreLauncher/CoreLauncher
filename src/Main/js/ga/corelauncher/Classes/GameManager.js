@@ -67,6 +67,10 @@ class GameManager {
         return this.Games[GameId].InstanceVersions
     }
 
+    SetInstanceVersion(GameId, InstanceId, VersionId, VersionValue) {
+        CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceId}.Versions.${VersionId}`, VersionValue)
+    }
+
     async ListInstanceVersionValues(GameId, InstanceVersionId, Values) {
         const InstanceVersions = this.ListInstanceVersions(GameId)
         const InstanceVersion = InstanceVersions.filter(InstanceVersion => InstanceVersion.Id == InstanceVersionId)[0]
@@ -81,11 +85,12 @@ class GameManager {
     }
 
     CreateInstance(GameId, InstanceData) {
-        console.log(GameId, InstanceData)
-
         InstanceData.UUID = UUID()
-
         CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceData.UUID}`, InstanceData)
+    }
+
+    RemoveInstance(GameId, InstanceId) {
+        CoreLauncher.DataBase.RemoveKey(`Game.${GameId}.Instances.${InstanceId}`)
     }
 
     ListInstances(GameId) {
@@ -105,7 +110,6 @@ class GameManager {
         const DefaultProperties = this.ListInstanceProperties(GameId, false)
 
         for (const Property of DefaultProperties) {
-            console.log(Property)
             if (Properties[Property.Id] == null) {
                 ReturnProperties[Property.Id] = Property.Default
             } else {
@@ -118,6 +122,10 @@ class GameManager {
 
     SetInstanceProperties(GameId, InstanceId, Properties) {
         CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceId}.Properties`, Properties)
+    }
+
+    SetInstanceName(GameId, InstanceId, Name) {
+        CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceId}.Name`, Name)
     }
 
     

@@ -1,5 +1,10 @@
 async function OpenInstanceSettings(GameId, InstanceId) {
     const SettingsData = {}
+    SettingsData.ReturnScreen = {
+        Screen: CoreLauncher.ScreenManager.GetScreen("settingswindow"),
+        Data: await CoreLauncher.Settings.OpenGameSettings(GameId, false, true)
+    }
+
     SettingsData.Tabs = []
 
     const InstanceSettingsGroup = {

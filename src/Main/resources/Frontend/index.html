@@ -14,7 +14,11 @@
     <body>
         <div class="topbar" id="topbar" style="visibility: hidden;">
             <div class="holder">
-                <img src="/assets/image/ico-nopad.png"><a>CORELAUNCHER</a>
+                <div class="imageholder">
+                    <img src="/assets/image/ico-nopad.png" class="logo">
+                    <img src="/assets/image/ico/bars.svg" alt="" class="bars">
+                </div>
+                <a>CORELAUNCHER</a>
             </div>
             <div class="windowcontrol">
                 <div style="--hover-color: var(--button-negative-hover)" class="close">
@@ -31,173 +35,219 @@
                 </div>
             </div>
         </div>
-        <div class="screen defaultscreen loadingscreen">
-            <div class="holder">
-                <img src="/assets/image/ico-nopad.gif" alt="CoreLauncher Icon"><br>
-                <a>Preparing CoreLauncher...</a>
-            </div>
-        </div>
-        <div class="screen settingswindow hidden">
-            <div class="closebutton">
-                <img src="/assets/image/ico/xmark.svg" alt="">
-                <a>ESC</a>
-            </div>
-            <div class="settingslist">
-                <a class="tag">Instance settings</a>
-                <div class="settingstab">
-                    <a class="title">Settings</a>
-                    <a class="indicator">◀</a>
+        <div class="screenholder">
+            <div class="screen defaultscreen loadingscreen">
+                <div class="holder">
+                    <img src="/assets/image/ico-nopad.gif" alt="CoreLauncher Icon"><br>
+                    <a>Preparing CoreLauncher...</a>
                 </div>
             </div>
-            <div class="settingsbody">
-                <div class="screen about">
-
+            <div class="screen settingswindow hidden">
+                <div class="closebutton">
+                    <img src="/assets/image/ico/xmark.svg" alt="" class="closeicon">
+                    <img src="/assets/image/ico/chevron-left.svg" alt="" class="returnicon">
+                    <a>ESC</a>
                 </div>
-                <div class="screen accounts">
-                    <div class="noaccountsblock block-negative" style="visibility: hidden; display: none;">
-                        <a>Oh no! Looks like you do not have a plugin that adds an account type</a><br>
-                        <a>Please add one to continue</a>
+                <div class="settingslist">
+                    <a class="tag">Instance settings</a>
+                    <div class="settingstab">
+                        <a class="title">Settings</a>
+                        <a class="indicator">◀</a>
                     </div>
-                    <div class="newaccountblock block-default">
-                        <a>You can add one of the following accounts:</a><br><br>
-                        <div class="accounttypes">
-                            <div class="accounttype fullwidth">
-                                <img src="https://www.dsaict.nl/web/image/product.template/1640/image_1024?unique=2d4fd62">
-                                <a>Microsoft</a>
+                </div>
+                <div class="settingsbody">
+                    <div class="screen about">
+    
+                    </div>
+                    <div class="screen accounts">
+                        <div class="noaccountsblock block-negative" style="visibility: hidden; display: none;">
+                            <a>Oh no! Looks like you do not have a plugin that adds an account type</a><br>
+                            <a>Please add one to continue</a>
+                        </div>
+                        <div class="newaccountblock block-default">
+                            <a>You can add one of the following accounts:</a><br><br>
+                            <div class="accounttypes">
+                                <div class="accounttype fullwidth">
+                                    <img src="https://www.dsaict.nl/web/image/product.template/1640/image_1024?unique=2d4fd62">
+                                    <a>Microsoft</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accountlist">
+                            <div class="account">
+                                <div class="primaryinfo">
+                                    <img src="https://crafatar.com/avatars/853c80ef3c3749fdaa49938b674adae6" class="icon">
+                                    <a class="name">CoreLauncherPlayer999</a><a class="accounttype">(Minecraft)</a>
+                                    <button class="button-negative removebutton">X</button>
+                                </div>
+                                <div class="secondaryinfo">
+                                    <a class="idindicator">Id: </a>
+                                    <a class="id">You are not meant to see this</a><br>
+                                    <a class="createdat">Created at: 1-1-2000</a>
+                                    <span class="dot"></span>
+                                    <a class="connectedat">Connected at: 1-1-2000</a>
+                                    <span class="dot"></span>
+                                    <a class="expiresat">Expires at: 1-1-2000</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="accountlist">
-                        <div class="account">
-                            <div class="primaryinfo">
-                                <img src="https://crafatar.com/avatars/853c80ef3c3749fdaa49938b674adae6" class="icon">
-                                <a class="name">CoreLauncherPlayer999</a><a class="accounttype">(Minecraft)</a>
-                                <button class="button-negative removebutton">X</button>
-                            </div>
-                            <div class="secondaryinfo">
-                                <a class="idindicator">Id: </a>
-                                <a class="id">You are not meant to see this</a><br>
-                                <a class="createdat">Created at: 1-1-2000</a>
-                                <span class="dot"></span>
-                                <a class="connectedat">Connected at: 1-1-2000</a>
-                                <span class="dot"></span>
-                                <a class="expiresat">Expires at: 1-1-2000</a>
-                            </div>
+                    <div class="screen changelog">
+    
+                    </div>
+                    <div class="screen gameinfo">
+                        <a class="gametitle">Game Title</a><br>
+                        <a class="gamedescription">Play this game now or else >:)</a>
+                        <br><br>
+    
+                        <a class="propertiestitle">Settings</a>
+                        <div class="propertiesholder">
+    
                         </div>
                     </div>
-                </div>
-                <div class="screen changelog">
-
-                </div>
-                <div class="screen gameinfo">
-                    <a class="gametitle">Game Title</a><br>
-                    <a class="gamedescription">Play this game now or else >:)</a>
-                    <br><br>
-
-                    <a class="propertiestitle">Settings</a>
-                    <div class="propertiesholder">
-
-                    </div>
-                </div>
-                <div class="screen instanceinfo">
-                    <input type="text" class="instancetitle">
-                    <br><br>
-
-                    <a class="propertiestitle">Settings</a>
-                    <div class="propertiesholder">
-
-                    </div>
-                </div>
-                <div class="screen instances">
-                    <div class="screen instancelist">
-                        <div class="block-default floatfix">
-                            <button class="button-default createinstancebutton">Create Instance</button>
+                    <div class="screen instanceinfo">
+                        <input type="text" class="instancetitle">
+                        <br><br>
+    
+                        <a class="header">Versions</a><br>
+                        <div class="versionsholder">
+    
                         </div>
-                        <div class="instancelist">
-                            <div class="instance">
-                                <img src="" class="icon"><a class="name">Latest Release</a>
-                                <button class="button-floating settingsbutton"><img src="/assets/image/ico/gear.svg"></button>
+                        <a class="versionscomment">*Version is only editable while creating instance</a><br><br>
+    
+                        <a class="header">Settings</a>
+                        <div class="propertiesholder">
+    
+                        </div>
+    
+                        <a class="header">Actions</a><br>
+                        <button class="button button-negative deletebutton">Delete Instance</button>
+                    </div>
+                    <div class="screen instances">
+                        <div class="screen instancelist">
+                            <div class="block-default floatfix">
+                                <button class="button-default createinstancebutton">Create Instance</button>
+                            </div>
+                            <div class="instancelist">
+                                <div class="instance">
+                                    <img src="" class="icon"><a class="name">Latest Release</a>
+                                    <button class="button-floating settingsbutton"><img src="/assets/image/ico/gear.svg"></button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="screen createinstance">
-                        <div class="block-default floatfix" style="line-height: 35px;">
-                            You are currently creating a new instance <br>
-                            <button class="button-negative cancelbutton">Cancel</button> <button class="button-positive createbutton">Create Instance</button>
-                        </div>
-                        <div class="block-negative issuesdisplay">
-                            <a>Please fix the following issues:</a>
-                            <div class="issuestobefixed"></div>
-                        </div>
-                        <br>
-
-                        <a>Instance Name: </a>
-                        <input type="text" class="instancename" placeholder="New Instance"><br><br>
-
-                        <div class="versionlist">
-                            <div class="versionselector isempty">
-                                <a class="versionname">Loader</a>
-                                <img src="/assets/image/ico.gif" class="loadingimage">
-                                <a class="emptytext">←</a>
-                                <div class="versionentries"></div>
+                        <div class="screen createinstance">
+                            <div class="block-default floatfix" style="line-height: 35px;">
+                                You are currently creating a new instance <br>
+                                <button class="button-negative cancelbutton">Cancel</button> <button class="button-positive createbutton">Create Instance</button>
+                            </div>
+                            <div class="block-negative issuesdisplay">
+                                <a>Please fix the following issues:</a>
+                                <div class="issuestobefixed"></div>
+                            </div>
+                            <br>
+    
+                            <a>Instance Name: </a>
+                            <input type="text" class="instancename" placeholder="New Instance"><br><br>
+    
+                            <div class="versionlist floatfix">
+                                <div class="versionselector isempty">
+                                    <a class="versionname">Loader</a>
+                                    <img src="/assets/image/ico.gif" class="loadingimage">
+                                    <a class="emptytext">←</a>
+                                    <div class="versionentries"></div>
+                                </div>
+                            </div>
+                            <a class="versioncomment">*Version type is not editable after you save the instance.</a>
+    
+                            <div class="instanceproperties">
                             </div>
                         </div>
-                        <a class="versioncomment">*Version type is not editable after you save the instance.</a>
-
-                        <div class="instanceproperties">
+                    </div>
+                    <div class="screen plugins">
+                        <div class="statusbar block-default">
+                            <a class="title">Plugins</a>
+                            <button class="button-branding">Install Plugin</button>
                         </div>
-                    </div>
-                </div>
-                <div class="screen plugins">
-                    <div class="statusbar block-default">
-                        <a class="title">Plugins</a>
-                        <button class="button-branding">Install Plugin</button>
-                    </div>
-                    <div class="pluginscontainer">
-                        <div class="pluginitem">
-                            <div class="information">
-                                <img src="" alt="" class="icon">
-                                <a class="name">Minecraft</a><br>
-                                <a class="createdby">by CoreBytes</a>
-                            </div>
-                            <div class="descriptionholder expanded">
-                                <a class="description"></a>
-                                <div class="controls">
-                                    <a class="version">1.0.0</a>
-                                    <button class="settings button-default">Settings</button>
-                                    <button class="creator button-default">Creator</button>
-                                    <button class="source button-default">Source</button>
+                        <div class="pluginscontainer">
+                            <div class="pluginitem">
+                                <div class="information">
+                                    <img src="" alt="" class="icon">
+                                    <a class="name">Minecraft</a><br>
+                                    <a class="createdby">by CoreBytes</a>
+                                </div>
+                                <div class="descriptionholder expanded">
+                                    <a class="description"></a>
+                                    <div class="controls">
+                                        <a class="version">1.0.0</a>
+                                        <button class="settings button-default">Settings</button>
+                                        <button class="creator button-default">Creator</button>
+                                        <button class="source button-default">Source</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="screen main">
-            <div class="gameslist">
-                <div class="names">
-
-                    <div class="dragline"></div>
+            <div class="screen main">
+                <div class="gameslist">
+                    <div class="names">
+    
+                        <div class="dragline"></div>
+                    </div>
+                    <div class="icons">
+                    </div>
+    
                 </div>
-                <div class="icons">
+                <div class="playscreenholder">
+                    <div class="screen genericinstanced">
+                        <div class="banner"></div>
+                        <div class="playbar">
+                            <button class="playbutton button-positive">PLAY</button>
+    
+                            <button class="settingsbutton button-floating"><img src="/assets/image/ico/gear.svg"></button>
+    
+                            <select name="" id="" class="accountselector">
+                                <option value="">Microsoft account</option>
+                            </select>
+                            <select name="" id="" class="instanceselector">
+                                <option value="">Instance</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-            <div class="playscreenholder">
-                <div class="screen genericinstanced">
-                    <div class="banner"></div>
-                    <div class="playbar">
-                        <button class="playbutton button-positive">PLAY</button>
-
-                        <button class="settingsbutton button-floating"><img src="/assets/image/ico/gear.svg"></button>
-
-                        <select name="" id="" class="accountselector">
-                            <option value="">Microsoft account</option>
-                        </select>
-                        <select name="" id="" class="instanceselector">
-                            <option value="">Instance</option>
-                        </select>
+        </div>
+        <div class="taskmanager">
+            <div class="bar">
+                <div class="progressbar"></div>
+                <div class="taskicon">
+                    <img src="/assets/image/ico/umbrella-beach.svg" alt="">
+                </div>
+                <a class="taskname">No running tasks</a>
+                <div class="sizeicon">
+                    <img src="/assets/image/ico/chevron-up.svg" alt="">
+                </div>
+            </div>
+            <div class="body">
+                <div class="taskholder">
+                    <div class="task" style="--parent-count: 0" parent-count="0">
+                        <img src="/assets/image/ico/arrow-up-right.svg" alt="" class="arrow">
+                        <div class="dot"></div>
+                        <div class="progressbarholder">
+                            <div class="progressbar"></div>
+                            <a class="taskname">Example name</a>
+                            <img src="/assets/image/ico/hourglass.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="task" style="--parent-count: 1" parent-count="1">
+                        <img src="/assets/image/ico/arrow-up-right.svg" alt="" class="arrow">
+                        <div class="dot"></div>
+                        <div class="progressbarholder">
+                            <div class="progressbar"></div>
+                            <a class="taskname">Example name</a>
+                            <img src="/assets/image/ico/hourglass.svg" alt="">
+                        </div>
                     </div>
                 </div>
             </div>

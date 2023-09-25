@@ -39,7 +39,6 @@ function LoadProperty(Data, Parent, PrefillData={}) {
     }
 
     if (Element) {
-        console.log(PrefillData, Data.Id)
         if (PrefillData[Data.Id] != undefined) { Element.setAttribute("value", PrefillData[Data.Id]) }
         Element.id = `renderedproperty_${Data.Id}`
         Parent.appendChild(Element)

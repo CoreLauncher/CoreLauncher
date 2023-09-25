@@ -1,6 +1,8 @@
-async function OpenGameSettings(Game) {
+async function OpenGameSettings(GameId, Show=true, InstancesDefault=false) {
     const SettingsData = {}
     SettingsData.Tabs = []
+
+    const Game = await CoreLauncher.GameManager.GetGame(GameId)
 
     const GameSettingsGroup = {
         Name: "Game Settings",
@@ -8,7 +10,7 @@ async function OpenGameSettings(Game) {
             {
                 Name: "Game Information",
                 Screen: "gameinfo",
-                Data: [Game.Id]
+                Data: [GameId]
             }
         ]
     }
@@ -19,12 +21,17 @@ async function OpenGameSettings(Game) {
             {
                 Name: "Instances",
                 Screen: "instances",
-                Data: [Game.Id]
+                Data: [GameId],
+                Default: InstancesDefault
             }
         )
     }
 
-    CoreLauncher.ScreenManager.GetScreen("settingswindow").Show(false, SettingsData)
+    if (Show) {
+        CoreLauncher.ScreenManager.GetScreen("settingswindow").Show(false, SettingsData)
+    }
+
+    return SettingsData
 }
 
 export default OpenGameSettings

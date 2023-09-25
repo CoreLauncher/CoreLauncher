@@ -29,6 +29,7 @@
   display: inline-block;
   height: 100%;
   width: 100px;
+  transition: width 0.2s;
   resize: horizontal;
   background-color: var(--background-secondary-alt);
 }
@@ -65,9 +66,11 @@
   float: right;
   height: 100%;
   width: 100%;
+  transition: width 0.2s;
   overflow: hidden;
 }
 .topbar {
+  position: fixed;
   height: 30px;
   width: 100%;
   background-color: var(--background-tertiary);
@@ -76,17 +79,35 @@
 }
 .topbar .holder {
   height: 100%;
-  width: 50%;
+  display: inline-block;
+}
+.topbar .holder .imageholder {
+  height: 100%;
+  width: 30px;
   padding: 4px;
   float: left;
+  -webkit-app-region: none;
+  cursor: pointer;
 }
-.topbar .holder img {
-  height: 22px;
-  width: 22px;
-  margin-right: 10px;
-  float: left;
+.topbar .holder .imageholder:hover .logo {
+  display: none;
+}
+.topbar .holder .imageholder:hover .bars {
+  display: block;
+}
+.topbar .holder .imageholder .logo,
+.topbar .holder .imageholder .bars {
+  height: 100%;
+  width: 100%;
+}
+.topbar .holder .imageholder .bars {
+  display: none;
+  fill: var(--background-floating);
+  -webkit-app-region: none;
 }
 .topbar .holder a {
+  margin-top: 4px;
+  margin-bottom: 4px;
   color: var(--background-floating);
   font-weight: bold;
   height: 100%;
@@ -113,4 +134,132 @@
 .topbar .windowcontrol div:hover svg {
   fill: var(--hover-color);
   margin: 7px;
+}
+.taskmanager {
+  display: block;
+  position: absolute;
+  bottom: calc(0px - 50vh);
+  transition: bottom 0.2s;
+  width: 100%;
+  background-color: var(--background-tertiary);
+}
+.taskmanager.expanded {
+  bottom: 0px;
+}
+.taskmanager.expanded .bar .sizeicon {
+  transition: transform 0.2s;
+  transform: rotate(180deg);
+}
+.taskmanager .bar {
+  height: 30px;
+}
+.taskmanager .bar .progressbar {
+  background-color: green;
+  height: 30px;
+  position: absolute;
+  transition: width 1s ease-out;
+}
+.taskmanager .bar .taskicon,
+.taskmanager .bar .sizeicon {
+  height: 30px;
+  position: absolute;
+}
+.taskmanager .bar .taskicon svg,
+.taskmanager .bar .sizeicon svg {
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 20px;
+  width: 20px;
+  fill: white;
+}
+.taskmanager .bar .taskicon,
+.taskmanager .bar .sizeicon,
+.taskmanager .bar .taskname {
+  top: 0px;
+}
+.taskmanager .bar .taskicon {
+  left: 0px;
+}
+.taskmanager .bar .taskname {
+  height: 30px;
+  line-height: 30px;
+  display: inline-block;
+  position: absolute;
+  left: 35px;
+}
+.taskmanager .bar .sizeicon {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 30px;
+  cursor: pointer;
+}
+.taskmanager .body {
+  height: 50vh;
+  background-color: var(--background-secondary-alt);
+  overflow: auto;
+}
+.taskmanager .body .taskholder {
+  width: 80%;
+  margin: auto;
+  margin-top: 10vh;
+}
+.taskmanager .body .taskholder .task {
+  height: 40px;
+  width: 100%;
+  display: inline-block;
+  position: relative;
+}
+.taskmanager .body .taskholder .task svg,
+.taskmanager .body .taskholder .task .dot {
+  --margin: 8px;
+  height: calc(40px - (var(--margin) * 2));
+  width: calc(40px - (var(--margin) * 2));
+  margin: var(--margin);
+  fill: var(--background-floating);
+  display: block;
+  position: absolute;
+}
+.taskmanager .body .taskholder .task .dot {
+  --margin: 15px;
+  border-radius: 100px;
+  background-color: var(--background-floating);
+  left: -35px;
+  display: none;
+}
+.taskmanager .body .taskholder .task .arrow {
+  position: absolute;
+  margin-left: calc(calc(40px * var(--parent-count)) - 40px + var(--margin));
+}
+.taskmanager .body .taskholder .task[parent-count="0"] .arrow {
+  display: none !important;
+}
+.taskmanager .body .taskholder .task[parent-count="0"] .dot {
+  display: block;
+}
+.taskmanager .body .taskholder .task .progressbarholder {
+  float: right;
+  position: relative;
+  height: 40px;
+  width: calc(100% - calc(40px * var(--parent-count)));
+  border-radius: 10px;
+  overflow: hidden;
+  display: block;
+  background-color: var(--background-tertiary);
+}
+.taskmanager .body .taskholder .task .progressbarholder .taskname {
+  height: 40px;
+  line-height: 40px;
+  margin-left: 35px;
+  display: inline-block;
+  position: absolute;
+}
+.taskmanager .body .taskholder .task .progressbarholder .progressbar {
+  background-color: green;
+  width: 50%;
+  height: 40px;
+  position: absolute;
+  transition: width 1s ease-out;
 }

@@ -2,6 +2,9 @@ const Screen = {}
 
 Screen.Init = async function(ScreenElement, Screen) {
 
+    var SetNamesWidth
+    var GetNamesWidth
+
     { // Window control
         const TopbarElement = document.querySelector('.topbar')
         const WindowControl = TopbarElement.querySelector('.windowcontrol')
@@ -31,6 +34,37 @@ Screen.Init = async function(ScreenElement, Screen) {
         )
     }
 
+    { // Task Manager
+        const TaskManagerElement = document.querySelector('.taskmanager')
+        const SizeIconElement = TaskManagerElement.querySelector('.sizeicon')
+        const TaskHolderElement = TaskManagerElement.querySelector('.taskholder')
+
+        SizeIconElement.addEventListener(
+            "click",
+            function () {
+                document.body.classList.toggle("taskmanager-expanded")
+                TaskManagerElement.classList.toggle("expanded")
+            }
+        )
+
+    }
+
+    { // Burger menu
+        const TopbarElement = document.querySelector('.topbar')
+        const BurgerMenu = TopbarElement.querySelector('.imageholder')
+
+        BurgerMenu.addEventListener(
+            "click",
+            function () {
+                if (GetNamesWidth() == 0) {
+                    SetNamesWidth(300)
+                } else {
+                    SetNamesWidth(0)
+                }
+            }
+        )
+    }
+
     { // Dragline
         const HoverLine = ScreenElement.querySelector('.dragline')
         const Names = ScreenElement.querySelector('.names')
@@ -52,7 +86,14 @@ Screen.Init = async function(ScreenElement, Screen) {
             PlayScreenHolder.style.width = `calc(100% - ${Width + 30}px)`
             Names.style.width = `${Width}px`
         }
+        SetNamesWidth = SetWidth
         SetWidth(0)
+
+        function GetWidth() {
+            return Names.getBoundingClientRect().width
+        }
+        GetNamesWidth = GetWidth
+
 
         document.addEventListener('mousemove', function (e) {
             if (Dragging) {
@@ -119,8 +160,7 @@ Screen.Init = async function(ScreenElement, Screen) {
                 NameHolder.classList.add('selected')
 
                 CoreLauncher.DataBase.SetKey("States.GamesList.SelectedGame", GameId)
-                console.log(`Selected game: ${Game}`)
-                console.log(Game)
+                console.log(`Selected game: `, Game)
                 Screen.GetScreen(Game.PlayScreenType).Show(false, Game)
             }
 
