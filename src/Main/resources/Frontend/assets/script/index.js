@@ -12,6 +12,7 @@ CoreLauncher.AccountManager = CoreLauncherManagers.AccountManager
 CoreLauncher.DataBase = CoreLauncherManagers.DataBase
 CoreLauncher.GameManager = CoreLauncherManagers.GameManager
 CoreLauncher.PluginManager = CoreLauncherManagers.PluginManager
+CoreLauncher.TaskManager = CoreLauncherManagers.TaskManager
 CoreLauncher.WindowControl = CoreLauncherManagers.WindowControl
 
 CoreLauncher.Settings = {
