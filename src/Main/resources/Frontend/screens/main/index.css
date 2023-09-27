@@ -87,12 +87,14 @@
   padding: 4px;
   float: left;
   -webkit-app-region: none;
+}
+.topbar .holder .imageholder.showbars {
   cursor: pointer;
 }
-.topbar .holder .imageholder:hover .logo {
+.topbar .holder .imageholder:hover.showbars .logo {
   display: none;
 }
-.topbar .holder .imageholder:hover .bars {
+.topbar .holder .imageholder:hover.showbars .bars {
   display: block;
 }
 .topbar .holder .imageholder .logo,

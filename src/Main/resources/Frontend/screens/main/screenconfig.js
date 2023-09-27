@@ -176,4 +176,16 @@ Screen.Init = async function(ScreenElement, Screen) {
     
 }
 
+Screen.Show = async function(ScreenElement, Screen, Data) {
+    const TopbarElement = document.querySelector('.topbar')
+    const BurgerMenu = TopbarElement.querySelector('.imageholder')
+    BurgerMenu.classList.add("showbars")
+}
+
+Screen.Hide = async function(ScreenElement, Screen) {
+    const TopbarElement = document.querySelector('.topbar')
+    const BurgerMenu = TopbarElement.querySelector('.imageholder')
+    BurgerMenu.classList.remove("showbars")
+}
+
 export default Screen
