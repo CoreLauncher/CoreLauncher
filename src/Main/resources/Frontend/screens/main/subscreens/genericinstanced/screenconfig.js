@@ -22,15 +22,22 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
 
     if (Game.UsesInstances) {
         InstanceSelector.style.display = "block"
-        InstanceSelector.style.visibility = "visible"
+
+        InstanceSelector.innerHTML = ""
+        var Instances = await CoreLauncher.GameManager.ListInstances(Game.Id)
+
+        for (const Instance of Instances) {
+            const InstanceOption = document.createElement("option")
+            InstanceOption.value = Instance.UUID
+            InstanceOption.innerText = Instance.Name
+            InstanceSelector.appendChild(InstanceOption)
+        }
     } else {
         InstanceSelector.style.display = "none"
-        InstanceSelector.style.visibility = "hidden"
     }
 
     if (Game.UsesAccounts) {
         AccountSelector.style.display = "block"
-        AccountSelector.style.visibility = "visible"
 
         AccountSelector.innerHTML = ""
         var Accounts = await CoreLauncher.GameManager.GetValidAccounts(Game.Id)
@@ -44,7 +51,6 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
         }
     } else {
         AccountSelector.style.display = "none"
-        AccountSelector.style.visibility = "hidden"
     }
 }
 
