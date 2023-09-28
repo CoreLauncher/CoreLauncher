@@ -15,6 +15,7 @@ class PluginManager {
             const Plugin = TypeWriter.LoadFile(FilePath)
             if (Plugin.Entrypoints.CoreLauncherPlugin) {
                 const PluginData = TypeWriter.LoadEntrypoint(Plugin.Id, "CoreLauncherPlugin")
+                PluginData.Data = {}
                 PluginData.DataFolder = `${CoreLauncher.PluginDataFolder}/${Plugin.Id}`
                 FS.ensureDirSync(PluginData.DataFolder)
                 this.Plugins[Plugin.Id] = PluginData
@@ -28,6 +29,11 @@ class PluginManager {
             await PluginData.Load(PluginData)
         }
     }
+
+    GetSharedData(Id) {
+        return this.Plugins[Id].Data
+    }
+
     ListGames() {
         const Games = {}
 
