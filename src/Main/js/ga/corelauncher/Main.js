@@ -30,6 +30,7 @@ async function Main() {
     )
     CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
     await CoreLauncher.ElectronApplication.whenReady()
+    await CoreLauncher.PluginManager.LoadPlugins()
 
     CoreLauncher.IPCMain = CoreLauncher.Electron.ipcMain
     CoreLauncher.BrowserWindow = new CoreLauncher.Electron.BrowserWindow(
