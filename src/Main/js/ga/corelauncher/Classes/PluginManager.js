@@ -17,6 +17,7 @@ class PluginManager {
                 const PluginData = TypeWriter.LoadEntrypoint(Plugin.Id, "CoreLauncherPlugin")
                 PluginData.DataFolder = `${CoreLauncher.PluginDataFolder}/${Plugin.Id}`
                 FS.ensureDirSync(PluginData.DataFolder)
+                PluginData.Load(PluginData)
                 this.Plugins[Plugin.Id] = PluginData
             }
         }
