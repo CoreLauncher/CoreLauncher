@@ -1,4 +1,4 @@
-const FS = require('fs')
+const FS = require('fs-extra')
 const ResourceBase64 = Import("ga.corelauncher.Libraries.ResourceBase64")
 
 class PluginManager {
@@ -15,6 +15,8 @@ class PluginManager {
             const Plugin = TypeWriter.LoadFile(FilePath)
             if (Plugin.Entrypoints.CoreLauncherPlugin) {
                 const PluginData = TypeWriter.LoadEntrypoint(Plugin.Id, "CoreLauncherPlugin")
+                PluginData.DataFolder = `${CoreLauncher.PluginDataFolder}/${Plugin.Id}`
+                FS.ensureDirSync(PluginData.DataFolder)
                 this.Plugins[Plugin.Id] = PluginData
             }
         }
