@@ -5,9 +5,11 @@ async function Main() {
     CoreLauncher.DevMode = process.env.CORELAUNCHER_DEV == "true"
     CoreLauncher.ApplicationData = `${TypeWriter.ApplicationData}/CoreLauncher`
     CoreLauncher.PluginsFolder = `${CoreLauncher.ApplicationData}/Plugins`
+    CoreLauncher.PluginDataFolder = `${CoreLauncher.ApplicationData}/PluginData`
 
     FS.ensureDirSync(CoreLauncher.ApplicationData)
     FS.ensureDirSync(CoreLauncher.PluginsFolder)
+    FS.ensureDirSync(CoreLauncher.PluginDataFolder)
 
     CoreLauncher.DataBase = new (Import("ga.corelauncher.Classes.DataBase"))(`${CoreLauncher.ApplicationData}/Database.json`)
     CoreLauncher.PluginManager = new (Import("ga.corelauncher.Classes.PluginManager"))(CoreLauncher.PluginsFolder)
