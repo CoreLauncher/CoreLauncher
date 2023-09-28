@@ -63,6 +63,10 @@ class AccountManager {
         return Object.values(CoreLauncher.DataBase.GetKey("Accounts", {}))
     }
 
+    GetAccount(UUID) {
+        return this.ListAccounts().find(Account => Account.UUID == UUID)
+    }
+
     GetAccountTypeIconBase64(AccountType) {
         return ResourceBase64(this.AccountTypes[AccountType].Icon)
     }
