@@ -128,7 +128,21 @@ class GameManager {
         CoreLauncher.DataBase.SetKey(`Game.${GameId}.Instances.${InstanceId}.Name`, Name)
     }
 
-    
+    async LaunchGame(GameId, Data) {
+        const Game = this.GetGame(GameId)
+        console.log(Game)
+
+        const LaunchData = {}
+        if (Data.Account) {
+            LaunchData.Account = CoreLauncher.AccountManager.GetAccount(Data.Account)
+        }
+
+        if (Data.Instance) {
+            LaunchData.Instance = this.GetInstance(GameId, Data.Instance)
+        }
+
+        Game.LaunchGame(LaunchData, CoreLauncher.PluginManager.GetSharedData(GameId))
+    }
 
 }
 
