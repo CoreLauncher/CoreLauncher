@@ -1,9 +1,13 @@
 const Screen = {}
 
 var Game
+var PlayButton
 var AccountSelector
 var InstanceSelector
 Screen.Init = async function (ScreenElement) {
+    PlayButton = ScreenElement.querySelector(".playbutton")
+    AccountSelector = ScreenElement.querySelector(".accountselector")
+    InstanceSelector = ScreenElement.querySelector(".instanceselector")
     ScreenElement.querySelector(".settingsbutton").addEventListener(
         "click",
         async function () {
@@ -11,8 +15,19 @@ Screen.Init = async function (ScreenElement) {
         }
     )
 
-    AccountSelector = ScreenElement.querySelector(".accountselector")
-    InstanceSelector = ScreenElement.querySelector(".instanceselector")
+    PlayButton.addEventListener(
+        "click",
+        async function() {
+            console.log(AccountSelector.value, InstanceSelector.value)
+            await CoreLauncher.GameManager.LaunchGame(
+                Game.Id,
+                {
+                    Account: AccountSelector.value,
+                    Instance: InstanceSelector.value
+                }
+            )
+        }
+    )
 }
 
 Screen.Show = async function (ScreenElement, Screen, Data) {
@@ -45,7 +60,7 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
 
         for (const Account of Accounts) {
             const OptionElement = document.createElement("option")
-            OptionElement.value = Account.Id
+            OptionElement.value = Account.UUID
             OptionElement.innerText = Account.DisplayData.Name
             AccountSelector.appendChild(OptionElement)
         }
