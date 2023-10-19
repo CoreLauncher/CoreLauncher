@@ -54,10 +54,10 @@ CoreLauncher.HtmlHelper = {
 
 }
 
-await CoreLauncher.ScreenManager.ScanScreens()
-
 const deSVG = await require("./lib/desvg.js")
 deSVG("img", true)
+
+await CoreLauncher.ScreenManager.ScanScreens()
 
 // await sleep(1000)
 CoreLauncher.ScreenManager.GetScreen("main").Show()

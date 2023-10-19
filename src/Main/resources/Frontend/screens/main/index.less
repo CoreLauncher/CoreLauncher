@@ -264,6 +264,19 @@
             margin: auto;
             margin-top: 10vh;
 
+            .notasks {
+                display: none;
+                text-align: center;
+                font-size: 20px;
+                width: 100%;
+            }
+
+            &.noitems {
+                .notasks {
+                    display: block;
+                }
+            }
+
             .task {
                 @task-height: 40px;
                 @fromleft: calc(40px * var(--parent-count));
@@ -319,17 +332,52 @@
                     .taskname {
                         height: @task-height;
                         line-height: @task-height;
-                        margin-left: 35px;
+                        margin-left: 40px;
                         display: inline-block;
                         position: absolute;
                     }
 
                     .progressbar {
                         background-color: green;
-                        width: 50%;
+                        width: 00%;
                         height: @task-height;
                         position: absolute;
                         transition: width 1s ease-out;
+                    }
+
+                    &.pending {
+                        .hourglass {
+                            display: block;
+                        }
+                    }
+
+                    &.running {
+                        .spinner {
+                            display: block;
+                        }
+                    }
+
+                    &.completed {
+                        .check {
+                            display: block;
+                        }
+                    }
+
+                    .hourglass, .spinner, .check {
+                        display: none;
+                    }
+
+                    .spinner {
+                        @keyframes spin {
+                            0% {
+                                transform: rotate(0deg);
+                            }
+                            100% {
+                                transform: rotate(360deg);
+                            }
+                        }
+
+                        animation: spin 1s linear infinite;
                     }
 
                     

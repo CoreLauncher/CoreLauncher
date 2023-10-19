@@ -208,6 +208,15 @@
   margin: auto;
   margin-top: 10vh;
 }
+.taskmanager .body .taskholder .notasks {
+  display: none;
+  text-align: center;
+  font-size: 20px;
+  width: 100%;
+}
+.taskmanager .body .taskholder.noitems .notasks {
+  display: block;
+}
 .taskmanager .body .taskholder .task {
   height: 40px;
   width: 100%;
@@ -254,14 +263,39 @@
 .taskmanager .body .taskholder .task .progressbarholder .taskname {
   height: 40px;
   line-height: 40px;
-  margin-left: 35px;
+  margin-left: 40px;
   display: inline-block;
   position: absolute;
 }
 .taskmanager .body .taskholder .task .progressbarholder .progressbar {
   background-color: green;
-  width: 50%;
+  width: 00%;
   height: 40px;
   position: absolute;
   transition: width 1s ease-out;
+}
+.taskmanager .body .taskholder .task .progressbarholder.pending .hourglass {
+  display: block;
+}
+.taskmanager .body .taskholder .task .progressbarholder.running .spinner {
+  display: block;
+}
+.taskmanager .body .taskholder .task .progressbarholder.completed .check {
+  display: block;
+}
+.taskmanager .body .taskholder .task .progressbarholder .hourglass,
+.taskmanager .body .taskholder .task .progressbarholder .spinner,
+.taskmanager .body .taskholder .task .progressbarholder .check {
+  display: none;
+}
+.taskmanager .body .taskholder .task .progressbarholder .spinner {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

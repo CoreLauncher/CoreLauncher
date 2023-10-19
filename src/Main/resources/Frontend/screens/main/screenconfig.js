@@ -1,6 +1,6 @@
 const Screen = {}
 
-Screen.Init = async function(ScreenElement, Screen) {
+Screen.Init = async function (ScreenElement, Screen) {
 
     var SetNamesWidth
     var GetNamesWidth
@@ -11,7 +11,7 @@ Screen.Init = async function(ScreenElement, Screen) {
 
         const CloseButton = WindowControl.querySelector('.close')
         CloseButton.addEventListener(
-            'click', 
+            'click',
             CoreLauncher.WindowControl.Close
         )
 
@@ -38,6 +38,11 @@ Screen.Init = async function(ScreenElement, Screen) {
         const TaskManagerElement = document.querySelector('.taskmanager')
         const SizeIconElement = TaskManagerElement.querySelector('.sizeicon')
         const TaskHolderElement = TaskManagerElement.querySelector('.taskholder')
+        const TaskTemplateElement = TaskManagerElement.querySelector('.task')
+        TaskTemplateElement.remove()
+        console.log(TaskTemplateElement)
+
+        const TaskBars = {}
 
         SizeIconElement.addEventListener(
             "click",
@@ -45,6 +50,78 @@ Screen.Init = async function(ScreenElement, Screen) {
                 document.body.classList.toggle("taskmanager-expanded")
                 TaskManagerElement.classList.toggle("expanded")
             }
+        )
+
+        SizeIconElement.click()
+
+        const TaskbarStates = ["pending", "running", "completed"]
+        function SetTaskBarState(TaskBar, NewState) {
+            const BarHolder = TaskBar.querySelector(".progressbarholder")
+            for (const State of TaskbarStates) {
+                if (State != NewState) {
+                    BarHolder.classList.remove(State)
+                }
+            }
+            BarHolder.classList.add(NewState)
+        }
+
+        async function RefreshTasks() {
+            console.log("Updating tasks.")
+            const Processes = await CoreLauncher.TaskManager.ListProcesses()
+            if (Object.values(Processes).length == 0) {
+                TaskHolderElement.classList.add("noitems")
+            } else {
+                TaskHolderElement.classList.remove("noitems")
+            }
+
+            for (const Process of Object.values(Processes)) {
+                if (!TaskBars[Process.Id]) {
+                    console.log("Creating task bar.")
+                    const BarElement = TaskTemplateElement.cloneNode(true)
+                    TaskBars[Process.Id] = {
+                        Element: BarElement,
+                        Tasks: {}
+                    }
+                    TaskHolderElement.appendChild(BarElement)
+                }
+
+                const ProcessBar = TaskBars[Process.Id]
+                ProcessBar.Element.querySelector('.taskname').innerText = Process.Name
+                ProcessBar.Element.querySelector(".progressbar").style.width = `${(Object.values(Process.Tasks).filter(Task => Task.Completed >= Task.Total).length / Object.values(Process.Tasks).length) * 100}%`
+
+                for (const Task of Object.values(Process.Tasks).sort(Task => Task.Step)) {
+                    if (!TaskBars[Process.Id].Tasks[Task.Id]) {
+                        console.log("Creating task bar.")
+                        const BarElement = TaskTemplateElement.cloneNode(true)
+                        TaskBars[Process.Id].Tasks[Task.Id] = {
+                            Element: BarElement
+                        }
+                        BarElement.style.setProperty("--parent-count", 1)
+                        BarElement.setAttribute("parent-count", 1)
+                        BarElement.querySelector('.taskname').innerText = Task.Name
+                        TaskHolderElement.appendChild(BarElement)
+                    }
+
+                    const TaskBar = TaskBars[Process.Id].Tasks[Task.Id]
+                    TaskBar.Element.querySelector('.taskname').innerText = `${Task.Name} (${Task.State})`
+                    TaskBar.Element.querySelector(".progressbar").style.width = `${(Task.Completed / Task.Total) * 100}%`
+
+                    if (Task.Completed == -1) {
+                        SetTaskBarState(TaskBar.Element, "pending")
+                    } else if (Task.Completed < Task.Total) {
+                        SetTaskBarState(TaskBar.Element, "running")
+                    } else {
+                        SetTaskBarState(TaskBar.Element, "completed")
+                    }
+
+                }
+            }
+        }
+
+        RefreshTasks()
+        setInterval(
+            RefreshTasks,
+            20
         )
 
     }
@@ -170,19 +247,19 @@ Screen.Init = async function(ScreenElement, Screen) {
 
             IconHolder.addEventListener('click', Select)
             NameHolder.addEventListener('click', Select)
-            
+
         }
     }
-    
+
 }
 
-Screen.Show = async function(ScreenElement, Screen, Data) {
+Screen.Show = async function (ScreenElement, Screen, Data) {
     const TopbarElement = document.querySelector('.topbar')
     const BurgerMenu = TopbarElement.querySelector('.imageholder')
     BurgerMenu.classList.add("showbars")
 }
 
-Screen.Hide = async function(ScreenElement, Screen) {
+Screen.Hide = async function (ScreenElement, Screen) {
     const TopbarElement = document.querySelector('.topbar')
     const BurgerMenu = TopbarElement.querySelector('.imageholder')
     BurgerMenu.classList.remove("showbars")
