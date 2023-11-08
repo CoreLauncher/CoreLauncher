@@ -130,7 +130,6 @@ class GameManager {
 
     async LaunchGame(GameId, Data) {
         const Game = this.GetGame(GameId)
-        console.log(Game)
 
         const LaunchData = {}
         if (Data.Account) {

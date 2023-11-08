@@ -40,7 +40,6 @@ Screen.Init = async function (ScreenElement, Screen) {
         const TaskHolderElement = TaskManagerElement.querySelector('.taskholder')
         const TaskTemplateElement = TaskManagerElement.querySelector('.task')
         TaskTemplateElement.remove()
-        console.log(TaskTemplateElement)
 
         const TaskBars = {}
 
@@ -51,8 +50,6 @@ Screen.Init = async function (ScreenElement, Screen) {
                 TaskManagerElement.classList.toggle("expanded")
             }
         )
-
-        SizeIconElement.click()
 
         const TaskbarStates = ["pending", "running", "completed"]
         function SetTaskBarState(TaskBar, NewState) {
