@@ -1,7 +1,7 @@
 const Screen = {}
 
-var TransitionBackground = null
-var ReturnData
+let TransitionBackground = null
+let ReturnData
 
 Screen.Init = function(ScreenElement, Screen) {
     TransitionBackground = document.createElement("div")
@@ -56,7 +56,7 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
     const TabsContainer = ScreenElement.querySelector(".settingslist")
     TabsContainer.innerHTML = ""
 
-    var DefaultFound = false
+    let DefaultFound = false
     for (const TabsGroup of Data.Tabs) {
         const GroupLabel = document.createElement("a")
         GroupLabel.classList.add("tag")

@@ -2,8 +2,8 @@ const Screen = {}
 
 Screen.Init = async function (ScreenElement, Screen) {
 
-    var SetNamesWidth
-    var GetNamesWidth
+    let SetNamesWidth
+    let GetNamesWidth
 
     { // Window control
         const TopbarElement = document.querySelector('.topbar')
@@ -143,7 +143,7 @@ Screen.Init = async function (ScreenElement, Screen) {
         const HoverLine = ScreenElement.querySelector('.dragline')
         const Names = ScreenElement.querySelector('.names')
         const PlayScreenHolder = ScreenElement.querySelector('.playscreenholder')
-        var Dragging = false
+        let Dragging = false
         const MinWidth = 200
 
         HoverLine.addEventListener('mousedown', function () {
@@ -171,7 +171,7 @@ Screen.Init = async function (ScreenElement, Screen) {
 
         document.addEventListener('mousemove', function (e) {
             if (Dragging) {
-                var Width = e.clientX - 30
+                let Width = e.clientX - 30
                 if (Width < MinWidth) {
                     Width = 0
                 } else {
@@ -192,7 +192,7 @@ Screen.Init = async function (ScreenElement, Screen) {
         for (const GameId in GamesList) {
             const Game = GamesList[GameId]
 
-            var IconHolder
+            let IconHolder
             { // Icon
                 const HolderDiv = document.createElement("div")
                 const IconElement = document.createElement("img")
@@ -201,7 +201,7 @@ Screen.Init = async function (ScreenElement, Screen) {
                 Icons.appendChild(HolderDiv)
                 IconHolder = HolderDiv
             }
-            var NameHolder
+            let NameHolder
             { // Name
                 const HolderDiv = document.createElement("div")
                 const NameElement = document.createElement("a")

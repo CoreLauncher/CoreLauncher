@@ -4,7 +4,7 @@ await require("./lib/globals/RemoveClassFromChildren.js")
 await require("./lib/globals/clamp.js")
 await require("./lib/globals/UserFocus.js")
 
-await require("./lib/purify/purify.min.js")
+// await require("./lib/purify/purify.min.js")
 
 globalThis.CoreLauncher = {}
 CoreLauncher.ScreenManager = await require("./ScreenManager.js")
@@ -27,12 +27,12 @@ CoreLauncher.Properties = {
 }
 
 CoreLauncher.HtmlHelper = {
-    CleanString: function(S) {
-        return DOMPurify.sanitize(S, {ALLOWED_TAGS:[]})
-    },
+    // CleanString: function(S) {
+        // return DOMPurify.sanitize(S, {ALLOWED_TAGS:[]})
+    // },
     CoreLauncherMarkdown: function(S) {
         const Parts = S.split("]extlink(")
-        var NewString = ""
+        let NewString = ""
 
         for (const PartIndex in Parts) {
             const Part = Parts[PartIndex]

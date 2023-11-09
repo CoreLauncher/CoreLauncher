@@ -1,7 +1,7 @@
 const Screen = {}
 
-var GameId
-var InstanceId
+let GameId
+let InstanceId
 Screen.Init = async function (ScreenElement, Screen) {
     ScreenElement.querySelector(".deletebutton").addEventListener(
         "click",

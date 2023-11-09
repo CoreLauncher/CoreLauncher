@@ -5,7 +5,7 @@ function LoadProperty(Data, Parent, PrefillData={}) {
         Parent.appendChild(PrefixElement)
     }
 
-    var Element
+    let Element
 
     if (Data.Type == "Number") {
         Element = document.createElement("input")

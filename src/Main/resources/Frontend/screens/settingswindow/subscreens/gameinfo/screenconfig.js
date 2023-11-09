@@ -1,6 +1,6 @@
 const Screen = {}
 
-var GameId
+let GameId
 Screen.Show = async function(ScreenElement, Screen, Data) {
     GameId = Data
 

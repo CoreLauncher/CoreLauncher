@@ -1,20 +1,20 @@
 //https://github.com/benhowdle89/deSVG/blob/gh-pages/desvg.js
 
-var desvg = function (selector, removeInlineCss) {
+let desvg = function (selector, removeInlineCss) {
     removeInlineCss = removeInlineCss || false;
 
-    var images,
+    let images,
         imagesLength,
         sortImages = {},
 
         // load svg file
         loadSvg = function (imgURL, replaceImages) {
             // set up the AJAX request
-            var xhr = new XMLHttpRequest();
+            let xhr = new XMLHttpRequest();
             xhr.open('GET', imgURL, true);
 
             xhr.onload = function () {
-                var xml,
+                let xml,
                     svg,
                     paths,
                     replaceImagesLength;
@@ -36,7 +36,7 @@ var desvg = function (selector, removeInlineCss) {
 
                 if (removeInlineCss) {
                     // if `removeInlineCss` is true then remove the style attributes from the SVG paths
-                    for (var i = 0; i < paths.length; i++) {
+                    for (let i = 0; i < paths.length; i++) {
                         paths[i].removeAttribute('style');
                     }
                 }
@@ -52,7 +52,7 @@ var desvg = function (selector, removeInlineCss) {
 
         // replace the original <img /> with the new <svg />
         replaceImgWithSvg = function (img, svg) {
-            var imgID = img.id,
+            let imgID = img.id,
                 imgClasses = img.getAttribute('class');
 
             if (imgID) {
@@ -76,7 +76,7 @@ var desvg = function (selector, removeInlineCss) {
 
     // sort images array by image url
     while (imagesLength--) {
-        var _img = images[imagesLength],
+        let _img = images[imagesLength],
             _imgURL;
 
         if (_img.getAttribute('data-src')) {
@@ -93,7 +93,7 @@ var desvg = function (selector, removeInlineCss) {
     }
 
     // loops over the matched urls
-    for (var key in sortImages) {
+    for (let key in sortImages) {
         if (sortImages.hasOwnProperty(key)) {
             loadSvg(key, sortImages[key]);
         }

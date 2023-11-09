@@ -1,9 +1,9 @@
 const Screen = {}
 
-var Game
-var PlayButton
-var AccountSelector
-var InstanceSelector
+let Game
+let PlayButton
+let AccountSelector
+let InstanceSelector
 Screen.Init = async function (ScreenElement) {
     PlayButton = ScreenElement.querySelector(".playbutton")
     AccountSelector = ScreenElement.querySelector(".accountselector")
@@ -39,7 +39,7 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
         InstanceSelector.style.display = "block"
 
         InstanceSelector.innerHTML = ""
-        var Instances = await CoreLauncher.GameManager.ListInstances(Game.Id)
+        let Instances = await CoreLauncher.GameManager.ListInstances(Game.Id)
 
         for (const Instance of Instances) {
             const InstanceOption = document.createElement("option")
@@ -55,7 +55,7 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
         AccountSelector.style.display = "block"
 
         AccountSelector.innerHTML = ""
-        var Accounts = await CoreLauncher.GameManager.GetValidAccounts(Game.Id)
+        let Accounts = await CoreLauncher.GameManager.GetValidAccounts(Game.Id)
         if (!Array.isArray(Accounts)) { Accounts = [] }
 
         for (const Account of Accounts) {

@@ -1,8 +1,8 @@
 const Screen = {}
 
-var Game
-var VersionSelectorTemplate
-var VersionList
+let Game
+let VersionSelectorTemplate
+let VersionList
 Screen.Init = function (ScreenElement, Screen) {
     // Create button
     const CreateButton = ScreenElement.querySelector(".createbutton")

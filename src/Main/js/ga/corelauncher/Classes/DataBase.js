@@ -24,8 +24,8 @@ class DataBase {
 
     SetKey(Key, Value) {
         const KeyParts = Key.split(".")
-        var Data = this.Data
-        var Index = 0
+        let Data = this.Data
+        let Index = 0
         for (const KeyPart of KeyParts) {
             if (Index === KeyParts.length - 1) {
                 if (Value === undefined) {

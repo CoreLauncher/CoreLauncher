@@ -7,7 +7,7 @@ async function UserFocus(Element, Time=0.3, FocusSize=20, ColorR, ColorG, ColorB
     FocusElement.style.setProperty("--parentwidth", Element.offsetWidth + "px")
     FocusElement.style.setProperty("--parentheight", Element.offsetHeight + "px")
 
-    var BackgroundColor
+    let BackgroundColor
     if (!ColorR) {
         BackgroundColor = window.getComputedStyle(Element).getPropertyValue("background-color")
     } else {

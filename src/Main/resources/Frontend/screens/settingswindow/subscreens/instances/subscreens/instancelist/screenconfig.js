@@ -1,8 +1,8 @@
 const Screen = {}
 
-var GameId
-var InstanceList
-var InstanceTemplate
+let GameId
+let InstanceList
+let InstanceTemplate
 Screen.Init = function (ScreenElement, Screen) {
     InstanceList = ScreenElement.querySelector(".instancelist")
     InstanceTemplate = ScreenElement.querySelector(".instance")

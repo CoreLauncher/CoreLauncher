@@ -2,7 +2,7 @@ function GetProperty(Data, Parent) {
     const Element = Parent.querySelector(`#renderedproperty_${Data.Id}`)
     if (!Element) { return }
 
-    var Value = Element.value
+    let Value = Element.value
     if (Value == "" || Value == undefined) {
         Value = null
         if (Data.SaveDefault == true) { Value = Data.Default }

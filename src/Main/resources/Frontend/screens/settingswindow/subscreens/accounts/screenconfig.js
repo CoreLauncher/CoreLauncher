@@ -1,15 +1,15 @@
 const Screen = {}
 
-var NewAccountBlock
-var AccountTypeList
-var AccountTypeTemplate
-var AccountList
-var AccountTemplate
+let NewAccountBlock
+let AccountTypeList
+let AccountTypeTemplate
+let AccountList
+let AccountTemplate
 
 async function ReloadAccountList() {
     AccountList.innerHTML = ""
 
-    var Accounts = await CoreLauncher.AccountManager.ListAccounts()
+    let Accounts = await CoreLauncher.AccountManager.ListAccounts()
 
     for (const Account of Accounts) {
         const AccountElement = AccountTemplate.cloneNode(true)

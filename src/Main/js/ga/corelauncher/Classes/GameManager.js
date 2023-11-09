@@ -106,7 +106,7 @@ class GameManager {
         if (!FillDefaults) {
             return Properties
         }
-        var ReturnProperties = {}
+        let ReturnProperties = {}
         const DefaultProperties = this.ListInstanceProperties(GameId, false)
 
         for (const Property of DefaultProperties) {
