@@ -63,7 +63,6 @@ Screen.Init = async function (ScreenElement, Screen) {
         }
 
         async function RefreshTasks() {
-            console.log("Updating tasks.")
             const Processes = await CoreLauncher.TaskManager.ListProcesses()
             if (Object.values(Processes).length == 0) {
                 TaskHolderElement.classList.add("noitems")

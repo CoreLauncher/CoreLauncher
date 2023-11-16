@@ -10,7 +10,8 @@
   font-size: 20px;
 }
 .screen.settingswindow .screen.instanceinfo .versionsholder,
-.screen.settingswindow .screen.instanceinfo .propertiesholder {
+.screen.settingswindow .screen.instanceinfo .propertiesholder,
+.screen.settingswindow .screen.instanceinfo .detailsholder {
   width: 100%;
 }
 .screen.settingswindow .screen.instanceinfo .versionsholder .version {
@@ -42,4 +43,7 @@
 }
 .screen.settingswindow .screen.instanceinfo .versionscomment {
   font-size: 12px;
+}
+.screen.settingswindow .screen.instanceinfo .detailsholder .instanceidtext {
+  user-select: all;
 }

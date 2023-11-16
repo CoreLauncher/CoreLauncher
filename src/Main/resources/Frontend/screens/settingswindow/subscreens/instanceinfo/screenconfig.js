@@ -96,6 +96,8 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
         await CoreLauncher.GameManager.GetInstanceProperties(GameId, InstanceId, false)
     )
 
+    ScreenElement.querySelector(".instanceidtext").innerText = InstanceId
+
 }
 
 export default Screen
