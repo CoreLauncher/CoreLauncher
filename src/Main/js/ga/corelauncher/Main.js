@@ -58,7 +58,8 @@ await Import("ga.corelauncher.IPC.Pipes.PluginManager")
 await Import("ga.corelauncher.IPC.Pipes.TaskManager")
 await Import("ga.corelauncher.IPC.Pipes.WindowControl")
 
-CoreLauncher.StaticServer = await Import("me.corebyte.static")(
+console.log(await Import("me.corebyte.static"))
+CoreLauncher.StaticServer = (await Import("me.corebyte.static"))(
     9875,
     "CoreLauncher",
     "Frontend",
