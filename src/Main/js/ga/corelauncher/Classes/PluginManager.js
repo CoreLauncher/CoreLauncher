@@ -1,5 +1,5 @@
 const FS = require('fs-extra')
-const ResourceBase64 = Import("ga.corelauncher.Libraries.ResourceBase64")
+const ResourceBase64 = await Import("ga.corelauncher.Libraries.ResourceBase64")
 
 class PluginManager {
     constructor(PluginFolder) {

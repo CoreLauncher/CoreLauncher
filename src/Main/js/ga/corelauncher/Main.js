@@ -10,14 +10,14 @@ FS.ensureDirSync(CoreLauncher.ApplicationData)
 FS.ensureDirSync(CoreLauncher.PluginsFolder)
 FS.ensureDirSync(CoreLauncher.PluginDataFolder)
 
-CoreLauncher.DataBase = new (Import("ga.corelauncher.Classes.DataBase"))(`${CoreLauncher.ApplicationData}/Database.json`)
-CoreLauncher.PluginManager = new (Import("ga.corelauncher.Classes.PluginManager"))(CoreLauncher.PluginsFolder)
-CoreLauncher.AccountManager = new (Import("ga.corelauncher.Classes.AccountManager"))(CoreLauncher.PluginManager.ListAccountTypes())
-CoreLauncher.GameManager = new (Import("ga.corelauncher.Classes.GameManager"))(CoreLauncher.PluginManager.ListGames())
-CoreLauncher.TaskManager = new (Import("ga.corelauncher.Classes.TaskManager"))()
-CoreLauncher.WindowControl = new (Import("ga.corelauncher.Classes.WindowControl"))
+CoreLauncher.DataBase = new (await Import("ga.corelauncher.Classes.DataBase"))(`${CoreLauncher.ApplicationData}/Database.json`)
+CoreLauncher.PluginManager = new (await Import("ga.corelauncher.Classes.PluginManager"))(CoreLauncher.PluginsFolder)
+CoreLauncher.AccountManager = new (await Import("ga.corelauncher.Classes.AccountManager"))(CoreLauncher.PluginManager.ListAccountTypes())
+CoreLauncher.GameManager = new (await Import("ga.corelauncher.Classes.GameManager"))(CoreLauncher.PluginManager.ListGames())
+CoreLauncher.TaskManager = new (await Import("ga.corelauncher.Classes.TaskManager"))()
+CoreLauncher.WindowControl = new (await Import("ga.corelauncher.Classes.WindowControl"))
 
-CoreLauncher.Electron = await(Import("electronhelper"))(
+CoreLauncher.Electron = await(await Import("electronhelper"))(
     {
         Id: "CoreLauncher",
         Name: "CoreLauncher",
@@ -51,14 +51,14 @@ CoreLauncher.BrowserWindow = new CoreLauncher.Electron.BrowserWindow(
 )
 CoreLauncher.BrowserWindow.setResizable(false)
 
-Import("ga.corelauncher.IPC.Pipes.AccountManager")
-Import("ga.corelauncher.IPC.Pipes.DataBase")
-Import("ga.corelauncher.IPC.Pipes.GameManager")
-Import("ga.corelauncher.IPC.Pipes.PluginManager")
-Import("ga.corelauncher.IPC.Pipes.TaskManager")
-Import("ga.corelauncher.IPC.Pipes.WindowControl")
+await Import("ga.corelauncher.IPC.Pipes.AccountManager")
+await Import("ga.corelauncher.IPC.Pipes.DataBase")
+await Import("ga.corelauncher.IPC.Pipes.GameManager")
+await Import("ga.corelauncher.IPC.Pipes.PluginManager")
+await Import("ga.corelauncher.IPC.Pipes.TaskManager")
+await Import("ga.corelauncher.IPC.Pipes.WindowControl")
 
-CoreLauncher.StaticServer = Import("me.corebyte.static")(
+CoreLauncher.StaticServer = await Import("me.corebyte.static")(
     9875,
     "CoreLauncher",
     "Frontend",
