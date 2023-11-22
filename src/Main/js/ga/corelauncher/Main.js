@@ -12,6 +12,7 @@ FS.ensureDirSync(CoreLauncher.PluginDataFolder)
 
 CoreLauncher.DataBase = new (await Import("ga.corelauncher.Classes.DataBase"))(`${CoreLauncher.ApplicationData}/Database.json`)
 CoreLauncher.PluginManager = new (await Import("ga.corelauncher.Classes.PluginManager"))(CoreLauncher.PluginsFolder)
+await CoreLauncher.PluginManager.LoadPlugins()
 CoreLauncher.AccountManager = new (await Import("ga.corelauncher.Classes.AccountManager"))(CoreLauncher.PluginManager.ListAccountTypes())
 CoreLauncher.GameManager = new (await Import("ga.corelauncher.Classes.GameManager"))(CoreLauncher.PluginManager.ListGames())
 CoreLauncher.TaskManager = new (await Import("ga.corelauncher.Classes.TaskManager"))()
@@ -29,7 +30,6 @@ CoreLauncher.Electron = await(await Import("electronhelper"))(
 )
 CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
 await CoreLauncher.ElectronApplication.whenReady()
-await CoreLauncher.PluginManager.LoadPlugins()
 
 CoreLauncher.IPCMain = CoreLauncher.Electron.ipcMain
 CoreLauncher.BrowserWindow = new CoreLauncher.Electron.BrowserWindow(
@@ -58,7 +58,6 @@ await Import("ga.corelauncher.IPC.Pipes.PluginManager")
 await Import("ga.corelauncher.IPC.Pipes.TaskManager")
 await Import("ga.corelauncher.IPC.Pipes.WindowControl")
 
-console.log(await Import("me.corebyte.static"))
 CoreLauncher.StaticServer = (await Import("me.corebyte.static"))(
     9875,
     "CoreLauncher",
