@@ -16,7 +16,7 @@ class PluginManager {
             if (!Plugin.PackageInfo.Entrypoints.CoreLauncherPlugin) { continue }
             const PluginData = await Plugin.LoadEntrypoint("CoreLauncherPlugin")
             PluginData.Data = {}
-            PluginData.DataFolder = `${CoreLauncher.PluginDataFolder}/${Plugin.Id}`
+            PluginData.DataFolder = `${CoreLauncher.PluginDataFolder}/${Plugin.PackageInfo.Id}`
             FS.ensureDirSync(PluginData.DataFolder)
             this.Plugins[Plugin.PackageInfo.Id] = PluginData
             await PluginData.Load(PluginData)
