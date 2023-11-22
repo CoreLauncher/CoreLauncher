@@ -6,18 +6,6 @@ CoreLauncher.ApplicationData = `${TypeWriter.ApplicationData}/CoreLauncher`
 CoreLauncher.PluginsFolder = `${CoreLauncher.ApplicationData}/Plugins`
 CoreLauncher.PluginDataFolder = `${CoreLauncher.ApplicationData}/PluginData`
 
-FS.ensureDirSync(CoreLauncher.ApplicationData)
-FS.ensureDirSync(CoreLauncher.PluginsFolder)
-FS.ensureDirSync(CoreLauncher.PluginDataFolder)
-
-CoreLauncher.DataBase = new (await Import("ga.corelauncher.Classes.DataBase"))(`${CoreLauncher.ApplicationData}/Database.json`)
-CoreLauncher.PluginManager = new (await Import("ga.corelauncher.Classes.PluginManager"))(CoreLauncher.PluginsFolder)
-await CoreLauncher.PluginManager.LoadPlugins()
-CoreLauncher.AccountManager = new (await Import("ga.corelauncher.Classes.AccountManager"))(CoreLauncher.PluginManager.ListAccountTypes())
-CoreLauncher.GameManager = new (await Import("ga.corelauncher.Classes.GameManager"))(CoreLauncher.PluginManager.ListGames())
-CoreLauncher.TaskManager = new (await Import("ga.corelauncher.Classes.TaskManager"))()
-CoreLauncher.WindowControl = new (await Import("ga.corelauncher.Classes.WindowControl"))
-
 CoreLauncher.Electron = await(await Import("electronhelper"))(
     {
         Id: "CoreLauncher",
@@ -30,6 +18,18 @@ CoreLauncher.Electron = await(await Import("electronhelper"))(
 )
 CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
 await CoreLauncher.ElectronApplication.whenReady()
+
+FS.ensureDirSync(CoreLauncher.ApplicationData)
+FS.ensureDirSync(CoreLauncher.PluginsFolder)
+FS.ensureDirSync(CoreLauncher.PluginDataFolder)
+
+CoreLauncher.DataBase = new (await Import("ga.corelauncher.Classes.DataBase"))(`${CoreLauncher.ApplicationData}/Database.json`)
+CoreLauncher.PluginManager = new (await Import("ga.corelauncher.Classes.PluginManager"))(CoreLauncher.PluginsFolder)
+await CoreLauncher.PluginManager.LoadPlugins()
+CoreLauncher.AccountManager = new (await Import("ga.corelauncher.Classes.AccountManager"))(CoreLauncher.PluginManager.ListAccountTypes())
+CoreLauncher.GameManager = new (await Import("ga.corelauncher.Classes.GameManager"))(CoreLauncher.PluginManager.ListGames())
+CoreLauncher.TaskManager = new (await Import("ga.corelauncher.Classes.TaskManager"))()
+CoreLauncher.WindowControl = new (await Import("ga.corelauncher.Classes.WindowControl"))
 
 CoreLauncher.IPCMain = CoreLauncher.Electron.ipcMain
 CoreLauncher.BrowserWindow = new CoreLauncher.Electron.BrowserWindow(
