@@ -61,17 +61,7 @@ await Import("ga.corelauncher.IPC.Pipes.WindowControl")
 CoreLauncher.StaticServer = (await Import("me.corebyte.static"))(
     9875,
     "CoreLauncher",
-    "Frontend",
-    null,
-    function (_, Request, Response) {
-        if (Request.path != "/AccountCallback.txt") { return }
-        if (Request.query == undefined) { return }
-        const Data = Json.parse(
-            Base64.decode(Request.query.d)
-        )
-        CoreLauncher.AccountManager.FinishedConnection(Data.Type, Data.Data)
-        CoreLauncher.BrowserWindow.restore()
-    }
+    "Frontend"
 )
 
 if (CoreLauncher.DevMode) {
