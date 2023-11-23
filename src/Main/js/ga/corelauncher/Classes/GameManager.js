@@ -1,4 +1,4 @@
-const ResourceBase64 = Import("ga.corelauncher.Libraries.ResourceBase64")
+const ResourceBase64 = await Import("ga.corelauncher.Libraries.ResourceBase64")
 const UUID = require("uuid").v4
 
 class GameManager {
