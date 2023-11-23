@@ -95,6 +95,7 @@ class Screen {
             await this.ScreenConfig.Show(this.Object, this, Data)
         }
         
+        this.Data = Data
         this.State = true
         if (this.ParentScreen.CurrentScreen) {
             if (this.ParentScreen.CurrentScreen == this) { return }

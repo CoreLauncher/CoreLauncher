@@ -1,0 +1,49 @@
+.screen.settingswindow .screen.instanceinfo .gametitle,
+.screen.settingswindow .screen.instanceinfo .header {
+  font-weight: bold;
+}
+.screen.settingswindow .screen.instanceinfo .instancetitle {
+  font-size: 30px;
+  width: 100%;
+}
+.screen.settingswindow .screen.instanceinfo .propertiestitle {
+  font-size: 20px;
+}
+.screen.settingswindow .screen.instanceinfo .versionsholder,
+.screen.settingswindow .screen.instanceinfo .propertiesholder,
+.screen.settingswindow .screen.instanceinfo .detailsholder {
+  width: 100%;
+}
+.screen.settingswindow .screen.instanceinfo .versionsholder .version {
+  border-radius: 10px;
+  height: 60px;
+  width: 175px;
+  background-color: var(--background-tertiary);
+  display: inline-block;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+.screen.settingswindow .screen.instanceinfo .versionsholder .version .versionheader {
+  line-height: 30px;
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+.screen.settingswindow .screen.instanceinfo .versionsholder .version .versionselector,
+.screen.settingswindow .screen.instanceinfo .versionsholder .version .versionvalue {
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  text-align: center;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: var(--background-secondary-alt);
+}
+.screen.settingswindow .screen.instanceinfo .versionscomment {
+  font-size: 12px;
+}
+.screen.settingswindow .screen.instanceinfo .detailsholder .instanceidtext {
+  user-select: all;
+}

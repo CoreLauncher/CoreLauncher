@@ -1,13 +1,13 @@
 const Screen = {}
 
 Screen.Init = async function(ScreenElement, Screen) {
-    var PluginTemplate = ScreenElement.querySelector(".pluginitem")
+    let PluginTemplate = ScreenElement.querySelector(".pluginitem")
     PluginTemplate.remove()
 
     const PluginsContainer = ScreenElement.querySelector(".pluginscontainer")
     PluginsContainer.innerHTML = ""
 
-    var PluginIds = (await CoreLauncher.PluginManager.ListPluginIds())
+    let PluginIds = (await CoreLauncher.PluginManager.ListPluginIds())
     if (Array.isArray(PluginIds) === false) PluginIds = []
     for (const PluginId of PluginIds) {
         const Plugin = await CoreLauncher.PluginManager.GetPluginInformation(PluginId)

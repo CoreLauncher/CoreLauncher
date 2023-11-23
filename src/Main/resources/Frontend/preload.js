@@ -31,6 +31,7 @@ function ReObjectPipe(PipeObject) {
                 DataBase: ReObjectPipe(await IPCRenderer.invoke("pipes.database")),
                 GameManager: ReObjectPipe(await IPCRenderer.invoke("pipes.gamemanager")),
                 PluginManager: ReObjectPipe(await IPCRenderer.invoke("pipes.pluginmanager")),
+                TaskManager: ReObjectPipe(await IPCRenderer.invoke("pipes.taskmanager")),
                 WindowControl: ReObjectPipe(await IPCRenderer.invoke("pipes.windowcontrol")),
             }
         )

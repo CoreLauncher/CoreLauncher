@@ -1,5 +1,5 @@
 const UUID = require("uuid").v4
-const ResourceBase64 = Import("ga.corelauncher.Libraries.ResourceBase64")
+const ResourceBase64 = await Import("ga.corelauncher.Libraries.ResourceBase64")
 
 class AccountManager {
     constructor(AccountTypes) {
@@ -61,6 +61,10 @@ class AccountManager {
 
     ListAccounts() {
         return Object.values(CoreLauncher.DataBase.GetKey("Accounts", {}))
+    }
+
+    GetAccount(UUID) {
+        return this.ListAccounts().find(Account => Account.UUID == UUID)
     }
 
     GetAccountTypeIconBase64(AccountType) {

@@ -1,23 +1,30 @@
-const FS = require('fs')
-const ResourceBase64 = Import("ga.corelauncher.Libraries.ResourceBase64")
+const FS = require('fs-extra')
+const ResourceBase64 = await Import("ga.corelauncher.Libraries.ResourceBase64")
 
 class PluginManager {
     constructor(PluginFolder) {
         this.PluginFolder = PluginFolder
         this.Plugins = {}
+    }
 
+    async LoadPlugins() {
         TypeWriter.Logger.Information(`Loading plugins from ${this.PluginFolder}`)
         const Files = FS.readdirSync(this.PluginFolder)
-
         for (const FileName of Files) {
-            TypeWriter.Logger.Information(`Loading plugin ${FileName}`)
             const FilePath = `${this.PluginFolder}/${FileName}`
-            const Plugin = TypeWriter.LoadFile(FilePath)
-            if (Plugin.Entrypoints.CoreLauncherPlugin) {
-                const PluginData = TypeWriter.LoadEntrypoint(Plugin.Id, "CoreLauncherPlugin")
-                this.Plugins[Plugin.Id] = PluginData
-            }
+            const Plugin = await TypeWriter.LoadFile(FilePath)
+            if (!Plugin.PackageInfo.Entrypoints.CoreLauncherPlugin) { continue }
+            const PluginData = await Plugin.LoadEntrypoint("CoreLauncherPlugin")
+            PluginData.Data = {}
+            PluginData.DataFolder = `${CoreLauncher.PluginDataFolder}/${Plugin.PackageInfo.Id}`
+            FS.ensureDirSync(PluginData.DataFolder)
+            this.Plugins[Plugin.PackageInfo.Id] = PluginData
+            await PluginData.Load(PluginData)
         }
+    }
+
+    GetSharedData(Id) {
+        return this.Plugins[Id].Data
     }
 
     ListGames() {

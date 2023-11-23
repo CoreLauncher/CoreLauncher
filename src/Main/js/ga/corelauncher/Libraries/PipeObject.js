@@ -33,11 +33,11 @@ function CloneWithoutFunctions(Object) {
     }
 }
 
-var PipeCache = {}
+let PipeCache = {}
 function PipeObject(Name, Object) {
-    var PipedObject = {}
+    let PipedObject = {}
 
-    var Functions = GetObjectFunctions(Object)
+    let Functions = GetObjectFunctions(Object)
     for (const Key in Functions) {
         const Value = Functions[Key]
         if (PipeCache[Value]) {

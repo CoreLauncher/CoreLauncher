@@ -14,7 +14,7 @@ window.require = async function(RequestPath) {
     if (Module.default) {
         return Module.default
     }
-    console.log("No default export found for " + RequestPath)
+    // console.log("No default export found for " + RequestPath)
 }
 
 

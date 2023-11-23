@@ -1,18 +1,33 @@
 const Screen = {}
 
-var Game
-var AccountSelector
-var InstanceSelector
+let Game
+let PlayButton
+let AccountSelector
+let InstanceSelector
 Screen.Init = async function (ScreenElement) {
+    PlayButton = ScreenElement.querySelector(".playbutton")
+    AccountSelector = ScreenElement.querySelector(".accountselector")
+    InstanceSelector = ScreenElement.querySelector(".instanceselector")
     ScreenElement.querySelector(".settingsbutton").addEventListener(
         "click",
         async function () {
-            await CoreLauncher.OpenGameSettings(Game)
+            await CoreLauncher.Settings.OpenGameSettings(Game.Id)
         }
     )
 
-    AccountSelector = ScreenElement.querySelector(".accountselector")
-    InstanceSelector = ScreenElement.querySelector(".instanceselector")
+    PlayButton.addEventListener(
+        "click",
+        async function() {
+            console.log(AccountSelector.value, InstanceSelector.value)
+            await CoreLauncher.GameManager.LaunchGame(
+                Game.Id,
+                {
+                    Account: AccountSelector.value,
+                    Instance: InstanceSelector.value
+                }
+            )
+        }
+    )
 }
 
 Screen.Show = async function (ScreenElement, Screen, Data) {
@@ -22,29 +37,35 @@ Screen.Show = async function (ScreenElement, Screen, Data) {
 
     if (Game.UsesInstances) {
         InstanceSelector.style.display = "block"
-        InstanceSelector.style.visibility = "visible"
+
+        InstanceSelector.innerHTML = ""
+        let Instances = await CoreLauncher.GameManager.ListInstances(Game.Id)
+
+        for (const Instance of Instances) {
+            const InstanceOption = document.createElement("option")
+            InstanceOption.value = Instance.UUID
+            InstanceOption.innerText = Instance.Name
+            InstanceSelector.appendChild(InstanceOption)
+        }
     } else {
         InstanceSelector.style.display = "none"
-        InstanceSelector.style.visibility = "hidden"
     }
 
     if (Game.UsesAccounts) {
         AccountSelector.style.display = "block"
-        AccountSelector.style.visibility = "visible"
 
         AccountSelector.innerHTML = ""
-        var Accounts = await CoreLauncher.GameManager.GetValidAccounts(Game.Id)
+        let Accounts = await CoreLauncher.GameManager.GetValidAccounts(Game.Id)
         if (!Array.isArray(Accounts)) { Accounts = [] }
 
         for (const Account of Accounts) {
             const OptionElement = document.createElement("option")
-            OptionElement.value = Account.Id
+            OptionElement.value = Account.UUID
             OptionElement.innerText = Account.DisplayData.Name
             AccountSelector.appendChild(OptionElement)
         }
     } else {
         AccountSelector.style.display = "none"
-        AccountSelector.style.visibility = "hidden"
     }
 }
 

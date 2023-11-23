@@ -36,6 +36,7 @@
             display: inline-block;
             height: 100%;
             width: 100px;
+            transition: width 0.2s;
 
             resize: horizontal;
             background-color: var(--background-secondary-alt);
@@ -78,6 +79,7 @@
         float: right;
         height: 100%;
         width: 100%;
+        transition: width 0.2s;
         overflow: hidden;
     }
 }
@@ -85,6 +87,7 @@
 .topbar {
     @topbar-height: 30px;
 
+    position: fixed;
     height: @topbar-height;
     width: 100%;
     background-color: var(--background-tertiary);
@@ -92,27 +95,54 @@
     -webkit-app-region: drag;
 
     .holder {
-        @holder-padding: 4px;
-        @holder-height: @topbar-height - (@holder-padding * 2);
-
         height: 100%;
-        width: 50%;
-        padding: @holder-padding;
-        float: left;
+        display: inline-block;
 
-        img {
-            height: @holder-height;
-            width: @holder-height;
-            margin-right: 10px;
+        .imageholder {
+            height: 100%;
+            width: @topbar-height;
+            padding: 4px;
             float: left;
+
+            -webkit-app-region: none;
+
+            &.showbars {
+                cursor: pointer;
+            }
+
+            &:hover.showbars {
+                .logo {
+                    display: none;
+                }
+
+                .bars {
+                    display: block;
+                }
+            }
+
+            .logo, .bars {
+                height: 100%;
+                width: 100%;
+            }
+
+            .bars {
+                display: none;
+                fill: var(--background-floating);
+                -webkit-app-region: none;
+            }
         }
-    
+
         a {
+            @margin: 4px;
+            margin-top: @margin;
+            margin-bottom: @margin;
+
             color: var(--background-floating);
             font-weight: bold;
             height: 100%;
-            line-height: @holder-height;
+            line-height: @topbar-height - (@margin * 2);
             float: left;
+
         }
     }
 
@@ -147,4 +177,213 @@
 
     }
 
+}
+
+.taskmanager {
+    display: block;
+    position: absolute;
+    bottom: calc(0px - 50vh);
+    transition: bottom 0.2s;
+
+    width: 100%;
+    background-color: var(--background-tertiary);
+
+    &.expanded {
+        bottom: 0px;
+
+        .bar {
+            .sizeicon {
+                transition: transform 0.2s;
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .bar {
+        @bar-height: 30px;
+        height: @bar-height;
+
+        .progressbar {
+            background-color: green;
+            height: @bar-height;
+            position: absolute;
+            transition: width 1s ease-out;
+        }
+
+        .taskicon, .sizeicon {
+            @margin: 5px;
+            @size: @bar-height - (@margin * 2);
+            height: @bar-height;
+            position: absolute;
+            
+            svg {
+                margin-left: @margin;
+                margin-right: @margin;
+                margin-top: @margin;
+                margin-bottom: @margin;
+
+                height: @size;
+                width: @size;
+                fill: white
+            }
+        }
+
+        .taskicon, .sizeicon, .taskname {
+            top: 0px
+        }
+
+        .taskicon {
+            left: 0px;
+        }
+
+        .taskname {
+            height: @bar-height;
+            line-height: @bar-height;
+            display: inline-block;
+            position: absolute;
+            left: 35px;
+        }
+
+        .sizeicon {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            width: 30px;
+            cursor: pointer;
+        }
+
+    }
+
+    .body {
+        height: 50vh;
+        background-color: var(--background-secondary-alt);
+        overflow: auto;
+
+        .taskholder {
+            width: 80%;
+            margin: auto;
+            margin-top: 10vh;
+
+            .notasks {
+                display: none;
+                text-align: center;
+                font-size: 20px;
+                width: 100%;
+            }
+
+            &.noitems {
+                .notasks {
+                    display: block;
+                }
+            }
+
+            .task {
+                @task-height: 40px;
+                @fromleft: calc(40px * var(--parent-count));
+                height: @task-height;
+                width: 100%;
+
+                display: inline-block;
+                position: relative;
+
+                svg, .dot {
+                    --margin: 8px;
+                    @margin: var(--margin);
+                    height: calc(@task-height - (@margin * 2));
+                    width: calc(@task-height - (@margin * 2));
+
+                    margin: @margin;
+                    fill: var(--background-floating);
+                    display: block;
+                    position: absolute;
+                }
+
+                .dot {
+                    --margin: 15px;
+                    border-radius: 100px;
+                    background-color: var(--background-floating);
+                    left: -@task-height + 5;
+                    display: none;
+                }
+
+                .arrow {
+                    position: absolute;
+                    margin-left: calc(@fromleft - 40px + var(--margin));
+                }
+
+                &[parent-count="0"] .arrow {
+                    display: none !important;
+                }
+
+                &[parent-count="0"] .dot {
+                    display: block;
+                }
+
+                .progressbarholder {
+                    float: right;
+                    position: relative;
+                    height: @task-height;
+                    width: calc(100% - @fromleft);
+                    border-radius: 10px;
+                    overflow: hidden;
+                    display: block;
+                    background-color: var(--background-tertiary);
+
+                    .taskname {
+                        height: @task-height;
+                        line-height: @task-height;
+                        margin-left: 40px;
+                        display: inline-block;
+                        position: absolute;
+                    }
+
+                    .progressbar {
+                        background-color: green;
+                        width: 00%;
+                        height: @task-height;
+                        position: absolute;
+                        transition: width 1s ease-out;
+                    }
+
+                    &.pending {
+                        .hourglass {
+                            display: block;
+                        }
+                    }
+
+                    &.running {
+                        .spinner {
+                            display: block;
+                        }
+                    }
+
+                    &.completed {
+                        .check {
+                            display: block;
+                        }
+                    }
+
+                    .hourglass, .spinner, .check {
+                        display: none;
+                    }
+
+                    .spinner {
+                        @keyframes spin {
+                            0% {
+                                transform: rotate(0deg);
+                            }
+                            100% {
+                                transform: rotate(360deg);
+                            }
+                        }
+
+                        animation: spin 1s linear infinite;
+                    }
+
+                    
+                }
+            }
+
+        }
+    }
 }

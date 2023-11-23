@@ -1,6 +1,8 @@
 @import url("./subscreens/about/index.css");
 @import url("./subscreens/accounts/index.css");
 @import url("./subscreens/changelog/index.css");
+@import url("./subscreens/gameinfo/index.css");
+@import url("./subscreens/instanceinfo/index.css");
 @import url("./subscreens/instances/index.css");
 @import url("./subscreens/plugins/index.css");
 
@@ -52,6 +54,20 @@
             transform: scale(1.1);
         }
 
+        &.isreturn {
+            .closeicon {
+                display: none;
+            }
+
+            .returnicon {
+                display: block;
+            }
+        }
+
+        .returnicon {
+            display: none;
+        }
+
         cursor: pointer;
 
         display: block;
@@ -80,6 +96,9 @@
             text-align: center;
             color: var(--color);
             font-weight: bold;
+            position: absolute;
+            top: 45px;
+            margin-top: 3px
         }
     }
 

@@ -1,6 +1,7 @@
 const Screen = {}
 
-var TransitionBackground = null
+let TransitionBackground = null
+let ReturnData
 
 Screen.Init = function(ScreenElement, Screen) {
     TransitionBackground = document.createElement("div")
@@ -15,6 +16,12 @@ Screen.Init = function(ScreenElement, Screen) {
 
     function Close() {
         if (Screen.GetState() == false) { return }
+        if (ReturnData) {
+            ReturnData.Screen.Show(false, ReturnData.Data)
+            ReturnData = undefined
+            return
+        }
+
         CoreLauncher.ScreenManager.GetScreen("main").Show()
     }
 
@@ -37,19 +44,26 @@ Screen.Init = function(ScreenElement, Screen) {
 
 //Screen.ApplyShowStyle = false
 Screen.Show = async function(ScreenElement, Screen, Data) {
+    ReturnData = Data.ReturnScreen
+
+    const CloseButton = ScreenElement.querySelector('.closebutton')
+    if (ReturnData) {
+        CloseButton.classList.add("isreturn")
+    } else {
+        CloseButton.classList.remove("isreturn")
+    }
+
     const TabsContainer = ScreenElement.querySelector(".settingslist")
     TabsContainer.innerHTML = ""
 
-    var DefaultFound = false
+    let DefaultFound = false
     for (const TabsGroup of Data.Tabs) {
-
         const GroupLabel = document.createElement("a")
         GroupLabel.classList.add("tag")
         GroupLabel.innerText = TabsGroup.Name
         TabsContainer.appendChild(GroupLabel)
 
         for (const Tab of TabsGroup.Tabs) {
-
             const TabElement = document.createElement("div")
             TabElement.classList.add("settingstab")
             TabsContainer.appendChild(TabElement)
@@ -61,7 +75,7 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
 
             const IndicatorElement = document.createElement("a")
             IndicatorElement.classList.add("indicator")
-            IndicatorElement.innerText = "<"
+            IndicatorElement.innerText = "◀"
             TabElement.appendChild(IndicatorElement)
 
             TabElement.addEventListener(
@@ -75,6 +89,7 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
 
             if (Tab.Default == true) {
                 TabElement.click()
+                DefaultFound = true
             }
         }
     }
@@ -86,9 +101,11 @@ Screen.Show = async function(ScreenElement, Screen, Data) {
     ScreenElement.classList.remove("hidden")
     TransitionBackground.classList.remove("hidden")
     await sleep(200)
+    TransitionBackground.style.display = "none"
 }
 
 Screen.Hide = async function(ScreenElement) {
+    TransitionBackground.style.display = "block"
     ScreenElement.classList.add("hidden")
     TransitionBackground.classList.add("hidden")
     await sleep(200)
