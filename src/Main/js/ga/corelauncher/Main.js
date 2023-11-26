@@ -32,6 +32,7 @@ CoreLauncher.TaskManager = new (await Import("ga.corelauncher.Classes.TaskManage
 CoreLauncher.WindowControl = new (await Import("ga.corelauncher.Classes.WindowControl"))
 
 CoreLauncher.IPCMain = CoreLauncher.Electron.ipcMain
+const ObjectPiper = new (await Import("ga.corelauncher.ObjectPiper"))(CoreLauncher.IPCMain, CoreLauncher, "CoreLauncher")
 CoreLauncher.BrowserWindow = new CoreLauncher.Electron.BrowserWindow(
     {
         show: false,
