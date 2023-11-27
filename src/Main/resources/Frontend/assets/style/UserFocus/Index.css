@@ -1,0 +1,28 @@
+.userfocus {
+  z-index: 99999;
+  position: absolute;
+  pointer-events: none;
+  --addsize: 0px;
+  width: calc(var(--parentwidth) + var(--addsize));
+  height: calc(var(--parentheight) + var(--addsize));
+  top: calc(var(--parenttop) - (var(--addsize) / 2));
+  left: calc(var(--parentleft) - (var(--addsize) / 2));
+  border-radius: calc(var(--addsize)/8);
+  box-shadow: 0px 0px 10px 2px var(--background-color);
+  transition: opacity var(--time) ease-out, border-radius var(--time) ease-out, width var(--time) ease-out, height var(--time) ease-out, top var(--time) ease-out, left var(--time) ease-out;
+  opacity: 1;
+}
+.userfocus .innerfocus {
+  position: relative;
+  z-index: 999999;
+  box-shadow: inset 0px 0px 10px 2px var(--background-color);
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--addsize)/16);
+  transition: border-radius var(--time) var(--mode);
+}
+.userfocus.focus {
+  --addsize: var(--focus-size);
+  opacity: 0 !important;
+}
