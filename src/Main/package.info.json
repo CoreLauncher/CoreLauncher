@@ -25,6 +25,7 @@
 	],
     "Preload": [
         "CoreLauncher:/Libraries/ElectronHelper.twr",
+        "CoreLauncher:/Libraries/NWJS-Helper.twr",
         "CoreLauncher:/Libraries/Static.twr"
     ],
 	"Entrypoints": {
