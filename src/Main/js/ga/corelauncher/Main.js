@@ -6,58 +6,21 @@ CoreLauncher.ApplicationData = `${TypeWriter.ApplicationData}/CoreLauncher`
 CoreLauncher.PluginsFolder = `${CoreLauncher.ApplicationData}/Plugins`
 CoreLauncher.PluginDataFolder = `${CoreLauncher.ApplicationData}/PluginData`
 
-CoreLauncher.Electron = await(await Import("electronhelper"))(
-    {
-        Id: "CoreLauncher",
-        Name: "CoreLauncher",
-        Icon: {
-            Windows: "CoreLauncher:/ico.ico",
-            MacOs: "CoreLauncher:/ico.icns",
-        }
-    }
-)
-CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
-await CoreLauncher.ElectronApplication.whenReady()
-
 FS.ensureDirSync(CoreLauncher.ApplicationData)
 FS.ensureDirSync(CoreLauncher.PluginsFolder)
 FS.ensureDirSync(CoreLauncher.PluginDataFolder)
 
-CoreLauncher.DataBase = new (await Import("ga.corelauncher.Classes.DataBase"))(`${CoreLauncher.ApplicationData}/Database.json`)
-CoreLauncher.PluginManager = new (await Import("ga.corelauncher.Classes.PluginManager"))(CoreLauncher.PluginsFolder)
-await CoreLauncher.PluginManager.LoadPlugins()
-CoreLauncher.AccountManager = new (await Import("ga.corelauncher.Classes.AccountManager"))(CoreLauncher.PluginManager.ListAccountTypes())
-CoreLauncher.GameManager = new (await Import("ga.corelauncher.Classes.GameManager"))(CoreLauncher.PluginManager.ListGames())
-CoreLauncher.TaskManager = new (await Import("ga.corelauncher.Classes.TaskManager"))()
-CoreLauncher.WindowControl = new (await Import("ga.corelauncher.Classes.WindowControl"))
-
-CoreLauncher.IPCMain = CoreLauncher.Electron.ipcMain
-const ObjectPiper = new (await Import("ga.corelauncher.ObjectPiper"))(CoreLauncher.IPCMain, CoreLauncher, "CoreLauncher")
-CoreLauncher.BrowserWindow = new CoreLauncher.Electron.BrowserWindow(
+CoreLauncher.NW = await(await Import("me.corebyte.NW"))(
     {
-        show: false,
-        frame: false,
-        center: true,
-        titleBarStyle: "hidden",
-
-        width: 275,
-        height: 400,
-        minWidth: 1000,
-        minHeight: 600,
-
-        webPreferences: {
-            preload: TypeWriter.ResourceManager.GetFilePath("CoreLauncher", "/Frontend/preload.js")
+        Id: "CoreLauncher",
+        Name: "CoreLauncher",
+        Main: CoreLauncher.DevMode ? "http://localhost:9874" : "http://localhost:9875",
+        Icon: {
+            Win: "CoreLauncher:/ico.ico",
+            Mac: "CoreLauncher:/ico.icns",
         }
     }
 )
-CoreLauncher.BrowserWindow.setResizable(false)
-
-await Import("ga.corelauncher.IPC.Pipes.AccountManager")
-await Import("ga.corelauncher.IPC.Pipes.DataBase")
-await Import("ga.corelauncher.IPC.Pipes.GameManager")
-await Import("ga.corelauncher.IPC.Pipes.PluginManager")
-await Import("ga.corelauncher.IPC.Pipes.TaskManager")
-await Import("ga.corelauncher.IPC.Pipes.WindowControl")
 
 CoreLauncher.StaticServer = (await Import("me.corebyte.static"))(
     9875,
@@ -65,32 +28,33 @@ CoreLauncher.StaticServer = (await Import("me.corebyte.static"))(
     "Frontend"
 )
 
-if (CoreLauncher.DevMode) {
-    TypeWriter.Logger.Warning("We are running in dev env");
-    CoreLauncher.BrowserWindow.loadURL("http://localhost:9874");
-    CoreLauncher.BrowserWindow.openDevTools();
-} else {
-    CoreLauncher.BrowserWindow.loadURL("http://localhost:9875");
+window.onbeforeunload = function () {
+    console.log("unloading")
+    CoreLauncher.StaticServer.Close()
 }
 
-CoreLauncher.BrowserWindow.once(
-    "ready-to-show",
-    function () {
-        CoreLauncher.BrowserWindow.show();
+CoreLauncher.Logger = TypeWriter.CreateLogger("CoreLauncher")
 
-        CoreLauncher.BrowserWindow.setResizable(true);
-        CoreLauncher.BrowserWindow.setSize(1000, 600);
-        CoreLauncher.BrowserWindow.center();
+const DataBaseClass = await Import("ga.corelauncher.Classes.DataBase")
+const ScreenManagerClass = await Import("ga.corelauncher.Classes.ScreenManager")
+const PluginManagerClass = await Import("ga.corelauncher.Classes.PluginManager")
+const AccountManagerClass = await Import("ga.corelauncher.Classes.AccountManager")
+const GameManagerClass = await Import("ga.corelauncher.Classes.GameManager")
+const TaskManagerClass = await Import("ga.corelauncher.Classes.TaskManager")
+const WindowControlClass = await Import("ga.corelauncher.Classes.WindowControl")
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+        CoreLauncher.DataBase = new DataBaseClass(`${CoreLauncher.ApplicationData}/Database.json`)
+        CoreLauncher.ScreenManager = new ScreenManagerClass()
+        await (await Import("ga.corelauncher.Screens.Registry"))(CoreLauncher.ScreenManager)
+        CoreLauncher.PluginManager = new PluginManagerClass(CoreLauncher.PluginsFolder)
+        await CoreLauncher.PluginManager.LoadPlugins()
+        CoreLauncher.AccountManager = new AccountManagerClass(CoreLauncher.PluginManager.ListAccountTypes())
+        CoreLauncher.GameManager = new GameManagerClass(CoreLauncher.PluginManager.ListGames())
+        CoreLauncher.TaskManager = new TaskManagerClass()
+        CoreLauncher.WindowControl = new WindowControlClass()
     }
-);
-
-CoreLauncher.BrowserWindow.on(
-    "resize",
-    function () {
-        const Size = CoreLauncher.BrowserWindow.getSize();
-        CoreLauncher.DataBase.SetKey("Window.Width", Size[0]);
-        CoreLauncher.DataBase.SetKey("Window.Height", Size[1]);
-    }
-);
-
+)
 
