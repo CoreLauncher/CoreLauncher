@@ -1,39 +1,26 @@
-async function RegisterScreen(Parent, Name, Handler) {
-    console.log(`Registering screen ${Name}`, Handler)
-    const ScreenParent = Parent.GetScreen(Name, true)
-    console.log(ScreenParent)
-    const NewScreen = new Screen(Name, Parent)
-    
-    let ScreenHolder
-    let Append = false
-    if (Handler.GetScreenElement) {
-        ScreenHolder = await Handler.GetScreenElement(ScreenParent)
-    } else {
-        ScreenHolder = ScreenParent.ScreenElement.querySelector(`screen[name="${Name}"]`)
-    }
-
-    const Iframe = ScreenHolder.ownerDocument.createElement("iframe")
-    console.log(Iframe)
-    console.log(NewScreen.GetPath())
-
-    console.log(ScreenHolder)
-}
+const Path = require("path")
+const WaitForEvent = await Import("ga.corelauncher.Helpers.WaitForEvent")
 
 function GetScreen(Parent, Name, ReturnParent = false) {
+    let ReturnScreen
     const SplitName = Name.split(".")
     if (SplitName.length == 1) {
-        return ReturnParent ? Parent : this.Screens[Name]
+        ReturnScreen = Parent.Screens[Name]
     } else {
         let Screen = Parent
         for (const NamePart of SplitName) {
             Screen = Screen.GetScreen(NamePart)
         }
-        return Screen
+        ReturnScreen = Screen
     }
+    if (ReturnParent) {
+        return ReturnScreen ? ReturnScreen.ParentScreen : Parent
+    }
+    return ReturnScreen
 }
 
 class Screen {
-    constructor(Name, ParentScreen) {
+    constructor(Name, Handler, ParentScreen) {
         this.Name = Name
         this.ParentScreen = ParentScreen
         this.Screens = {}
@@ -41,6 +28,37 @@ class Screen {
 
     GetPath(Append) {
         return this.ParentScreen.GetPath(this.Name)
+    }
+
+    ShowStyle() {
+        this.Iframe.style.visibility = "visible"
+        this.Iframe.style.display = null
+        this.Iframe.style.zIndex = "1"
+    }
+
+    async Show(Data, SkipAnimation = false) {
+        if (this.ParentScreen.CurrentScreen) {
+            if (this.ParentScreen.CurrentScreen == this) { return }
+            this.ParentScreen.CurrentScreen.Hide()
+        }
+        this.ParentScreen.CurrentScreen = this
+
+        if (this.Handler.Show) {
+            await this.Handler.Show(this, this.ScreenElement, Data)
+        }
+
+    }
+
+    HideStyle() {
+        this.Iframe.style.visibility = "hidden"
+        this.Iframe.style.display = "none"
+        this.Iframe.style.zIndex = "-1"
+    }
+
+    async Hide(SkipAnimation = false) {
+        if (this.Handler.Hide) {
+            await this.Handler.Hide(this, this.ScreenElement)
+        }
     }
 }
 
@@ -60,7 +78,30 @@ class ScreenManager {
     }
 
     async RegisterScreen(Name, Handler) {
-        await RegisterScreen(this, Name, Handler)
+        console.log(`Registering screen ${Name}`, Handler)
+        const ScreenParent = this.GetScreen(Name, true)
+        console.log(ScreenParent)
+        const NewScreen = new Screen(Name, Handler, this)
+
+        let ScreenHolder
+        if (Handler.GetScreenElement) {
+            ScreenHolder = await Handler.GetScreenElement(ScreenParent)
+        } else {
+            ScreenHolder = ScreenParent.ScreenElement.querySelector(`screen[name="${Name}"]`)
+        }
+
+
+        const ScreenFolder = Path.join("/screens/", NewScreen.GetPath().replaceAll(".", "/"))
+        ScreenHolder.innerHTML = await (await fetch(`${ScreenFolder}/index.html`)).text()
+        ScreenHolder.classList.add(Name)
+
+        const LinkElement = document.createElement("link")
+        LinkElement.rel = "stylesheet"
+        LinkElement.href = `${ScreenFolder}/Index.css`
+        document.head.appendChild(LinkElement)
+
+        NewScreen.ScreenElement = ScreenHolder
+        Handler.Init(NewScreen, NewScreen.ScreenElement, this)
     }
 }
 
