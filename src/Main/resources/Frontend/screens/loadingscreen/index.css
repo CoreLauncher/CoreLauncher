@@ -1,9 +1,10 @@
-.screen.loadingscreen {
+screen.LoadingScreen {
   transition: visibility 0.3s, opacity 0.3s;
   z-index: 1000000;
   background-color: var(--background-primary);
+  -webkit-app-region: drag;
 }
-.screen.loadingscreen .holder {
+screen.LoadingScreen .holder {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -11,20 +12,19 @@
   width: 235px;
   height: 360px;
   margin: auto;
-  -webkit-app-region: drag;
 }
-.screen.loadingscreen img {
+screen.LoadingScreen img {
   width: 60%;
   margin: 20%;
   margin-bottom: 30px;
 }
-.screen.loadingscreen a {
+screen.LoadingScreen a {
   font-weight: bold;
   text-transform: capitalize;
   width: 100%;
   display: block;
   text-align: center;
 }
-.screen.loadingscreen.hidden .holder {
+screen.loadingscreen .holder {
   -webkit-app-region: no-drag;
 }

@@ -1,7 +1,9 @@
-.screen.loadingscreen {
+screen.LoadingScreen {
     transition: visibility 0.3s, opacity 0.3s;
     z-index: 1000000;
     background-color: var(--background-primary);
+    -webkit-app-region: drag;
+
     .holder {
         position: absolute;
 
@@ -13,7 +15,6 @@
         width: 275px-@smaller*2;
         height: 400px-@smaller*2;
         margin: auto;
-        -webkit-app-region: drag;
     }
     img {
         @margin: 20%;
@@ -30,7 +31,7 @@
     }
 }
 
-.screen.loadingscreen.hidden {
+screen.loadingscreen {
     .holder {
         -webkit-app-region: no-drag;
     }
