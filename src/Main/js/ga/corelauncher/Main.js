@@ -15,6 +15,7 @@ CoreLauncher.NW = await(await Import("me.corebyte.NW"))(
         Id: "CoreLauncher",
         Name: "CoreLauncher",
         Main: CoreLauncher.DevMode ? "http://localhost:9874" : "http://localhost:9875",
+        Frame: false,
         Icon: {
             Win: "CoreLauncher:/ico.ico",
             Mac: "CoreLauncher:/ico.icns",
