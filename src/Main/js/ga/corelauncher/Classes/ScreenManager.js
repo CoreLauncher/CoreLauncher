@@ -9,7 +9,10 @@ function GetScreen(Parent, Name, ReturnParent = false) {
     } else {
         let Screen = Parent
         for (const NamePart of SplitName) {
-            Screen = Screen.GetScreen(NamePart)
+            if (!Screen.Screens[NamePart] && SplitName[SplitName.length - 1] == NamePart) {
+                return Screen
+            }
+            Screen = Screen.Screens[NamePart]
         }
         ReturnScreen = Screen
     }
@@ -27,8 +30,12 @@ class Screen {
         this.Handler = Handler
     }
 
-    GetPath(Append) {
-        return this.ParentScreen.GetPath(this.Name)
+    GetPath() {
+        return this.Name
+    }
+
+    GetScreen(Name, ReturnParent = false) {
+        return GetScreen(this, Name, ReturnParent)
     }
 
     ShowStyle() {
@@ -79,17 +86,14 @@ class ScreenManager {
         this.ScreenElement = document.body
     }
 
-    GetPath(Append) {
-        return Append
-    }
-
     GetScreen(Name, ReturnParent = false) {
         return GetScreen(this, Name, ReturnParent)
     }
 
-    async RegisterScreen(Name, Handler) {
-        const ScreenParent = this.GetScreen(Name, true)
-        const NewScreen = new Screen(Name, Handler, ScreenParent)
+    async RegisterScreen(ScreenPath, Handler) {
+        const ScreenParent = this.GetScreen(ScreenPath, true)
+        const NewScreen = new Screen(ScreenPath, Handler, ScreenParent)
+        const Name = ScreenPath.split(".").pop()
 
         let ScreenHolder
         if (Handler.GetScreenElement) {
