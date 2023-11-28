@@ -57,6 +57,8 @@ document.addEventListener(
         CoreLauncher.GameManager = new GameManagerClass(CoreLauncher.PluginManager.ListGames())
         CoreLauncher.TaskManager = new TaskManagerClass()
         CoreLauncher.WindowControl = new WindowControlClass()
+
+        CoreLauncher.ScreenManager.GetScreen("Main").Show()
     }
 )
 
