@@ -6,8 +6,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/assets/style/index.css"></link>
     </head>
-    <body class="draggable">
-        <screen name="LoadingScreen" style="height: 100vh;"></screen>
+    <body>
+        <style>
+            body > screen {
+                height: 100vh;
+            }
+        </style>
+        <screen name="LoadingScreen" class="draggable" style="height: 100vh;"></screen>
         <screen name="Main"></screen>
     </body>
 </html>
