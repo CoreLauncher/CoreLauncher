@@ -1,31 +1,96 @@
 @import url("subscreens/genericinstanced/index.css");
-.screen.main .gameslist {
+screen.Main .topbar {
+  padding: 10px;
+  height: 50px;
+  width: 100%;
+  background-color: var(--background-tertiary);
+  z-index: 50000;
+  -webkit-app-region: drag;
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+  justify-content: space-between;
+}
+screen.Main .topbar .imageholder {
+  height: 100%;
+  display: flex;
+  -webkit-app-region: none;
+}
+screen.Main .topbar .imageholder.showbars {
+  cursor: pointer;
+}
+screen.Main .topbar .imageholder:hover.showbars .logo {
+  display: none;
+}
+screen.Main .topbar .imageholder:hover.showbars .bars {
+  display: block;
+}
+screen.Main .topbar .imageholder .logo,
+screen.Main .topbar .imageholder .bars {
+  height: 100%;
+  aspect-ratio: 1/1;
+}
+screen.Main .topbar .imageholder .bars {
+  display: none;
+  fill: var(--background-floating);
+  -webkit-app-region: none;
+}
+screen.Main .topbar .imageholder .title {
+  margin-left: 10px;
+  color: var(--background-floating);
+  font-weight: bold;
+  line-height: 30px;
+}
+screen.Main .topbar .windowcontrol {
+  -webkit-app-region: no-drag;
+  display: flex;
+  gap: 5px;
+}
+screen.Main .topbar .windowcontrol div {
+  height: 100%;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+screen.Main .topbar .windowcontrol div svg {
+  transition: margin 0.1s, fill 0.1s;
+  margin: 4px;
+  fill: var(--button-floating);
+}
+screen.Main .topbar .windowcontrol div:hover svg {
+  fill: var(--hover-color);
+  margin: 5px;
+}
+.screenholder {
+  height: calc(100% - 50px);
+}
+.gameslist {
   float: left;
   height: 100%;
   max-width: fit-content;
   background-color: var(--background-tertiary);
 }
-.screen.main .gameslist .icons {
+.gameslist .icons {
   float: left;
   height: 100%;
   width: 30px;
 }
-.screen.main .gameslist .icons div {
+.gameslist .icons div {
   width: 30px;
   height: 30px;
 }
-.screen.main .gameslist .icons div:hover,
-.screen.main .gameslist .icons div.hover,
-.screen.main .gameslist .icons div.selected {
+.gameslist .icons div:hover,
+.gameslist .icons div.hover,
+.gameslist .icons div.selected {
   cursor: pointer;
   background-color: var(--background-secondary-alt);
 }
-.screen.main .gameslist .icons div img {
+.gameslist .icons div img {
   margin: 2px;
   width: calc(100% - (2px * 2));
   position: relative;
 }
-.screen.main .gameslist .names {
+.gameslist .names {
   display: inline-block;
   height: 100%;
   width: 100px;
@@ -33,27 +98,27 @@
   resize: horizontal;
   background-color: var(--background-secondary-alt);
 }
-.screen.main .gameslist .names .dragline {
+.gameslist .names .dragline {
   height: 100%;
   width: 3px;
   float: right;
 }
-.screen.main .gameslist .names .dragline:hover,
-.screen.main .gameslist .names .dragline.dragging {
+.gameslist .names .dragline:hover,
+.gameslist .names .dragline.dragging {
   cursor: ew-resize;
   background-color: var(--background-floating);
 }
-.screen.main .gameslist .names div {
+.gameslist .names div {
   width: 100%;
   height: 30px;
 }
-.screen.main .gameslist .names div:hover,
-.screen.main .gameslist .names div.hover,
-.screen.main .gameslist .names div.selected {
+.gameslist .names div:hover,
+.gameslist .names div.hover,
+.gameslist .names div.selected {
   cursor: pointer;
   background-color: var(--background-secondary);
 }
-.screen.main .gameslist .names div a {
+.gameslist .names div a {
   margin-left: 10px;
   display: block;
   height: 30px;
@@ -62,240 +127,10 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.screen.main .playscreenholder {
+.playscreenholder {
   float: right;
   height: 100%;
   width: 100%;
   transition: width 0.2s;
   overflow: hidden;
-}
-.topbar {
-  position: fixed;
-  height: 30px;
-  width: 100%;
-  background-color: var(--background-tertiary);
-  z-index: 50000;
-  -webkit-app-region: drag;
-}
-.topbar .holder {
-  height: 100%;
-  display: inline-block;
-}
-.topbar .holder .imageholder {
-  height: 100%;
-  width: 30px;
-  padding: 4px;
-  float: left;
-  -webkit-app-region: none;
-}
-.topbar .holder .imageholder.showbars {
-  cursor: pointer;
-}
-.topbar .holder .imageholder:hover.showbars .logo {
-  display: none;
-}
-.topbar .holder .imageholder:hover.showbars .bars {
-  display: block;
-}
-.topbar .holder .imageholder .logo,
-.topbar .holder .imageholder .bars {
-  height: 100%;
-  width: 100%;
-}
-.topbar .holder .imageholder .bars {
-  display: none;
-  fill: var(--background-floating);
-  -webkit-app-region: none;
-}
-.topbar .holder a {
-  margin-top: 4px;
-  margin-bottom: 4px;
-  color: var(--background-floating);
-  font-weight: bold;
-  height: 100%;
-  line-height: 22px;
-  float: left;
-}
-.topbar .windowcontrol {
-  float: right;
-  -webkit-app-region: no-drag;
-}
-.topbar .windowcontrol div {
-  height: 30px;
-  width: 30px;
-  text-align: center;
-  float: right;
-  cursor: pointer;
-  -webkit-app-region: no-drag;
-}
-.topbar .windowcontrol div svg {
-  transition: margin 0.1s, fill 0.1s;
-  margin: 8px;
-  fill: var(--button-floating);
-}
-.topbar .windowcontrol div:hover svg {
-  fill: var(--hover-color);
-  margin: 7px;
-}
-.taskmanager {
-  display: block;
-  position: absolute;
-  bottom: calc(0px - 50vh);
-  transition: bottom 0.2s;
-  width: 100%;
-  background-color: var(--background-tertiary);
-}
-.taskmanager.expanded {
-  bottom: 0px;
-}
-.taskmanager.expanded .bar .sizeicon {
-  transition: transform 0.2s;
-  transform: rotate(180deg);
-}
-.taskmanager .bar {
-  height: 30px;
-}
-.taskmanager .bar .progressbar {
-  background-color: green;
-  height: 30px;
-  position: absolute;
-  transition: width 1s ease-out;
-}
-.taskmanager .bar .taskicon,
-.taskmanager .bar .sizeicon {
-  height: 30px;
-  position: absolute;
-}
-.taskmanager .bar .taskicon svg,
-.taskmanager .bar .sizeicon svg {
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  height: 20px;
-  width: 20px;
-  fill: white;
-}
-.taskmanager .bar .taskicon,
-.taskmanager .bar .sizeicon,
-.taskmanager .bar .taskname {
-  top: 0px;
-}
-.taskmanager .bar .taskicon {
-  left: 0px;
-}
-.taskmanager .bar .taskname {
-  height: 30px;
-  line-height: 30px;
-  display: inline-block;
-  position: absolute;
-  left: 35px;
-}
-.taskmanager .bar .sizeicon {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  width: 30px;
-  cursor: pointer;
-}
-.taskmanager .body {
-  height: 50vh;
-  background-color: var(--background-secondary-alt);
-  overflow: auto;
-}
-.taskmanager .body .taskholder {
-  width: 80%;
-  margin: auto;
-  margin-top: 10vh;
-}
-.taskmanager .body .taskholder .notasks {
-  display: none;
-  text-align: center;
-  font-size: 20px;
-  width: 100%;
-}
-.taskmanager .body .taskholder.noitems .notasks {
-  display: block;
-}
-.taskmanager .body .taskholder .task {
-  height: 40px;
-  width: 100%;
-  display: inline-block;
-  position: relative;
-}
-.taskmanager .body .taskholder .task svg,
-.taskmanager .body .taskholder .task .dot {
-  --margin: 8px;
-  height: calc(40px - (var(--margin) * 2));
-  width: calc(40px - (var(--margin) * 2));
-  margin: var(--margin);
-  fill: var(--background-floating);
-  display: block;
-  position: absolute;
-}
-.taskmanager .body .taskholder .task .dot {
-  --margin: 15px;
-  border-radius: 100px;
-  background-color: var(--background-floating);
-  left: -35px;
-  display: none;
-}
-.taskmanager .body .taskholder .task .arrow {
-  position: absolute;
-  margin-left: calc(calc(40px * var(--parent-count)) - 40px + var(--margin));
-}
-.taskmanager .body .taskholder .task[parent-count="0"] .arrow {
-  display: none !important;
-}
-.taskmanager .body .taskholder .task[parent-count="0"] .dot {
-  display: block;
-}
-.taskmanager .body .taskholder .task .progressbarholder {
-  float: right;
-  position: relative;
-  height: 40px;
-  width: calc(100% - calc(40px * var(--parent-count)));
-  border-radius: 10px;
-  overflow: hidden;
-  display: block;
-  background-color: var(--background-tertiary);
-}
-.taskmanager .body .taskholder .task .progressbarholder .taskname {
-  height: 40px;
-  line-height: 40px;
-  margin-left: 40px;
-  display: inline-block;
-  position: absolute;
-}
-.taskmanager .body .taskholder .task .progressbarholder .progressbar {
-  background-color: green;
-  width: 00%;
-  height: 40px;
-  position: absolute;
-  transition: width 1s ease-out;
-}
-.taskmanager .body .taskholder .task .progressbarholder.pending .hourglass {
-  display: block;
-}
-.taskmanager .body .taskholder .task .progressbarholder.running .spinner {
-  display: block;
-}
-.taskmanager .body .taskholder .task .progressbarholder.completed .check {
-  display: block;
-}
-.taskmanager .body .taskholder .task .progressbarholder .hourglass,
-.taskmanager .body .taskholder .task .progressbarholder .spinner,
-.taskmanager .body .taskholder .task .progressbarholder .check {
-  display: none;
-}
-.taskmanager .body .taskholder .task .progressbarholder .spinner {
-  animation: spin 1s linear infinite;
-}
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
