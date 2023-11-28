@@ -24,6 +24,7 @@ class Screen {
         this.Name = Name
         this.ParentScreen = ParentScreen
         this.Screens = {}
+        this.Handler = Handler
     }
 
     GetPath(Append) {
@@ -31,9 +32,9 @@ class Screen {
     }
 
     ShowStyle() {
-        this.Iframe.style.visibility = "visible"
-        this.Iframe.style.display = null
-        this.Iframe.style.zIndex = "1"
+        this.ScreenElement.style.visibility = "visible"
+        this.ScreenElement.style.display = null
+        this.ScreenElement.style.zIndex = "1"
     }
 
     async Show(Data, SkipAnimation = false) {
@@ -43,21 +44,31 @@ class Screen {
         }
         this.ParentScreen.CurrentScreen = this
 
-        if (this.Handler.Show) {
+        if (this.Handler.Show && !SkipAnimation) {
             await this.Handler.Show(this, this.ScreenElement, Data)
+            if (this.Handler.ApplyShowStyle) {
+                this.ShowStyle()
+            }
+        } else {
+            this.ShowStyle()
         }
 
     }
 
     HideStyle() {
-        this.Iframe.style.visibility = "hidden"
-        this.Iframe.style.display = "none"
-        this.Iframe.style.zIndex = "-1"
+        this.ScreenElement.style.visibility = "hidden"
+        this.ScreenElement.style.display = "none"
+        this.ScreenElement.style.zIndex = "-1"
     }
 
     async Hide(SkipAnimation = false) {
-        if (this.Handler.Hide) {
+        if (this.Handler.Hide && !SkipAnimation) {
             await this.Handler.Hide(this, this.ScreenElement)
+            if (this.Handler.ApplyHideStyle) {
+                this.HideStyle()
+            }
+        } else {
+            this.HideStyle()
         }
     }
 }
@@ -80,8 +91,7 @@ class ScreenManager {
     async RegisterScreen(Name, Handler) {
         console.log(`Registering screen ${Name}`, Handler)
         const ScreenParent = this.GetScreen(Name, true)
-        console.log(ScreenParent)
-        const NewScreen = new Screen(Name, Handler, this)
+        const NewScreen = new Screen(Name, Handler, ScreenParent)
 
         let ScreenHolder
         if (Handler.GetScreenElement) {
@@ -90,17 +100,19 @@ class ScreenManager {
             ScreenHolder = ScreenParent.ScreenElement.querySelector(`screen[name="${Name}"]`)
         }
 
-
         const ScreenFolder = Path.join("/screens/", NewScreen.GetPath().replaceAll(".", "/"))
-        ScreenHolder.innerHTML = await (await fetch(`${ScreenFolder}/index.html`)).text()
-        ScreenHolder.classList.add(Name)
 
         const LinkElement = document.createElement("link")
         LinkElement.rel = "stylesheet"
         LinkElement.href = `${ScreenFolder}/Index.css`
         document.head.appendChild(LinkElement)
 
+        ScreenHolder.innerHTML = await (await fetch(`${ScreenFolder}/index.html`)).text()
+        ScreenHolder.classList.add(Name)
+
         NewScreen.ScreenElement = ScreenHolder
+        if (!Handler.Default) { await NewScreen.Hide() } else { await NewScreen.Show() }
+        ScreenParent.Screens[Name] = NewScreen
         Handler.Init(NewScreen, NewScreen.ScreenElement, this)
     }
 }
