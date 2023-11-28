@@ -1,9 +1,10 @@
 const FS = require('fs-extra')
+const Path = require('path')
 const ResourceBase64 = await Import("ga.corelauncher.Helpers.ResourceBase64")
 
 class PluginManager {
     constructor(PluginFolder) {
-        this.PluginFolder = PluginFolder
+        this.PluginFolder = Path.normalize(PluginFolder)
         this.Plugins = {}
     }
 
@@ -11,15 +12,17 @@ class PluginManager {
         TypeWriter.Logger.Information(`Loading plugins from ${this.PluginFolder}`)
         const Files = FS.readdirSync(this.PluginFolder)
         for (const FileName of Files) {
-            const FilePath = `${this.PluginFolder}/${FileName}`
+            const FilePath = Path.normalize(`${this.PluginFolder}/${FileName}`)
             const Plugin = await TypeWriter.LoadFile(FilePath)
             if (!Plugin.PackageInfo.Entrypoints.CoreLauncherPlugin) { continue }
-            const PluginData = await Plugin.LoadEntrypoint("CoreLauncherPlugin")
-            PluginData.Data = {}
-            PluginData.DataFolder = `${CoreLauncher.PluginDataFolder}/${Plugin.PackageInfo.Id}`
-            FS.ensureDirSync(PluginData.DataFolder)
-            this.Plugins[Plugin.PackageInfo.Id] = PluginData
-            await PluginData.Load(PluginData)
+            const PluginDataFolder = `${CoreLauncher.PluginDataFolder}/${Plugin.PackageInfo.Id}`
+            FS.ensureDirSync(PluginDataFolder)
+
+            const PluginClass = await Plugin.LoadEntrypoint("CoreLauncherPlugin")
+            const PluginInstance = new PluginClass(PluginDataFolder)
+            console.log(PluginInstance)
+            this.Plugins[Plugin.PackageInfo.Id] = PluginInstance
+            await PluginInstance.Load()
         }
     }
 
@@ -28,41 +31,17 @@ class PluginManager {
     }
 
     ListGames() {
-        const Games = {}
-
-        for (const PluginId in this.Plugins) {
-            const PluginData = this.Plugins[PluginId]
-            if (!PluginData.Games) { continue }
-            for (const GameData of PluginData.Games) {
-                Games[GameData.Id] = GameData
-            }
-        }
-
-        return Games
+        return Object.values(this.Plugins).flatMap(Plugin => Plugin.Games)
     }
 
     ListAccountTypes() {
         const AccountTypes = {}
 
-        for (const PluginId in this.Plugins) {
-            const PluginData = this.Plugins[PluginId]
-            if (!PluginData.AccountTypes) { continue }
-            for (const AccountTypeData of PluginData.AccountTypes) {
-                AccountTypes[AccountTypeData.Id] = AccountTypeData
-            }
-        }
-
-        return AccountTypes
+        return Object.values(this.Plugins).flatMap(Plugin => Plugin.AccountTypes)
     }
 
     ListPluginIds() {
-        const PluginIds = []
-
-        for (const PluginId in this.Plugins) {
-            PluginIds.push(PluginId)
-        }
-
-        return PluginIds
+        return Object.keys(this.Plugins)
     }
 
     GetPluginInformation(PluginId) {
@@ -74,4 +53,4 @@ class PluginManager {
     }
 }
 
-module.exports = PluginManager
+return PluginManager

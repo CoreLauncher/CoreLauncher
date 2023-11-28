@@ -5,10 +5,10 @@ class GameManager {
     constructor(Games) {
         this.Games = Games
 
-        for (const GameId in Games) {
-            CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${GameId}.Properties`, this.ListDefaultGameProperties(GameId))
-            CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${GameId}.Instances`, {})
-
+        for (const Game of Games) {
+            const GameId = Game.Id
+            // CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${GameId}.Properties`, this.ListDefaultGameProperties(GameId))
+            // CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${GameId}.Instances`, {})
         }
     }
 
@@ -17,7 +17,7 @@ class GameManager {
     }
 
     GetGame(GameId) {
-        return this.Games[GameId]
+        return this.Games.find(Game => Game.Id == GameId)
     }
 
     //#region Images
@@ -145,4 +145,4 @@ class GameManager {
 
 }
 
-module.exports = GameManager
+return GameManager
