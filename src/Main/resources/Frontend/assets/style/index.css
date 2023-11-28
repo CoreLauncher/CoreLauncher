@@ -13,11 +13,14 @@ body {
 img {
   pointer-events: none;
 }
-.screen {
+screen {
   width: 100%;
   height: 100%;
   display: block;
 }
 .draggable {
   -webkit-app-region: drag;
+}
+* {
+  box-sizing: border-box;
 }
