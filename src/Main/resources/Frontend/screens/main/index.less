@@ -54,6 +54,7 @@ screen.Main {
                 color: var(--background-floating);
                 font-weight: bold;
                 line-height: 30px;
+                -webkit-app-region: drag
             }
         }
 
@@ -87,97 +88,7 @@ screen.Main {
         }
     }
 
-}
-
-.screenholder {
-    height: calc(100% - 50px);
-}
-
-.gameslist {
-    float: left;
-    height: 100%;
-    max-width: fit-content;
-
-    background-color: var(--background-tertiary);
-
-    .icons {
-        @icons-size: 30px;
-        float: left;
-        height: 100%;
-        width: @icons-size;
-
-        div {
-            width: @icons-size;
-            height: @icons-size;
-
-            &:hover,
-            &.hover,
-            &.selected {
-                cursor: pointer;
-                background-color: var(--background-secondary-alt);
-            }
-
-            img {
-                @margin: 2px;
-                margin: @margin;
-                width: calc(100% - (@margin * 2));
-                position: relative;
-            }
-        }
-
+    .screenholder {
+        height: calc(100% - 50px);
     }
-
-    .names {
-        display: inline-block;
-        height: 100%;
-        width: 100px;
-        transition: width 0.2s;
-
-        resize: horizontal;
-        background-color: var(--background-secondary-alt);
-
-        .dragline {
-            height: 100%;
-            width: 3px;
-            float: right;
-
-
-            &:hover,
-            &.dragging {
-                cursor: ew-resize;
-                background-color: var(--background-floating);
-            }
-        }
-
-        div {
-            @name-height: 30px;
-            width: 100%;
-            height: @name-height;
-
-            &:hover,
-            &.hover,
-            &.selected {
-                cursor: pointer;
-                background-color: var(--background-secondary);
-            }
-
-            a {
-                margin-left: 10px;
-                display: block;
-                height: @name-height;
-                line-height: @name-height;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-            }
-        }
-    }
-}
-
-.playscreenholder {
-    float: right;
-    height: 100%;
-    width: 100%;
-    transition: width 0.2s;
-    overflow: hidden;
 }

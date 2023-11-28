@@ -40,6 +40,7 @@ screen.Main .topbar .imageholder .title {
   color: var(--background-floating);
   font-weight: bold;
   line-height: 30px;
+  -webkit-app-region: drag;
 }
 screen.Main .topbar .windowcontrol {
   -webkit-app-region: no-drag;
@@ -61,76 +62,6 @@ screen.Main .topbar .windowcontrol div:hover svg {
   fill: var(--hover-color);
   margin: 5px;
 }
-.screenholder {
+screen.Main .screenholder {
   height: calc(100% - 50px);
-}
-.gameslist {
-  float: left;
-  height: 100%;
-  max-width: fit-content;
-  background-color: var(--background-tertiary);
-}
-.gameslist .icons {
-  float: left;
-  height: 100%;
-  width: 30px;
-}
-.gameslist .icons div {
-  width: 30px;
-  height: 30px;
-}
-.gameslist .icons div:hover,
-.gameslist .icons div.hover,
-.gameslist .icons div.selected {
-  cursor: pointer;
-  background-color: var(--background-secondary-alt);
-}
-.gameslist .icons div img {
-  margin: 2px;
-  width: calc(100% - (2px * 2));
-  position: relative;
-}
-.gameslist .names {
-  display: inline-block;
-  height: 100%;
-  width: 100px;
-  transition: width 0.2s;
-  resize: horizontal;
-  background-color: var(--background-secondary-alt);
-}
-.gameslist .names .dragline {
-  height: 100%;
-  width: 3px;
-  float: right;
-}
-.gameslist .names .dragline:hover,
-.gameslist .names .dragline.dragging {
-  cursor: ew-resize;
-  background-color: var(--background-floating);
-}
-.gameslist .names div {
-  width: 100%;
-  height: 30px;
-}
-.gameslist .names div:hover,
-.gameslist .names div.hover,
-.gameslist .names div.selected {
-  cursor: pointer;
-  background-color: var(--background-secondary);
-}
-.gameslist .names div a {
-  margin-left: 10px;
-  display: block;
-  height: 30px;
-  line-height: 30px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.playscreenholder {
-  float: right;
-  height: 100%;
-  width: 100%;
-  transition: width 0.2s;
-  overflow: hidden;
 }
