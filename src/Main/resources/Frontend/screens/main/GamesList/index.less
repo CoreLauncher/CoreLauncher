@@ -1,10 +1,19 @@
 screen.Main screen.GamesList {
     display: flex;
+    flex-direction: row;
+    background-color: var(--background-tertiary);
+    height: 100%;
 
     .iconcolumn {
         width: 50px;
         height: 100%;
-        background-color: var(--background-tertiary);
         padding: 10px;
+    }
+
+    .playscreenholder {
+        width: calc(100% - 50px);
+        height: 100%;
+        background-color: var(--background-primary);
+        border-top-left-radius: 20px;
     }
 }
