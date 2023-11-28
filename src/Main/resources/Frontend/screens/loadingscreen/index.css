@@ -3,28 +3,19 @@ screen.LoadingScreen {
   z-index: 1000000;
   background-color: var(--background-primary);
   -webkit-app-region: drag;
-}
-screen.LoadingScreen .holder {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 235px;
-  height: 360px;
-  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 screen.LoadingScreen img {
-  width: 60%;
-  margin: 20%;
-  margin-bottom: 30px;
+  width: 150px;
 }
 screen.LoadingScreen a {
   font-weight: bold;
   text-transform: capitalize;
-  width: 100%;
-  display: block;
   text-align: center;
 }
-screen.loadingscreen .holder {
+screen.loadingscreen.hidden .holder {
   -webkit-app-region: no-drag;
 }

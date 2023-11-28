@@ -5,10 +5,12 @@ return {
 
     },
 
+    ApplyShowStyle: true,
     Show: async function(Screen, ScreenElement, ScreenManager) {
     
     },
     
+    ApplyHideStyle: true,
     Hide: async function(Screen, ScreenElement, ScreenManager) {
     
     }
