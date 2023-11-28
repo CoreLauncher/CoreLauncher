@@ -50,6 +50,7 @@ document.addEventListener(
         CoreLauncher.DataBase = new DataBaseClass(`${CoreLauncher.ApplicationData}/Database.json`)
         CoreLauncher.ScreenManager = new ScreenManagerClass()
         await (await Import("ga.corelauncher.Screens.Registry"))(CoreLauncher.ScreenManager)
+        await (await Import("ga.corelauncher.Helpers.DeSVG"))("img", false)
         CoreLauncher.PluginManager = new PluginManagerClass(CoreLauncher.PluginsFolder)
         await CoreLauncher.PluginManager.LoadPlugins()
         CoreLauncher.AccountManager = new AccountManagerClass(CoreLauncher.PluginManager.ListAccountTypes())
