@@ -77,7 +77,6 @@ class ScreenManager {
     constructor() {
         this.Screens = {}
         this.ScreenElement = document.body
-        console.log(this.ScreenElement)
     }
 
     GetPath(Append) {
@@ -89,7 +88,6 @@ class ScreenManager {
     }
 
     async RegisterScreen(Name, Handler) {
-        console.log(`Registering screen ${Name}`, Handler)
         const ScreenParent = this.GetScreen(Name, true)
         const NewScreen = new Screen(Name, Handler, ScreenParent)
 
