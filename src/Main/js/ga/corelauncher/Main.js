@@ -10,7 +10,7 @@ FS.ensureDirSync(CoreLauncher.ApplicationData)
 FS.ensureDirSync(CoreLauncher.PluginsFolder)
 FS.ensureDirSync(CoreLauncher.PluginDataFolder)
 
-CoreLauncher.NW = await(await Import("me.corebyte.NW"))(
+await(await Import("me.corebyte.NW"))(
     {
         Id: "CoreLauncher",
         Name: "CoreLauncher",
@@ -34,6 +34,15 @@ window.onbeforeunload = function () {
     CoreLauncher.StaticServer.Close()
 }
 
+nw.Window.get().on(
+    "close",
+    function () {
+        console.log("closing")
+        CoreLauncher.StaticServer.Close()
+        nw.Window.get().close(true)
+    }
+)
+
 CoreLauncher.Logger = TypeWriter.CreateLogger("CoreLauncher")
 
 const DataBaseClass = await Import("ga.corelauncher.Classes.DataBase")
@@ -51,6 +60,7 @@ document.addEventListener(
         CoreLauncher.ScreenManager = new ScreenManagerClass()
         await (await Import("ga.corelauncher.Screens.Registry"))(CoreLauncher.ScreenManager)
         await (await Import("ga.corelauncher.Helpers.DeSVG"))("img", false)
+
         CoreLauncher.PluginManager = new PluginManagerClass(CoreLauncher.PluginsFolder)
         await CoreLauncher.PluginManager.LoadPlugins()
         CoreLauncher.AccountManager = new AccountManagerClass(CoreLauncher.PluginManager.ListAccountTypes())
