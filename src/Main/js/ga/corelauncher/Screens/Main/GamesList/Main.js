@@ -13,12 +13,8 @@ return {
 
         const Games = CoreLauncher.GameManager.ListGames()
 
-        console.log(Games)
-
         IconsColumn.innerHTML = ""
         for (const Game of Games) {
-            console.log(Game)
-
             const IconHolder = document.createElement("div")
             IconHolder.classList.add("icon")
             IconsColumn.appendChild(IconHolder)
