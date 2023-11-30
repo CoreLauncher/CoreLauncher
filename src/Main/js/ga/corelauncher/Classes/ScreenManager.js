@@ -64,7 +64,7 @@ class Screen {
         if (this.ParentScreen.Show) { await this.ParentScreen.Show() }
 
         if (this.Handler.Show && !SkipAnimation) {
-            await this.Handler.Show(this, this.ScreenElement, this, Data)
+            await this.Handler.Show(this, this.ScreenElement, CoreLauncher.ScreenManager, Data)
             if (this.Handler.ApplyShowStyle) {
                 this.ShowStyle()
             }
