@@ -30,6 +30,7 @@ class Game {
     OpenSettings() {
         const Screen = CoreLauncher.ScreenManager.GetScreen("Main.Settings")
         const ScreenData = {
+            Title: "Settings for " + this.Name,
             Tabs: []
         }
 
