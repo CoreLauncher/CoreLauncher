@@ -1,5 +1,6 @@
 const Path = require("path")
 const WaitForEvent = await Import("ga.corelauncher.Helpers.WaitForEvent")
+const DeSVG = await Import("ga.corelauncher.Helpers.DeSVG")
 
 function GetScreen(Parent, Name, ReturnParent = false) {
     let ReturnScreen
@@ -121,6 +122,7 @@ class ScreenManager {
         ScreenHolder.innerHTML = await (await fetch(`${ScreenFolder}/index.html`)).text()
         ScreenHolder.classList.add(Name)
 
+        await DeSVG(ScreenHolder)
         NewScreen.ScreenElement = ScreenHolder
         if (Handler.Default && ScreenParent == this) { await NewScreen.Show() } else { await NewScreen.HideStyle() }
         ScreenParent.Screens[Name] = NewScreen

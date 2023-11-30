@@ -1,104 +1,23 @@
-//https://github.com/benhowdle89/deSVG/blob/gh-pages/desvg.js
+function ElementFromXml(Xml) {
+    const Div = document.createElement("div")
+    Div.innerHTML = Xml
+    return Div.firstChild
+}
 
-let desvg = function (selector, removeInlineCss) {
-    removeInlineCss = removeInlineCss || false;
+async function ReplaceImage(ImageTag, SvgUrl) {
+    console.log(ImageTag, SvgUrl)
+    const Response = await fetch(SvgUrl)
+    const Svg = await Response.text()
+    const SvgElement = ElementFromXml(Svg)
+    SvgElement.setAttribute("class", ImageTag.getAttribute("class"))
+    ImageTag.replaceWith(SvgElement)
+}
 
-    let images,
-        imagesLength,
-        sortImages = {},
+async function DeSVG(SelectorParent = document) {
+    const ImageTags = Array.from(SelectorParent.querySelectorAll('img[src*=".svg"]'))
+    console.log(ImageTags)
+    const Promises = ImageTags.map(ImageTag => { ReplaceImage(ImageTag, ImageTag.src) })
+    await Promise.all(Promises)
+}
 
-        // load svg file
-        loadSvg = function (imgURL, replaceImages) {
-            // set up the AJAX request
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', imgURL, true);
-
-            xhr.onload = function () {
-                let xml,
-                    svg,
-                    paths,
-                    replaceImagesLength;
-
-                // get the response in XML format
-                xml = xhr.responseXML;
-                replaceImagesLength = replaceImages.length;
-
-                // bail if no XML
-                if (!xml) {
-                    return;
-                }
-
-                // this will be the <svg />
-                svg = xml.documentElement;
-
-                // get all the SVG paths
-                paths = svg.querySelectorAll('path');
-
-                if (removeInlineCss) {
-                    // if `removeInlineCss` is true then remove the style attributes from the SVG paths
-                    for (let i = 0; i < paths.length; i++) {
-                        paths[i].removeAttribute('style');
-                    }
-                }
-                svg.removeAttribute('xmlns:a');
-
-                while (replaceImagesLength--) {
-                    replaceImgWithSvg(replaceImages[replaceImagesLength], svg.cloneNode(true));
-                }
-            };
-
-            xhr.send();
-        },
-
-        // replace the original <img /> with the new <svg />
-        replaceImgWithSvg = function (img, svg) {
-            let imgID = img.id,
-                imgClasses = img.getAttribute('class');
-
-            if (imgID) {
-                // re-assign the ID attribute from the <img />
-                svg.id = imgID;
-            }
-
-            if (imgClasses) {
-                // re-assign the class attribute from the <img />
-                svg.setAttribute('class', imgClasses + ' replaced-svg');
-            }
-
-            img.parentNode.replaceChild(svg, img);
-        };
-
-
-
-    // grab all the elements from the document matching the passed in selector
-    images = document.querySelectorAll(selector);
-    imagesLength = images.length;
-
-    // sort images array by image url
-    while (imagesLength--) {
-        let _img = images[imagesLength],
-            _imgURL;
-
-        if (_img.getAttribute('data-src')) {
-            _imgURL = _img.getAttribute('data-src')
-        } else {
-            _imgURL = _img.getAttribute('src')
-        }
-
-        if (sortImages[_imgURL]) {
-            sortImages[_imgURL].push(_img);
-        } else {
-            sortImages[_imgURL] = [_img];
-        }
-    }
-
-    // loops over the matched urls
-    for (let key in sortImages) {
-        if (sortImages.hasOwnProperty(key)) {
-            loadSvg(key, sortImages[key]);
-        }
-    }
-
-};
-
-return desvg
+return DeSVG
