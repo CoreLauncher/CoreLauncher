@@ -45,6 +45,15 @@ class Screen {
     }
 
     async Show(Data, SkipAnimation = false) {
+        if (!this.CurrentScreen) {
+            for (const ScreenName in this.Screens) {
+                const SubScreen = this.Screens[ScreenName]
+                if (!SubScreen.Handler.Default) { continue }
+                await SubScreen.Show()
+                break
+            }
+        }
+
         if (this.ParentScreen.CurrentScreen) {
             if (this.ParentScreen.CurrentScreen == this) { return }
             this.ParentScreen.CurrentScreen.Hide()
@@ -113,7 +122,7 @@ class ScreenManager {
         ScreenHolder.classList.add(Name)
 
         NewScreen.ScreenElement = ScreenHolder
-        if (!Handler.Default) { await NewScreen.Hide() } else { await NewScreen.Show() }
+        if (Handler.Default && ScreenParent == this) { await NewScreen.Show() } else { await NewScreen.HideStyle() }
         ScreenParent.Screens[Name] = NewScreen
         Handler.Init(NewScreen, NewScreen.ScreenElement, this)
     }
