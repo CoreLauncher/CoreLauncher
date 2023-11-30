@@ -126,9 +126,9 @@ class ScreenManager {
 
         await DeSVG(ScreenHolder)
         NewScreen.ScreenElement = ScreenHolder
+        Handler.Init(NewScreen, NewScreen.ScreenElement, this)
         if (Handler.Default && ScreenParent == this) { await NewScreen.Show() } else { await NewScreen.HideStyle() }
         ScreenParent.Screens[Name] = NewScreen
-        Handler.Init(NewScreen, NewScreen.ScreenElement, this)
     }
 }
 
