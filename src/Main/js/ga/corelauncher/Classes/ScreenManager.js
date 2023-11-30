@@ -61,7 +61,7 @@ class Screen {
         this.ParentScreen.CurrentScreen = this
 
         if (this.Handler.Show && !SkipAnimation) {
-            await this.Handler.Show(this, this.ScreenElement, Data)
+            await this.Handler.Show(this, this.ScreenElement, this, Data)
             if (this.Handler.ApplyShowStyle) {
                 this.ShowStyle()
             }
