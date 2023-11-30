@@ -68,7 +68,7 @@ document.addEventListener(
         CoreLauncher.TaskManager = new TaskManagerClass()
         CoreLauncher.WindowControl = new WindowControlClass()
 
-        CoreLauncher.ScreenManager.GetScreen("Main").Show()
+        await CoreLauncher.ScreenManager.GetScreen("Main").Show()
     }
 )
 
