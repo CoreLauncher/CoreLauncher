@@ -26,6 +26,34 @@ class Game {
     GetBannerBase64() {
         return ResourceBase64(this.Banner)
     }
+
+    OpenSettings() {
+        const Screen = CoreLauncher.ScreenManager.GetScreen("Main.Settings")
+        const ScreenData = {
+            Tabs: []
+        }
+
+        ScreenData.Tabs.push("Game Settings")
+        ScreenData.Tabs.push(
+            {
+                Name: "Game Information",
+                Screen: "GameInformation",
+                Data: [this]
+            }
+        )
+
+        if (this.UsesInstances) {
+            ScreenData.Tabs.push(
+                {
+                    Name: "Instances",
+                    Screen: "Instances",
+                    Data: [this]
+                }
+            )
+        }
+
+        Screen.Show(ScreenData)
+    }
 }
 
 return Game
