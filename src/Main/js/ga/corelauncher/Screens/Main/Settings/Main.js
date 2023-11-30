@@ -7,6 +7,7 @@ return {
 
     ApplyShowStyle: true,
     Show: async function(Screen, ScreenElement, ScreenManager, Data) {
+        console.log(Data)
     },
     
     ApplyHideStyle: true,
