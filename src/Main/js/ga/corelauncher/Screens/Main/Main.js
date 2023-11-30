@@ -1,7 +1,7 @@
 return {
     Default: false,
 
-    Init: async function(Screen, ScreenElement, ScreenManager) {
+    Init: async function(Screen, ScreenElement, ScreenManager, Data) {
         const NwWindow = nw.Window.get()
 
         ScreenElement.querySelector(".close").addEventListener("click", NwWindow.close.bind(NwWindow))
@@ -11,12 +11,12 @@ return {
     },
 
     ApplyShowStyle: true,
-    Show: async function(Screen, ScreenElement, ScreenManager) {
+    Show: async function(Screen, ScreenElement, ScreenManager, Data) {
     
     },
     
     ApplyHideStyle: true,
-    Hide: async function(Screen, ScreenElement, ScreenManager) {
+    Hide: async function(Screen, ScreenElement, ScreenManager, Data) {
     
     }
 }
