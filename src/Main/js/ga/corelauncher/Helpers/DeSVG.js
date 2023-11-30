@@ -5,7 +5,6 @@ function ElementFromXml(Xml) {
 }
 
 async function ReplaceImage(ImageTag, SvgUrl) {
-    console.log(ImageTag, SvgUrl)
     const Response = await fetch(SvgUrl)
     const Svg = await Response.text()
     const SvgElement = ElementFromXml(Svg)
@@ -15,7 +14,6 @@ async function ReplaceImage(ImageTag, SvgUrl) {
 
 async function DeSVG(SelectorParent = document) {
     const ImageTags = Array.from(SelectorParent.querySelectorAll('img[src*=".svg"]'))
-    console.log(ImageTags)
     const Promises = ImageTags.map(ImageTag => { ReplaceImage(ImageTag, ImageTag.src) })
     await Promise.all(Promises)
 }
