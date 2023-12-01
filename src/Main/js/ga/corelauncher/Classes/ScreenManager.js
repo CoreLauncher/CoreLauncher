@@ -57,7 +57,7 @@ class Screen {
 
         if (this.ParentScreen.CurrentScreen) {
             if (this.ParentScreen.CurrentScreen == this) { return }
-            this.ParentScreen.CurrentScreen.Hide()
+            await this.ParentScreen.CurrentScreen.Hide()
         }
         this.ParentScreen.CurrentScreen = this
         this.Data = Data
@@ -90,6 +90,7 @@ class Screen {
         } else {
             this.HideStyle()
         }
+        this.ParentScreen.CurrentScreen = undefined
         this.Data = undefined
     }
 }
