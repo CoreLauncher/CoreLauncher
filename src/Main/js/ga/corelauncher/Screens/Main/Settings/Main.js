@@ -6,10 +6,11 @@ return {
     Init: async function(Screen, ScreenElement, ScreenManager, Data) {
         ScreenElement.querySelector(".returnbutton").addEventListener(
             "click",
-            function () {
+            async function () {
                 const ReturnData = Screen.Data.ReturnData
                 if (!ReturnData) { return }
-                ReturnData.Screen.Show(ReturnData.Data)
+                await Screen.CurrentScreen.Hide()
+                await ReturnData.Screen.Show(ReturnData.Data)
             }
         )
 
