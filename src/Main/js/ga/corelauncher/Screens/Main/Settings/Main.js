@@ -1,4 +1,3 @@
-let ReturnData
 let TabTemplate
 
 return {
@@ -8,9 +7,9 @@ return {
         ScreenElement.querySelector(".returnbutton").addEventListener(
             "click",
             function () {
+                const ReturnData = Screen.Data.ReturnData
                 if (!ReturnData) { return }
                 ReturnData.Screen.Show(ReturnData.Data)
-                ReturnData = undefined
             }
         )
 
@@ -26,7 +25,6 @@ return {
                 Data: undefined
             }
         }
-        ReturnData = Data.ReturnData
 
         const TabsList = ScreenElement.querySelector(".tabslist")
         TabsList.innerHTML = ""
