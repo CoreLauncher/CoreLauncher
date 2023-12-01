@@ -6,7 +6,6 @@ function RenderProperty(PropertyData, FillData, RowElement) {
     if (PropertyData.Prefix) {
         const PrefixElement = document.createElement("a")
         PrefixElement.classList.add("prefix")
-        console.log(MarkdownRenderer(PropertyData.Prefix))
         PrefixElement.innerHTML = MarkdownRenderer(PropertyData.Prefix)
         RowElement.appendChild(PrefixElement)
     }
