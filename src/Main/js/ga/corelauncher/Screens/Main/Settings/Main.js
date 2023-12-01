@@ -50,6 +50,7 @@ return {
                     }
                 )
                 TabsList.appendChild(TabElement)
+                if (!Screen.CurrentScreen) { TabElement.click() }
             }
         }
     },
