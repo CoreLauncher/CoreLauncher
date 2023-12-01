@@ -44,7 +44,7 @@ class Game {
         ScreenData.Tabs.push("Game Settings")
         ScreenData.Tabs.push(
             {
-                Name: "Game Information",
+                Name: "Information",
                 Screen: "GameInformation",
                 Data: this
             }
