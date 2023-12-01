@@ -1,24 +1,88 @@
 screen.Main screen.Settings {
     display: flex;
 
-    .tabslist {
+    .sidebar {
         width: 25%;
         height: 100%;
         background-color: var(--background-secondary);
         padding: 10px;
 
-        .tab {
-            width: 100%;
-            height: 35px;
-            background-color: var(--background-primary);
-            margin-bottom: 10px;
-            padding: 5px;
-            border-radius: 5px;
+        @returnbuttonheight: 60px;
 
-            svg {
-                transform: rotate(180deg);
-                height: 100%;
+        .tabslist {
+            height: calc(100% - @returnbuttonheight - 16px);
+            .tabheader {
+                color: var(--text-muted);
+                text-transform: uppercase;
+                font-weight: bold;
+                font-size: 14px;
+            }
+    
+            .tab {
+                width: 100%;
+                height: 35px;
+                background-color: var(--background-primary);
+                margin-bottom: 10px;
+                padding: 5px;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+                cursor: pointer;
+    
+                svg {
+                    transform: rotate(180deg);
+                    height: 100%;
+                    margin-right: 0px;
+                    fill: var(--text-normal);
+                    width: 0px;
+                    transition: width 0.3s ease-in-out, margin-right 0.3s ease-in-out;
+                }
+    
+                &.active, &:hover {
+                    svg {
+                        width: 20px;
+                        margin-right: 8px;
+                    }
+                }
             }
         }
+
+        hr {
+            border-color: var(--text-muted);
+        }
+
+        .returnbutton {
+            height: @returnbuttonheight;
+            padding: 10px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                background-color: var(--button-default-hover);
+                svg {
+                    margin-left: 2px;
+                }
+            }
+
+            svg {
+                height: 100%;
+                fill: var(--text-normal);
+                transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+                margin-right: 10px;
+                margin-left: 5px;
+            }
+
+            a {
+                font-size: 20px;
+            }
+        }
+
+
     }
+
+    
 }
