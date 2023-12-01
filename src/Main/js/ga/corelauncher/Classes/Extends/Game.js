@@ -46,7 +46,7 @@ class Game {
             {
                 Name: "Game Information",
                 Screen: "GameInformation",
-                Data: [this]
+                Data: this
             }
         )
 
@@ -55,7 +55,7 @@ class Game {
                 {
                     Name: "Instances",
                     Screen: "Instances",
-                    Data: [this]
+                    Data: this
                 }
             )
         }
