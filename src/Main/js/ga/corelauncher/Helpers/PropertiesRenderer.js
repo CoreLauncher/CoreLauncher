@@ -42,7 +42,7 @@ function RenderProperty(PropertyData, FillData, RowElement) {
     if (PropertyData.Suffix) {
         const SuffixElement = document.createElement("a")
         SuffixElement.innerHTML = MarkdownRenderer(PropertyData.Suffix)
-        Parent.appendChild(SuffixElement)
+        RowElement.appendChild(SuffixElement)
     }
 
     return Element
