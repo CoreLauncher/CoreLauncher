@@ -15,20 +15,31 @@ screen.Main screen.GamesList screen.Generic {
         transform: translateY(450px);
 
         .playbar {
-            height: 80px;
+            height: 70px;
             background-color: var(--background-secondary);
             padding: 10px;
 
             button {
-                height: 60px;
-                font-size: 30px;
+                height: 50px;
+                font-size: 20px;
                 font-weight: bolder;
             }
 
             select {
                 float: right;
-                margin-left: 10px;
                 height: 100%;
+            }
+
+            .settingsbutton {
+                height: 100%;
+                aspect-ratio: 1/1;
+                float: right;
+                padding: 4px;
+                fill: var(--background-secondary);
+            }
+
+            select, .settingsbutton {
+                margin-left: 10px;
             }
         }
     }

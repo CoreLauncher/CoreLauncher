@@ -2,7 +2,12 @@ return {
     Default: false,
 
     Init: async function(Screen, ScreenElement, ScreenManager, Data) {
-
+        ScreenElement.querySelector(".settingsbutton").addEventListener(
+            "click",
+            function () {
+                Screen.Data.OpenSettings()
+            }
+        )
     },
 
     ApplyShowStyle: true,
