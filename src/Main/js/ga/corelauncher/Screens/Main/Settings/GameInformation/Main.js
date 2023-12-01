@@ -9,10 +9,11 @@ return {
 
     ApplyShowStyle: true,
     Show: async function(Screen, ScreenElement, ScreenManager, Game) {
-        console.log(Data)
-        ScreenElement.querySelector(".title").innerText = Data.Name
-        ScreenElement.querySelector(".description").innerText = Data.Description
-        PropertiesRenderer.Render(ScreenElement.querySelector(".properties"), Data.GameProperties(), Data.FillData)
+        ScreenElement.querySelector(".title").innerText = Game.Name
+        ScreenElement.querySelector(".description").innerText = Game.Description
+        const PropertiesHolder = ScreenElement.querySelector(".propertiesholder")
+        PropertiesHolder.innerHTML = ""
+        PropertiesRenderer.Render(PropertiesHolder, Game.Properties(), Game.GetProperties())
     },
     
     ApplyHideStyle: true,
