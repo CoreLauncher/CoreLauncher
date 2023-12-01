@@ -9,7 +9,7 @@ class Game {
     DefaultProperties() {
         const DefaultProperties = {}
 
-        for (const PropertyRow of this.Properties) {
+        for (const PropertyRow of this.Properties()) {
             for (const Property of PropertyRow) {
                 DefaultProperties[Property.Id] = Property.Default
             }
