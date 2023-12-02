@@ -9,7 +9,6 @@ return {
             async function () {
                 const ReturnData = Screen.Data.ReturnData
                 if (!ReturnData) { return }
-                await Screen.CurrentScreen.Hide()
                 await ReturnData.Screen.Show(ReturnData.Data)
             }
         )
@@ -56,6 +55,7 @@ return {
     
     ApplyHideStyle: true,
     Hide: async function(Screen, ScreenElement, ScreenManager, Data) {
-
+        if (!Screen.CurrentScreen) { return }
+        await Screen.CurrentScreen.Hide()
     }
 }
