@@ -8,4 +8,5 @@ return async function(ScreenManager) {
     await ScreenManager.RegisterScreen("Main.Settings.Accounts", await Import("ga.corelauncher.Screens.Main.Settings.Accounts"))
     await ScreenManager.RegisterScreen("Main.Settings.GameInformation", await Import("ga.corelauncher.Screens.Main.Settings.GameInformation"))
     await ScreenManager.RegisterScreen("Main.Settings.Instances", await Import("ga.corelauncher.Screens.Main.Settings.Instances"))
+    await ScreenManager.RegisterScreen("Main.Settings.Plugins", await Import("ga.corelauncher.Screens.Main.Settings.Plugins"))
 }
