@@ -6,8 +6,8 @@ return {
     },
 
     ApplyShowStyle: true,
-    Show: async function(Screen, ScreenElement, ScreenManager, Data) {
-        console.log(Data)
+    Show: async function(Screen, ScreenElement, ScreenManager, Game) {
+        ScreenElement.querySelector(".title").innerText = `${Game.Name} instances`
     },
     
     ApplyHideStyle: true,
