@@ -1,0 +1,5 @@
+class AccountType {
+    
+}
+
+return AccountType
