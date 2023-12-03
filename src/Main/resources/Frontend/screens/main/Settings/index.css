@@ -71,4 +71,9 @@ screen.Main screen.Settings .sidebar .returnbutton a {
 screen.Main screen.Settings .settingsframe {
   padding-top: 30px;
   padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
+}
+screen.Main screen.Settings .settingsframe screen {
+  width: 100%;
 }
