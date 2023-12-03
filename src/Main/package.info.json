@@ -30,6 +30,6 @@
         "CoreLauncher:/Libraries/Static.twr"
     ],
     "Entrypoints": {
-        "Main": "ga.corelauncher"
+        "Main": "ga.corelauncher.NwjsLoader"
     }
 }
