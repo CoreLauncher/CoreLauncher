@@ -11,7 +11,7 @@ return {
 
         const IconsColumn = ScreenElement.querySelector(".iconcolumn")
 
-        const Games = CoreLauncher.GameManager.ListGames()
+        const Games = CoreLauncher.ListGames()
 
         IconsColumn.innerHTML = ""
         for (const Game of Games) {
