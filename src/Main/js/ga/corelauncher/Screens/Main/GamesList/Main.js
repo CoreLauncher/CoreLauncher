@@ -38,8 +38,6 @@ return {
             if (SelectedGame == Game.Id || SelectedGame == undefined) {
                 IconHolder.click()
             }
-
-
         }
     },
     
