@@ -5,11 +5,6 @@ const WaitForEvent = await Import("ga.corelauncher.Helpers.WaitForEvent")
 
 const DataBaseClass = await Import("ga.corelauncher.Classes.DataBase")
 const ScreenManagerClass = await Import("ga.corelauncher.Classes.ScreenManager")
-const PluginManagerClass = await Import("ga.corelauncher.Classes.PluginManager")
-const AccountManagerClass = await Import("ga.corelauncher.Classes.AccountManager")
-const GameManagerClass = await Import("ga.corelauncher.Classes.GameManager")
-const TaskManagerClass = await Import("ga.corelauncher.Classes.TaskManager")
-const WindowControlClass = await Import("ga.corelauncher.Classes.WindowControl")
 
 class CoreLauncherClass {
     constructor() {
