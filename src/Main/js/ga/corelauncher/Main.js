@@ -10,24 +10,7 @@ FS.ensureDirSync(CoreLauncher.ApplicationData)
 FS.ensureDirSync(CoreLauncher.PluginsFolder)
 FS.ensureDirSync(CoreLauncher.PluginDataFolder)
 
-await(await Import("me.corebyte.NW"))(
-    {
-        Id: "CoreLauncher",
-        Name: "CoreLauncher",
-        Main: CoreLauncher.DevMode ? "http://localhost:9874" : "http://localhost:9875",
-        Frame: false,
-        Icon: {
-            Win: "CoreLauncher:/ico.ico",
-            Mac: "CoreLauncher:/ico.icns",
-        }
-    }
-)
 
-CoreLauncher.StaticServer = (await Import("me.corebyte.static"))(
-    9875,
-    "CoreLauncher",
-    "Frontend"
-)
 
 window.onbeforeunload = function () {
     console.log("unloading")
