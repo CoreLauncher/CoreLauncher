@@ -59,6 +59,7 @@ class Screen {
             if (this.ParentScreen.CurrentScreen == this) { return }
             await this.ParentScreen.CurrentScreen.Hide()
         }
+
         this.ParentScreen.CurrentScreen = this
         this.Data = Data
 
@@ -82,6 +83,7 @@ class Screen {
     }
 
     async Hide(SkipAnimation = false) {
+        if (this.ParentScreen.CurrentScreen != this) { return }
         if (this.Handler.Hide && !SkipAnimation) {
             await this.Handler.Hide(this, this.ScreenElement)
             if (this.Handler.ApplyHideStyle) {
