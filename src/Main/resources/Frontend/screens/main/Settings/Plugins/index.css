@@ -1,3 +1,8 @@
+screen.Main screen.Settings screen.Plugins {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 screen.Main screen.Settings screen.Plugins .plugin {
   width: 100%;
   background-color: var(--background-secondary);
