@@ -1,3 +1,51 @@
 screen.Main screen.Settings screen.Accounts {
-    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .typelist,
+    .listfilter {
+        width: 100%;
+        padding: 20px;
+        background-color: var(--background-secondary);
+        border-radius: 10px;
+    }
+
+    .accounticon {
+        height: 100%;
+        padding: 5px;
+        background-color: var(--background-primary);
+        border-radius: 10px;
+    }
+
+    .typelist {
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .accountselector {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 50px;
+            gap: 5px;
+
+            * {
+                height: 100%;
+            }
+        }
+    }
+
+    .listfilter {
+        height: 90px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+
+        *:not(a) {
+            height: 100%;
+        }
+    }
 }

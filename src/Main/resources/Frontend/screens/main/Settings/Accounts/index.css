@@ -1,0 +1,43 @@
+screen.Main screen.Settings screen.Accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+screen.Main screen.Settings screen.Accounts .typelist,
+screen.Main screen.Settings screen.Accounts .listfilter {
+  width: 100%;
+  padding: 20px;
+  background-color: var(--background-secondary);
+  border-radius: 10px;
+}
+screen.Main screen.Settings screen.Accounts .accounticon {
+  height: 100%;
+  padding: 5px;
+  background-color: var(--background-primary);
+  border-radius: 10px;
+}
+screen.Main screen.Settings screen.Accounts .typelist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+screen.Main screen.Settings screen.Accounts .typelist .accountselector {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50px;
+  gap: 5px;
+}
+screen.Main screen.Settings screen.Accounts .typelist .accountselector * {
+  height: 100%;
+}
+screen.Main screen.Settings screen.Accounts .listfilter {
+  height: 90px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+screen.Main screen.Settings screen.Accounts .listfilter *:not(a) {
+  height: 100%;
+}
