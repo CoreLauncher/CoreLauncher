@@ -6,9 +6,14 @@ return {
     Init: async function(Screen, ScreenElement, ScreenManager, Data) {
         const NwWindow = nw.Window.get()
 
-        ScreenElement.querySelector(".close").addEventListener("click", NwWindow.close.bind(NwWindow))
-        ScreenElement.querySelector(".minimize").addEventListener("click", NwWindow.minimize.bind(NwWindow))
-        ScreenElement.querySelector(".maximize").addEventListener("click", NwWindow.maximize.bind(NwWindow))
+        let Maximized = false
+
+        NwWindow.on("maximize", () => { Maximized = true })
+        NwWindow.on("restore", () => { Maximized = false })
+
+        ScreenElement.querySelector(".close").addEventListener("click", () => { NwWindow.close() })
+        ScreenElement.querySelector(".minimize").addEventListener("click", () => { NwWindow.minimize() })
+        ScreenElement.querySelector(".maximize").addEventListener("click", () => { Maximized ? NwWindow.restore() : NwWindow.maximize() })
 
         ScreenElement.querySelector(".settings").addEventListener("click", OpenMainSettings)
 
