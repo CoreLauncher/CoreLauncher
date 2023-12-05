@@ -7,6 +7,17 @@ function NewBetterSelect(Element) {
         }
     )
 
+    const ExpandElement = document.createElement("div")
+    ExpandElement.classList.add("expand")
+    Element.insertBefore(ExpandElement, Element.firstChild)
+
+    function OnResize() {
+        Element.style.setProperty("--select-height", `${Element.offsetHeight}px`)
+        Element.style.setProperty("--select-width", `${Element.offsetWidth}px`)
+    }
+    OnResize()
+    new ResizeObserver(OnResize).observe(Element)
+
     Element.setAttribute("loaded", "")
 }
 
@@ -14,9 +25,24 @@ function NewBetterOption(Element) {
     Element.addEventListener(
         "click",
         () => {
+            if (Element.getAttribute("selected") == "") { return }
+            const SelectElement = Element.parentNode.parentNode
+            const CurrentSelected = SelectElement.querySelector("betteroption[selected]")
+            if (CurrentSelected) {
+                CurrentSelected.removeAttribute("selected")
+                Element.parentNode.appendChild(CurrentSelected)
+            }
 
+            Element.setAttribute("selected", "")
+            SelectElement.setAttribute("value", Element.getAttribute("value"))
+            SelectElement.appendChild(Element)
+            console.log(CurrentSelected)
         }
     )
+
+    if (Element.getAttribute("selected") == null) {
+        Element.parentNode.querySelector("div.expand").appendChild(Element)
+    }
 
     Element.setAttribute("loaded", "")
 }
