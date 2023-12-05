@@ -66,7 +66,8 @@ class CoreLauncherClass {
     }
 
     GetAccountType(Id) {
-        return this.ListAccountTypes().find(AccountType => AccountType.Id == Id)
+        return this.ListAccountTypes().find(AccountType => AccountType.Type == Id)
+    }
     }
 
     ListPlugins() {
