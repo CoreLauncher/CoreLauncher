@@ -21,6 +21,7 @@ screen.Main screen.GamesList screen.Generic .container .playbar button {
   font-size: 20px;
   font-weight: bolder;
 }
+screen.Main screen.GamesList screen.Generic .container .playbar betterselect,
 screen.Main screen.GamesList screen.Generic .container .playbar select {
   float: right;
   height: 100%;
@@ -32,6 +33,7 @@ screen.Main screen.GamesList screen.Generic .container .playbar .settingsbutton 
   padding: 4px;
   fill: var(--background-secondary);
 }
+screen.Main screen.GamesList screen.Generic .container .playbar betterselect,
 screen.Main screen.GamesList screen.Generic .container .playbar select,
 screen.Main screen.GamesList screen.Generic .container .playbar .settingsbutton {
   margin-left: 10px;

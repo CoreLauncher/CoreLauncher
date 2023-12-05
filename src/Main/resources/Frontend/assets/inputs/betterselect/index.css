@@ -1,0 +1,34 @@
+betterselect {
+  background-color: var(--button-floating);
+  color: var(--text-primary);
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+}
+betterselect::after {
+  content: "▼";
+  font-size: 10px;
+  margin-left: 5px;
+}
+betterselect.expanded::after {
+  content: "▲";
+}
+betterselect.expanded betteroption {
+  display: flex;
+}
+betterselect:hover {
+  background-color: var(--button-floating-hover);
+}
+betterselect betteroption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  height: 100%;
+}
+betterselect betteroption:not([selected]) {
+  display: none;
+}
