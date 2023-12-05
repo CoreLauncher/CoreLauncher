@@ -80,7 +80,8 @@ await WaitForEvent(document, "DOMContentLoaded")
 await CoreLauncher.AsyncLoad()
 await CoreLauncher.LoadPlugins()
 
-await CoreLauncher.ScreenManager.GetScreen("Main").Show()
+// await CoreLauncher.ScreenManager.GetScreen("Main").Show()
+document.querySelector(".windowcontrol .settings").click()
 
 // document.addEventListener(
 //     "DOMContentLoaded",
