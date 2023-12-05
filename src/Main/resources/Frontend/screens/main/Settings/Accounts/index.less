@@ -4,22 +4,28 @@ screen.Main screen.Settings screen.Accounts {
     gap: 20px;
 
     .typelist,
-    .listfilter {
+    .listfilter, .account {
         width: 100%;
         padding: 20px;
         background-color: var(--background-secondary);
         border-radius: 10px;
     }
 
-    .accounticon {
+    .accounticonholder {
+        background-color: var(--button-floating);
         height: 100%;
         padding: 5px;
-        background-color: var(--background-primary);
         border-radius: 10px;
+        aspect-ratio: 1/1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .accounticon {
+            height: 100%;
+        }
     }
 
     .typelist {
-
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -46,6 +52,35 @@ screen.Main screen.Settings screen.Accounts {
 
         *:not(a) {
             height: 100%;
+        }
+    }
+
+    .instanceslist {
+        .account {
+            .topinfo {
+                height: 50px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+
+                .nameholder {
+                    display: flex;
+                    flex-direction: column;
+                    .id {
+                        font-size: 0.8em;
+                        color: var(--text-muted);
+                        user-select: all;
+                    }
+                }
+
+                button {
+                    height: 100%;
+                    font-weight: bolder;
+                    float: right;
+                    margin-left: auto;
+                }
+            }
         }
     }
 }

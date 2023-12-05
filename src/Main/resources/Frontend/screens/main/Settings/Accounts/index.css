@@ -4,17 +4,25 @@ screen.Main screen.Settings screen.Accounts {
   gap: 20px;
 }
 screen.Main screen.Settings screen.Accounts .typelist,
-screen.Main screen.Settings screen.Accounts .listfilter {
+screen.Main screen.Settings screen.Accounts .listfilter,
+screen.Main screen.Settings screen.Accounts .account {
   width: 100%;
   padding: 20px;
   background-color: var(--background-secondary);
   border-radius: 10px;
 }
-screen.Main screen.Settings screen.Accounts .accounticon {
+screen.Main screen.Settings screen.Accounts .accounticonholder {
+  background-color: var(--button-floating);
   height: 100%;
   padding: 5px;
-  background-color: var(--background-primary);
   border-radius: 10px;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+screen.Main screen.Settings screen.Accounts .accounticonholder .accounticon {
+  height: 100%;
 }
 screen.Main screen.Settings screen.Accounts .typelist {
   display: flex;
@@ -40,4 +48,26 @@ screen.Main screen.Settings screen.Accounts .listfilter {
 }
 screen.Main screen.Settings screen.Accounts .listfilter *:not(a) {
   height: 100%;
+}
+screen.Main screen.Settings screen.Accounts .instanceslist .account .topinfo {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+screen.Main screen.Settings screen.Accounts .instanceslist .account .topinfo .nameholder {
+  display: flex;
+  flex-direction: column;
+}
+screen.Main screen.Settings screen.Accounts .instanceslist .account .topinfo .nameholder .id {
+  font-size: 0.8em;
+  color: var(--text-muted);
+  user-select: all;
+}
+screen.Main screen.Settings screen.Accounts .instanceslist .account .topinfo button {
+  height: 100%;
+  font-weight: bolder;
+  float: right;
+  margin-left: auto;
 }
