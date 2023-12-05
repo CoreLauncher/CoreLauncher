@@ -1,4 +1,5 @@
 const ResourceBase64 = await Import("ga.corelauncher.Helpers.ResourceBase64")
+const CreateUUID = require("uuid").v4
 
 class AccountType {
     constructor(Type, AccountInstanceClass) {
@@ -14,9 +15,16 @@ class AccountType {
                 return AccountInstance
             }
         )
-        console.log(AccountInstances)
         this.AccountInstances = AccountInstances
-        console.log(this)
+    }
+
+    CreateInstance() {
+        const Instance = new this.InstanceClass()
+        Instance.Type = this.Type
+        Instance.InstanceUUID = CreateUUID()
+        Instance.ConnectedAt = new Date()
+        this.AccountInstances.push(Instance)
+        return Instance
     }
 
     GetIconBase64() {
