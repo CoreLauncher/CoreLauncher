@@ -9,6 +9,7 @@ const ScreenManagerClass = await Import("ga.corelauncher.Classes.ScreenManager")
 class CoreLauncherClass {
     constructor() {
         this.DevMode = process.env.CORELAUNCHER_DEV == "true"
+        this.RunId = require("uuid").v4()
         this.Logger = TypeWriter.CreateLogger("CoreLauncher")
 
         //Folders
