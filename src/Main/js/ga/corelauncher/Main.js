@@ -68,6 +68,11 @@ class CoreLauncherClass {
     GetAccountType(Id) {
         return this.ListAccountTypes().find(AccountType => AccountType.Type == Id)
     }
+
+    ListAccountInstances(Type) {
+        const Instances = this.ListAccountTypes().flatMap(AccountType => AccountType.AccountInstances)
+        if (Type) { return Instances.filter(Instance => Instance.Type == Type) }
+        return Instances
     }
 
     ListPlugins() {
