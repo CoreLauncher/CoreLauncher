@@ -47,7 +47,6 @@ class CoreLauncherClass {
 
             const PluginClass = await Plugin.LoadEntrypoint("CoreLauncherPlugin")
             const PluginInstance = new PluginClass(PluginDataFolder)
-            console.log(PluginInstance)
             this.Plugins[Plugin.PackageInfo.Id] = PluginInstance
             await PluginInstance.Load()
         }
