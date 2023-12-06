@@ -1,5 +1,19 @@
 let AccountTemplate
 
+function LoadAccountsFromFilter(ScreenElement) {
+    let Accounts = CoreLauncher.ListAccountInstances()
+    const AccountFilter = ScreenElement.querySelector(".listfilter select")
+    if (AccountFilter.value != "all") {
+        Accounts = Accounts.filter(
+            (Account) => {
+                return Account.Type == AccountFilter.value
+            }
+        )
+    }
+
+    LoadAccounts(ScreenElement, Accounts)
+}
+
 function LoadAccounts(ScreenElement, Accounts) {
     const AccountsList = ScreenElement.querySelector(".instanceslist")
     AccountsList.innerHTML = ""
@@ -10,6 +24,15 @@ function LoadAccounts(ScreenElement, Accounts) {
         AccountElement.querySelector(".name").innerText = Account.GetName()
         AccountElement.querySelector(".id").innerText = Account.GetId()
         AccountElement.querySelector("img").src = Account.GetIcon()
+
+        AccountElement.querySelector("button").addEventListener(
+            "click",
+            async () => {
+                await Account.Delete()
+                LoadAccountsFromFilter(ScreenElement)
+            }
+        )
+
         AccountsList.appendChild(AccountElement)
     }
 }
@@ -27,6 +50,7 @@ return {
             async () => {
                 const AccountType = CoreLauncher.GetAccountType(AccountSelector.value)
                 await AccountType.StartConnection()
+                LoadAccountsFromFilter(ScreenElement)
             }
         )
 
@@ -44,6 +68,8 @@ return {
 
         const AccountFilterImage = ScreenElement.querySelector(".listfilter img")
         const AccountFilter = ScreenElement.querySelector(".listfilter select")
+
+        AccountFilter.addEventListener("changed", () => {LoadAccountsFromFilter(ScreenElement)})
 
         AccountSelector.innerHTML = ""
         AccountFilter.innerHTML = ""
@@ -77,7 +103,7 @@ return {
         AccountFilter.addEventListener("changed", OnChangeFn(AccountFilterImage, AccountFilter))
         OnChangeFn(AccountFilterImage, AccountFilter)()
 
-        LoadAccounts(ScreenElement, CoreLauncher.ListAccountInstances())
+        LoadAccountsFromFilter(ScreenElement)
 
     },
     

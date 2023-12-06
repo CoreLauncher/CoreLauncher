@@ -15,6 +15,12 @@ class AccountInstance {
             }
         )
     }
+
+    Delete() {
+        const AccountType = CoreLauncher.GetAccountType(this.Type)
+        AccountType.AccountInstances = AccountType.AccountInstances.filter((AccountInstance) => AccountInstance.InstanceUUID != this.InstanceUUID)
+        CoreLauncher.DataBase.RemoveKey(`Accounts.${this.InstanceUUID}`)
+    }
 }
 
 return AccountInstance

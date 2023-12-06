@@ -49,6 +49,11 @@ screen.Main screen.Settings screen.Accounts .listfilter {
 screen.Main screen.Settings screen.Accounts .listfilter *:not(a) {
   height: 100%;
 }
+screen.Main screen.Settings screen.Accounts .instanceslist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 screen.Main screen.Settings screen.Accounts .instanceslist .account .topinfo {
   height: 50px;
   display: flex;
