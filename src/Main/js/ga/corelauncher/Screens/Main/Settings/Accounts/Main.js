@@ -54,6 +54,13 @@ return {
             }
         )
 
+        AccountFilter.addEventListener(
+            "change",
+            () => {
+                LoadAccountsFromFilter(ScreenElement)
+            }
+        )
+
         AccountTemplate = ScreenElement.querySelector(".account")
         AccountTemplate.remove()
 
