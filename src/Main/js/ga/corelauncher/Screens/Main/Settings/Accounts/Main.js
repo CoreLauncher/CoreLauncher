@@ -105,9 +105,9 @@ return {
             }
         }
 
-        AccountSelector.addEventListener("changed", OnChangeFn(AccountSelectorImage, AccountSelector))
+        AccountSelector.addEventListener("change", OnChangeFn(AccountSelectorImage, AccountSelector))
         OnChangeFn(AccountSelectorImage, AccountSelector)()
-        AccountFilter.addEventListener("changed", OnChangeFn(AccountFilterImage, AccountFilter))
+        AccountFilter.addEventListener("change", OnChangeFn(AccountFilterImage, AccountFilter))
         OnChangeFn(AccountFilterImage, AccountFilter)()
 
         LoadAccountsFromFilter(ScreenElement)
