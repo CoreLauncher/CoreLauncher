@@ -1,7 +1,9 @@
 const FS = require("fs-extra")
 const Path = require("path")
+const Express = require("express")
 
 const WaitForEvent = await Import("ga.corelauncher.Helpers.WaitForEvent")
+const OpenMainSettings = await Import("ga.corelauncher.Helpers.OpenMainSettings")
 
 const DataBaseClass = await Import("ga.corelauncher.Classes.DataBase")
 const ScreenManagerClass = await Import("ga.corelauncher.Classes.ScreenManager")
@@ -25,6 +27,38 @@ class CoreLauncherClass {
         this.Logger.Information("Loading classes")
         this.DataBase = new DataBaseClass(`${this.ApplicationData}/Database.json`)
 
+        //Load event server
+        this.Logger.Information("Loading event server")
+        this.EventServer = Express()
+        const EventHttpsServer = this.EventServer.listen(9876)
+        this.Logger.Information("Event listening on port 9876")
+        
+        this.EventServer.get(
+            "/accountlink",
+            async (Request, Response) => {
+                console.log(Request.query)
+                if (!Request.query.d) { return }
+                const Data = JSON.parse(Buffer.from(Request.query.d, "base64").toString("utf8"))
+                const AccountType = CoreLauncher.GetAccountType(Data.Type)
+                if (!AccountType) { return }
+                if (!await AccountType.ConnectionDataValid(Data.Data)) { OpenMainSettings("Accounts"); return }
+                const AccountInstance = AccountType.CreateInstance()
+                await AccountInstance.FromConnectionData(Data.Data)
+                OpenMainSettings("Accounts")
+            }
+        )
+
+        nw.Window.get().on(
+            "close",
+            () => {
+                EventHttpsServer.close()
+                nw.Window.get().close(true)
+            }
+        )
+
+        window.onbeforeunload = EventHttpsServer.close
+
+        //Data
         this.Plugins = {}
     }
 
