@@ -19,7 +19,6 @@ function LoadAccounts(ScreenElement, Accounts) {
     AccountsList.innerHTML = ""
 
     for (const Account of Accounts) {
-
         const AccountElement = AccountTemplate.cloneNode(true)
         AccountElement.querySelector(".name").innerText = Account.GetName()
         AccountElement.querySelector(".id").innerText = Account.GetId()
