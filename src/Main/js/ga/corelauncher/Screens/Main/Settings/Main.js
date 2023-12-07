@@ -27,6 +27,7 @@ return {
         }
 
         const TabsList = ScreenElement.querySelector(".tabslist")
+        const HasDefaultTab = Data.Tabs.find(Tab => Tab.Default)
         TabsList.innerHTML = ""
         for (const Tab of Data.Tabs) {
             if (typeof Tab === "string") {
@@ -48,7 +49,8 @@ return {
                     }
                 )
                 TabsList.appendChild(TabElement)
-                if (!Screen.CurrentScreen) { TabElement.click() }
+                if (!Screen.CurrentScreen && !HasDefaultTab) { TabElement.click() }
+                if (Tab.Default) { TabElement.click() }
             }
         }
     },
