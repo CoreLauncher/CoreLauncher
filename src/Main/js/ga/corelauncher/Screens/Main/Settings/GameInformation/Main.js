@@ -13,7 +13,14 @@ return {
         ScreenElement.querySelector(".description").innerText = Game.Description
         const PropertiesHolder = ScreenElement.querySelector(".propertiesholder")
         PropertiesHolder.innerHTML = ""
-        PropertiesRenderer.Render(PropertiesHolder, Game.Properties(), Game.GetProperties())
+        PropertiesRenderer.Render(
+            PropertiesHolder,
+            Game.Properties(),
+            Game.GetProperties(),
+            function(Value, PropertyData) {
+                Game.SetProperty(PropertyData.Id, Value)
+            }
+        )
     },
     
     ApplyHideStyle: true,

@@ -48,13 +48,27 @@ function RenderProperty(PropertyData, FillData, RowElement) {
     return Element
 }
 
+function GetPropertyData(Data, Element) {
+    let Value = Element.getAttribute("value")
+
+    if (Value == "" || Value == undefined) {
+        if (Data.SaveDefault == true) { Value = Data.Default } else { Value = null }
+        return Value
+    }
+    if (Data.Type == "Number") { Value = Number(Value) }
+    if (Data.Type == "Boolean") { Value = Value == "true" }
+    return Value
+}
+
 PropertiesRenderer.Render = function Render(HolderElement, Properties, FillData, OnChange) {
     for (const Row of Properties) {
         const RowElement = document.createElement("div")
         RowElement.classList.add("propertyrow")
         HolderElement.appendChild(RowElement)
         for (const Property of Row) {
-            RenderProperty(Property, FillData, RowElement)
+            const PropertyElement = RenderProperty(Property, FillData, RowElement)
+            if (!OnChange) { continue }
+            PropertyElement.addEventListener("change", () => { OnChange(GetPropertyData(Property, PropertyElement), Property, PropertyElement) })
         }
     }
 }

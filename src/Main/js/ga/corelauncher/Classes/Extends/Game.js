@@ -18,6 +18,10 @@ class Game {
         return DefaultProperties
     }
 
+    SetProperty(Id, Value) {
+        CoreLauncher.DataBase.SetKey(`Game.${this.Id}.Properties.${Id}`, Value)
+    }
+
     SetProperties(Properties) {
         CoreLauncher.DataBase.SetKey(`Game.${this.Id}.Properties`, Properties)
     }
