@@ -36,7 +36,6 @@ class CoreLauncherClass {
         this.EventServer.get(
             "/accountlink",
             async (Request, Response) => {
-                console.log(Request.query)
                 if (!Request.query.d) { return }
                 const Data = JSON.parse(Buffer.from(Request.query.d, "base64").toString("utf8"))
                 const AccountType = CoreLauncher.GetAccountType(Data.Type)
