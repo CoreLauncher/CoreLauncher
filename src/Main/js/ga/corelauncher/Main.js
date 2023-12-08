@@ -120,26 +120,4 @@ await WaitForEvent(document, "DOMContentLoaded")
 await CoreLauncher.AsyncLoad()
 await CoreLauncher.LoadPlugins()
 
-// await CoreLauncher.ScreenManager.GetScreen("Main").Show()
-document.querySelector(".windowcontrol .settings").click()
-
-// document.addEventListener(
-//     "DOMContentLoaded",
-//     async function () {
-//         CoreLauncher.DataBase = new DataBaseClass(`${CoreLauncher.ApplicationData}/Database.json`)
-//         CoreLauncher.ScreenManager = new ScreenManagerClass()
-//         await (await Import("ga.corelauncher.Screens.Registry"))(CoreLauncher.ScreenManager)
-//         await (await Import("ga.corelauncher.Helpers.DeSVG"))()
-
-//         CoreLauncher.PluginManager = new PluginManagerClass(CoreLauncher.PluginsFolder)
-//         await CoreLauncher.PluginManager.LoadPlugins()
-//         CoreLauncher.AccountManager = new AccountManagerClass(CoreLauncher.PluginManager.ListAccountTypes())
-//         CoreLauncher.GameManager = new GameManagerClass(CoreLauncher.PluginManager.ListGames())
-//         CoreLauncher.TaskManager = new TaskManagerClass()
-//         CoreLauncher.WindowControl = new WindowControlClass()
-
-//         // await CoreLauncher.ScreenManager.GetScreen("Main").Show()
-//         await CoreLauncher.GameManager.Games[0].OpenSettings()
-
-//     }
-// )
+await CoreLauncher.ScreenManager.GetScreen("Main").Show()
