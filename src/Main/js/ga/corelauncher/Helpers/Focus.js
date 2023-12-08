@@ -18,7 +18,7 @@ async function Focus(Element, Time, Color) {
     document.body.appendChild(FocusElement)
 
     await Sleep(Time)
-    // FocusElement.remove()
+    FocusElement.remove()
     clearInterval(Interval)
 }
 
