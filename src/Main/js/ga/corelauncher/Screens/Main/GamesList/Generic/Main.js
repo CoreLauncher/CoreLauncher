@@ -14,7 +14,7 @@ return {
     Show: async function(Screen, ScreenElement, ScreenManager, Game) {
         ScreenElement.querySelector(".banner").style.setProperty(
             "background-image", 
-            `url("${Game.GetBannerBase64()}")`    
+            `url("${Game.GetBannerBase64()}")`
         )
 
         const InstanceSelect = ScreenElement.querySelector(".instanceselect")
@@ -26,6 +26,9 @@ return {
     
     ApplyHideStyle: true,
     Hide: async function(Screen, ScreenElement, ScreenManager, Data) {
-
+        ScreenElement.querySelector(".banner").style.setProperty(
+            "background-image", 
+            ""
+        )
     }
 }

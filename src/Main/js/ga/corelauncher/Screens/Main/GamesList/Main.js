@@ -9,11 +9,10 @@ return {
     Show: async function(Screen, ScreenElement, ScreenManager, Data) {
         document.querySelector(".topbar .imageholder").classList.add("showbars")
 
-        const IconsColumn = ScreenElement.querySelector(".iconcolumn")
-
         const Games = CoreLauncher.ListGames()
-
+        const IconsColumn = ScreenElement.querySelector(".iconcolumn")
         IconsColumn.innerHTML = ""
+
         for (const Game of Games) {
             const IconHolder = document.createElement("div")
             IconHolder.classList.add("icon")
@@ -44,5 +43,8 @@ return {
     ApplyHideStyle: true,
     Hide: async function(Screen, ScreenElement, ScreenManager, Data) {
         document.querySelector(".topbar .imageholder").classList.remove("showbars")
+
+        const IconsColumn = ScreenElement.querySelector(".iconcolumn")
+        IconsColumn.innerHTML = ""
     }
 }

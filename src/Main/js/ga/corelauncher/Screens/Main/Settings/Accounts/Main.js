@@ -116,5 +116,13 @@ return {
     ApplyHideStyle: true,
     Hide: async function(Screen, ScreenElement, ScreenManager, Data) {
 
+        const AccountSelectorImage = ScreenElement.querySelector(".accountselector img")
+        const AccountFilterImage = ScreenElement.querySelector(".listfilter img")
+        const AccountsList = ScreenElement.querySelector(".instanceslist")
+
+        AccountSelectorImage.src = ""
+        AccountFilterImage.src = ""
+        AccountsList.innerHTML = ""
+
     }
 }
