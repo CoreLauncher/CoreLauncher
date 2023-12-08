@@ -56,7 +56,7 @@ class CoreLauncherClass {
             }
         )
 
-        window.onbeforeunload = EventHttpsServer.close
+        window.addEventListener("beforeunload", () => { EventHttpsServer.close() })
 
         //Data
         this.Plugins = {}
