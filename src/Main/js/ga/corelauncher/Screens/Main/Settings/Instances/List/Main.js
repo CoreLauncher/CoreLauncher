@@ -2,7 +2,7 @@ return {
     Default: false,
 
     Init: async function(Screen, ScreenElement, ScreenManager, Data) {
-
+        ScreenElement.querySelector(".createbutton").addEventListener("click", () => { Screen.ParentScreen.GetScreen("Create").Show(Screen.Data) })
     },
 
     ApplyShowStyle: true,
