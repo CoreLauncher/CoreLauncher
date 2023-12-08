@@ -7,7 +7,7 @@ return {
 
     ApplyShowStyle: true,
     Show: async function(Screen, ScreenElement, ScreenManager, Game) {
-        Screen.GetScreen("List").Show(Game)
+        ScreenElement.querySelector(".title").innerText = `${Game.Name} instances`
     },
     
     ApplyHideStyle: true,

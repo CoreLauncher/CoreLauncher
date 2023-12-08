@@ -7,7 +7,7 @@ return {
 
     ApplyShowStyle: true,
     Show: async function(Screen, ScreenElement, ScreenManager, Game) {
-        Screen.GetScreen("List").Show(Game)
+
     },
     
     ApplyHideStyle: true,
