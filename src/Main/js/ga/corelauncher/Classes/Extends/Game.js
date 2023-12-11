@@ -1,25 +1,24 @@
 const ResourceBase64 = await Import("ga.corelauncher.Helpers.ResourceBase64")
 
 class Game {
-    constructor(ParentClass) {
-        const GameId = ParentClass.Id
-        this.InstanceClass = ParentClass.InstanceClass
+    constructor() {
 
-        CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${GameId}.Properties`, this.DefaultProperties())
-        CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${GameId}.Instances`, {})
+    }
 
-        console.log(this, GameId)
+    SuperConstructor() {
+        CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${this.Id}.Properties`, this.DefaultProperties())
+        CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${this.Id}.Instances`, {})
 
-        const SavedInstanceData = Object.values(CoreLauncher.DataBase.GetKey(`Game.${GameId}.Instances`))
+        const SavedInstanceData = Object.values(CoreLauncher.DataBase.GetKey(`Game.${this.Id}.Instances`))
         for (const InstanceData of SavedInstanceData) {
-            console.log(InstanceData)
+            CoreLauncher.Logger.Information(`Loading instance ${InstanceData.Name} for game ${this.Id} (${InstanceData.UUID})`)
             this.AddInstance(InstanceData)
         }
     }
 
     AddInstance(InstanceData) {
         if (!this.Instances) { this.Instances = {} }
-        const Instance = new this.InstanceClass(InstanceData, this)
+        const Instance = new this.GameInstanceClass(InstanceData, this)
         this.Instances[InstanceData.UUID] = Instance
         Instance.Save()
         return Instance

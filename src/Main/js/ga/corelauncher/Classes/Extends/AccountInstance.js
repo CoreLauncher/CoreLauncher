@@ -3,6 +3,10 @@ class AccountInstance {
 
     }
 
+    SuperConstructor() {
+
+    }
+
     Save() {
         const SaveData = this.SaveData()
         CoreLauncher.DataBase.SetKey(

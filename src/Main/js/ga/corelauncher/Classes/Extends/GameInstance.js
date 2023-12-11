@@ -4,6 +4,10 @@ class GameInstance {
         this.Game = Game
     }
 
+    SuperConstructor() {
+
+    }
+
     GetName() {
         return this.InstanceData.Name
     }

@@ -2,14 +2,17 @@ const ResourceBase64 = await Import("ga.corelauncher.Helpers.ResourceBase64")
 const CreateUUID = require("uuid").v4
 
 class AccountType {
-    constructor(Type, AccountInstanceClass) {
+    constructor() {
 
-        const AccountsData = Object.values(CoreLauncher.DataBase.GetKey("Accounts") || {}).filter((Account) => Account.Type == Type)
+    }
+
+    SuperConstructor() {
+        const AccountsData = Object.values(CoreLauncher.DataBase.GetKey("Accounts") || {}).filter((Account) => Account.Type == this.Type)
         const AccountInstances = AccountsData.map(
             (AccountData) => {
-                const AccountInstance = new AccountInstanceClass()
+                const AccountInstance = new this.AccountInstanceClass()
                 AccountInstance.FromSavedData(AccountData.Data)
-                AccountInstance.Type = Type
+                AccountInstance.Type = this.Type
                 AccountInstance.InstanceUUID = AccountData.UUID
                 AccountInstance.ConnectedAt = AccountData.ConnectedAt
                 return AccountInstance

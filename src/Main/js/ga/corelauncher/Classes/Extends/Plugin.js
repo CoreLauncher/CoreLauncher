@@ -5,6 +5,10 @@ class CoreLauncherPlugin {
 
     }
 
+    SuperConstructor() {
+        
+    }
+
     GetIconBase64() {
         return ResourceBase64(this.Icon)
     }
