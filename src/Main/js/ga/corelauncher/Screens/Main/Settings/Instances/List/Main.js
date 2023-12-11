@@ -22,6 +22,7 @@ return {
         for (const Instance of Instances) {
             const InstanceElement = InstanceTemplate.cloneNode(true)
             InstanceElement.querySelector(".name").innerText = Instance.GetName()
+            InstanceElement.querySelector("img").src = Instance.GetIcon()
             
             InstanceListElement.appendChild(InstanceElement)
         }
