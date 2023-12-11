@@ -1,6 +1,11 @@
 screen.Main screen.Settings screen.Instances .title {
   font-size: 30px;
 }
+screen.Main screen.Settings screen.Instances .instancelist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 screen.Main screen.Settings screen.Instances .instancelist .instance {
   width: 100%;
   height: 60px;
