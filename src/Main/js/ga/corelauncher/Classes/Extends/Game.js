@@ -1,9 +1,38 @@
 const ResourceBase64 = await Import("ga.corelauncher.Helpers.ResourceBase64")
 
 class Game {
-    constructor() {
-        CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${this.Id}.Properties`, this.DefaultProperties())
-        CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${this.Id}.Instances`, {})
+    constructor(ParentClass) {
+        const GameId = ParentClass.Id
+        this.InstanceClass = ParentClass.InstanceClass
+
+        CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${GameId}.Properties`, this.DefaultProperties())
+        CoreLauncher.DataBase.SetKeyIfNotExists(`Game.${GameId}.Instances`, {})
+
+        console.log(this, GameId)
+
+        const SavedInstanceData = Object.values(CoreLauncher.DataBase.GetKey(`Game.${GameId}.Instances`))
+        for (const InstanceData of SavedInstanceData) {
+            console.log(InstanceData)
+            this.AddInstance(InstanceData)
+        }
+    }
+
+    AddInstance(InstanceData) {
+        if (!this.Instances) { this.Instances = {} }
+        const Instance = new this.InstanceClass(InstanceData, this)
+        this.Instances[InstanceData.UUID] = Instance
+        Instance.Save()
+        return Instance
+    }
+
+    ListInstances() {
+        if (!this.Instances) { this.Instances = {} }
+        return Object.values(this.Instances)
+    }
+
+    GetInstance(InstanceId) {
+        if (!this.Instances) { this.Instances = {} }
+        return this.Instances[InstanceId]
     }
 
     DefaultProperties() {
@@ -59,7 +88,8 @@ class Game {
                 {
                     Name: "Instances",
                     Screen: "Instances",
-                    Data: this
+                    Data: this,
+                    Default: true
                 }
             )
         }

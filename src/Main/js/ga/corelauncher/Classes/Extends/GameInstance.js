@@ -1,7 +1,15 @@
 class GameInstance {
-    constructor(Game, InstanceId) {
+    constructor(InstanceData, Game) {
+        this.InstanceData = InstanceData
         this.Game = Game
-        this.InstanceId = InstanceId
+    }
+
+    GetName() {
+        return this.InstanceData.Name
+    }
+
+    Save() {
+        CoreLauncher.DataBase.SetKey(`Game.${this.Game.Id}.Instances.${this.InstanceData.UUID}`, this.InstanceData)
     }
 }
 
