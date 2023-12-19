@@ -32,6 +32,27 @@ class GameInstance {
         return this.InstanceData.Name
     }
 
+    Properties() {
+        return this.Game.InstanceProperties()
+    }
+
+    GetProperties() {
+        return this.InstanceData.Properties
+    }
+
+    SetProperty(PropertyId, Value) {
+        this.InstanceData.Properties[PropertyId] = Value
+        this.Save()
+    }
+
+    Versions() {
+        return this.Game.InstanceVersions()
+    }
+
+    GetVersions() {
+        return this.InstanceData.Versions
+    }
+
     Save() {
         CoreLauncher.DataBase.SetKey(`Game.${this.Game.Id}.Instances.${this.InstanceData.UUID}`, this.InstanceData)
     }
