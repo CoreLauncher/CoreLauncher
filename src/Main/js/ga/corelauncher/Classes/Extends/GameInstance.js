@@ -8,6 +8,26 @@ class GameInstance {
 
     }
 
+    async OpenSettings() {
+        const Screen = CoreLauncher.ScreenManager.GetScreen("Main.Settings")
+        const ScreenData = {
+            Title: "Settings for " + this.GetName(),
+            Tabs: []
+        }
+
+        ScreenData.Tabs.push("Instance Settings")
+        ScreenData.Tabs.push(
+            {
+                Name: "Information",
+                Screen: "InstanceInformation",
+                Data: this
+            }
+        )
+
+        await Screen.Hide()
+        await Screen.Show(ScreenData)
+    }
+
     GetName() {
         return this.InstanceData.Name
     }
