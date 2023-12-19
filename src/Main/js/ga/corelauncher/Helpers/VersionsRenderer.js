@@ -69,6 +69,7 @@ class VersionsRenderer {
 
                     const NextVersion = Versions[Versions.indexOf(Version) + 1]
                     if (!NextVersion) { return }
+                    await this.ClearSelectorsAfter(Holder, Version, Versions)
                     await this.RenderVersionSelector(Holder, NextVersion, PreSelect, Versions)
                 }
             )
@@ -85,6 +86,27 @@ class VersionsRenderer {
         } else {
             SelectorElement.classList.add("loaded")
         }
+    }
+
+    static async ClearSelectorsAfter(Holder, Version, Versions) {
+        const VersionSelectors = Holder.querySelectorAll(".renderedversionselector")
+        let Clear = false
+        for (const VersionSelector of VersionSelectors) {
+            if (Clear) {
+                await this.ClearSelector(VersionSelector)
+            }
+            if (VersionSelector.getAttribute("versionselectorid") == Version.Id) {
+                Clear = true
+            }
+        }
+    }
+
+    static async ClearSelector(Element) {
+        const VersionEntryHolderElement = Element.querySelector(".versions")
+        VersionEntryHolderElement.innerHTML = ""
+        Element.removeAttribute("value")
+        Element.classList.remove("loaded")
+        Element.classList.add("empty")
     }
 
     static async GetVersionElements(Holder) {
