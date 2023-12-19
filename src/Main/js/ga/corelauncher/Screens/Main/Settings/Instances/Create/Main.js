@@ -1,20 +1,10 @@
 const Focus = await Import("ga.corelauncher.Helpers.Focus")
 const PropertiesRenderer = await Import("ga.corelauncher.Helpers.PropertiesRenderer")
+const VersionsRenderer = await Import("ga.corelauncher.Helpers.VersionsRenderer")
 const CreateUUID = require("uuid").v4
 
-let VersionTemplate
 let InstanceVersions
-let VersionElements
 let InstanceProperties
-
-function GetVersionValues() {
-    const Versions = {}
-    for (const Version of InstanceVersions) {
-        const VersionElement = VersionElements[Version.Id]
-        Versions[Version.Id] = VersionElement.getAttribute("value")
-    }
-    return Versions
-}
 
 return {
     Default: false,
@@ -25,10 +15,13 @@ return {
         VersionTemplate = ScreenElement.querySelector(".versionsholder .version")
         VersionTemplate.remove()
 
+        const VersionsHolder = ScreenElement.querySelector(".versionsholder")
+
         ScreenElement.querySelector(".createbutton").addEventListener(
             "click",
-            () => {
-                const VersionValues = GetVersionValues()
+            async () => {
+                const VersionValues = await VersionsRenderer.GetVersionValues(VersionsHolder)
+                const VersionElements = await VersionsRenderer.GetVersionElements(VersionsHolder)
                 console.log(VersionValues)
                 for (const VersionId in VersionValues) {
                     const VersionValue = VersionValues[VersionId]
@@ -61,68 +54,10 @@ return {
         console.log(InstanceVersions)
 
         const VersionsHolder = ScreenElement.querySelector(".versionsholder")
-        VersionsHolder.innerHTML = ""
-
-        function EmptyVersionsAfter(VersionData) {
-            let VersionFound = false
-            for (const Version of InstanceVersions) {
-                if (VersionFound) {
-                    const VersionElement = VersionElements[Version.Id]
-                    VersionElement.classList.remove("loaded")
-                    VersionElement.classList.add("empty")
-                } else if (VersionData.Id == Version.Id) {
-                    VersionFound = true
-                }
-            }
-        }
-
-        async function RenderVersion(VersionData) {
-            const VersionElement = VersionElements[VersionData.Id]
-            VersionElement.classList.remove("empty")
-            VersionElement.classList.remove("loaded")
-            VersionElement.classList.add("loading")
-            const VersionsList = VersionElement.querySelector(".versions")
-            VersionsList.innerHTML = ""
-            EmptyVersionsAfter(VersionData)
-
-            const VersionValues = await VersionData.ObtainValues(GetVersionValues())
-            for (const VersionId in VersionValues) {
-                const VersionName = VersionValues[VersionId]
-                const VersionEntryElement = document.createElement("a")
-                VersionEntryElement.classList.add("versionentry")
-                VersionEntryElement.innerText = VersionName
-                VersionsList.appendChild(VersionEntryElement)
-                VersionEntryElement.addEventListener(
-                    "click",
-                    async () => {
-                        const SelectedVersion = VersionsList.querySelector(".selected")
-                        if (SelectedVersion) { SelectedVersion.classList.remove("selected") }
-                        VersionEntryElement.classList.add("selected")
-                        VersionElement.setAttribute("value", VersionId)
-                        let VersionFound = false
-                        for (const Version of InstanceVersions) {
-                            if (VersionFound) {
-                                await RenderVersion(Version)
-                                break
-                            } else if (VersionData.Id == Version.Id) {
-                                VersionFound = true
-                            }
-                        }
-                    }
-                )
-            }
-            VersionElement.classList.remove("loading")
-            VersionElement.classList.add("loaded")
-        }
-
-        for (const Version of InstanceVersions) {
-            const VersionElement = VersionTemplate.cloneNode(true)
-            VersionElement.querySelector(".name").innerText = Version.Name
-            VersionElements[Version.Id] = VersionElement
-            VersionsHolder.appendChild(VersionElement)
-        }
-
-        await RenderVersion(InstanceVersions[0])
+        VersionsRenderer.RenderVersions(
+            VersionsHolder,
+            InstanceVersions
+        )
 
         const PropertiesHolder = ScreenElement.querySelector(".propertiesholder")
         PropertiesHolder.innerHTML = ""
