@@ -41,7 +41,6 @@ class VersionsRenderer {
 
     static async RenderVersionSelector(Holder, Version, PreSelect, Versions) {
         const SelectorElement = Holder.querySelector(`[versionselectorid="${Version.Id}"]`)
-        console.log(Version)
 
         SelectorElement.classList.remove("empty")
         SelectorElement.classList.remove("loaded")
