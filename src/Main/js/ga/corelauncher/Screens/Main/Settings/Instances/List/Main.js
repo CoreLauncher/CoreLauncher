@@ -23,6 +23,7 @@ return {
             const InstanceElement = InstanceTemplate.cloneNode(true)
             InstanceElement.querySelector(".name").innerText = Instance.GetName()
             InstanceElement.querySelector("img").src = Instance.GetIcon()
+            InstanceElement.querySelector("#instancesettingsbutton").addEventListener("click", () => { Instance.OpenSettings() })
             
             InstanceListElement.appendChild(InstanceElement)
         }
