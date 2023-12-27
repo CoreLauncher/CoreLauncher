@@ -22,6 +22,24 @@ return {
         
         InstanceSelect.style.display = Game.UsesInstances ? "block" : "none"
         AccountSelect.style.display = Game.UsesAccounts ? "block" : "none"
+
+        InstanceSelect.innerHTML = ""
+        const Instances = Game.ListInstances()
+        for (const Instance of Instances) {
+            const Option = document.createElement("option")
+            Option.value = Instance.GetName()
+            Option.innerText = Instance.GetName()
+            InstanceSelect.appendChild(Option)
+        }
+
+        AccountSelect.innerHTML = ""
+        const Accounts = Game.ListAccounts()
+        for (const Account of Accounts) {
+            const Option = document.createElement("option")
+            Option.value = Account.GetName()
+            Option.innerText = Account.GetName()
+            AccountSelect.appendChild(Option)
+        }
     },
     
     ApplyHideStyle: true,
