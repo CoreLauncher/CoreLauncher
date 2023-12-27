@@ -61,6 +61,7 @@ class Game {
     }
 
     // Accounts
+    // Images
     GetIconBase64() {
         return ResourceBase64(this.Icon)
     }
