@@ -61,6 +61,11 @@ class Game {
     }
 
     // Accounts
+    ListAccounts() {
+        const AccountInstances = CoreLauncher.ListAccountInstances()
+        return AccountInstances.filter(this.AccountFilter)
+    }
+
     // Images
     GetIconBase64() {
         return ResourceBase64(this.Icon)
