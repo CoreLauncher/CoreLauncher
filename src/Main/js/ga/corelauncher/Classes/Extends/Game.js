@@ -16,6 +16,7 @@ class Game {
         }
     }
 
+    // Instances
     AddInstance(InstanceData) {
         if (!this.Instances) { this.Instances = {} }
         const Instance = new this.GameInstanceClass(InstanceData, this)
@@ -34,6 +35,7 @@ class Game {
         return this.Instances[InstanceId]
     }
 
+    // Game Properties
     DefaultProperties() {
         const DefaultProperties = {}
 
@@ -58,6 +60,7 @@ class Game {
         return CoreLauncher.DataBase.GetKey(`Game.${this.Id}.Properties`)
     }
 
+    // Accounts
     GetIconBase64() {
         return ResourceBase64(this.Icon)
     }
@@ -66,6 +69,7 @@ class Game {
         return ResourceBase64(this.Banner)
     }
 
+    // Ui shortcuts
     async OpenSettings() {
         const Screen = CoreLauncher.ScreenManager.GetScreen("Main.Settings")
         const ScreenData = {
