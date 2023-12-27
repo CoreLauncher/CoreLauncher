@@ -18,7 +18,7 @@ class AccountType {
                 return AccountInstance
             }
         )
-        this.AccountInstances = AccountInstances
+        this.AccountInstances = AccountInstances || []
     }
 
     CreateInstance() {
