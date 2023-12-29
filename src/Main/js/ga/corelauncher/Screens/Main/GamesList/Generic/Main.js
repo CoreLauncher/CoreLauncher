@@ -8,6 +8,18 @@ return {
                 Screen.Data.OpenSettings()
             }
         )
+
+        ScreenElement.querySelector("#launchbutton").addEventListener(
+            "click",
+            async function() {
+                const Game = Screen.Data
+
+                Game.Launch(
+                    ScreenElement.querySelector(".instanceselect").value,
+                    ScreenElement.querySelector(".accountselect").value
+                )
+            }
+        )
     },
 
     ApplyShowStyle: true,
