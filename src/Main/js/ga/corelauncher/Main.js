@@ -7,6 +7,7 @@ const OpenMainSettings = await Import("ga.corelauncher.Helpers.OpenMainSettings"
 
 const DataBaseClass = await Import("ga.corelauncher.Classes.DataBase")
 const ScreenManagerClass = await Import("ga.corelauncher.Classes.ScreenManager")
+const TaskManagerClass = await Import("ga.corelauncher.Classes.TaskManager")
 
 class CoreLauncherClass {
     constructor() {
@@ -26,6 +27,7 @@ class CoreLauncherClass {
         //Load Classes
         this.Logger.Information("Loading classes")
         this.DataBase = new DataBaseClass(`${this.ApplicationData}/Database.json`)
+        this.TaskManager = new TaskManagerClass()
 
         //Load event server
         this.Logger.Information("Loading event server")
