@@ -12,4 +12,7 @@ return async function(ScreenManager) {
     await ScreenManager.RegisterScreen("Main.Settings.Instances.Create", await Import("ga.corelauncher.Screens.Main.Settings.Instances.Create"))
     await ScreenManager.RegisterScreen("Main.Settings.Instances.List", await Import("ga.corelauncher.Screens.Main.Settings.Instances.List"))
     await ScreenManager.RegisterScreen("Main.Settings.Plugins", await Import("ga.corelauncher.Screens.Main.Settings.Plugins"))
+    await ScreenManager.RegisterScreen("Main.TaskManager", await Import("ga.corelauncher.Screens.Main.TaskManager"))
+    await ScreenManager.RegisterScreen("Main.TaskManager.Console", await Import("ga.corelauncher.Screens.Main.TaskManager.Console"))
+    await ScreenManager.RegisterScreen("Main.TaskManager.List", await Import("ga.corelauncher.Screens.Main.TaskManager.List"))
 }
