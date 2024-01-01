@@ -65,6 +65,12 @@ class Task extends DataGetter {
         this.UpdateBar()
     }
 
+    AddProgress(Progress) {
+        if (!this.Progress) { this.Progress = 0 }
+        this.Progress += Progress
+        this.UpdateBar()
+    }
+
     SetMaximumProgress(MaximumProgress) {
         this.MaximumProgress = MaximumProgress
         this.UpdateBar()
