@@ -7,10 +7,14 @@ class AccountInstance {
 
     }
 
+    GetId() {
+        return this.InstanceUUID
+    }
+
     Save() {
         const SaveData = this.SaveData()
         CoreLauncher.DataBase.SetKey(
-            `Accounts.${this.InstanceUUID}`,
+            `Accounts.${this.GetId()}`,
             {
                 Type: this.Type,
                 UUID: this.InstanceUUID,

@@ -32,6 +32,10 @@ class GameInstance {
         return this.InstanceData.Name
     }
 
+    GetId() {
+        return this.InstanceData.UUID
+    }
+
     Properties() {
         return this.Game.InstanceProperties()
     }
@@ -54,7 +58,7 @@ class GameInstance {
     }
 
     Save() {
-        CoreLauncher.DataBase.SetKey(`Game.${this.Game.Id}.Instances.${this.InstanceData.UUID}`, this.InstanceData)
+        CoreLauncher.DataBase.SetKey(`Game.${this.Game.Id}.Instances.${this.GetId()}`, this.InstanceData)
     }
 }
 
