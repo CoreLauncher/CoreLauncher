@@ -17,11 +17,25 @@ return {
 
         ScreenElement.querySelector(".settings").addEventListener("click", OpenMainSettings)
 
+        ScreenElement.querySelector(".taskstatus").addEventListener(
+            "click",
+            () => {
+                const TaskManagerScreen = CoreLauncher.ScreenManager.GetScreen("Main.TaskManager")
+                const GamesListScreen = CoreLauncher.ScreenManager.GetScreen("Main.GamesList")
+
+                if (TaskManagerScreen.IsShown()) {
+                    GamesListScreen.Show()
+                } else {
+                    TaskManagerScreen.Show()
+                }
+            }
+        )
+        
     },
 
     ApplyShowStyle: true,
     Show: async function(Screen, ScreenElement, ScreenManager, Data) {
-    
+
     },
     
     ApplyHideStyle: true,
