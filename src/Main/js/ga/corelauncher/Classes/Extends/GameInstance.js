@@ -36,6 +36,10 @@ class GameInstance {
         return this.InstanceData.UUID
     }
 
+    GetGame() {
+        return this.Game
+    }
+
     Properties() {
         return this.Game.InstanceProperties()
     }
