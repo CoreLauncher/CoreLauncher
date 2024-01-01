@@ -1,3 +1,21 @@
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes scroll {
+    0% {
+        // transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-33%);
+    }
+}
 
 screen.Main {
     .topbar {
@@ -13,7 +31,6 @@ screen.Main {
         display: flex;
         flex-direction: row;
         vertical-align: middle;
-        justify-content: space-between;
 
         .imageholder {
             height: 100%;
@@ -54,6 +71,87 @@ screen.Main {
                 font-weight: bold;
                 line-height: 30px;
                 -webkit-app-region: drag
+            }
+        }
+
+        .taskstatus {
+            -webkit-app-region: no-drag;
+            cursor: pointer;
+
+            height: 100%;
+            width: 200px;
+            margin-left: auto;
+            margin-right: 20px;
+            justify-self: right;
+            border: 2px solid var(--background-floating);
+            border-radius: 50px;
+
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+
+            .indicatorholder {
+                height: 100%;
+                aspect-ratio: 1/1;
+                padding: 2px;
+
+                .indicator {
+                    height: 100%;
+                    aspect-ratio: 1/1;
+                    border-radius: 50px;
+                    background-color: var(--border-color);
+                    overflow: hidden;
+                    position: relative;
+
+                    animation: rotate 2s linear infinite;
+
+                    .indicatorline {
+                        height: 50%;
+                        aspect-ratio: 1/1;
+                        background-color: var(--color);
+                        position: absolute;
+                    }
+
+                    .indicatorinnerbackground, .indicatorinner {
+                        height: calc(100% - var(--padding) * 2);
+                        aspect-ratio: 1/1;
+                        position: absolute;
+                        top: var(--padding);
+                        left: var(--padding);
+                        border-radius: 50px;
+                    }
+
+                    .indicatorinnerbackground {
+                        --padding: 2px;
+                        background-color: var(--background-tertiary);
+
+                    }
+
+                    .indicatorinner {
+                        --padding: 4px;
+                        background-color: var(--color);
+                    }
+                }
+            }
+
+            .statustext {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+                margin-right: 10px;
+                
+                a {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    animation: scroll 5s linear infinite;
+
+                    &::after, &::before {
+                        content: attr(data-text);
+                        margin: 5px;
+                    }
+                }
             }
         }
 
