@@ -39,6 +39,10 @@ class Screen {
         return GetScreen(this, Name, ReturnParent)
     }
 
+    IsShown() {
+        return this.ParentScreen.CurrentScreen == this
+    }
+
     ShowStyle() {
         this.ScreenElement.style.visibility = "visible"
         this.ScreenElement.style.display = null
@@ -56,7 +60,7 @@ class Screen {
         }
 
         if (this.ParentScreen.CurrentScreen) {
-            if (this.ParentScreen.CurrentScreen == this) { return }
+            if (this.IsShown()) { return }
             await this.ParentScreen.CurrentScreen.Hide()
         }
 
