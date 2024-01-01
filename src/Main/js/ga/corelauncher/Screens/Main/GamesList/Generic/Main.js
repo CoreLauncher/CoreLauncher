@@ -39,7 +39,7 @@ return {
         const Instances = Game.ListInstances()
         for (const Instance of Instances) {
             const Option = document.createElement("option")
-            Option.value = Instance.GetName()
+            Option.value = Instance.GetId()
             Option.innerText = Instance.GetName()
             InstanceSelect.appendChild(Option)
         }
@@ -48,7 +48,7 @@ return {
         const Accounts = Game.ListAccounts()
         for (const Account of Accounts) {
             const Option = document.createElement("option")
-            Option.value = Account.GetName()
+            Option.value = Account.GetId()
             Option.innerText = Account.GetName()
             AccountSelect.appendChild(Option)
         }
