@@ -1,8 +1,8 @@
 const ResourceBase64 = await Import("ga.corelauncher.Helpers.ResourceBase64")
 
 class Game {
-    constructor() {
-
+    constructor(Plugin) {
+        this.Plugin = Plugin
     }
 
     SuperConstructor() {
@@ -14,6 +14,11 @@ class Game {
             CoreLauncher.Logger.Information(`Loading instance ${InstanceData.Name} for game ${this.Id} (${InstanceData.UUID})`)
             this.AddInstance(InstanceData)
         }
+    }
+
+    // Getters
+    GetPlugin() {
+        return this.Plugin
     }
 
     // Instances
