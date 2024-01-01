@@ -22,7 +22,7 @@ class AccountType {
     }
 
     CreateInstance() {
-        const Instance = new this.InstanceClass()
+        const Instance = new this.AccountInstanceClass()
         Instance.Type = this.Type
         Instance.InstanceUUID = CreateUUID()
         Instance.ConnectedAt = new Date()
