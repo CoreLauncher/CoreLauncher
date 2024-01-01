@@ -9,6 +9,7 @@ async function ReplaceImage(ImageTag, SvgUrl) {
     const Svg = await Response.text()
     const SvgElement = ElementFromXml(Svg)
     SvgElement.setAttribute("src", SvgUrl)
+    SvgElement.querySelectorAll("[fill]").forEach(Element => Element.removeAttribute("fill"))
     ImageTag.getAttribute("class") ? SvgElement.setAttribute("class", ImageTag.getAttribute("class")) : null
     ImageTag.replaceWith(SvgElement)
 }
