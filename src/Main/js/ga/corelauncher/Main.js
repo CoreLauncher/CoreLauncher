@@ -111,7 +111,7 @@ class CoreLauncherClass {
     }
 
     GetAccountInstance(Id) {
-        return this.ListAccountInstances().find(AccountInstance => AccountInstance.InstanceUUID == Id)
+        return this.ListAccountInstances().find(AccountInstance => AccountInstance.GetId() == Id)
     }
 
     ListPlugins() {
