@@ -80,7 +80,7 @@ class VersionsRenderer {
 
         SelectorElement.classList.remove("loading")
         if (PreSelect[Version.Id] && !Version.Editable) {
-            SelectorElement.querySelector(".lockedtext").innerText = `Version is locked to ${PreSelect[Version.Id]}. create a new instance to change it`
+            SelectorElement.querySelector(".lockedtext").innerText = `Version is locked to ${PreSelect[Version.Id]}. Create a new instance to change it.`
             SelectorElement.classList.add("locked")
         } else {
             SelectorElement.classList.add("loaded")
