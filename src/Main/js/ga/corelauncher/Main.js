@@ -117,6 +117,10 @@ class CoreLauncherClass {
     ListPlugins() {
         return Object.values(this.Plugins)
     }
+
+    GetPlugin(Id) {
+        return this.Plugins[Id]
+    }
 }
 
 const CoreLauncher = new CoreLauncherClass()
