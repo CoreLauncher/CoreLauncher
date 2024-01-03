@@ -81,7 +81,7 @@ class Game {
     }
 
     // Ui shortcuts
-    async OpenSettings() {
+    async OpenSettings(DefaultPage="Instances") {
         const Screen = CoreLauncher.ScreenManager.GetScreen("Main.Settings")
         const ScreenData = {
             Title: "Settings for " + this.Name,
@@ -102,11 +102,12 @@ class Game {
                 {
                     Name: "Instances",
                     Screen: "Instances",
-                    Data: this,
-                    Default: true
+                    Data: this
                 }
             )
         }
+
+        ScreenData.Tabs.find(Tab => Tab.Screen == DefaultPage).Default = true
 
         await Screen.Hide()
         await Screen.Show(ScreenData)
