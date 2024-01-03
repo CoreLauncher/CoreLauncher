@@ -61,6 +61,11 @@ class GameInstance {
         return this.InstanceData.Versions
     }
 
+    SetVersion(VersionType, VersionId) {
+        this.InstanceData.Versions[VersionType] = VersionId
+        this.Save()
+    }
+
     Save() {
         CoreLauncher.DataBase.SetKey(`Game.${this.Game.Id}.Instances.${this.GetId()}`, this.InstanceData)
     }

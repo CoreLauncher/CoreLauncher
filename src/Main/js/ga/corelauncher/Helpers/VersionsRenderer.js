@@ -25,7 +25,7 @@ const DeSVG = await Import("ga.corelauncher.Helpers.DeSVG")
 DeSVG(VersionTemplate)
 
 class VersionsRenderer {
-    static async RenderVersions(Holder, Versions, PreSelect = {}) {
+    static async RenderVersions(Holder, Versions, PreSelect = {}, OnChange = () => {}) {
         Holder.innerHTML = ""
         Holder.classList.add("renderedversionselectorholder")
 
@@ -36,10 +36,10 @@ class VersionsRenderer {
             Holder.appendChild(VersionElement)
         }
 
-        this.RenderVersionSelector(Holder, Versions[0], PreSelect, Versions)
+        this.RenderVersionSelector(Holder, Versions[0], PreSelect, Versions, OnChange)
     }
 
-    static async RenderVersionSelector(Holder, Version, PreSelect, Versions) {
+    static async RenderVersionSelector(Holder, Version, PreSelect, Versions, OnChange) {
         const SelectorElement = Holder.querySelector(`[versionselectorid="${Version.Id}"]`)
 
         SelectorElement.classList.remove("empty")
@@ -66,10 +66,12 @@ class VersionsRenderer {
                     VersionEntryElement.classList.add("selected")
                     SelectorElement.setAttribute("value", VersionId)
 
+                    OnChange(VersionId, Version.Id, VersionName, Version)
+
                     const NextVersion = Versions[Versions.indexOf(Version) + 1]
                     if (!NextVersion) { return }
                     await this.ClearSelectorsAfter(Holder, Version, Versions)
-                    await this.RenderVersionSelector(Holder, NextVersion, PreSelect, Versions)
+                    await this.RenderVersionSelector(Holder, NextVersion, PreSelect, Versions, OnChange)
                 }
             )
 

@@ -8,7 +8,14 @@ return {
     Default: false,
 
     Init: async function(Screen, ScreenElement, ScreenManager, Data) {
-
+        ScreenElement.querySelector(".deletebutton").addEventListener(
+            "click",
+            () => {
+                const Instance = Screen.Data
+                Instance.Delete()
+                Instance.Game.OpenSettings("Instances")
+            }
+        )
     },
 
     ApplyShowStyle: true,
@@ -20,7 +27,7 @@ return {
             PropertiesHolder,
             Instance.Properties(),
             Instance.GetProperties(),
-            function(Value, PropertyData) {
+            (Value, PropertyData) => {
                 Instance.SetProperty(PropertyData.Id, Value)
             }
         )
@@ -29,7 +36,10 @@ return {
         VersionsRenderer.RenderVersions(
             VersionsHolder,
             Instance.Versions(),
-            Instance.GetVersions()
+            Instance.GetVersions(),
+            (VersionId, VersionType) => {
+                Instance.SetVersion(VersionType, VersionId)
+            }
         )
 
     },
