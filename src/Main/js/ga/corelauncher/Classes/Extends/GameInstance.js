@@ -69,6 +69,11 @@ class GameInstance {
     Save() {
         CoreLauncher.DataBase.SetKey(`Game.${this.Game.Id}.Instances.${this.GetId()}`, this.InstanceData)
     }
+
+    Delete() {
+        delete this.Game.Instances[this.GetId()]
+        CoreLauncher.DataBase.RemoveKey(`Game.${this.Game.Id}.Instances.${this.GetId()}`)
+    }
 }
 
 return GameInstance
