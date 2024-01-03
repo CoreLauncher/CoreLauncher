@@ -12,6 +12,6 @@ return {
     
     ApplyHideStyle: true,
     Hide: async function(Screen, ScreenElement, ScreenManager, Data) {
-
+        Screen.CurrentScreen.Hide()
     }
 }
