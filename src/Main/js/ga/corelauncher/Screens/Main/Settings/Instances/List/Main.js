@@ -14,7 +14,7 @@ return {
     Show: async function(Screen, ScreenElement, ScreenManager, Game) {
         ScreenElement.querySelector(".title").innerText = `${Game.Name} instances`
 
-        const Instances = Game.ListInstances()
+        const Instances = Game.ListInstances().sort((A, B) => { return A.GetLastPlayed() - B.GetLastPlayed() }).reverse()
 
         const InstanceListElement = ScreenElement.querySelector(".instancelist")
         InstanceListElement.innerHTML = ""

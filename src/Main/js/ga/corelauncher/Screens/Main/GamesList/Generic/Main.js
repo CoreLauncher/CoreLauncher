@@ -36,7 +36,7 @@ return {
         AccountSelect.style.display = Game.UsesAccounts ? "block" : "none"
 
         InstanceSelect.innerHTML = ""
-        const Instances = Game.ListInstances()
+        const Instances = Game.ListInstances().sort((A, B) => { return A.GetLastPlayed() - B.GetLastPlayed() }).reverse()
         for (const Instance of Instances) {
             const Option = document.createElement("option")
             Option.value = Instance.GetId()

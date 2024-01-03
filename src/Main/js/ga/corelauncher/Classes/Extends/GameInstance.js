@@ -66,6 +66,15 @@ class GameInstance {
         this.Save()
     }
 
+    GetLastPlayed() {
+        return this.InstanceData.LastPlayed || 0
+    }
+
+    SetLastPlayed() {
+        this.InstanceData.LastPlayed = Date.now()
+        this.Save()
+    }
+
     Save() {
         CoreLauncher.DataBase.SetKey(`Game.${this.Game.Id}.Instances.${this.GetId()}`, this.InstanceData)
     }
