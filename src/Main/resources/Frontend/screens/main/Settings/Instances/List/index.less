@@ -1,0 +1,38 @@
+screen.Main screen.Settings screen.Instances {
+    .title {
+        font-size: 30px;
+    }
+
+    .instancelist {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        
+        .instance {
+            width: 100%;
+            height: 60px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: var(--background-tertiary);
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            img {
+                height: 100%;
+                aspect-ratio: 1/1;
+                border-radius: 10px;
+                padding: 5px;
+                background-color: var(--background-primary);
+            }
+
+            button {
+                margin-left: auto;
+                height: 100%;
+                aspect-ratio: 1/1;
+                padding: 5px;
+            }
+        }
+    }
+}

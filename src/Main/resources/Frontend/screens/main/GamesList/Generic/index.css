@@ -1,0 +1,40 @@
+screen.Main screen.GamesList screen.Generic .banner {
+  width: 100%;
+  height: 450px;
+  overflow-y: hidden;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0px;
+}
+screen.Main screen.GamesList screen.Generic .container {
+  width: 100%;
+  transform: translateY(450px);
+}
+screen.Main screen.GamesList screen.Generic .container .playbar {
+  height: 70px;
+  background-color: var(--background-secondary);
+  padding: 10px;
+}
+screen.Main screen.GamesList screen.Generic .container .playbar button {
+  height: 50px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+screen.Main screen.GamesList screen.Generic .container .playbar betterselect,
+screen.Main screen.GamesList screen.Generic .container .playbar select {
+  float: right;
+  height: 100%;
+}
+screen.Main screen.GamesList screen.Generic .container .playbar .settingsbutton {
+  height: 100%;
+  aspect-ratio: 1/1;
+  float: right;
+  padding: 4px;
+  fill: var(--background-secondary);
+}
+screen.Main screen.GamesList screen.Generic .container .playbar betterselect,
+screen.Main screen.GamesList screen.Generic .container .playbar select,
+screen.Main screen.GamesList screen.Generic .container .playbar .settingsbutton {
+  margin-left: 10px;
+}

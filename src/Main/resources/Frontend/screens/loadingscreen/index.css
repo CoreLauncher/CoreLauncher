@@ -1,0 +1,21 @@
+screen.LoadingScreen {
+  transition: visibility 0.3s, opacity 0.3s;
+  z-index: 1000000;
+  background-color: var(--background-primary);
+  -webkit-app-region: drag;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+screen.LoadingScreen img {
+  width: 150px;
+}
+screen.LoadingScreen a {
+  font-weight: bold;
+  text-transform: capitalize;
+  text-align: center;
+}
+screen.loadingscreen.hidden .holder {
+  -webkit-app-region: no-drag;
+}

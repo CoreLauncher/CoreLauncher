@@ -1,0 +1,39 @@
+body {
+    color: var(--text-normal);
+    background-color: var(--background-primary);
+    font-family: var(--font-inter);
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    user-select: none;
+}
+
+img {
+    pointer-events: none;
+}
+
+screen {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+}
+
+.draggable {
+    -webkit-app-region: drag;
+}
+
+.propertyrow {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.linkappearance {
+    color: #3838ff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+* {
+    box-sizing: border-box;
+}
