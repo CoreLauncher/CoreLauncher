@@ -1,0 +1,181 @@
+@import url("./subscreens/about/index.css");
+@import url("./subscreens/accounts/index.css");
+@import url("./subscreens/changelog/index.css");
+@import url("./subscreens/gameinfo/index.css");
+@import url("./subscreens/instanceinfo/index.css");
+@import url("./subscreens/instances/index.css");
+@import url("./subscreens/plugins/index.css");
+
+
+.transitionbackground {
+    &.hidden {
+        opacity: 0;
+    }
+
+    transition: opacity 0.2s;
+    opacity: 1;
+
+    width: 100%;
+    display: inline-block;
+
+    background-color: var(--background-primary);
+
+    z-index: 4500;
+    pointer-events: none;
+}
+
+.screen.settingswindow {
+    transform-origin: center;
+    transform: scale(1);
+    transition: transform 0.2s;
+    z-index: 5000 !important;
+    visibility: visible;
+
+    * {
+        opacity: 1;
+        transition: opacity 0.2s;
+    }
+
+
+    &.hidden {
+        transform: scale(.8);
+        * {
+            opacity: 0;
+        }
+    }
+    
+    .closebutton {
+        --color: var(--background-tertiary);
+        transition: transform 0.1s;
+        transform-origin: center center;
+
+        &:hover {
+            --color: var(--background-floating);
+            transform: scale(1.1);
+        }
+
+        &.isreturn {
+            .closeicon {
+                display: none;
+            }
+
+            .returnicon {
+                display: block;
+            }
+        }
+
+        .returnicon {
+            display: none;
+        }
+
+        cursor: pointer;
+
+        display: block;
+        position: absolute;
+        border-color: var(--color);
+        border-style: solid;
+        border-width: 3px;
+        border-radius: 50px;
+        width: 45px;
+        height: 45px;
+        top: 75px;
+        right: 75px;
+
+        svg {
+            @margin: 10px;
+            margin: @margin;
+            @size: calc(100% - @margin * 2);
+            width: @size;
+            height: @size;
+            fill: var(--color);
+        }
+
+        a {
+            display: block;
+            width: 100%;
+            text-align: center;
+            color: var(--color);
+            font-weight: bold;
+            position: absolute;
+            top: 45px;
+            margin-top: 3px
+        }
+    }
+
+    .settingslist, .settingsbody {
+        float: left;
+        margin-top: 100px;
+        margin-right: 0px;
+    }
+
+    .settingslist {
+        margin-left: 100px;
+        width: 200px;
+
+        .tag {
+            width: calc(100% - 20px);
+            height: 12px;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-align: right;
+            display: block;
+            margin-right: 20px;
+            margin-bottom: 3px;
+        }
+
+        .settingstab {
+            @tabheight: 30px;
+            height: @tabheight;
+            width: 100%;
+            background-color: var(--background-secondary);
+            border-radius: 8px;
+            margin-bottom: 4px;
+            overflow: hidden;
+            position: relative;
+
+            .title, .indicator {
+                float: right;
+                height: 100%;
+                width: 100%;
+                text-align: right;
+                line-height: @tabheight;
+                font-size: 13px;
+                font-weight: bold;
+
+                transition: right 0.1s;
+                position: absolute
+            }
+
+            .title {
+                right: 20px;
+                text-transform: uppercase;
+            }
+
+            .indicator {
+                position: absolute;
+                right: -50px;
+            }
+
+            &:hover:not(.active) {
+                .title {
+                    right: 30px;
+                }
+            }
+
+            &.active {
+                .title {
+                    right: 40px;
+                }
+                .indicator {
+                    right: 20px;
+                }
+            }
+        }
+    }
+
+    .settingsbody {
+        width: 50%;
+        margin-left: 20px;
+    }
+}

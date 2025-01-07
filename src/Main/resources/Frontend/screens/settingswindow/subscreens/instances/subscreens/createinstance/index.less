@@ -1,0 +1,119 @@
+
+.screen.settingswindow .screen.instances .screen.createinstance {
+
+    .createbutton, .cancelbutton {
+        float: right;
+        margin-left: 10px;
+    }
+
+    .issuesdisplay {
+        margin-top: 20px;
+        .issuestobefixed {
+            margin-left: 20px;
+        }
+    }
+
+    .versionlist {
+        width: 100%;
+        display: block;
+
+        .versionselector {
+            height: 300px;
+            width: 175px;
+            position: relative;
+            float: left;
+            margin-right: 10px;
+            margin-top: 10px;
+            background-color: var(--background-secondary-alt);
+            border-radius: 10px;
+
+            .versionname {
+                height: 10%;
+                width: 100%;
+                text-align: center;
+                line-height: 30px;
+                display: inline-block;
+
+                background-color: var(--background-tertiary);
+
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+
+            .versionentries {
+                height: 90%;
+                width: 100%;
+
+                background-color: var(--background-secondary-alt);
+
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+
+                overflow-y: auto;
+                overflow-x: hidden;
+
+                .versionentry {
+                    width: 100%;
+                    height: 30px;
+                    line-height: 30px;
+                    display: block;
+                    text-align: center;
+
+                    cursor: pointer;
+                    transition: background-color 0.2s ease-in-out;
+                    &:hover {
+                        background-color: var(--background-secondary);
+                    }
+
+                    &.selected {
+                        background-color: var(--background-secondary);
+                        border: 3px solid var(--text-muted);
+                        line-height: 25px;
+                    }
+                }
+            }
+
+            &.isloading {
+                .loadingimage {
+                    opacity: 1;
+                }
+            }
+
+            &.isempty {
+                .emptytext {
+                    opacity: 1;
+                }
+            }
+
+            .emptytext, .loadingimage {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+                opacity: 0;
+                transition: opacity 0.2s ease-in-out;
+            }
+
+            .emptytext {
+                font-size: 30px;
+                font-weight: bold;
+            }
+
+            .loadingimage {
+                width: 90%;
+            }
+
+        }
+    }
+
+    .versioncomment {
+        font-size: 12px;
+    }
+
+    .instanceproperties {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+}

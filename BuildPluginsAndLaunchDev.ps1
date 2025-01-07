@@ -1,0 +1,1 @@
+cd ..\Default-plugins\; .\BuildInstall.ps1; cd ..\CoreLauncher\; .\LaunchDev.ps1

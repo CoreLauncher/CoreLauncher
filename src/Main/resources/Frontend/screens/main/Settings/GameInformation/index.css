@@ -1,0 +1,6 @@
+screen.Main screen.Settings screen.GameInformation .title {
+  font-size: 30px;
+}
+screen.Main screen.Settings screen.GameInformation .propertiestitle {
+  font-weight: bold;
+}

@@ -1,6 +1,6 @@
 {
     "liveServer.settings.fullReload": false,
-    "liveServer.settings.root": "/Frontend/",
+    "liveServer.settings.root": "/src/Main/resources/Frontend",
     "liveServer.settings.port": 9874,
     "liveServer.settings.useBrowserPreview": false,
     "liveServer.settings.NoBrowser": true,
