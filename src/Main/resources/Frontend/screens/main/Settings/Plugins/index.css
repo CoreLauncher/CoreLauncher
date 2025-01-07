@@ -1,0 +1,46 @@
+screen.Main screen.Settings screen.Plugins {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+screen.Main screen.Settings screen.Plugins .plugin {
+  width: 100%;
+  background-color: var(--background-secondary);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+screen.Main screen.Settings screen.Plugins .plugin .topholder {
+  height: 60px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+screen.Main screen.Settings screen.Plugins .plugin .topholder .icon {
+  height: 100%;
+  padding: 3px;
+  border-radius: 10px;
+  background-color: var(--background-primary);
+}
+screen.Main screen.Settings screen.Plugins .plugin .topholder .nameholder {
+  display: flex;
+  flex-direction: column;
+}
+screen.Main screen.Settings screen.Plugins .plugin .topholder .nameholder .creator {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+screen.Main screen.Settings screen.Plugins .plugin .bottomholder {
+  padding: 10px;
+  background-color: var(--background-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+}
+screen.Main screen.Settings screen.Plugins .plugin .bottomholder .actions .button-default {
+  font-size: 10px;
+}

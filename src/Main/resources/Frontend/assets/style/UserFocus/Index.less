@@ -1,0 +1,22 @@
+@keyframes zoom {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(1.03);
+        opacity: 0;
+    }
+}
+
+.focus {
+    position: absolute;
+    z-index: 999999999999;
+    transform: scale(100px);
+    border-radius: 10px;
+    pointer-events: none;
+    box-shadow: 0px 0px 10px 2px var(--color), 0px 0px 10px 2px var(--color) inset;
+
+    animation-name: zoom;
+    animation-timing-function: ease-in-out;
+}

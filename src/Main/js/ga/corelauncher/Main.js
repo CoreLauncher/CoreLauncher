@@ -1,96 +1,132 @@
 const FS = require("fs-extra")
+const Path = require("path")
+const Express = require("express")
 
-globalThis.CoreLauncher = {}
-CoreLauncher.DevMode = process.env.CORELAUNCHER_DEV == "true"
-CoreLauncher.ApplicationData = `${TypeWriter.ApplicationData}/CoreLauncher`
-CoreLauncher.PluginsFolder = `${CoreLauncher.ApplicationData}/Plugins`
-CoreLauncher.PluginDataFolder = `${CoreLauncher.ApplicationData}/PluginData`
+const WaitForEvent = await Import("ga.corelauncher.Helpers.WaitForEvent")
+const OpenMainSettings = await Import("ga.corelauncher.Helpers.OpenMainSettings")
 
-CoreLauncher.Electron = await(await Import("electronhelper"))(
-    {
-        Id: "CoreLauncher",
-        Name: "CoreLauncher",
-        Icon: {
-            Windows: "CoreLauncher:/ico.ico",
-            MacOs: "CoreLauncher:/ico.icns",
+const DataBaseClass = await Import("ga.corelauncher.Classes.DataBase")
+const ScreenManagerClass = await Import("ga.corelauncher.Classes.ScreenManager")
+const TaskManagerClass = await Import("ga.corelauncher.Classes.TaskManager")
+
+class CoreLauncherClass {
+    constructor() {
+        this.DevMode = process.env.CORELAUNCHER_DEV == "true"
+        this.RunId = require("uuid").v4()
+        this.Logger = TypeWriter.CreateLogger("CoreLauncher")
+
+        //Folders
+        this.Logger.Information("Loading folders")
+        this.ApplicationData = Path.normalize(`${TypeWriter.ApplicationData}/CoreLauncher`)
+        this.PluginsFolder = Path.normalize(`${this.ApplicationData}/Plugins`)
+        this.PluginDataFolder = Path.normalize(`${this.ApplicationData}/PluginData`)
+        FS.ensureDirSync(this.ApplicationData)
+        FS.ensureDirSync(this.PluginsFolder)
+        FS.ensureDirSync(this.PluginDataFolder)
+
+        //Load Classes
+        this.Logger.Information("Loading classes")
+        this.DataBase = new DataBaseClass(`${this.ApplicationData}/Database.json`)
+        this.TaskManager = new TaskManagerClass()
+
+        //Load event server
+        this.Logger.Information("Loading event server")
+        this.EventServer = Express()
+        const EventHttpsServer = this.EventServer.listen(9876)
+        this.Logger.Information("Event listening on port 9876")
+        
+        this.EventServer.get(
+            "/accountlink",
+            async (Request, Response) => {
+                if (!Request.query.d) { return }
+                const Data = JSON.parse(Buffer.from(Request.query.d, "base64").toString("utf8"))
+                const AccountType = CoreLauncher.GetAccountType(Data.Type)
+                if (!AccountType) { return }
+                if (!await AccountType.ConnectionDataValid(Data.Data)) { OpenMainSettings("Accounts"); return }
+                const AccountInstance = AccountType.CreateInstance()
+                await AccountInstance.FromConnectionData(Data.Data)
+                OpenMainSettings("Accounts")
+            }
+        )
+
+        nw.Window.get().on(
+            "close",
+            () => {
+                EventHttpsServer.close()
+                nw.Window.get().close(true)
+            }
+        )
+
+        window.addEventListener("beforeunload", () => { EventHttpsServer.close() })
+
+        //Data
+        this.Plugins = {}
+    }
+
+    async AsyncLoad() {
+        //Register Screens
+        this.ScreenManager = new ScreenManagerClass()
+        const ScreenRegistry = await Import("ga.corelauncher.Screens.Registry")
+        await ScreenRegistry(this.ScreenManager)
+    }
+
+    async LoadPlugins() {
+        CoreLauncher.Logger.Information(`Loading plugins from ${this.PluginsFolder}`)
+        const Files = FS.readdirSync(this.PluginsFolder)
+        for (const FileName of Files) {
+            const FilePath = Path.normalize(`${this.PluginsFolder}/${FileName}`)
+            const Plugin = await TypeWriter.LoadFile(FilePath)
+            if (!Plugin.PackageInfo.Entrypoints.CoreLauncherPlugin) { continue }
+            CoreLauncher.Logger.Information(`Loading plugin ${Plugin.PackageInfo.Id}`)
+            const PluginDataFolder = `${this.PluginDataFolder}/${Plugin.PackageInfo.Id}`
+            FS.ensureDirSync(PluginDataFolder)
+
+            const PluginClass = await Plugin.LoadEntrypoint("CoreLauncherPlugin")
+            const PluginInstance = new PluginClass(PluginDataFolder)
+            this.Plugins[Plugin.PackageInfo.Id] = PluginInstance
+            await PluginInstance.Load()
         }
     }
-)
-CoreLauncher.ElectronApplication = CoreLauncher.Electron.app
-await CoreLauncher.ElectronApplication.whenReady()
 
-FS.ensureDirSync(CoreLauncher.ApplicationData)
-FS.ensureDirSync(CoreLauncher.PluginsFolder)
-FS.ensureDirSync(CoreLauncher.PluginDataFolder)
-
-CoreLauncher.DataBase = new (await Import("ga.corelauncher.Classes.DataBase"))(`${CoreLauncher.ApplicationData}/Database.json`)
-CoreLauncher.PluginManager = new (await Import("ga.corelauncher.Classes.PluginManager"))(CoreLauncher.PluginsFolder)
-await CoreLauncher.PluginManager.LoadPlugins()
-CoreLauncher.AccountManager = new (await Import("ga.corelauncher.Classes.AccountManager"))(CoreLauncher.PluginManager.ListAccountTypes())
-CoreLauncher.GameManager = new (await Import("ga.corelauncher.Classes.GameManager"))(CoreLauncher.PluginManager.ListGames())
-CoreLauncher.TaskManager = new (await Import("ga.corelauncher.Classes.TaskManager"))()
-CoreLauncher.WindowControl = new (await Import("ga.corelauncher.Classes.WindowControl"))
-
-CoreLauncher.IPCMain = CoreLauncher.Electron.ipcMain
-const ObjectPiper = new (await Import("ga.corelauncher.ObjectPiper"))(CoreLauncher.IPCMain, CoreLauncher, "CoreLauncher")
-CoreLauncher.BrowserWindow = new CoreLauncher.Electron.BrowserWindow(
-    {
-        show: false,
-        frame: false,
-        center: true,
-        titleBarStyle: "hidden",
-
-        width: 275,
-        height: 400,
-        minWidth: 1000,
-        minHeight: 600,
-
-        webPreferences: {
-            preload: TypeWriter.ResourceManager.GetFilePath("CoreLauncher", "/Frontend/preload.js")
-        }
+    ListGames() {
+        return Object.values(this.Plugins).flatMap(Plugin => Plugin.Games)
     }
-)
-CoreLauncher.BrowserWindow.setResizable(false)
+    
+    GetGame(Id) {
+        return this.ListGames().find(Game => Game.Id == Id)
+    }
 
-await Import("ga.corelauncher.IPC.Pipes.AccountManager")
-await Import("ga.corelauncher.IPC.Pipes.DataBase")
-await Import("ga.corelauncher.IPC.Pipes.GameManager")
-await Import("ga.corelauncher.IPC.Pipes.PluginManager")
-await Import("ga.corelauncher.IPC.Pipes.TaskManager")
-await Import("ga.corelauncher.IPC.Pipes.WindowControl")
+    ListAccountTypes() {
+        return Object.values(this.Plugins).flatMap(Plugin => Plugin.AccountTypes)
+    }
 
-CoreLauncher.StaticServer = (await Import("me.corebyte.static"))(
-    9875,
-    "CoreLauncher",
-    "Frontend"
-)
+    GetAccountType(Id) {
+        return this.ListAccountTypes().find(AccountType => AccountType.Type == Id)
+    }
 
-if (CoreLauncher.DevMode) {
-    TypeWriter.Logger.Warning("We are running in dev env");
-    CoreLauncher.BrowserWindow.loadURL("http://localhost:9874");
-    CoreLauncher.BrowserWindow.openDevTools();
-} else {
-    CoreLauncher.BrowserWindow.loadURL("http://localhost:9875");
+    ListAccountInstances(Type) {
+        const Instances = this.ListAccountTypes().flatMap(AccountType => AccountType.AccountInstances)
+        if (Type) { return Instances.filter(Instance => Instance.Type == Type) }
+        return Instances
+    }
+
+    GetAccountInstance(Id) {
+        return this.ListAccountInstances().find(AccountInstance => AccountInstance.GetId() == Id)
+    }
+
+    ListPlugins() {
+        return Object.values(this.Plugins)
+    }
+
+    GetPlugin(Id) {
+        return this.Plugins[Id]
+    }
 }
 
-CoreLauncher.BrowserWindow.once(
-    "ready-to-show",
-    function () {
-        CoreLauncher.BrowserWindow.show();
+const CoreLauncher = new CoreLauncherClass()
+globalThis.CoreLauncher = CoreLauncher
+await WaitForEvent(document, "DOMContentLoaded")
+await CoreLauncher.AsyncLoad()
+await CoreLauncher.LoadPlugins()
 
-        CoreLauncher.BrowserWindow.setResizable(true);
-        CoreLauncher.BrowserWindow.setSize(1000, 600);
-        CoreLauncher.BrowserWindow.center();
-    }
-);
-
-CoreLauncher.BrowserWindow.on(
-    "resize",
-    function () {
-        const Size = CoreLauncher.BrowserWindow.getSize();
-        CoreLauncher.DataBase.SetKey("Window.Width", Size[0]);
-        CoreLauncher.DataBase.SetKey("Window.Height", Size[1]);
-    }
-);
-
-
+await CoreLauncher.ScreenManager.GetScreen("Main").Show()

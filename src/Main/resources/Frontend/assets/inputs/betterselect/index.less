@@ -1,0 +1,69 @@
+betterselect {
+    background-color: var(--button-floating);
+    color: var(--text-primary);
+    border-radius: 5px;
+    padding: 2px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+
+    display: flex;
+    align-items: center;
+
+    &::after {
+        content: "▼";
+        font-size: 10px;
+        margin-left: 5px;
+    }
+
+    .expand {
+        display: none;
+        position: absolute;
+        flex-direction: column;
+        background-color: var(--button-floating);
+        
+        border-radius: 5px;
+
+        transform: translateX(-10px) translateY(-80px);
+
+        betteroption {
+            min-height: var(--select-height);
+            min-width: var(--select-width);
+            padding: 2px;
+            border-radius: 5px;
+        }
+
+        betteroption:hover {
+            background-color: var(--button-floating-hover);
+        }
+    }
+
+    &.expanded {
+        &::after {
+            content: "▲";
+        }
+
+        betteroption {
+            display: flex !important;
+        }
+
+        .expand {
+            display: flex;
+        }
+    }
+
+    &:hover {
+        background-color: var(--button-floating-hover);
+    }
+
+    betteroption {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        height: 100%;
+        &:not([selected]) {
+            display: none;
+        }
+
+    }
+}

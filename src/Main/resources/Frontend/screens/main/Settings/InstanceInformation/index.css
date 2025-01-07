@@ -1,0 +1,7 @@
+screen.Main screen.Settings screen.InstanceInformation .instancename {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+screen.Main screen.Settings screen.InstanceInformation .header {
+  font-weight: bold;
+}

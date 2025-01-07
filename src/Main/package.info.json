@@ -1,33 +1,37 @@
 {
-	"Id": "CoreLauncher",
-	"Name": "CoreLauncher",
-	"Description": "A Test for TypeWriter",
-	"Version": "2.0.0",
-	"Authors": {
-		"Developers": [
-			"CoreByte"
-		],
-		"Contributors": []
-	},
-	"Contact": {
-		"Website": "https://corelauncher.ga",
-		"Source": "https://github.com/CoreLauncher/CoreLauncher",
-		"Socials": {}
-	},
-	"Dependencies": [
-		"npm+fs-extra@11.1.1",
-		"npm+hash-anything@1.3.3",
-		"npm+js-base64@3.7.5",
-		"npm+base64-img@1.0.4",
-		"npm+uuid@9.0.0",
-		"npm+node-fetch@2.6.11",
-		"npm+randomstring@1.3.0"
-	],
+    "Id": "CoreLauncher",
+    "Name": "CoreLauncher",
+    "Description": "A Test for TypeWriter",
+    "Version": "2.0.0",
+    "Authors": {
+        "Developers": [
+            "CoreByte"
+        ],
+        "Contributors": []
+    },
+    "Contact": {
+        "Website": "https://corelauncher.ga",
+        "Source": "https://github.com/CoreLauncher/CoreLauncher",
+        "Socials": {}
+    },
+    "Dependencies": [
+        "npm+fs-extra@11.1.1",
+        "npm+hash-anything@1.3.3",
+        "npm+js-base64@3.7.5",
+        "npm+base64-img@1.0.4",
+        "npm+uuid@9.0.0",
+        "npm+node-fetch@2.6.11",
+        "npm+randomstring@1.3.0",
+        "npm+markdown-it@13.0.2",
+        "npm+express@4.18.2",
+        "npm+bytes@3.1.2"
+    ],
     "Preload": [
         "CoreLauncher:/Libraries/ElectronHelper.twr",
+        "CoreLauncher:/Libraries/NWJS-Helper.twr",
         "CoreLauncher:/Libraries/Static.twr"
     ],
-	"Entrypoints": {
-		"Main": "ga.corelauncher"
-	}
+    "Entrypoints": {
+        "Main": "ga.corelauncher.NwjsLoader"
+    }
 }
