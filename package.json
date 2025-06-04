@@ -1,9 +1,17 @@
 {
+    "name": "corelauncher",
     "license": "MIT",
-    "private": true,
-    "workspaces": [
-        "packages/*",
-        "plugins/*",
-        "projects/*"
-    ]
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "plugins/*",
+    "projects/*"
+  ],
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
 }
