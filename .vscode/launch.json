@@ -9,7 +9,7 @@
 			"internalConsoleOptions": "neverOpen",
 			"request": "launch",
 			"name": "Debug",
-			"program": "./projects/apparaatjes/index.ts",
+			"program": "./projects/corelauncher/index.ts",
 			"cwd": "${workspaceFolder}",
 			"stopOnEntry": false,
 			"watchMode": true
