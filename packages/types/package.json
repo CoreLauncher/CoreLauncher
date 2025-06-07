@@ -1,0 +1,4 @@
+{
+	"name": "@corelauncher/types",
+	"main": "./index.ts"
+}
