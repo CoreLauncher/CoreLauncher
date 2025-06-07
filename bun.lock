@@ -7,7 +7,7 @@
         "@types/bun": "latest",
       },
       "peerDependencies": {
-        "typescript": "^5",
+        "typescript": "^5.8.3",
       },
     },
     "packages/types": {
@@ -15,6 +15,9 @@
     },
     "plugins/plugin-react-frontend": {
       "name": "@corelauncher/plugin-react-frontend",
+      "dependencies": {
+        "@corebyte/webwindow": "^1.0.0",
+      },
     },
     "projects/corelauncher": {
       "name": "@corelauncher/corelauncher",
@@ -39,6 +42,8 @@
 
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@1.9.4", "", { "os": "win32", "cpu": "x64" }, "sha512-8Y5wMhVIPaWe6jw2H+KlEm4wP/f7EW3810ZLmDlrEEy5KvBsb9ECEfu/kMWD484ijfQ8+nIi0giMgu9g1UAuuA=="],
 
+    "@corebyte/webwindow": ["@corebyte/webwindow@1.0.1", "", { "dependencies": { "webview-bun": "^2.3.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-9J9N4XPg/kaIT5zXcHJrCVqXFONf44dyRSAHa6RNDds7smTykFPyecGD587LzZ6R3MZeDQkCYAJrpo0+HoR7Pw=="],
+
     "@corelauncher/corelauncher": ["@corelauncher/corelauncher@workspace:projects/corelauncher"],
 
     "@corelauncher/plugin-react-frontend": ["@corelauncher/plugin-react-frontend@workspace:plugins/plugin-react-frontend"],
@@ -54,5 +59,7 @@
     "typescript": ["typescript@5.8.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ=="],
 
     "undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
+
+    "webview-bun": ["webview-bun@2.4.0", "", {}, "sha512-0+ugnQlcUHmuW+iLeb+Lzb8rGUJh7WEdXvNsuvaVEXT3EagK380XdD7heVJu0Ek/mNxMY3G2JM142YRQ1hDUGQ=="],
   }
 }
