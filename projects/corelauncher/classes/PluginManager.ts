@@ -1,21 +1,31 @@
 import type { PluginShape } from "../../../packages/types";
 
-import * as ReactPlugin from "@corelauncher/plugin-react-frontend";
-
 type Plugin = {
 	id: string;
 	name: string;
 	description: string;
-	Plugin: PluginShape;
+	Plugin: new (
+		...args: ConstructorParameters<typeof PluginShape>
+	) => PluginShape;
+};
+
+type LoadedPlugin = Plugin & {
+	class?: InstanceType<typeof PluginShape>;
 };
 
 export default class PluginManager {
-	plugins: InstanceType<typeof PluginShape>[];
+	plugins: LoadedPlugin[];
 	constructor() {
 		this.plugins = [];
 	}
 
-	async loadPlugin(plugin: Plugin) {}
+	async loadPlugin(plugin: Plugin) {
+		console.log(plugin);
+		this.plugins.push({
+			...plugin,
+			class: new plugin.Plugin(),
+		});
+	}
 
 	async enablePlugin(id: string) {}
 
