@@ -42,5 +42,8 @@ export class Plugin implements PluginShape {
 		} as ConstructorParameters<typeof Window>[0];
 
 		this.window = new Window(windowOptions);
+		this.window.on("close", () => {
+			this.server.stop();
+		});
 	}
 }
