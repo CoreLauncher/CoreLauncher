@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import "./index.css";
 
 export function App() {
+	// Prevent right-click context menu from appearing
 	useEffect(() => {
 		function onContextMenu(event: MouseEvent) {
 			event.preventDefault();
