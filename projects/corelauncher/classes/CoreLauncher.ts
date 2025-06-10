@@ -1,5 +1,5 @@
-import PluginManager from "./PluginManager";
 import * as ReactPlugin from "@corelauncher/plugin-react-frontend";
+import PluginManager from "./PluginManager";
 
 export default class CoreLauncher {
 	plugins: PluginManager;
