@@ -7,6 +7,7 @@ Window.check();
 const port = await getPort();
 
 export const id = "plugin-react-frontend";
+export const format = 1;
 export const name = "React frontend";
 export const description =
 	"A pretty frontend for CoreLauncher using React and a browserview.";
