@@ -1,0 +1,7 @@
+{
+	"name": "@corelauncher/plugin-steam",
+	"dependencies": {},
+	"devDependencies": {
+		"@corelauncher/types": "*"
+	}
+}
