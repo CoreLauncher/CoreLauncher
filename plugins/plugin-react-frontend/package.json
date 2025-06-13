@@ -7,6 +7,7 @@
 		"react-dom": "^19"
 	},
 	"devDependencies": {
+		"@corelauncher/types": "*",
 		"@types/react": "^19",
 		"@types/react-dom": "^19"
 	}
