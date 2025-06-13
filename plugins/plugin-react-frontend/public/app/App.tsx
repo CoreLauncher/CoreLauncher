@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import "./index.css";
+import "../index.css";
+import "./App.css";
 
 export function App() {
 	// Prevent right-click context menu from appearing
