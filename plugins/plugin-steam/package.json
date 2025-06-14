@@ -1,6 +1,8 @@
 {
 	"name": "@corelauncher/plugin-steam",
-	"dependencies": {},
+	"dependencies": {
+		"regedit": "^5.1.4"
+	},
 	"devDependencies": {
 		"@corelauncher/types": "*"
 	}
