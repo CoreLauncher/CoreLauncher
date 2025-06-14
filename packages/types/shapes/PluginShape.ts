@@ -1,4 +1,7 @@
-export default abstract class PluginShape {
-	// biome-ignore lint/complexity/noUselessConstructor: <explanation>
-	constructor() {}
+import { TypedEmitter } from "tiny-typed-emitter";
+
+interface PluginEvents {
+	ready: () => void;
 }
+
+export default abstract class PluginShape extends TypedEmitter<PluginEvents> {}
