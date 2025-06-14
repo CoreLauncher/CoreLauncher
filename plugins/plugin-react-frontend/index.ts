@@ -16,6 +16,8 @@ export class Plugin extends PluginShape implements PluginShape {
 	server: Bun.Server;
 	window: Window;
 	constructor() {
+		super();
+
 		const serveOptions = {
 			port,
 			host: "localhost",
@@ -46,5 +48,7 @@ export class Plugin extends PluginShape implements PluginShape {
 		this.window.on("close", () => {
 			this.server.stop();
 		});
+
+		this.emit("ready");
 	}
 }
