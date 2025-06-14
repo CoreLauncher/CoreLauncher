@@ -20,7 +20,6 @@ export default class PluginManager {
 	}
 
 	async loadPlugin(plugin: Plugin) {
-		console.log(plugin);
 		this.plugins.push({
 			...plugin,
 			class: new plugin.Plugin(),
