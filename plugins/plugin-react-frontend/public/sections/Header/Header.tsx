@@ -1,3 +1,5 @@
+import { CloudArrowDownFill } from "react-bootstrap-icons";
+
 import logoSVG from "../../assets/logo.svg";
 import "./Header.css";
 
@@ -10,7 +12,11 @@ export function Header() {
 					<p>CORELAUNCHER</p>
 				</div>
 			</div>
-			<div className="end"></div>
+			<div className="end">
+				<button type="button">
+					<CloudArrowDownFill />
+				</button>
+			</div>
 		</header>
 	);
 }

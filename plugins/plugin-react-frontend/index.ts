@@ -1,8 +1,8 @@
 import { SizeConstraint, Window } from "@corebyte/webwindow";
+import { env } from "bun";
 import getPort from "get-port";
 import { PluginShape } from "../../packages/types";
 import indexHTML from "./public/index.html";
-import { env } from "bun";
 
 Window.check();
 const port = env.NODE_ENV === "production" ? await getPort() : 3000;
