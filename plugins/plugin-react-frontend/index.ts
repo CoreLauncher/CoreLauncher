@@ -2,9 +2,10 @@ import { SizeConstraint, Window } from "@corebyte/webwindow";
 import getPort from "get-port";
 import { PluginShape } from "../../packages/types";
 import indexHTML from "./public/index.html";
+import { env } from "bun";
 
 Window.check();
-const port = await getPort();
+const port = env.NODE_ENV === "production" ? await getPort() : 3000;
 
 export const id = "plugin-react-frontend";
 export const format = 1;
