@@ -39,8 +39,8 @@ export class Plugin extends PluginShape implements PluginShape {
 			title: "CoreLauncher",
 			url: `http://localhost:${port}`,
 			size: {
-				width: 800,
-				height: 600,
+				width: 1200,
+				height: 800,
 				constraint: SizeConstraint.MIN,
 			},
 		} as ConstructorParameters<typeof Window>[0];
