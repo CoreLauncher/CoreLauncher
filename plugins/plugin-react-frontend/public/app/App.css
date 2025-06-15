@@ -1,3 +1,10 @@
-/* .App {
+@import "@fontsource/inter";
 
-} */
+.App {
+	height: 100%;
+
+	background-color: var(--background-color);
+	color: var(--text-color);
+
+	font-family: "Inter", sans-serif;
+}

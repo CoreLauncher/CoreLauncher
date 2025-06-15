@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import "../index.css";
 import "./App.css";
+import Header from "../sections/Header/Header";
 
 export function App() {
 	// Prevent right-click context menu from appearing
@@ -15,7 +16,11 @@ export function App() {
 		};
 	}, []);
 
-	return <div className="App">Hi</div>;
+	return (
+		<div className="App">
+			<Header />
+		</div>
+	);
 }
 
 export default App;
