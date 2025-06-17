@@ -22,6 +22,11 @@ interface PluginManagerEvents {
 	"plugin-ready": (plugin: LoadedPlugin) => void;
 }
 
+/**
+ * Manages plugins for CoreLauncher.
+ * Handles loading, enabling, and disabling plugins.
+ * Emits events when plugins are ready.
+ */
 export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 	plugins: LoadedPlugin[];
 	constructor() {
@@ -29,6 +34,10 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 		this.plugins = [];
 	}
 
+	/**
+	 * Loads a plugin into the manager.
+	 * @param plugin Plugin to load.
+	 */
 	async loadPlugin(plugin: Plugin) {
 		console.info(`Loading plugin "${plugin.name}" (${plugin.id})...`);
 		const constructed = new plugin.Plugin();

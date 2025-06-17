@@ -2,6 +2,9 @@ import * as ReactPlugin from "@corelauncher/plugin-react-frontend";
 import * as SteamPlugin from "@corelauncher/plugin-steam";
 import PluginManager from "./PluginManager";
 
+/**
+ * CoreLauncher class that initializes and manages plugins.
+ */
 export default class CoreLauncher {
 	plugins: PluginManager;
 	constructor() {
