@@ -1,4 +1,4 @@
-import type { GameShape, PluginShape } from "../../../packages/types";
+import type { GameShape, PluginShape } from "@corelauncher/types";
 
 type Plugin = {
 	id: string;
