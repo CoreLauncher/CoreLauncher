@@ -12,6 +12,7 @@ type Plugin = {
 
 type LoadedPlugin = Plugin & {
 	constructed?: InstanceType<typeof PluginShape>;
+	ready: boolean;
 	parts: {
 		games: InstanceType<typeof GameShape>[];
 	};
@@ -34,12 +35,17 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 		const loaded = {
 			...plugin,
 			constructed: constructed,
+			ready: false,
 			parts: {
 				games: [],
 			},
 		} as LoadedPlugin;
 
 		constructed.on("games", (games: InstanceType<typeof GameShape>[]) => {
+			if (loaded.ready)
+				throw new Error(
+					"Can't update games after ready event has been emitted.",
+				);
 			loaded.parts.games = games;
 		});
 
@@ -47,6 +53,7 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 			console.info(
 				`Plugin "${plugin.name}" (${plugin.id}) loaded successfully.`,
 			);
+			loaded.ready = true;
 			this.emit("plugin-ready", loaded);
 		});
 
