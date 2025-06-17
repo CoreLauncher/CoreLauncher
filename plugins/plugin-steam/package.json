@@ -1,6 +1,7 @@
 {
 	"name": "@corelauncher/plugin-steam",
 	"dependencies": {
+		"@node-steam/vdf": "^2.2.0",
 		"regedit": "^5.1.4"
 	},
 	"devDependencies": {

@@ -1,4 +1,4 @@
-import type { PluginShape } from "../../../packages/types";
+import type { GameShape, PluginShape } from "../../../packages/types";
 
 type Plugin = {
 	id: string;
@@ -10,7 +10,10 @@ type Plugin = {
 };
 
 type LoadedPlugin = Plugin & {
-	class?: InstanceType<typeof PluginShape>;
+	constructed?: InstanceType<typeof PluginShape>;
+	parts: {
+		games: InstanceType<typeof GameShape>[];
+	};
 };
 
 export default class PluginManager {
@@ -20,10 +23,20 @@ export default class PluginManager {
 	}
 
 	async loadPlugin(plugin: Plugin) {
-		this.plugins.push({
+		const constructed = new plugin.Plugin();
+		const loaded = {
 			...plugin,
-			class: new plugin.Plugin(),
+			constructed: constructed,
+			parts: {
+				games: [],
+			},
+		} as LoadedPlugin;
+
+		constructed.on("games", (games: InstanceType<typeof GameShape>[]) => {
+			loaded.parts.games = games;
 		});
+
+		this.plugins.push(loaded);
 	}
 
 	async enablePlugin(id: string) {}
