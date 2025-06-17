@@ -14,12 +14,8 @@ export class Plugin extends PluginShape implements PluginShape {
 	constructor() {
 		super();
 
-		// this.steamDirectory =
-		// console.log(this.steamDirectory);
-
 		noop()
 			.then(async () => {
-				console.log(await getSteamGames());
 				const games = await getSteamGames();
 				this.emit(
 					"games",
