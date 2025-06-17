@@ -31,7 +31,7 @@ export class Plugin extends PluginShape implements PluginShape {
 			},
 		} as Parameters<typeof Bun.serve>[0];
 
-		console.log(`Starting internal server on http://localhost:${port}`);
+		console.info(`Starting internal server on http://localhost:${port}`);
 
 		this.server = Bun.serve(serveOptions);
 
