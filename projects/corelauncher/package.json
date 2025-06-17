@@ -1,3 +1,6 @@
 {
-	"name": "@corelauncher/corelauncher"
+	"name": "@corelauncher/corelauncher",
+	"dependencies": {
+		"tiny-typed-emitter": "^2.1.0"
+	}
 }

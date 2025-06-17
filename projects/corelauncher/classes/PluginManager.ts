@@ -1,3 +1,4 @@
+import { TypedEmitter } from "tiny-typed-emitter";
 import type { GameShape, PluginShape } from "@corelauncher/types";
 
 type Plugin = {
@@ -16,13 +17,19 @@ type LoadedPlugin = Plugin & {
 	};
 };
 
-export default class PluginManager {
+interface PluginManagerEvents {
+	"plugin-ready": (plugin: LoadedPlugin) => void;
+}
+
+export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 	plugins: LoadedPlugin[];
 	constructor() {
+		super();
 		this.plugins = [];
 	}
 
 	async loadPlugin(plugin: Plugin) {
+		console.info(`Loading plugin "${plugin.name}" (${plugin.id})...`);
 		const constructed = new plugin.Plugin();
 		const loaded = {
 			...plugin,
@@ -34,6 +41,13 @@ export default class PluginManager {
 
 		constructed.on("games", (games: InstanceType<typeof GameShape>[]) => {
 			loaded.parts.games = games;
+		});
+
+		constructed.on("ready", () => {
+			console.info(
+				`Plugin "${plugin.name}" (${plugin.id}) loaded successfully.`,
+			);
+			this.emit("plugin-ready", loaded);
 		});
 
 		this.plugins.push(loaded);
