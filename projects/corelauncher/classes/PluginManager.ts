@@ -1,5 +1,6 @@
 import { TypedEmitter } from "tiny-typed-emitter";
 import type { GameShape, PluginShape } from "@corelauncher/types";
+import PluginPortal from "./PluginPortal";
 
 type Plugin = {
 	id: string;
@@ -28,9 +29,11 @@ interface PluginManagerEvents {
  * Emits events when plugins are ready.
  */
 export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
+	private portal: PluginPortal;
 	plugins: LoadedPlugin[];
 	constructor() {
 		super();
+		this.portal = new PluginPortal(this);
 		this.plugins = [];
 	}
 
