@@ -1,4 +1,4 @@
-export default abstract class GameShape {
+export abstract class GameShape {
 	abstract id: string;
 	abstract name: string;
 }

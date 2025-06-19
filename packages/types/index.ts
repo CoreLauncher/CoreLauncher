@@ -1,2 +1,3 @@
-export { default as GameShape } from "./shapes/GameShape";
-export { default as PluginShape } from "./shapes/PluginShape";
+
+export { GameShape } from "./shapes/GameShape";
+export { PluginShape } from "./shapes/PluginShape";
