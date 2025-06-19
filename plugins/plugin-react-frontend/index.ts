@@ -32,6 +32,16 @@ export class Plugin extends PluginClass implements PluginShape {
 			},
 			routes: {
 				"/": indexHTML,
+
+				"/api/games/list": async () => {
+					const games = portal.getGames();
+					return Response.json(
+						games.map((game) => ({
+							id: game.id,
+							name: game.name,
+						})),
+					);
+				},
 			},
 		} as Parameters<typeof Bun.serve>[0];
 
@@ -57,3 +67,4 @@ export class Plugin extends PluginClass implements PluginShape {
 		this.emit("ready");
 	}
 }
+ 
