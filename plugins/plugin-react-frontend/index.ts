@@ -1,7 +1,11 @@
 import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { env } from "bun";
 import getPort from "get-port";
-import { PluginShape } from "../../packages/types";
+import {
+	PluginClass,
+	type PluginPortal,
+	type PluginShape,
+} from "@corelauncher/types";
 import indexHTML from "./public/index.html";
 
 Window.check();
@@ -13,10 +17,10 @@ export const name = "React frontend";
 export const description =
 	"A pretty frontend for CoreLauncher using React and a browserview.";
 
-export class Plugin extends PluginShape implements PluginShape {
+export class Plugin extends PluginClass implements PluginShape {
 	server: Bun.Server;
 	window: Window;
-	constructor() {
+	constructor(portal: PluginPortal) {
 		super();
 
 		const serveOptions = {

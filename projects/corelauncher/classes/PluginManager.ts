@@ -43,7 +43,7 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 	 */
 	async loadPlugin(plugin: Plugin) {
 		console.info(`Loading plugin "${plugin.name}" (${plugin.id})...`);
-		const constructed = new plugin.Plugin();
+		const constructed = new plugin.Plugin(this.portal);
 		const loaded = {
 			...plugin,
 			constructed: constructed,
