@@ -1,7 +1,7 @@
-import { getSteamInstallationDirectory } from "./registry";
-import { parse as parseVDF } from "@node-steam/vdf";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { parse as parseVDF } from "@node-steam/vdf";
+import { getSteamInstallationDirectory } from "./registry";
 
 type LibraryFoldersVDF = {
 	libraryfolders: {

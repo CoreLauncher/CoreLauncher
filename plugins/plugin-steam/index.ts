@@ -3,8 +3,8 @@ import {
 	type PluginPortal,
 	type PluginShape,
 } from "@corelauncher/types";
-import { getSteamGames } from "./util/steam";
 import SteamGame from "./parts/SteamGame";
+import { getSteamGames } from "./util/steam";
 
 async function noop() {}
 

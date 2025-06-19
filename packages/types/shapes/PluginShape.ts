@@ -1,6 +1,6 @@
 import { TypedEmitter } from "tiny-typed-emitter";
-import type { GameShape } from "./GameShape";
 import type { PluginPortal } from "../types/PluginPortal";
+import type { GameShape } from "./GameShape";
 
 interface PluginEvents {
 	ready: () => void;

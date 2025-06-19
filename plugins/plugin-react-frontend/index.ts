@@ -1,11 +1,11 @@
 import { SizeConstraint, Window } from "@corebyte/webwindow";
-import { env } from "bun";
-import getPort from "get-port";
 import {
 	PluginClass,
 	type PluginPortal,
 	type PluginShape,
 } from "@corelauncher/types";
+import { env } from "bun";
+import getPort from "get-port";
 import indexHTML from "./public/index.html";
 
 Window.check();
@@ -67,4 +67,3 @@ export class Plugin extends PluginClass implements PluginShape {
 		this.emit("ready");
 	}
 }
- 

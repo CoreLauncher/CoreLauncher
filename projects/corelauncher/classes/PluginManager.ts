@@ -1,5 +1,5 @@
-import { TypedEmitter } from "tiny-typed-emitter";
 import type { GameShape, PluginShape } from "@corelauncher/types";
+import { TypedEmitter } from "tiny-typed-emitter";
 import PluginPortal from "./PluginPortal";
 
 type Plugin = {
