@@ -1,8 +1,11 @@
 :root {
 	--background-color: #000000;
 	--block-color: #0f0f0f;
+
 	--text-color: #ffffff;
+	--text-dimmed-color: #b0b0b0;
 	--input-color: #0a0a0a;
+
 	--branding-color: #4898da;
 }
 
@@ -26,6 +29,10 @@ body,
 input,
 textarea,
 select {
+	&::placeholder {
+		color: var(--text-dimmed-color);
+	}
+
 	background-color: var(--input-color);
 
 	border: none;
