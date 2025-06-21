@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import "../index.css";
 import "./App.css";
-import GameList from "../sections/GameList/GameList";
 import Header from "../sections/Header/Header";
+import LibraryPage from "../pages/LibraryPage/LibraryPage";
 
 export function App() {
 	// Prevent right-click context menu from appearing
@@ -20,10 +20,7 @@ export function App() {
 	return (
 		<div className="App">
 			<Header />
-			<main>
-				<GameList />
-				<div className="overview" />
-			</main>
+			<LibraryPage />
 		</div>
 	);
 }
