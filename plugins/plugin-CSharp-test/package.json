@@ -1,0 +1,7 @@
+{
+	"name": "@corelauncher/plugin-csharp-test",
+	"dependencies": {},
+	"devDependencies": {
+		"@corelauncher/types": "*"
+	}
+}

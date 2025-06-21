@@ -22,6 +22,12 @@
         "tiny-typed-emitter": "^2.1.0",
       },
     },
+    "plugins/plugin-CSharp-test": {
+      "name": "@corelauncher/plugin-csharp-test",
+      "devDependencies": {
+        "@corelauncher/types": "*",
+      },
+    },
     "plugins/plugin-react-frontend": {
       "name": "@corelauncher/plugin-react-frontend",
       "dependencies": {
@@ -79,6 +85,8 @@
     "@corelauncher/console-addon": ["@corelauncher/console-addon@workspace:packages/console-addon"],
 
     "@corelauncher/corelauncher": ["@corelauncher/corelauncher@workspace:projects/corelauncher"],
+
+    "@corelauncher/plugin-csharp-test": ["@corelauncher/plugin-csharp-test@workspace:plugins/plugin-CSharp-test"],
 
     "@corelauncher/plugin-react-frontend": ["@corelauncher/plugin-react-frontend@workspace:plugins/plugin-react-frontend"],
 
