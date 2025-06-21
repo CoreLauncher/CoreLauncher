@@ -33,5 +33,6 @@ export class Plugin extends PluginClass implements PluginShape {
 			.then(() => {
 				this.emit("ready");
 			});
+			
 	}
 }
