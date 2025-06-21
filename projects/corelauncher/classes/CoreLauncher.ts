@@ -1,6 +1,6 @@
 import * as ReactPlugin from "@corelauncher/plugin-react-frontend";
 import * as SteamPlugin from "@corelauncher/plugin-steam";
-import * as CSharpPlugin from "@corelauncher/plugin-csharp-test";
+// import * as CSharpPlugin from "@corelauncher/plugin-csharp-test";
 import PluginManager from "./PluginManager";
 
 /**
@@ -13,6 +13,6 @@ export default class CoreLauncher {
 
 		this.plugins.loadPlugin(ReactPlugin);
 		this.plugins.loadPlugin(SteamPlugin);
-		this.plugins.loadPlugin(CSharpPlugin);
+		// this.plugins.loadPlugin(CSharpPlugin);
 	}
 }
