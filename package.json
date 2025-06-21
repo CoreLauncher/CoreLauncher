@@ -11,6 +11,7 @@
 		"typescript": "^5.8.3"
 	},
 	"scripts": {
+		"lint": "bun run biome check --fix",
 		"dev": "bun run --watch ./projects/corelauncher/index.ts",
 		"bundle": "bun build --target=bun --outdir .bundle ./projects/corelauncher/index.ts",
 		"compile": "bun build --target=bun --outfile CoreLauncher.exe --sourcemap=inline --compile ./projects/corelauncher/index.ts"
