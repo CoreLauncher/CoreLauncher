@@ -1,6 +1,7 @@
 .GameList {
 	display: flex;
 	flex-direction: column;
+	gap: 8px;
 
 	max-width: 25%;
 	height: 100%;
@@ -8,25 +9,32 @@
 	padding: 8px;
 	border-radius: 8px;
 
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow: hidden;
 
 	background-color: var(--block-color);
 
-	.game {
-		padding: 4px;
-		border-radius: 4px;
+	.games {
+		display: flex;
+		flex-direction: column;
+		overflow-y: auto;
 
-		transition: backdrop-filter 0.2s ease-in-out;
+		.game {
+			padding: 4px;
+			border-radius: 4px;
 
-		&:hover {
-			backdrop-filter: brightness(0.5);
-		}
+			transition: backdrop-filter 0.2s ease-in-out;
 
-		p {
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			overflow: hidden;
+			&:hover {
+				backdrop-filter: brightness(0.5);
+			}
+
+			p {
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
 		}
 	}
+
+	
 }

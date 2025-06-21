@@ -2,6 +2,8 @@
 	--background-color: #000000;
 	--block-color: #0f0f0f;
 	--text-color: #ffffff;
+	--input-color: #0a0a0a;
+	--branding-color: #4898da;
 }
 
 html,
@@ -14,8 +16,21 @@ body,
 }
 
 * {
+	color: var(--text-color);
 	box-sizing: border-box;
 	user-select: none;
 	padding: 0;
 	margin: 0;
+}
+
+input,
+textarea,
+select {
+	background-color: var(--input-color);
+
+	border: none;
+	outline: none;
+
+	padding: 10px;
+	border-radius: 8px;
 }
