@@ -19,10 +19,6 @@ export class Plugin extends PluginClass implements PluginShape {
 
 		const proc = spawn(exePath);
 
-		const games = portal.getGames();
-		proc.stdin.write(JSON.stringify(games));
-		proc.stdin.end();
-
 		proc.stdout.on("data", (data) => {
 			console.log("[C#]", data.toString());
 		});
