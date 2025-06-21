@@ -24,6 +24,6 @@ jobs:
       - name: Upload .exe artifact
         uses: actions/upload-artifact@v4
         with:
-          name: bun-compiled-exe
+          name: CoreLauncher
           path: |
             CoreLauncher.exe
