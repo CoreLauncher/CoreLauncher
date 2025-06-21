@@ -5,7 +5,8 @@
 	"workspaces": ["packages/*", "plugins/*", "projects/*"],
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
-		"@types/bun": "latest"
+		"@types/bun": "latest",
+		"rcedit": "^4.0.1"
 	},
 	"peerDependencies": {
 		"typescript": "^5.8.3"
@@ -14,6 +15,6 @@
 		"lint": "bun run biome check --fix",
 		"dev": "bun run --watch ./projects/corelauncher/index.ts",
 		"bundle": "bun build --target=bun --outdir .bundle ./projects/corelauncher/index.ts",
-		"compile": "bun build --target=bun --outfile CoreLauncher.exe --sourcemap=inline --compile ./projects/corelauncher/index.ts"
+		"compile": "bun run ./scripts/compile-dev.ts"
 	}
 }
