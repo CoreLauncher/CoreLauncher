@@ -1,10 +1,10 @@
-import { enumerateValues, HKEY, RegistryValueType } from 'registry-js'
+import { HKEY, type RegistryValueType, enumerateValues } from "registry-js";
 
 export async function getRegistryEntry() {
 	const entries = enumerateValues(
 		HKEY.HKEY_CURRENT_USER,
-		"Software\\Valve\\Steam"
-	)
+		"Software\\Valve\\Steam",
+	);
 
 	return Object.fromEntries(
 		entries.map((entry) => [
@@ -13,7 +13,7 @@ export async function getRegistryEntry() {
 				value: entry.data,
 				type: entry.type as RegistryValueType,
 			},
-		])
+		]),
 	);
 }
 

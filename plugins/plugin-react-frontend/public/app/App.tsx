@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import "../index.css";
 import "./App.css";
-import Header from "../sections/Header/Header";
 import LibraryPage from "../pages/LibraryPage/LibraryPage";
+import Header from "../sections/Header/Header";
 
 export function App() {
 	// Prevent right-click context menu from appearing
