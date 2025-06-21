@@ -7,4 +7,10 @@
 	color: var(--text-color);
 
 	font-family: "Inter", sans-serif;
+
+	main {
+		padding: 5;
+		padding-top: 0;
+		height: calc(100% - 50px);
+	}
 }

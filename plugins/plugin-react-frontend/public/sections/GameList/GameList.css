@@ -1,0 +1,32 @@
+.GameList {
+	display: flex;
+	flex-direction: column;
+
+	max-width: 25%;
+	height: 100%;
+
+	padding: 8px;
+	border-radius: 8px;
+
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	background-color: var(--block-color);
+
+	.game {
+		padding: 4px;
+		border-radius: 4px;
+
+		transition: backdrop-filter 0.2s ease-in-out;
+
+		&:hover {
+			backdrop-filter: brightness(0.5);
+		}
+
+		p {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+	}
+}

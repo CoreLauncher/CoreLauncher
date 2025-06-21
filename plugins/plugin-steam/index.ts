@@ -23,7 +23,11 @@ export class Plugin extends PluginClass implements PluginShape {
 				const games = await getSteamGames();
 				this.emit(
 					"games",
-					games.map((game) => new SteamGame(game.id.toString(), game.name)),
+					games
+						.map(
+							(game) => new SteamGame(`steam:${game.id.toString()}`, game.name),
+						)
+						.filter((game) => game.id !== "steam:228980"),
 				);
 			})
 			.then(() => {

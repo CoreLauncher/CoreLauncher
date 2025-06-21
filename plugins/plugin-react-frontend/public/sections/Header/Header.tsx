@@ -3,7 +3,7 @@ import { CloudArrowDownFill } from "react-bootstrap-icons";
 import logoSVG from "../../assets/logo.svg";
 import "./Header.css";
 
-export function Header() {
+export default function Header() {
 	return (
 		<header className="Header">
 			<div className="start">
@@ -20,5 +20,3 @@ export function Header() {
 		</header>
 	);
 }
-
-export default Header;

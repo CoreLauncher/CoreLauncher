@@ -1,5 +1,6 @@
 :root {
 	--background-color: #000000;
+	--block-color: #0f0f0f;
 	--text-color: #ffffff;
 }
 
@@ -9,9 +10,12 @@ body,
 	height: 100%;
 	margin: 0;
 	padding: 0;
+	overflow: hidden;
 }
 
 * {
 	box-sizing: border-box;
 	user-select: none;
+	padding: 0;
+	margin: 0;
 }

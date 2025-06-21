@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import "../index.css";
 import "./App.css";
 import Header from "../sections/Header/Header";
+import GameList from "../sections/GameList/GameList";
 
 export function App() {
 	// Prevent right-click context menu from appearing
@@ -19,6 +20,10 @@ export function App() {
 	return (
 		<div className="App">
 			<Header />
+			<main>
+				<GameList />
+				<div className="overview" />
+			</main>
 		</div>
 	);
 }
