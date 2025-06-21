@@ -1,0 +1,29 @@
+name: Compile and upload artifact
+
+on: 
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Compile with Bun
+        run: bun compile
+
+      - name: Upload .exe artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bun-compiled-exe
+          path: |
+            CoreLauncher.exe
