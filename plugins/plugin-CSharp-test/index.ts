@@ -1,10 +1,10 @@
+import { spawn } from "node:child_process";
+import path from "node:path";
 import {
 	PluginClass,
 	type PluginPortal,
 	type PluginShape,
 } from "@corelauncher/types";
-import { spawn } from "node:child_process";
-import path from "node:path";
 
 export const id = "plugin-C#-test";
 export const format = 1;
