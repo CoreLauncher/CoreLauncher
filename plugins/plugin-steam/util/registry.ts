@@ -1,10 +1,20 @@
-import { promisified as regedit } from "regedit";
+import { enumerateValues, HKEY, RegistryValueType } from 'registry-js'
 
 export async function getRegistryEntry() {
-	const key = "HKCU\\Software\\Valve\\Steam";
-	const entries = await regedit.list([key]);
-	const entry = entries[key];
-	return entry.values;
+	const entries = enumerateValues(
+		HKEY.HKEY_CURRENT_USER,
+		"Software\\Valve\\Steam"
+	)
+
+	return Object.fromEntries(
+		entries.map((entry) => [
+			entry.name,
+			{
+				value: entry.data,
+				type: entry.type as RegistryValueType,
+			},
+		])
+	);
 }
 
 export async function getSteamInstallationDirectory() {
