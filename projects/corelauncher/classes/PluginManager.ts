@@ -72,7 +72,7 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 		this.plugins.push(loaded);
 	}
 
-	async enablePlugin(id: string) {}
+	// async enablePlugin(id: string) {}
 
-	async disablePlugin(id: string) {}
+	// async disablePlugin(id: string) {}
 }

@@ -2,9 +2,13 @@
 	"name": "corelauncher",
 	"license": "MIT",
 	"private": true,
-	"workspaces": ["packages/*", "plugins/*", "projects/*"],
+	"workspaces": [
+		"packages/*",
+		"plugins/*",
+		"projects/*"
+	],
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
+		"@biomejs/biome": "2.0.4",
 		"@types/bun": "latest",
 		"embedded-postgres": "^17.5.0-beta.15",
 		"rcedit": "^4.0.1"
@@ -18,5 +22,8 @@
 		"bundle": "bun build --target=bun --outdir .bundle ./projects/corelauncher/index.ts",
 		"compile": "bun run ./scripts/compile-dev.ts"
 	},
-	"trustedDependencies": ["@biomejs/biome", "@embedded-postgres/windows-x64"]
+	"trustedDependencies": [
+		"@biomejs/biome",
+		"@embedded-postgres/windows-x64"
+	]
 }
