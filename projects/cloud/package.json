@@ -1,0 +1,9 @@
+{
+	"name": "@corelauncher/cloud",
+	"dependencies": {
+		"openid": "^2.0.13"
+	},
+	"devDependencies": {
+		"@types/openid": "^2.0.5"
+	}
+}
