@@ -1,0 +1,38 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/.idea.tray.iml
+/modules.xml
+/projectSettingsUpdater.xml
+/contentModel.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Rider project files
+.idea/
+*.sln.iml
+*.user
+*.suo
+*.resharper/
+*.DotSettings.user
+
+# Build output folders
+bin/
+obj/
+
+# Logs and temp files
+*.log
+*.tmp
+*.cache
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Rider local workspace files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
