@@ -1,6 +1,5 @@
 {
 	"name": "@corelauncher/tray",
 	"main": "./index.ts",
-	"dependencies": {
-	}
+	"dependencies": {}
 }
