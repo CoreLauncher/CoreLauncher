@@ -1,8 +1,4 @@
-import {
-	PluginClass,
-	type PluginPortal,
-	type PluginShape,
-} from "@corelauncher/types";
+import { PluginClass, type PluginShape } from "@corelauncher/types";
 import SteamGame from "./parts/SteamGame";
 import { getSteamGames } from "./util/steam";
 
@@ -15,7 +11,7 @@ export const description =
 	"Allows you to launch Steam games from CoreLauncher.";
 
 export class Plugin extends PluginClass implements PluginShape {
-	constructor(portal: PluginPortal) {
+	constructor() {
 		super();
 
 		noop()

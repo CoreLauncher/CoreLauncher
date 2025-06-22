@@ -1,10 +1,6 @@
 import { spawn } from "node:child_process";
 import path from "node:path";
-import {
-	PluginClass,
-	type PluginPortal,
-	type PluginShape,
-} from "@corelauncher/types";
+import { PluginClass, type PluginShape } from "@corelauncher/types";
 
 export const id = "plugin-C#-test";
 export const format = 1;
@@ -12,7 +8,7 @@ export const name = "C# Test Plugin";
 export const description = "Test C# plugin that logs games after 10s.";
 
 export class Plugin extends PluginClass implements PluginShape {
-	constructor(portal: PluginPortal) {
+	constructor() {
 		super();
 
 		const exePath = path.join(__dirname, "program.exe");

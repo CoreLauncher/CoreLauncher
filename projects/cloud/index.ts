@@ -16,7 +16,7 @@ Bun.serve({
 			return Response.redirect(authUrl, 302);
 		},
 
-		"/return": async (request: Request) => {
+		"/return": async (request) => {
 			const steamId = await verifySteamResponse(request.url);
 			if (steamId) {
 				return new Response(`Logged in as SteamdId64: ${steamId}`, {
@@ -27,7 +27,7 @@ Bun.serve({
 		},
 	},
 
-	fetch(request) {
+	fetch() {
 		return new Response("404 Not Found", { status: 404 });
 	},
 });

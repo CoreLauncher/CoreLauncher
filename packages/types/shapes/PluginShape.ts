@@ -8,6 +8,7 @@ interface PluginEvents {
 }
 
 export abstract class PluginShape extends TypedEmitter<PluginEvents> {
+	// biome-ignore lint/correctness/noUnusedFunctionParameters: <Its for typing>
 	constructor(portal: PluginPortal) {
 		super();
 	}
