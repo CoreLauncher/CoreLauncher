@@ -6,6 +6,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@types/bun": "latest",
+		"embedded-postgres": "^17.5.0-beta.15",
 		"rcedit": "^4.0.1"
 	},
 	"peerDependencies": {
@@ -16,5 +17,6 @@
 		"dev": "bun run --watch ./projects/corelauncher/index.ts",
 		"bundle": "bun build --target=bun --outdir .bundle ./projects/corelauncher/index.ts",
 		"compile": "bun run ./scripts/compile-dev.ts"
-	}
+	},
+	"trustedDependencies": ["@biomejs/biome", "@embedded-postgres/windows-x64"]
 }
