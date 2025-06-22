@@ -26,6 +26,7 @@ export default function GameList() {
 			<input type="text" placeholder="Search..." onChange={onQuery} />
 			<div className="games">
 				{games
+					.sort((a, b) => a.name.localeCompare(b.name))
 					.filter(
 						(game) =>
 							game.name.toLowerCase().includes(query.toLowerCase()) ||
