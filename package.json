@@ -25,5 +25,8 @@
 	"trustedDependencies": [
 		"@biomejs/biome",
 		"@embedded-postgres/windows-x64"
-	]
+	],
+	"patchedDependencies": {
+		"webview-bun@2.4.0": "patches/webview-bun@2.4.0.patch"
+	}
 }

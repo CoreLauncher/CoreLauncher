@@ -1,0 +1,12 @@
+diff --git a/src/ffi.ts b/src/ffi.ts
+index fd7ce3d54a12328d613f2938b4570a52faa35338..630455fb9c5a8cf74bea490ae677a8666d2e24ba 100644
+--- a/src/ffi.ts
++++ b/src/ffi.ts
+@@ -21,7 +21,6 @@ let lib_file;
+ if (process.env.WEBVIEW_PATH) {
+   lib_file = { default: process.env.WEBVIEW_PATH };
+ } else if (process.platform === "win32") {
+-  //@ts-expect-error
+   lib_file = await import("../build/libwebview.dll");
+ } else if (process.platform === "linux") {
+   lib_file = await import(`../build/libwebview-${process.arch}.so`);
