@@ -33,9 +33,9 @@ public class Tray : IDisposable
     public void Destroy()
     { 
 #if WINDOWS
-        NotifyIcon.Visible = false;
-        NotifyIcon.Dispose();
-        notifyIcon = null;
+        notifyIcon.Visible = false;
+        notifyIcon.Dispose();
+        notifyIcon = null!;
 #endif
         // TODO: macOS and Linux cleanup
     }

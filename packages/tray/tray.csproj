@@ -1,9 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
-        <OutputType>Library</OutputType>
         <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <OutputType>Library</OutputType>
+        <SelfContained>true</SelfContained>
+        <PublishAot>true</PublishAot>
+        <UseNativeAot>true</UseNativeAot>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <NativeLib>Shared</NativeLib>
     </PropertyGroup>
 </Project>

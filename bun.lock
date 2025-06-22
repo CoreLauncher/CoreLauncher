@@ -18,6 +18,9 @@
         "chalk": "^5.4.1",
       },
     },
+    "packages/tray": {
+      "name": "@corelauncher/tray",
+    },
     "packages/types": {
       "name": "@corelauncher/types",
       "dependencies": {
@@ -108,6 +111,8 @@
     "@corelauncher/plugin-react-frontend": ["@corelauncher/plugin-react-frontend@workspace:plugins/plugin-react-frontend"],
 
     "@corelauncher/plugin-steam": ["@corelauncher/plugin-steam@workspace:plugins/plugin-steam"],
+
+    "@corelauncher/tray": ["@corelauncher/tray@workspace:packages/tray"],
 
     "@corelauncher/types": ["@corelauncher/types@workspace:packages/types"],
 
