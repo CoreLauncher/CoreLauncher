@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.0.4/schema.json",
 	"vcs": {
 		"enabled": false,
 		"clientKind": "git",
@@ -7,28 +7,16 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": ["node_modules/**", ".bundle"]
+		"includes": ["**", "!**/node_modules/**", "!**/.bundle/**"]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab"
 	},
-	"organizeImports": {
-		"enabled": true
-	},
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"recommended": true,
-			"nursery": {
-				"useConsistentMemberAccessibility": "error"
-			},
-			"correctness": {
-				"noUnusedImports": "error"
-			},
-			"complexity": {
-				"noForEach": "off"
-			},
 			"style": {
 				"noNonNullAssertion": "off"
 			}
@@ -39,16 +27,12 @@
 			"quoteStyle": "double"
 		}
 	},
-	"overrides": [
-		{
-			"include": ["migrations/*.ts", "*.test.ts"],
-			"linter": {
-				"rules": {
-					"suspicious": {
-						"noExplicitAny": "off"
-					}
-				}
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on"
 			}
 		}
-	]
+	}
 }
