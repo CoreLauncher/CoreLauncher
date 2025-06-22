@@ -1,4 +1,4 @@
-import { HKEY, type RegistryValueType, enumerateValues } from "registry-js";
+import { enumerateValues, HKEY, type RegistryValueType } from "registry-js";
 
 export async function getRegistryEntry() {
 	const entries = enumerateValues(
