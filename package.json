@@ -11,6 +11,7 @@
 		"@biomejs/biome": "2.0.5",
 		"@types/bun": "latest",
 		"embedded-postgres": "^17.5.0-beta.15",
+		"husky": "^9.1.7",
 		"rcedit": "^4.0.1"
 	},
 	"peerDependencies": {
@@ -20,7 +21,8 @@
 		"lint": "bun run biome check --fix",
 		"dev": "bun run --watch ./projects/corelauncher/index.ts",
 		"bundle": "bun build --target=bun --outdir .bundle ./projects/corelauncher/index.ts",
-		"compile": "bun build --target=bun --outfile CoreLauncher.exe --sourcemap=inline --compile ./projects/corelauncher/index.ts"
+		"compile": "bun build --target=bun --outfile CoreLauncher.exe --sourcemap=inline --compile ./projects/corelauncher/index.ts",
+		"prepare": "husky"
 	},
 	"trustedDependencies": [
 		"@biomejs/biome",
