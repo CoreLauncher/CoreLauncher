@@ -11,6 +11,9 @@ import indexHTML from "./public/index.html";
 
 Window.check();
 const port = env.NODE_ENV === "production" ? await getPort() : 3000;
+const icon = await import(process.cwd() + "/icon.ico", {
+	with: { type: "file" },
+});
 
 export const id = "plugin-react-frontend";
 export const format = 1;
@@ -67,7 +70,7 @@ export class Plugin extends PluginClass implements PluginShape {
 		});
 
 		this.tray = new Tray();
-		this.tray.create("Corebittelanceert zichzelf in uwe anus", "./icon.ico");
+		this.tray.create("Corebittelanceert zichzelf in uwe anus", icon.default);
 		this.tray.on("click", () => {
 			console.log("Tray icon clicked!");
 		});
