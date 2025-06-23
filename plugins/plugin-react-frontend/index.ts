@@ -68,6 +68,9 @@ export class Plugin extends PluginClass implements PluginShape {
 
 		this.tray = new Tray();
 		this.tray.create("./icon.ico", "Corebittelanceert zichzelf in uwe anus");
+		this.tray.onClick(() => {
+			console.log("Tray icon clicked!");
+		});
 		this.emit("ready");
 	}
 }
