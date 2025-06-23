@@ -1,6 +1,6 @@
 import "./LibraryPage.css";
-import GameList from "../../sections/GameList/GameList";
 import { useState } from "react";
+import GameList from "../../sections/GameList/GameList";
 
 export default function LibraryPage() {
 	const [selected, setSelected] = useState<string | undefined>(undefined);
