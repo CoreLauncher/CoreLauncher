@@ -6,7 +6,8 @@
 		"get-port": "^7.1.0",
 		"react": "^19",
 		"react-bootstrap-icons": "^1.11.6",
-		"react-dom": "^19"
+		"react-dom": "^19",
+		"temp-dir": "^3.0.0"
 	},
 	"devDependencies": {
 		"@corelauncher/types": "*",

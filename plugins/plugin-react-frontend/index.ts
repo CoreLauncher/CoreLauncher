@@ -7,13 +7,17 @@ import {
 } from "@corelauncher/types";
 import { env } from "bun";
 import getPort from "get-port";
+import temporaryDirectory from "temp-dir";
 import indexHTML from "./public/index.html";
 
 Window.check();
 const port = env.NODE_ENV === "production" ? await getPort() : 3000;
+
 const icon = await import("../../icon.ico", {
 	with: { type: "file" },
 });
+const tempIcon = `${temporaryDirectory}/corelauncher-tray-icon.ico`;
+await Bun.write(tempIcon, Bun.file(icon.default));
 
 export const id = "plugin-react-frontend";
 export const format = 1;
@@ -70,7 +74,7 @@ export class Plugin extends PluginClass implements PluginShape {
 		});
 
 		this.tray = new Tray();
-		this.tray.create("Corebittelanceert zichzelf in uwe anus", icon.default);
+		this.tray.create("Corebittelanceert zichzelf in uwe anus", tempIcon);
 		this.tray.on("click", () => {
 			console.log("Tray icon clicked!");
 		});
