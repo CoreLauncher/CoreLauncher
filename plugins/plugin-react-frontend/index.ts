@@ -11,7 +11,7 @@ import indexHTML from "./public/index.html";
 
 Window.check();
 const port = env.NODE_ENV === "production" ? await getPort() : 3000;
-const icon = await import(process.cwd() + "/icon.ico", {
+const icon = await import("../../icon.ico", {
 	with: { type: "file" },
 });
 
