@@ -67,7 +67,7 @@ export class Plugin extends PluginClass implements PluginShape {
 		});
 
 		this.tray = new Tray();
-		this.tray.create();
+		this.tray.create("./icon.ico", "Corebittelanceert zichzelf in uwe anus");
 		this.emit("ready");
 	}
 }
