@@ -1,21 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./GameList.css";
-import { fetchGames } from "../../functions/api";
-
-type Game = {
-	id: string;
-	name: string;
-};
+import useGames from "../../hooks/useGames";
 
 export default function GameList() {
-	const [games, setGames] = useState<Game[]>([]);
 	const [query, setQuery] = useState("");
-
-	useEffect(() => {
-		fetchGames().then((data) => {
-			setGames(data);
-		});
-	}, []);
+	const games = useGames();
 
 	function onQuery(event: React.ChangeEvent<HTMLInputElement>) {
 		setQuery(event.target.value);
