@@ -67,10 +67,10 @@ export class Plugin extends PluginClass implements PluginShape {
 		});
 
 		this.tray = new Tray();
-		this.tray.create("./icon.ico", "Corebittelanceert zichzelf in uwe anus");
-		this.tray.onClick(() => {
+		this.tray.on("click", () => {
 			console.log("Tray icon clicked!");
 		});
+		this.tray.create("./icon.ico", "Corebittelanceert zichzelf in uwe anus");
 		this.emit("ready");
 	}
 }

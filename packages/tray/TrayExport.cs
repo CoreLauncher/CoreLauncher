@@ -11,30 +11,32 @@ public static class TrayExport
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void ClickCallBack();
-
-    [UnmanagedCallersOnly(EntryPoint = "tray_register_click_callback")]
-    public static void RegisterClickCallback(IntPtr callbackPtr)
-    {
-        clickCallback = Marshal.GetDelegateForFunctionPointer<ClickCallBack>(callbackPtr);
-    }
+    
+    private static ManualResetEvent trayReady = new ManualResetEvent(false);
     
     [UnmanagedCallersOnly(EntryPoint = "tray_create")]
-    public static void CreateTray(IntPtr iconPathPtr, IntPtr namePtr)
+    public static void CreateTray(IntPtr iconPathPtr, IntPtr namePtr, IntPtr callbackPtr)
     {
         string iconPath = Marshal.PtrToStringUTF8(iconPathPtr);
         string name = Marshal.PtrToStringUTF8(namePtr);
+        clickCallback = Marshal.GetDelegateForFunctionPointer<ClickCallBack>(callbackPtr);
+        
+        trayReady.Reset();
         
         uiThread = new Thread(() =>
         {
             tray = new Tray(iconPath, name);
             tray.Click += (_, _) => clickCallback?.Invoke();
 
+            trayReady.Set();
             // Allows notifyicon to do its job and keeps the thread breathing :D
             Application.Run();
         });
         
         uiThread.SetApartmentState(ApartmentState.STA);
         uiThread.Start();
+        
+        trayReady.WaitOne();
     }
 
     [UnmanagedCallersOnly(EntryPoint = "tray_destroy")]
