@@ -9,9 +9,9 @@
 		"ignoreUnknown": false,
 		"includes": [
 			"**",
-			"!/node_modules/**",
-			"!/.bundle/**",
-			"!/packages/tray/obj/**"
+			"!**/node_modules/**",
+			"!**/.bundle/**",
+			"!**/packages/tray/obj/**"
 		]
 	},
 	"formatter": {
