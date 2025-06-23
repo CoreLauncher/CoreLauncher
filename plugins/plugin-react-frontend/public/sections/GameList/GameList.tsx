@@ -28,14 +28,6 @@ export default function GameList({
 			const rectRight = rect.right;
 			const rectTop = rect.top;
 			const rectBottom = rect.bottom;
-			console.log({
-				rect,
-				mouseX,
-				mouseY,
-				rectRight,
-				rectTop,
-				rectBottom,
-			});
 			if (
 				mouseX >= rectRight &&
 				mouseX <= rectRight + 5 &&
