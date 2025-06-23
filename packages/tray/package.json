@@ -1,5 +1,7 @@
 {
 	"name": "@corelauncher/tray",
 	"main": "./index.ts",
-	"dependencies": {}
+	"dependencies": {
+		"tiny-typed-emitter": "^2.1.0"
+	}
 }
