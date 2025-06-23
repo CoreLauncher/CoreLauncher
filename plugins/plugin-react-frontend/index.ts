@@ -1,4 +1,5 @@
 import { SizeConstraint, Window } from "@corebyte/webwindow";
+import { Tray } from "@corelauncher/tray";
 import {
 	PluginClass,
 	type PluginPortal,
@@ -7,7 +8,6 @@ import {
 import { env } from "bun";
 import getPort from "get-port";
 import indexHTML from "./public/index.html";
-import { Tray } from "@corelauncher/tray";
 
 Window.check();
 const port = env.NODE_ENV === "production" ? await getPort() : 3000;
