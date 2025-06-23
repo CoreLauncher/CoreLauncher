@@ -2,7 +2,6 @@
 #if WINDOWS
 using System.Windows.Forms;
 #endif
-namespace CoreLauncher;
 
 public class Tray : IDisposable
 {

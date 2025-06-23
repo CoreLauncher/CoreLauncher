@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace CoreLauncher;
-
 public static class TrayExport
 {
     private static Tray? tray;

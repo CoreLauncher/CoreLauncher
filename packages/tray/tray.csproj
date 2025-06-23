@@ -7,5 +7,6 @@
         <UseNativeAot>true</UseNativeAot>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <NativeLib>Shared</NativeLib>
+        <!--<ModuleDefinitionFile>C:\Users\jeans\Coding-Projects\CoreLauncher\packages\tray\tray.def</ModuleDefinitionFile>-->
     </PropertyGroup>
 </Project>

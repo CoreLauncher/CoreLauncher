@@ -1,5 +1,7 @@
 import { dlopen, FFIType } from "bun:ffi";
-import dll from "./tray.dll" with { type: "file" };
+import dll from "./bin/Release/net8.0/win-x64/publish/tray.dll" with {
+	type: "file",
+};
 
 const lib = dlopen(dll, {
 	tray_create: {

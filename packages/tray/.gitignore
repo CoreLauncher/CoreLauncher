@@ -20,7 +20,10 @@
 *.DotSettings.user
 
 # Build output folders
-bin/
+bin/Debug/
+bin/Release/net8.0/win-x64/native
+bin/Release/net8.0/win-x64/tray*
+bin/Release/net8.0/win-x64/publish/tray.pdb
 obj/
 
 # Logs and temp files
