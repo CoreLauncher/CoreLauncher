@@ -1,7 +1,5 @@
 import { dlopen, FFIType } from "bun:ffi";
-import dll from "./bin/Release/net8.0/win-x64/publish/tray.dll" with {
-	type: "file",
-};
+import dll from "./tray.dll" with { type: "file" };
 
 const lib = dlopen(dll, {
 	tray_create: {
@@ -14,4 +12,18 @@ const lib = dlopen(dll, {
 	},
 });
 
-lib.symbols.tray_create();
+export class Tray {
+	public created = false;
+
+	create() {
+		if (this.created) throw new Error("Tray already created!");
+		lib.symbols.tray_create();
+		this.created = true;
+	}
+
+	destroy() {
+		if (!this.created) throw new Error("Tray not created yet");
+		lib.symbols.tray_destroy();
+		this.created = false;
+	}
+}

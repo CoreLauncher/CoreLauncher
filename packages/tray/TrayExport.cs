@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Windows.Forms;
 
 public static class TrayExport
 {
@@ -14,6 +15,9 @@ public static class TrayExport
         {
             tray = new Tray("C:\\Users\\jeans\\Coding-Projects\\CoreLauncher\\icon.ico", "CoreLauncher");
             tray.Click += (_, _) => Console.WriteLine("Tray Clicked");
+
+            // Allows notifyicon to do its job and keeps the thread breathing :D
+            Application.Run();
         });
         
         uiThread.SetApartmentState(ApartmentState.STA);
@@ -27,6 +31,13 @@ public static class TrayExport
         {
             tray?.Dispose();
             tray = null;
+        }
+        
+        if (uiThread != null && uiThread.IsAlive)
+        {
+            Application.ExitThread(); // Terminates application.run
+            uiThread.Join(); // Waits for thread ending
+            uiThread = null;
         }
     }
 }

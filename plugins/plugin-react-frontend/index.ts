@@ -7,6 +7,7 @@ import {
 import { env } from "bun";
 import getPort from "get-port";
 import indexHTML from "./public/index.html";
+import { Tray } from "@corelauncher/tray";
 
 Window.check();
 const port = env.NODE_ENV === "production" ? await getPort() : 3000;
@@ -20,6 +21,7 @@ export const description =
 export class Plugin extends PluginClass implements PluginShape {
 	server: Bun.Server;
 	window: Window;
+	tray: Tray;
 	constructor(portal: PluginPortal) {
 		super();
 
@@ -64,6 +66,8 @@ export class Plugin extends PluginClass implements PluginShape {
 			this.server.stop();
 		});
 
+		this.tray = new Tray();
+		this.tray.create();
 		this.emit("ready");
 	}
 }
