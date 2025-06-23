@@ -19,46 +19,46 @@ function encodeCString(value: string) {
 }
 
 export class Tray extends EventEmitter {
-		private clickCallback?: JSCallback;
-		public created = false;
+	private clickCallback?: JSCallback;
+	public created = false;
 
-		// biome-ignore lint/complexity/noUselessConstructor: this might be needed to make the clickcallback function idk
-		constructor() {
-			super();
-		}
-
-		create(name: string, icon: string) {
-			if (this.created) throw new Error("Tray already created!");
-			if (!existsSync(icon)) throw new Error(`Tray icon not found at: ${icon}`);
-
-			this.clickCallback = new JSCallback(
-				() => {
-					queueMicrotask(() => {
-						this.emit("click");
-					});
-				},
-				{
-					args: [],
-					returns: FFIType.void,
-				},
-			);
-
-			if (!this.clickCallback?.ptr) throw new Error("Callback pointer is null");
-
-			lib.symbols.tray_create(
-				encodeCString(icon),
-				encodeCString(name),
-				this.clickCallback.ptr,
-			);
-
-			this.created = true;
-		}
-
-		destroy() {
-			if (!this.created) throw new Error("Tray not created yet");
-			this.created = false;
-			lib.symbols.tray_destroy();
-			this.clickCallback?.close();
-			this.clickCallback = undefined;
-		}
+	// biome-ignore lint/complexity/noUselessConstructor: this might be needed to make the clickcallback function idk
+	constructor() {
+		super();
 	}
+
+	create(name: string, icon: string) {
+		if (this.created) throw new Error("Tray already created!");
+		if (!existsSync(icon)) throw new Error(`Tray icon not found at: ${icon}`);
+
+		this.clickCallback = new JSCallback(
+			() => {
+				queueMicrotask(() => {
+					this.emit("click");
+				});
+			},
+			{
+				args: [],
+				returns: FFIType.void,
+			},
+		);
+
+		if (!this.clickCallback?.ptr) throw new Error("Callback pointer is null");
+
+		lib.symbols.tray_create(
+			encodeCString(icon),
+			encodeCString(name),
+			this.clickCallback.ptr,
+		);
+
+		this.created = true;
+	}
+
+	destroy() {
+		if (!this.created) throw new Error("Tray not created yet");
+		this.created = false;
+		lib.symbols.tray_destroy();
+		this.clickCallback?.close();
+		this.clickCallback = undefined;
+	}
+}
