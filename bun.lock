@@ -20,6 +20,9 @@
     },
     "packages/tray": {
       "name": "@corelauncher/tray",
+      "dependencies": {
+        "tiny-typed-emitter": "^2.1.0",
+      },
     },
     "packages/types": {
       "name": "@corelauncher/types",

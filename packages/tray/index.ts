@@ -1,7 +1,6 @@
 import { dlopen, FFIType, JSCallback, ptr } from "bun:ffi";
 import { EventEmitter } from "node:events";
 import dll from "./tray.dll" with { type: "file" };
-import { TypedEmitter } from "tiny-typed-emitter";
 import { existsSync } from "node:fs";
 
 const lib = dlopen(dll, {
@@ -28,7 +27,7 @@ export class Tray extends EventEmitter {
 		super();
 	}
 
-	create(iconPath: string, name: string) {
+	create(name: string, iconPath: string) {
 		if (this.created) throw new Error("Tray already created!");
 
 		if (!existsSync(iconPath)) {
