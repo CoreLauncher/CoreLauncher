@@ -13,7 +13,7 @@ public static class TrayExport
     {
         uiThread = new Thread(() =>
         {
-            tray = new Tray("C:\\Users\\jeans\\Coding-Projects\\CoreLauncher\\icon.ico", "CoreLauncher");
+            tray = new Tray("icon.ico", "CoreLauncher");
             tray.Click += (_, _) => Console.WriteLine("Tray Clicked");
 
             // Allows notifyicon to do its job and keeps the thread breathing :D
