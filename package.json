@@ -1,32 +1,33 @@
 {
-	"name": "corelauncher",
-	"license": "MIT",
-	"private": true,
-	"workspaces": [
-		"packages/*",
-		"plugins/*",
-		"projects/*"
-	],
-	"devDependencies": {
-		"@biomejs/biome": "2.0.4",
-		"@types/bun": "latest",
-		"embedded-postgres": "^17.5.0-beta.15",
-		"rcedit": "^4.0.1"
-	},
-	"peerDependencies": {
-		"typescript": "^5.8.3"
-	},
-	"scripts": {
-		"lint": "bun run biome check --fix",
-		"dev": "bun run --watch ./projects/corelauncher/index.ts",
-		"bundle": "bun build --target=bun --outdir .bundle ./projects/corelauncher/index.ts",
-		"compile": "bun run ./scripts/compile-dev.ts"
-	},
-	"trustedDependencies": [
-		"@biomejs/biome",
-		"@embedded-postgres/windows-x64"
-	],
-	"patchedDependencies": {
-		"webview-bun@2.4.0": "patches/webview-bun@2.4.0.patch"
-	}
+  "name": "corelauncher",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "plugins/*",
+    "projects/*"
+  ],
+  "devDependencies": {
+    "@biomejs/biome": "2.0.4",
+    "@types/bun": "latest",
+    "embedded-postgres": "^17.5.0-beta.15",
+    "rcedit": "^4.0.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "scripts": {
+    "lint": "bun run biome check --fix",
+    "dev": "bun run --watch ./projects/corelauncher/index.ts",
+    "bundle": "bun build --target=bun --outdir .bundle ./projects/corelauncher/index.ts",
+    "compile": "bun run ./scripts/compile-dev.ts"
+  },
+  "trustedDependencies": [
+    "@biomejs/biome",
+    "@embedded-postgres/windows-x64",
+    "registry-js"
+  ],
+  "patchedDependencies": {
+    "webview-bun@2.4.0": "patches/webview-bun@2.4.0.patch"
+  }
 }

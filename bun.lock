@@ -78,6 +78,7 @@
   "trustedDependencies": [
     "@biomejs/biome",
     "@embedded-postgres/windows-x64",
+    "registry-js",
   ],
   "patchedDependencies": {
     "webview-bun@2.4.0": "patches/webview-bun@2.4.0.patch",
