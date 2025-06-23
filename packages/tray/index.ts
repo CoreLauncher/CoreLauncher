@@ -1,11 +1,8 @@
 import { dlopen, FFIType, JSCallback, ptr } from "bun:ffi";
 import { EventEmitter } from "node:events";
-import { existsSync } from "node:fs";
 import dll from "./tray.dll" with { type: "file" };
-
-function encodeCString(value: string) {
-	return ptr(new TextEncoder().encode(`${value}\0`));
-}
+import { TypedEmitter } from "tiny-typed-emitter";
+import { existsSync } from "node:fs";
 
 const lib = dlopen(dll, {
 	tray_create: {
@@ -17,6 +14,10 @@ const lib = dlopen(dll, {
 		return: FFIType.void,
 	},
 });
+
+function encodeCString(value: string) {
+	return ptr(new TextEncoder().encode(`${value}\0`));
+}
 
 export class Tray extends EventEmitter {
 	private clickCallback?: JSCallback;
