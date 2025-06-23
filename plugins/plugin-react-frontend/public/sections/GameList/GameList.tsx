@@ -2,7 +2,13 @@ import { useState } from "react";
 import "./GameList.css";
 import useGames from "../../hooks/useGames";
 
-export default function GameList() {
+export default function GameList({
+	selected,
+	onSelect,
+}: {
+	selected?: string;
+	onSelect?: (id: string) => void;
+}) {
 	const [query, setQuery] = useState("");
 	const games = useGames();
 
@@ -22,9 +28,14 @@ export default function GameList() {
 							game.id.toLowerCase().includes(query.toLowerCase()),
 					)
 					.map((game) => (
-						<div className="game" key={game.id}>
+						<button
+							key={game.id}
+							type="button"
+							onClick={() => onSelect?.(game.id)}
+							className={`game ${game.id === selected ? "selected" : ""}`}
+						>
 							<p>{game.name}</p>
-						</div>
+						</button>
 					))}
 			</div>
 		</div>

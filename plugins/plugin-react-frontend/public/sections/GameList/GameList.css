@@ -19,6 +19,7 @@
 		overflow-y: auto;
 
 		.game {
+			all: unset;
 			padding: 4px;
 			border-radius: 4px;
 
@@ -26,7 +27,8 @@
 
 			transition: backdrop-filter 0.2s ease-in-out;
 
-			&:hover {
+			&:hover,
+			&.selected {
 				backdrop-filter: brightness(0.5);
 			}
 
