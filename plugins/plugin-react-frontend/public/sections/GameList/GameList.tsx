@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./GameList.css";
 import useGames from "../../hooks/useGames";
 
@@ -11,13 +11,69 @@ export default function GameList({
 }) {
 	const [query, setQuery] = useState("");
 	const games = useGames();
+	const divRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		let isDragging = false;
+
+		function onMouseDown(event: MouseEvent) {
+			const target = event.target as HTMLElement;
+			const div = divRef.current;
+			if (!div) return;
+			if (target !== divRef.current) return;
+
+			const rect = div.getBoundingClientRect();
+			const mouseX = event.clientX;
+			const mouseY = event.clientY;
+			const rectRight = rect.right;
+			const rectTop = rect.top;
+			const rectBottom = rect.bottom;
+			console.log({
+				rect,
+				mouseX,
+				mouseY,
+				rectRight,
+				rectTop,
+				rectBottom,
+			});
+			if (
+				mouseX >= rectRight &&
+				mouseX <= rectRight + 5 &&
+				mouseY >= rectTop &&
+				mouseY <= rectBottom
+			) {
+				isDragging = true;
+			}
+		}
+
+		function onMouseUp() {
+			isDragging = false;
+		}
+
+		function onMove(event: MouseEvent) {
+			const div = divRef.current;
+			if (!div) return;
+			if (!isDragging) return;
+			const rect = div.getBoundingClientRect();
+			div.style.width = `${event.clientX - rect.left}px`;
+		}
+
+		window.addEventListener("mousedown", onMouseDown);
+		window.addEventListener("mouseup", onMouseUp);
+		window.addEventListener("mousemove", onMove);
+		return () => {
+			window.removeEventListener("mousedown", onMouseDown);
+			window.removeEventListener("mouseup", onMouseUp);
+			window.removeEventListener("mousemove", onMove);
+		};
+	}, []);
 
 	function onQuery(event: React.ChangeEvent<HTMLInputElement>) {
 		setQuery(event.target.value);
 	}
 
 	return (
-		<div className="GameList">
+		<div className="GameList" ref={divRef}>
 			<input type="text" placeholder="Search..." onChange={onQuery} />
 			<div className="games">
 				{games
