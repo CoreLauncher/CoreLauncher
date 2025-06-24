@@ -16,7 +16,7 @@ Bun.serve({
 			return Response.redirect(authUrl, 302);
 		},
 
-		"/return": async (request) => {
+		"/return": async (request: { url: string }) => {
 			const steamId = await verifySteamResponse(request.url);
 			if (steamId) {
 				return new Response(`Logged in as SteamdId64: ${steamId}`, {
