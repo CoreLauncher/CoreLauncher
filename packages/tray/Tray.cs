@@ -1,6 +1,7 @@
 ﻿using System;
 #if WINDOWS
 using System.Windows.Forms;
+using Accessibility;
 #endif
 
 namespace tray;
@@ -11,34 +12,51 @@ public class Tray : IDisposable
     private NotifyIcon notifyIcon;
 #endif
     
-    public event EventHandler Click;
     public event EventHandler LeftClick;
     public event EventHandler RightClick;
+    public event EventHandler MiddleClick;
+    public event EventHandler DoubleClick;
 
     public Tray(string iconPath, string iconName = "")
     {
 #if WINDOWS
-        notifyIcon = new NotifyIcon();
-        notifyIcon.Icon = new System.Drawing.Icon(iconPath);
-        notifyIcon.Text = iconName;
-        notifyIcon.Visible = true;
-        notifyIcon.Click += (sender, args) => Click?.Invoke(this, EventArgs.Empty);
-        /*notifyIcon.MouseClick += (sender, args) =>
+        notifyIcon = new NotifyIcon
         {
-            if (args.Button == MouseButtons.Left) 
-                LeftClick?.Invoke(this, EventArgs.Empty);
-            else if (args.Button == MouseButtons.Right) 
-                RightClick?.Invoke(this, EventArgs.Empty);
-        };*/
+            Site = null,
+            BalloonTipText = null!,
+            BalloonTipIcon = ToolTipIcon.None,
+            BalloonTipTitle = null!,
+            ContextMenuStrip = null,
+            Icon = new System.Drawing.Icon(iconPath),
+            Text = iconName,
+            Visible = true,
+            Tag = null
+        };
+        
+        notifyIcon.DoubleClick += (_, _) => DoubleClick?.Invoke(this, EventArgs.Empty);
+        notifyIcon.MouseClick += (_, args) =>
+        {
+            switch (args.Button)
+            {
+                case MouseButtons.Left:
+                    LeftClick?.Invoke(this, EventArgs.Empty);
+                    break;
+                case MouseButtons.Right:
+                    RightClick?.Invoke(this, EventArgs.Empty);
+                    break;
+                case MouseButtons.Middle:
+                    MiddleClick?.Invoke(this, EventArgs.Empty);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        };
 #endif
 
         // TODO: add macOS and Linux implementations
     }
     
-    public void Dispose()
-    {
-        Destroy();
-    }
+    public void Dispose() => Destroy(); 
 
     public void Destroy()
     { 

@@ -9,15 +9,19 @@ public static class TrayExport
 {
     private static Tray tray;
     private static Thread uiThread;
-    private static ClickCallBack clickCallback;
     private static ManualResetEvent trayReady = new ManualResetEvent(false);
     private static readonly object locker = new();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void ClickCallBack();
     
+    private static ClickCallBack leftClick;
+    private static ClickCallBack rightClick;
+    private static ClickCallBack middleClick;
+    private static ClickCallBack doubleClick;
+    
     [UnmanagedCallersOnly(EntryPoint = "tray_create")]
-    public static void CreateTray(IntPtr iconPathPtr, IntPtr namePtr, IntPtr callbackPtr)
+    public static void CreateTray(IntPtr namePtr, IntPtr iconPathPtr, IntPtr leftClickPtr, IntPtr rightClickPtr, IntPtr middleClickPtr, IntPtr doubleClickPtr)
     {
         lock (locker)
         {
@@ -26,9 +30,13 @@ public static class TrayExport
                 Console.WriteLine("[Tray] Warning: Tray already exists. Returning...");
                 return;
             }
-            string iconPath = Marshal.PtrToStringUTF8(iconPathPtr);
+            
             string iconName = Marshal.PtrToStringUTF8(namePtr);
-            clickCallback = Marshal.GetDelegateForFunctionPointer<ClickCallBack>(callbackPtr);
+            string iconPath = Marshal.PtrToStringUTF8(iconPathPtr);
+            leftClick = Marshal.GetDelegateForFunctionPointer<ClickCallBack>(leftClickPtr);
+            rightClick = Marshal.GetDelegateForFunctionPointer<ClickCallBack>(rightClickPtr);
+            middleClick = Marshal.GetDelegateForFunctionPointer<ClickCallBack>(middleClickPtr);
+            doubleClick = Marshal.GetDelegateForFunctionPointer<ClickCallBack>(doubleClickPtr);
 
             trayReady.Reset();
 
@@ -37,7 +45,10 @@ public static class TrayExport
                 try
                 {
                     tray = new Tray(iconPath, iconName);
-                    tray.Click += (_, _) => clickCallback?.Invoke();
+                    tray.LeftClick += (_, _) => leftClick.Invoke();
+                    tray.RightClick += (_, _) => rightClick.Invoke();
+                    tray.MiddleClick += (_, _) => middleClick.Invoke();
+                    tray.DoubleClick += (_, _) => doubleClick.Invoke();
 
                     trayReady.Set();
                     Console.WriteLine($"[Tray] Created with icon: {iconPath}, name: {iconName}");
@@ -61,27 +72,18 @@ public static class TrayExport
     {
         lock (locker)
         {
+            try { tray?.Dispose(); }
+            finally { tray = null; }
+        }
+
+        if (uiThread != null && uiThread.IsAlive)
+        {
             try
             {
-                tray?.Dispose();
+                Application.ExitThread();
+                uiThread.Join();
             }
-            finally
-            {
-                tray = null;
-            }
-        
-            if (uiThread != null && uiThread.IsAlive)
-            {
-                try
-                {
-                    Application.ExitThread();
-                    uiThread.Join();
-                }
-                finally
-                {
-                    uiThread = null;
-                }
-            }
+            finally { uiThread = null; }
         }
     }
 }
