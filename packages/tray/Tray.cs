@@ -1,7 +1,6 @@
 ﻿using System;
 #if WINDOWS
 using System.Windows.Forms;
-using Accessibility;
 #endif
 
 namespace tray;
