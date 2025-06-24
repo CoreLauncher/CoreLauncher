@@ -75,9 +75,10 @@ export class Plugin extends PluginClass implements PluginShape {
 
 		this.tray = new Tray();
 		this.tray.create("Corebittelanceert zichzelf in uwe anus", tempIcon);
-		this.tray.on("click", () => {
-			console.log("Tray icon clicked!");
-		});
+		this.tray.on("left-click", () => console.log("Left click!"));
+		this.tray.on("right-click", () => console.log("Right click!"));
+		this.tray.on("middle-click", () => console.log("Middle click!"));
+		this.tray.on("double-click", () => console.log("Double click!"));
 
 		this.emit("ready");
 	}

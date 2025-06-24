@@ -5,7 +5,14 @@ import dll from "./tray.dll" with { type: "file" };
 
 const lib = dlopen(dll, {
 	tray_create: {
-		args: [FFIType.cstring, FFIType.cstring, FFIType.function],
+		args: [
+			FFIType.cstring, // name
+			FFIType.cstring, // icon
+			FFIType.function, // left
+			FFIType.function, // right
+			FFIType.function, // middle
+			FFIType.function, // double
+		],
 		return: FFIType.void,
 	},
 	tray_destroy: {
@@ -19,7 +26,11 @@ function encodeCString(value: string) {
 }
 
 export class Tray extends EventEmitter {
-	private clickCallback?: JSCallback;
+	private leftClick?: JSCallback;
+	private rightClick?: JSCallback;
+	private middleClick?: JSCallback;
+	private doubleClick?: JSCallback;
+
 	public created = false;
 
 	// biome-ignore lint/complexity/noUselessConstructor: this might be needed to make the clickcallback function idk
@@ -31,24 +42,45 @@ export class Tray extends EventEmitter {
 		if (this.created) throw new Error("Tray already created!");
 		if (!existsSync(icon)) throw new Error(`Tray icon not found at: ${icon}`);
 
-		this.clickCallback = new JSCallback(
-			() => {
-				queueMicrotask(() => {
-					this.emit("click");
-				});
-			},
+		this.leftClick = new JSCallback(
+			() => queueMicrotask(() => this.emit("left-click")),
 			{
 				args: [],
 				returns: FFIType.void,
 			},
 		);
 
-		if (!this.clickCallback?.ptr) throw new Error("Callback pointer is null");
+		this.rightClick = new JSCallback(
+			() => queueMicrotask(() => this.emit("right-click")),
+			{
+				args: [],
+				returns: FFIType.void,
+			},
+		);
+
+		this.middleClick = new JSCallback(
+			() => queueMicrotask(() => this.emit("middle-click")),
+			{
+				args: [],
+				returns: FFIType.void,
+			},
+		);
+
+		this.doubleClick = new JSCallback(
+			() => queueMicrotask(() => this.emit("double-click")),
+			{
+				args: [],
+				returns: FFIType.void,
+			},
+		);
 
 		lib.symbols.tray_create(
-			encodeCString(icon),
 			encodeCString(name),
-			this.clickCallback.ptr,
+			encodeCString(icon),
+			this.leftClick.ptr,
+			this.rightClick.ptr,
+			this.middleClick.ptr,
+			this.doubleClick.ptr,
 		);
 
 		this.created = true;
@@ -56,9 +88,19 @@ export class Tray extends EventEmitter {
 
 	destroy() {
 		if (!this.created) throw new Error("Tray not created yet");
-		this.created = false;
 		lib.symbols.tray_destroy();
-		this.clickCallback?.close();
-		this.clickCallback = undefined;
+
+		this.leftClick?.close();
+		this.rightClick?.close();
+		this.middleClick?.close();
+		this.doubleClick?.close();
+
+		this.leftClick =
+			this.rightClick =
+			this.middleClick =
+			this.doubleClick =
+				undefined;
+
+		this.created = false;
 	}
 }
