@@ -3,56 +3,85 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
+namespace tray;
+
 public static class TrayExport
 {
-    private static Tray? tray;
-    private static Thread? uiThread;
-    private static ClickCallBack? clickCallback;
+    private static Tray tray;
+    private static Thread uiThread;
+    private static ClickCallBack clickCallback;
+    private static ManualResetEvent trayReady = new ManualResetEvent(false);
+    private static readonly object locker = new();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void ClickCallBack();
     
-    private static ManualResetEvent trayReady = new ManualResetEvent(false);
-    
     [UnmanagedCallersOnly(EntryPoint = "tray_create")]
     public static void CreateTray(IntPtr iconPathPtr, IntPtr namePtr, IntPtr callbackPtr)
     {
-        string iconPath = Marshal.PtrToStringUTF8(iconPathPtr);
-        string name = Marshal.PtrToStringUTF8(namePtr);
-        clickCallback = Marshal.GetDelegateForFunctionPointer<ClickCallBack>(callbackPtr);
-        
-        trayReady.Reset();
-        
-        uiThread = new Thread(() =>
+        lock (locker)
         {
-            tray = new Tray(iconPath, name);
-            tray.Click += (_, _) => clickCallback?.Invoke();
+            if (tray != null)
+            {
+                Console.WriteLine("[Tray] Warning: Tray already exists. Returning...");
+                return;
+            }
+            string iconPath = Marshal.PtrToStringUTF8(iconPathPtr);
+            string iconName = Marshal.PtrToStringUTF8(namePtr);
+            clickCallback = Marshal.GetDelegateForFunctionPointer<ClickCallBack>(callbackPtr);
 
-            trayReady.Set();
-            // Allows notifyicon to do its job and keeps the thread breathing :D
-            Application.Run();
-        });
-        
-        uiThread.SetApartmentState(ApartmentState.STA);
-        uiThread.Start();
-        
-        trayReady.WaitOne();
+            trayReady.Reset();
+
+            uiThread = new Thread(() =>
+            {
+                try
+                {
+                    tray = new Tray(iconPath, iconName);
+                    tray.Click += (_, _) => clickCallback?.Invoke();
+
+                    trayReady.Set();
+                    Console.WriteLine($"[Tray] Created with icon: {iconPath}, name: {iconName}");
+                    Application.Run();
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine($"[Tray] Error in UI thread: {ex}");
+                }
+            });
+
+            uiThread.SetApartmentState(ApartmentState.STA);
+            uiThread.Start();
+
+            trayReady.WaitOne();
+        }
     }
 
     [UnmanagedCallersOnly(EntryPoint = "tray_destroy")]
     public static void DestroyTray()
     {
-        if (tray != null)
+        lock (locker)
         {
-            tray?.Dispose();
-            tray = null;
-        }
+            try
+            {
+                tray?.Dispose();
+            }
+            finally
+            {
+                tray = null;
+            }
         
-        if (uiThread != null && uiThread.IsAlive)
-        {
-            Application.ExitThread(); // Terminates application.run
-            uiThread.Join(); // Waits for thread ending
-            uiThread = null;
+            if (uiThread != null && uiThread.IsAlive)
+            {
+                try
+                {
+                    Application.ExitThread();
+                    uiThread.Join();
+                }
+                finally
+                {
+                    uiThread = null;
+                }
+            }
         }
     }
 }
