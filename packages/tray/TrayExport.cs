@@ -51,7 +51,6 @@ public static class TrayExport
                     tray.DoubleClick += (_, _) => doubleClick.Invoke();
 
                     trayReady.Set();
-                    Console.WriteLine($"[Tray] Created with icon: {iconPath}, name: {iconName}");
                     Application.Run();
                 }
                 catch (Exception ex)

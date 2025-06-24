@@ -55,11 +55,6 @@ export class Tray extends (TypedEmitter as new () => TypedEmitter<TrayEvents>) {
 
 	public created = false;
 
-	// biome-ignore lint/complexity/noUselessConstructor: If this is not there the bun panic is thrown... idfk why
-	constructor() {
-		super();
-	}
-
 	public safeEmit(event: keyof TrayEvents) {
 		eventQueue.push(() => this.emit(event));
 	}

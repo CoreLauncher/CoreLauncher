@@ -46,6 +46,10 @@ public class Tray : IDisposable
                 case MouseButtons.Middle:
                     MiddleClick?.Invoke(this, EventArgs.Empty);
                     break;
+                case MouseButtons.None:
+                case MouseButtons.XButton1:
+                case MouseButtons.XButton2:
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
