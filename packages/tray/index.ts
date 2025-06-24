@@ -1,6 +1,6 @@
 import { dlopen, FFIType, JSCallback, ptr } from "bun:ffi";
-import { EventEmitter } from "node:events";
 import { existsSync } from "node:fs";
+import { TypedEmitter } from "tiny-typed-emitter";
 import dll from "./tray.dll" with { type: "file" };
 
 const lib = dlopen(dll, {
@@ -21,11 +21,33 @@ const lib = dlopen(dll, {
 	},
 });
 
+type TrayEvents = {
+	"left-click": () => void;
+	"right-click": () => void;
+	"middle-click": () => void;
+	"double-click": () => void;
+};
+
 function encodeCString(value: string) {
 	return ptr(new TextEncoder().encode(`${value}\0`));
 }
 
-export class Tray extends EventEmitter {
+const eventQueue: (() => void)[] = [];
+
+setInterval(() => {
+	while (eventQueue.length > 0) {
+		const handler = eventQueue.shift();
+		handler?.();
+	}
+}, 16);
+
+const makeCallback = (tray: Tray, event: keyof TrayEvents) =>
+	new JSCallback(() => queueMicrotask(() => tray.safeEmit(event)), {
+		args: [],
+		returns: FFIType.void,
+	});
+
+export class Tray extends (TypedEmitter as new () => TypedEmitter<TrayEvents>) {
 	private leftClick?: JSCallback;
 	private rightClick?: JSCallback;
 	private middleClick?: JSCallback;
@@ -33,46 +55,23 @@ export class Tray extends EventEmitter {
 
 	public created = false;
 
-	// biome-ignore lint/complexity/noUselessConstructor: this might be needed to make the clickcallback function idk
+	// biome-ignore lint/complexity/noUselessConstructor: If this is not there the bun panic is thrown... idfk why
 	constructor() {
 		super();
+	}
+
+	public safeEmit(event: keyof TrayEvents) {
+		eventQueue.push(() => this.emit(event));
 	}
 
 	create(name: string, icon: string) {
 		if (this.created) throw new Error("Tray already created!");
 		if (!existsSync(icon)) throw new Error(`Tray icon not found at: ${icon}`);
 
-		this.leftClick = new JSCallback(
-			() => queueMicrotask(() => this.emit("left-click")),
-			{
-				args: [],
-				returns: FFIType.void,
-			},
-		);
-
-		this.rightClick = new JSCallback(
-			() => queueMicrotask(() => this.emit("right-click")),
-			{
-				args: [],
-				returns: FFIType.void,
-			},
-		);
-
-		this.middleClick = new JSCallback(
-			() => queueMicrotask(() => this.emit("middle-click")),
-			{
-				args: [],
-				returns: FFIType.void,
-			},
-		);
-
-		this.doubleClick = new JSCallback(
-			() => queueMicrotask(() => this.emit("double-click")),
-			{
-				args: [],
-				returns: FFIType.void,
-			},
-		);
+		this.leftClick = makeCallback(this, "left-click");
+		this.rightClick = makeCallback(this, "right-click");
+		this.middleClick = makeCallback(this, "middle-click");
+		this.doubleClick = makeCallback(this, "double-click");
 
 		lib.symbols.tray_create(
 			encodeCString(name),
