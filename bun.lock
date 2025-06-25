@@ -37,6 +37,15 @@
         "@corelauncher/types": "*",
       },
     },
+    "plugins/plugin-epic-games": {
+      "name": "@corelauncher/plugin-epic-games",
+      "dependencies": {
+        "registry-js": "^1.16.1",
+      },
+      "devDependencies": {
+        "@corelauncher/types": "*",
+      },
+    },
     "plugins/plugin-react-frontend": {
       "name": "@corelauncher/plugin-react-frontend",
       "dependencies": {
@@ -116,6 +125,8 @@
     "@corelauncher/corelauncher": ["@corelauncher/corelauncher@workspace:projects/corelauncher"],
 
     "@corelauncher/plugin-csharp-test": ["@corelauncher/plugin-csharp-test@workspace:plugins/plugin-csharp-test"],
+
+    "@corelauncher/plugin-epic-games": ["@corelauncher/plugin-epic-games@workspace:plugins/plugin-epic-games"],
 
     "@corelauncher/plugin-react-frontend": ["@corelauncher/plugin-react-frontend@workspace:plugins/plugin-react-frontend"],
 

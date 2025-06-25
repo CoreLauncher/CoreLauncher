@@ -1,3 +1,4 @@
+import * as EpicPlugin from "@corelauncher/plugin-epic-games";
 import * as ReactPlugin from "@corelauncher/plugin-react-frontend";
 import * as SteamPlugin from "@corelauncher/plugin-steam";
 // import * as CSharpPlugin from "@corelauncher/plugin-csharp-test";
@@ -13,6 +14,7 @@ export default class CoreLauncher {
 
 		this.plugins.loadPlugin(ReactPlugin);
 		this.plugins.loadPlugin(SteamPlugin);
+		this.plugins.loadPlugin(EpicPlugin);
 		// this.plugins.loadPlugin(CSharpPlugin);
 	}
 }

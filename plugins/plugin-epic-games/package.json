@@ -1,0 +1,9 @@
+{
+	"name": "@corelauncher/plugin-epic-games",
+	"dependencies": {
+		"registry-js": "^1.16.1"
+	},
+	"devDependencies": {
+		"@corelauncher/types": "*"
+	}
+}
