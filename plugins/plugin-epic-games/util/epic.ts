@@ -81,7 +81,7 @@ export async function getEpicGames() {
 		const manifest = JSON.parse(content) as EpicManifest;
 
 		games.push({
-			id: manifest.CatalogNamespace,
+			id: manifest.AppName,
 			name: manifest.DisplayName,
 			directory: manifest.InstallLocation,
 			exe: manifest.LaunchExecutable,
