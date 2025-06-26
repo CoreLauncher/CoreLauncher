@@ -1,6 +1,7 @@
 :root {
 	--background-color: #000000;
 	--block-color: #0f0f0f;
+	--scrollbar-color: #1f1f1f;
 
 	--text-color: hsl(0, 0%, 100%);
 	--text-muted-color: #b0b0b0;
@@ -33,6 +34,9 @@ body,
 
 	padding: 0;
 	margin: 0;
+
+	scrollbar-width: thin;
+	scrollbar-color: var(--scrollbar-color) var(--block-color);
 }
 
 input,
