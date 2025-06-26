@@ -14,20 +14,16 @@ export class Plugin extends PluginClass implements PluginShape {
 	constructor() {
 		super();
 
-		noop()
-			.then(async () => {
-				const games = await getSteamGames();
-				this.emit(
-					"games",
-					games
-						.map(
-							(game) => new SteamGame(`steam:${game.id.toString()}`, game.name),
-						)
-						.filter((game) => game.id !== "steam:228980"),
-				);
-			})
-			.then(() => {
-				this.emit("ready");
-			});
+		noop().then(async () => {
+			const games = await getSteamGames();
+			this.emit(
+				"games",
+				games
+					.map((game) => new SteamGame({ id: game.id, name: game.name }))
+					.filter((game) => game.id !== "steam:228980"), // Steam Common Redistibutables
+			);
+
+			this.emit("ready");
+		});
 	}
 }

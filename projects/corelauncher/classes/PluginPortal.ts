@@ -9,7 +9,17 @@ export default class PluginPortal implements AbstractPluginPortal {
 	constructor(pluginManager: PluginManager) {
 		this.pluginManager = pluginManager;
 	}
+
 	getGames() {
 		return this.pluginManager.plugins.flatMap((plugin) => plugin.parts.games);
+	}
+
+	getGame(id: string) {
+		const game = this.pluginManager.plugins
+			.flatMap((plugin) => plugin.parts.games)
+			.find((game) => game.id === id);
+
+		if (!game) throw new Error(`Game with ID ${id} does not exist`);
+		return game;
 	}
 }

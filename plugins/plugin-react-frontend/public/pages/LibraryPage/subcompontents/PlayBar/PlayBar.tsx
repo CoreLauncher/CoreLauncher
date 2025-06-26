@@ -1,5 +1,6 @@
 import { type Icon, PlayFill } from "react-bootstrap-icons";
 import "./PlayBar.css";
+import { fetchLaunchGame } from "../../../../functions/api";
 import type { Game } from "../../../../types";
 
 export default function PlayBar({
@@ -9,7 +10,9 @@ export default function PlayBar({
 	meta?: { icon: Icon; title: string; content: string }[];
 	game: Game;
 }) {
-	function onPlay() {}
+	function onPlay() {
+		fetchLaunchGame(game.id);
+	}
 
 	return (
 		<div className="PlayBar">

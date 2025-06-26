@@ -5,7 +5,7 @@ import {
 	type PluginPortal,
 	type PluginShape,
 } from "@corelauncher/types";
-import { env } from "bun";
+import { type BunRequest, env } from "bun";
 import getPort from "get-port";
 import temporaryDirectory from "temp-dir";
 import indexHTML from "./public/index.html";
@@ -50,6 +50,16 @@ export class Plugin extends PluginClass implements PluginShape {
 							name: game.name,
 						})),
 					);
+				},
+
+				"/api/games/launch/:id": {
+					POST: async (request: BunRequest<"/api/games/launch/:id">) => {
+						const gameId = request.params.id;
+						const game = portal.getGame(gameId);
+
+						const result = await game.launch();
+						return Response.json(result);
+					},
 				},
 			},
 		} as Parameters<typeof Bun.serve>[0];

@@ -19,7 +19,7 @@ export class Plugin extends PluginClass implements PluginShape {
 
 				this.emit(
 					"games",
-					games.map((game) => new EpicGame(`epic:${game.id}`, game.name)),
+					games.map((game) => new EpicGame({ id: game.id, name: game.name })),
 				);
 			})
 			.then(() => {

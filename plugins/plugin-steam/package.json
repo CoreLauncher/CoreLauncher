@@ -2,6 +2,7 @@
 	"name": "@corelauncher/plugin-steam",
 	"dependencies": {
 		"@node-steam/vdf": "^2.2.0",
+		"open": "^10.1.2",
 		"registry-js": "^1.16.1"
 	},
 	"devDependencies": {
