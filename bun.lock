@@ -31,15 +31,10 @@
         "tiny-typed-emitter": "^2.1.0",
       },
     },
-    "plugins/plugin-csharp-test": {
-      "name": "@corelauncher/plugin-csharp-test",
-      "devDependencies": {
-        "@corelauncher/types": "*",
-      },
-    },
     "plugins/plugin-epic-games": {
       "name": "@corelauncher/plugin-epic-games",
       "dependencies": {
+        "open": "^10.1.2",
         "registry-js": "^1.16.1",
       },
       "devDependencies": {
@@ -124,8 +119,6 @@
     "@corelauncher/console-addon": ["@corelauncher/console-addon@workspace:packages/console-addon"],
 
     "@corelauncher/corelauncher": ["@corelauncher/corelauncher@workspace:projects/corelauncher"],
-
-    "@corelauncher/plugin-csharp-test": ["@corelauncher/plugin-csharp-test@workspace:plugins/plugin-csharp-test"],
 
     "@corelauncher/plugin-epic-games": ["@corelauncher/plugin-epic-games@workspace:plugins/plugin-epic-games"],
 
