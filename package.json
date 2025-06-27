@@ -19,6 +19,7 @@
 	},
 	"scripts": {
 		"prepare": "husky",
+		"postinstall": "bun run scripts/patch-webview.ts",
 		"lint": "bun run biome check --fix",
 		"dev": "bun run --watch ./projects/corelauncher/index.ts",
 		"bundle": "bun build --target=bun --outdir .bundle ./projects/corelauncher/index.ts",
@@ -28,8 +29,5 @@
 		"@biomejs/biome",
 		"@embedded-postgres/windows-x64",
 		"registry-js"
-	],
-	"patchedDependencies": {
-		"webview-bun@2.4.0": "patches/webview-bun@2.4.0.patch"
-	}
+	]
 }

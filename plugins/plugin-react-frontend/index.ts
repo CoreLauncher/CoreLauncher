@@ -10,7 +10,6 @@ import getPort from "get-port";
 import temporaryDirectory from "temp-dir";
 import indexHTML from "./public/index.html";
 
-Window.check();
 const port = env.NODE_ENV === "production" ? await getPort() : 3000;
 
 const icon = await import("../../icon.ico", {
@@ -71,6 +70,7 @@ export class Plugin extends PluginClass implements PluginShape {
 		const windowOptions = {
 			title: "CoreLauncher",
 			url: `http://localhost:${port}`,
+			show: true,
 			size: {
 				width: 1200,
 				height: 800,
