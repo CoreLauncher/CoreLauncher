@@ -79,16 +79,15 @@ export class Plugin extends PluginClass implements PluginShape {
 		} as ConstructorParameters<typeof Window>[0];
 
 		this.window = new Window(windowOptions);
-		this.window.on("close", () => {
-			this.server.stop();
-		});
+		this.window.on("close", () => {});
 
 		this.tray = new Tray();
 		this.tray.create("CoreLauncher", tempIcon);
-		this.tray.on("left-click", () => console.log("Left click!"));
-		this.tray.on("right-click", () => console.log("Right click!"));
-		this.tray.on("middle-click", () => console.log("Middle click!"));
-		this.tray.on("double-click", () => console.log("Double click!"));
+		this.tray.on("left-click", () => {
+			console.log("Tray Icon Clicked!", this.window.shown);
+			if (this.window.shown) return;
+			this.window.show();
+		});
 
 		this.emit("ready");
 	}
