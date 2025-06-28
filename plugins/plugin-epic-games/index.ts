@@ -13,17 +13,16 @@ export class Plugin extends PluginClass implements PluginShape {
 	constructor() {
 		super();
 
-		noop()
-			.then(async () => {
-				const games = await getEpicGames();
+		noop().then(async () => {
+			if (!(await getEpicGames())) return this.emit("ready");
 
-				this.emit(
-					"games",
-					games.map((game) => new EpicGame({ id: game.id, name: game.name })),
-				);
-			})
-			.then(() => {
-				this.emit("ready");
-			});
+			const games = await getEpicGames();
+			this.emit(
+				"games",
+				games.map((game) => new EpicGame({ id: game.id, name: game.name })),
+			);
+
+			this.emit("ready");
+		});
 	}
 }

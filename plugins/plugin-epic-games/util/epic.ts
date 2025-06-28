@@ -57,7 +57,7 @@ type EpicManifest = {
 };
 
 export async function getEpicGames() {
-	const manifestDir = await getEpicInstallationDirectory();
+	const manifestDir = (await getEpicInstallationDirectory()) as string;
 	const files = await readdir(manifestDir);
 
 	const games: {

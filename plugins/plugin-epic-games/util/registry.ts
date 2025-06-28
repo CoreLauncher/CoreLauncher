@@ -17,13 +17,12 @@ export async function getRegistryEntry() {
 	);
 }
 
-export async function getEpicInstallationDirectory(): Promise<string> {
+export async function getEpicInstallationDirectory() {
 	const registry = await getRegistryEntry();
-	const dir = registry.ModSdkMetadataDir!.value;
+	return registry.ModSdkMetadataDir?.value as string | undefined;
+}
 
-	if (!dir || typeof dir !== "string") {
-		throw new Error("eeh err");
-	}
-
-	return dir;
+export async function getEpicInstalled() {
+	const installationDirectory = await getEpicInstallationDirectory();
+	return !!installationDirectory;
 }
