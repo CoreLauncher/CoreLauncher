@@ -17,7 +17,7 @@ jobs:
         run: bun run biome ci .
   types:
     name: Run type checks
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,7 +29,7 @@ jobs:
         run: bun run tsc --noEmit
   test:
     name: Run unit tests
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
