@@ -19,7 +19,7 @@ export async function getRegistryEntry() {
 
 export async function getSteamInstallationDirectory() {
 	const registry = await getRegistryEntry();
-	return registry.SteamPath?.value;
+	return registry.SteamPath?.value as string | undefined;
 }
 
 export async function getSteamInstalled() {
