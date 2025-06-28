@@ -25,10 +25,7 @@ pub unsafe extern "C" fn tray_create(
     middle: extern "C" fn(),
     double: extern "C" fn(),
 ) {
-    eprintln!("[Rust] tray_create() called.");
 
-    eprintln!("[Rust] Calling left callback manually to test FFI:");
-    (left)();
     let name = unsafe { CStr::from_ptr(name).to_string_lossy().into_owned() };
     let icon_path = unsafe { CStr::from_ptr(icon_path).to_string_lossy().into_owned() };
 
@@ -58,12 +55,10 @@ pub unsafe extern "C" fn tray_destroy() {
 
 pub fn start_message_loop() {
     thread::spawn(|| {
-        eprintln!("[Rust] Message loop started.");
         unsafe {
             let mut msg = MSG::default();
             loop {
                 if GetMessageW(&mut msg, None, 0, 0).into() {
-                    eprintln!("[Rust] Dispatching a Windows message.");
                     let _ = TranslateMessage(&msg);
                     DispatchMessageW(&msg);
                 }
