@@ -3,7 +3,7 @@ import { enumerateValues, HKEY, type RegistryValueType } from "registry-js";
 export async function getRegistryEntry() {
 	const entries = enumerateValues(
 		HKEY.HKEY_CURRENT_USER,
-		"Software\\Valve\\Steama",
+		"Software\\Valve\\Steam",
 	);
 
 	return Object.fromEntries(
