@@ -28,24 +28,21 @@ type TrayEvents = {
 	"double-click": () => void;
 };
 
+// Might be garbage collected if this breaks need to take a look at it.
 function encodeCString(value: string) {
 	return ptr(new TextEncoder().encode(`${value}\0`));
 }
 
-const eventQueue: (() => void)[] = [];
-
-setInterval(() => {
-	while (eventQueue.length > 0) {
-		const handler = eventQueue.shift();
-		handler?.();
-	}
-}, 16);
-
 const makeCallback = (tray: Tray, event: keyof TrayEvents) =>
-	new JSCallback(() => queueMicrotask(() => tray.safeEmit(event)), {
-		args: [],
-		returns: FFIType.void,
-	});
+	new JSCallback(
+		() => {
+			queueMicrotask(() => tray.emit(event));
+		},
+		{
+			args: [],
+			returns: FFIType.void,
+		},
+	);
 
 export class Tray extends (TypedEmitter as new () => TypedEmitter<TrayEvents>) {
 	private leftClick?: JSCallback;
@@ -54,10 +51,6 @@ export class Tray extends (TypedEmitter as new () => TypedEmitter<TrayEvents>) {
 	private doubleClick?: JSCallback;
 
 	public created = false;
-
-	public safeEmit(event: keyof TrayEvents) {
-		eventQueue.push(() => this.emit(event));
-	}
 
 	create(name: string, icon: string) {
 		if (this.created) throw new Error("Tray already created!");

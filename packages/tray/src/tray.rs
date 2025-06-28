@@ -21,7 +21,6 @@ impl TrayHandle {
         let event_handler = {
             let callbacks = Arc::clone(&callbacks);
             move |event: TrayIconEvent| {
-                eprintln!("Tray event fired: {:?}", event);
 
                 match event {
                     TrayIconEvent::Click {
@@ -29,7 +28,6 @@ impl TrayHandle {
                         button_state,
                         ..
                     } => {
-                        eprintln!("Clicked: {:?}, {:?}", button, button_state);
                         if button_state == MouseButtonState::Up {
                             match button {
                                 MouseButton::Left => (callbacks.left)(),
@@ -39,7 +37,6 @@ impl TrayHandle {
                         }
                     }
                     TrayIconEvent::DoubleClick { button, .. } => {
-                        eprintln!("Double clicked: {:?}", button);
                         if button == MouseButton::Left {
                             (callbacks.double)();
                         }
@@ -49,9 +46,7 @@ impl TrayHandle {
             }
         };
 
-        eprintln!("Setting tray icon event handler...");
         TrayIconEvent::set_event_handler(Some(event_handler));
-        eprintln!("Handler set!");
 
         TrayHandle { tray_icon }
     }
