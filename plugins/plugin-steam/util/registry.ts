@@ -3,7 +3,7 @@ import { enumerateValues, HKEY, type RegistryValueType } from "registry-js";
 export async function getRegistryEntry() {
 	const entries = enumerateValues(
 		HKEY.HKEY_CURRENT_USER,
-		"Software\\Valve\\Steam",
+		"Software\\Valve\\Steama",
 	);
 
 	return Object.fromEntries(
@@ -19,5 +19,10 @@ export async function getRegistryEntry() {
 
 export async function getSteamInstallationDirectory() {
 	const registry = await getRegistryEntry();
-	return registry.SteamPath!.value;
+	return registry.SteamPath?.value;
+}
+
+export async function getSteamInstalled() {
+	const installationDirectory = await getSteamInstallationDirectory();
+	return !!installationDirectory;
 }
