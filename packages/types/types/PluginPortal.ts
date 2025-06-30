@@ -5,6 +5,12 @@ import type { GameShape } from "../shapes/GameShape";
  */
 export abstract class PluginPortal {
 	/**
+	 * Returns the data directory for the plugin.
+	 * @returns {string} The path to the plugin's data directory.
+	 */
+	abstract getDataDirectory(): string;
+
+	/**
 	 * Returns a list of games from all plugins.
 	 * @returns {GameShape[]} An array of GameShape objects.
 	 */

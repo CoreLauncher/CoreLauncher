@@ -1,5 +1,6 @@
 import { join } from "node:path";
 import type { PluginPortal as AbstractPluginPortal } from "@corelauncher/types";
+import { ensureDirSync } from "fs-extra";
 import { pluginDataDirectory } from "../util/directories";
 import type PluginContainer from "./PluginContainer";
 import type PluginManager from "./PluginManager";
@@ -16,7 +17,9 @@ export default class PluginPortal implements AbstractPluginPortal {
 	}
 
 	getDataDirectory() {
-		return join(pluginDataDirectory(), this.container.id);
+		const directory = join(pluginDataDirectory(), this.container.id);
+		ensureDirSync(directory);
+		return directory;
 	}
 
 	getGames() {

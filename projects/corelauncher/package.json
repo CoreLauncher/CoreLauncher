@@ -1,6 +1,10 @@
 {
 	"name": "@corelauncher/corelauncher",
 	"dependencies": {
-		"tiny-typed-emitter": "^2.1.0"
+		"tiny-typed-emitter": "^2.1.0",
+		"fs-extra": "^11.3.0"
+	},
+	"devDependencies": {
+		"@types/fs-extra": "^11.0.2"
 	}
 }
