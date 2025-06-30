@@ -1,22 +1,31 @@
+import { join } from "node:path";
 import type { PluginPortal as AbstractPluginPortal } from "@corelauncher/types";
+import { pluginDataDirectory } from "../util/directories";
+import type PluginContainer from "./PluginContainer";
 import type PluginManager from "./PluginManager";
 
 /**
  * The PluginPortal class is a plugins way to access the resources from other plugins.
  */
 export default class PluginPortal implements AbstractPluginPortal {
-	private pluginManager: PluginManager;
-	constructor(pluginManager: PluginManager) {
-		this.pluginManager = pluginManager;
+	container: PluginContainer;
+	pluginManager: PluginManager;
+	constructor(container: PluginContainer) {
+		this.container = container;
+		this.pluginManager = container.pluginManager;
+	}
+
+	getDataDirectory() {
+		return join(pluginDataDirectory(), this.container.id);
 	}
 
 	getGames() {
-		return this.pluginManager.plugins.flatMap((plugin) => plugin.parts.games);
+		return this.pluginManager.plugins.flatMap((plugin) => plugin.games);
 	}
 
 	getGame(id: string) {
 		const game = this.pluginManager.plugins
-			.flatMap((plugin) => plugin.parts.games)
+			.flatMap((plugin) => plugin.games)
 			.find((game) => game.id === id);
 
 		if (!game) throw new Error(`Game with ID ${id} does not exist`);
