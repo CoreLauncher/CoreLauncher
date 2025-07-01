@@ -4,7 +4,7 @@ import useDisableContextMenu from "../hooks/useDisableContextMenu";
 import LibraryPage from "../pages/LibraryPage/LibraryPage";
 import Header from "../sections/Header/Header";
 
-export function App() {
+export default function App() {
 	useDisableContextMenu();
 
 	return (
@@ -14,5 +14,3 @@ export function App() {
 		</div>
 	);
 }
-
-export default App;
