@@ -3,13 +3,15 @@
 :root {
 	--background-color: #000000;
 	--block-color: #0f0f0f;
+	--header-tab-color: #191b1f;
+	--header-tab-selected-color: var(--branding-color);
 	--scrollbar-color: #1f1f1f;
 
 	--text-color: hsl(0, 0%, 100%);
 	--text-muted-color: #b0b0b0;
 	--input-color: #0a0a0a;
 
-	--branding-color: #4898da;
+	--branding-color: #3d6ee1;
 	--success-color: #4caf50;
 	--error-color: #f44336;
 	--warning-color: #ff9800;

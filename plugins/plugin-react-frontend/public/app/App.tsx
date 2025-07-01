@@ -1,16 +1,24 @@
 import "../index.css";
 import "./App.css";
+import { useState } from "react";
 import useDisableContextMenu from "../hooks/useDisableContextMenu";
 import LibraryPage from "../pages/LibraryPage/LibraryPage";
+import SettingsPage from "../pages/SettingsPage/SettingsPage";
 import Header from "../sections/Header/Header";
 
 export default function App() {
+	const [page, setPage] = useState("library");
 	useDisableContextMenu();
 
 	return (
 		<div className="App">
-			<Header />
-			<LibraryPage />
+			<Header
+				selectedTab={page}
+				onClickHome={() => setPage("library")}
+				onClickSettings={() => setPage("settings")}
+			/>
+			<LibraryPage isVisible={page === "library"} />
+			<SettingsPage isVisible={page === "settings"} />
 		</div>
 	);
 }

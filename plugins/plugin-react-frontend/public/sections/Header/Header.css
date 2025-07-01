@@ -10,6 +10,39 @@
 		padding: 8px;
 	}
 
+	.tab {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 5px;
+
+		cursor: pointer;
+		color: var(--tab-text-color);
+		--tab-text-color: color-mix(
+			in srgb,
+			var(--text-color) 50%,
+			var(--tab-background-color) 50%
+		);
+		--tab-background-color: var(--header-tab-color);
+		background-color: var(--tab-background-color);
+		border: none;
+
+		transition: background-color 0.2s ease-in-out;
+
+		height: 100%;
+
+		padding: 8px;
+		border-radius: 8px;
+
+		font-size: 16px;
+		font-weight: 500;
+
+		&.selected {
+			--tab-background-color: var(--header-tab-selected-color);
+		}
+	}
+
 	.start {
 		.logo {
 			display: flex;
