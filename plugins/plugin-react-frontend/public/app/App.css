@@ -1,9 +1,5 @@
-@import "@fontsource/inter";
-
 .App {
 	height: 100%;
-
-	font-family: "Inter", sans-serif;
 
 	main {
 		height: calc(100% - 50px);
