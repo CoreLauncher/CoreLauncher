@@ -7,10 +7,10 @@ export default function Header() {
 	return (
 		<header className="Header">
 			<div className="start">
-				<div className="logo">
+				<button type="button" className="logo">
 					<img src={logoSVG} alt="logo" />
 					<p>CORELAUNCHER</p>
-				</div>
+				</button>
 			</div>
 			<div className="end">
 				<button type="button">

@@ -16,6 +16,10 @@
 			flex-direction: row;
 			align-items: center;
 
+			cursor: pointer;
+			background-color: transparent;
+			border: none;
+
 			height: 100%;
 
 			img {
