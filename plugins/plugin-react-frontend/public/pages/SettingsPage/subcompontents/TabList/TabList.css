@@ -1,0 +1,40 @@
+.TabList {
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+	max-width: 20%;
+
+	padding: 8px;
+	border-radius: 8px;
+	background-color: var(--block-color);
+
+	.tab {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 5px;
+
+		height: 40px;
+		padding: 5px;
+
+		border: none;
+		background-color: transparent;
+
+		cursor: pointer;
+		border-radius: 8px;
+		font-size: 1rem;
+		transition: backdrop-filter 0.2s ease-in-out;
+
+		&:hover,
+		&.selected {
+			backdrop-filter: brightness(0.5);
+		}
+
+		div {
+			height: 100%;
+			padding: 5px;
+			aspect-ratio: 1;
+		}
+	}
+}

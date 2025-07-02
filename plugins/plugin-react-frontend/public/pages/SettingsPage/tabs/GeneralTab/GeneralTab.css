@@ -1,0 +1,15 @@
+.GeneralTab {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+
+	height: 100%;
+	width: 100%;
+
+	& > div {
+		padding: 10px;
+		border-radius: 8px;
+
+		background-color: var(--block-color);
+	}
+}

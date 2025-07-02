@@ -9,6 +9,7 @@ import { type BunRequest, env } from "bun";
 import getPort from "get-port";
 import temporaryDirectory from "temp-dir";
 import indexHTML from "./public/index.html";
+import { getVersion } from "./util/version" with { type: "macro" };
 
 const port = env.NODE_ENV === "production" ? await getPort() : 3000;
 
@@ -40,6 +41,12 @@ export class Plugin extends PluginClass implements PluginShape {
 			},
 			routes: {
 				"/": indexHTML,
+
+				"/api/application/version": async () => {
+					return Response.json({
+						version: getVersion(),
+					});
+				},
 
 				"/api/games/list": async () => {
 					const games = portal.getGames();
