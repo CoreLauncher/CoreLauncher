@@ -11,6 +11,9 @@
 	}
 
 	.tab {
+		--tab-color: var(--accent-color);
+		--tab-text-color: color-mix(in srgb, var(--tab-color) 80%, white 20%);
+
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -19,13 +22,7 @@
 
 		cursor: pointer;
 		color: var(--tab-text-color);
-		--tab-text-color: color-mix(
-			in srgb,
-			var(--text-color) 50%,
-			var(--tab-background-color) 50%
-		);
-		--tab-background-color: var(--header-tab-color);
-		background-color: var(--tab-background-color);
+		background-color: var(--tab-color);
 		border: none;
 
 		transition:
@@ -35,13 +32,13 @@
 		height: 100%;
 
 		padding: 8px;
-		border-radius: 8px;
+		border-radius: 5px;
 
 		font-size: 16px;
 		font-weight: 500;
 
 		&.selected {
-			--tab-background-color: var(--header-tab-selected-color);
+			--tab-color: color-mix(in srgb, var(--accent-color) 95%, white 5%);
 		}
 	}
 

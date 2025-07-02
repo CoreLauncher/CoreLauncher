@@ -3,8 +3,7 @@
 :root {
 	--background-color: #000000;
 	--block-color: #0f0f0f;
-	--header-tab-color: #191b1f;
-	--header-tab-selected-color: var(--branding-color);
+	--accent-color: #191b1d;
 	--scrollbar-color: #1f1f1f;
 
 	--text-color: hsl(0, 0%, 100%);
