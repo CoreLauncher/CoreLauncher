@@ -12,7 +12,7 @@
 
 	.tab {
 		--tab-color: var(--accent-color);
-		--tab-text-color: color-mix(in srgb, var(--tab-color) 80%, white 20%);
+		--tab-text-color: color-mix(in srgb, var(--tab-color) 60%, white 40%);
 
 		display: flex;
 		flex-direction: row;
