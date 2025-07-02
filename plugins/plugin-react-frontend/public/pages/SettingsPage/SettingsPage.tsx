@@ -16,6 +16,7 @@ export default function SettingsPage({
 	return (
 		<main className="SettingsPage">
 			<TabList
+				onSelect={(tab) => setSelected(tab)}
 				selected={selected}
 				tabs={[
 					{
