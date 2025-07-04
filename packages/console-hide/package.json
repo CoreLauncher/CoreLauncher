@@ -1,0 +1,5 @@
+{
+	"name": "@corelauncher/console-hide",
+	"main": "./index.ts",
+	"dependencies": {}
+}

@@ -1,0 +1,5 @@
+{
+	"name": "@corelauncher/is-production",
+	"main": "./index.ts",
+	"dependencies": {}
+}

@@ -1,9 +1,17 @@
 import { join } from "node:path";
+import { isProduction } from "@corelauncher/is-production";
+import { existsSync } from "fs-extra";
 
 export function applicationDirectory() {
 	if (process.env.CORELAUNCHER_APP_DIR) return process.env.CORELAUNCHER_APP_DIR;
-	if (process.env.NODE_ENV === "development")
-		return join(process.cwd(), ".data");
+	if (!isProduction) return join(process.cwd(), ".data");
+	if (process.platform === "win32") {
+		const appdata = process.env.APPDATA || "";
+		if (!existsSync(appdata))
+			throw new Error("APPDATA environment variable is not set or invalid.");
+
+		return join(appdata, "CoreLauncher");
+	}
 
 	throw new Error("No valid application directory found.");
 }

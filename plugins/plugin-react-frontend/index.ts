@@ -1,17 +1,18 @@
 import { SizeConstraint, Window } from "@corebyte/webwindow";
+import { isProduction } from "@corelauncher/is-production";
 import { Tray } from "@corelauncher/tray";
 import {
 	PluginClass,
 	type PluginPortal,
 	type PluginShape,
 } from "@corelauncher/types";
-import { type BunRequest, env } from "bun";
+import type { BunRequest } from "bun";
 import getPort from "get-port";
 import temporaryDirectory from "temp-dir";
 import indexHTML from "./public/index.html";
 import { getVersion } from "./util/version" with { type: "macro" };
 
-const port = env.NODE_ENV === "production" ? await getPort() : 3000;
+const port = isProduction ? await getPort() : 3000;
 
 const icon = await import("../../icon.ico", {
 	with: { type: "file" },
