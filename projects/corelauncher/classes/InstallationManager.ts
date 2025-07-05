@@ -98,6 +98,31 @@ export default class InstallationManager {
 			workingDir: this.applicationDirectory,
 		});
 
+		console.info("Registering corelauncher:// protocol handler...");
+		const protocolKey = registry.createKey(
+			registry.HKEY.CURRENT_USER,
+			"Software\\Classes\\corelauncher",
+			registry.Access.ALL_ACCESS,
+		);
+
+		registry.setValueSZ(protocolKey, "", "URL:CoreLauncher Protocol");
+		registry.setValueSZ(protocolKey, "URL Protocol", "");
+
+		const commandKey = registry.createKey(
+			protocolKey,
+			"shell\\open\\command",
+			registry.Access.ALL_ACCESS,
+		);
+
+		registry.setValueSZ(
+			commandKey,
+			"",
+			`"${this.applicationExecutable}" protocol "%1"`,
+		);
+
+		registry.closeKey(commandKey);
+		registry.closeKey(protocolKey);
+
 		console.info("Installation complete!");
 
 		spawn(this.applicationExecutable, {
