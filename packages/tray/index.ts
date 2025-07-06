@@ -33,18 +33,14 @@ function encodeCString(value: string) {
 	return ptr(new TextEncoder().encode(`${value}\0`));
 }
 
-const makeCallback = (tray: Tray, event: keyof TrayEvents) =>
-	new JSCallback(
-		() => {
-			queueMicrotask(() => tray.emit(event));
-		},
-		{
-			args: [],
-			returns: FFIType.void,
-		},
-	);
+function makeCallback(tray: Tray, event: keyof TrayEvents) {
+	return new JSCallback(() => queueMicrotask(() => tray.emit(event)), {
+		args: [],
+		returns: FFIType.void,
+	});
+}
 
-export class Tray extends (TypedEmitter as new () => TypedEmitter<TrayEvents>) {
+export class Tray extends TypedEmitter<TrayEvents> {
 	private leftClick?: JSCallback;
 	private rightClick?: JSCallback;
 	private middleClick?: JSCallback;
@@ -82,11 +78,10 @@ export class Tray extends (TypedEmitter as new () => TypedEmitter<TrayEvents>) {
 		this.middleClick?.close();
 		this.doubleClick?.close();
 
-		this.leftClick =
-			this.rightClick =
-			this.middleClick =
-			this.doubleClick =
-				undefined;
+		this.leftClick = undefined;
+		this.rightClick = undefined;
+		this.middleClick = undefined;
+		this.doubleClick = undefined;
 
 		this.created = false;
 	}
