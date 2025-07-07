@@ -76,6 +76,7 @@ export class Plugin extends PluginClass implements PluginShape {
 		this.server = Bun.serve(serveOptions);
 
 		const windowOptions = {
+			debug: !isProduction,
 			title: "CoreLauncher",
 			url: `http://localhost:${port}`,
 			show: true,
