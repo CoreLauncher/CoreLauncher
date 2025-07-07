@@ -70,7 +70,7 @@ setInterval(() => {
 			},
 		),
 	);
-}, 1);
+}, 1).unref();
 
 export interface TrayEvents {
 	click: () => void;
