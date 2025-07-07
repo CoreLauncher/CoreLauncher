@@ -1,88 +1,115 @@
-import { dlopen, FFIType, JSCallback, ptr } from "bun:ffi";
+import {
+	CString,
+	dlopen,
+	FFIType,
+	JSCallback,
+	type Pointer,
+	ptr,
+} from "bun:ffi";
 import { existsSync } from "node:fs";
 import { TypedEmitter } from "tiny-typed-emitter";
 import dll from "./tray.dll" with { type: "file" };
 
 const lib = dlopen(dll, {
-	tray_create: {
-		args: [
-			FFIType.cstring, // name
-			FFIType.cstring, // icon
-			FFIType.function, // left
-			FFIType.function, // right
-			FFIType.function, // middle
-			FFIType.function, // double
-		],
-		return: FFIType.void,
+	tray_construct_receiver: {
+		args: [],
+		returns: FFIType.ptr,
+	},
+	tray_pump_events: {
+		args: [FFIType.ptr, FFIType.function],
+		returns: FFIType.void,
+	},
+	tray_construct: {
+		args: [FFIType.cstring],
+		returns: FFIType.ptr,
+	},
+	tray_set_icon: {
+		args: [FFIType.ptr, FFIType.ptr],
+		returns: FFIType.void,
+	},
+	tray_set_label: {
+		args: [FFIType.ptr, FFIType.ptr],
+		returns: FFIType.void,
+	},
+	tray_set_visibility: {
+		args: [FFIType.ptr, FFIType.bool],
+		returns: FFIType.void,
 	},
 	tray_destroy: {
-		args: [],
-		return: FFIType.void,
+		args: [FFIType.ptr],
+		returns: FFIType.void,
 	},
 });
 
-type TrayEvents = {
-	"left-click": () => void;
-	"right-click": () => void;
-	"middle-click": () => void;
-	"double-click": () => void;
-};
-
-// Might be garbage collected if this breaks need to take a look at it.
 function encodeCString(value: string) {
 	return ptr(new TextEncoder().encode(`${value}\0`));
 }
 
-function makeCallback(tray: Tray, event: keyof TrayEvents) {
-	return new JSCallback(() => queueMicrotask(() => tray.emit(event)), {
-		args: [],
-		returns: FFIType.void,
-	});
+function decodeCString(value: Pointer) {
+	return new CString(value).toString();
+}
+
+const receiverPtr = lib.symbols.tray_construct_receiver();
+const instances: Tray[] = [];
+
+setInterval(() => {
+	lib.symbols.tray_pump_events(
+		receiverPtr,
+		new JSCallback(
+			(idPtr: Pointer, eventPtr: Pointer) => {
+				const id = decodeCString(idPtr);
+				const event = decodeCString(eventPtr);
+				const instance = instances.find((i) => i.id === id);
+				if (!instance) return;
+				if (event !== "Click") return;
+				instance.emit("click");
+			},
+			{
+				args: [FFIType.cstring, FFIType.cstring],
+				returns: FFIType.void,
+			},
+		),
+	);
+}, 1);
+
+export interface TrayEvents {
+	click: () => void;
 }
 
 export class Tray extends TypedEmitter<TrayEvents> {
-	private leftClick?: JSCallback;
-	private rightClick?: JSCallback;
-	private middleClick?: JSCallback;
-	private doubleClick?: JSCallback;
+	id: string;
+	private tray: Pointer | null;
+	constructor() {
+		super();
+		this.id = Bun.randomUUIDv7();
+		this.tray = lib.symbols.tray_construct(encodeCString(this.id))!;
 
-	public created = false;
+		instances.push(this);
+	}
 
-	create(name: string, icon: string) {
-		if (this.created) throw new Error("Tray already created!");
-		if (!existsSync(icon)) throw new Error(`Tray icon not found at: ${icon}`);
+	setIcon(path: string) {
+		if (!existsSync(path)) throw new Error(`Icon file does not exist: ${path}`);
 
-		this.leftClick = makeCallback(this, "left-click");
-		this.rightClick = makeCallback(this, "right-click");
-		this.middleClick = makeCallback(this, "middle-click");
-		this.doubleClick = makeCallback(this, "double-click");
+		const encodedPath = encodeCString(path);
+		lib.symbols.tray_set_icon(this.tray, encodedPath);
+	}
 
-		lib.symbols.tray_create(
-			encodeCString(name),
-			encodeCString(icon),
-			this.leftClick.ptr,
-			this.rightClick.ptr,
-			this.middleClick.ptr,
-			this.doubleClick.ptr,
-		);
+	setLabel(label: string) {
+		const encodedLabel = encodeCString(label);
+		lib.symbols.tray_set_label(this.tray, encodedLabel);
+	}
 
-		this.created = true;
+	setVisibility(visible: boolean) {
+		lib.symbols.tray_set_visibility(this.tray, visible);
 	}
 
 	destroy() {
-		if (!this.created) throw new Error("Tray not created yet");
-		lib.symbols.tray_destroy();
+		lib.symbols.tray_destroy(this.tray);
+		this.tray = null;
 
-		this.leftClick?.close();
-		this.rightClick?.close();
-		this.middleClick?.close();
-		this.doubleClick?.close();
+		const index = instances.indexOf(this);
+		if (index !== -1) instances.splice(index, 1);
 
-		this.leftClick = undefined;
-		this.rightClick = undefined;
-		this.middleClick = undefined;
-		this.doubleClick = undefined;
-
-		this.created = false;
+		this.removeAllListeners();
 	}
 }

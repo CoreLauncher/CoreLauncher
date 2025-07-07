@@ -1,2 +1,1 @@
-﻿# Build target for rust .dll file gets auto copied to correct location.
-target/
+target

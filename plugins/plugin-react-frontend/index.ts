@@ -90,8 +90,9 @@ export class Plugin extends PluginClass implements PluginShape {
 		this.window.on("close", () => {});
 
 		this.tray = new Tray();
-		this.tray.create("CoreLauncher", tempIcon);
-		this.tray.on("left-click", () => {
+		this.tray.setLabel("CoreLauncher");
+		this.tray.setIcon(tempIcon);
+		this.tray.on("click", () => {
 			console.log("Tray Icon Clicked!", this.window.shown);
 			if (this.window.shown) return;
 			this.window.show();
