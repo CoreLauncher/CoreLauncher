@@ -1,0 +1,5 @@
+{
+	"name": "@corelauncher/file-to-dataurl",
+	"main": "./index.ts",
+	"dependencies": {}
+}
