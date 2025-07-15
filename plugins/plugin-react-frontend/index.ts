@@ -68,6 +68,30 @@ export class Plugin extends PluginClass implements PluginShape {
 						return Response.json(result);
 					},
 				},
+
+				"/api/account-providers/list": async () => {
+					const providers = portal.getAccountProviders();
+					return Response.json(
+						providers.map((provider) => ({
+							id: provider.id,
+							name: provider.name,
+							color: provider.color,
+							logo: provider.logo,
+						})),
+					);
+				},
+
+				"/api/account-providers/:id/connect": {
+					POST: async (
+						request: BunRequest<"/api/account-providers/:id/connect">,
+					) => {
+						const providerId = request.params.id;
+						const provider = portal.getAccountProvider(providerId);
+
+						const result = await provider.connect();
+						return Response.json(result);
+					},
+				},
 			},
 		} as Parameters<typeof Bun.serve>[0];
 

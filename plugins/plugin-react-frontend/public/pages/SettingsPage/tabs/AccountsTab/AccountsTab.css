@@ -1,0 +1,45 @@
+.AccountsTab {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+
+	height: 100%;
+	width: 100%;
+
+	& > div {
+		padding: 10px;
+		border-radius: 8px;
+
+		background-color: var(--block-color);
+	}
+
+	.account-providers {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		margin-top: 10px;
+	}
+
+	.account-button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		padding: 15px;
+		border: none;
+		border-radius: 8px;
+		cursor: pointer;
+
+		background-color: var(--color);
+		transition: background-color 0.2s ease-in-out;
+
+		&:hover {
+			background-color: color-mix(in srgb, var(--color) 80%, black 20%);
+		}
+
+		img {
+			width: 30px;
+			height: 30px;
+		}
+	}
+}
