@@ -1,9 +1,13 @@
 {
 	"name": "@corelauncher/plugin-steam",
 	"dependencies": {
+		"@corebyte/webwindow": "^1.1.1",
 		"@node-steam/vdf": "^2.2.0",
+		"bootstrap-icons": "^1.13.1",
+		"get-port": "^7.1.0",
 		"open": "^10.1.2",
-		"registry-js": "^1.16.1"
+		"registry-js": "^1.16.1",
+		"steam-session": "^1.9.3"
 	},
 	"devDependencies": {
 		"@corelauncher/types": "*"

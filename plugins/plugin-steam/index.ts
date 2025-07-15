@@ -1,4 +1,5 @@
 import { PluginClass, type PluginShape } from "@corelauncher/types";
+import { SteamAccountProvider } from "./parts/SteamAccountProvider";
 import SteamGame from "./parts/SteamGame";
 import { getSteamInstalled } from "./util/registry";
 import { getSteamGames } from "./util/steam";
@@ -25,6 +26,8 @@ export class Plugin extends PluginClass implements PluginShape {
 					.map((game) => new SteamGame({ id: game.id, name: game.name }))
 					.filter((game) => game.id !== "steam:228980"), // Steam Common Redistibutables
 			);
+
+			this.emit("account_providers", [new SteamAccountProvider()]);
 
 			this.emit("ready");
 		});
