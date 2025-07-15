@@ -34,4 +34,20 @@ export default class PluginPortal implements AbstractPluginPortal {
 		if (!game) throw new Error(`Game with ID ${id} does not exist`);
 		return game;
 	}
+
+	getAccountProviders() {
+		return this.pluginManager.plugins
+			.flatMap((plugin) => plugin.accountProviders)
+			.filter((provider) => provider);
+	}
+
+	getAccountProvider(id: string) {
+		const provider = this.pluginManager.plugins
+			.flatMap((plugin) => plugin.accountProviders)
+			.find((provider) => provider.id === id);
+
+		if (!provider)
+			throw new Error(`Account provider with ID ${id} does not exist`);
+		return provider;
+	}
 }

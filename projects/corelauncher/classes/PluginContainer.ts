@@ -1,4 +1,5 @@
 import type {
+	AccountProviderShape,
 	GameShape,
 	PluginExport,
 	PluginShape,
@@ -19,6 +20,7 @@ export default class PluginContainer extends TypedEmitter<PluginContainerEvents>
 	) => PluginShape;
 
 	games: InstanceType<typeof GameShape>[] = [];
+	accountProviders: InstanceType<typeof AccountProviderShape>[] = [];
 
 	instance: InstanceType<typeof PluginShape> | null = null;
 
@@ -43,6 +45,11 @@ export default class PluginContainer extends TypedEmitter<PluginContainerEvents>
 		this.instance.on("games", (games) => {
 			this.games = games;
 			this.emit("games", games);
+		});
+
+		this.instance.on("account_providers", (providers) => {
+			this.accountProviders = providers;
+			this.emit("account_providers", providers);
 		});
 
 		this.instance.on("ready", () => {
