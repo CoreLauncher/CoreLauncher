@@ -9,7 +9,7 @@
 		"projects/*"
 	],
 	"devDependencies": {
-		"@biomejs/biome": "2.0.6",
+		"@biomejs/biome": "2.1.1",
 		"@types/bun": "latest",
 		"embedded-postgres": "^17.5.0-beta.15",
 		"husky": "^9.1.7",
