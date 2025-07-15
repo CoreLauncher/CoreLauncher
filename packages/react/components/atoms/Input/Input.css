@@ -1,0 +1,18 @@
+.cl-input {
+	&::placeholder {
+		color: var(--cl-color-text-muted);
+	}
+
+	&:hover {
+		background-color: var(--cl-color-input-hover);
+	}
+
+	transition: background-color 0.2s ease-in-out;
+	background-color: var(--cl-color-input);
+
+	border: none;
+	outline: none;
+
+	padding: 10px;
+	border-radius: 8px;
+}
