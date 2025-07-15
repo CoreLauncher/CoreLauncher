@@ -4,13 +4,13 @@ import { dataToDataURL } from "@corelauncher/file-to-dataurl";
 import { isProduction } from "@corelauncher/is-production";
 import type { AccountProviderShape } from "@corelauncher/types";
 import SteamSVG from "bootstrap-icons/icons/steam.svg" with { type: "file" };
-import { env } from "bun";
+// import { env } from "bun";
 import getPort from "get-port";
 import recolorSVG from "../../../packages/recolor-svg";
 import indexHTML from "../public/index.html";
 
 const port = isProduction ? await getPort() : 4000;
-const machineName = `${env.USERNAME}@${env.USERDOMAIN} (CoreLauncher)`;
+// const machineName = `${env.USERNAME}@${env.USERDOMAIN} (CoreLauncher)`;
 
 export class SteamAccountProvider implements AccountProviderShape {
 	id = "steam";
