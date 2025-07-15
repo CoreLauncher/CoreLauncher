@@ -1,0 +1,18 @@
+:root {
+	--cl-color-background: hsl(0, 0%, 0%);
+	--cl-color-block: hsl(0, 0%, 10%);
+	--cl-color-accent: hsl(0, 0%, 15%);
+	--cl-color-scrollbar: hsl(0, 0%, 20%);
+
+	--cl-color-text: hsl(0, 0%, 90%);
+	--cl-color-text-muted: hsl(0, 0%, 50%);
+
+	--cl-color-input: hsl(0, 0%, 5%);
+	--cl-color-input-hover: hsl(0, 0%, 6%);
+
+	--cl-color-branding: hsl(210, 100%, 50%);
+	--cl-color-success: hsl(120, 100%, 30%);
+	--cl-color-error: hsl(0, 100%, 50%);
+	--cl-color-warning: hsl(40, 100%, 50%);
+	--cl-color-info: hsl(210, 100%, 50%);
+}

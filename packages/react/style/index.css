@@ -1,0 +1,34 @@
+@import "@fontsource/inter";
+
+@import "./normalize.css";
+@import "./colors.css";
+
+html,
+body,
+#root {
+	background-color: var(--cl-color-background);
+}
+
+* {
+	color: var(--cl-color-text);
+	font-family: "Inter", sans-serif;
+
+	scrollbar-width: thin;
+	scrollbar-color: var(--cl-color-scrollbar) var(--cl-color-block);
+}
+
+/* input,
+textarea,
+select {
+	&::placeholder {
+		color: var(--text-dimmed-color);
+	}
+
+	background-color: var(--input-color);
+
+	border: none;
+	outline: none;
+
+	padding: 10px;
+	border-radius: 8px;
+} */
