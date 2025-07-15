@@ -6,7 +6,6 @@ import type { AccountProviderShape } from "@corelauncher/types";
 import SteamSVG from "bootstrap-icons/icons/steam.svg" with { type: "file" };
 import { env } from "bun";
 import getPort from "get-port";
-import { EAuthTokenPlatformType, LoginSession } from "steam-session";
 import recolorSVG from "../../../packages/recolor-svg";
 import indexHTML from "../public/index.html";
 
@@ -23,7 +22,6 @@ export class SteamAccountProvider implements AccountProviderShape {
 	);
 
 	private server: Bun.Server;
-	private session: LoginSession;
 	private window: Window;
 	constructor() {
 		const serveOptions = {
@@ -48,25 +46,11 @@ export class SteamAccountProvider implements AccountProviderShape {
 		this.server = Bun.serve(serveOptions);
 		this.server.unref();
 
-		this.session = new LoginSession(EAuthTokenPlatformType.SteamClient, {
-			machineFriendlyName: machineName,
-		});
-
-		this.session.startWithQR().then((s) => {
-			console.log(s.qrChallengeUrl);
-		});
-
-		this.session.on("remoteInteraction", () => {
-			console.log("Remote interaction detected.");
-			this.server.publish("", "");
-		});
-
 		const windowOptions = {
 			debug: !isProduction,
 			title: "Connect Steam Account",
 			url: `http://localhost:${port}`,
-			// show: false,
-			show: true,
+			show: false,
 			size: {
 				width: 800,
 				height: 400,
