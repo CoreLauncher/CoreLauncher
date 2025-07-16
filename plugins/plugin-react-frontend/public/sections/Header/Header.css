@@ -11,7 +11,7 @@
 	}
 
 	.tab {
-		--tab-color: var(--accent-color);
+		--tab-color: var(--cl-color-accent);
 		--tab-text-color: color-mix(in srgb, var(--tab-color) 60%, white 40%);
 
 		display: flex;
@@ -38,7 +38,7 @@
 		font-weight: 500;
 
 		&.selected {
-			--tab-color: color-mix(in srgb, var(--accent-color) 95%, white 5%);
+			--tab-color: color-mix(in srgb, var(--cl-color-accent) 95%, white 5%);
 		}
 	}
 

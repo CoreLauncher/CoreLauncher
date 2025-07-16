@@ -1,13 +1,13 @@
 :root {
 	--cl-color-background: hsl(0, 0%, 0%);
-	--cl-color-block: hsl(0, 0%, 10%);
-	--cl-color-accent: hsl(0, 0%, 15%);
+	--cl-color-block: hsl(0, 0%, 5%);
+	--cl-color-accent: hsl(0, 0%, 10%);
 	--cl-color-scrollbar: hsl(0, 0%, 20%);
 
 	--cl-color-text: hsl(0, 0%, 90%);
 	--cl-color-text-muted: hsl(0, 0%, 50%);
 
-	--cl-color-input: hsl(0, 0%, 5%);
+	--cl-color-input: hsl(0, 0%, 3%);
 	--cl-color-input-hover: hsl(0, 0%, 6%);
 
 	--cl-color-branding: hsl(210, 100%, 50%);

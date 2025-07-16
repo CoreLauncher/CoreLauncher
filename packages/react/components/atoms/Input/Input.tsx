@@ -5,11 +5,13 @@ export function Input({
 	name,
 	type = "text",
 	placeholder = "",
+	onChange,
 }: {
 	id?: string;
 	name?: string;
 	type?: "text" | "password";
 	placeholder?: string;
+	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
 	return (
 		<input
@@ -18,6 +20,8 @@ export function Input({
 			name={name}
 			type={type}
 			placeholder={placeholder}
+			onChange={onChange}
+			autoComplete="off"
 		/>
 	);
 }

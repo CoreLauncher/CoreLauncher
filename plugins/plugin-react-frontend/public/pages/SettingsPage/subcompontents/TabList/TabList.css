@@ -8,7 +8,7 @@
 
 	padding: 8px;
 	border-radius: 8px;
-	background-color: var(--block-color);
+	background-color: var(--cl-color-block);
 
 	.tab {
 		display: flex;

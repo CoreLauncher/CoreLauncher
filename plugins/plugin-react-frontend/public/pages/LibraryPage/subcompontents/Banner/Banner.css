@@ -5,7 +5,7 @@
 }
 
 .Banner {
-	background-color: var(--block-color);
+	background-color: var(--cl-color-block);
 
 	position: relative;
 	overflow: hidden;

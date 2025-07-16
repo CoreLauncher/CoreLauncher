@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./GameList.css";
+import { Input } from "@corelauncher/react";
 import useGames from "../../../../hooks/useGames";
 
 export default function GameList({
@@ -66,7 +67,7 @@ export default function GameList({
 
 	return (
 		<div className="GameList" ref={divRef}>
-			<input type="text" placeholder="Search..." onChange={onQuery} />
+			<Input type="text" placeholder="Search..." onChange={onQuery} />
 			<div className="games">
 				{games
 					.sort((a, b) => a.name.localeCompare(b.name))

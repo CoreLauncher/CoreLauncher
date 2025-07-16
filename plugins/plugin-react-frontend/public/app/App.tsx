@@ -1,5 +1,5 @@
-import "../index.css";
 import "./App.css";
+import { Style } from "@corelauncher/react";
 import { useState } from "react";
 import useDisableContextMenu from "../hooks/useDisableContextMenu";
 import LibraryPage from "../pages/LibraryPage/LibraryPage";
@@ -11,14 +11,16 @@ export default function App() {
 	useDisableContextMenu();
 
 	return (
-		<div className="App">
-			<Header
-				selectedTab={page}
-				onClickHome={() => setPage("library")}
-				onClickSettings={() => setPage("settings")}
-			/>
-			<LibraryPage isVisible={page === "library"} />
-			<SettingsPage isVisible={page === "settings"} />
-		</div>
+		<Style>
+			<div className="App">
+				<Header
+					selectedTab={page}
+					onClickHome={() => setPage("library")}
+					onClickSettings={() => setPage("settings")}
+				/>
+				<LibraryPage isVisible={page === "library"} />
+				<SettingsPage isVisible={page === "settings"} />
+			</div>
+		</Style>
 	);
 }
