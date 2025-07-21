@@ -1,6 +1,6 @@
 import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { isProduction } from "@corelauncher/is-production";
-import { Tray } from "@corelauncher/tray";
+// import { Tray } from "@corelauncher/tray";
 import {
 	PluginClass,
 	type PluginPortal,
@@ -29,7 +29,7 @@ export const description =
 export class Plugin extends PluginClass implements PluginShape {
 	server: Bun.Server;
 	window: Window;
-	tray: Tray;
+	// tray: Tray;
 	constructor(portal: PluginPortal) {
 		super();
 
@@ -114,14 +114,14 @@ export class Plugin extends PluginClass implements PluginShape {
 		this.window = new Window(windowOptions);
 		this.window.on("close", () => {});
 
-		this.tray = new Tray();
-		this.tray.setLabel("CoreLauncher");
-		this.tray.setIcon(tempIcon);
-		this.tray.on("click", () => {
-			console.log("Tray Icon Clicked!", this.window.shown);
-			if (this.window.shown) return;
-			this.window.show();
-		});
+		// this.tray = new Tray();
+		// this.tray.setLabel("CoreLauncher");
+		// this.tray.setIcon(tempIcon);
+		// this.tray.on("click", () => {
+		// 	console.log("Tray Icon Clicked!", this.window.shown);
+		// 	if (this.window.shown) return;
+		// 	this.window.show();
+		// });
 
 		this.emit("ready");
 	}
