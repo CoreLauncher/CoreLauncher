@@ -7,6 +7,10 @@
 		background-color: var(--cl-color-input-hover);
 	}
 
+	&::-ms-reveal {
+		display: none;
+	}
+
 	transition: background-color 0.2s ease-in-out;
 	background-color: var(--cl-color-input);
 
