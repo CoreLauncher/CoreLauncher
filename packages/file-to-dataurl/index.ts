@@ -8,5 +8,6 @@ export function fileToDataURL(path: string) {
 }
 
 export function dataToDataURL(data: string, type: string) {
-	return `data:${type};base64,${Buffer.from(data).toString("base64")}`;
+	btoa;
+	return `data:${type};base64,${btoa(data)}`;
 }
