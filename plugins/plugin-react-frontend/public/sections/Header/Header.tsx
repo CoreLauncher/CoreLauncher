@@ -1,7 +1,7 @@
 import { GearFill } from "react-bootstrap-icons";
 
-import logoSVG from "../../assets/logo.svg";
 import "./Header.css";
+import { Logo } from "@corelauncher/react";
 
 export default function Header({
 	selectedTab,
@@ -16,7 +16,7 @@ export default function Header({
 		<header className="Header">
 			<div className="start">
 				<button type="button" className="logo" onClick={onClickHome}>
-					<img src={logoSVG} alt="logo" />
+					<Logo size={"100%"} />
 					<p>CORELAUNCHER</p>
 				</button>
 			</div>

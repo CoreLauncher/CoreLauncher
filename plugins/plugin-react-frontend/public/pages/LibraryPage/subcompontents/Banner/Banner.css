@@ -20,7 +20,7 @@
 		left: 50%;
 		transform: translate(-50%, -50%) rotate(15deg);
 
-		background-image: url("../../../../assets/logo.svg");
+		background-image: url("@corelauncher/react/assets/logo.svg");
 		background-repeat: round;
 		background-size: 150px 150px;
 
