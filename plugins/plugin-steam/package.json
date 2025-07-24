@@ -1,7 +1,7 @@
 {
 	"name": "@corelauncher/plugin-steam",
 	"dependencies": {
-		"@corebyte/webwindow": "^1.1.1",
+		"@corebyte/webwindow": "^1.1.2",
 		"@node-steam/vdf": "^2.2.0",
 		"bootstrap-icons": "^1.13.1",
 		"get-port": "^7.1.0",

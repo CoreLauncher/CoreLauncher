@@ -76,7 +76,7 @@
     "plugins/plugin-react-frontend": {
       "name": "@corelauncher/plugin-react-frontend",
       "dependencies": {
-        "@corebyte/webwindow": "^1.1.1",
+        "@corebyte/webwindow": "^1.1.2",
         "@fontsource/inter": "^5.2.6",
         "get-port": "^7.1.0",
         "react": "^19",
@@ -93,7 +93,7 @@
     "plugins/plugin-steam": {
       "name": "@corelauncher/plugin-steam",
       "dependencies": {
-        "@corebyte/webwindow": "^1.1.1",
+        "@corebyte/webwindow": "^1.1.2",
         "@node-steam/vdf": "^2.2.0",
         "bootstrap-icons": "^1.13.1",
         "get-port": "^7.1.0",
@@ -152,7 +152,7 @@
 
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.1.1", "", { "os": "win32", "cpu": "x64" }, "sha512-i2PKdn70kY++KEF/zkQFvQfX1e8SkA8hq4BgC+yE9dZqyLzB/XStY2MvwI3qswlRgnGpgncgqe0QYKVS1blksg=="],
 
-    "@corebyte/webwindow": ["@corebyte/webwindow@1.1.1", "", { "dependencies": { "tiny-typed-emitter": "^2.1.0", "webview-bun": "exoRift/webview-bun#b805351391e58d0cce4c3b15d92cae192b6b1dda" }, "peerDependencies": { "typescript": "^5.8.2" } }, "sha512-rs9agMmyUnPJXiO/0u3vOhQ1h8BK3jVyJSxfwpZmdYiY1yB/gwi9HZOkzPaJysTRTyBBRGEBXekIkA/Nr1AGtA=="],
+    "@corebyte/webwindow": ["@corebyte/webwindow@1.1.2", "", { "dependencies": { "tiny-typed-emitter": "^2.1.0", "webview-bun": "exoRift/webview-bun#b805351391e58d0cce4c3b15d92cae192b6b1dda" }, "peerDependencies": { "typescript": "^5.8.2" } }, "sha512-8NRn/zQxA16pItVCrT56Cg2bHsTCuSmmPR+c/c0g4Tv1hXeZ/q8UioXQ99xiKd/WbVVoRmucGj7OsLPOltd2wg=="],
 
     "@corelauncher/cloud": ["@corelauncher/cloud@workspace:projects/cloud"],
 
