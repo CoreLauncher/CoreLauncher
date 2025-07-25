@@ -90,5 +90,15 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 		console.log(data);
 	}
 
-	destroy() {}
+	destroy() {
+		if (this.pollInterval) clearInterval(this.pollInterval);
+		this.pollInterval = null;
+
+		this.state = QRLoginSessionState.Initial;
+		this.clientId = null;
+		this.challengeUrl = null;
+		this.requestId = null;
+
+		this.emit("complete", this);
+	}
 }

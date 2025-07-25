@@ -88,6 +88,12 @@ export class SteamAccountProvider implements AccountProviderShape {
 						state: this.qrLoginSession.state,
 					});
 				},
+				close: () => {
+					const connectionCount = this.server.subscriberCount("client");
+					if (connectionCount !== 0) return;
+					if (!this.qrLoginSession) return;
+					this.qrLoginSession.destroy();
+				},
 			},
 		} as Parameters<typeof Bun.serve>[0];
 
@@ -100,7 +106,7 @@ export class SteamAccountProvider implements AccountProviderShape {
 			debug: !isProduction,
 			title: "Connect Steam Account",
 			url: `http://localhost:${port}`,
-			show: true,
+			show: false,
 			size: {
 				width: 800,
 				height: 400,
