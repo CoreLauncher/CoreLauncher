@@ -11,7 +11,7 @@ import getPort from "get-port";
 import recolorSVG from "../../../packages/recolor-svg";
 import indexHTML from "../public/index.html";
 
-const port = isProduction ? await getPort() : 4000;
+const port = await getPort({ port: isProduction ? undefined : 4000 });
 const machineName = `${env.USERNAME}@${env.USERDOMAIN} (CoreLauncher)`;
 
 export class SteamAccountProvider implements AccountProviderShape {

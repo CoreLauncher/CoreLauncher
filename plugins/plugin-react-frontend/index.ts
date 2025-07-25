@@ -12,7 +12,7 @@ import temporaryDirectory from "temp-dir";
 import indexHTML from "./public/index.html";
 import { getVersion } from "./util/version" with { type: "macro" };
 
-const port = isProduction ? await getPort() : 3000;
+const port = await getPort({ port: isProduction ? undefined : 3000 });
 
 const icon = await import("../../icon.ico", {
 	with: { type: "file" },
