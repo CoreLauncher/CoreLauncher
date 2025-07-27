@@ -4,7 +4,8 @@
 		"fs-extra": "^11.3.0",
 		"native-reg": "^1.1.1",
 		"tiny-typed-emitter": "^2.1.0",
-		"windows-shortcuts": "^0.1.6"
+		"windows-shortcuts": "^0.1.6",
+		"get-port": "^7.1.0"
 	},
 	"devDependencies": {
 		"@types/fs-extra": "^11.0.2"
