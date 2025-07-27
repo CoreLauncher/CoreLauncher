@@ -76,7 +76,7 @@
     "plugins/plugin-react-frontend": {
       "name": "@corelauncher/plugin-react-frontend",
       "dependencies": {
-        "@corebyte/webwindow": "^1.1.2",
+        "@corebyte/webwindow": "^1.1.3",
         "@fontsource/inter": "^5.2.6",
         "get-port": "^7.1.0",
         "react": "^19",
@@ -93,7 +93,7 @@
     "plugins/plugin-steam": {
       "name": "@corelauncher/plugin-steam",
       "dependencies": {
-        "@corebyte/webwindow": "^1.1.2",
+        "@corebyte/webwindow": "^1.1.3",
         "@node-steam/vdf": "^2.2.0",
         "bootstrap-icons": "^1.13.1",
         "get-port": "^7.1.0",
@@ -153,7 +153,7 @@
 
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.1.2", "", { "os": "win32", "cpu": "x64" }, "sha512-9zajnk59PMpjBkty3bK2IrjUsUHvqe9HWwyAWQBjGLE7MIBjbX2vwv1XPEhmO2RRuGoTkVx3WCanHrjAytICLA=="],
 
-    "@corebyte/webwindow": ["@corebyte/webwindow@1.1.2", "", { "dependencies": { "tiny-typed-emitter": "^2.1.0", "webview-bun": "exoRift/webview-bun#b805351391e58d0cce4c3b15d92cae192b6b1dda" }, "peerDependencies": { "typescript": "^5.8.2" } }, "sha512-8NRn/zQxA16pItVCrT56Cg2bHsTCuSmmPR+c/c0g4Tv1hXeZ/q8UioXQ99xiKd/WbVVoRmucGj7OsLPOltd2wg=="],
+    "@corebyte/webwindow": ["@corebyte/webwindow@1.1.3", "", { "dependencies": { "tiny-typed-emitter": "^2.1.0", "webview-bun": "exoRift/webview-bun#d67c8a772452868c1e3358e28df61cba3b46cc5f" }, "peerDependencies": { "typescript": "^5.8.2" } }, "sha512-lOAl8XSCL77PmShI9V83VSpbYAbuqbn9NSx3c1V/8IViAsMk/znmF7M/21DW2R/Tzev+IejtLmWDXsx7CQYNUQ=="],
 
     "@corelauncher/cloud": ["@corelauncher/cloud@workspace:projects/cloud"],
 
@@ -507,7 +507,7 @@
 
     "util-deprecate": ["util-deprecate@1.0.2", "", {}, "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="],
 
-    "webview-bun": ["webview-bun@github:exoRift/webview-bun#b805351", {}, "exoRift-webview-bun-b805351"],
+    "webview-bun": ["webview-bun@github:exoRift/webview-bun#d67c8a7", {}, "exoRift-webview-bun-d67c8a7"],
 
     "which": ["which@2.0.2", "", { "dependencies": { "isexe": "^2.0.0" }, "bin": { "node-which": "./bin/node-which" } }, "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA=="],
 
