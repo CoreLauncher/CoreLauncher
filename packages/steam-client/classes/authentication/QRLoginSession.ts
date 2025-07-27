@@ -31,6 +31,8 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 	challengeUrl: string | null = null;
 	requestId: string | null = null;
 
+	destroyed = false;
+
 	constructor(options: Options) {
 		super();
 
@@ -49,7 +51,8 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 		this.challengeUrl = data.challenge_url;
 		this.requestId = data.request_id;
 
-		if (this.pollInterval) clearInterval(this.pollInterval);
+		if (this.destroyed) return;
+
 		this.pollInterval = setInterval(
 			this.poll.bind(this),
 			// data.response.interval * 1000,
@@ -69,6 +72,8 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 			request_id: this.requestId,
 		});
 
+		console.log(data);
+
 		if ("new_client_id" in data) {
 			this.clientId = data.new_client_id;
 			this.challengeUrl = data.new_challenge_url;
@@ -86,8 +91,6 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 			this.state = QRLoginSessionState.Interaction;
 			this.emit("interaction", this.challengeUrl!);
 		}
-
-		console.log(data);
 	}
 
 	destroy() {
@@ -98,6 +101,8 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 		this.clientId = null;
 		this.challengeUrl = null;
 		this.requestId = null;
+
+		this.destroyed = true;
 
 		this.emit("complete", this);
 	}
