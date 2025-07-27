@@ -27,9 +27,7 @@ export default class SingleInstanceLock extends TypedEmitter<SingleInstanceLockE
 				body: JSON.stringify(Bun.argv.splice(2)),
 			});
 			process.exit(0);
-		} catch {
-			console.log("err");
-		}
+		} catch {}
 	}
 
 	constructor() {
