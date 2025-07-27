@@ -1,5 +1,3 @@
-import LogoSVG from "../../../assets/logo.svg" with { type: "text" };
-
 import "./Logo.css";
 
 export function Logo({
