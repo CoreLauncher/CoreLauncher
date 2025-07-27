@@ -93,6 +93,7 @@ export class SteamAccountProvider implements AccountProviderShape {
 					if (connectionCount !== 0) return;
 					if (!this.qrLoginSession) return;
 					this.qrLoginSession.destroy();
+					this.qrLoginSession = null;
 				},
 			},
 		} as Parameters<typeof Bun.serve>[0];
