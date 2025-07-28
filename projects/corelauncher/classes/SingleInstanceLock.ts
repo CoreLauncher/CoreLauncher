@@ -36,7 +36,6 @@ export default class SingleInstanceLock extends TypedEmitter<SingleInstanceLockE
 			hostname: "127.0.0.1",
 			port: listenPort,
 			fetch: async (request) => {
-				console.log(request);
 				const args = await request.json();
 				this.emit("instance", args);
 				return new Response("OK");
