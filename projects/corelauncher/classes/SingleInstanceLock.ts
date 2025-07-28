@@ -16,6 +16,7 @@ export default class SingleInstanceLock extends TypedEmitter<SingleInstanceLockE
 	private static lockfile = join(applicationDirectory(), "CoreLauncher.lock");
 
 	static async check() {
+		console.info("Checking for existing instance...");
 		const file = await Bun.file(SingleInstanceLock.lockfile);
 		const exists = await file.exists();
 		if (!exists) return;
@@ -26,6 +27,7 @@ export default class SingleInstanceLock extends TypedEmitter<SingleInstanceLockE
 				method: "POST",
 				body: JSON.stringify(Bun.argv.splice(2)),
 			});
+			console.info("An existing instance was found, exiting.");
 			process.exit(0);
 		} catch {}
 	}
@@ -37,6 +39,7 @@ export default class SingleInstanceLock extends TypedEmitter<SingleInstanceLockE
 			port: listenPort,
 			fetch: async (request) => {
 				const args = await request.json();
+				console.info("Received new instance with arguments:", args);
 				this.emit("instance", args);
 				return new Response("OK");
 			},
