@@ -1,6 +1,7 @@
 import { PluginClass, type PluginShape } from "@corelauncher/types";
 import EpicGame from "./parts/EpicGame.ts";
 import { getEpicGames } from "./util/epic";
+import { getEpicInstalled } from "./util/registry.ts";
 
 async function noop() {}
 
@@ -14,7 +15,7 @@ export class Plugin extends PluginClass implements PluginShape {
 		super();
 
 		noop().then(async () => {
-			if (!(await getEpicGames())) return this.emit("ready");
+			if (!(await getEpicInstalled())) return this.emit("ready");
 
 			const games = await getEpicGames();
 			this.emit(

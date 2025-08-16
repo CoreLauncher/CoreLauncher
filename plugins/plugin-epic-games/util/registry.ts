@@ -11,6 +11,7 @@ export async function getEpicInstallationDirectory() {
 }
 
 export async function getEpicInstalled() {
+	if (process.platform !== "win32") return false;
 	const installationDirectory = await getEpicInstallationDirectory();
 	return !!installationDirectory;
 }

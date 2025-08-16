@@ -11,6 +11,7 @@ export async function getSteamInstallationDirectory() {
 }
 
 export async function getSteamInstalled() {
+	if (process.platform !== "win32") return false;
 	const installationDirectory = await getSteamInstallationDirectory();
 	return !!installationDirectory;
 }
