@@ -2,6 +2,6 @@
 	"name": "@corelauncher/console-addon",
 	"main": "./index.ts",
 	"dependencies": {
-		"chalk": "^5.4.1"
+		"chalk": "^5.5.0"
 	}
 }

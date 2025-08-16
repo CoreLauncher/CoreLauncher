@@ -9,14 +9,14 @@
 		"projects/*"
 	],
 	"devDependencies": {
-		"@biomejs/biome": "2.1.2",
-		"@types/bun": "^1.2.19",
+		"@biomejs/biome": "2.2.0",
+		"@types/bun": "^1.2.20",
 		"embedded-postgres": "^17.5.0-beta.15",
 		"husky": "^9.1.7",
 		"rcedit": "^4.0.1"
 	},
 	"peerDependencies": {
-		"typescript": "^5.8.3"
+		"typescript": "^5.9.2"
 	},
 	"scripts": {
 		"prepare": "husky",

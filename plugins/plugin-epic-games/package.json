@@ -2,7 +2,7 @@
 	"name": "@corelauncher/plugin-epic-games",
 	"dependencies": {
 		"native-reg": "^1.1.1",
-		"open": "^10.1.2"
+		"open": "^10.2.0"
 	},
 	"devDependencies": {
 		"@corelauncher/types": "*"
