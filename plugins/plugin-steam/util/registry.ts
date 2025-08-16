@@ -1,25 +1,13 @@
-import { enumerateValues, HKEY, type RegistryValueType } from "registry-js";
-
-export async function getRegistryEntry() {
-	const entries = enumerateValues(
-		HKEY.HKEY_CURRENT_USER,
-		"Software\\Valve\\Steam",
-	);
-
-	return Object.fromEntries(
-		entries.map((entry) => [
-			entry.name,
-			{
-				value: entry.data,
-				type: entry.type as RegistryValueType,
-			},
-		]),
-	);
-}
+import * as registry from "native-reg";
 
 export async function getSteamInstallationDirectory() {
-	const registry = await getRegistryEntry();
-	return registry.SteamPath?.value as string | undefined;
+	const installationDirectory = registry.getValue(
+		registry.HKEY.CURRENT_USER,
+		"Software\\Valve\\Steam",
+		"SteamPath",
+	);
+
+	return installationDirectory as string | null;
 }
 
 export async function getSteamInstalled() {
