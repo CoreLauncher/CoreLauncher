@@ -16,7 +16,7 @@ export default function Header({
 		<header className="Header">
 			<div className="start">
 				<button type="button" className="logo" onClick={onClickHome}>
-					<Logo size={"100%"} />
+					<Logo size={"2.5em"} />
 					<p>CORELAUNCHER</p>
 				</button>
 			</div>
