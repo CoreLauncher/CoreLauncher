@@ -92,7 +92,9 @@ export class SteamAccountProvider implements AccountProviderShape {
 					const connectionCount = this.server.subscriberCount("client");
 					if (connectionCount !== 0) return;
 					if (!this.qrLoginSession) return;
-					console.info("No more clients connected, destroying QR login session");
+					console.info(
+						"No more clients connected, destroying QR login session",
+					);
 					this.qrLoginSession.destroy();
 					this.qrLoginSession = null;
 				},
