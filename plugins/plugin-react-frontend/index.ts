@@ -46,6 +46,7 @@ export class Plugin extends PluginClass implements PluginShape {
 				"/api/application/version": async () => {
 					return Response.json({
 						version: getVersion(),
+						environment: isProduction ? "production" : "development",
 					});
 				},
 

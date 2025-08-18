@@ -5,6 +5,7 @@ export async function fetchApplicationVersion() {
 	const data = await response.json();
 	return data as {
 		version: string;
+		environment: "production" | "development";
 	};
 }
 
