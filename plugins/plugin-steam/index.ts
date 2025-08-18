@@ -1,7 +1,6 @@
 import { PluginClass, type PluginShape } from "@corelauncher/types";
 import { SteamAccountProvider } from "./parts/SteamAccountProvider";
 import SteamGame from "./parts/SteamGame";
-import { getSteamInstalled } from "./util/registry";
 import { getSteamGames } from "./util/steam";
 
 async function noop() {}
@@ -17,8 +16,6 @@ export class Plugin extends PluginClass implements PluginShape {
 		super();
 
 		noop().then(async () => {
-			if (!(await getSteamInstalled())) return this.emit("ready");
-
 			const games = await getSteamGames();
 			this.emit(
 				"games",
