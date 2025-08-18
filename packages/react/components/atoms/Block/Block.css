@@ -1,0 +1,6 @@
+.cl-block {
+	background-color: var(--cl-color-block);
+
+	padding: 8px;
+	border-radius: 8px;
+}

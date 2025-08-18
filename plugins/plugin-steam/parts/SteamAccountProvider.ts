@@ -111,7 +111,7 @@ export class SteamAccountProvider implements AccountProviderShape {
 			size: {
 				width: 800,
 				height: 400,
-				constraint: SizeConstraint.FIXED,
+				constraint: SizeConstraint.MIN,
 			},
 		} as ConstructorParameters<typeof Window>[0];
 
