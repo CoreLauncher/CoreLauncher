@@ -87,8 +87,8 @@ export default function App() {
 					</Block>
 				</div>
 				<TextMuted>
-					All credientials are sent to the Steam servers directly, we do not
-					store or process them in any way.
+					All login credientials are sent to the Steam servers directly, we do
+					not store or process them in any way.
 				</TextMuted>
 			</Style>
 		</div>
