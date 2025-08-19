@@ -7,11 +7,18 @@ import {
 interface QRLoginSessionEvents {
 	change: () => void; // the qr changed
 	interaction: (interaction: string) => void; // user interacted with the QR code
-	complete: (session: QRLoginSession) => void; // the authentication is complete
+	complete: (session: AccessData) => void; // the authentication is complete
+	destroyed: () => void; // the session was destroyed
 }
 
 type Options = {
 	deviceName: string;
+};
+
+type AccessData = {
+	accountName: string;
+	accessToken: string;
+	refreshToken: string;
 };
 
 enum QRLoginSessionState {
@@ -80,6 +87,16 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 			this.emit("change");
 		}
 
+		if ("account_name" in data) {
+			this.state = QRLoginSessionState.Complete;
+			this.emit("complete", {
+				accountName: data.account_name,
+				accessToken: data.access_token,
+				refreshToken: data.refresh_token,
+			});
+			return this.destroy();
+		}
+
 		if (!("had_remote_interaction" in data)) {
 			return await this.load();
 		}
@@ -104,6 +121,6 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 
 		this.destroyed = true;
 
-		this.emit("complete", this);
+		this.emit("destroyed");
 	}
 }

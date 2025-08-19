@@ -49,5 +49,11 @@ export async function pollAuthSessionStatus(options: {
 				new_challenge_url: string;
 				had_remote_interaction: boolean;
 		  }
+		| {
+				account_name: string;
+				access_token: string;
+				refresh_token: string;
+				had_remote_interaction: true;
+		  }
 		| Record<string, never>;
 }

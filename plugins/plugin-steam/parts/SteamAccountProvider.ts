@@ -43,8 +43,6 @@ export class SteamAccountProvider implements AccountProviderShape {
 			deviceName: machineName,
 		} as ConstructorParameters<typeof QRLoginSession>[0];
 
-		// this.qrLoginSession = new QRLoginSession(qrLoginSessionOptions);
-
 		const serveOptions = {
 			port,
 			host: "localhost",
@@ -77,7 +75,7 @@ export class SteamAccountProvider implements AccountProviderShape {
 						});
 
 						this.qrLoginSession.on("complete", () => {
-							broadcast("qr-complete");
+							this.window.close();
 						});
 
 						return;
