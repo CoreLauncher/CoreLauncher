@@ -1,7 +1,7 @@
 {
 	"name": "@corelauncher/plugin-react-frontend",
 	"dependencies": {
-		"@corebyte/webwindow": "^1.1.3",
+		"@corebyte/webwindow": "^1.1.4",
 		"@fontsource/inter": "^5.2.6",
 		"get-port": "^7.1.0",
 		"react": "^19.1.1",
