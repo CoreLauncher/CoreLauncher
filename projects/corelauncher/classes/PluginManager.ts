@@ -1,10 +1,8 @@
-import type { PluginExport } from "@corelauncher/types";
+import type { PluginExport, PluginShapeEvents } from "@corelauncher/types";
 import { TypedEmitter } from "tiny-typed-emitter";
 import PluginContainer from "./PluginContainer";
 
-interface PluginManagerEvents {
-	"plugin-ready": (plugin: PluginContainer) => void;
-}
+interface PluginManagerEvents extends PluginShapeEvents {}
 
 /**
  * Manages plugins for CoreLauncher.
@@ -28,11 +26,25 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 		const container = new PluginContainer(this, plugin);
 		this.plugins.push(container);
 
+		container.on("games", (games) => {
+			console.info(
+				`Plugin "${plugin.name}" (${plugin.id}) registered ${games.length} games.`,
+			);
+			this.emit("games", games);
+		});
+
+		container.on("account_providers", (providers) => {
+			console.info(
+				`Plugin "${plugin.name}" (${plugin.id}) registered ${providers.length} account providers.`,
+			);
+			this.emit("account_providers", providers);
+		});
+
 		container.on("ready", () => {
 			console.info(
 				`Plugin "${plugin.name}" (${plugin.id}) loaded successfully.`,
 			);
-			this.emit("plugin-ready", container);
+			this.emit("ready");
 		});
 	}
 

@@ -11,6 +11,7 @@ import getPort from "get-port";
 import temporaryDirectory from "temp-dir";
 import indexHTML from "./public/index.html";
 import { getVersion } from "./util/version" with { type: "macro" };
+import type { JSONValue } from "@corelauncher/json-value";
 
 const port = await getPort({ port: isProduction ? undefined : 3000 });
 
@@ -27,8 +28,9 @@ export const description =
 	"A pretty frontend for CoreLauncher using React and a browserview.";
 
 export class Plugin extends PluginClass implements PluginShape {
-	server: Bun.Server;
-	window: Window;
+	private server: Bun.Server;
+	private window: Window;
+	private publishedData: Record<string, JSONValue> = {};
 	// tray: Tray;
 	constructor(portal: PluginPortal) {
 		super();
@@ -40,8 +42,26 @@ export class Plugin extends PluginClass implements PluginShape {
 				hmr: true,
 				console: true,
 			},
+			websocket: {
+				open: (ws) => {
+					ws.subscribe("client");
+
+					for (const event in this.publishedData) {
+						ws.send(
+							JSON.stringify({
+								type: event,
+								data: this.publishedData[event],
+							}),
+						);
+					}
+				},
+			},
 			routes: {
 				"/": indexHTML,
+
+				"/api/events": (request) => {
+					this.server.upgrade(request);
+				},
 
 				"/api/application/version": async () => {
 					return Response.json({
@@ -124,6 +144,33 @@ export class Plugin extends PluginClass implements PluginShape {
 		// 	this.window.show();
 		// });
 
+		portal.on("games", (games) => {
+			this.publish(
+				"games",
+				games.map((game) => ({
+					id: game.id,
+					name: game.name,
+				})),
+			);
+		});
+
+		portal.on("account_providers", (providers) => {
+			this.publish(
+				"account_providers",
+				providers.map((provider) => ({
+					id: provider.id,
+					name: provider.name,
+					color: provider.color,
+					logo: provider.logo,
+				})),
+			);
+		});
+
 		this.emit("ready");
+	}
+
+	private publish(type: string, data: JSONValue) {
+		this.publishedData[type] = data;
+		this.server.publish("client", JSON.stringify({ type, data }));
 	}
 }

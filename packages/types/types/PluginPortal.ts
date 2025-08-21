@@ -1,10 +1,30 @@
+import { TypedEmitter } from "tiny-typed-emitter";
 import type { AccountProviderShape } from "../shapes/AccountProviderShape";
 import type { GameShape } from "../shapes/GameShape";
+
+interface PluginPortalEvents {
+	/**
+	 * The list of registered games has changed.
+	 * @param games The updated list of games.
+	 */
+	games: (games: GameShape[]) => void;
+
+	/**
+	 * The list of registered account providers has changed.
+	 * @param providers The updated list of account providers.
+	 */
+	account_providers: (providers: AccountProviderShape[]) => void;
+
+	/**
+	 * A plugin has emitted the ready signal.
+	 */
+	ready: () => void;
+}
 
 /**
  * The PluginPortal class is a plugins way to access the resources from other plugins.
  */
-export abstract class PluginPortal {
+export abstract class PluginPortal extends TypedEmitter<PluginPortalEvents> {
 	/**
 	 * Returns the data directory for the plugin.
 	 * @returns {string} The path to the plugin's data directory.

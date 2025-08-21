@@ -25,7 +25,6 @@ export class Plugin extends PluginClass implements PluginShape {
 			);
 
 			this.emit("account_providers", [new SteamAccountProvider()]);
-
 			this.emit("ready");
 		});
 	}

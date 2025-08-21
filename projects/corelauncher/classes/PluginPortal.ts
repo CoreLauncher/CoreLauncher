@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import type { PluginPortal as AbstractPluginPortal } from "@corelauncher/types";
+import { PluginPortal as AbstractPluginPortal } from "@corelauncher/types";
 import { ensureDirSync } from "fs-extra";
 import { pluginDataDirectory } from "../util/directories";
 import type PluginContainer from "./PluginContainer";
@@ -8,12 +8,28 @@ import type PluginManager from "./PluginManager";
 /**
  * The PluginPortal class is a plugins way to access the resources from other plugins.
  */
-export default class PluginPortal implements AbstractPluginPortal {
+export default class PluginPortal
+	extends AbstractPluginPortal
+	implements AbstractPluginPortal
+{
 	container: PluginContainer;
 	pluginManager: PluginManager;
 	constructor(container: PluginContainer) {
+		super();
 		this.container = container;
 		this.pluginManager = container.pluginManager;
+
+		this.pluginManager.on("games", (games) => {
+			this.emit("games", games);
+		});
+
+		this.pluginManager.on("account_providers", (providers) => {
+			this.emit("account_providers", providers);
+		});
+
+		this.pluginManager.on("ready", () => {
+			this.emit("ready");
+		});
 	}
 
 	getDataDirectory() {

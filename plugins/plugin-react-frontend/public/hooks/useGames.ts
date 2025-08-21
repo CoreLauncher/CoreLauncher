@@ -1,8 +1,23 @@
-import { use } from "react";
-import { fetchGames } from "../functions/api";
-
-const games = fetchGames();
+import { useEffect, useState } from "react";
+import Events from "../classes/Events";
+import type { Game } from "../types";
 
 export default function useGames() {
-	return use(games);
+	const events = Events.getInstance();
+	const [games, setGames] = useState<Game[]>(
+		events.getValue<Game[]>("games") ?? [],
+	);
+
+	useEffect(() => {
+		function onChange(newGames: Game[]) {
+			setGames(newGames);
+		}
+
+		events.on("games", onChange);
+		return () => {
+			events.off("games", onChange);
+		};
+	}, [events]);
+
+	return games;
 }
