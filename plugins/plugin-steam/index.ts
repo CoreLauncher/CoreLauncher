@@ -1,10 +1,10 @@
+import { join } from "node:path";
 import createDatabase from "@corelauncher/database";
 import {
 	PluginClass,
 	type PluginPortal,
 	type PluginShape,
 } from "@corelauncher/types";
-import { join } from "path";
 import { migrations } from "./migrations";
 import { SteamAccountProvider } from "./parts/SteamAccountProvider";
 import SteamGame from "./parts/SteamGame";
