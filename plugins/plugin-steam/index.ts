@@ -1,7 +1,15 @@
-import { PluginClass, type PluginShape } from "@corelauncher/types";
+import {
+	PluginClass,
+	PluginPortal,
+	type PluginShape,
+} from "@corelauncher/types";
 import { SteamAccountProvider } from "./parts/SteamAccountProvider";
 import SteamGame from "./parts/SteamGame";
 import { getSteamGames } from "./util/steam";
+import createDatabase from "@corelauncher/database";
+import type { Database } from "./types/database";
+import { join } from "path";
+import { migrations } from "./migrations";
 
 async function noop() {}
 
@@ -12,10 +20,14 @@ export const description =
 	"Allows you to launch Steam games from CoreLauncher.";
 
 export class Plugin extends PluginClass implements PluginShape {
-	constructor() {
+	constructor(portal: PluginPortal) {
 		super();
 
 		noop().then(async () => {
+			const database = await createDatabase<Database>(
+				join(portal.getDataDirectory(), "database.sqlite"),
+				migrations,
+			);
 			const games = await getSteamGames();
 			this.emit(
 				"games",
