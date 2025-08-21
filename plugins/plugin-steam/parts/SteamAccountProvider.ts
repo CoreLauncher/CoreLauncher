@@ -83,6 +83,7 @@ export class SteamAccountProvider implements AccountProviderShape {
 							this.window.close();
 							this.database
 								.insertInto("accounts")
+								.orReplace()
 								.values({
 									name: data.accountName,
 									access_token: data.accessToken,
