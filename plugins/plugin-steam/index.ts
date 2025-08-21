@@ -36,7 +36,7 @@ export class Plugin extends PluginClass implements PluginShape {
 					.filter((game) => game.id !== "steam:228980"), // Steam Common Redistibutables
 			);
 
-			this.emit("account_providers", [new SteamAccountProvider()]);
+			this.emit("account_providers", [new SteamAccountProvider(database)]);
 			this.emit("ready");
 		});
 	}

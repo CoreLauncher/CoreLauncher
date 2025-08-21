@@ -8,8 +8,10 @@ import type { AccountProviderShape } from "@corelauncher/types";
 import SteamSVG from "bootstrap-icons/icons/steam.svg" with { type: "file" };
 import { env } from "bun";
 import getPort from "get-port";
+import type { Kysely } from "kysely";
 import recolorSVG from "../../../packages/recolor-svg";
 import indexHTML from "../public/index.html";
+import type { Database } from "../types/database";
 
 const port = await getPort({ port: isProduction ? undefined : 4000 });
 const machineName = `${env.USERNAME}@${env.USERDOMAIN} (CoreLauncher)`;
@@ -23,10 +25,13 @@ export class SteamAccountProvider implements AccountProviderShape {
 		"image/svg+xml",
 	);
 
+	private database: Kysely<Database>;
 	private qrLoginSession: QRLoginSession | null = null;
 	private server: Bun.Server;
 	private window: Window;
-	constructor() {
+	constructor(database: Kysely<Database>) {
+		this.database = database;
+
 		const broadcast = (type: string, data?: JSONValue) => {
 			this.server.publish("client", JSON.stringify({ type, data }));
 		};
@@ -74,8 +79,16 @@ export class SteamAccountProvider implements AccountProviderShape {
 							broadcast("qr-interaction");
 						});
 
-						this.qrLoginSession.on("complete", () => {
+						this.qrLoginSession.on("complete", async (data) => {
 							this.window.close();
+							this.database
+								.insertInto("accounts")
+								.values({
+									name: data.accountName,
+									access_token: data.accessToken,
+									refresh_token: data.refreshToken,
+								})
+								.execute();
 						});
 
 						return;
