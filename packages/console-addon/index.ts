@@ -20,3 +20,11 @@ console.error = (...args: any[]) => {
 	if (args.length === 0) return;
 	return oldError("✖ ", ...args);
 };
+
+const oldAlert = globalThis.alert;
+globalThis.alert = (message?: string) => {
+	return oldAlert(
+		chalk.blue("?  ") +
+			(message ? message.split("\n").join("\n" + chalk.blue("?  ")) : ""),
+	);
+};

@@ -22,6 +22,13 @@
     "packages/console-hide": {
       "name": "@corelauncher/console-hide",
     },
+    "packages/database": {
+      "name": "@corelauncher/database",
+      "dependencies": {
+        "kysely": "^0.28.5",
+        "kysely-bun-sqlite": "^0.4.0",
+      },
+    },
     "packages/file-to-dataurl": {
       "name": "@corelauncher/file-to-dataurl",
     },
@@ -100,6 +107,7 @@
         "native-reg": "^1.1.1",
         "open": "^10.2.0",
         "react-bootstrap-icons": "^1.11.6",
+        "tiny-typed-emitter": "^2.1.0",
         "uqr": "^0.1.2",
       },
       "devDependencies": {
@@ -161,6 +169,8 @@
     "@corelauncher/console-hide": ["@corelauncher/console-hide@workspace:packages/console-hide"],
 
     "@corelauncher/corelauncher": ["@corelauncher/corelauncher@workspace:projects/corelauncher"],
+
+    "@corelauncher/database": ["@corelauncher/database@workspace:packages/database"],
 
     "@corelauncher/file-to-dataurl": ["@corelauncher/file-to-dataurl@workspace:packages/file-to-dataurl"],
 
@@ -303,6 +313,10 @@
     "js-tokens": ["js-tokens@4.0.0", "", {}, "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="],
 
     "jsonfile": ["jsonfile@6.1.0", "", { "dependencies": { "universalify": "^2.0.0" }, "optionalDependencies": { "graceful-fs": "^4.1.6" } }, "sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ=="],
+
+    "kysely": ["kysely@0.28.5", "", {}, "sha512-rlB0I/c6FBDWPcQoDtkxi9zIvpmnV5xoIalfCMSMCa7nuA6VGA3F54TW9mEgX4DVf10sXAWCF5fDbamI/5ZpKA=="],
+
+    "kysely-bun-sqlite": ["kysely-bun-sqlite@0.4.0", "", { "dependencies": { "bun-types": "^1.1.31" }, "peerDependencies": { "kysely": "^0.28.2" } }, "sha512-2EkQE5sT4ewiw7IWfJsAkpxJ/QPVKXKO5sRYI/xjjJIJlECuOdtG+ssYM0twZJySrdrmuildNPFYVreyu1EdZg=="],
 
     "loose-envify": ["loose-envify@1.4.0", "", { "dependencies": { "js-tokens": "^3.0.0 || ^4.0.0" }, "bin": { "loose-envify": "cli.js" } }, "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q=="],
 
