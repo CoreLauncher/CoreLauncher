@@ -1,7 +1,7 @@
-import { Kysely, Migrator, type Migration } from "kysely";
-import { BunSqliteDialect } from "kysely-bun-sqlite";
 import { Database } from "bun:sqlite";
 import { isProduction } from "@corelauncher/is-production";
+import { Kysely, type Migration, Migrator } from "kysely";
+import { BunSqliteDialect } from "kysely-bun-sqlite";
 import { relative } from "path";
 
 export type NamedMigration = {

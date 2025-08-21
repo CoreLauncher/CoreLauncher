@@ -1,5 +1,6 @@
 import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { isProduction } from "@corelauncher/is-production";
+import type { JSONValue } from "@corelauncher/json-value";
 // import { Tray } from "@corelauncher/tray";
 import {
 	PluginClass,
@@ -11,7 +12,6 @@ import getPort from "get-port";
 import temporaryDirectory from "temp-dir";
 import indexHTML from "./public/index.html";
 import { getVersion } from "./util/version" with { type: "macro" };
-import type { JSONValue } from "@corelauncher/json-value";
 
 const port = await getPort({ port: isProduction ? undefined : 3000 });
 

@@ -1,4 +1,4 @@
-./.husky/common.sh
+. ./.husky/common.sh
 
 # Lint code before committing
 bun lint

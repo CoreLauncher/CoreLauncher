@@ -1,15 +1,15 @@
+import createDatabase from "@corelauncher/database";
 import {
 	PluginClass,
-	PluginPortal,
+	type PluginPortal,
 	type PluginShape,
 } from "@corelauncher/types";
-import { SteamAccountProvider } from "./parts/SteamAccountProvider";
-import SteamGame from "./parts/SteamGame";
-import { getSteamGames } from "./util/steam";
-import createDatabase from "@corelauncher/database";
-import type { Database } from "./types/database";
 import { join } from "path";
 import { migrations } from "./migrations";
+import { SteamAccountProvider } from "./parts/SteamAccountProvider";
+import SteamGame from "./parts/SteamGame";
+import type { Database } from "./types/database";
+import { getSteamGames } from "./util/steam";
 
 async function noop() {}
 
