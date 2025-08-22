@@ -25,14 +25,11 @@
 		cursor: pointer;
 		border-radius: 8px;
 		font-size: 1rem;
-		transition:
-			backdrop-filter 0.2s ease-in-out,
-			-webkit-backdrop-filter 0.2s ease-in-out;
+		transition: background-color 0.2s ease-in-out;
 
 		&:hover,
 		&.selected {
-			backdrop-filter: brightness(0.5);
-			-webkit-backdrop-filter: brightness(0.5);
+			background-color: var(--cl-color-accent);
 		}
 
 		div {
