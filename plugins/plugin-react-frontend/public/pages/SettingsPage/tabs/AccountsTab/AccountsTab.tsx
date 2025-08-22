@@ -1,8 +1,8 @@
-import { TextMuted } from "@corelauncher/react";
 import { fetchConnectAccountProvider } from "../../../../functions/api";
 import useAccountInstances from "../../../../hooks/useAccountInstances";
 import useAccountProviders from "../../../../hooks/useAccountProviders";
 import "./AccountsTab.css";
+import { QuestionLg } from "react-bootstrap-icons";
 
 export default function AccountsTab({
 	isVisible = true,
@@ -41,6 +41,7 @@ export default function AccountsTab({
 					return (
 						<div key={instance.id} className="account-instance">
 							{/* <img src={instance.icon} /> */}
+							<QuestionLg className="icon unknown-icon" />
 							<div>
 								<p className="account-name">{instance.name}</p>
 								<div className="account-provider">

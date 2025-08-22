@@ -58,6 +58,19 @@
 			border-radius: 8px;
 			background-color: var(--cl-color-block);
 
+			.icon {
+				height: 40px;
+				width: 40px;
+				border-radius: 8px;
+			}
+
+			.unknown-icon {
+				padding: 10px;
+
+				background-color: var(--cl-color-accent);
+				color: var(--cl-color-text-secondary);
+			}
+
 			.account-provider {
 				display: flex;
 				flex-direction: row;
