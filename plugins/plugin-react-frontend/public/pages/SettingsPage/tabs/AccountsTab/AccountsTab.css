@@ -6,7 +6,7 @@
 	height: 100%;
 	width: 100%;
 
-	& > div {
+	.account-providers-container {
 		padding: 10px;
 		border-radius: 8px;
 
@@ -18,28 +18,51 @@
 		flex-wrap: wrap;
 		gap: 10px;
 		margin-top: 10px;
+
+		.account-button {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			padding: 15px;
+			border: none;
+			border-radius: 8px;
+			cursor: pointer;
+
+			background-color: var(--color);
+			transition: background-color 0.2s ease-in-out;
+
+			&:hover {
+				background-color: color-mix(in srgb, var(--color) 80%, black 20%);
+			}
+
+			img {
+				width: 30px;
+				height: 30px;
+			}
+		}
 	}
 
-	.account-button {
+	.account-instances {
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		flex-direction: column;
+		gap: 10px;
 
-		padding: 15px;
-		border: none;
-		border-radius: 8px;
-		cursor: pointer;
+		.account-instance {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 10px;
 
-		background-color: var(--color);
-		transition: background-color 0.2s ease-in-out;
+			padding: 8px;
+			border-radius: 8px;
+			background-color: var(--cl-color-block);
 
-		&:hover {
-			background-color: color-mix(in srgb, var(--color) 80%, black 20%);
-		}
-
-		img {
-			width: 30px;
-			height: 30px;
+			.account-provider {
+				display: flex;
+				flex-direction: row;
+				gap: 0.25em;
+			}
 		}
 	}
 }

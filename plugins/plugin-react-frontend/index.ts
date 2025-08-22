@@ -70,16 +70,6 @@ export class Plugin extends PluginClass implements PluginShape {
 					});
 				},
 
-				"/api/games/list": async () => {
-					const games = portal.getGames();
-					return Response.json(
-						games.map((game) => ({
-							id: game.id,
-							name: game.name,
-						})),
-					);
-				},
-
 				"/api/games/launch/:id": {
 					POST: async (request: BunRequest<"/api/games/launch/:id">) => {
 						const gameId = request.params.id;
@@ -88,18 +78,6 @@ export class Plugin extends PluginClass implements PluginShape {
 						const result = await game.launch();
 						return Response.json(result);
 					},
-				},
-
-				"/api/account-providers/list": async () => {
-					const providers = portal.getAccountProviders();
-					return Response.json(
-						providers.map((provider) => ({
-							id: provider.id,
-							name: provider.name,
-							color: provider.color,
-							logo: provider.logo,
-						})),
-					);
 				},
 
 				"/api/account-providers/:id/connect": {
@@ -162,6 +140,17 @@ export class Plugin extends PluginClass implements PluginShape {
 					name: provider.name,
 					color: provider.color,
 					logo: provider.logo,
+				})),
+			);
+		});
+
+		portal.on("account_instances", (instances) => {
+			this.publish(
+				"account_instances",
+				instances.map((instance) => ({
+					id: instance.id,
+					name: instance.name,
+					providerId: instance.providerId,
 				})),
 			);
 		});

@@ -19,6 +19,10 @@ export default class PluginPortal
 		this.container = container;
 		this.pluginManager = container.pluginManager;
 
+		this.pluginManager.on("ready", () => {
+			this.emit("ready");
+		});
+
 		this.pluginManager.on("games", (games) => {
 			this.emit("games", games);
 		});
@@ -27,8 +31,8 @@ export default class PluginPortal
 			this.emit("account_providers", providers);
 		});
 
-		this.pluginManager.on("ready", () => {
-			this.emit("ready");
+		this.pluginManager.on("account_instances", (instances) => {
+			this.emit("account_instances", instances);
 		});
 	}
 
@@ -65,5 +69,21 @@ export default class PluginPortal
 		if (!provider)
 			throw new Error(`Account provider with ID ${id} does not exist`);
 		return provider;
+	}
+
+	getAccountInstances() {
+		return this.pluginManager.plugins
+			.flatMap((plugin) => plugin.accountInstances)
+			.filter((instance) => instance);
+	}
+
+	getAccountInstance(id: string) {
+		const instance = this.pluginManager.plugins
+			.flatMap((plugin) => plugin.accountInstances)
+			.find((instance) => instance.id === id);
+
+		if (!instance)
+			throw new Error(`Account instance with ID ${id} does not exist`);
+		return instance;
 	}
 }

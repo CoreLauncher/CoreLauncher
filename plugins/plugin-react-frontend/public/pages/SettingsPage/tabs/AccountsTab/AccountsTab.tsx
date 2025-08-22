@@ -1,4 +1,6 @@
+import { TextMuted } from "@corelauncher/react";
 import { fetchConnectAccountProvider } from "../../../../functions/api";
+import useAccountInstances from "../../../../hooks/useAccountInstances";
 import useAccountProviders from "../../../../hooks/useAccountProviders";
 import "./AccountsTab.css";
 
@@ -8,11 +10,12 @@ export default function AccountsTab({
 	isVisible?: boolean;
 }) {
 	const accountProviders = useAccountProviders();
+	const accountInstances = useAccountInstances();
 	if (!isVisible) return null;
 
 	return (
 		<div className="AccountsTab">
-			<div>
+			<div className="account-providers-container">
 				<p>Connect a new account to CoreLauncher</p>
 				<div className="account-providers">
 					{accountProviders.map((provider) => (
@@ -27,6 +30,27 @@ export default function AccountsTab({
 						</button>
 					))}
 				</div>
+			</div>
+			<div className="account-instances">
+				{accountInstances.map((instance) => {
+					const provider = accountProviders.find(
+						(provider) => provider.id === instance.providerId,
+					);
+					if (!provider)
+						throw new Error(`Provider not found for instance ${instance.id}`);
+					return (
+						<div key={instance.id} className="account-instance">
+							{/* <img src={instance.icon} /> */}
+							<div>
+								<p className="account-name">{instance.name}</p>
+								<div className="account-provider">
+									<img src={provider.logo} alt="Provider Logo" />
+									<p>{provider.name} Account</p>
+								</div>
+							</div>
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	);

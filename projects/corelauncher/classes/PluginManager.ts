@@ -26,6 +26,13 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 		const container = new PluginContainer(this, plugin);
 		this.plugins.push(container);
 
+		container.on("ready", () => {
+			console.info(
+				`Plugin "${plugin.name}" (${plugin.id}) loaded successfully.`,
+			);
+			this.emit("ready");
+		});
+
 		container.on("games", (games) => {
 			console.info(
 				`Plugin "${plugin.name}" (${plugin.id}) registered ${games.length} games.`,
@@ -40,11 +47,11 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 			this.emit("account_providers", providers);
 		});
 
-		container.on("ready", () => {
+		container.on("account_instances", (instances) => {
 			console.info(
-				`Plugin "${plugin.name}" (${plugin.id}) loaded successfully.`,
+				`Plugin "${plugin.name}" (${plugin.id}) registered ${instances.length} account instances.`,
 			);
-			this.emit("ready");
+			this.emit("account_instances", instances);
 		});
 	}
 

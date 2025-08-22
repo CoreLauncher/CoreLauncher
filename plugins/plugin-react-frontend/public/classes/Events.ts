@@ -1,11 +1,12 @@
 import type { JSONValue } from "@corelauncher/json-value";
 import { TypedEmitter } from "tiny-typed-emitter";
-import type { AccountProvider, Game } from "../types";
+import type { AccountInstance, AccountProvider, Game } from "../types";
 
 interface EventsEvents {
+	ready: () => void;
 	games: (games: Game[]) => void;
 	account_providers: (accountProviders: AccountProvider[]) => void;
-	ready: () => void;
+	account_instances: (accountInstances: AccountInstance[]) => void;
 }
 
 export default class Events extends TypedEmitter<EventsEvents> {

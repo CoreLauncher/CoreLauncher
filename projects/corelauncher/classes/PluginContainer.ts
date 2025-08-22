@@ -1,4 +1,5 @@
 import type {
+	AccountInstanceShape,
 	AccountProviderShape,
 	GameShape,
 	PluginExport,
@@ -21,6 +22,7 @@ export default class PluginContainer extends TypedEmitter<PluginContainerEvents>
 
 	games: InstanceType<typeof GameShape>[] = [];
 	accountProviders: InstanceType<typeof AccountProviderShape>[] = [];
+	accountInstances: InstanceType<typeof AccountInstanceShape>[] = [];
 
 	instance: InstanceType<typeof PluginShape> | null = null;
 
@@ -42,6 +44,10 @@ export default class PluginContainer extends TypedEmitter<PluginContainerEvents>
 	enable() {
 		this.instance = new this.plugin(this.portal);
 
+		this.instance.on("ready", () => {
+			this.emit("ready");
+		});
+
 		this.instance.on("games", (games) => {
 			this.games = games;
 			this.emit("games", games);
@@ -52,8 +58,9 @@ export default class PluginContainer extends TypedEmitter<PluginContainerEvents>
 			this.emit("account_providers", providers);
 		});
 
-		this.instance.on("ready", () => {
-			this.emit("ready");
+		this.instance.on("account_instances", (instances) => {
+			this.accountInstances = instances;
+			this.emit("account_instances", instances);
 		});
 	}
 }

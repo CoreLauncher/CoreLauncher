@@ -9,6 +9,7 @@ import SteamSVG from "bootstrap-icons/icons/steam.svg" with { type: "file" };
 import { env } from "bun";
 import getPort from "get-port";
 import type { Kysely } from "kysely";
+import { TypedEmitter } from "tiny-typed-emitter";
 import recolorSVG from "../../../packages/recolor-svg";
 import indexHTML from "../public/index.html";
 import type { Database } from "../types/database";
@@ -16,7 +17,14 @@ import type { Database } from "../types/database";
 const port = await getPort({ port: isProduction ? undefined : 4000 });
 const machineName = `${env.USERNAME}@${env.USERDOMAIN} (CoreLauncher)`;
 
-export class SteamAccountProvider implements AccountProviderShape {
+interface SteamAccountProviderEvents {
+	connection: () => void;
+}
+
+export class SteamAccountProvider
+	extends TypedEmitter<SteamAccountProviderEvents>
+	implements AccountProviderShape
+{
 	id = "steam";
 	name = "Steam";
 	color = "#1a9fff";
@@ -30,6 +38,7 @@ export class SteamAccountProvider implements AccountProviderShape {
 	private server: Bun.Server;
 	private window: Window;
 	constructor(database: Kysely<Database>) {
+		super();
 		this.database = database;
 
 		const broadcast = (type: string, data?: JSONValue) => {
@@ -81,7 +90,7 @@ export class SteamAccountProvider implements AccountProviderShape {
 
 						this.qrLoginSession.on("complete", async (data) => {
 							this.window.close();
-							this.database
+							await this.database
 								.insertInto("accounts")
 								.orReplace()
 								.values({
@@ -90,6 +99,7 @@ export class SteamAccountProvider implements AccountProviderShape {
 									refresh_token: data.refreshToken,
 								})
 								.execute();
+							this.emit("connection");
 						});
 
 						return;

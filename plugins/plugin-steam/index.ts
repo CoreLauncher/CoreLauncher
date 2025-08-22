@@ -6,6 +6,7 @@ import {
 	type PluginShape,
 } from "@corelauncher/types";
 import { migrations } from "./migrations";
+import SteamAccountInstance from "./parts/SteamAccountInstance";
 import { SteamAccountProvider } from "./parts/SteamAccountProvider";
 import SteamGame from "./parts/SteamGame";
 import type { Database } from "./types/database";
@@ -28,6 +29,23 @@ export class Plugin extends PluginClass implements PluginShape {
 				join(portal.getDataDirectory(), "database.sqlite"),
 				migrations,
 			);
+
+			const updateAccountInstances = async () => {
+				const instances = await database
+					.selectFrom("accounts")
+					.selectAll()
+					.execute();
+
+				this.emit(
+					"account_instances",
+					instances.map((i) => new SteamAccountInstance(i)),
+				);
+			};
+
+			const accountProvider = new SteamAccountProvider(database);
+			accountProvider.on("connection", updateAccountInstances);
+			await updateAccountInstances();
+
 			const games = await getSteamGames();
 			this.emit(
 				"games",
@@ -36,7 +54,7 @@ export class Plugin extends PluginClass implements PluginShape {
 					.filter((game) => game.id !== "steam:228980"), // Steam Common Redistibutables
 			);
 
-			this.emit("account_providers", [new SteamAccountProvider(database)]);
+			this.emit("account_providers", [accountProvider]);
 			this.emit("ready");
 		});
 	}

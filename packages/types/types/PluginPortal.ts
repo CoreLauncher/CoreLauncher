@@ -1,8 +1,14 @@
 import { TypedEmitter } from "tiny-typed-emitter";
+import type { AccountInstanceShape } from "../shapes/AccountInstanceShape";
 import type { AccountProviderShape } from "../shapes/AccountProviderShape";
 import type { GameShape } from "../shapes/GameShape";
 
 interface PluginPortalEvents {
+	/**
+	 * A plugin has emitted the ready signal.
+	 */
+	ready: () => void;
+
 	/**
 	 * The list of registered games has changed.
 	 * @param games The updated list of games.
@@ -16,9 +22,10 @@ interface PluginPortalEvents {
 	account_providers: (providers: AccountProviderShape[]) => void;
 
 	/**
-	 * A plugin has emitted the ready signal.
+	 * The list of account instances has changed.
+	 * @param instances The updated list of account instances.
 	 */
-	ready: () => void;
+	account_instances: (instances: AccountInstanceShape[]) => void;
 }
 
 /**

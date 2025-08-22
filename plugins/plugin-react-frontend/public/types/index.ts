@@ -9,3 +9,10 @@ export type AccountProvider = {
 	color: string;
 	logo: string;
 };
+
+export type AccountInstance = {
+	id: string;
+	name: string;
+	providerId: string;
+	icon?: string;
+};
