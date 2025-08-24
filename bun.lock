@@ -38,6 +38,9 @@
     "packages/json-value": {
       "name": "@corelauncher/json-value",
     },
+    "packages/noop": {
+      "name": "@corelauncher/noop",
+    },
     "packages/react": {
       "name": "@corelauncher/react",
       "dependencies": {
@@ -52,8 +55,8 @@
     "packages/recolor-svg": {
       "name": "@corelauncher/recolor-svg",
     },
-    "packages/steam-client": {
-      "name": "@corelauncher/steam-client",
+    "packages/steam-login": {
+      "name": "@corelauncher/steam-login",
       "dependencies": {
         "tiny-typed-emitter": "^2.1.0",
       },
@@ -178,6 +181,8 @@
 
     "@corelauncher/json-value": ["@corelauncher/json-value@workspace:packages/json-value"],
 
+    "@corelauncher/noop": ["@corelauncher/noop@workspace:packages/noop"],
+
     "@corelauncher/plugin-epic-games": ["@corelauncher/plugin-epic-games@workspace:plugins/plugin-epic-games"],
 
     "@corelauncher/plugin-react-frontend": ["@corelauncher/plugin-react-frontend@workspace:plugins/plugin-react-frontend"],
@@ -188,7 +193,7 @@
 
     "@corelauncher/recolor-svg": ["@corelauncher/recolor-svg@workspace:packages/recolor-svg"],
 
-    "@corelauncher/steam-client": ["@corelauncher/steam-client@workspace:packages/steam-client"],
+    "@corelauncher/steam-login": ["@corelauncher/steam-login@workspace:packages/steam-login"],
 
     "@corelauncher/tray": ["@corelauncher/tray@workspace:packages/tray"],
 

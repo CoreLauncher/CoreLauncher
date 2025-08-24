@@ -3,7 +3,7 @@ import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { dataToDataURL } from "@corelauncher/file-to-dataurl";
 import { isProduction } from "@corelauncher/is-production";
 import type { JSONValue } from "@corelauncher/json-value";
-import { QRLoginSession } from "@corelauncher/steam-client";
+import { QRLoginSession } from "@corelauncher/steam-login";
 import type { AccountProviderShape } from "@corelauncher/types";
 import SteamSVG from "bootstrap-icons/icons/steam.svg" with { type: "file" };
 import { env } from "bun";

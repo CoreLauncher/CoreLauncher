@@ -1,8 +1,8 @@
 import { TypedEmitter } from "tiny-typed-emitter";
 import {
-	beginAuthSessionViaQR,
-	pollAuthSessionStatus,
-} from "../../interfaces/authenticationService";
+	BeginAuthSessionViaQR,
+	PollAuthSessionStatus,
+} from "../../interfaces/AuthenticationService";
 
 interface QRLoginSessionEvents {
 	change: () => void; // the qr changed
@@ -48,7 +48,7 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 	}
 
 	private async load() {
-		const data = await beginAuthSessionViaQR({
+		const data = await BeginAuthSessionViaQR({
 			device_friendly_name: this.deviceName,
 			platform_type: 1, // 1 for desktop
 		});
@@ -74,7 +74,7 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 		if (!this.clientId || !this.requestId)
 			throw new Error("Authentication session not initialized");
 
-		const data = await pollAuthSessionStatus({
+		const data = await PollAuthSessionStatus({
 			client_id: this.clientId,
 			request_id: this.requestId,
 		});

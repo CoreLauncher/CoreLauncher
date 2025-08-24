@@ -1,5 +1,5 @@
 {
-	"name": "@corelauncher/steam-client",
+	"name": "@corelauncher/steam-login",
 	"main": "./index.ts",
 	"dependencies": {
 		"tiny-typed-emitter": "^2.1.0"

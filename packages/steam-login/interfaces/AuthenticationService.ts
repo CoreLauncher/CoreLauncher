@@ -1,6 +1,6 @@
 import { request } from "../util/request";
 
-export async function beginAuthSessionViaQR(options: {
+export async function BeginAuthSessionViaQR(options: {
 	device_friendly_name: string;
 	platform_type: number;
 	device_details?: string;
@@ -28,7 +28,7 @@ export async function beginAuthSessionViaQR(options: {
 	};
 }
 
-export async function pollAuthSessionStatus(options: {
+export async function PollAuthSessionStatus(options: {
 	client_id: string;
 	request_id: string;
 	token_to_revoke?: string;
