@@ -1,4 +1,10 @@
+# Dependencies
 node_modules
+
+# Data
 .CoreLauncher
-CoreLauncher.exe
+
+# Compiled output
 .bundle
+CoreLauncher
+CoreLauncher.exe
