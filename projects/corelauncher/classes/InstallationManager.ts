@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import { join } from "node:path";
+import { isProduction } from "@corelauncher/is-production";
 import { ensureDir } from "fs-extra";
 import * as registry from "native-reg";
 import * as ws from "windows-shortcuts";
@@ -39,6 +40,12 @@ export default class InstallationManager {
 	}
 
 	async checkInstallation() {
+		if (!isProduction) {
+			return console.warn(
+				"Skipping installation check, not in production mode.",
+			);
+		}
+
 		if (!this.isExecutable)
 			return console.warn(
 				"Skipping installation check, not running as executable.",
