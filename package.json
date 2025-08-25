@@ -11,7 +11,6 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.2.0",
 		"@types/bun": "^1.2.20",
-		"embedded-postgres": "^17.5.0-beta.15",
 		"husky": "^9.1.7",
 		"rcedit": "^4.0.1"
 	},
@@ -27,9 +26,7 @@
 		"compile": "bun build --target=bun --outfile CoreLauncher.exe --sourcemap=inline --compile ./projects/corelauncher/index.ts"
 	},
 	"trustedDependencies": [
-		"@biomejs/biome",
-		"@embedded-postgres/windows-x64",
-		"registry-js"
+		"@biomejs/biome"
 	],
 	"dependencies": {},
 	"patchedDependencies": {}
