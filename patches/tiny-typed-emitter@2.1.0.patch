@@ -1,0 +1,15 @@
+diff --git a/lib/index.js b/lib/index.js
+index 59094a239a06653b4b6bede6278bd84f418641ec..580fe4dc80191a43c6998f34fe3e48947776620d 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -1,3 +1,6 @@
+-"use strict";
+-Object.defineProperty(exports, "__esModule", { value: true });
+-exports.TypedEmitter = require("events").EventEmitter;
++// "use strict";
++// Object.defineProperty(exports, "__esModule", { value: true });
++// exports.TypedEmitter = require("events").EventEmitter;
++
++import { EventEmitter } from "node:events";
++export { EventEmitter as TypedEmitter };
+\ No newline at end of file
