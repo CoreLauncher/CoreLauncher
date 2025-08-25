@@ -1,8 +1,8 @@
 import { Database } from "bun:sqlite";
+import { relative } from "node:path";
 import { isProduction } from "@corelauncher/is-production";
-import { Kysely, type Migration, Migrator } from "kysely";
+import { CamelCasePlugin, Kysely, type Migration, Migrator } from "kysely";
 import { BunSqliteDialect } from "kysely-bun-sqlite";
-import { relative } from "path";
 
 export type NamedMigration = {
 	name: string;
@@ -15,6 +15,7 @@ export default async function createDatabase<Schema>(
 	migrations: NamedMigration[],
 ) {
 	const database = new Kysely<Schema>({
+		plugins: [new CamelCasePlugin()],
 		dialect: new BunSqliteDialect({
 			database: new Database(file),
 		}),

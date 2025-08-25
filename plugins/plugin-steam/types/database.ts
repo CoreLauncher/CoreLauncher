@@ -4,7 +4,7 @@ export interface Database {
 	accounts: {
 		id: Generated<number>;
 		name: string;
-		access_token: string;
-		refresh_token: string;
+		accessToken: string;
+		refreshToken: string;
 	};
 }
