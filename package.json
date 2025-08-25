@@ -22,8 +22,8 @@
 		"postinstall": "bun run scripts/patch-webview.ts",
 		"lint": "bun run biome check --fix",
 		"dev": "bun run --watch ./projects/corelauncher/index.ts",
-		"bundle": "bun build --target=bun --outdir .bundle ./projects/corelauncher/index.ts",
-		"compile": "bun build --target=bun --outfile CoreLauncher.exe --sourcemap=inline --compile ./projects/corelauncher/index.ts"
+		"bundle": "bun build --target=bun --sourcemap=inline --outdir .bundle --root . ./projects/corelauncher/index.ts",
+		"compile": "bun build --target=bun --sourcemap=inline --outfile CoreLauncher.exe --compile ./projects/corelauncher/index.ts"
 	},
 	"trustedDependencies": [
 		"@biomejs/biome",
