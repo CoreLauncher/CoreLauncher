@@ -138,7 +138,9 @@
     },
   },
   "trustedDependencies": [
+    "native-reg",
     "@biomejs/biome",
+    "protobufjs",
   ],
   "packages": {
     "@bbob/parser": ["@bbob/parser@2.9.0", "", { "dependencies": { "@bbob/plugin-helper": "^2.9.0" } }, "sha512-tldSYsMoEclke/B1nqL7+HbYMWZHTKvpbEHRSHuY+sZvS1o7Jpdfjb+KPpwP9wLI3p3r7GPv69/wGy+Xibs9yA=="],
