@@ -29,7 +29,9 @@ export default class SingleInstanceLock extends TypedEmitter<SingleInstanceLockE
 			});
 			console.info("An existing instance was found, exiting.");
 			process.exit(0);
-		} catch {}
+		} catch {
+			console.info("No existing instance found, continuing.");
+		}
 	}
 
 	constructor() {
