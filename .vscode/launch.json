@@ -12,7 +12,7 @@
 			"program": "./projects/corelauncher/index.ts",
 			"cwd": "${workspaceFolder}",
 			"stopOnEntry": false,
-			"watchMode": false
+			"watchMode": true
 		}
 	]
 }
