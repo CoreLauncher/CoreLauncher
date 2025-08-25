@@ -4,12 +4,12 @@ import { dataToDataURL } from "@corelauncher/file-to-dataurl";
 import { isProduction } from "@corelauncher/is-production";
 import type { JSONValue } from "@corelauncher/json-value";
 import { QRLoginSession } from "@corelauncher/steam-login";
+import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { AccountProviderShape } from "@corelauncher/types";
 import SteamSVG from "bootstrap-icons/icons/steam.svg" with { type: "file" };
 import { env } from "bun";
 import getPort from "get-port";
 import type { Kysely } from "kysely";
-import { TypedEmitter } from "tiny-typed-emitter";
 import recolorSVG from "../../../packages/recolor-svg";
 import indexHTML from "../public/index.html";
 import type { Database } from "../types/database";
@@ -17,8 +17,15 @@ import type { Database } from "../types/database";
 const port = await getPort({ port: isProduction ? undefined : 4000 });
 const machineName = `${env.USERNAME}@${env.USERDOMAIN} (CoreLauncher)`;
 
+type AccountData = {
+	id: number;
+	name: string;
+	accessToken: string;
+	refreshToken: string;
+};
+
 interface SteamAccountProviderEvents {
-	connection: () => void;
+	connection: (data: AccountData) => void;
 }
 
 export class SteamAccountProvider
@@ -90,16 +97,24 @@ export class SteamAccountProvider
 
 						this.qrLoginSession.on("complete", async (data) => {
 							this.window.close();
-							await this.database
+
+							const { id } = await this.database
 								.insertInto("accounts")
 								.orReplace()
 								.values({
 									name: data.accountName,
-									access_token: data.accessToken,
-									refresh_token: data.refreshToken,
+									accessToken: data.accessToken,
+									refreshToken: data.refreshToken,
 								})
-								.execute();
-							this.emit("connection");
+								.returning("accounts.id")
+								.executeTakeFirstOrThrow();
+
+							this.emit("connection", {
+								id,
+								name: data.accountName,
+								accessToken: data.accessToken,
+								refreshToken: data.refreshToken,
+							});
 						});
 
 						return;

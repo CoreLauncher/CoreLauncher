@@ -1,5 +1,5 @@
+import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { PluginExport, PluginShapeEvents } from "@corelauncher/types";
-import { TypedEmitter } from "tiny-typed-emitter";
 import PluginContainer from "./PluginContainer";
 
 interface PluginManagerEvents extends PluginShapeEvents {}

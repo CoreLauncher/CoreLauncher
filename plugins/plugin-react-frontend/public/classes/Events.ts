@@ -1,5 +1,5 @@
 import type { JSONValue } from "@corelauncher/json-value";
-import { TypedEmitter } from "tiny-typed-emitter";
+import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { AccountInstance, AccountProvider, Game } from "../types";
 
 interface EventsEvents {

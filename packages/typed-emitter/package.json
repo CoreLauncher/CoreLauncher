@@ -1,0 +1,7 @@
+{
+	"name": "@corelauncher/typed-emitter",
+	"main": "./index.ts",
+	"dependencies": {
+		"events": "^3.3.0"
+	}
+}

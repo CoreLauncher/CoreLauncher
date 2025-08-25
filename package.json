@@ -32,7 +32,5 @@
 		"registry-js"
 	],
 	"dependencies": {},
-	"patchedDependencies": {
-		"tiny-typed-emitter@2.1.0": "patches/tiny-typed-emitter@2.1.0.patch"
-	}
+	"patchedDependencies": {}
 }

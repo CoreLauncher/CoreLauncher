@@ -1,4 +1,4 @@
-import { TypedEmitter } from "tiny-typed-emitter";
+import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { AccountInstanceShape } from "../shapes/AccountInstanceShape";
 import type { AccountProviderShape } from "../shapes/AccountProviderShape";
 import type { GameShape } from "../shapes/GameShape";
