@@ -46,14 +46,19 @@ export class Plugin extends PluginClass implements PluginShape {
 				open: (ws) => {
 					ws.subscribe("client");
 
-					for (const event in this.publishedData) {
-						ws.send(
-							JSON.stringify({
-								type: event,
-								data: this.publishedData[event],
-							}),
-						);
-					}
+					// Send all previously published data to the newly connected client
+					// We use a slight delay to ensure the client is ready to receive messages
+					// Was previously an issue on webkitgtk
+					setTimeout(() => {
+						for (const event in this.publishedData) {
+							ws.send(
+								JSON.stringify({
+									type: event,
+									data: this.publishedData[event],
+								}),
+							);
+						}
+					}, 10);
 				},
 			},
 			routes: {
