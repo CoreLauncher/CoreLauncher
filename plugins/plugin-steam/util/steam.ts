@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { parse as parseVDF } from "@node-steam/vdf";
-import { getSteamInstallationDirectory, getSteamInstalled } from "./registry";
+import { getSteamInstallationDirectory, getSteamInstalled } from "./files";
 
 type LibraryFoldersVDF = {
 	libraryfolders: {
@@ -63,7 +63,7 @@ type AppManifestACF = {
 };
 
 export async function getSteamLibraries() {
-	const installationDirectory = await getSteamInstallationDirectory();
+	const installationDirectory = getSteamInstallationDirectory();
 	const libraryFoldersFile = `${installationDirectory}/steamapps/libraryfolders.vdf`;
 	const libraryFolders = parseVDF(
 		await readFile(libraryFoldersFile, "utf-8"),
@@ -86,7 +86,7 @@ export async function getSteamAppManifest(library: string, app: string) {
 }
 
 export async function getSteamGames() {
-	if (!(await getSteamInstalled())) return [];
+	if (!getSteamInstalled()) return [];
 	const libraries = await getSteamLibraries();
 	const apps = [];
 
