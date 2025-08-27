@@ -25,6 +25,6 @@ const oldAlert = globalThis.alert;
 globalThis.alert = (message?: string) => {
 	return oldAlert(
 		chalk.blue("?  ") +
-			(message ? message.split("\n").join("\n" + chalk.blue("?  ")) : ""),
+			(message ? message.split("\n").join(`\n${chalk.blue("?  ")}`) : ""),
 	);
 };

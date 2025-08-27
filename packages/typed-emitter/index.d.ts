@@ -1,8 +1,10 @@
 export type ListenerSignature<L> = {
+	// biome-ignore lint/suspicious/noExplicitAny: I dont care
 	[E in keyof L]: (...args: any[]) => any;
 };
 
 export type DefaultListener = {
+	// biome-ignore lint/suspicious/noExplicitAny: I dont care
 	[k: string]: (...args: any[]) => any;
 };
 
