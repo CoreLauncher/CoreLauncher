@@ -30,21 +30,35 @@ export class Plugin extends PluginClass implements PluginShape {
 				migrations,
 			);
 
-			const updateAccountInstances = async () => {
-				const instances = await database
-					.selectFrom("accounts")
-					.selectAll()
-					.execute();
-
-				this.emit(
-					"account_instances",
-					instances.map((i) => new SteamAccountInstance(i)),
-				);
+			// #region Accounts
+			const attatchListeners = (instance: SteamAccountInstance) => {
+				instance.on("refreshToken", async (token) => {
+					await database
+						.updateTable("accounts")
+						.set({ refreshToken: token })
+						.where("name", "=", instance.name)
+						.execute();
+				});
 			};
 
+			// Load stored account instances
+			const accountInstances: SteamAccountInstance[] = await database
+				.selectFrom("accounts")
+				.selectAll()
+				.execute()
+				.then((instances) => instances.map((i) => new SteamAccountInstance(i)));
+
+			accountInstances.forEach(attatchListeners);
+
+			// Create account provider and listen for new instances
 			const accountProvider = new SteamAccountProvider(database);
-			accountProvider.on("connection", updateAccountInstances);
-			await updateAccountInstances();
+			accountProvider.on("connection", async (data) => {
+				const accountInstance = new SteamAccountInstance(data);
+				attatchListeners(accountInstance);
+				accountInstances.push(accountInstance);
+				this.emit("account_instances", accountInstances);
+			});
+			// #endregion
 
 			const games = await getSteamGames();
 			this.emit(
@@ -54,6 +68,7 @@ export class Plugin extends PluginClass implements PluginShape {
 					.filter((game) => game.id !== "steam:228980"), // Steam Common Redistibutables
 			);
 
+			this.emit("account_instances", accountInstances);
 			this.emit("account_providers", [accountProvider]);
 			this.emit("ready");
 		});
