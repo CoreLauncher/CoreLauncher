@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./GameList.css";
 import { Input } from "@corelauncher/react";
-import useGames from "../../../../hooks/useGames";
+import useGames from "../../../../../hooks/useGames";
 
 export default function GameList({
 	selected,

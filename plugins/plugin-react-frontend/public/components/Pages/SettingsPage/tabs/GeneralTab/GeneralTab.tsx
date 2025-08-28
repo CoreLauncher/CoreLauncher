@@ -1,4 +1,4 @@
-import useApplicationVersion from "../../../../hooks/useApplicationVersion";
+import useApplicationVersion from "../../../../../hooks/useApplicationVersion";
 import "./GeneralTab.css";
 
 export default function GeneralTab({

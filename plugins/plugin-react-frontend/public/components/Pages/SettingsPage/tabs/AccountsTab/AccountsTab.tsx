@@ -1,6 +1,6 @@
-import { fetchConnectAccountProvider } from "../../../../functions/api";
-import useAccountInstances from "../../../../hooks/useAccountInstances";
-import useAccountProviders from "../../../../hooks/useAccountProviders";
+import { fetchConnectAccountProvider } from "../../../../../functions/api";
+import useAccountInstances from "../../../../../hooks/useAccountInstances";
+import useAccountProviders from "../../../../../hooks/useAccountProviders";
 import "./AccountsTab.css";
 import { QuestionLg } from "react-bootstrap-icons";
 

@@ -1,7 +1,7 @@
 import { type Icon, PlayFill } from "react-bootstrap-icons";
 import "./PlayBar.css";
-import { fetchLaunchGame } from "../../../../functions/api";
-import type { Game } from "../../../../types";
+import { fetchLaunchGame } from "../../../../../functions/api";
+import type { Game } from "../../../../../types";
 
 export default function PlayBar({
 	meta = [],

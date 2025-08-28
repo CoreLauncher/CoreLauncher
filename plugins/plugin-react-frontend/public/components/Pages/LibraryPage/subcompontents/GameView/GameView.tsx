@@ -2,7 +2,7 @@ import { Activity, ClockHistory } from "react-bootstrap-icons";
 import Banner from "../Banner/Banner";
 import PlayBar from "../PlayBar/PlayBar";
 import "./GameView.css";
-import useGame from "../../../../hooks/useGame";
+import useGame from "../../../../../hooks/useGame";
 
 export default function GameView({ gameId }: { gameId: string }) {
 	const game = useGame(gameId);
