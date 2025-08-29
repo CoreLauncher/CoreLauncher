@@ -1,8 +1,10 @@
 import { Activity, ClockHistory } from "react-bootstrap-icons";
-import Banner from "../Banner/Banner";
+
 import PlayBar from "../PlayBar/PlayBar";
 import "./GameView.css";
+import { Block } from "@corelauncher/react";
 import useGame from "../../../../../hooks/useGame";
+import LogoPattern from "../../../../Atoms/LogoPattern/LogoPattern";
 
 export default function GameView({ gameId }: { gameId: string }) {
 	const game = useGame(gameId);
@@ -13,17 +15,16 @@ export default function GameView({ gameId }: { gameId: string }) {
 
 	return (
 		<div className="GameView">
-			<Banner>
-				<div className="banner-content">
-					<PlayBar
-						game={game}
-						meta={[
-							{ icon: Activity, title: "Last played", content: "Never" },
-							{ icon: ClockHistory, title: "Playtime", content: "Unknown" },
-						]}
-					/>
-				</div>
-			</Banner>
+			<Block className="banner">
+				<LogoPattern />
+				<PlayBar
+					game={game}
+					meta={[
+						{ icon: Activity, title: "Last played", content: "Never" },
+						{ icon: ClockHistory, title: "Playtime", content: "Unknown" },
+					]}
+				/>
+			</Block>
 		</div>
 	);
 }

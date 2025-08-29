@@ -9,6 +9,9 @@ body,
 }
 
 * {
+	/* Might cause issues */
+	position: relative;
+
 	box-sizing: border-box;
 	user-select: none;
 	-webkit-user-select: none;
