@@ -2,9 +2,9 @@
 node_modules
 
 # Data
-.CoreLauncher
+.corelauncher
 
 # Compiled output
 .bundle
-CoreLauncher
-CoreLauncher.exe
+corelauncher
+corelauncher.exe
