@@ -6,7 +6,10 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
 
     steps:
       - name: Checkout code
@@ -21,9 +24,12 @@ jobs:
       - name: Compile with Bun
         run: bun compile
 
-      - name: Upload .exe artifact
+      - name: List files
+        run: ls -la
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: CoreLauncher
+          name: corelauncher-${{ matrix.os }}
           path: |
-            CoreLauncher.exe
+            ${{ matrix.os == 'windows-latest' && 'corelauncher.exe' || 'corelauncher' }}
