@@ -25,7 +25,7 @@ jobs:
         run: bun compile
 
       - name: List files
-        run: ls -la
+        run: ls
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
