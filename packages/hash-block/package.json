@@ -1,0 +1,10 @@
+{
+	"name": "@corelauncher/hash-block",
+	"main": "./index.ts",
+	"bin": {
+		"hash-block": "./bin.ts"
+	},
+	"dependencies": {
+		"p-event": "^6.0.1"
+	}
+}

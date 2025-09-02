@@ -3,6 +3,9 @@
   "workspaces": {
     "": {
       "name": "corelauncher",
+      "dependencies": {
+        "p-event": "^6.0.1",
+      },
       "devDependencies": {
         "@biomejs/biome": "2.2.2",
         "@types/bun": "^1.2.21",
@@ -31,6 +34,12 @@
     },
     "packages/file-to-dataurl": {
       "name": "@corelauncher/file-to-dataurl",
+    },
+    "packages/hash-block": {
+      "name": "@corelauncher/hash-block",
+      "bin": {
+        "hash-block": "./bin.ts",
+      },
     },
     "packages/is-production": {
       "name": "@corelauncher/is-production",
@@ -172,6 +181,8 @@
     "@corelauncher/database": ["@corelauncher/database@workspace:packages/database"],
 
     "@corelauncher/file-to-dataurl": ["@corelauncher/file-to-dataurl@workspace:packages/file-to-dataurl"],
+
+    "@corelauncher/hash-block": ["@corelauncher/hash-block@workspace:packages/hash-block"],
 
     "@corelauncher/is-production": ["@corelauncher/is-production@workspace:packages/is-production"],
 
@@ -324,6 +335,10 @@
     "open": ["open@10.2.0", "", { "dependencies": { "default-browser": "^5.2.1", "define-lazy-prop": "^3.0.0", "is-inside-container": "^1.0.0", "wsl-utils": "^0.1.0" } }, "sha512-YgBpdJHPyQ2UE5x+hlSXcnejzAvD0b22U2OuAP+8OnlJT+PjWPxtgmGqKKc+RgTM63U9gN0YzrYc71R2WT/hTA=="],
 
     "openid": ["openid@2.0.13", "", { "dependencies": { "axios": "^1.6.0", "qs": "^6.5.2" } }, "sha512-GVHa+EsDeH+jpPOihw2J5L3xUXeyf1cfmVpNP4XKk8twwmclUUcTOA4oVwu5pVrESomQoHFEQIR9FRlNuLofWA=="],
+
+    "p-event": ["p-event@6.0.1", "", { "dependencies": { "p-timeout": "^6.1.2" } }, "sha512-Q6Bekk5wpzW5qIyUP4gdMEujObYstZl6DMMOSenwBvV0BlE5LkDwkjs5yHbZmdCEq2o4RJx4tE1vwxFVf2FG1w=="],
+
+    "p-timeout": ["p-timeout@6.1.4", "", {}, "sha512-MyIV3ZA/PmyBN/ud8vV9XzwTrNtR4jFrObymZYnZqMmW0zA8Z17vnT0rBgFE/TlohB+YCHqXMgZzb3Csp49vqg=="],
 
     "path-key": ["path-key@3.1.1", "", {}, "sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q=="],
 
