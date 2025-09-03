@@ -3,9 +3,6 @@
   "workspaces": {
     "": {
       "name": "corelauncher",
-      "dependencies": {
-        "p-event": "^6.0.1",
-      },
       "devDependencies": {
         "@biomejs/biome": "2.2.2",
         "@types/bun": "^1.2.21",
@@ -39,6 +36,9 @@
       "name": "@corelauncher/hash-block",
       "bin": {
         "hash-block": "./bin.ts",
+      },
+      "dependencies": {
+        "p-event": "^6.0.1",
       },
     },
     "packages/is-production": {
