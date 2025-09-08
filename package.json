@@ -9,7 +9,7 @@
 		"projects/*"
 	],
 	"devDependencies": {
-		"@biomejs/biome": "2.2.2",
+		"@biomejs/biome": "2.2.3",
 		"@types/bun": "^1.2.21",
 		"husky": "^9.1.7",
 		"rcedit": "^4.0.1"
