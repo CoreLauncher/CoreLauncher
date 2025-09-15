@@ -5,6 +5,6 @@
 		"hash-block": "./bin.ts"
 	},
 	"dependencies": {
-		"p-event": "^6.0.1"
+		"p-event": "^7.0.0"
 	}
 }
