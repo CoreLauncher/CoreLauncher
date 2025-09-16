@@ -13,7 +13,7 @@ interface SingleInstanceLockEvents {
  * This class makes it only one instance of the application running at a time and forwards new instances to the existing instance.
  */
 export default class SingleInstanceLock extends TypedEmitter<SingleInstanceLockEvents> {
-	private static lockfile = join(applicationDirectory(), "CoreLauncher.lock");
+	private static lockfile = join(applicationDirectory(), "corelauncher.lock");
 
 	static async check() {
 		console.info("Checking for existing instance...");
