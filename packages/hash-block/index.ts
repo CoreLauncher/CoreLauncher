@@ -22,7 +22,6 @@ export async function generateHashes(file: string) {
 		index = end;
 
 		hashes.push({ start, end, hash });
-		console.log(start, end, chunk.length, hash);
 	});
 
 	await pEvent(stream, "end");
@@ -44,4 +43,38 @@ export async function encodeHashes(hashes: RangedHash[]) {
 	const buffer = Buffer.concat(lines);
 	const compressed = Bun.gzipSync(buffer);
 	return compressed;
+}
+
+export async function decodeHashes(input: Uint8Array<ArrayBuffer>) {
+	const decompressed = Bun.gunzipSync(input);
+	const buffer = Buffer.from(decompressed);
+	const hashes: RangedHash[] = [];
+
+	for (let i = 0; i < buffer.length; i += 24) {
+		const start = Number(buffer.readBigUInt64LE(i));
+		const end = Number(buffer.readBigUInt64LE(i + 8));
+		const hash = buffer.readBigUInt64LE(i + 16);
+		hashes.push({ start, end, hash });
+	}
+
+	return hashes;
+}
+
+export function verifyHashes(a: RangedHash[], b: RangedHash[]): Range[] {
+	const mismatches: Range[] = [];
+
+	const mapA = new Map<string, bigint>();
+	for (const { start, end, hash } of a) {
+		mapA.set(`${start}:${end}`, hash);
+	}
+
+	for (const { start, end, hash } of b) {
+		const key = `${start}:${end}`;
+		const hashA = mapA.get(key);
+		if (hashA === undefined || hashA !== hash) {
+			mismatches.push({ start, end });
+		}
+	}
+
+	return mismatches;
 }
