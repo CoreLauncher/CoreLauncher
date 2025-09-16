@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { exists, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { parse as parseVDF } from "@node-steam/vdf";
 import { getSteamInstallationDirectory, getSteamInstalled } from "./files";
@@ -80,6 +80,8 @@ export async function getSteamLibraries() {
 
 export async function getSteamAppManifest(library: string, app: string) {
 	const file = `${library}/steamapps/appmanifest_${app}.acf`;
+	const fileExists = await exists(file);
+	if (!fileExists) return null; // The library manifest if somehow corrupted...
 	const content = await readFile(file, "utf-8");
 	const manifest = parseVDF(content) as AppManifestACF;
 	return manifest.AppState;
@@ -96,6 +98,7 @@ export async function getSteamGames() {
 
 		for (const appId of appIds) {
 			const manifest = await getSteamAppManifest(path, appId);
+			if (!manifest) continue;
 			apps.push({
 				id: manifest.appid,
 				name: manifest.name,
