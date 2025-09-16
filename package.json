@@ -27,8 +27,7 @@
 	},
 	"trustedDependencies": [
 		"@biomejs/biome",
-		"native-reg",
-		"protobufjs"
+		"native-reg"
 	],
 	"dependencies": {},
 	"patchedDependencies": {}
