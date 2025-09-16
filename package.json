@@ -23,7 +23,7 @@
 		"dev": "bun run --watch ./projects/corelauncher/index.ts",
 		"bundle": "bun build --target=bun --sourcemap=inline --root . --entry-naming=entrypoint-[hash].[ext] --chunk-naming=chunk-[hash].[ext] --asset-naming=asset-[hash].[ext] --outdir .bundle  ./projects/corelauncher/index.ts",
 		"compile": "bun build --target=bun --sourcemap=inline --root . --entry-naming=entrypoint-[hash].[ext] --chunk-naming=chunk-[hash].[ext] --asset-naming=asset-[hash].[ext] --outfile corelauncher --compile ./projects/corelauncher/index.ts",
-		"compile-production": "bun build --target=bun --sourcemap=inline --root . --entry-naming=entrypoint-[hash].[ext] --chunk-naming=chunk-[hash].[ext] --asset-naming=asset-[hash].[ext] --windows-hide-console --windows-icon=./icon.ico --windows-title=CoreLauncher --windows-publisher='CoreByte & CoreLauncher Contributors' --windows-version='0.0.0.0' --windows-description='Multipurpose Game Launcher' --windows-copyright='CoreByte & CoreLauncher Contributors' --outfile corelauncher --compile ./projects/corelauncher/index.ts"
+		"compile-production": "bun build --target=bun --sourcemap=inline --root . --entry-naming=entrypoint-[hash].[ext] --chunk-naming=chunk-[hash].[ext] --asset-naming=asset-[hash].[ext] --windows-hide-console --windows-icon=./icon.ico --windows-title=CoreLauncher --windows-publisher='CoreByte & CoreLauncher Contributors' --windows-version='0.0.0.0' --windows-description='CoreLauncher' --windows-copyright='CoreByte & CoreLauncher Contributors' --outfile corelauncher --define process.env.NODE_ENV=\"'production'\" --production --compile ./projects/corelauncher/index.ts"
 	},
 	"trustedDependencies": [
 		"@biomejs/biome",
