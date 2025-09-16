@@ -1,10 +1,10 @@
 # Dependencies
-node_modules
+/node_modules
 
 # Data
-.corelauncher
+/.corelauncher
 
 # Compiled output
-.bundle
-corelauncher
-corelauncher.exe
+/.bundle
+/corelauncher
+/corelauncher.exe
