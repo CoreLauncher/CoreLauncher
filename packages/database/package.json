@@ -2,7 +2,7 @@
 	"name": "@corelauncher/database",
 	"main": "./index.ts",
 	"dependencies": {
-		"kysely": "^0.28.5",
+		"kysely": "^0.28.7",
 		"kysely-bun-sqlite": "^0.4.0"
 	}
 }
