@@ -11,8 +11,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.2.4",
 		"@types/bun": "^1.2.22",
-		"husky": "^9.1.7",
-		"rcedit": "^4.0.1"
+		"husky": "^9.1.7"
 	},
 	"peerDependencies": {
 		"typescript": "^5.9.2"
