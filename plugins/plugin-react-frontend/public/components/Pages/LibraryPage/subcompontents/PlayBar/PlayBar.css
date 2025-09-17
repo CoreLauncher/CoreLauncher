@@ -11,16 +11,16 @@
 	}
 
 	.playbutton {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		border: none;
-		aspect-ratio: 5 / 2;
 		z-index: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		aspect-ratio: 5 / 2;
 
 		cursor: pointer;
 		background-color: var(--cl-color-branding);
+
+		border: none;
 		transition: background-color 0.2s ease-in-out;
 
 		&:hover {
@@ -35,31 +35,31 @@
 	.metadata {
 		display: flex;
 		flex-direction: row;
-		align-items: center;
 		gap: 10px;
+		align-items: center;
 
-		background-color: rgba(0, 0, 0, 0.8);
-		translate: -10px 0px;
+		width: fit-content;
 
 		padding: 10px;
 		padding-left: 20px;
 
-		width: fit-content;
+		background-color: rgba(0, 0, 0, 0.8);
 
 		border-top-left-radius: 0px;
 		border-bottom-left-radius: 0px;
+		translate: -10px 0px;
 
 		.metadata-item {
 			display: flex;
 			flex-direction: row;
-			align-items: center;
 			gap: 5px;
+			align-items: center;
 
 			height: 100%;
 
 			svg {
-				height: 100%;
 				width: 20%;
+				height: 100%;
 				aspect-ratio: 1;
 				fill: var(--cl-color-text-muted);
 			}
@@ -77,9 +77,9 @@
 				}
 
 				.title {
-					color: var(--cl-color-text-muted);
 					font-size: 14px;
 					font-weight: 900;
+					color: var(--cl-color-text-muted);
 				}
 
 				.content {

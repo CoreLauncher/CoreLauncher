@@ -10,9 +10,9 @@ body,
 }
 
 * {
-	color: var(--cl-color-text);
 	font-family: "Inter", sans-serif;
+	color: var(--cl-color-text);
 
-	scrollbar-width: thin;
 	scrollbar-color: var(--cl-color-scrollbar) var(--cl-color-block);
+	scrollbar-width: thin;
 }

@@ -1,4 +1,15 @@
 .cl-input {
+	width: 100%;
+
+	padding: 10px;
+	outline: none;
+	background-color: var(--cl-color-input);
+
+	border: none;
+	border-radius: 8px;
+
+	transition: background-color 0.2s ease-in-out;
+
 	&::placeholder {
 		color: var(--cl-color-text-muted);
 	}
@@ -10,15 +21,4 @@
 	&::-ms-reveal {
 		display: none;
 	}
-
-	transition: background-color 0.2s ease-in-out;
-	background-color: var(--cl-color-input);
-
-	border: none;
-	outline: none;
-
-	padding: 10px;
-	border-radius: 8px;
-
-	width: 100%;
 }

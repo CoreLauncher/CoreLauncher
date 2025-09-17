@@ -2,10 +2,10 @@ html,
 body,
 #root {
 	height: 100%;
-	overflow: hidden;
+	padding: 0;
 
 	margin: 0;
-	padding: 0;
+	overflow: hidden;
 }
 
 * {
@@ -13,9 +13,10 @@ body,
 	position: relative;
 
 	box-sizing: border-box;
-	user-select: none;
-	-webkit-user-select: none;
 
 	padding: 0;
 	margin: 0;
+
+	-webkit-user-select: none;
+	user-select: none;
 }

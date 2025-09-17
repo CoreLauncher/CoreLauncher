@@ -1,18 +1,17 @@
 .GameList {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
+	min-width: 150px;
 
 	max-width: 40%;
-	min-width: 150px;
 	height: 100%;
 
 	padding: 8px;
-	border-radius: 8px;
-
-	position: relative;
 
 	background-color: var(--cl-color-block);
+	border-radius: 8px;
 
 	.games {
 		display: flex;
@@ -22,9 +21,9 @@
 		.game {
 			all: unset;
 			padding: 4px;
-			border-radius: 4px;
 
 			cursor: pointer;
+			border-radius: 4px;
 
 			transition: backdrop-filter 0.2s ease-in-out;
 
@@ -34,23 +33,22 @@
 			}
 
 			p {
+				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
-				overflow: hidden;
 			}
 		}
 	}
 
 	&::before {
-		content: "";
-
 		position: absolute;
 		top: 0;
 		right: -5px;
-
-		height: 100%;
 		width: 5px;
 
+		height: 100%;
+
 		cursor: ew-resize;
+		content: "";
 	}
 }

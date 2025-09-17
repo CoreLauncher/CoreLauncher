@@ -3,14 +3,14 @@
 	flex-direction: column;
 	gap: 5px;
 
-	height: 100%;
 	width: 100%;
+	height: 100%;
 
 	.account-providers-container {
 		padding: 10px;
-		border-radius: 8px;
 
 		background-color: var(--cl-color-block);
+		border-radius: 8px;
 	}
 
 	.account-providers {
@@ -21,15 +21,15 @@
 
 		.account-button {
 			display: flex;
-			justify-content: center;
 			align-items: center;
+			justify-content: center;
 
 			padding: 15px;
-			border: none;
-			border-radius: 8px;
 			cursor: pointer;
 
 			background-color: var(--color);
+			border: none;
+			border-radius: 8px;
 			transition: background-color 0.2s ease-in-out;
 
 			&:hover {
@@ -51,24 +51,24 @@
 		.account-instance {
 			display: flex;
 			flex-direction: row;
-			align-items: center;
 			gap: 10px;
+			align-items: center;
 
 			padding: 8px;
-			border-radius: 8px;
 			background-color: var(--cl-color-block);
+			border-radius: 8px;
 
 			.icon {
-				height: 40px;
 				width: 40px;
+				height: 40px;
 				border-radius: 8px;
 			}
 
 			.unknown-icon {
 				padding: 10px;
+				color: var(--cl-color-text-secondary);
 
 				background-color: var(--cl-color-accent);
-				color: var(--cl-color-text-secondary);
 			}
 
 			.account-provider {

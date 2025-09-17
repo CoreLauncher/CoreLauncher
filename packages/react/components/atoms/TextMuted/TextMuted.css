@@ -1,8 +1,8 @@
 .cl-text-muted {
-	color: var(--cl-color-text-muted);
-	font-size: 0.875rem; /* 14px */
-	line-height: 1.25rem; /* 20px */
-	margin: 0;
 	padding: 0;
+	margin: 0;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	color: var(--cl-color-text-muted);
 	text-align: center;
 }

@@ -9,22 +9,21 @@
 	overflow: hidden;
 
 	&::before {
-		content: "";
-
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%, -50%) rotate(var(--rotation));
 
 		width: var(--container-size);
 		height: var(--container-size);
 
-		filter: brightness(var(--brightness));
+		pointer-events: none;
+		content: "";
 		background-image: url("@corelauncher/react/assets/logo.svg");
-		background-position: center;
 		background-repeat: repeat;
+		background-position: center;
 		background-size: calc(var(--size) + var(--gap));
 
-		pointer-events: none;
+		filter: brightness(var(--brightness));
+		transform: translate(-50%, -50%) rotate(var(--rotation));
 	}
 }

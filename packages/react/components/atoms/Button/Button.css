@@ -1,4 +1,16 @@
 .cl-button {
+	width: fit-content;
+
+	padding: 10px;
+	cursor: pointer;
+	outline: none;
+	background-color: var(--cl-color-input);
+
+	border: none;
+	border-radius: 8px;
+
+	transition: background-color 0.2s ease-in-out;
+
 	&::placeholder {
 		color: var(--cl-color-text-muted);
 	}
@@ -6,16 +18,4 @@
 	&:hover {
 		background-color: var(--cl-color-input-hover);
 	}
-
-	transition: background-color 0.2s ease-in-out;
-	background-color: var(--cl-color-input);
-	cursor: pointer;
-
-	border: none;
-	outline: none;
-
-	padding: 10px;
-	border-radius: 8px;
-
-	width: fit-content;
 }

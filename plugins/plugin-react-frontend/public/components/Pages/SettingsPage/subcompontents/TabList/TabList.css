@@ -7,24 +7,24 @@
 	max-width: 20%;
 
 	padding: 8px;
-	border-radius: 8px;
 	background-color: var(--cl-color-block);
+	border-radius: 8px;
 
 	.tab {
 		display: flex;
 		flex-direction: row;
-		align-items: center;
 		gap: 5px;
+		align-items: center;
 
 		height: 40px;
 		padding: 5px;
-
-		border: none;
-		background-color: transparent;
+		font-size: 1rem;
 
 		cursor: pointer;
+		background-color: transparent;
+
+		border: none;
 		border-radius: 8px;
-		font-size: 1rem;
 		transition: background-color 0.2s ease-in-out;
 
 		&:hover,
@@ -34,8 +34,8 @@
 
 		div {
 			height: 100%;
-			padding: 5px;
 			aspect-ratio: 1;
+			padding: 5px;
 		}
 	}
 }
