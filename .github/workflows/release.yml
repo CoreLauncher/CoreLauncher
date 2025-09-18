@@ -32,10 +32,11 @@ jobs:
           VERSION: ${{ steps.pkg.outputs.version }}
 
       - name: Exit if release exists
-        if: ${{ steps.check_release.outputs.exists == true }}
         run: |
-          echo "Release already exists for version ${{ steps.pkg.outputs.version }}. Exiting."
-          exit 0
+          if [ "${{ steps.check_release.outputs.exists }}" = "true" ]; then
+            echo "Release already exists for version ${{ steps.pkg.outputs.version }}. Exiting."
+            exit 0
+          fi
   
   build:
     name: Build binary
