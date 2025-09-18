@@ -91,18 +91,31 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: linux-binary
+          path: ./linux
 
       - name: Download Windows binary
         uses: actions/download-artifact@v3
         with:
           name: windows-binary
+          path: ./windows
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: v${{ steps.pkg.outputs.version }}
-          release_name: Release v${{ steps.pkg.outputs.version }}
-          draft: true
-          prerelease: false
-            
+      - name: Rename release assets
+        run: |
+          mv ./linux/corelauncher corelauncher-linux-x64
+          mv ./windows/corelauncher.exe corelauncher-windows-x64.exe
+          mv ./linux/corelauncher.hashes corelauncher-linux-x64.hashes
+          mv ./windows/corelauncher.hashes corelauncher-windows-x64.hashes
+
+      - name: Upload release assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: v${{ steps.pkg.outputs.version }}
+        run: |
+            gh release create $TAG \
+              ./linux/corelauncher-linux-x64 \
+              ./windows/corelauncher-windows-x64.exe \
+              ./linux/corelauncher-linux-x64.hashes \
+              ./windows/corelauncher-windows-x64.hashes \
+              --title "Release $TAG" \
+              --generate-notes
+              --draft
