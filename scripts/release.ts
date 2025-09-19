@@ -2,6 +2,7 @@ import "@corelauncher/console-addon";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { encodeHashes, generateHashes } from "@corelauncher/hash-block";
 import { $ } from "bun";
+import packageJSON from "../package.json";
 
 const commit = await $`git rev-parse --short HEAD`.text();
 const branch = await $`git rev-parse --abbrev-ref HEAD`.text();
@@ -64,4 +65,4 @@ console.info("Computing windows x64 hashes...");
 // 	writeFileSync(".dist/corelauncher-app-linux-x64.hashes", encoded);
 // }
 
-console.info("Build finished.");
+console.info(`Build of version ${packageJSON.version} finished.`);
