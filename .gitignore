@@ -5,6 +5,7 @@
 /.corelauncher
 
 # Compiled output
+/.dist
 /.bundle
 /corelauncher
 /corelauncher.exe
