@@ -46,22 +46,22 @@ console.info("Computing windows x64 hashes...");
 	writeFileSync(".dist/corelauncher-app-windows-x64.hashes", encoded);
 }
 
-console.info("Building linux x64 executable...");
-await Bun.build({
-	entrypoints: ["./projects/corelauncher/index.ts"],
-	outdir: ".dist",
-	define: defineOptions,
-	compile: {
-		target: "bun-linux-x64",
-		outfile: "corelauncher-app-linux-x64",
-	},
-});
+// console.info("Building linux x64 executable...");
+// await Bun.build({
+// 	entrypoints: ["./projects/corelauncher/index.ts"],
+// 	outdir: ".dist",
+// 	define: defineOptions,
+// 	compile: {
+// 		target: "bun-linux-x64",
+// 		outfile: "corelauncher-app-linux-x64",
+// 	},
+// });
 
-console.info("Computing linux x64 hashes...");
-{
-	const hashes = await generateHashes(".dist/corelauncher-app-linux-x64");
-	const encoded = await encodeHashes(hashes);
-	writeFileSync(".dist/corelauncher-app-linux-x64.hashes", encoded);
-}
+// console.info("Computing linux x64 hashes...");
+// {
+// 	const hashes = await generateHashes(".dist/corelauncher-app-linux-x64");
+// 	const encoded = await encodeHashes(hashes);
+// 	writeFileSync(".dist/corelauncher-app-linux-x64.hashes", encoded);
+// }
 
 console.info("Build finished.");
