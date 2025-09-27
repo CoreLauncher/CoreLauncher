@@ -7,12 +7,14 @@ import SingleInstanceLock from "./classes/SingleInstanceLock";
 process.title = "CoreLauncher";
 
 const installation = new InstallationManager();
-await installation.checkInstallation();
+await installation.checkInstall();
 
 // Check if another instance is running and forward arguments to it
 await SingleInstanceLock.check();
+
+// Check for updates and apply them if available
 await installation.checkApply();
-await installation.checkUpdates();
+await installation.checkUpdate();
 
 hideConsole();
 

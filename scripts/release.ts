@@ -1,6 +1,5 @@
 import "@corelauncher/console-addon";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
-import { encodeHashes, generateHashes } from "@corelauncher/hash-block";
+import { existsSync, mkdirSync } from "node:fs";
 import { $ } from "bun";
 import packageJSON from "../package.json";
 
@@ -40,13 +39,6 @@ await Bun.build({
 	},
 });
 
-console.info("Computing windows x64 hashes...");
-{
-	const hashes = await generateHashes(".dist/corelauncher-app-windows-x64.exe");
-	const encoded = await encodeHashes(hashes);
-	writeFileSync(".dist/corelauncher-app-windows-x64.hashes", encoded);
-}
-
 console.info("Building linux x64 executable...");
 await Bun.build({
 	entrypoints: ["./projects/corelauncher/index.ts"],
@@ -57,12 +49,5 @@ await Bun.build({
 		outfile: "corelauncher-app-linux-x64",
 	},
 });
-
-console.info("Computing linux x64 hashes...");
-{
-	const hashes = await generateHashes(".dist/corelauncher-app-linux-x64");
-	const encoded = await encodeHashes(hashes);
-	writeFileSync(".dist/corelauncher-app-linux-x64.hashes", encoded);
-}
 
 console.info(`Build of version ${packageJSON.version} finished.`);

@@ -1,11 +1,5 @@
 import { spawn } from "node:child_process";
 import { join } from "node:path";
-import {
-	decodeHashes,
-	generateHashes,
-	type Range,
-	verifyHashes,
-} from "@corelauncher/hash-block";
 import { isProduction } from "@corelauncher/is-production";
 import { Octokit } from "@octokit/rest";
 import type { SupportedCryptoAlgorithms } from "bun";
@@ -14,8 +8,10 @@ import {
 	copyFile,
 	createReadStream,
 	ensureDir,
+	ensureDirSync,
+	existsSync,
 	open,
-	truncate,
+	removeSync,
 	write,
 } from "fs-extra";
 import * as registry from "native-reg";
@@ -82,29 +78,6 @@ async function fetchReleases() {
 	}
 }
 
-async function fetchHashes(url: string) {
-	try {
-		const response = await fetch(url);
-		const data = await response.arrayBuffer();
-		console.log(Buffer.from(data).toString("utf-8"));
-		const hashes = decodeHashes(new Uint8Array(data));
-		return hashes;
-	} catch (error) {
-		console.error("Failed to fetch/parse hashes:", error);
-	}
-}
-
-async function fetchRange(url: string, range: Range) {
-	const response = await fetch(url, {
-		headers: { Range: `bytes=${range.start}-${range.end}` },
-	});
-	if (!response.ok)
-		throw new Error(
-			`Failed to fetch range: ${response.statusText} ${await response.text()}`,
-		);
-	return new Uint8Array(await response.arrayBuffer());
-}
-
 async function hashFile(
 	file: string,
 	algorithm: SupportedCryptoAlgorithms = "sha256",
@@ -122,8 +95,6 @@ async function hashFile(
 const BINARY_ASSET_NAME = `corelauncher-app-${getOS()}-${getArchitecture()}${
 	process.platform === "win32" ? ".exe" : ""
 }`;
-
-const HASH_ASSSET_NAME = `corelauncher-app-${getOS()}-${getArchitecture()}.hashes`;
 
 export default class InstallationManager {
 	isExecutable: boolean;
@@ -158,9 +129,20 @@ export default class InstallationManager {
 			this.applicationDirectory,
 			"corelauncher.exe",
 		);
+
+		console.info("Application Directory:", this.applicationDirectory);
+		ensureDirSync(this.applicationDirectory);
+
+		if (existsSync(this.updateExecutable) && !this.isUpdateExecutable) {
+			console.info("Removing leftover update executable...");
+			removeSync(this.updateExecutable);
+		}
 	}
 
-	async checkInstallation() {
+	/**
+	 * Checks if CoreLauncher is installed, and installs it if not.
+	 */
+	async checkInstall() {
 		if (!isProduction) {
 			return console.warn(
 				"Skipping installation check, not in production mode.",
@@ -175,6 +157,13 @@ export default class InstallationManager {
 		if (this.thisExecutable === this.applicationExecutable)
 			return console.info("CoreLauncher seems to be installed correctly.");
 
+		return this.install();
+	}
+
+	/**
+	 * Installs CoreLauncher to the application directory.
+	 */
+	async install() {
 		console.info("Installing CoreLauncher...");
 
 		console.info("Creating application directory...");
@@ -261,21 +250,30 @@ export default class InstallationManager {
 		process.exit(0);
 	}
 
-	async checkUpdates() {
+	/**
+	 * Checks if this binary can be updated.
+	 */
+	async checkUpdate() {
 		// if (!isProduction)
 		// return console.warn("Skipping update check, not in production mode.");
 
 		// if (!this.isExecutable)
 		// return console.warn("Skipping update check, not running as executable.");
 
+		return this.update();
+	}
+
+	/**
+	 * Updates CoreLauncher if a new version is available.
+	 */
+	async update() {
 		console.info("Checking for updates...");
 		const version = packageJSON.version;
 		const releases = await fetchReleases();
 		if (!releases) return error();
 		const validReleases = releases.filter((r) => {
 			const hasBinary = r.assets.some((a) => a.name === BINARY_ASSET_NAME);
-			const hasHashes = r.assets.some((a) => a.name === HASH_ASSSET_NAME);
-			if (!hasBinary || !hasHashes) return false;
+			if (!hasBinary) return false;
 			if (r.draft || r.prerelease) return false;
 			if (Bun.semver.order(version, parseSemver(r.tag_name)) !== -1)
 				return false;
@@ -284,10 +282,7 @@ export default class InstallationManager {
 
 		const release = validReleases[0];
 		if (!release)
-			return console.warn("Skipping update check, no valid releases found.");
-
-		if (`v${version}` === release.tag_name)
-			return console.info("CoreLauncher is up to date!");
+			return console.warn(`CoreLauncher is up to date! (you have v${version})`);
 
 		console.info(
 			`A new version of CoreLauncher is available: ${release.tag_name} (you have v${version})`,
@@ -296,70 +291,32 @@ export default class InstallationManager {
 		const binaryAsset = release.assets.find(
 			(a) => a.name === BINARY_ASSET_NAME,
 		);
-		const hashesAsset = release.assets.find((a) => a.name === HASH_ASSSET_NAME);
 
-		if (!binaryAsset || !hashesAsset) {
+		if (!binaryAsset) {
 			console.error("Failed to find suitable update assets.");
 			return error();
 		}
 
-		console.info("Fetching remote hashes...");
-		const remoteHashes = await fetchHashes(hashesAsset.browser_download_url);
-		if (!remoteHashes) return error();
+		const binaryFile = await open(this.updateExecutable, "w+");
+		const binaryResponse = await fetch(binaryAsset.browser_download_url);
+		const reader = binaryResponse.body!.getReader();
+		let receivedLength = 0;
 
-		console.info("Generating local hashes...");
-		const localHashes = await generateHashes(this.thisExecutable); // Change this
-
-		const differences = await verifyHashes(localHashes, remoteHashes);
-		const size = differences.reduce(
-			(s, range) => s + range.end - range.start,
-			0,
-		);
-
-		console.info(
-			`Local file size: ${prettyBytes(Bun.file(this.thisExecutable).size)}`,
-		);
-		console.info(`Remote file size: ${prettyBytes(binaryAsset.size)}`);
-		console.info(`Total download size: ${prettyBytes(size)}`);
-
-		console.info(
-			`Copying ${this.thisExecutable} to ${this.updateExecutable}...`,
-		);
-		await copyFile(this.thisExecutable, this.updateExecutable);
-
-		console.info("Downloading update...");
-		const updateFile = await open(this.updateExecutable, "r+");
-		const promises: (() => Promise<void>)[] = [];
-		let complete = 0;
-
-		for (const index in differences) {
-			const range = differences[index]!;
-			if (range.action !== "add" && range.action !== "change") continue;
-
-			promises.push(async () => {
-				const chunk = await fetchRange(binaryAsset.browser_download_url, range);
-				await write(
-					updateFile,
-					Buffer.from(chunk),
-					0,
-					chunk.length,
-					range.start,
-				);
-				complete++;
-				process.stdout.write(
-					`${complete}/${differences.length} - ${prettyBytes(
-						(range.end - range.start) * (parseInt(index) + 1),
-					)} (${prettyBytes((range.end - range.start) * (parseInt(index) + 1))} of ${prettyBytes(
-						size,
-					)})        \r`,
-				);
-			});
+		while (true) {
+			const { done, value } = await reader.read();
+			if (done) break;
+			await write(binaryFile, value);
+			receivedLength += value.length;
+			process.stdout.write(
+				`\rDownloading update... ${prettyBytes(receivedLength)} / ${prettyBytes(
+					binaryAsset.size,
+				)} (${Math.floor((receivedLength / binaryAsset.size) * 100)}%)`,
+			);
 		}
 
-		await Promise.all(promises.map((p) => p()));
+		process.stdout.write("\n");
 
-		await close(updateFile);
-		await truncate(this.updateExecutable, binaryAsset.size);
+		await close(binaryFile);
 
 		console.info("Update downloaded and applied to temporary file.");
 		console.info("Verifying update integrity...");
@@ -377,8 +334,7 @@ export default class InstallationManager {
 		}
 
 		console.info("Update verified successfully!");
-
-		console.info("Applying update...");
+		console.info(`Spawning update executable... (${this.updateExecutable})`);
 
 		spawn(this.updateExecutable, process.argv.slice(1), {
 			cwd: this.thisDirectory,
@@ -386,14 +342,22 @@ export default class InstallationManager {
 			detached: true,
 		});
 
-		await Bun.sleep(9999);
-
 		process.exit(0);
 	}
 
+	/**
+	 * Checks if updates need to be applied.
+	 */
 	async checkApply() {
 		if (!this.isUpdateExecutable) return;
 
+		return this.apply();
+	}
+
+	/**
+	 * Applies updates.
+	 */
+	async apply() {
 		console.info("Applying update...");
 
 		await copyFile(this.updateExecutable, this.applicationExecutable);
