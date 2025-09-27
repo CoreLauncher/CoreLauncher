@@ -86,6 +86,7 @@ async function fetchHashes(url: string) {
 	try {
 		const response = await fetch(url);
 		const data = await response.arrayBuffer();
+		console.log(Buffer.from(data).toString("utf-8"));
 		const hashes = decodeHashes(new Uint8Array(data));
 		return hashes;
 	} catch (error) {
@@ -138,8 +139,12 @@ export default class InstallationManager {
 	constructor() {
 		this.isExecutable = Bun.main.endsWith("BUN/root/corelauncher");
 
-		this.thisExecutable =
-			process.argv0 === "bun" ? "./corelauncher.exe" : process.argv0;
+		const isBun =
+			process.argv0.endsWith("\\bun.exe") ||
+			process.argv0.endsWith("/bun") ||
+			process.argv0 === "bun";
+
+		this.thisExecutable = isBun ? "./corelauncher.exe" : process.argv0;
 		this.thisDirectory = join(this.thisExecutable, "..");
 
 		this.updateExecutable = join(
@@ -317,17 +322,41 @@ export default class InstallationManager {
 		console.info(`Remote file size: ${prettyBytes(binaryAsset.size)}`);
 		console.info(`Total download size: ${prettyBytes(size)}`);
 
+		console.info(
+			`Copying ${this.thisExecutable} to ${this.updateExecutable}...`,
+		);
 		await copyFile(this.thisExecutable, this.updateExecutable);
 
+		console.info("Downloading update...");
 		const updateFile = await open(this.updateExecutable, "r+");
+		const promises: (() => Promise<void>)[] = [];
+		let complete = 0;
 
 		for (const index in differences) {
 			const range = differences[index]!;
 			if (range.action !== "add" && range.action !== "change") continue;
 
-			const chunk = await fetchRange(binaryAsset.browser_download_url, range);
-			await write(updateFile, Buffer.from(chunk), 0, chunk.length, range.start);
+			promises.push(async () => {
+				const chunk = await fetchRange(binaryAsset.browser_download_url, range);
+				await write(
+					updateFile,
+					Buffer.from(chunk),
+					0,
+					chunk.length,
+					range.start,
+				);
+				complete++;
+				process.stdout.write(
+					`${complete}/${differences.length} - ${prettyBytes(
+						(range.end - range.start) * (parseInt(index) + 1),
+					)} (${prettyBytes((range.end - range.start) * (parseInt(index) + 1))} of ${prettyBytes(
+						size,
+					)})        \r`,
+				);
+			});
 		}
+
+		await Promise.all(promises.map((p) => p()));
 
 		await close(updateFile);
 		await truncate(this.updateExecutable, binaryAsset.size);
