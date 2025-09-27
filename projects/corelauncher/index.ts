@@ -11,6 +11,7 @@ await installation.checkInstallation();
 
 // Check if another instance is running and forward arguments to it
 await SingleInstanceLock.check();
+await installation.checkApply();
 await installation.checkUpdates();
 
 hideConsole();

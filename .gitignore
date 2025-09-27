@@ -7,5 +7,13 @@
 # Compiled output
 /.dist
 /.bundle
+
+# Binaries
 /corelauncher
 /corelauncher.exe
+
+/corelauncher.old
+/corelauncher.old.exe
+
+/corelauncher.update
+/corelauncher.update.exe

@@ -1,12 +1,17 @@
 import { createReadStream } from "node:fs";
+import { range } from "@corelauncher/util";
 import { pEvent } from "p-event";
 
-type Range = {
+export type Range = {
 	start: number;
 	end: number;
 };
 
-type RangedHash = {
+export type RangedUpdate = {
+	action: "add" | "change" | "remove";
+} & Range;
+
+export type RangedHash = {
 	hash: bigint;
 } & Range;
 
@@ -60,21 +65,34 @@ export async function decodeHashes(input: Uint8Array<ArrayBuffer>) {
 	return hashes;
 }
 
-export function verifyHashes(a: RangedHash[], b: RangedHash[]): Range[] {
-	const mismatches: Range[] = [];
+export function verifyHashes(
+	current: RangedHash[],
+	update: RangedHash[],
+): RangedUpdate[] {
+	const updates: RangedUpdate[] = [];
 
-	const mapA = new Map<string, bigint>();
-	for (const { start, end, hash } of a) {
-		mapA.set(`${start}:${end}`, hash);
-	}
+	for (const index of range(0, Math.max(current.length, update.length))) {
+		const currentHash = current[index];
+		const updateHash = update[index];
 
-	for (const { start, end, hash } of b) {
-		const key = `${start}:${end}`;
-		const hashA = mapA.get(key);
-		if (hashA === undefined || hashA !== hash) {
-			mismatches.push({ start, end });
+		if (!currentHash && updateHash) {
+			updates.push({ action: "add", ...updateHash });
+			continue;
 		}
+
+		if (!updateHash && currentHash) {
+			updates.push({ action: "remove", ...currentHash });
+			continue;
+		}
+
+		if (!currentHash || !updateHash) continue;
+
+		if (currentHash.hash !== updateHash.hash) {
+			updates.push({ action: "change", ...updateHash });
+		}
+
+		// No changes
 	}
 
-	return mismatches;
+	return updates;
 }

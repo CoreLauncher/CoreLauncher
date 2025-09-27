@@ -1,11 +1,38 @@
 import { spawn } from "node:child_process";
 import { join } from "node:path";
+import {
+	decodeHashes,
+	generateHashes,
+	type Range,
+	verifyHashes,
+} from "@corelauncher/hash-block";
 import { isProduction } from "@corelauncher/is-production";
-import { ensureDir } from "fs-extra";
+import { Octokit } from "@octokit/rest";
+import type { SupportedCryptoAlgorithms } from "bun";
+import {
+	close,
+	copyFile,
+	createReadStream,
+	ensureDir,
+	open,
+	truncate,
+	write,
+} from "fs-extra";
 import * as registry from "native-reg";
+import prettyBytes from "pretty-bytes";
 import * as ws from "windows-shortcuts";
+import packageJSON from "../../../package.json";
 import { applicationDirectory } from "../util/directories";
 import { getVersion } from "../util/version" with { type: "macro" };
+
+function error() {
+	console.error("Something in the updating process failed.");
+	console.error(
+		"If you see this message multiple times, please report it on GitHub (https://github.com/CoreLauncher/CoreLauncher) and manually reinstall.",
+	);
+	alert("Press Enter to continue...");
+	return;
+}
 
 function createShortcut(
 	path: string,
@@ -18,24 +45,113 @@ function createShortcut(
 	});
 }
 
+function getOS() {
+	const platform = process.platform;
+	if (platform === "win32") return "windows";
+	if (platform === "darwin") return "macos";
+	if (platform === "linux") return "linux";
+	return "unknown";
+}
+
+function getArchitecture() {
+	const arch = process.arch;
+	if (arch === "x64") return "x64";
+	if (arch === "arm64") return "arm64";
+	if (arch === "ia32") return "x86";
+	return "unknown";
+}
+
+function parseSemver(version: string) {
+	if (version.startsWith("v")) version = version.slice(1);
+	return version;
+}
+
+async function fetchReleases() {
+	try {
+		const octokit = new Octokit();
+		const { data } = await octokit.rest.repos.listReleases({
+			owner: "CoreLauncher",
+			repo: "CoreLauncher",
+			per_page: 5,
+		});
+
+		return data;
+	} catch (error) {
+		console.error("Failed to fetch releases:", error);
+		return false;
+	}
+}
+
+async function fetchHashes(url: string) {
+	try {
+		const response = await fetch(url);
+		const data = await response.arrayBuffer();
+		const hashes = decodeHashes(new Uint8Array(data));
+		return hashes;
+	} catch (error) {
+		console.error("Failed to fetch/parse hashes:", error);
+	}
+}
+
+async function fetchRange(url: string, range: Range) {
+	const response = await fetch(url, {
+		headers: { Range: `bytes=${range.start}-${range.end}` },
+	});
+	if (!response.ok)
+		throw new Error(
+			`Failed to fetch range: ${response.statusText} ${await response.text()}`,
+		);
+	return new Uint8Array(await response.arrayBuffer());
+}
+
+async function hashFile(
+	file: string,
+	algorithm: SupportedCryptoAlgorithms = "sha256",
+) {
+	const hasher = new Bun.CryptoHasher(algorithm);
+	const reader = createReadStream(file, { highWaterMark: 1024 * 8 });
+
+	for await (const chunk of reader) {
+		hasher.update(chunk);
+	}
+
+	return hasher.digest("hex");
+}
+
+const BINARY_ASSET_NAME = `corelauncher-app-${getOS()}-${getArchitecture()}${
+	process.platform === "win32" ? ".exe" : ""
+}`;
+
+const HASH_ASSSET_NAME = `corelauncher-app-${getOS()}-${getArchitecture()}.hashes`;
+
 export default class InstallationManager {
 	isExecutable: boolean;
 
 	thisExecutable: string;
 	thisDirectory: string;
 
+	updateExecutable: string;
+	isUpdateExecutable: boolean;
+
 	applicationDirectory: string;
 	applicationExecutable: string;
 	constructor() {
-		this.isExecutable = Bun.main.endsWith("CoreLauncher.exe");
+		this.isExecutable = Bun.main.endsWith("BUN/root/corelauncher");
 
-		this.thisExecutable = process.argv0;
+		this.thisExecutable =
+			process.argv0 === "bun" ? "./corelauncher.exe" : process.argv0;
 		this.thisDirectory = join(this.thisExecutable, "..");
+
+		this.updateExecutable = join(
+			this.thisDirectory,
+			`corelauncher.update${process.platform === "win32" ? ".exe" : ""}`,
+		);
+		this.isUpdateExecutable = this.thisExecutable === this.updateExecutable;
 
 		this.applicationDirectory = applicationDirectory();
 		this.applicationExecutable = join(
 			this.applicationDirectory,
-			"CoreLauncher.exe",
+			"corelauncher.exe",
 		);
 	}
 
@@ -132,7 +248,7 @@ export default class InstallationManager {
 
 		console.info("Installation complete!");
 
-		spawn(this.applicationExecutable, {
+		spawn(this.applicationExecutable, process.argv.slice(1), {
 			cwd: this.applicationDirectory,
 			detached: true,
 		});
@@ -141,7 +257,124 @@ export default class InstallationManager {
 	}
 
 	async checkUpdates() {
-		if (!this.isExecutable)
-			return console.warn("Skipping update check, not running as executable.");
+		// if (!isProduction)
+		// return console.warn("Skipping update check, not in production mode.");
+
+		// if (!this.isExecutable)
+		// return console.warn("Skipping update check, not running as executable.");
+
+		console.info("Checking for updates...");
+		const version = packageJSON.version;
+		const releases = await fetchReleases();
+		if (!releases) return error();
+		const validReleases = releases.filter((r) => {
+			const hasBinary = r.assets.some((a) => a.name === BINARY_ASSET_NAME);
+			const hasHashes = r.assets.some((a) => a.name === HASH_ASSSET_NAME);
+			if (!hasBinary || !hasHashes) return false;
+			if (r.draft || r.prerelease) return false;
+			if (Bun.semver.order(version, parseSemver(r.tag_name)) !== -1)
+				return false;
+			return true;
+		});
+
+		const release = validReleases[0];
+		if (!release)
+			return console.warn("Skipping update check, no valid releases found.");
+
+		if (`v${version}` === release.tag_name)
+			return console.info("CoreLauncher is up to date!");
+
+		console.info(
+			`A new version of CoreLauncher is available: ${release.tag_name} (you have v${version})`,
+		);
+
+		const binaryAsset = release.assets.find(
+			(a) => a.name === BINARY_ASSET_NAME,
+		);
+		const hashesAsset = release.assets.find((a) => a.name === HASH_ASSSET_NAME);
+
+		if (!binaryAsset || !hashesAsset) {
+			console.error("Failed to find suitable update assets.");
+			return error();
+		}
+
+		console.info("Fetching remote hashes...");
+		const remoteHashes = await fetchHashes(hashesAsset.browser_download_url);
+		if (!remoteHashes) return error();
+
+		console.info("Generating local hashes...");
+		const localHashes = await generateHashes(this.thisExecutable); // Change this
+
+		const differences = await verifyHashes(localHashes, remoteHashes);
+		const size = differences.reduce(
+			(s, range) => s + range.end - range.start,
+			0,
+		);
+
+		console.info(
+			`Local file size: ${prettyBytes(Bun.file(this.thisExecutable).size)}`,
+		);
+		console.info(`Remote file size: ${prettyBytes(binaryAsset.size)}`);
+		console.info(`Total download size: ${prettyBytes(size)}`);
+
+		await copyFile(this.thisExecutable, this.updateExecutable);
+
+		const updateFile = await open(this.updateExecutable, "r+");
+
+		for (const index in differences) {
+			const range = differences[index]!;
+			if (range.action !== "add" && range.action !== "change") continue;
+
+			const chunk = await fetchRange(binaryAsset.browser_download_url, range);
+			await write(updateFile, Buffer.from(chunk), 0, chunk.length, range.start);
+		}
+
+		await close(updateFile);
+		await truncate(this.updateExecutable, binaryAsset.size);
+
+		console.info("Update downloaded and applied to temporary file.");
+		console.info("Verifying update integrity...");
+		const updateHash = await hashFile(this.updateExecutable);
+		const expectedHash = binaryAsset.digest?.split(":")[1];
+		console.info(`Actual hash:   ${updateHash}`);
+		console.info(`Expected hash: ${expectedHash}`);
+		console.info(`Actual size:   ${Bun.file(this.updateExecutable).size}`);
+		console.info(`Expected size: ${binaryAsset.size}`);
+		console.info("Hashes match: ", updateHash === expectedHash);
+
+		if (updateHash !== expectedHash) {
+			console.error("Hash mismatch! Update failed.");
+			return error();
+		}
+
+		console.info("Update verified successfully!");
+
+		console.info("Applying update...");
+
+		spawn(this.updateExecutable, process.argv.slice(1), {
+			cwd: this.thisDirectory,
+			stdio: "inherit",
+			detached: true,
+		});
+
+		await Bun.sleep(9999);
+
+		process.exit(0);
+	}
+
+	async checkApply() {
+		if (!this.isUpdateExecutable) return;
+
+		console.info("Applying update...");
+
+		await copyFile(this.updateExecutable, this.applicationExecutable);
+
+		spawn(this.applicationExecutable, process.argv.slice(1), {
+			cwd: this.applicationDirectory,
+			stdio: "inherit",
+			detached: true,
+		});
+
+		process.exit(0);
 	}
 }
