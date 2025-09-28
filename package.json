@@ -4,7 +4,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.2.4",
 		"@types/bun": "^1.2.22",
-		"husky": "^9.1.7"
+		"husky": "^9.1.7",
+		"knip": "^5.64.1"
 	},
 	"peerDependencies": {
 		"typescript": "^5.9.2"
@@ -16,6 +17,7 @@
 		"prepare": "husky",
 		"postinstall": "bun run scripts/patch-webview.ts",
 		"lint": "bun run biome check --fix",
+		"knip": "knip-bun",
 		"dev": "bun run --watch ./projects/corelauncher/index.ts",
 		"release": "bun run scripts/release.ts",
 		"bundle": "bun build --target=bun --sourcemap=inline --root . --entry-naming=entrypoint-[hash].[ext] --chunk-naming=chunk-[hash].[ext] --asset-naming=asset-[hash].[ext] --outdir .bundle  ./projects/corelauncher/index.ts",
@@ -24,7 +26,8 @@
 	},
 	"trustedDependencies": [
 		"@biomejs/biome",
-		"native-reg"
+		"native-reg",
+		"oxc-resolver"
 	],
 	"workspaces": [
 		"packages/*",
