@@ -4,7 +4,7 @@ on:
   push:
 jobs:
   knip:
-    name: Run knip to find unused dependencies
+    name: Run knip checks 
     runs-on: windows-latest
     steps:
       - name: Checkout
