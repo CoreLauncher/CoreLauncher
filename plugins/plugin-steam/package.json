@@ -1,6 +1,13 @@
 {
 	"name": "@corelauncher/plugin-steam",
 	"dependencies": {
+		"@corelauncher/database": "*",
+		"@corelauncher/react": "*",
+		"@corelauncher/types": "*",
+		"@corelauncher/typed-emitter": "*",
+		"@corelauncher/is-production": "*",
+		"@corelauncher/file-to-dataurl": "*",
+		"@corelauncher/steam-login": "*",
 		"@corebyte/webwindow": "^1.1.4",
 		"@node-steam/vdf": "^2.2.0",
 		"bootstrap-icons": "^1.13.1",
@@ -9,9 +16,13 @@
 		"native-reg": "^1.1.1",
 		"react-bootstrap-icons": "^1.11.6",
 		"uqr": "^0.1.2",
-		"@corelauncher/database": "*"
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1",
+		"kysely": "^0.28.7"
 	},
 	"devDependencies": {
-		"@corelauncher/types": "*"
+		"@corelauncher/json-value": "*",
+		"@types/react": "^19.1.13",
+		"@types/react-dom": "^19.1.9"
 	}
 }

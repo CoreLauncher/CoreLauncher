@@ -1,15 +1,6 @@
 {
 	"name": "corelauncher",
 	"version": "1.0.0-beta.3",
-	"devDependencies": {
-		"@biomejs/biome": "2.2.4",
-		"@types/bun": "^1.2.22",
-		"husky": "^9.1.7",
-		"knip": "^5.64.1"
-	},
-	"peerDependencies": {
-		"typescript": "^5.9.2"
-	},
 	"license": "MIT",
 	"patchedDependencies": {},
 	"private": true,
@@ -23,6 +14,18 @@
 		"bundle": "bun build --target=bun --sourcemap=inline --root . --entry-naming=entrypoint-[hash].[ext] --chunk-naming=chunk-[hash].[ext] --asset-naming=asset-[hash].[ext] --outdir .bundle  ./projects/corelauncher/index.ts",
 		"compile": "bun build --target=bun --sourcemap=inline --root . --entry-naming=entrypoint-[hash].[ext] --chunk-naming=chunk-[hash].[ext] --asset-naming=asset-[hash].[ext] --outfile corelauncher --compile ./projects/corelauncher/index.ts",
 		"compile-production": "bun build --target=bun --sourcemap=inline --root . --entry-naming=entrypoint-[hash].[ext] --chunk-naming=chunk-[hash].[ext] --asset-naming=asset-[hash].[ext] --windows-hide-console --windows-icon=./icon.ico --windows-title=CoreLauncher --windows-publisher='CoreByte & CoreLauncher Contributors' --windows-version='0.0.0.0' --windows-description='CoreLauncher' --windows-copyright='CoreByte & CoreLauncher Contributors' --outfile corelauncher --define process.env.NODE_ENV=\"'production'\" --production --compile ./projects/corelauncher/index.ts"
+	},
+	"dependencies": {
+		"@corelauncher/console-addon": "*"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.2.4",
+		"@types/bun": "^1.2.22",
+		"husky": "^9.1.7",
+		"knip": "^5.64.1"
+	},
+	"peerDependencies": {
+		"typescript": "^5.9.2"
 	},
 	"trustedDependencies": [
 		"@biomejs/biome",

@@ -6,6 +6,8 @@
 		"@corelauncher/plugin-react-frontend": "*",
 		"@corelauncher/is-production": "*",
 		"@corelauncher/typed-emitter": "*",
+		"@corelauncher/console-addon": "*",
+		"@corelauncher/console-hide": "*",
 		"@corelauncher/types": "*",
 		"@octokit/rest": "^22.0.0",
 		"fs-extra": "^11.3.2",

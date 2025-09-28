@@ -1,4 +1,27 @@
 {
 	"$schema": "./node_modules/knip/schema-jsonc.json",
-	"ignoreBinaries": ["i", "build", "CoreLauncher"]
+	"rules": {
+		"exports": "off"
+	},
+	"ignoreBinaries": ["i", "build", "CoreLauncher"],
+	"ignoreDependencies": [
+		"@types/react",
+		"@types/react-dom",
+		"@fontsource/inter",
+		"@biomejs/biome"
+	],
+	"workspaces": {
+		"packages/*": {
+			"entry": ["**/*.test.ts"]
+		},
+		"plugins/*": {
+			"entry": ["public/index.tsx", "migrations/*.ts"]
+		},
+		"packages/react": {
+			"ignoreDependencies": ["react", "react-dom"]
+		},
+		"packages/typed-emitter": {
+			"ignoreDependencies": ["events"]
+		}
+	}
 }
