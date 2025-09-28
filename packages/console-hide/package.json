@@ -1,5 +1,7 @@
 {
 	"name": "@corelauncher/console-hide",
 	"main": "./index.ts",
-	"dependencies": {}
+	"dependencies": {
+		"@corelauncher/is-production": "*"
+	}
 }

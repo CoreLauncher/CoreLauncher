@@ -1,11 +1,17 @@
 {
 	"name": "@corelauncher/corelauncher",
 	"dependencies": {
+		"@corelauncher/plugin-steam": "*",
+		"@corelauncher/plugin-epic-games": "*",
+		"@corelauncher/plugin-react-frontend": "*",
+		"@corelauncher/is-production": "*",
+		"@corelauncher/typed-emitter": "*",
+		"@corelauncher/types": "*",
+		"@octokit/rest": "^22.0.0",
 		"fs-extra": "^11.3.2",
 		"native-reg": "^1.1.1",
 		"windows-shortcuts": "^0.1.6",
 		"get-port": "^7.1.0",
-		"@octokit/rest": "^22.0.0",
 		"pretty-bytes": "^7.1.0"
 	},
 	"devDependencies": {

@@ -5,6 +5,8 @@
 		"hash-block": "./bin.ts"
 	},
 	"dependencies": {
-		"p-event": "^7.0.0"
+		"p-event": "^7.0.0",
+		"@corelauncher/util": "*",
+		"@corelauncher/console-addon": "*"
 	}
 }
