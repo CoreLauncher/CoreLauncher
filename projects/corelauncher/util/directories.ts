@@ -6,6 +6,12 @@ export function applicationDirectory() {
 	const thisBinary = process.execPath;
 	const thisDirectory = join(thisBinary, "..");
 
+	console.log(
+		thisBinary,
+		thisDirectory,
+		thisDirectory.endsWith(".corelauncher"),
+	);
+
 	if (process.env.CORELAUNCHER_APP_DIR) return process.env.CORELAUNCHER_APP_DIR;
 	if (thisDirectory.endsWith(".corelauncher")) return thisDirectory;
 	if (!isProduction) return join(process.cwd(), ".corelauncher");

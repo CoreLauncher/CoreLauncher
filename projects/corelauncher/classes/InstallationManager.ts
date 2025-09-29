@@ -55,23 +55,17 @@ function getArchitecture() {
 	return "unknown";
 }
 
-function parseSemver(version: string) {
-	if (version.startsWith("v")) version = version.slice(1);
-	return version;
-}
-
-async function fetchReleases() {
+async function fetchLatestRelease() {
 	try {
 		const octokit = new Octokit();
-		const { data } = await octokit.rest.repos.listReleases({
+		const { data } = await octokit.rest.repos.getLatestRelease({
 			owner: "CoreLauncher",
 			repo: "CoreLauncher",
-			per_page: 5,
 		});
 
 		return data;
 	} catch (error) {
-		console.error("Failed to fetch releases:", error);
+		console.error("Failed to fetch latest release:", error);
 		return false;
 	}
 }
@@ -276,28 +270,16 @@ export default class InstallationManager {
 	async update() {
 		console.info("Checking for updates...");
 		const version = packageJSON.version;
-		const releases = await fetchReleases();
-		if (!releases) return error();
-		const validReleases = releases.filter((r) => {
-			const hasBinary = r.assets.some((a) => a.name === BINARY_ASSET_NAME);
-			if (!hasBinary) return false;
-			if (r.draft || r.prerelease) return false;
-			if (Bun.semver.order(version, parseSemver(r.tag_name)) !== -1)
-				return false;
-			return true;
-		});
-
-		const release = validReleases[0];
-		if (!release)
-			return console.warn(`CoreLauncher is up to date! (you have v${version})`);
+		const latest = await fetchLatestRelease();
+		if (!latest) return error();
+		if (Bun.semver.order(latest.tag_name, version) !== 1)
+			return console.info(`CoreLauncher is up to date!`);
 
 		console.info(
-			`A new version of CoreLauncher is available: ${release.tag_name} (you have v${version})`,
+			`A new version of CoreLauncher is available: ${latest.tag_name} (you have v${version})`,
 		);
 
-		const binaryAsset = release.assets.find(
-			(a) => a.name === BINARY_ASSET_NAME,
-		);
+		const binaryAsset = latest.assets.find((a) => a.name === BINARY_ASSET_NAME);
 
 		if (!binaryAsset) {
 			console.error("Failed to find suitable update assets.");
