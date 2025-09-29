@@ -116,21 +116,22 @@ export default class InstallationManager {
 			process.argv0 === "bun";
 
 		this.thisExecutable = isBun ? "./corelauncher.exe" : process.argv0;
-		this.thisDirectory = join(this.thisExecutable, "..");
+		this.thisDirectory = resolve(join(this.thisExecutable, ".."));
 
-		this.updateExecutable = join(
-			this.thisDirectory,
-			`corelauncher.update${process.platform === "win32" ? ".exe" : ""}`,
+		this.updateExecutable = resolve(
+			join(
+				this.thisDirectory,
+				`corelauncher.update${process.platform === "win32" ? ".exe" : ""}`,
+			),
 		);
 		this.isUpdateExecutable = this.thisExecutable === this.updateExecutable;
 
-		this.applicationDirectory = applicationDirectory();
-		this.applicationExecutable = join(
-			this.applicationDirectory,
-			"corelauncher.exe",
+		this.applicationDirectory = resolve(applicationDirectory());
+		this.applicationExecutable = resolve(
+			join(this.applicationDirectory, "corelauncher.exe"),
 		);
 
-		console.info("Current Corelauncher Version:", packageJSON.version);
+		console.info("Corelauncher Version:", packageJSON.version);
 		console.info("This Executable:", resolve(this.thisExecutable));
 		console.info("This Directory:", resolve(this.thisDirectory));
 		console.info("Update Executable:", resolve(this.updateExecutable));
