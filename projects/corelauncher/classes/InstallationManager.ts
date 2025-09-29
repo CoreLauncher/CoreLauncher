@@ -5,7 +5,6 @@ import { Octokit } from "@octokit/rest";
 import type { SupportedCryptoAlgorithms } from "bun";
 import {
 	close,
-	copyFile,
 	createReadStream,
 	ensureDir,
 	ensureDirSync,
@@ -19,7 +18,6 @@ import prettyBytes from "pretty-bytes";
 import * as ws from "windows-shortcuts";
 import packageJSON from "../../../package.json";
 import { applicationDirectory } from "../util/directories";
-import { getVersion } from "../util/version" with { type: "macro" };
 
 function error() {
 	console.error("Something in the updating process failed.");
@@ -141,8 +139,8 @@ export default class InstallationManager {
 			"Application Executable:",
 			resolve(this.applicationExecutable),
 		);
-		ensureDirSync(this.applicationDirectory);
 
+		ensureDirSync(this.applicationDirectory);
 		if (existsSync(this.updateExecutable) && !this.isUpdateExecutable) {
 			console.info("Removing leftover update executable...");
 			removeSync(this.updateExecutable);
@@ -191,7 +189,7 @@ export default class InstallationManager {
 
 		registry.setValueSZ(key, "DisplayIcon", this.applicationExecutable);
 		registry.setValueSZ(key, "DisplayName", "CoreLauncher");
-		registry.setValueSZ(key, "DisplayVersion", await getVersion());
+		registry.setValueSZ(key, "DisplayVersion", packageJSON.version);
 		registry.setValueSZ(key, "Publisher", "CoreLauncher Team");
 		registry.setValueSZ(key, "HelpLink", "https://corelauncher.app");
 		registry.setValueSZ(
@@ -371,13 +369,6 @@ export default class InstallationManager {
 	async apply() {
 		console.info("Applying update...");
 
-		await copyFile(this.updateExecutable, this.applicationExecutable);
-		spawn(this.applicationExecutable, process.argv.slice(2), {
-			cwd: this.applicationDirectory,
-			detached: true,
-			shell: true,
-		});
-
-		process.exit(0);
+		await this.install();
 	}
 }
