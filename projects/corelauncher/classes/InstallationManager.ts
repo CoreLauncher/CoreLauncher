@@ -130,7 +130,6 @@ export default class InstallationManager {
 			"corelauncher.exe",
 		);
 
-		console.log(Bun.env);
 		console.info("Current Corelauncher Version:", packageJSON.version);
 		console.info("This Executable:", resolve(this.thisExecutable));
 		console.info("This Directory:", resolve(this.thisDirectory));
@@ -255,6 +254,7 @@ export default class InstallationManager {
 		spawn(this.applicationExecutable, process.argv.slice(2), {
 			cwd: this.applicationDirectory,
 			detached: true,
+			shell: true,
 		});
 
 		process.exit(0);
@@ -349,6 +349,7 @@ export default class InstallationManager {
 		spawn(this.updateExecutable, process.argv.slice(2), {
 			cwd: this.thisDirectory,
 			detached: true,
+			shell: true,
 		});
 
 		process.exit(0);
@@ -373,6 +374,7 @@ export default class InstallationManager {
 		spawn(this.applicationExecutable, process.argv.slice(2), {
 			cwd: this.applicationDirectory,
 			detached: true,
+			shell: true,
 		});
 
 		process.exit(0);
