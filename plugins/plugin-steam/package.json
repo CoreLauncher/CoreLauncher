@@ -7,7 +7,7 @@
 		"@corelauncher/typed-emitter": "*",
 		"@corelauncher/is-production": "*",
 		"@corelauncher/file-to-dataurl": "*",
-		"@corelauncher/steam-login": "*",
+		"@corelauncher/steam-client": "*",
 		"@corebyte/webwindow": "^1.1.4",
 		"@node-steam/vdf": "^2.2.0",
 		"bootstrap-icons": "^1.13.1",

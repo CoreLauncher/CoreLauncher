@@ -3,7 +3,6 @@ import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { dataToDataURL } from "@corelauncher/file-to-dataurl";
 import { isProduction } from "@corelauncher/is-production";
 import type { JSONValue } from "@corelauncher/json-value";
-import { QRLoginSession } from "@corelauncher/steam-login";
 import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { AccountProviderShape } from "@corelauncher/types";
 import SteamSVG from "bootstrap-icons/icons/steam.svg" with { type: "file" };
@@ -11,6 +10,7 @@ import { env } from "bun";
 import getPort from "get-port";
 import type { Kysely } from "kysely";
 import recolorSVG from "../../../packages/recolor-svg";
+import { QRLoginSession } from "../../../packages/steam-client";
 import indexHTML from "../public/index.html";
 import type { Database } from "../types/database";
 
