@@ -151,10 +151,10 @@ export default class InstallationManager {
 	 * Checks if CoreLauncher is installed, and installs it if not.
 	 */
 	async checkInstall() {
-		// if (!isProduction)
-		// 	return console.warn(
-		// 		"Skipping installation check, not in production mode.",
-		// 	);
+		if (!isProduction)
+			return console.warn(
+				"Skipping installation check, not in production mode.",
+			);
 
 		if (!this.isExecutable)
 			return console.warn(
