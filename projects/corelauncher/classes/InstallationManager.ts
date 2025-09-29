@@ -151,11 +151,10 @@ export default class InstallationManager {
 	 * Checks if CoreLauncher is installed, and installs it if not.
 	 */
 	async checkInstall() {
-		if (!isProduction) {
-			return console.warn(
-				"Skipping installation check, not in production mode.",
-			);
-		}
+		// if (!isProduction)
+		// 	return console.warn(
+		// 		"Skipping installation check, not in production mode.",
+		// 	);
 
 		if (!this.isExecutable)
 			return console.warn(
@@ -212,7 +211,6 @@ export default class InstallationManager {
 		const startMenuPath = join(
 			process.env.APPDATA || "",
 			"Microsoft\\Windows\\Start Menu\\Programs",
-			"CoreLauncher",
 			"CoreLauncher.lnk",
 		);
 
