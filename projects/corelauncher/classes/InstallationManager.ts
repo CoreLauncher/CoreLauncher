@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { isProduction } from "@corelauncher/is-production";
 import { Octokit } from "@octokit/rest";
 import type { SupportedCryptoAlgorithms } from "bun";
@@ -130,7 +130,17 @@ export default class InstallationManager {
 			"corelauncher.exe",
 		);
 
-		console.info("Application Directory:", this.applicationDirectory);
+		console.log(Bun.env);
+		console.info("Current Corelauncher Version:", packageJSON.version);
+		console.info("This Executable:", resolve(this.thisExecutable));
+		console.info("This Directory:", resolve(this.thisDirectory));
+		console.info("Update Executable:", resolve(this.updateExecutable));
+		console.info("Is Update Executable:", this.isUpdateExecutable);
+		console.info("Application Directory:", resolve(this.applicationDirectory));
+		console.info(
+			"Application Executable:",
+			resolve(this.applicationExecutable),
+		);
 		ensureDirSync(this.applicationDirectory);
 
 		if (existsSync(this.updateExecutable) && !this.isUpdateExecutable) {
@@ -242,7 +252,7 @@ export default class InstallationManager {
 
 		console.info("Installation complete!");
 
-		spawn(this.applicationExecutable, process.argv.slice(1), {
+		spawn(this.applicationExecutable, process.argv.slice(2), {
 			cwd: this.applicationDirectory,
 			detached: true,
 		});
@@ -336,9 +346,8 @@ export default class InstallationManager {
 		console.info("Update verified successfully!");
 		console.info(`Spawning update executable... (${this.updateExecutable})`);
 
-		spawn(this.updateExecutable, process.argv.slice(1), {
+		spawn(this.updateExecutable, process.argv.slice(2), {
 			cwd: this.thisDirectory,
-			stdio: "inherit",
 			detached: true,
 		});
 
@@ -361,10 +370,8 @@ export default class InstallationManager {
 		console.info("Applying update...");
 
 		await copyFile(this.updateExecutable, this.applicationExecutable);
-
-		spawn(this.applicationExecutable, process.argv.slice(1), {
+		spawn(this.applicationExecutable, process.argv.slice(2), {
 			cwd: this.applicationDirectory,
-			stdio: "inherit",
 			detached: true,
 		});
 
