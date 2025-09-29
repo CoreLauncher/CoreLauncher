@@ -216,7 +216,7 @@ export default class InstallationManager {
 			"CoreLauncher.lnk",
 		);
 
-		await createShortcut(startMenuPath, {
+		await createShortcut(resolve(startMenuPath), {
 			target: this.applicationExecutable,
 			desc: "CoreLauncher",
 			icon: this.applicationExecutable,
