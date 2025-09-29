@@ -255,11 +255,11 @@ export default class InstallationManager {
 	 * Checks if this binary can be updated.
 	 */
 	async checkUpdate() {
-		// if (!isProduction)
-		// return console.warn("Skipping update check, not in production mode.");
+		if (!isProduction)
+			return console.warn("Skipping update check, not in production mode.");
 
-		// if (!this.isExecutable)
-		// return console.warn("Skipping update check, not running as executable.");
+		if (!this.isExecutable)
+			return console.warn("Skipping update check, not running as executable.");
 
 		return this.update();
 	}
