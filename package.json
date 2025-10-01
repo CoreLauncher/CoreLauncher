@@ -1,6 +1,6 @@
 {
 	"name": "corelauncher",
-	"version": "1.0.0-beta.11",
+	"version": "1.0.0-beta.12",
 	"license": "MIT",
 	"patchedDependencies": {
 		"native-reg@1.1.1": "patches/native-reg@1.1.1.patch"
