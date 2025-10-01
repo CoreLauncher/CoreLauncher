@@ -2,9 +2,7 @@
 	"name": "corelauncher",
 	"version": "1.0.0-beta.12",
 	"license": "MIT",
-	"patchedDependencies": {
-		"native-reg@1.1.1": "patches/native-reg@1.1.1.patch"
-	},
+
 	"private": true,
 	"scripts": {
 		"prepare": "husky",
@@ -28,6 +26,9 @@
 	},
 	"peerDependencies": {
 		"typescript": "^5.9.2"
+	},
+	"patchedDependencies": {
+		"native-reg@1.1.1": "patches/native-reg@1.1.1.patch"
 	},
 	"trustedDependencies": [
 		"@biomejs/biome",
