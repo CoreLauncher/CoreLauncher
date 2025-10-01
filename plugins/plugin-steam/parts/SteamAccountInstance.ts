@@ -1,6 +1,6 @@
+import { SteamClient } from "@corelauncher/steam-client";
 import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { AccountInstanceShape } from "@corelauncher/types";
-import SteamClient from "../../../packages/steam-client/classes/SteamClient";
 
 interface SteamAccountInstanceEvents {
 	/**

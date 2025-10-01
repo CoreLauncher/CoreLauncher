@@ -1,7 +1,7 @@
 import SteamAPI from "./SteamAPI";
 import WebsocketTransport from "./transport/WebsocketTransport";
 
-export default class SteamClient {
+export class SteamClient {
 	api: SteamAPI;
 	transport: WebsocketTransport;
 	constructor() {
