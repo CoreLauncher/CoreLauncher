@@ -1,5 +1,6 @@
 import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { AccountInstanceShape } from "@corelauncher/types";
+import SteamClient from "../../../packages/steam-client/classes/SteamClient";
 
 interface SteamAccountInstanceEvents {
 	/**
@@ -13,9 +14,11 @@ export default class SteamAccountInstance
 	extends TypedEmitter<SteamAccountInstanceEvents>
 	implements AccountInstanceShape
 {
+	providerId = "steam";
+
 	id: string;
 	name: string;
-	providerId = "steam";
+	client: SteamClient;
 	constructor(data: {
 		id: number;
 		name: string;
@@ -26,5 +29,7 @@ export default class SteamAccountInstance
 
 		this.id = `steam:${data.id}`;
 		this.name = data.name;
+
+		this.client = new SteamClient();
 	}
 }

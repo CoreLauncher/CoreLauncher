@@ -3,5 +3,6 @@
 	"main": "./index.ts",
 	"dependencies": {
 		"@corelauncher/typed-emitter": "*"
-	}
+	},
+	"devDependencies": {}
 }
