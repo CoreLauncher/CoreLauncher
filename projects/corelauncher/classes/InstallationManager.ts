@@ -100,7 +100,7 @@ export default class InstallationManager {
 	applicationDirectory: string;
 	applicationExecutable: string;
 	constructor() {
-		this.isExecutable = Bun.main.endsWith("BUN/root/corelauncher");
+		this.isExecutable = !!Bun.main.search("~BUN/root/");
 
 		const isBun =
 			process.argv0.endsWith("\\bun.exe") ||
@@ -124,6 +124,9 @@ export default class InstallationManager {
 		);
 
 		console.info("Corelauncher Version:", packageJSON.version);
+		console.info("Operating System:", getOS(), getArchitecture());
+		console.info("Arguments:", Bun.argv, process.argv);
+		console.info("Is Executable:", this.isExecutable);
 		console.info("This Executable:", resolve(this.thisExecutable));
 		console.info("This Directory:", resolve(this.thisDirectory));
 		console.info("Update Executable:", resolve(this.updateExecutable));
