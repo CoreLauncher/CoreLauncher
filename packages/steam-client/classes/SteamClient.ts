@@ -1,10 +1,14 @@
 import SteamAPI from "./SteamAPI";
 import WebsocketTransport from "./transport/WebsocketTransport";
 
+type SteamClientOptions = {
+	refreshToken: string;
+};
+
 export class SteamClient {
 	api: SteamAPI;
 	transport: WebsocketTransport;
-	constructor() {
+	constructor(options: SteamClientOptions) {
 		this.api = new SteamAPI();
 		this.transport = new WebsocketTransport();
 
