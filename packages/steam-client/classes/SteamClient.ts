@@ -1,3 +1,4 @@
+import { EMsg } from "../protobuf/compiled";
 import SteamAPI from "./SteamAPI";
 import WebsocketTransport from "./transport/WebsocketTransport";
 
@@ -11,6 +12,12 @@ export class SteamClient {
 	constructor(options: SteamClientOptions) {
 		this.api = new SteamAPI();
 		this.transport = new WebsocketTransport();
+
+		this.transport.on("connected", () => {
+			this.transport.send(EMsg.k_EMsgClientHello, {
+				protocolVersion: 65576,
+			});
+		});
 
 		this.api
 			.fetch("GET", "ISteamDirectory", "GetCMListForConnect", "1", {

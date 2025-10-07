@@ -15,17 +15,16 @@
 		"compile-production": "bun build --target=bun --sourcemap=inline --root . --entry-naming=entrypoint-[hash].[ext] --chunk-naming=chunk-[hash].[ext] --asset-naming=asset-[hash].[ext] --windows-hide-console --windows-icon=./icon.ico --windows-title=CoreLauncher --windows-publisher='CoreByte & CoreLauncher Contributors' --windows-version='0.0.0.0' --windows-description='CoreLauncher' --windows-copyright='CoreByte & CoreLauncher Contributors' --outfile corelauncher --define process.env.NODE_ENV=\"'production'\" --production --compile ./projects/corelauncher/index.ts"
 	},
 	"dependencies": {
-		"@corelauncher/console-addon": "*"
+		"@corelauncher/console-addon": "*",
+		"protobufjs": "^7.5.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.4",
 		"@octokit/rest": "^22.0.0",
-		"@protobuf-ts/plugin": "^2.11.1",
 		"@types/bun": "^1.2.22",
 		"husky": "^9.1.7",
 		"knip": "^5.64.1",
-		"protobufjs-cli": "^1.1.3",
-		"protoc": "^32.1.0"
+		"protobufjs-cli": "^1.1.3"
 	},
 	"peerDependencies": {
 		"typescript": "^5.9.2"
