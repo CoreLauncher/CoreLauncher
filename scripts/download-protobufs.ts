@@ -47,7 +47,7 @@ const files = await readdir(DOWNLOAD_PATH).then((files) =>
 console.log("Running PBJS...");
 pbjs([
 	"-t",
-	"static",
+	"static-module",
 	"-w",
 	"es6",
 	"-o",
