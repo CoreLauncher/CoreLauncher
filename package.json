@@ -19,15 +19,15 @@
 		"protobufjs": "^7.5.4"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.2.4",
+		"@biomejs/biome": "2.2.5",
 		"@octokit/rest": "^22.0.0",
-		"@types/bun": "^1.2.22",
+		"@types/bun": "^1.2.23",
 		"husky": "^9.1.7",
-		"knip": "^5.64.1",
+		"knip": "^5.64.2",
 		"protobufjs-cli": "^1.1.3"
 	},
 	"peerDependencies": {
-		"typescript": "^5.9.2"
+		"typescript": "^5.9.3"
 	},
 	"patchedDependencies": {
 		"native-reg@1.1.1": "patches/native-reg@1.1.1.patch"

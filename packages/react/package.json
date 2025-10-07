@@ -2,11 +2,11 @@
 	"name": "@corelauncher/react",
 	"main": "./index.ts",
 	"dependencies": {
-		"react": "^19.1.1",
-		"react-dom": "^19.1.1"
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0"
 	},
 	"devDependencies": {
-		"@types/react": "^19.1.13",
-		"@types/react-dom": "^19.1.9"
+		"@types/react": "^19.2.2",
+		"@types/react-dom": "^19.2.1"
 	}
 }
