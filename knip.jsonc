@@ -8,7 +8,8 @@
 		"@types/react",
 		"@types/react-dom",
 		"@fontsource/inter",
-		"@biomejs/biome"
+		"@biomejs/biome",
+		"long"
 	],
 	"workspaces": {
 		"packages/*": {
