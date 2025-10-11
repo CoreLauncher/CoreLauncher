@@ -1,2 +1,5 @@
+[install]
+linker = "hoisted"
+
 [console]
 depth = 999
