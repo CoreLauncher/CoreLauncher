@@ -24,9 +24,9 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 		const message = this.encodeProto(proto, properties);
 		const header = this.encodeProto(PROTOBUFFERS.CMsgProtoBufHeader, {
 			clientSessionid: 0,
-			steamid: "76561199013332465",
-			jobidSource: "18446744073709551615",
-			jobidTarget: "18446744073709551615",
+			steamid: "76561199013332465" as unknown as number,
+			jobidSource: "18446744073709551615" as unknown as number,
+			jobidTarget: "18446744073709551615" as unknown as number,
 		});
 
 		const buffer = new ByteBuffer(
@@ -40,9 +40,9 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 		return Buffer.concat([buffer.flip().toBuffer(), message]);
 	}
 
-	encodeProto(
-		proto: (typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS],
-		data: { [key: string]: any },
+	encodeProto<Proto extends (typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS]>(
+		proto: Proto,
+		data: Partial<ClassProperties<InstanceType<Proto>>>,
 	) {
 		return proto.encode(data).finish();
 	}

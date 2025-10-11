@@ -11,8 +11,8 @@
 			"**",
 			"!**/node_modules",
 			"!**/.bundle",
-			"!./packages/steam-client/protobuf/compiled.js",
-			"!./packages/steam-client/protobuf/compiled.d.js"
+			"!**/packages/steam-client/protobuf/compiled.js",
+			"!**/packages/steam-client/protobuf/compiled.d.ts"
 		]
 	},
 	"formatter": {

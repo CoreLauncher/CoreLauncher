@@ -4,9 +4,6 @@ import Transport from "./Transport";
 
 export default class WebsocketTransport extends Transport {
 	connection: WebSocket | null = null;
-	constructor() {
-		super();
-	}
 
 	connect(endpoint: string) {
 		console.log("Connecting to", endpoint);
