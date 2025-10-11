@@ -1,6 +1,7 @@
 import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { ClassProperties } from "@corelauncher/types";
-import { MESSAGES } from "./Messages";
+import ByteBuffer from "bytebuffer";
+import { PROTOBUFFERS } from "./protobuffers";
 
 interface TransportEvents {
 	connected: () => void;
@@ -10,15 +11,39 @@ interface TransportEvents {
  * Base transport class
  */
 export default class Transport extends TypedEmitter<TransportEvents> {
-	encodeMessage<Type extends keyof typeof MESSAGES>(
+	encodeMessage<Type extends keyof typeof PROTOBUFFERS>(
 		type: Type,
-		properties: ClassProperties<InstanceType<(typeof MESSAGES)[Type]>>,
+		properties: Partial<
+			ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>
+		>,
 	) {
-		if (!(type in MESSAGES))
-			throw new Error(`Message type ${type} not found in MESSAGES`);
-		const MessageClass = MESSAGES[type];
-		const message = MessageClass.create(properties);
-		const encoded = MessageClass.encode(message).finish();
-		return encoded;
+		if (!(type in PROTOBUFFERS))
+			throw new Error(`Message type ${type} not found in PROTOBUFFERS`);
+
+		const proto = PROTOBUFFERS[type];
+		const message = this.encodeProto(proto, properties);
+		const header = this.encodeProto(PROTOBUFFERS.CMsgProtoBufHeader, {
+			clientSessionid: 0,
+			steamid: "76561199013332465",
+			jobidSource: "18446744073709551615",
+			jobidTarget: "18446744073709551615",
+		});
+
+		const buffer = new ByteBuffer(
+			4 + 4 + header.length,
+			ByteBuffer.LITTLE_ENDIAN,
+		);
+		buffer.writeUint32((type as number) | 0x80000000);
+		buffer.writeUint32(header.length);
+		buffer.append(header);
+
+		return Buffer.concat([buffer.flip().toBuffer(), message]);
+	}
+
+	encodeProto(
+		proto: (typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS],
+		data: { [key: string]: any },
+	) {
+		return proto.encode(data).finish();
 	}
 }

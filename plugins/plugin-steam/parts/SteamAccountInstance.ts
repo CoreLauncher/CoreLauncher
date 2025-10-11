@@ -30,6 +30,8 @@ export default class SteamAccountInstance
 		this.id = `steam:${data.id}`;
 		this.name = data.name;
 
-		this.client = new SteamClient();
+		this.client = new SteamClient({
+			refreshToken: data.refreshToken,
+		});
 	}
 }

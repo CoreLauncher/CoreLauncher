@@ -1,5 +1,5 @@
 import type { ClassProperties } from "@corelauncher/types";
-import type { MESSAGES } from "./Messages";
+import type { PROTOBUFFERS } from "./protobuffers";
 import Transport from "./Transport";
 
 export default class WebsocketTransport extends Transport {
@@ -33,14 +33,15 @@ export default class WebsocketTransport extends Transport {
 		});
 	}
 
-	send<Type extends keyof typeof MESSAGES>(
+	send<Type extends keyof typeof PROTOBUFFERS>(
 		type: Type,
-		properties: ClassProperties<InstanceType<(typeof MESSAGES)[Type]>>,
+		properties: Partial<
+			ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>
+		>,
 	) {
 		if (!this.connection || this.connection.readyState !== WebSocket.OPEN)
 			throw new Error("WebSocket is not connected");
 		const encoded = this.encodeMessage(type, properties);
 		this.connection.send(encoded);
-		console.log(encoded);
 	}
 }

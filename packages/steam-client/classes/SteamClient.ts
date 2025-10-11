@@ -13,9 +13,21 @@ export class SteamClient {
 		this.api = new SteamAPI();
 		this.transport = new WebsocketTransport();
 
+		console.log("Connecting to Steam...");
+
 		this.transport.on("connected", () => {
-			this.transport.send(EMsg.k_EMsgClientHello, {
-				protocolVersion: 65576,
+			this.transport.send(EMsg.k_EMsgClientLogon, {
+				shouldRememberPassword: true,
+				obfuscatedPrivateIp: { v4: 0 },
+				protocolVersion: 65580,
+				supportsRateLimitResponse: true,
+				machineName: "",
+				clientLanguage: "english",
+				clientOsType: 16,
+				chatMode: 2,
+				accessToken: options.refreshToken,
+				cellId: 15,
+				// machineId: "",
 			});
 		});
 
