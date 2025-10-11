@@ -2,7 +2,11 @@
 	"name": "@corelauncher/steam-client",
 	"main": "./index.ts",
 	"dependencies": {
-		"@corelauncher/typed-emitter": "*"
+		"@corelauncher/typed-emitter": "*",
+		"protobufjs": "^7.5.4",
+		"bytebuffer": "^5.0.1"
 	},
-	"devDependencies": {}
+	"devDependencies": {
+		"@types/bytebuffer": "^5.0.49"
+	}
 }
