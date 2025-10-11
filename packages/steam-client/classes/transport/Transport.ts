@@ -11,7 +11,7 @@ interface TransportEvents {
  * Base transport class
  */
 export default class Transport extends TypedEmitter<TransportEvents> {
-	encodeMessage<Type extends keyof typeof PROTOBUFFERS>(
+	encodeMessage<Type extends keyof typeof PROTOBUFFERS & number>(
 		type: Type,
 		properties: Partial<
 			ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>
@@ -33,7 +33,7 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 			4 + 4 + header.length,
 			ByteBuffer.LITTLE_ENDIAN,
 		);
-		buffer.writeUint32((type as number) | 0x80000000);
+		buffer.writeUint32(type | 0x80000000);
 		buffer.writeUint32(header.length);
 		buffer.append(header);
 
