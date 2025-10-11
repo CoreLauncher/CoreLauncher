@@ -33,7 +33,7 @@ export default class WebsocketTransport extends Transport {
 		});
 	}
 
-	send<Type extends keyof typeof PROTOBUFFERS>(
+	send<Type extends keyof typeof PROTOBUFFERS & number>(
 		type: Type,
 		properties: Partial<
 			ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>
