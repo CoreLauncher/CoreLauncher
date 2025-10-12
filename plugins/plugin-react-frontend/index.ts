@@ -7,7 +7,7 @@ import {
 	type PluginPortal,
 	type PluginShape,
 } from "@corelauncher/types";
-import type { BunRequest } from "bun";
+import type { BunRequest, ServerWebSocket } from "bun";
 import getPort from "get-port";
 import temporaryDirectory from "temp-dir";
 import indexHTML from "./public/index.html";
@@ -28,7 +28,7 @@ export const description =
 	"A pretty frontend for CoreLauncher using React and a browserview.";
 
 export class Plugin extends PluginClass implements PluginShape {
-	private server: Bun.Server;
+	private server: Bun.Server<never>;
 	private window: Window;
 	private publishedData: Record<string, JSONValue> = {};
 	// tray: Tray;
@@ -37,13 +37,13 @@ export class Plugin extends PluginClass implements PluginShape {
 
 		const serveOptions = {
 			port,
-			host: "localhost",
+			hostname: "localhost",
 			development: {
 				hmr: true,
 				console: true,
 			},
 			websocket: {
-				open: (ws) => {
+				open: (ws: ServerWebSocket<never>) => {
 					ws.subscribe("client");
 
 					// Send all previously published data to the newly connected client
@@ -60,6 +60,7 @@ export class Plugin extends PluginClass implements PluginShape {
 						}
 					}, 10);
 				},
+				message: () => {},
 			},
 			routes: {
 				"/": indexHTML,

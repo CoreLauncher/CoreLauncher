@@ -42,7 +42,7 @@ export class SteamAccountProvider
 
 	private database: Kysely<Database>;
 	private qrLoginSession: QRLoginSession | null = null;
-	private server: Bun.Server;
+	private server: Bun.Server<never>;
 	private window: Window;
 	constructor(database: Kysely<Database>) {
 		super();
@@ -125,6 +125,7 @@ export class SteamAccountProvider
 						state: this.qrLoginSession.state,
 					});
 				},
+				message: () => {},
 				close: () => {
 					const connectionCount = this.server.subscriberCount("client");
 					if (connectionCount !== 0) return;
