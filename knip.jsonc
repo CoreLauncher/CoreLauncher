@@ -13,7 +13,7 @@
 	],
 	"workspaces": {
 		"packages/*": {
-			"entry": ["**/*.test.ts"]
+			"entry": ["**/*.d.ts", "**/*.test.ts"]
 		},
 		"plugins/*": {
 			"entry": ["public/index.tsx", "migrations/*.ts"]
