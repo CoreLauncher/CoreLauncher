@@ -16,6 +16,12 @@ interface TransportEvents {
  * Base transport class
  */
 export default class Transport extends TypedEmitter<TransportEvents> {
+	/**
+	 * Encodes a message to be sent over the transport
+	 * @param type message type (EMsg)
+	 * @param properties message properties
+	 * @returns encoded message
+	 */
 	encodeMessage<Type extends keyof typeof PROTOBUFFERS & number>(
 		type: Type,
 		properties: Partial<
@@ -45,6 +51,12 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 		return Buffer.concat([buffer.flip().toBuffer(), message]);
 	}
 
+	/**
+	 * Encodes a protobuf message
+	 * @param proto protobuf class
+	 * @param data message data
+	 * @returns encoded message
+	 */
 	encodeProto<Proto extends (typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS]>(
 		proto: Proto,
 		data: Partial<ClassProperties<InstanceType<Proto>>>,
@@ -52,6 +64,11 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 		return proto.encode(data).finish();
 	}
 
+	/**
+	 * Decodes a message received over the transport
+	 * @param message message buffer
+	 * @returns decoded message or null if not a protobuf message
+	 */
 	decodeMessage(message: Buffer) {
 		const rawType = message.readUInt32LE(0);
 		const type = rawType & ~MESSAGE_TYPE_MASK;
@@ -79,6 +96,12 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 		return { type, header, body };
 	}
 
+	/**
+	 * Decodes a protobuf message
+	 * @param proto protobuf class
+	 * @param data message data
+	 * @returns decoded message
+	 */
 	decodeProto<Proto extends (typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS]>(
 		proto: Proto,
 		data: Buffer,
@@ -86,6 +109,10 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 		return proto.decode(data).toJSON();
 	}
 
+	/**
+	 * Handles an incoming message buffer
+	 * @param message message buffer
+	 */
 	handleMessage(message: Buffer) {
 		const decoded = this.decodeMessage(message);
 		if (!decoded) return;

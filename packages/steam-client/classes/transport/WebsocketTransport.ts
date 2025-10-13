@@ -5,6 +5,10 @@ import Transport from "./Transport";
 export default class WebsocketTransport extends Transport {
 	connection: WebSocket | null = null;
 
+	/**
+	 * Connect to the given endpoint
+	 * @param endpoint hostname and port of the endpoint
+	 */
 	connect(endpoint: string) {
 		console.log("Connecting to", endpoint);
 
@@ -30,6 +34,11 @@ export default class WebsocketTransport extends Transport {
 		});
 	}
 
+	/**
+	 * Sends a message over the transport
+	 * @param type message type (EMsg)
+	 * @param properties message properties
+	 */
 	send<Type extends keyof typeof PROTOBUFFERS & number>(
 		type: Type,
 		properties: Partial<
