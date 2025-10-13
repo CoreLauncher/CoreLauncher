@@ -3,6 +3,7 @@ import type { ClassProperties } from "@corelauncher/types";
 import { gunzipSync } from "bun";
 import ByteBuffer from "bytebuffer";
 import { EMsg } from "../../protobuf/compiled";
+import getMessageName from "../../util/getMessageName";
 import { PROTOBUFFERS } from "./protobuffers";
 
 const MESSAGE_TYPE_MASK = 0x80000000;
@@ -55,11 +56,9 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 		const rawType = message.readUInt32LE(0);
 		const type = rawType & ~MESSAGE_TYPE_MASK;
 		const isProto = !!(rawType & MESSAGE_TYPE_MASK);
-
-		console.log("Message type:", type);
-		console.log("Is Proto:", isProto);
-
 		if (!isProto) return null;
+
+		console.log("Decoding message type:", getMessageName(type), type);
 
 		const headerLength = message.readUInt32LE(4);
 		const headerData = message.subarray(8, 8 + headerLength);
@@ -72,17 +71,10 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 		if (bodyData.length === 0) return { type, header, body: {} };
 		if (!PROTOBUFFERS[type as keyof typeof PROTOBUFFERS])
 			throw new Error(`No proto found for message type ${type}`);
-		// if (type !== 1) return { type, header, body: {} };
 		const body = this.decodeProto(
 			PROTOBUFFERS[type as keyof typeof PROTOBUFFERS],
 			bodyData,
 		);
-
-		console.log("Header data length:", headerData.length);
-		console.log("Body data length:", bodyData.length);
-
-		console.log("Header:", header);
-		console.log("Body:", body);
 
 		return { type, header, body };
 	}
