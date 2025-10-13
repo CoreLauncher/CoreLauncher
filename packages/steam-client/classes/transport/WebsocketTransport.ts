@@ -27,6 +27,7 @@ export default class WebsocketTransport extends Transport {
 
 		this.connection.addEventListener("message", (event) => {
 			console.log("WebSocket message", event.data);
+			this.handleMessage(event.data as Buffer);
 		});
 	}
 
