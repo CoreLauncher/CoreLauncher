@@ -1,3 +1,4 @@
+import type { JSONPrimitive } from "@corelauncher/json-value";
 import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { ClassProperties } from "@corelauncher/types";
 import { gunzipSync } from "bun";
@@ -10,12 +11,34 @@ const MESSAGE_TYPE_MASK = 0x80000000;
 
 interface TransportEvents {
 	connected: () => void;
+	message: (message: {
+		type: number;
+		header: Record<string, JSONPrimitive>;
+		body: Record<string, JSONPrimitive>;
+	}) => void;
 }
 
 /**
  * Base transport class
  */
-export default class Transport extends TypedEmitter<TransportEvents> {
+export default abstract class Transport extends TypedEmitter<TransportEvents> {
+	heartbeat: NodeJS.Timeout | null;
+	constructor() {
+		super();
+		this.heartbeat = null;
+
+		this.on("message", (message) => {
+			const { type, body } = message;
+			if (type !== EMsg.k_EMsgClientLogOnResponse) return;
+			console.log("Logged on, server time offset:", body);
+			if (this.heartbeat) clearInterval(this.heartbeat);
+			this.heartbeat = setInterval(
+				() => this.sendHeartbeat(),
+				(body.heartbeatSeconds as number) * 1000,
+			);
+		});
+	}
+
 	/**
 	 * Encodes a message to be sent over the transport
 	 * @param type message type (EMsg)
@@ -116,7 +139,7 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 	handleMessage(message: Buffer) {
 		const decoded = this.decodeMessage(message);
 		if (!decoded) return;
-		const { type, body } = decoded;
+		const { type, header, body } = decoded;
 
 		if (type === EMsg.k_EMsgMulti) {
 			let buffer = Buffer.from(body.messageBody, "base64");
@@ -134,6 +157,20 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 				buffer = buffer.subarray(size + 4);
 				this.handleMessage(msg);
 			}
+			return;
 		}
+
+		this.emit("message", { type, header, body });
+	}
+
+	abstract send<Type extends keyof typeof PROTOBUFFERS & number>(
+		type: Type,
+		properties: Partial<
+			ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>
+		>,
+	): void;
+
+	sendHeartbeat() {
+		this.send(EMsg.k_EMsgClientHeartBeat, {});
 	}
 }

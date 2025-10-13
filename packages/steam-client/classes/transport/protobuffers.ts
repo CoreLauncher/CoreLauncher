@@ -5,6 +5,7 @@ import {
 	CMsgClientFriendsGroupsList,
 	CMsgClientFriendsList,
 	CMsgClientGameConnectTokens,
+	CMsgClientHeartBeat,
 	CMsgClientIsLimitedAccount,
 	CMsgClientLicenseList,
 	CMsgClientLogon,
@@ -20,6 +21,8 @@ import {
 
 export const PROTOBUFFERS = {
 	[EMsg.k_EMsgMulti]: CMsgMulti,
+
+	[EMsg.k_EMsgClientHeartBeat]: CMsgClientHeartBeat,
 
 	[EMsg.k_EMsgClientLogOnResponse]: CMsgClientLogonResponse,
 	[EMsg.k_EMsgClientFriendsList]: CMsgClientFriendsList,
