@@ -81,8 +81,8 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 		console.log("Header data length:", headerData.length);
 		console.log("Body data length:", bodyData.length);
 
-		// console.log("Header:", header);
-		// console.log("Body:", body);
+		console.log("Header:", header);
+		console.log("Body:", body);
 
 		return { type, header, body };
 	}
@@ -112,16 +112,11 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 			}
 
 			while (buffer.length > 0) {
-				console.log("Remaining buffer length:", buffer.length);
 				const size = buffer.readUInt32LE(0);
-				console.log("Next message size:", size);
 				const msg = buffer.subarray(4, size + 4);
 				buffer = buffer.subarray(size + 4);
-
-				this.decodeMessage(msg);
+				this.handleMessage(msg);
 			}
-
-			console.log(buffer);
 		}
 	}
 }
