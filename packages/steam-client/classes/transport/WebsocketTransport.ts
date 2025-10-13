@@ -2,7 +2,7 @@ import type { ClassProperties } from "@corelauncher/types";
 import type { PROTOBUFFERS } from "./protobuffers";
 import Transport from "./Transport";
 
-export default class WebsocketTransport extends Transport {
+export default class WebsocketTransport extends Transport implements Transport {
 	connection: WebSocket | null = null;
 
 	/**
