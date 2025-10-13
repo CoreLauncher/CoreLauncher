@@ -107,14 +107,32 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 			headerData,
 		);
 
+		console.log("Header:", header);
+
 		const bodyData = message.subarray(8 + headerLength);
-		if (bodyData.length === 0) return { type, header, body: {} };
-		if (!PROTOBUFFERS[type as keyof typeof PROTOBUFFERS])
-			throw new Error(`No proto found for message type ${type}`);
-		const body = this.decodeProto(
-			PROTOBUFFERS[type as keyof typeof PROTOBUFFERS],
-			bodyData,
-		);
+		let bodyProto: (typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS] | null =
+			null;
+
+		if (bodyData.length === 0) {
+			// There is no data to parse
+			return { type, header, body: {} };
+		} else if (type in PROTOBUFFERS) {
+			bodyProto = PROTOBUFFERS[type as keyof typeof PROTOBUFFERS];
+		} else if ([EMsg.k_EMsgServiceMethod].includes(type)) {
+			const proto =
+				PROTOBUFFERS[header.targetJobName as keyof typeof PROTOBUFFERS];
+			if (!proto)
+				throw new Error(
+					`No protobuf found for service method ${header.targetJobName}`,
+				);
+			bodyProto = proto;
+		} else {
+			throw new Error(
+				`No protobuf found for message type ${type} (${getMessageName(type)})`,
+			);
+		}
+
+		const body = this.decodeProto(bodyProto, bodyData);
 
 		return { type, header, body };
 	}
@@ -160,6 +178,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 			return;
 		}
 
+		console.log({ type, header, body });
 		this.emit("message", { type, header, body });
 	}
 
