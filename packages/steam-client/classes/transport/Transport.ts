@@ -1,6 +1,6 @@
 import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { ClassProperties } from "@corelauncher/types";
-import { deflateSync, gunzipSync, inflateSync } from "bun";
+import { gunzipSync } from "bun";
 import ByteBuffer from "bytebuffer";
 import { EMsg } from "../../protobuf/compiled";
 import { PROTOBUFFERS } from "./protobuffers";
@@ -98,7 +98,7 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 	handleMessage(message: Buffer) {
 		const decoded = this.decodeMessage(message);
 		if (!decoded) return;
-		const { type, header, body } = decoded;
+		const { type, body } = decoded;
 
 		if (type === EMsg.k_EMsgMulti) {
 			let buffer = Buffer.from(body.messageBody, "base64");
