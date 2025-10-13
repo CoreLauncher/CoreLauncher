@@ -83,7 +83,6 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 		proto: Proto,
 		data: Buffer,
 	) {
-		console.log("Decoding proto", proto);
 		return proto.decode(data).toJSON();
 	}
 
@@ -95,7 +94,6 @@ export default class Transport extends TypedEmitter<TransportEvents> {
 		if (type === EMsg.k_EMsgMulti) {
 			let buffer = Buffer.from(body.messageBody, "base64");
 			if (body.sizeUnzipped) {
-				console.log(buffer);
 				buffer = Buffer.from(gunzipSync(buffer));
 				if (buffer.length !== body.sizeUnzipped)
 					throw new Error(
