@@ -5,6 +5,7 @@ import { gunzipSync } from "bun";
 import ByteBuffer from "bytebuffer";
 import { EMsg } from "../../protobuf/compiled";
 import getMessageName from "../../util/getMessageName";
+import type { SteamClient } from "../SteamClient";
 import { PROTOBUFFERS } from "./protobuffers";
 
 const MESSAGE_TYPE_MASK = 0x80000000;
@@ -22,9 +23,11 @@ interface TransportEvents {
  * Base transport class
  */
 export default abstract class Transport extends TypedEmitter<TransportEvents> {
+	client: SteamClient;
 	heartbeat: NodeJS.Timeout | null;
-	constructor() {
+	constructor(client: SteamClient) {
 		super();
+		this.client = client;
 		this.heartbeat = null;
 
 		this.on("message", (message) => {
@@ -58,7 +61,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		const message = this.encodeProto(proto, properties);
 		const header = this.encodeProto(PROTOBUFFERS.CMsgProtoBufHeader, {
 			clientSessionid: 0,
-			steamid: "76561199013332465" as unknown as number,
+			steamid: this.client.token.id as unknown as number,
 			jobidSource: "18446744073709551615" as unknown as number,
 			jobidTarget: "18446744073709551615" as unknown as number,
 		});

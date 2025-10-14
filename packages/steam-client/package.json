@@ -4,7 +4,8 @@
 	"dependencies": {
 		"@corelauncher/typed-emitter": "*",
 		"protobufjs": "^7.5.4",
-		"bytebuffer": "^5.0.1"
+		"bytebuffer": "^5.0.1",
+		"jwt-decode": "^4.0.0"
 	},
 	"devDependencies": {
 		"@corelauncher/types": "*",

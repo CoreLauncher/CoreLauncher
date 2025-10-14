@@ -1,5 +1,6 @@
 import { EMsg } from "../protobuf/compiled";
 import SteamAPI from "./SteamAPI";
+import SteamToken from "./SteamToken";
 import WebsocketTransport from "./transport/WebsocketTransport";
 
 type SteamClientOptions = {
@@ -7,11 +8,13 @@ type SteamClientOptions = {
 };
 
 export class SteamClient {
+	token: SteamToken;
 	api: SteamAPI;
 	transport: WebsocketTransport;
 	constructor(options: SteamClientOptions) {
+		this.token = new SteamToken(options.refreshToken);
 		this.api = new SteamAPI();
-		this.transport = new WebsocketTransport();
+		this.transport = new WebsocketTransport(this);
 
 		console.log("Connecting to Steam...");
 
