@@ -34,6 +34,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 			const { type, body } = message;
 			if (type !== EMsg.k_EMsgClientLogOnResponse) return;
 			console.log("Logged on, server time offset:", body);
+			if (!body.heartbeatSeconds) return;
 			if (this.heartbeat) clearInterval(this.heartbeat);
 			this.heartbeat = setInterval(
 				() => this.sendHeartbeat(),
