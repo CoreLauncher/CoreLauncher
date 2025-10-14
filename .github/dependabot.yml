@@ -10,5 +10,5 @@ updates:
     schedule:
       interval: "weekly"
     allow:
-      # Allow patch, minor, and major updates
       - dependency-type: "direct"
+      - versioning-strategy: "increase"
