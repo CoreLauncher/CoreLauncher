@@ -16,7 +16,8 @@
 		"compile-production": "bun build --target=bun --sourcemap=inline --root . --entry-naming=entrypoint-[hash].[ext] --chunk-naming=chunk-[hash].[ext] --asset-naming=asset-[hash].[ext] --windows-hide-console --windows-icon=./icon.ico --windows-title=CoreLauncher --windows-publisher='CoreByte & CoreLauncher Contributors' --windows-version='0.0.0.0' --windows-description='CoreLauncher' --windows-copyright='CoreByte & CoreLauncher Contributors' --outfile corelauncher --define process.env.NODE_ENV=\"'production'\" --production --compile ./projects/corelauncher/index.ts"
 	},
 	"dependencies": {
-		"@corelauncher/console-addon": "*"
+		"@corelauncher/console-addon": "*",
+		"@types/fs-extra": "^11.0.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.6",
