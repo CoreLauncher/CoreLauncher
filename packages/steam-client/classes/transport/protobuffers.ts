@@ -11,6 +11,7 @@ import {
 	CMsgClientHeartBeat,
 	CMsgClientIsLimitedAccount,
 	CMsgClientLicenseList,
+	CMsgClientLoggedOff,
 	CMsgClientLogon,
 	CMsgClientLogonResponse,
 	CMsgClientOfflineMessageNotification,
@@ -32,6 +33,7 @@ export const PROTOBUFFERS = {
 	// 700+
 	[EMsg.k_EMsgClientHeartBeat]: CMsgClientHeartBeat,
 	[EMsg.k_EMsgClientLogOnResponse]: CMsgClientLogonResponse,
+	[EMsg.k_EMsgClientLoggedOff]: CMsgClientLoggedOff,
 	[EMsg.k_EMsgClientFriendsList]: CMsgClientFriendsList,
 	[EMsg.k_EMsgClientAccountInfo]: CMsgClientAccountInfo,
 	[EMsg.k_EMsgClientGameConnectTokens]: CMsgClientGameConnectTokens,
