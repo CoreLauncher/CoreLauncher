@@ -9,6 +9,7 @@
 	},
 	"devDependencies": {
 		"@corelauncher/types": "*",
+		"@corelauncher/json-value": "*",
 		"@types/bytebuffer": "^5.0.49"
 	}
 }

@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 
-export type SteamTokenData = {
+type SteamTokenData = {
 	/**
 	 * The issuer of the token, usually "steam".
 	 */
