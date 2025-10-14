@@ -2,6 +2,7 @@
 
 ## Sources
 Code taken from:
+- https://steamapi.xpaw.me (unknown)
 - https://www.npmjs.com/package/steam-user (MIT)
 - https://www.npmjs.com/package/steam-session (MIT)
 - https://github.com/SteamRE/SteamKit (LGPL-2.1)
