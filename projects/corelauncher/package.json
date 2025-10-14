@@ -16,6 +16,6 @@
 		"pretty-bytes": "^7.1.0"
 	},
 	"devDependencies": {
-		"@types/fs-extra": "^11.0.2"
+		"@types/fs-extra": "^11.0.4"
 	}
 }
