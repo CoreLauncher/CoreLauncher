@@ -33,7 +33,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		this.on("message", (message) => {
 			const { type, body } = message;
 			if (type !== EMsg.k_EMsgClientLogOnResponse) return;
-			console.log("Logged on, server time offset:", body);
+			console.log("Got Logon Response");
 			if (!body.heartbeatSeconds) return;
 			if (this.heartbeat) clearInterval(this.heartbeat);
 			this.heartbeat = setInterval(
@@ -111,8 +111,6 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 			headerData,
 		);
 
-		console.log("Header:", header);
-
 		const bodyData = message.subarray(8 + headerLength);
 		let bodyProto: (typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS] | null =
 			null;
@@ -137,7 +135,6 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		}
 
 		const body = this.decodeProto(bodyProto, bodyData);
-
 		return { type, header, body };
 	}
 

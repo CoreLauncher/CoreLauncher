@@ -1,4 +1,5 @@
 import type { ClassProperties } from "@corelauncher/types";
+import getMessageName from "../../util/getMessageName";
 import type { PROTOBUFFERS } from "./protobuffers";
 import Transport from "./Transport";
 
@@ -46,7 +47,9 @@ export default class WebsocketTransport extends Transport implements Transport {
 		>,
 	) {
 		if (!this.connection || this.connection.readyState !== WebSocket.OPEN)
-			throw new Error("WebSocket is not connected");
+			return console.warn(
+				`WebSocket is not connected (tried to send ${getMessageName(type)})`,
+			);
 		const encoded = this.encodeMessage(type, properties);
 		this.connection.send(encoded);
 	}
