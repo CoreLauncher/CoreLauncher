@@ -1,4 +1,5 @@
 import {
+	CFamilyGroupsClient_NotifyRunningApps_Notification,
 	CFriendMessages_AckMessage_Notification,
 	CFriendMessages_IncomingMessage_Notification,
 	ChatRoomClient_NotifyChatGroupUserStateChanged_Notification,
@@ -23,6 +24,7 @@ import {
 	CMsgClientWalletInfoUpdate,
 	CMsgMulti,
 	CMsgProtoBufHeader,
+	CPlayer_LastPlayedTimes_Notification,
 	EMsg,
 } from "../../protobuf/compiled";
 
@@ -65,6 +67,12 @@ export const PROTOBUFFERS = {
 	// Interfaces
 	"ChatRoomClient.NotifyChatGroupUserStateChanged#1":
 		ChatRoomClient_NotifyChatGroupUserStateChanged_Notification,
+
+	"PlayerClient.NotifyLastPlayedTimes#1": CPlayer_LastPlayedTimes_Notification,
+
+	"FamilyGroupsClient.NotifyRunningApps#1":
+		CFamilyGroupsClient_NotifyRunningApps_Notification,
+
 	"FriendMessagesClient.IncomingMessage#1":
 		CFriendMessages_IncomingMessage_Notification,
 	"FriendMessagesClient.NotifyAckMessageEcho#1":
