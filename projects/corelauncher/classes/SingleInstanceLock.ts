@@ -25,7 +25,7 @@ export default class SingleInstanceLock extends TypedEmitter<SingleInstanceLockE
 		try {
 			await fetch(`http://localhost:${port}`, {
 				method: "POST",
-				body: JSON.stringify(Bun.argv.splice(2)),
+				body: JSON.stringify(Bun.argv.slice(2)),
 			});
 			console.info("An existing instance was found, exiting.");
 			process.exit(0);

@@ -36,6 +36,10 @@ export default class PluginPortal
 		});
 	}
 
+	get arguments() {
+		return Bun.argv.slice(2);
+	}
+
 	getDataDirectory() {
 		const directory = join(pluginDataDirectory(), this.container.id);
 		ensureDirSync(directory);

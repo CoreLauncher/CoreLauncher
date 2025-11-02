@@ -33,6 +33,12 @@ interface PluginPortalEvents {
  */
 export abstract class PluginPortal extends TypedEmitter<PluginPortalEvents> {
 	/**
+	 * Returns the command line arguments passed to the application.
+	 * @returns {string[]} An array of command line arguments.
+	 */
+	abstract get arguments(): string[];
+
+	/**
 	 * Returns the data directory for the plugin.
 	 * @returns {string} The path to the plugin's data directory.
 	 */

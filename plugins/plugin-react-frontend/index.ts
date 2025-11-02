@@ -108,7 +108,7 @@ export class Plugin extends PluginClass implements PluginShape {
 			debug: !isProduction,
 			title: "CoreLauncher",
 			url: `http://localhost:${port}`,
-			show: true,
+			show: portal.arguments[0] !== "hidden",
 			size: {
 				width: 1200,
 				height: 800,
