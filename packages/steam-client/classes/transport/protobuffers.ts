@@ -1,6 +1,7 @@
 import {
 	CFriendMessages_AckMessage_Notification,
 	CFriendMessages_IncomingMessage_Notification,
+	ChatRoomClient_NotifyChatGroupUserStateChanged_Notification,
 	CMsgClientAccountInfo,
 	CMsgClientChatInvite,
 	CMsgClientClanState,
@@ -15,6 +16,7 @@ import {
 	CMsgClientLogon,
 	CMsgClientLogonResponse,
 	CMsgClientOfflineMessageNotification,
+	CMsgClientPersonaState,
 	CMsgClientPlayerNicknameList,
 	CMsgClientPlayingSessionState,
 	CMsgClientServersAvailable,
@@ -33,6 +35,7 @@ export const PROTOBUFFERS = {
 	// 700+
 	[EMsg.k_EMsgClientHeartBeat]: CMsgClientHeartBeat,
 	[EMsg.k_EMsgClientLogOnResponse]: CMsgClientLogonResponse,
+	[EMsg.k_EMsgClientPersonaState]: CMsgClientPersonaState,
 	[EMsg.k_EMsgClientLoggedOff]: CMsgClientLoggedOff,
 	[EMsg.k_EMsgClientFriendsList]: CMsgClientFriendsList,
 	[EMsg.k_EMsgClientAccountInfo]: CMsgClientAccountInfo,
@@ -60,6 +63,8 @@ export const PROTOBUFFERS = {
 	[EMsg.k_EMsgClientPlayingSessionState]: CMsgClientPlayingSessionState,
 
 	// Interfaces
+	"ChatRoomClient.NotifyChatGroupUserStateChanged#1":
+		ChatRoomClient_NotifyChatGroupUserStateChanged_Notification,
 	"FriendMessagesClient.IncomingMessage#1":
 		CFriendMessages_IncomingMessage_Notification,
 	"FriendMessagesClient.NotifyAckMessageEcho#1":
