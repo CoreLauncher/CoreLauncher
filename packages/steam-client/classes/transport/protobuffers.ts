@@ -4,7 +4,6 @@ import {
 	CFriendMessages_AckMessage_Notification,
 	CFriendMessages_IncomingMessage_Notification,
 	ChatRoomClient_NotifyChatGroupUserStateChanged_Notification,
-	CloudClient,
 	CMsgClientAccountInfo,
 	CMsgClientChatInvite,
 	CMsgClientClanState,
