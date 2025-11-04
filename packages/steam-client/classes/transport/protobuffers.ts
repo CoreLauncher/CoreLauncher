@@ -1,8 +1,10 @@
 import {
+	CCloud_AppCloudStateChange_Notification,
 	CFamilyGroupsClient_NotifyRunningApps_Notification,
 	CFriendMessages_AckMessage_Notification,
 	CFriendMessages_IncomingMessage_Notification,
 	ChatRoomClient_NotifyChatGroupUserStateChanged_Notification,
+	CloudClient,
 	CMsgClientAccountInfo,
 	CMsgClientChatInvite,
 	CMsgClientClanState,
@@ -18,6 +20,8 @@ import {
 	CMsgClientLogonResponse,
 	CMsgClientOfflineMessageNotification,
 	CMsgClientPersonaState,
+	CMsgClientPICSProductInfoRequest,
+	CMsgClientPICSProductInfoResponse,
 	CMsgClientPlayerNicknameList,
 	CMsgClientPlayingSessionState,
 	CMsgClientServersAvailable,
@@ -61,12 +65,19 @@ export const PROTOBUFFERS = {
 	[EMsg.k_EMsgClientChatOfflineMessageNotification]:
 		CMsgClientOfflineMessageNotification,
 
+	// 8000+
+	[EMsg.k_EMsgClientPICSProductInfoRequest]: CMsgClientPICSProductInfoRequest,
+	[EMsg.k_EMsgClientPICSProductInfoResponse]: CMsgClientPICSProductInfoResponse,
+
 	// 9000+
 	[EMsg.k_EMsgClientPlayingSessionState]: CMsgClientPlayingSessionState,
 
 	// Interfaces
 	"ChatRoomClient.NotifyChatGroupUserStateChanged#1":
 		ChatRoomClient_NotifyChatGroupUserStateChanged_Notification,
+
+	"CloudConfigStoreClient.NotifyChange#1":
+		CCloud_AppCloudStateChange_Notification,
 
 	"PlayerClient.NotifyLastPlayedTimes#1": CPlayer_LastPlayedTimes_Notification,
 

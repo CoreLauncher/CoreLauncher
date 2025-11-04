@@ -1,6 +1,3 @@
-import type { ClassProperties } from "@corelauncher/types";
-import getMessageName from "../../util/getMessageName";
-import type { PROTOBUFFERS } from "./protobuffers";
 import Transport from "./Transport";
 
 export default class WebsocketTransport extends Transport implements Transport {
@@ -16,17 +13,15 @@ export default class WebsocketTransport extends Transport implements Transport {
 		this.connection = new WebSocket(`wss://${endpoint}/cmsocket/`);
 
 		this.connection.addEventListener("open", () => {
-			console.log("WebSocket connected");
 			this.emit("connected");
 		});
 
 		this.connection.addEventListener("close", () => {
-			console.log("WebSocket disconnected");
 			// this.emit("disconnected");
 		});
 
 		this.connection.addEventListener("error", (error) => {
-			console.error("WebSocket error", error);
+			console.error("[SteamClient] WebSocket error", error);
 			// this.emit("error", error);
 		});
 
@@ -35,22 +30,10 @@ export default class WebsocketTransport extends Transport implements Transport {
 		});
 	}
 
-	/**
-	 * Sends a message over the transport
-	 * @param type message type (EMsg)
-	 * @param properties message properties
-	 */
-	send<Type extends keyof typeof PROTOBUFFERS & number>(
-		type: Type,
-		properties: Partial<
-			ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>
-		>,
-	) {
+	protected rawSend(data: Buffer) {
 		if (!this.connection || this.connection.readyState !== WebSocket.OPEN)
-			return console.warn(
-				`WebSocket is not connected (tried to send ${getMessageName(type)})`,
-			);
-		const encoded = this.encodeMessage(type, properties);
-		this.connection.send(encoded);
+			return console.warn(`WebSocket is not connected, cannot send message.`);
+
+		this.connection.send(data);
 	}
 }

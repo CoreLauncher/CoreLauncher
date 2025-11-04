@@ -3,7 +3,8 @@ import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { ClassProperties } from "@corelauncher/types";
 import { gunzipSync } from "bun";
 import ByteBuffer from "bytebuffer";
-import { EMsg } from "../../protobuf/compiled";
+import { pEvent } from "p-event";
+import { type CMsgClientLogonResponse, EMsg } from "../../protobuf/compiled";
 import getMessageName from "../../util/getMessageName";
 import type { SteamClient } from "../SteamClient";
 import { PROTOBUFFERS } from "./protobuffers";
@@ -12,12 +13,16 @@ const MESSAGE_TYPE_MASK = 0x80000000;
 
 interface TransportEvents {
 	connected: () => void;
-	message: (message: {
-		type: number;
-		header: Record<string, JSONPrimitive>;
-		body: Record<string, JSONPrimitive>;
-	}) => void;
+	message: (message: Message) => void;
 }
+
+type Message = {
+	type: keyof typeof PROTOBUFFERS | number;
+	header: Record<string, JSONPrimitive>;
+	body: ClassProperties<
+		InstanceType<(typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS]>
+	>;
+};
 
 /**
  * Base transport class
@@ -25,15 +30,16 @@ interface TransportEvents {
 export default abstract class Transport extends TypedEmitter<TransportEvents> {
 	client: SteamClient;
 	heartbeat: NodeJS.Timeout | null;
+	job = 1;
 	constructor(client: SteamClient) {
 		super();
 		this.client = client;
 		this.heartbeat = null;
 
 		this.on("message", (message) => {
-			const { type, body } = message;
+			const type = message.type;
+			const body = message.body as CMsgClientLogonResponse;
 			if (type !== EMsg.k_EMsgClientLogOnResponse) return;
-			console.log("Got Logon Response");
 			if (!body.heartbeatSeconds) return;
 			if (this.heartbeat) clearInterval(this.heartbeat);
 			this.heartbeat = setInterval(
@@ -46,25 +52,27 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 	/**
 	 * Encodes a message to be sent over the transport
 	 * @param type message type (EMsg)
-	 * @param properties message properties
+	 * @param body message body
+	 * @param options.jobId optional job ID for the message
 	 * @returns encoded message
 	 */
 	encodeMessage<Type extends keyof typeof PROTOBUFFERS & number>(
 		type: Type,
-		properties: Partial<
-			ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>
-		>,
+		body: Partial<ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>>,
+		options: {
+			jobId?: number;
+		} = {},
 	) {
 		if (!(type in PROTOBUFFERS))
 			throw new Error(`Message type ${type} not found in PROTOBUFFERS`);
 
 		const proto = PROTOBUFFERS[type];
-		const message = this.encodeProto(proto, properties);
+		const message = this.encodeProto(proto, body);
 		const header = this.encodeProto(PROTOBUFFERS.CMsgProtoBufHeader, {
 			clientSessionid: 0,
 			steamid: this.client.token.id as unknown as number,
-			jobidSource: "18446744073709551615" as unknown as number,
-			jobidTarget: "18446744073709551615" as unknown as number,
+			jobidSource: (options.jobId || -1) as unknown as number,
+			jobidTarget: -1 as unknown as number,
 		});
 
 		const buffer = new ByteBuffer(
@@ -101,8 +109,6 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		const type = rawType & ~MESSAGE_TYPE_MASK;
 		const isProto = !!(rawType & MESSAGE_TYPE_MASK);
 		if (!isProto) return null;
-
-		console.log("Decoding message type:", getMessageName(type), type);
 
 		const headerLength = message.readUInt32LE(4);
 		const headerData = message.subarray(8, 8 + headerLength);
@@ -179,16 +185,41 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 			return;
 		}
 
-		console.log({ type, header, body });
-		this.emit("message", { type, header, body });
+		// console.log({ type, header, body });
+		this.emit("message", { type, header, body: body as any });
 	}
 
-	abstract send<Type extends keyof typeof PROTOBUFFERS & number>(
+	protected abstract rawSend(data: Buffer): void;
+
+	/**
+	 * Sends a message over the transport
+	 * @param type message type (EMsg)
+	 * @param body message body
+	 */
+	async send<Type extends keyof typeof PROTOBUFFERS & number>(
 		type: Type,
-		properties: Partial<
-			ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>
-		>,
-	): void;
+		body: Partial<ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>>,
+		options: {
+			wait?: boolean;
+		} = {},
+	) {
+		const job = options.wait ? this.job++ : undefined;
+		const encoded = this.encodeMessage(type, body, {
+			jobId: job,
+		});
+
+		this.rawSend(encoded);
+		if (!options?.wait) return;
+
+		const response = await pEvent(this, "message", {
+			filter: (message: Message) => {
+				// console.log(message);
+				return message.header.jobidTarget === job?.toString();
+			},
+		});
+
+		return response;
+	}
 
 	sendHeartbeat() {
 		this.send(EMsg.k_EMsgClientHeartBeat, {});
