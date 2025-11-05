@@ -1,4 +1,4 @@
-import { type SteamAppInfo, validateSteamAppInfo } from "../types/SteamAppInfo";
+import type { SteamAppInfo } from "../types/SteamAppInfo";
 import type { SteamClient } from "./SteamClient";
 
 export default class SteamApp {

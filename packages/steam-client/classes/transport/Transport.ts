@@ -1,4 +1,3 @@
-import type { JSONPrimitive } from "@corelauncher/json-value";
 import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { ClassProperties } from "@corelauncher/types";
 import { gunzipSync } from "bun";
