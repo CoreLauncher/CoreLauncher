@@ -3,8 +3,8 @@ import { Activity, ClockHistory } from "react-bootstrap-icons";
 import PlayBar from "../PlayBar/PlayBar";
 import "./GameView.css";
 import { Block } from "@corelauncher/react";
-import useGame from "../../../../../hooks/useGame";
-import LogoPattern from "../../../../Atoms/LogoPattern/LogoPattern";
+import LogoPattern from "../../../../components/Atoms/LogoPattern/LogoPattern";
+import useGame from "../../../../hooks/useGame";
 
 export default function GameView({ gameId }: { gameId: string }) {
 	const game = useGame(gameId);
