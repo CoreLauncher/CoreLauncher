@@ -8,6 +8,7 @@ import {
 	CMsgClientChatInvite,
 	CMsgClientClanState,
 	CMsgClientEmailAddrInfo,
+	CMsgClientEmoticonList,
 	CMsgClientFriendsGroupsList,
 	CMsgClientFriendsList,
 	CMsgClientGameConnectTokens,
@@ -70,6 +71,7 @@ export const PROTOBUFFERS = {
 
 	// 9000+
 	[EMsg.k_EMsgClientPlayingSessionState]: CMsgClientPlayingSessionState,
+	[EMsg.k_EMsgClientEmoticonList]: CMsgClientEmoticonList,
 
 	// Interfaces
 	"ChatRoomClient.NotifyChatGroupUserStateChanged#1":
