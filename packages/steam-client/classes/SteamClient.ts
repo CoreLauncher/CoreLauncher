@@ -25,12 +25,17 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 	token: SteamToken;
 	api: SteamAPI;
 	transport: WebsocketTransport;
+
 	apps: SteamApp[];
+	licenses: CMsgClientLicenseList.ILicense[];
+
 	constructor(options: SteamClientOptions) {
 		super();
 		this.token = new SteamToken(options.refreshToken);
 		this.api = new SteamAPI();
 		this.transport = new WebsocketTransport(this);
+
+		this.licenses = [];
 		this.apps = [];
 
 		console.log("Connecting to Steam...");
@@ -57,15 +62,30 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 			const type = message.type;
 			const body = message.body as CMsgClientLicenseList;
 			if (type !== EMsg.k_EMsgClientLicenseList) return;
+
 			const licenses = body.licenses;
+			this.licenses = licenses || [];
+
 			const { packages } = await this.requestProductInformation({
 				packages: licenses?.map((license) => license.packageId as number),
 			});
+
+			const appids: number[] = [];
+
+			for (const pkg of packages) {
+				pkg.appids
+					.filter((appid) => !appids.includes(appid))
+					.forEach((appid) => {
+						appids.push(appid);
+					});
+			}
+
 			const { apps } = await this.requestProductInformation({
-				apps: packages.flatMap((pkg) => pkg.appids as number[]),
+				apps: appids,
 			});
+
 			this.apps = apps
-				// .filter((app) => app.common?.type === "Game")
+				.filter((app) => app.common?.type === "Game")
 				.map((app) => new SteamApp(this, app));
 			this.emit("apps");
 		});
@@ -88,45 +108,60 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 		apps?: number[];
 		packages?: number[];
 	}) {
-		const response = await this.transport.send(
-			EMsg.k_EMsgClientPICSProductInfoRequest,
-			{
-				singleResponse: true,
-				apps: options.apps?.map((appid) => {
-					return { appid };
-				}),
-				packages: options.packages?.map((packageid) => {
-					return { packageid };
-				}),
-			},
-			{
-				wait: true,
-			},
-		);
+		const returnedApps: SteamAppInfo[] = [];
+		const returnedPackages: SteamPackageInfo[] = [];
 
-		if (!response)
-			throw new Error("No response received for product info request");
+		await new Promise((resolve) => {
+			this.transport.send(
+				EMsg.k_EMsgClientPICSProductInfoRequest,
+				{
+					apps: options.apps?.map((appid) => {
+						return { appid };
+					}),
+					packages: options.packages?.map((packageid) => {
+						return {
+							packageid,
+							accessToken: this.licenses.find((l) => l.packageId === packageid)
+								?.accessToken,
+						};
+					}),
+				},
+				{
+					wait: true,
+					callback: (message) => {
+						const body = message.body as CMsgClientPICSProductInfoResponse;
 
-		const body = response.body as CMsgClientPICSProductInfoResponse;
-		console.log(body);
+						const parsedApps = body.apps?.map((app) => {
+							const buffer = Buffer.from(
+								app.buffer as unknown as string,
+								"base64",
+							);
+							const vdf = buffer.toString("utf-8").replace(/\0$/, "");
+							return parseVDF(vdf).appinfo;
+						}) as SteamAppInfo[];
+
+						const parsedPackages = body.packages
+							?.map((pkg) => {
+								const buffer = Buffer.from(
+									pkg.buffer as unknown as string,
+									"base64",
+								);
+								return parseBinaryKV(buffer)[pkg.packageid];
+							})
+							.filter((p) => p) as SteamPackageInfo[];
+
+						if (parsedApps) returnedApps.push(...parsedApps);
+						if (parsedPackages) returnedPackages.push(...parsedPackages);
+
+						if (!body.responsePending) resolve(undefined);
+					},
+				},
+			);
+		});
 
 		return {
-			apps: body.apps?.map((app) => {
-				if (!app.buffer || !app.appid) return false;
-				const buffer = Buffer.from(app.buffer as unknown as string, "base64");
-				const vdf = buffer.toString("utf-8").replace(/\0$/, "");
-				return parseVDF(vdf).appinfo;
-			}),
-			packages: body.packages
-				?.map((pkg) => {
-					if (!pkg.buffer || !pkg.packageid) return false;
-					const buffer = Buffer.from(pkg.buffer as unknown as string, "base64");
-					return parseBinaryKV(buffer)[pkg.packageid];
-				})
-				.filter((p) => p),
-		} as {
-			apps: SteamAppInfo[];
-			packages: SteamPackageInfo[];
+			apps: returnedApps,
+			packages: returnedPackages,
 		};
 	}
 }

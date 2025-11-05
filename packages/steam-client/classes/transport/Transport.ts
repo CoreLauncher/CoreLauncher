@@ -18,29 +18,61 @@ interface TransportEvents {
 
 type Message = {
 	type: keyof typeof PROTOBUFFERS | number;
-	header: Record<string, JSONPrimitive>;
+	header: ClassProperties<
+		InstanceType<(typeof PROTOBUFFERS)["CMsgProtoBufHeader"]>
+	>;
 	body: ClassProperties<
 		InstanceType<(typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS]>
 	>;
 };
 
+type JobCallback = (response: Message) => void;
+
 /**
  * Base transport class
  */
 export default abstract class Transport extends TypedEmitter<TransportEvents> {
-	client: SteamClient;
-	heartbeat: NodeJS.Timeout | null;
-	job = 1;
+	private client: SteamClient;
+	private heartbeat: NodeJS.Timeout | null;
+
+	/**
+	 * Session ID for the client
+	 */
+	private sessionId = 0;
+
+	/**
+	 * Job ID counter for messages that require a response
+	 */
+	private job = 1;
+
+	/**
+	 * Stores pending job callbacks
+	 */
+	private jobs: Record<string, JobCallback> = {};
 	constructor(client: SteamClient) {
 		super();
 		this.client = client;
 		this.heartbeat = null;
 
+		// this.on("message", (message) => {
+		// console.log("Received", getMessageName(message.type));
+		// });
+
+		// Handle Job callbacks
+		this.on("message", (message) => {
+			const job = message.header.jobidTarget as number;
+			if (!job) return;
+			if (!this.jobs[job]) return;
+			this.jobs[job](message);
+		});
+
+		// Start heartbeat on logon response
 		this.on("message", (message) => {
 			const type = message.type;
 			const body = message.body as CMsgClientLogonResponse;
 			if (type !== EMsg.k_EMsgClientLogOnResponse) return;
 			if (!body.heartbeatSeconds) return;
+			this.sessionId = message.header.clientSessionid;
 			if (this.heartbeat) clearInterval(this.heartbeat);
 			this.heartbeat = setInterval(
 				() => this.sendHeartbeat(),
@@ -69,7 +101,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		const proto = PROTOBUFFERS[type];
 		const message = this.encodeProto(proto, body);
 		const header = this.encodeProto(PROTOBUFFERS.CMsgProtoBufHeader, {
-			clientSessionid: 0,
+			clientSessionid: this.sessionId,
 			steamid: this.client.token.id as unknown as number,
 			jobidSource: (options.jobId || -1) as unknown as number,
 			jobidTarget: -1 as unknown as number,
@@ -186,7 +218,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		}
 
 		// console.log({ type, header, body });
-		this.emit("message", { type, header, body: body as any });
+		this.emit("message", { type, header, body: body } as Message);
 	}
 
 	protected abstract rawSend(data: Buffer): void;
@@ -201,14 +233,19 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		body: Partial<ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>>,
 		options: {
 			wait?: boolean;
+			callback?: JobCallback;
 		} = {},
 	) {
-		const job = options.wait ? this.job++ : undefined;
+		const job = options.wait || options.callback ? this.job++ : undefined;
 		const encoded = this.encodeMessage(type, body, {
 			jobId: job,
 		});
 
+		if (options.callback && job !== undefined)
+			this.registerJobCallback(job, options.callback);
+
 		this.rawSend(encoded);
+
 		if (!options?.wait) return;
 
 		const response = await pEvent(this, "message", {
@@ -221,7 +258,22 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		return response;
 	}
 
-	sendHeartbeat() {
+	private sendHeartbeat() {
 		this.send(EMsg.k_EMsgClientHeartBeat, {});
+	}
+
+	/**
+	 * Registers a job callback
+	 * @param id job ID
+	 * @param callback callback function
+	 * @param ttl time to live in milliseconds
+	 */
+	private registerJobCallback(
+		id: number,
+		callback: JobCallback,
+		ttl = 2 * 60 * 1000,
+	) {
+		this.jobs[id] = callback;
+		setTimeout(() => delete this.jobs[id], ttl);
 	}
 }
