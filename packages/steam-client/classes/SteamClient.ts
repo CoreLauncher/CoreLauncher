@@ -9,7 +9,7 @@ import {
 import type { SteamAppInfo } from "../types/SteamAppInfo";
 import type { SteamPackageInfo } from "../types/SteamPackageInfo";
 import SteamAPI from "./SteamAPI";
-import SteamApp from "./SteamApp";
+import { SteamApp } from "./SteamApp";
 import SteamToken from "./SteamToken";
 import WebsocketTransport from "./transport/WebsocketTransport";
 
@@ -18,6 +18,19 @@ type SteamClientOptions = {
 };
 
 type SteamClientEvents = {
+	/**
+	 * Emitted when the client has connected to the Steam servers
+	 */
+	connected: () => void;
+
+	/**
+	 * Emitted when the client is logged in
+	 */
+	ready: () => void;
+
+	/**
+	 * Emitted when the owned apps have been fetched
+	 */
 	apps: () => void;
 };
 
@@ -48,8 +61,6 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 
 		this.licenses = [];
 		this.apps = [];
-
-		console.log("Connecting to Steam...");
 
 		// Logon when connected
 		this.transport.on("connected", () => {

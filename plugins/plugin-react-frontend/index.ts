@@ -134,6 +134,7 @@ export class Plugin extends PluginClass implements PluginShape {
 				games.map((game) => ({
 					id: game.id,
 					name: game.name,
+					icon: game.icon,
 				})),
 			);
 		});

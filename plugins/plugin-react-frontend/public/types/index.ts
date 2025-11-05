@@ -1,6 +1,7 @@
 export type Game = {
 	id: string;
 	name: string;
+	icon?: string;
 };
 
 export type AccountProvider = {

@@ -20,6 +20,10 @@
 
 		.game {
 			all: unset;
+
+			display: flex;
+			flex-direction: row;
+			gap: 4px;
 			padding: 4px;
 
 			cursor: pointer;
@@ -30,6 +34,17 @@
 			&:hover,
 			&.selected {
 				backdrop-filter: brightness(0.5);
+			}
+
+			.game-icon {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				min-width: 20px;
+				height: 20px;
+
+				background-color: var(--cl-color-accent);
+				border-radius: 4px;
 			}
 
 			p {

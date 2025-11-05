@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./GameList.css";
 import { Input } from "@corelauncher/react";
+import { Question } from "react-bootstrap-icons";
 import useGames from "../../../../hooks/useGames";
 
 export default function GameList({
@@ -83,6 +84,13 @@ export default function GameList({
 							onClick={() => onSelect?.(game.id)}
 							className={`game ${game.id === selected ? "selected" : ""}`}
 						>
+							{game.icon ? (
+								<img className="game-icon" src={game.icon} aria-hidden />
+							) : (
+								<div className="game-icon">
+									<Question />
+								</div>
+							)}
 							<p>{game.name}</p>
 						</button>
 					))}

@@ -31,16 +31,6 @@ export class Plugin extends PluginClass implements PluginShape {
 			);
 
 			// #region Accounts
-			const attatchListeners = (instance: SteamAccountInstance) => {
-				instance.on("refreshToken", async (token) => {
-					await database
-						.updateTable("accounts")
-						.set({ refreshToken: token })
-						.where("name", "=", instance.name)
-						.execute();
-				});
-			};
-
 			// Load stored account instances
 			const accountInstances: SteamAccountInstance[] = await database
 				.selectFrom("accounts")
@@ -48,26 +38,20 @@ export class Plugin extends PluginClass implements PluginShape {
 				.execute()
 				.then((instances) => instances.map((i) => new SteamAccountInstance(i)));
 
-			accountInstances.forEach(attatchListeners);
-
 			// Create account provider and listen for new instances
 			const accountProvider = new SteamAccountProvider(database);
 			accountProvider.on("connection", async (data) => {
 				if (accountInstances.find((a) => a.name === data.name)) return;
-				const accountInstance = new SteamAccountInstance(data);
-				attatchListeners(accountInstance);
-				accountInstances.push(accountInstance);
+				accountInstances.push(new SteamAccountInstance(data));
 				this.emit("account_instances", accountInstances);
 			});
 			// #endregion
 
-			const games = await getSteamGames();
-			this.emit(
-				"games",
-				games
-					.map((game) => new SteamGame({ id: game.id, name: game.name }))
-					.filter((game) => game.id !== "steam:228980"), // Steam Common Redistibutables
-			);
+			for (const instance of accountInstances) {
+				instance.on("games", () => {
+					this.emit("games", instance.games);
+				});
+			}
 
 			this.emit("account_instances", accountInstances);
 			this.emit("account_providers", [accountProvider]);

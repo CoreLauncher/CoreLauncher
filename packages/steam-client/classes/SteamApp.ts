@@ -1,7 +1,10 @@
 import type { SteamAppInfo } from "../types/SteamAppInfo";
 import type { SteamClient } from "./SteamClient";
 
-export default class SteamApp {
+const STEAM_ASSET_URL =
+	"https://shared.fastly.steamstatic.com/community_assets/images/apps/";
+
+export class SteamApp {
 	client: SteamClient;
 	data: SteamAppInfo;
 	constructor(client: SteamClient, data: SteamAppInfo) {
@@ -11,5 +14,14 @@ export default class SteamApp {
 
 	get id() {
 		return this.data.appid;
+	}
+
+	get name() {
+		return this.data.common.name;
+	}
+
+	get iconUrl() {
+		if (!this.data.common.icon) return null;
+		return `${STEAM_ASSET_URL}${this.data.appid}/${this.data.common.icon}.jpg`;
 	}
 }

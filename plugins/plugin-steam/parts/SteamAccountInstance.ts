@@ -1,13 +1,10 @@
 import { SteamClient } from "@corelauncher/steam-client";
 import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { AccountInstanceShape } from "@corelauncher/types";
+import SteamGame from "./SteamGame";
 
 interface SteamAccountInstanceEvents {
-	/**
-	 * Emitted when a new refresh token is generated
-	 * @param token The new refresh token
-	 */
-	refreshToken: (token: string) => void;
+	games: (games: SteamGame[]) => void;
 }
 
 export default class SteamAccountInstance
@@ -18,6 +15,9 @@ export default class SteamAccountInstance
 
 	id: string;
 	name: string;
+
+	games: SteamGame[] = [];
+
 	client: SteamClient;
 	constructor(data: {
 		id: number;
@@ -27,11 +27,19 @@ export default class SteamAccountInstance
 	}) {
 		super();
 
-		this.id = `steam:${data.id}`;
+		// Generate a unique ID based on the account name
+		// We do this to protect the account name from logs or other plugins
+		this.id = `steam:${Bun.hash(data.name)}`;
 		this.name = data.name;
 
 		this.client = new SteamClient({
 			refreshToken: data.refreshToken,
+		});
+
+		this.client.on("apps", () => {
+			console.info("Received Steam games");
+			this.games = this.client.apps.map((app) => new SteamGame(app));
+			this.emit("games", this.games);
 		});
 	}
 }

@@ -1,26 +1,28 @@
+import type { SteamApp } from "@corelauncher/steam-client";
 import type { GameShape } from "@corelauncher/types";
 import open from "open";
 
-type SteamGameOptions = {
-	id: number;
-	name: string;
-};
-
 export default class SteamGame implements GameShape {
-	id: string;
-	name: string;
+	app: SteamApp;
 
-	private rawId: number;
+	constructor(app: SteamApp) {
+		this.app = app;
+	}
 
-	constructor(options: SteamGameOptions) {
-		this.id = `steam:${options.id}`;
-		this.name = options.name;
+	get id() {
+		return `steam:${this.app.id}`;
+	}
 
-		this.rawId = options.id;
+	get name() {
+		return this.app.name;
+	}
+
+	get icon() {
+		return this.app.iconUrl;
 	}
 
 	async launch() {
-		await open(`steam://launch/${this.rawId}`);
+		await open(`steam://launch/${this.app.id}`);
 		return true;
 	}
 }
