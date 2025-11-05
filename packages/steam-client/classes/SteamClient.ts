@@ -22,11 +22,22 @@ type SteamClientEvents = {
 };
 
 export class SteamClient extends TypedEmitter<SteamClientEvents> {
-	token: SteamToken;
-	api: SteamAPI;
-	transport: WebsocketTransport;
+	private api: SteamAPI;
+	private transport: WebsocketTransport;
 
+	/**
+	 * Steam Token the client is currently using
+	 */
+	token: SteamToken;
+
+	/**
+	 * Owned Steam Apps (Currently only holds games)
+	 */
 	apps: SteamApp[];
+
+	/**
+	 * Owned Steam Licenses
+	 */
 	licenses: CMsgClientLicenseList.ILicense[];
 
 	constructor(options: SteamClientOptions) {

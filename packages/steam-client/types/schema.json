@@ -55,6 +55,10 @@
 				"appid": {
 					"type": "number"
 				},
+				"public_only": {
+					"type": "number",
+					"const": 1
+				},
 				"common": {
 					"type": "object",
 					"properties": {
@@ -65,9 +69,12 @@
 							"type": "string",
 							"enum": ["Game", "DLC", "Tool"]
 						},
+						"parent": {
+							"type": "number"
+						},
 						"releasestate": {
 							"type": "string",
-							"const": "released"
+							"enum": ["released", "prerelease"]
 						},
 						"oslist": {
 							"type": "string"
@@ -75,6 +82,10 @@
 						"osarch": {
 							"type": ["number", "string"],
 							"enum": [64, 32, ""]
+						},
+						"requireskbmouse": {
+							"type": "number",
+							"const": 1
 						},
 						"controllervr": {
 							"type": "object",
@@ -157,6 +168,9 @@
 						"logo_small": {
 							"type": "string"
 						},
+						"restricted_countries": {
+							"type": "string"
+						},
 						"icon": {
 							"type": "string"
 						},
@@ -222,11 +236,29 @@
 									},
 									"version": {
 										"type": "number"
+									},
+									"countries": {
+										"type": "string"
 									}
 								},
 								"required": ["id", "name", "url"],
 								"additionalProperties": false
 							}
+						},
+						"kbmousegame": {
+							"type": "number",
+							"const": 1
+						},
+						"releasestateoverride": {
+							"type": "string",
+							"const": "released"
+						},
+						"releasestateoverridecountries": {
+							"type": "string"
+						},
+						"releasestateoverrideinverse": {
+							"type": "number",
+							"const": 0
 						},
 						"languages": {
 							"type": "object",
@@ -234,6 +266,9 @@
 								"type": "number",
 								"const": 1
 							}
+						},
+						"sortas": {
+							"type": "string"
 						},
 						"name_localized": {
 							"type": "object",
@@ -243,6 +278,14 @@
 						},
 						"osextended": {
 							"type": "string"
+						},
+						"app_retired_publisher_request": {
+							"type": "number",
+							"const": 1
+						},
+						"app_retired_was_free": {
+							"type": "number",
+							"const": 1
 						},
 						"content_descriptors": {
 							"type": "object",
@@ -349,7 +392,10 @@
 										},
 										"hdr_support": {
 											"type": "number",
-											"enum": [0, 1]
+											"enum": [0, 1, 2]
+										},
+										"proton_compat_config": {
+											"type": "string"
 										}
 									},
 									"required": [
@@ -363,7 +409,6 @@
 										"requires_internet_for_singleplayer",
 										"recommended_runtime",
 										"requires_h264",
-										"requires_voice_files",
 										"gamescope_frame_limiter_not_supported",
 										"hdr_support"
 									],
@@ -463,12 +508,7 @@
 									"additionalProperties": false
 								}
 							},
-							"required": [
-								"library_capsule",
-								"library_hero",
-								"library_logo",
-								"logo_position"
-							],
+							"required": ["library_hero", "library_logo", "logo_position"],
 							"additionalProperties": false
 						},
 						"library_assets_full": {
@@ -490,7 +530,6 @@
 											}
 										}
 									},
-									"required": ["image", "image2x"],
 									"additionalProperties": false
 								},
 								"library_hero": {
@@ -648,7 +687,6 @@
 										"const": true
 									}
 								},
-								"required": ["supported"],
 								"additionalProperties": false
 							}
 						},
@@ -676,6 +714,10 @@
 						"exfgls": {
 							"type": "number"
 						},
+						"onlyvrsupport": {
+							"type": "number",
+							"const": 1
+						},
 						"content_descriptors_including_dlc": {
 							"type": "object",
 							"additionalProperties": {
@@ -699,37 +741,56 @@
 						},
 						"review_percentage_bombs": {
 							"type": "number"
+						},
+						"mastersubs_granting_app": {
+							"type": "number"
 						}
 					},
 					"required": [
 						"name",
 						"type",
-						"oslist",
-						"logo",
-						"logo_small",
-						"icon",
-						"clienttga",
-						"clienticon",
-						"small_capsule",
-						"header_image",
-						"store_asset_mtime",
 						"associations",
 						"primary_genre",
-						"genres",
 						"category",
-						"supported_languages",
-						"steam_release_date",
-						"community_hub_visible",
-						"gameid",
-						"store_tags",
-						"review_score",
-						"review_percentage"
+						"gameid"
 					],
 					"additionalProperties": false
 				},
 				"extended": {
 					"type": "object",
 					"properties": {
+						"cwdoverride": {
+							"type": "string"
+						},
+						"installscript": {
+							"type": "string"
+						},
+						"disableoverlay": {
+							"type": "number",
+							"const": 1
+						},
+						"legacykeylinkedexternally": {
+							"type": "number",
+							"const": 1
+						},
+						"hadthirdpartycdkey": {
+							"type": "number",
+							"const": 1
+						},
+						"thirdpartycdkey": {
+							"type": "number",
+							"const": 1
+						},
+						"mustownapptopurchase": {
+							"type": "number"
+						},
+						"absolutemousecoordinates": {
+							"type": "number",
+							"const": 0
+						},
+						"remoteplaytogethertestingbranches": {
+							"type": "string"
+						},
 						"vrheadsetstreaming": {
 							"type": "number",
 							"const": 1
@@ -749,6 +810,23 @@
 						"developer": {
 							"type": "string"
 						},
+						"directx_minver": {
+							"type": "string"
+						},
+						"g4w_gdf": {
+							"type": "string"
+						},
+						"g4w_type": {
+							"type": "number",
+							"const": 2
+						},
+						"developer_url": {
+							"type": "string"
+						},
+						"deckresolutionoverride": {
+							"type": "string",
+							"const": "Native"
+						},
 						"gamedir": {
 							"type": "string"
 						},
@@ -756,6 +834,16 @@
 							"type": "string"
 						},
 						"icon": {
+							"type": "string"
+						},
+						"icon2": {
+							"type": "string"
+						},
+						"order": {
+							"type": "number",
+							"const": 1
+						},
+						"languages": {
 							"type": "string"
 						},
 						"languages_macos": {
@@ -773,7 +861,7 @@
 						},
 						"noservers": {
 							"type": "number",
-							"const": 0
+							"enum": [0, 1]
 						},
 						"primarycache": {
 							"type": "number"
@@ -818,6 +906,10 @@
 						"state": {
 							"type": "string"
 						},
+						"supports64bit": {
+							"type": "number",
+							"const": 0
+						},
 						"visibleonlywhensubscribed": {
 							"type": "number",
 							"const": 1
@@ -838,6 +930,10 @@
 						"vacmodulefilename": {
 							"type": "string"
 						},
+						"visibleonlywheninstalled": {
+							"type": "number",
+							"const": 1
+						},
 						"validoslist": {
 							"type": "string"
 						},
@@ -851,8 +947,11 @@
 						"aliases": {
 							"type": "string"
 						},
-						"listofdlc": {
+						"gamemanualurl": {
 							"type": "string"
+						},
+						"listofdlc": {
+							"type": ["string", "number"]
 						},
 						"dlcavailableonstore": {
 							"type": "number",
@@ -872,12 +971,30 @@
 							"type": "number",
 							"const": 1
 						},
+						"testchange": {
+							"type": "number",
+							"const": 2
+						},
 						"launchwithoutworkshopupdates": {
 							"type": "number",
 							"const": 1
 						},
 						"installdir": {
 							"type": "string"
+						},
+						"replaceinstalledappid": {
+							"type": "number"
+						},
+						"nativesteamcontroller": {
+							"type": "number",
+							"const": 1
+						},
+						"convertgcfs": {
+							"type": ["string", "number"]
+						},
+						"steamvrsupport": {
+							"type": "number",
+							"const": 1
 						},
 						"app_mappings": {
 							"type": "object",
@@ -895,7 +1012,7 @@
 										"type": "string"
 									}
 								},
-								"required": ["platform", "tool", "comment"],
+								"required": ["platform", "tool"],
 								"additionalProperties": false
 							}
 						},
@@ -923,8 +1040,7 @@
 										"type": "object",
 										"properties": {
 											"oslist": {
-												"type": "string",
-												"enum": ["windows", "macos", "linux"]
+												"type": "string"
 											},
 											"osarch": {
 												"type": ["number", "string"],
@@ -945,6 +1061,10 @@
 											},
 											"optionaldlc": {
 												"type": "number"
+											},
+											"steamdeck": {
+												"type": "number",
+												"const": 0
 											}
 										},
 										"additionalProperties": false
@@ -969,8 +1089,8 @@
 							"const": 1
 						},
 						"usemms": {
-							"type": "number",
-							"const": 1
+							"type": ["number", "string"],
+							"enum": [1, ""]
 						},
 						"vacmodulefilename": {
 							"type": "string"
@@ -986,11 +1106,17 @@
 							"type": "string",
 							"const": "no"
 						},
+						"steamcontrollerconfigfileids": {
+							"type": ["number", "string"]
+						},
 						"steamcontrollertemplateindex": {
 							"type": "number"
 						},
 						"steamcontrollertouchtemplateindex": {
 							"type": "number"
+						},
+						"steaminputmanifestpath": {
+							"type": "string"
 						},
 						"steamcontrollertouchconfigdetails": {
 							"type": "object",
@@ -1030,11 +1156,7 @@
 										"type": "boolean"
 									}
 								},
-								"required": [
-									"controller_type",
-									"enabled_branches",
-									"use_action_block"
-								],
+								"required": ["controller_type", "enabled_branches"],
 								"additionalProperties": false
 							}
 						},
@@ -1091,17 +1213,14 @@
 							"properties": {
 								"steam_china_enable_duration_control": {
 									"type": "number",
-									"const": 1
+									"enum": [1, 0]
 								},
 								"steam_china_duration_control_show_interstitial": {
 									"type": "number",
 									"const": 0
 								}
 							},
-							"required": [
-								"steam_china_enable_duration_control",
-								"steam_china_duration_control_show_interstitial"
-							],
+							"required": ["steam_china_enable_duration_control"],
 							"additionalProperties": false
 						},
 						"uselaunchcommandline": {
@@ -1113,7 +1232,7 @@
 						},
 						"steamdecktouchscreen": {
 							"type": "number",
-							"const": 1
+							"enum": [1, 5]
 						},
 						"installscriptsignature": {
 							"type": "string"
@@ -1123,11 +1242,34 @@
 							"const": 1
 						},
 						"externalarguments": {
-							"type": "object",
-							"additionalProperties": {
-								"type": "number",
-								"const": 1
-							}
+							"anyOf": [
+								{
+									"type": "object",
+									"additionalProperties": {
+										"type": "number",
+										"const": 1
+									}
+								},
+								{
+									"type": "object",
+									"properties": {
+										"whitelisted": {
+											"type": "object",
+											"additionalProperties": {
+												"type": "string"
+											}
+										},
+										"blacklisted": {
+											"type": "object",
+											"additionalProperties": {
+												"type": "string"
+											}
+										}
+									},
+									"required": ["whitelisted", "blacklisted"],
+									"additionalProperties": false
+								}
+							]
 						},
 						"cegpublickey": {
 							"type": "string"
@@ -1146,6 +1288,25 @@
 							"type": "number",
 							"const": 1
 						},
+						"run process": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "object",
+								"properties": {
+									"hasrunkey": {
+										"type": "string"
+									},
+									"nocleanup": {
+										"type": "number",
+										"enum": [0, 1]
+									}
+								},
+								"required": ["hasrunkey", "nocleanup"],
+								"additionalProperties": {
+									"type": "string"
+								}
+							}
+						},
 						"registry": {
 							"type": "object",
 							"additionalProperties": {
@@ -1153,21 +1314,31 @@
 								"properties": {
 									"string": {
 										"type": "object",
-										"properties": {
-											"installpath": {
-												"type": "string"
-											}
-										},
-										"required": ["installpath"],
-										"additionalProperties": false
+										"additionalProperties": {
+											"type": ["string", "number"]
+										}
+									},
+									"dword": {
+										"type": "object",
+										"additionalProperties": {
+											"anyOf": [
+												{
+													"type": "number"
+												},
+												{
+													"type": "object",
+													"additionalProperties": {
+														"type": "number"
+													}
+												}
+											]
+										}
 									}
 								},
-								"required": ["string"],
 								"additionalProperties": false
 							}
 						}
 					},
-					"required": ["utf8_registry_strings", "registry"],
 					"additionalProperties": false
 				},
 				"depots": {
@@ -1181,6 +1352,14 @@
 							"type": "number",
 							"const": 1
 						},
+						"preloadonly": {
+							"type": "number",
+							"const": 1
+						},
+						"markdlcdepots": {
+							"type": "number",
+							"enum": [1, 0]
+						},
 						"baselanguages": {
 							"type": "string"
 						},
@@ -1189,7 +1368,7 @@
 						},
 						"hasdepotsindlc": {
 							"type": "number",
-							"const": 1
+							"enum": [1, 0]
 						},
 						"branches": {
 							"type": "object",
@@ -1204,6 +1383,10 @@
 									},
 									"description": {
 										"type": "string"
+									},
+									"lcsrequired": {
+										"type": "number",
+										"const": 1
 									}
 								},
 								"required": ["buildid"],
@@ -1234,8 +1417,7 @@
 								"type": "object",
 								"properties": {
 									"oslist": {
-										"type": "string",
-										"enum": ["windows", "macos", "linux"]
+										"type": "string"
 									},
 									"osarch": {
 										"type": ["number", "string"],
@@ -1256,6 +1438,10 @@
 									},
 									"optionaldlc": {
 										"type": "number"
+									},
+									"steamdeck": {
+										"type": "number",
+										"const": 0
 									}
 								},
 								"additionalProperties": false
@@ -1265,7 +1451,7 @@
 							},
 							"sharedinstall": {
 								"type": "number",
-								"const": 1
+								"enum": [1, 2]
 							},
 							"manifests": {
 								"type": "object",
@@ -1293,10 +1479,33 @@
 				"ufs": {
 					"type": "object",
 					"properties": {
+						"sync_while_suspended": {
+							"type": "number",
+							"const": 1
+						},
 						"quota": {
-							"type": "number"
+							"anyOf": [
+								{
+									"type": "number"
+								},
+								{
+									"type": "string",
+									"const": ""
+								}
+							]
 						},
 						"maxnumfiles": {
+							"anyOf": [
+								{
+									"type": "number"
+								},
+								{
+									"type": "string",
+									"const": ""
+								}
+							]
+						},
+						"appidredirect": {
 							"type": "number"
 						},
 						"hidecloudui": {
@@ -1330,7 +1539,7 @@
 										"properties": {
 											"1": {
 												"type": "string",
-												"const": "Windows"
+												"enum": ["Windows", "MacOS", "Linux"]
 											}
 										},
 										"required": ["1"],
@@ -1347,33 +1556,40 @@
 								"type": "object",
 								"properties": {
 									"root": {
-										"type": "string",
-										"const": "gameinstall"
+										"type": "string"
 									},
 									"os": {
 										"type": "string",
-										"const": "Windows"
+										"enum": ["Windows", "MacOS", "Linux"]
 									},
 									"oscompare": {
 										"type": "string",
 										"const": "="
 									},
 									"useinstead": {
-										"type": "string",
-										"const": "gameinstall"
+										"type": "string"
 									},
 									"addpath": {
-										"type": "string",
-										"const": ""
+										"type": "string"
+									},
+									"pathtransforms": {
+										"type": "object",
+										"additionalProperties": {
+											"type": "object",
+											"properties": {
+												"find": {
+													"type": "string"
+												},
+												"replace": {
+													"type": "string"
+												}
+											},
+											"required": ["find", "replace"],
+											"additionalProperties": false
+										}
 									}
 								},
-								"required": [
-									"root",
-									"os",
-									"oscompare",
-									"useinstead",
-									"addpath"
-								],
+								"required": ["root", "os", "oscompare", "useinstead"],
 								"additionalProperties": false
 							}
 						}
@@ -1382,7 +1598,7 @@
 					"additionalProperties": false
 				}
 			},
-			"required": ["appid", "common", "extended", "config", "depots"],
+			"required": ["appid", "common"],
 			"additionalProperties": false,
 			"description": "This type is intended to be used by the decoded buffer from the CMsgClientPICSProductInfoResponse message"
 		},

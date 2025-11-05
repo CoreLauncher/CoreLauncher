@@ -4,13 +4,14 @@ import { definitions } from "./schema.json";
 type OsArch = 64 | 32 | "";
 
 type Config = {
-	oslist?: "windows" | "macos" | "linux";
+	oslist?: "windows" | "macos" | "linux" | string;
 	osarch?: OsArch;
 	ownsdlc?: number;
 	language?: string;
 	realm?: "steamglobal" | "steamchina";
 	betakey?: string;
 	optionaldlc?: number;
+	steamdeck?: 0;
 };
 
 type LocalizedString = {
@@ -37,13 +38,17 @@ type LogoPosition = {
  */
 export type SteamAppInfo = {
 	appid: number;
+	public_only?: 1;
 
 	common: {
 		name: string;
 		type: "Game" | "DLC" | "Tool";
-		releasestate?: "released";
-		oslist: string;
+		parent?: number;
+		releasestate?: "released" | "prerelease";
+		oslist?: string;
 		osarch?: OsArch;
+
+		requireskbmouse?: 1;
 
 		controllervr?: {
 			steamvr?: 1;
@@ -70,10 +75,12 @@ export type SteamAppInfo = {
 
 		aicontenttype?: number;
 
-		logo: string;
-		logo_small: string;
+		logo?: string;
+		logo_small?: string;
 
-		icon: string;
+		restricted_countries?: string;
+
+		icon?: string;
 
 		openvr_controller_bindings?: {
 			[key: `${number}`]: {
@@ -82,8 +89,8 @@ export type SteamAppInfo = {
 			};
 		};
 
-		clienttga: string;
-		clienticon: string;
+		clienttga?: string;
+		clienticon?: string;
 		clienticns?: string;
 		linuxclienticon?: string;
 
@@ -101,16 +108,28 @@ export type SteamAppInfo = {
 				name: string;
 				url: string;
 				version?: number;
+				countries?: string;
 			};
 		};
+
+		kbmousegame?: 1;
+
+		releasestateoverride?: "released";
+		releasestateoverridecountries?: string;
+		releasestateoverrideinverse?: 0;
 
 		languages?: {
 			[key: string]: 1;
 		};
 
+		sortas?: string;
+
 		name_localized?: LocalizedString;
 
 		osextended?: string;
+
+		app_retired_publisher_request?: 1;
+		app_retired_was_free?: 1;
 
 		content_descriptors?: {
 			[key: `${number}`]: number;
@@ -147,9 +166,10 @@ export type SteamAppInfo = {
 				requires_internet_for_singleplayer: 0 | 1;
 				recommended_runtime: "native" | string;
 				requires_h264: 0 | 1;
-				requires_voice_files: 0 | 1;
+				requires_voice_files?: 0 | 1;
 				gamescope_frame_limiter_not_supported: 0 | 1;
-				hdr_support: 0 | 1;
+				hdr_support: 0 | 1 | 2;
+				proton_compat_config?: string;
 			};
 		};
 
@@ -162,14 +182,14 @@ export type SteamAppInfo = {
 
 		controllertagwizard?: number;
 
-		small_capsule: LocalizedString;
-		header_image: LocalizedString;
+		small_capsule?: LocalizedString;
+		header_image?: LocalizedString;
 
 		store_screenshot?: string;
-		store_asset_mtime: number;
+		store_asset_mtime?: number;
 
 		library_assets?: {
-			library_capsule: string;
+			library_capsule?: string;
 			library_hero: string;
 			library_hero_blur?: string;
 			library_logo: string;
@@ -179,8 +199,8 @@ export type SteamAppInfo = {
 
 		library_assets_full?: {
 			library_capsule: {
-				image: LocalizedString;
-				image2x: LocalizedString;
+				image?: LocalizedString;
+				image2x?: LocalizedString;
 			};
 
 			library_hero: {
@@ -213,7 +233,7 @@ export type SteamAppInfo = {
 		};
 
 		primary_genre: number;
-		genres: {
+		genres?: {
 			[key: `${number}`]: number;
 		};
 
@@ -221,51 +241,72 @@ export type SteamAppInfo = {
 			[key: `category_${number}`]: 1;
 		};
 
-		supported_languages: {
+		supported_languages?: {
 			[key: string]: {
-				supported: true | 1;
+				supported?: true | 1;
 				full_audio?: true | 1;
 				subtitles?: true;
 			};
 		};
 
 		original_release_date?: number;
-		steam_release_date: number;
+		steam_release_date?: number;
 
 		community_visible_stats?: 1;
 		workshop_visible?: 1;
-		community_hub_visible: 1;
+		community_hub_visible?: 1;
 		gameid: number;
 		exfgls?: number;
+
+		onlyvrsupport?: 1;
 
 		content_descriptors_including_dlc?: {
 			[key: `${number}`]: number;
 		};
 
-		store_tags: {
+		store_tags?: {
 			[key: `${number}`]: number;
 		};
 
-		review_score: number;
-		review_percentage: number;
+		review_score?: number;
+		review_percentage?: number;
 		review_score_bombs?: number;
 		review_percentage_bombs?: number;
+
+		mastersubs_granting_app?: number;
 	};
 
-	extended: {
+	extended?: {
+		cwdoverride?: string;
+		installscript?: string;
+		disableoverlay?: 1;
+		legacykeylinkedexternally?: 1;
+		hadthirdpartycdkey?: 1;
+		thirdpartycdkey?: 1;
+		mustownapptopurchase?: number;
+		absolutemousecoordinates?: 0;
+		remoteplaytogethertestingbranches?: string;
 		vrheadsetstreaming?: 1;
 		disable_shader_precaching?: 1;
 		disableshaderreporting?: 1;
 		checkpkgstate?: 1;
 		developer: string;
+		directx_minver?: string;
+		g4w_gdf?: string;
+		g4w_type?: 2;
+		developer_url?: string;
+		deckresolutionoverride?: "Native";
 		gamedir?: string;
 		homepage?: string;
 		icon?: string | "";
+		icon2?: string | "";
+		order?: 1;
+		languages?: string;
 		languages_macos?: string;
 		loadallbeforelaunch?: 1;
 		minclientversion?: number;
 		minclientversion_pw_csgo?: number;
-		noservers?: 0;
+		noservers?: 0 | 1;
 		primarycache?: number;
 		primarycache_macos?: number;
 		serverbrowsername?: string;
@@ -280,31 +321,40 @@ export type SteamAppInfo = {
 		};
 		sourcegame?: 1;
 		state?: string;
+		supports64bit?: 0;
 		visibleonlywhensubscribed?: 1;
 		allowmicrotxnfromrestrictedcountries?: 0;
 		microtxnrestrictedcountries?: string;
 		vacmacmodulecache?: number;
 		vacmodulecache?: number;
 		vacmodulefilename?: string;
+		visibleonlywheninstalled?: 1;
 		validoslist?: string;
 		publisher: string;
 		isfreeapp?: 0 | 1;
 		aliases?: string;
-		listofdlc?: string;
+		gamemanualurl?: string;
+		listofdlc?: string | number;
 		dlcavailableonstore?: 1;
 	};
 
-	config: {
+	config?: {
 		contenttype?: number;
 		checkforupdatesbeforelaunch?: 1;
+		testchange?: 2;
 		launchwithoutworkshopupdates?: 1;
 		installdir: string;
+		replaceinstalledappid?: number;
+		nativesteamcontroller?: 1;
+
+		convertgcfs?: string | number;
+		steamvrsupport?: 1;
 
 		app_mappings?: {
 			[key: `${number}`]: {
 				platform: "linux";
 				tool: string;
-				comment: string;
+				comment?: string;
 			};
 		};
 
@@ -325,7 +375,7 @@ export type SteamAppInfo = {
 		noupdatesafterinstall?: 1;
 
 		systemprofile?: 1;
-		usemms?: 1;
+		usemms?: 1 | "";
 
 		vacmodulefilename?: string;
 		vacmodulefilename_macos?: string;
@@ -333,8 +383,10 @@ export type SteamAppInfo = {
 		verifyupdates?: 0;
 		usesfrenemies?: "no";
 
+		steamcontrollerconfigfileids?: number | string;
 		steamcontrollertemplateindex?: number;
 		steamcontrollertouchtemplateindex?: number;
+		steaminputmanifestpath?: string;
 
 		steamcontrollertouchconfigdetails?: {
 			[key: `${number}`]: {
@@ -348,7 +400,7 @@ export type SteamAppInfo = {
 			[key: `${number}`]: {
 				controller_type: string;
 				enabled_branches: string;
-				use_action_block: boolean;
+				use_action_block?: boolean;
 			};
 		};
 
@@ -376,42 +428,66 @@ export type SteamAppInfo = {
 		duration_control_show_interstitial?: 0;
 
 		steam_china_only?: {
-			steam_china_enable_duration_control: 1;
-			steam_china_duration_control_show_interstitial: 0;
+			steam_china_enable_duration_control: 1 | 0;
+			steam_china_duration_control_show_interstitial?: 0;
 		};
 
 		uselaunchcommandline?: 1;
 		steamconfigurator3rdpartynative?: number;
-		steamdecktouchscreen?: 1;
+		steamdecktouchscreen?: 1 | 5;
 
 		installscriptsignature?: string;
 		installscriptoverride?: 1;
 
-		externalarguments?: {
-			[key: string]: 1;
-		};
+		externalarguments?:
+			| {
+					[key: string]: 1;
+			  }
+			| {
+					whitelisted: {
+						[key: string]: string;
+					};
+					blacklisted: {
+						[key: string]: string;
+					};
+			  };
 		cegpublickey?: string;
 		checkguid?: string;
 	};
 
 	install?: {
-		utf8_registry_strings: 1;
-		registry: {
+		utf8_registry_strings?: 1;
+		"run process"?: {
 			[key: string]: {
-				string: {
-					installpath: string;
+				hasrunkey: string;
+				nocleanup: 0 | 1;
+				[key: `process ${number}`]: string;
+				[key: `command ${number}`]: string;
+			};
+		};
+		registry?: {
+			[key: string]: {
+				string?: {
+					[key: string]: string | number;
+				};
+				dword?: {
+					[key: string]:
+						| number
+						| {
+								[key: string]: number;
+						  };
 				};
 			};
 		};
 	};
 
-	depots: {
+	depots?: {
 		[key: `${number}`]: {
 			systemdefined?: 1;
 			dlcappid?: number;
 			config?: Config;
 			depotfromapp?: number;
-			sharedinstall?: 1;
+			sharedinstall?: 1 | 2;
 			manifests?: {
 				[key: string]: {
 					gid: number;
@@ -423,15 +499,18 @@ export type SteamAppInfo = {
 
 		depotdeltapatches?: 0 | 1;
 		overridescddb?: 1;
+		preloadonly?: 1;
+		markdlcdepots?: 1 | 0;
 		baselanguages?: string;
 		workshopdepot?: number;
-		hasdepotsindlc?: 1;
+		hasdepotsindlc?: 1 | 0;
 
 		branches: {
 			[key: string]: {
 				buildid: number;
 				timeupdated?: number;
 				description?: string;
+				lcsrequired?: 1;
 			};
 		};
 
@@ -440,8 +519,10 @@ export type SteamAppInfo = {
 	};
 
 	ufs?: {
-		quota: number;
-		maxnumfiles: number;
+		sync_while_suspended?: 1;
+		quota: number | "";
+		maxnumfiles: number | "";
+		appidredirect?: number;
 		hidecloudui?: 1;
 		ignoreexternalfiles?: 1;
 		savefiles?: {
@@ -451,17 +532,23 @@ export type SteamAppInfo = {
 				pattern: string;
 				recursive?: 1;
 				platforms?: {
-					"1": "Windows";
+					"1": "Windows" | "MacOS" | "Linux";
 				};
 			};
 		};
 		rootoverrides?: {
 			[key: `${number}`]: {
-				root: "gameinstall";
-				os: "Windows";
+				root: string;
+				os: "Windows" | "MacOS" | "Linux";
 				oscompare: "=";
-				useinstead: "gameinstall";
-				addpath: "";
+				useinstead: string;
+				addpath?: string;
+				pathtransforms?: {
+					[key: `${number}`]: {
+						find: string;
+						replace: string;
+					};
+				};
 			};
 		};
 	};
