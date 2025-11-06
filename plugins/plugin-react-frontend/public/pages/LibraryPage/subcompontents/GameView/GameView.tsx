@@ -13,8 +13,6 @@ export default function GameView({ gameId }: { gameId: string }) {
 		throw new Error(`Game with ID ${gameId} not found`);
 	}
 
-	console.log(game);
-
 	return (
 		<div className="GameView">
 			<Block
