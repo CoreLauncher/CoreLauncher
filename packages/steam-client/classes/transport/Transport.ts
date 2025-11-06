@@ -166,9 +166,10 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 				);
 			bodyProto = proto;
 		} else {
-			throw new Error(
+			console.warn(
 				`No protobuf found for message type ${type} (${getMessageName(type)})`,
 			);
+			return null;
 		}
 
 		const body = this.decodeProto(bodyProto, bodyData);
