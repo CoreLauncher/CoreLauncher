@@ -146,6 +146,7 @@
         "@corelauncher/types": "*",
         "@node-steam/vdf": "^2.2.0",
         "bootstrap-icons": "^1.13.1",
+        "clsx": "^2.1.1",
         "get-port": "^7.1.0",
         "kysely": "^0.28.8",
         "native-reg": "^1.1.1",

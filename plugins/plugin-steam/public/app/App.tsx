@@ -10,10 +10,11 @@ import { renderSVG } from "uqr";
 import "./App.css";
 import { useEffect, useState } from "react";
 import { Hourglass, LockFill, Steam, X } from "react-bootstrap-icons";
+import QRCode, { QRCodeState } from "../components/atoms/QRCode/QRCode";
 
 export default function App() {
-	const [qr, setQR] = useState<string | null>(null);
-	const [state, setState] = useState<string>("initial");
+	const [qrValue, setQrValue] = useState<string>("");
+	const [qrState, setQrState] = useState<QRCodeState>(QRCodeState.Loading);
 
 	useEffect(() => {
 		const socket = new WebSocket("/events");
@@ -25,13 +26,15 @@ export default function App() {
 
 			switch (type) {
 				case "qr-change": {
-					setQR(data.qr);
-					setState(data.state);
+					setQrValue(data.qr);
+					setQrState(
+						data.state === "active" ? QRCodeState.Normal : QRCodeState.Waiting,
+					);
 					break;
 				}
 
 				case "qr-interaction": {
-					setState("interaction");
+					setQrState(QRCodeState.Waiting);
 					break;
 				}
 
@@ -57,39 +60,19 @@ export default function App() {
 					<h3>Connect Steam to CoreLauncher</h3>
 					<LockFill className="lock" />
 				</div>
-				<div className="body">
-					<Block className="block">
-						<div className="password-login">
-							<Input name="username" placeholder="Username" type="text" />
-							<Input name="password" placeholder="Password" type="password" />
-							<Button>Login</Button>
-						</div>
-						<div className="qr-login">
-							<div
-								className={`qr-code ${state !== "active" ? "invalid-qr" : ""}`}
-							>
-								<div
-									className="qr-code-svg"
-									// biome-ignore lint/security/noDangerouslySetInnerHtml: <this is the way>
-									dangerouslySetInnerHTML={{
-										__html: qr
-											? renderSVG(qr, { border: 0 })
-											: renderSVG("You should not be able to scan this QR", {
-													border: 0,
-												}),
-									}}
-								/>
-								<div className="qr-code-state">
-									<Hourglass size={"50%"} />
-								</div>
-							</div>
-						</div>
-					</Block>
-				</div>
-				<TextMuted>
-					All login credientials are sent to the Steam servers directly, we do
-					not store or process them in any way.
-				</TextMuted>
+				<Block className="body">
+					<QRCode className="qrcode" state={qrState} value={qrValue} />
+					<div className="info">
+						<p>
+							Log in to your Steam account by scanning the QR code with the
+							Steam Mobile App.
+						</p>
+						<TextMuted>
+							All login credentials are sent to the Steam servers directly, we
+							do not store or process them in any way.
+						</TextMuted>
+					</div>
+				</Block>
 			</Style>
 		</div>
 	);

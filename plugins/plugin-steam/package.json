@@ -18,7 +18,8 @@
 		"uqr": "^0.1.2",
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0",
-		"kysely": "^0.28.8"
+		"kysely": "^0.28.8",
+		"clsx": "^2.1.1"
 	},
 	"devDependencies": {
 		"@corelauncher/json-value": "*",

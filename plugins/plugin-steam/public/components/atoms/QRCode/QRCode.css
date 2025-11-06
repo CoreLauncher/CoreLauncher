@@ -1,0 +1,48 @@
+@keyframes QRCodeLoadingSpin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.QRCode {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	padding: 8px;
+
+	overflow: hidden;
+	background-color: white;
+	border-radius: 8px;
+
+	.overlay {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+
+		backdrop-filter: blur(8px) brightness(0.5);
+
+		transition: opacity 200ms ease;
+	}
+
+	.loading-overlay .icon {
+		animation: QRCodeLoadingSpin 2s linear infinite;
+	}
+
+	&.loading .loading-overlay {
+		opacity: 1;
+	}
+
+	&.waiting .waiting-overlay {
+		opacity: 1;
+	}
+}
