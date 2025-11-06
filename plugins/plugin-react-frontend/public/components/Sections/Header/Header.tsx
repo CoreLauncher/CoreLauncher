@@ -1,35 +1,54 @@
-import { GearFill } from "react-bootstrap-icons";
+import { X } from "react-bootstrap-icons";
 
 import "./Header.css";
 import { Logo } from "@corelauncher/react";
+import clsx from "clsx";
 
 export default function Header({
-	selectedTab,
-	onClickHome = () => {},
-	onClickSettings = () => {},
+	tab,
+	onSelect,
 }: {
-	selectedTab?: string;
-	onClickHome?: () => void;
-	onClickSettings?: () => void;
+	tab: string;
+	onSelect: (tab: string) => void;
 }) {
 	return (
 		<header className="Header">
-			<div className="start">
-				<button type="button" className="logo" onClick={onClickHome}>
-					<Logo size={"2.5em"} />
-					<p>CORELAUNCHER</p>
-				</button>
+			<div className="logo">
+				<Logo size={"2.3em"} />
+				<p>CORELAUNCHER</p>
 			</div>
-			<div className="end">
-				<button
-					type="button"
-					className={`tab ${selectedTab === "settings" ? "selected" : ""}`}
-					onClick={onClickSettings}
-				>
-					<GearFill color="var(--tab-text-color)" />
-					Settings
-				</button>
-			</div>
+
+			<div />
+
+			<button
+				type="button"
+				className={clsx("tab", { selected: tab === "library" })}
+				onClick={() => onSelect("library")}
+			>
+				Library
+			</button>
+
+			<button
+				type="button"
+				className={clsx("tab", { selected: tab === "profile" })}
+				onClick={() => onSelect("profile")}
+			>
+				Profile
+			</button>
+
+			<button
+				type="button"
+				className={clsx("tab", { selected: tab === "settings" })}
+				onClick={() => onSelect("settings")}
+			>
+				Settings
+			</button>
+
+			<div className="spacer" />
+
+			<button type="button" className="window-controls">
+				<X size={"1.5rem"} />
+			</button>
 		</header>
 	);
 }

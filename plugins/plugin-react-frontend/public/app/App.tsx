@@ -14,11 +14,7 @@ export default function App() {
 	return (
 		<Style>
 			<div className="App">
-				<Header
-					selectedTab={page}
-					onClickHome={() => setPage("library")}
-					onClickSettings={() => setPage("settings")}
-				/>
+				<Header tab={page} onSelect={(tab) => setPage(tab)} />
 				<LibraryPage isVisible={page === "library"} />
 				<SettingsPage isVisible={page === "settings"} />
 				<LoadingPage />

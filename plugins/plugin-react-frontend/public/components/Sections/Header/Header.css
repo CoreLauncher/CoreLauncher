@@ -1,11 +1,85 @@
 .Header {
 	display: flex;
 	flex-direction: row;
+	gap: 8px;
 	justify-content: space-between;
 
 	height: 50px;
+	padding: 8px;
 
-	& > div {
+	/*margin-top: 4px;*/
+	/*margin-bottom: 4px;*/
+
+	.spacer {
+		width: 100%;
+	}
+
+	.logo {
+		display: flex;
+		flex-direction: row;
+		gap: 8px;
+		align-items: center;
+
+		height: 100%;
+
+		cursor: pointer;
+		background-color: transparent;
+		border: none;
+
+		p {
+			font-size: 1.2em;
+			font-weight: 700;
+		}
+	}
+
+	.tab {
+		--tab-color: var(--cl-color-block);
+		--tab-text-color: color-mix(in srgb, var(--tab-color) 40%, white 60%);
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		padding: 8px;
+
+		font-size: 16px;
+		font-weight: 500;
+
+		color: var(--tab-text-color);
+
+		cursor: pointer;
+		background-color: var(--tab-color);
+
+		border: none;
+		border-radius: 5px;
+
+		transition:
+			background-color 0.2s ease-in-out,
+			color 0.2s ease-in-out;
+
+		&.selected {
+			--tab-color: var(--cl-color-branding);
+		}
+	}
+
+	.window-controls {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		aspect-ratio: 1 / 1;
+		background-color: transparent;
+		border: none;
+		border-radius: 5px;
+
+		transition: background-color 0.2s ease-in-out;
+
+		&:hover {
+			background-color: var(--cl-color-block);
+		}
+	}
+
+	/*& > div {
 		height: 100%;
 		padding: 8px;
 	}
@@ -57,8 +131,8 @@
 
 			p {
 				font-size: 1.2em;
-				font-weight: 900;
+				font-weight: 700;
 			}
 		}
-	}
+	}*/
 }
