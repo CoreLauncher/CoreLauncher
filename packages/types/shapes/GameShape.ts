@@ -1,7 +1,8 @@
 export abstract class GameShape {
 	abstract id: string;
 	abstract name: string;
-	abstract icon: string | null;
+	abstract iconUrl: string | null;
+	abstract bannerUrl: string | null;
 
 	/**
 	 * Launches the game.

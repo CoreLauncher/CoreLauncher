@@ -13,10 +13,17 @@ export default function GameView({ gameId }: { gameId: string }) {
 		throw new Error(`Game with ID ${gameId} not found`);
 	}
 
+	console.log(game);
+
 	return (
 		<div className="GameView">
-			<Block className="banner">
-				<LogoPattern />
+			<Block
+				className="banner"
+				style={{
+					backgroundImage: game.banner ? `url(${game.banner})` : undefined,
+				}}
+			>
+				{!game.banner && <LogoPattern />}
 				<PlayBar
 					game={game}
 					meta={[

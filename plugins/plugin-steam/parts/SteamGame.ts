@@ -17,8 +17,12 @@ export default class SteamGame implements GameShape {
 		return this.app.name;
 	}
 
-	get icon() {
+	get iconUrl() {
 		return this.app.iconUrl;
+	}
+
+	get bannerUrl() {
+		return this.app.bannerUrl;
 	}
 
 	async launch() {

@@ -2,6 +2,7 @@ export type Game = {
 	id: string;
 	name: string;
 	icon?: string;
+	banner?: string;
 };
 
 export type AccountProvider = {

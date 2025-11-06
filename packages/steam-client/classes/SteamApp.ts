@@ -1,9 +1,6 @@
 import type { SteamAppInfo } from "../types/SteamAppInfo";
 import type { SteamClient } from "./SteamClient";
 
-const STEAM_ASSET_URL =
-	"https://shared.fastly.steamstatic.com/community_assets/images/apps/";
-
 export class SteamApp {
 	client: SteamClient;
 	data: SteamAppInfo;
@@ -22,6 +19,11 @@ export class SteamApp {
 
 	get iconUrl() {
 		if (!this.data.common.icon) return null;
-		return `${STEAM_ASSET_URL}${this.data.appid}/${this.data.common.icon}.jpg`;
+		return `https://shared.fastly.steamstatic.com/community_assets/images/apps/${this.data.appid}/${this.data.common.icon}.jpg`;
+	}
+
+	get bannerUrl() {
+		if (!this.data.common.library_assets?.library_hero) return null;
+		return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${this.data.appid}/library_hero.jpg`;
 	}
 }
