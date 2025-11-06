@@ -8,10 +8,7 @@ import useGame from "../../../../hooks/useGame";
 
 export default function GameView({ gameId }: { gameId: string }) {
 	const game = useGame(gameId);
-
-	if (!game) {
-		throw new Error(`Game with ID ${gameId} not found`);
-	}
+	if (!game) throw new Error(`Game with ID ${gameId} not found`);
 
 	return (
 		<div className="GameView">
