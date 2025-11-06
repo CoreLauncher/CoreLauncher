@@ -1,3 +1,4 @@
+import type { JSONObject } from "@corelauncher/json-value";
 import { TypedEmitter } from "@corelauncher/typed-emitter";
 import { parse as parseVDF } from "@node-steam/vdf";
 import { parse as parseBinaryKV } from "binarykvparser";
@@ -168,7 +169,8 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 									pkg.buffer as unknown as string,
 									"base64",
 								);
-								return parseBinaryKV(buffer)[pkg.packageid];
+								const parsed = parseBinaryKV(buffer) as JSONObject;
+								return parsed[pkg.packageid!.toString()];
 							})
 							.filter((p) => p) as SteamPackageInfo[];
 

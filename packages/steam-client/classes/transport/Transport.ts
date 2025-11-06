@@ -253,8 +253,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 
 		const response = await pEvent(this, "message", {
 			filter: (message: Message) => {
-				// console.log(message);
-				return message.header.jobidTarget === job?.toString();
+				return message.header.jobidTarget === job!;
 			},
 		});
 
