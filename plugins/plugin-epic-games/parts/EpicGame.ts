@@ -9,6 +9,8 @@ type EpicGameOptions = {
 export default class EpicGame implements GameShape {
 	id: string;
 	name: string;
+	iconUrl: null = null;
+	bannerUrl: null = null;
 
 	private rawId: string;
 
