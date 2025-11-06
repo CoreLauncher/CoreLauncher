@@ -160,10 +160,13 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		} else if ([EMsg.k_EMsgServiceMethod].includes(type)) {
 			const proto =
 				PROTOBUFFERS[header.targetJobName as keyof typeof PROTOBUFFERS];
-			if (!proto)
-				throw new Error(
+			if (!proto) {
+				console.warn(
 					`No protobuf found for service method ${header.targetJobName}`,
 				);
+				return null;
+			}
+
 			bodyProto = proto;
 		} else {
 			console.warn(
