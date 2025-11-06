@@ -29,7 +29,6 @@ export default function QRCode({
 	value: string;
 	state: QRCodeState;
 }) {
-	console.log(value, state);
 	const options = { border: 0 };
 	const svg =
 		state === QRCodeState.Normal
