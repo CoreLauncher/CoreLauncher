@@ -8,9 +8,7 @@ import {
 import { migrations } from "./migrations";
 import SteamAccountInstance from "./parts/SteamAccountInstance";
 import { SteamAccountProvider } from "./parts/SteamAccountProvider";
-import SteamGame from "./parts/SteamGame";
 import type { Database } from "./types/database";
-import { getSteamGames } from "./util/steam";
 
 async function noop() {}
 

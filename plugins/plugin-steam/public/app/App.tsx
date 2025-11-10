@@ -1,15 +1,7 @@
-import {
-	Block,
-	Button,
-	Input,
-	Logo,
-	Style,
-	TextMuted,
-} from "@corelauncher/react";
-import { renderSVG } from "uqr";
+import { Block, Logo, Style, TextMuted } from "@corelauncher/react";
 import "./App.css";
 import { useEffect, useState } from "react";
-import { Hourglass, LockFill, Steam, X } from "react-bootstrap-icons";
+import { LockFill, Steam, X } from "react-bootstrap-icons";
 import QRCode, { QRCodeState } from "../components/atoms/QRCode/QRCode";
 
 export default function App() {
@@ -37,9 +29,6 @@ export default function App() {
 					setQrState(QRCodeState.Waiting);
 					break;
 				}
-
-				default:
-					break;
 			}
 		});
 
