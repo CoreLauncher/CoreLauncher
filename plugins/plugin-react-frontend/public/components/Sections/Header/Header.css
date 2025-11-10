@@ -7,8 +7,8 @@
 	height: 50px;
 	padding: 8px;
 
-	/*margin-top: 4px;*/
-	/*margin-bottom: 4px;*/
+	margin-top: 4px;
+	margin-bottom: 4px;
 
 	.spacer {
 		width: 100%;
@@ -58,7 +58,7 @@
 			color 0.2s ease-in-out;
 
 		&.selected {
-			--tab-color: var(--cl-color-branding);
+			--tab-color: var(--cl-color-accent);
 		}
 	}
 

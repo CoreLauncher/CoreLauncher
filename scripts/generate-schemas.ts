@@ -1,6 +1,3 @@
-// import { $ } from "bun";
-// await $`ts-json-schema-generator --jsDoc none --path ./packages/steam-client/types/*.ts --out ./packages/steam-client/types/schema.json`;
-
 import { createGenerator } from "ts-json-schema-generator";
 
 const schema = createGenerator({
