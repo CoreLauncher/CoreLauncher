@@ -1,5 +1,6 @@
 import "./LibraryPage.css";
 import { useState } from "react";
+import LibraryOverview from "../../components/Sections/LibraryOverview/LibraryOverview";
 import GameList from "./subcompontents/GameList/GameList";
 import GameView from "./subcompontents/GameView/GameView";
 
@@ -15,7 +16,7 @@ export default function LibraryPage({
 	return (
 		<main className="LibraryPage">
 			<GameList selected={selected} onSelect={setSelected} />
-			{selected ? <GameView gameId={selected} /> : <p>no selection</p>}
+			{selected ? <GameView gameId={selected} /> : <LibraryOverview />}
 		</main>
 	);
 }

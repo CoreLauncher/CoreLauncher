@@ -25,6 +25,10 @@ export default class SteamGame implements GameShape {
 		return this.app.bannerUrl;
 	}
 
+	get capsuleUrl() {
+		return this.app.capsuleUrl;
+	}
+
 	async launch() {
 		await open(`steam://launch/${this.app.id}`);
 		return true;

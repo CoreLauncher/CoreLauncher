@@ -1,0 +1,14 @@
+.GameCapsule {
+	position: relative;
+	max-width: 280px;
+	aspect-ratio: 2 / 3;
+
+	overflow: hidden;
+	border-radius: 8px;
+
+	img {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+}

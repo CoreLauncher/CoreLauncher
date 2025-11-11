@@ -26,4 +26,9 @@ export class SteamApp {
 		if (!this.data.common.library_assets?.library_hero) return null;
 		return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${this.data.appid}/library_hero.jpg`;
 	}
+
+	get capsuleUrl() {
+		if (!this.data.common.library_assets?.library_capsule) return null;
+		return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${this.data.appid}/library_600x900.jpg`;
+	}
 }

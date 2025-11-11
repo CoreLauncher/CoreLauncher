@@ -1,2 +1,18 @@
 .LibraryOverview {
+	display: grid;
+	grid-template-rows: auto;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 16px;
+
+	align-items: start;
+	justify-content: center;
+
+	width: 100%;
+
+	overflow-y: auto;
+
+	.capsule {
+		justify-self: center;
+		width: 100%;
+	}
 }

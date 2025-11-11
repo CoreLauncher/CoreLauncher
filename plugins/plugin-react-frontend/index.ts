@@ -136,6 +136,7 @@ export class Plugin extends PluginClass implements PluginShape {
 					name: game.name,
 					icon: game.iconUrl,
 					banner: game.bannerUrl,
+					capsule: game.capsuleUrl,
 				})),
 			);
 		});
