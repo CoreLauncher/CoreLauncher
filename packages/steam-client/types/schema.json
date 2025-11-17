@@ -49,6 +49,55 @@
 			"additionalProperties": false,
 			"description": "This type is intended to be used by the decoded buffer from the CMsgClientPICSProductInfoResponse message"
 		},
+		"SteamLibraries": {
+			"type": "object",
+			"properties": {
+				"libraryfolders": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"path": {
+								"type": "string"
+							},
+							"label": {
+								"type": "string"
+							},
+							"contentid": {
+								"type": "number"
+							},
+							"totalsize": {
+								"type": "number"
+							},
+							"update_clean_bytes_tally": {
+								"type": "number"
+							},
+							"time_last_update_verified": {
+								"type": "number"
+							},
+							"apps": {
+								"type": "object",
+								"additionalProperties": {
+									"type": "number"
+								}
+							}
+						},
+						"required": [
+							"path",
+							"label",
+							"contentid",
+							"totalsize",
+							"update_clean_bytes_tally",
+							"time_last_update_verified",
+							"apps"
+						],
+						"additionalProperties": false
+					}
+				}
+			},
+			"required": ["libraryfolders"],
+			"additionalProperties": false
+		},
 		"SteamAppInfo": {
 			"type": "object",
 			"properties": {
