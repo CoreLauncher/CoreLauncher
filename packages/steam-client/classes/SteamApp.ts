@@ -7,6 +7,8 @@ export class SteamApp {
 	constructor(client: SteamClient, data: SteamAppInfo) {
 		this.client = client;
 		this.data = data;
+
+		if (this.data.appid === 3606890) console.log(this.data);
 	}
 
 	get id() {
@@ -23,12 +25,14 @@ export class SteamApp {
 	}
 
 	get bannerUrl() {
-		if (!this.data.common.library_assets?.library_hero) return null;
-		return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${this.data.appid}/library_hero.jpg`;
+		if (!this.data.common.library_assets_full?.library_hero.image?.english)
+			return null;
+		return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${this.data.appid}/${this.data.common.library_assets_full?.library_hero?.image?.english}`;
 	}
 
 	get capsuleUrl() {
-		if (!this.data.common.library_assets?.library_capsule) return null;
-		return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${this.data.appid}/library_600x900.jpg`;
+		if (!this.data.common.library_assets_full?.library_capsule?.image?.english)
+			return null;
+		return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${this.data.appid}/${this.data.common.library_assets_full?.library_capsule?.image?.english}`;
 	}
 }
