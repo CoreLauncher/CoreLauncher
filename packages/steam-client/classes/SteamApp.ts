@@ -7,8 +7,6 @@ export class SteamApp {
 	constructor(client: SteamClient, data: SteamAppInfo) {
 		this.client = client;
 		this.data = data;
-
-		if (this.data.appid === 3606890) console.log(this.data);
 	}
 
 	get id() {
