@@ -2,7 +2,7 @@
 	"name": "@corelauncher/plugin-react-frontend",
 	"dependencies": {
 		"@corelauncher/is-production": "*",
-		"tiny-typed-emitter": "^2.1.0",
+		"@corelauncher/typed-emitter": "*",
 		"@corelauncher/types": "*",
 		"@corelauncher/react": "*",
 		"@corebyte/webwindow": "^1.1.4",

@@ -1,8 +1,8 @@
+import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { ClassProperties } from "@corelauncher/types";
 import { gunzipSync } from "bun";
 import ByteBuffer from "bytebuffer";
 import { pEvent } from "p-event";
-import { TypedEmitter } from "tiny-typed-emitter";
 import { type CMsgClientLogonResponse, EMsg } from "../../protobuf/compiled";
 import getMessageName from "../../util/getMessageName";
 import type { SteamClient } from "../SteamClient";

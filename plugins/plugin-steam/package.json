@@ -4,7 +4,7 @@
 		"@corelauncher/database": "*",
 		"@corelauncher/react": "*",
 		"@corelauncher/types": "*",
-		"tiny-typed-emitter": "^2.1.0",
+		"@corelauncher/typed-emitter": "*",
 		"@corelauncher/is-production": "*",
 		"@corelauncher/file-to-dataurl": "*",
 		"@corelauncher/steam-client": "*",

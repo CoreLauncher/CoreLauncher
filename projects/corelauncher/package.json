@@ -5,7 +5,7 @@
 		"@corelauncher/plugin-epic-games": "*",
 		"@corelauncher/plugin-react-frontend": "*",
 		"@corelauncher/is-production": "*",
-		"tiny-typed-emitter": "^2.1.0",
+		"@corelauncher/typed-emitter": "*",
 		"@corelauncher/console-addon": "*",
 		"@corelauncher/types": "*",
 		"@octokit/rest": "^22.0.1",

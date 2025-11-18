@@ -1,3 +1,4 @@
+import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type {
 	AccountInstanceShape,
 	AccountProviderShape,
@@ -6,7 +7,6 @@ import type {
 	PluginShape,
 	PluginShapeEvents,
 } from "@corelauncher/types";
-import { TypedEmitter } from "tiny-typed-emitter";
 import type PluginManager from "./PluginManager";
 import PluginPortal from "./PluginPortal";
 

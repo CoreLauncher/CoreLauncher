@@ -1,4 +1,4 @@
-import { TypedEmitter } from "tiny-typed-emitter";
+import { TypedEmitter } from "@corelauncher/typed-emitter";
 import {
 	BeginAuthSessionViaQR,
 	PollAuthSessionStatus,

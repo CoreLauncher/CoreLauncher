@@ -67,15 +67,14 @@
     "packages/steam-client": {
       "name": "@corelauncher/steam-client",
       "dependencies": {
+        "@corelauncher/typed-emitter": "*",
         "@node-steam/vdf": "^2.2.0",
         "binarykvparser": "^2.3.0",
         "bytebuffer": "^5.0.1",
         "jsonschema": "^1.5.0",
         "jwt-decode": "^4.0.0",
-        "native-reg": "^1.1.1",
         "p-event": "^7.0.0",
         "protobufjs": "^7.5.4",
-        "tiny-typed-emitter": "^2.1.0",
       },
       "devDependencies": {
         "@corelauncher/json-value": "*",
@@ -86,13 +85,19 @@
     "packages/tray": {
       "name": "@corelauncher/tray",
       "dependencies": {
-        "tiny-typed-emitter": "^2.1.0",
+        "@corelauncher/typed-emitter": "*",
+      },
+    },
+    "packages/typed-emitter": {
+      "name": "@corelauncher/typed-emitter",
+      "dependencies": {
+        "events": "^3.3.0",
       },
     },
     "packages/types": {
       "name": "@corelauncher/types",
       "dependencies": {
-        "tiny-typed-emitter": "^2.1.0",
+        "@corelauncher/typed-emitter": "*",
       },
     },
     "packages/util": {
@@ -114,6 +119,7 @@
         "@corebyte/webwindow": "^1.1.4",
         "@corelauncher/is-production": "*",
         "@corelauncher/react": "*",
+        "@corelauncher/typed-emitter": "*",
         "@corelauncher/types": "*",
         "@fontsource/inter": "^5.2.8",
         "clsx": "^2.1.1",
@@ -122,7 +128,6 @@
         "react-bootstrap-icons": "^1.11.6",
         "react-dom": "^19.2.0",
         "temp-dir": "^3.0.0",
-        "tiny-typed-emitter": "^2.1.0",
       },
       "devDependencies": {
         "@corelauncher/json-value": "*",
@@ -139,6 +144,7 @@
         "@corelauncher/is-production": "*",
         "@corelauncher/react": "*",
         "@corelauncher/steam-client": "*",
+        "@corelauncher/typed-emitter": "*",
         "@corelauncher/types": "*",
         "bootstrap-icons": "^1.13.1",
         "clsx": "^2.1.1",
@@ -148,7 +154,6 @@
         "react": "^19.2.0",
         "react-bootstrap-icons": "^1.11.6",
         "react-dom": "^19.2.0",
-        "tiny-typed-emitter": "^2.1.0",
         "uqr": "^0.1.2",
       },
       "devDependencies": {
@@ -165,13 +170,13 @@
         "@corelauncher/plugin-epic-games": "*",
         "@corelauncher/plugin-react-frontend": "*",
         "@corelauncher/plugin-steam": "*",
+        "@corelauncher/typed-emitter": "*",
         "@corelauncher/types": "*",
         "@octokit/rest": "^22.0.1",
         "fs-extra": "^11.3.2",
         "get-port": "^7.1.0",
         "native-reg": "^1.1.1",
         "pretty-bytes": "^7.1.0",
-        "tiny-typed-emitter": "^2.1.0",
         "windows-shortcuts": "^0.1.6",
       },
       "devDependencies": {
@@ -250,6 +255,8 @@
     "@corelauncher/steam-client": ["@corelauncher/steam-client@workspace:packages/steam-client"],
 
     "@corelauncher/tray": ["@corelauncher/tray@workspace:packages/tray"],
+
+    "@corelauncher/typed-emitter": ["@corelauncher/typed-emitter@workspace:packages/typed-emitter"],
 
     "@corelauncher/types": ["@corelauncher/types@workspace:packages/types"],
 
@@ -462,6 +469,8 @@
     "estraverse": ["estraverse@5.3.0", "", {}, "sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA=="],
 
     "esutils": ["esutils@2.0.3", "", {}, "sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g=="],
+
+    "events": ["events@3.3.0", "", {}, "sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q=="],
 
     "fast-content-type-parse": ["fast-content-type-parse@3.0.0", "", {}, "sha512-ZvLdcY8P+N8mGQJahJV5G4U88CSvT1rP8ApL6uETe88MBXrBHAkZlSEySdUlyztF7ccb+Znos3TFqaepHxdhBg=="],
 

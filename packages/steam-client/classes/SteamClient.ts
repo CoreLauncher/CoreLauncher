@@ -1,7 +1,7 @@
 import type { JSONObject } from "@corelauncher/json-value";
+import { TypedEmitter } from "@corelauncher/typed-emitter";
 import { parse as parseVDF } from "@node-steam/vdf";
 import { parse as parseBinaryKV } from "binarykvparser";
-import { TypedEmitter } from "tiny-typed-emitter";
 import {
 	type CMsgClientLicenseList,
 	type CMsgClientPICSProductInfoResponse,

@@ -1,4 +1,4 @@
-import { TypedEmitter } from "tiny-typed-emitter";
+import { TypedEmitter } from "@corelauncher/typed-emitter";
 
 export class PluginClass extends TypedEmitter {
 	constructor() {

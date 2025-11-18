@@ -1,6 +1,6 @@
 import { join } from "node:path";
+import { TypedEmitter } from "@corelauncher/typed-emitter";
 import getPort from "get-port";
-import { TypedEmitter } from "tiny-typed-emitter";
 import { applicationDirectory } from "../util/directories";
 
 const listenPort = await getPort();
