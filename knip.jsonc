@@ -20,9 +20,6 @@
 		},
 		"packages/react": {
 			"ignoreDependencies": ["react", "react-dom"]
-		},
-		"packages/typed-emitter": {
-			"ignoreDependencies": ["events"]
 		}
 	}
 }

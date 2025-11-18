@@ -7,7 +7,7 @@ import {
 	ptr,
 } from "bun:ffi";
 import { existsSync } from "node:fs";
-import { TypedEmitter } from "@corelauncher/typed-emitter";
+import { TypedEmitter } from "tiny-typed-emitter";
 import dll from "./tray.dll" with { type: "file" };
 
 const lib = dlopen(dll, {

@@ -2,6 +2,6 @@
 	"name": "@corelauncher/types",
 	"main": "./index.ts",
 	"dependencies": {
-		"@corelauncher/typed-emitter": "*"
+		"tiny-typed-emitter": "^2.1.0"
 	}
 }
