@@ -11,6 +11,7 @@ export default class EpicGame implements GameShape {
 	name: string;
 	iconUrl: null = null;
 	bannerUrl: null = null;
+	capsuleUrl: null = null;
 
 	private rawId: string;
 
