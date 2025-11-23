@@ -19,6 +19,7 @@ export default class SteamGame implements GameShape {
 
 	get status() {
 		const status = this.app.getStatus();
+		if (status === SteamAppStatus.Running) return GameStatus.Running;
 		if (status === SteamAppStatus.Installed) return GameStatus.Installed;
 		if (status === SteamAppStatus.NotInstalled) return GameStatus.NotInstalled;
 		return GameStatus.Unknown;

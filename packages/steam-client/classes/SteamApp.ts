@@ -1,6 +1,7 @@
 import { join } from "node:path";
 import type { SteamAppInfo } from "../types/SteamAppInfo";
 import { SteamAppStatus } from "../types/SteamAppStatus";
+import isAppRunning from "../util/is-app-running";
 import { getApplicationLibraryDirectory } from "../util/paths";
 import type { SteamClient } from "./SteamClient";
 
@@ -52,6 +53,7 @@ export class SteamApp {
 	 */
 	getStatus() {
 		const directory = this.getDirectory();
+		if (isAppRunning(this.id)) return SteamAppStatus.Running;
 		if (directory) return SteamAppStatus.Installed;
 		return SteamAppStatus.NotInstalled;
 	}
