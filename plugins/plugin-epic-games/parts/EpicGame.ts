@@ -9,7 +9,7 @@ type EpicGameOptions = {
 export default class EpicGame implements GameShape {
 	id: string;
 	name: string;
-	status = GameStatus.Unknown;
+	status = GameStatus.Installed;
 	iconUrl: null = null;
 	bannerUrl: null = null;
 	capsuleUrl: null = null;
