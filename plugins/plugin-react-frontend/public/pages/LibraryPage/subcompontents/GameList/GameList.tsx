@@ -4,7 +4,6 @@ import { Input } from "@corelauncher/react";
 import { Question } from "react-bootstrap-icons";
 import VerticalList from "../../../../components/Atoms/VerticalList/VerticalList";
 import useGames from "../../../../hooks/useGames";
-import type { Game } from "../../../../types";
 
 export default function GameList({
 	selected,
