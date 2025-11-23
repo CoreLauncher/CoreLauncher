@@ -14,8 +14,8 @@ export default function GameCapsule({
 
 	return (
 		<div className={clsx("GameCapsule", className)}>
-			{game.capsule && <img src={game.capsule} aria-label="game capsule" />}
 			<p>{game.name}</p>
+			{game.capsule && <img src={game.capsule} aria-label="game capsule" />}
 		</div>
 	);
 }
