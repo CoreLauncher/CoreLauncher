@@ -16,7 +16,11 @@ export default function LibraryPage({
 	return (
 		<main className="LibraryPage">
 			<GameList selected={selected} onSelect={setSelected} />
-			{selected ? <GameView gameId={selected} /> : <LibraryOverview />}
+			{selected ? (
+				<GameView gameId={selected} />
+			) : (
+				<LibraryOverview onSelect={setSelected} />
+			)}
 		</main>
 	);
 }

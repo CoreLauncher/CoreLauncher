@@ -3,19 +3,28 @@ import useGame from "../../../hooks/useGame";
 import "./GameCapsule.css";
 
 export default function GameCapsule({
-	className,
 	id,
+	onClick,
+	className,
 }: {
-	className?: string;
 	id: string;
+	onClick?: () => void;
+	className?: string;
 }) {
 	const game = useGame(id);
 	if (!game) throw new Error(`Game with id ${id} not found`);
 
 	return (
-		<div className={clsx("GameCapsule", className)}>
+		<button
+			className={clsx("GameCapsule", className)}
+			type="button"
+			onClick={onClick}
+			style={{
+				cursor: onClick ? "pointer" : "default",
+			}}
+		>
 			<p>{game.name}</p>
 			{game.capsule && <img src={game.capsule} aria-label="game capsule" />}
-		</div>
+		</button>
 	);
 }
