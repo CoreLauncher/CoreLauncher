@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import "./GameList.css";
 import { Input } from "@corelauncher/react";
 import { Question } from "react-bootstrap-icons";
+import VerticalList from "../../../../components/Atoms/VerticalList/VerticalList";
 import useGames from "../../../../hooks/useGames";
+import type { Game } from "../../../../types";
 
 export default function GameList({
 	selected,
@@ -69,32 +71,33 @@ export default function GameList({
 	return (
 		<div className="GameList" ref={divRef}>
 			<Input type="text" placeholder="Search..." onChange={onQuery} />
-			<div className="games">
-				{games
+			<VerticalList
+				className="games"
+				items={games
 					.sort((a, b) => a.name.localeCompare(b.name))
 					.filter(
 						(game) =>
 							game.name.toLowerCase().includes(query.toLowerCase()) ||
 							game.id.toLowerCase().includes(query.toLowerCase()),
-					)
-					.map((game) => (
-						<button
-							key={game.id}
-							type="button"
-							onClick={() => onSelect?.(game.id)}
-							className={`game ${game.id === selected ? "selected" : ""}`}
-						>
-							{game.icon ? (
-								<img className="game-icon" src={game.icon} aria-hidden />
-							) : (
-								<div className="game-icon">
-									<Question />
-								</div>
-							)}
-							<p>{game.name}</p>
-						</button>
-					))}
-			</div>
+					)}
+				element={(game) => (
+					<button
+						key={game.id}
+						type="button"
+						onClick={() => onSelect?.(game.id)}
+						className={`game ${game.id === selected ? "selected" : ""}`}
+					>
+						{game.icon ? (
+							<img className="game-icon" src={game.icon} aria-hidden />
+						) : (
+							<div className="game-icon">
+								<Question />
+							</div>
+						)}
+						<p>{game.name}</p>
+					</button>
+				)}
+			/>
 		</div>
 	);
 }
