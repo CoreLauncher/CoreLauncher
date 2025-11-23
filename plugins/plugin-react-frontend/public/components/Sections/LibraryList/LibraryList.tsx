@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import "./GameList.css";
+import "./LibraryList.css";
 import { Input } from "@corelauncher/react";
 import { Question } from "react-bootstrap-icons";
-import VerticalList from "../../../../components/Atoms/VerticalList/VerticalList";
-import useGames from "../../../../hooks/useGames";
+import useGames from "../../../hooks/useGames";
+import VerticalList from "../../Atoms/VerticalList/VerticalList";
 
-export default function GameList({
+export default function LibraryList({
 	selected,
 	onSelect,
 }: {
@@ -68,7 +68,7 @@ export default function GameList({
 	}
 
 	return (
-		<div className="GameList" ref={divRef}>
+		<div className="LibraryList" ref={divRef}>
 			<Input type="text" placeholder="Search..." onChange={onQuery} />
 			<VerticalList
 				className="games"
