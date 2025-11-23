@@ -5,14 +5,8 @@ import TabList from "./subcompontents/TabList/TabList";
 import AccountsTab from "./tabs/AccountsTab/AccountsTab";
 import GeneralTab from "./tabs/GeneralTab/GeneralTab";
 
-export default function SettingsPage({
-	isVisible = true,
-}: {
-	isVisible?: boolean;
-}) {
+export default function SettingsPage() {
 	const [selected, setSelected] = useState("general");
-
-	if (!isVisible) return null;
 
 	return (
 		<main className="SettingsPage">

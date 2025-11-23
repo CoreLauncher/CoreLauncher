@@ -1,6 +1,6 @@
 import "./App.css";
 import { Style } from "@corelauncher/react";
-import { useState } from "react";
+import { Activity, useState } from "react";
 import Header from "../components/Sections/Header/Header";
 import useDisableContextMenu from "../hooks/useDisableContextMenu";
 import LibraryPage from "../pages/LibraryPage/LibraryPage";
@@ -15,8 +15,15 @@ export default function App() {
 		<Style>
 			<div className="App">
 				<Header tab={page} onSelect={(tab) => setPage(tab)} />
-				<LibraryPage isVisible={page === "library"} />
-				<SettingsPage isVisible={page === "settings"} />
+
+				<Activity mode={page === "library" ? "visible" : "hidden"}>
+					<LibraryPage />
+				</Activity>
+
+				<Activity mode={page === "settings" ? "visible" : "hidden"}>
+					<SettingsPage />
+				</Activity>
+
 				<LoadingPage />
 			</div>
 		</Style>
