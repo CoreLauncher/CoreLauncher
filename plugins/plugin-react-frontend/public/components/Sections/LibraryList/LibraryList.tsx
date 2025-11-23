@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./LibraryList.css";
 import { Button, Input } from "@corelauncher/react";
-import { HouseFill, Question } from "react-bootstrap-icons";
+import { Question, ViewList } from "react-bootstrap-icons";
 import useGames from "../../../hooks/useGames";
 import VerticalList from "../../Atoms/VerticalList/VerticalList";
 
@@ -73,7 +73,7 @@ export default function LibraryList({
 		<div className="LibraryList" ref={divRef}>
 			<div className="search">
 				<Button className="home" onClick={onHome}>
-					<HouseFill />
+					<ViewList />
 				</Button>
 				<Input type="text" placeholder="Search..." onChange={onQuery} />
 			</div>
