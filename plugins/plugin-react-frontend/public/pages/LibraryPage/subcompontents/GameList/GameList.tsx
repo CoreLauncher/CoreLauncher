@@ -73,6 +73,7 @@ export default function GameList({
 			<Input type="text" placeholder="Search..." onChange={onQuery} />
 			<VerticalList
 				className="games"
+				gap={0}
 				items={games
 					.sort((a, b) => a.name.localeCompare(b.name))
 					.filter(
