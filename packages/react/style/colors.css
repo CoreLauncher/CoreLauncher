@@ -6,6 +6,8 @@
 
 	--cl-color-text: hsl(0, 0%, 90%);
 	--cl-color-text-muted: hsl(0, 0%, 50%);
+	--cl-color-text-blue: hsl(210, 100%, 70%);
+	--cl-color-text-green: hsl(120, 100%, 70%);
 
 	--cl-color-input: hsl(0, 0%, 3%);
 	--cl-color-input-hover: hsl(0, 0%, 6%);

@@ -1,9 +1,12 @@
+import type { GameStatus } from "../enums/GameStatus";
+
 export abstract class GameShape {
 	abstract id: string;
 	abstract name: string;
 	abstract iconUrl: string | null;
 	abstract bannerUrl: string | null;
 	abstract capsuleUrl: string | null;
+	abstract status: GameStatus;
 
 	/**
 	 * Launches the game.

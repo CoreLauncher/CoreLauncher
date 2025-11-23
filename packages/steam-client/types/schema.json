@@ -98,6 +98,10 @@
 			"required": ["libraryfolders"],
 			"additionalProperties": false
 		},
+		"SteamAppStatus": {
+			"type": "number",
+			"enum": [0, 1, 2, 3]
+		},
 		"SteamAppInfo": {
 			"type": "object",
 			"properties": {

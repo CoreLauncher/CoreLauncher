@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "./LibraryList.css";
 import { Button, Input } from "@corelauncher/react";
+import { GameStatus } from "@corelauncher/types";
+import clsx from "clsx";
 import { Question, ViewList } from "react-bootstrap-icons";
 import useGames from "../../../hooks/useGames";
 import VerticalList from "../../Atoms/VerticalList/VerticalList";
@@ -92,7 +94,15 @@ export default function LibraryList({
 						key={game.id}
 						type="button"
 						onClick={() => onSelect?.(game.id)}
-						className={`game ${game.id === selected ? "selected" : ""}`}
+						className={clsx("game", {
+							selected: game.id === selected,
+							running: game.status === GameStatus.Running,
+							installed: game.status === GameStatus.Installed,
+							"not-installed": game.status === GameStatus.NotInstalled,
+							updating: game.status === GameStatus.Updating,
+							"update-available": game.status === GameStatus.UpdateAvailable,
+							unknown: game.status === GameStatus.Unknown,
+						})}
 					>
 						{game.icon ? (
 							<img className="game-icon" src={game.icon} aria-hidden />

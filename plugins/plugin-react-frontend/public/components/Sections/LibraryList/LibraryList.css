@@ -41,11 +41,6 @@
 
 			transition: backdrop-filter 0.2s ease-in-out;
 
-			&:hover,
-			&.selected {
-				backdrop-filter: brightness(0.5);
-			}
-
 			.game-icon {
 				display: flex;
 				align-items: center;
@@ -61,6 +56,25 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
+			}
+
+			&:hover,
+			&.selected {
+				backdrop-filter: brightness(0.5);
+			}
+
+			&.running p {
+				color: var(--cl-color-text-green);
+			}
+
+			&.not-installed p,
+			&.unknown p {
+				color: var(--cl-color-text-muted);
+			}
+
+			&.updating p,
+			&.update-available p {
+				color: var(--color-text-blue);
 			}
 		}
 	}

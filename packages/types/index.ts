@@ -1,5 +1,7 @@
 export { PluginClass } from "./classes/PluginClass";
 
+export { GameStatus } from "./enums/GameStatus";
+
 export { AccountInstanceShape } from "./shapes/AccountInstanceShape";
 export { AccountProviderShape } from "./shapes/AccountProviderShape";
 export { GameShape } from "./shapes/GameShape";

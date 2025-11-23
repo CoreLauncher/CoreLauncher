@@ -1,5 +1,5 @@
-import type { SteamApp } from "@corelauncher/steam-client";
-import type { GameShape } from "@corelauncher/types";
+import { type SteamApp, SteamAppStatus } from "@corelauncher/steam-client";
+import { type GameShape, GameStatus } from "@corelauncher/types";
 import open from "open";
 
 export default class SteamGame implements GameShape {
@@ -15,6 +15,13 @@ export default class SteamGame implements GameShape {
 
 	get name() {
 		return this.app.name;
+	}
+
+	get status() {
+		const status = this.app.getStatus();
+		if (status === SteamAppStatus.Installed) return GameStatus.Installed;
+		if (status === SteamAppStatus.NotInstalled) return GameStatus.NotInstalled;
+		return GameStatus.Unknown;
 	}
 
 	get iconUrl() {
