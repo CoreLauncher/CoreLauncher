@@ -1,11 +1,12 @@
 import { type SteamApp, SteamAppStatus } from "@corelauncher/steam-client";
-import { type GameShape, GameStatus } from "@corelauncher/types";
+import { GameShape, GameStatus } from "@corelauncher/types";
 import open from "open";
 
-export default class SteamGame implements GameShape {
+export default class SteamGame extends GameShape implements GameShape {
 	app: SteamApp;
 
 	constructor(app: SteamApp) {
+		super();
 		this.app = app;
 	}
 

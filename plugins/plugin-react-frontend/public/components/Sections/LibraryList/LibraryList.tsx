@@ -4,7 +4,7 @@ import { Button, Input } from "@corelauncher/react";
 import { GameStatus } from "@corelauncher/types";
 import clsx from "clsx";
 import { Question, ViewList } from "react-bootstrap-icons";
-import useGames from "../../../hooks/useGames";
+import { useGameStore } from "../../../stores/GameStore";
 import VerticalList from "../../Atoms/VerticalList/VerticalList";
 
 export default function LibraryList({
@@ -17,7 +17,7 @@ export default function LibraryList({
 	onHome?: () => void;
 }) {
 	const [query, setQuery] = useState("");
-	const games = useGames();
+	const games = useGameStore((state) => state.games);
 	const divRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -104,8 +104,8 @@ export default function LibraryList({
 							unknown: game.status === GameStatus.Unknown,
 						})}
 					>
-						{game.icon ? (
-							<img className="game-icon" src={game.icon} aria-hidden />
+						{game.iconUrl ? (
+							<img className="game-icon" src={game.iconUrl} aria-hidden />
 						) : (
 							<div className="game-icon">
 								<Question />

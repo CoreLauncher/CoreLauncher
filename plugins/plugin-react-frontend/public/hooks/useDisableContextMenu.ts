@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import useApplicationVersion from "./useApplicationVersion";
+import { useApplicationStore } from "../stores/ApplicationStore";
 
 export default function useDisableContextMenu() {
-	const version = useApplicationVersion();
+	const environment = useApplicationStore((store) => store.environment);
 
 	useEffect(() => {
 		function onContextMenu(event: MouseEvent) {
-			if (version.environment === "development") return;
+			if (environment === "development") return;
 			event.preventDefault();
 		}
 
@@ -14,5 +14,5 @@ export default function useDisableContextMenu() {
 		return () => {
 			document.removeEventListener("contextmenu", onContextMenu);
 		};
-	}, [version]);
+	}, [environment]);
 }

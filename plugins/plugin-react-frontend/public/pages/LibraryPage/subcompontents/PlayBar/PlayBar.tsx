@@ -1,6 +1,7 @@
 import { type Icon, PlayFill } from "react-bootstrap-icons";
 import "./PlayBar.css";
-import { fetchLaunchGame } from "../../../../functions/api";
+import { MessageType } from "../../../../../types/messages";
+import Socket from "../../../../classes/Socket";
 import type { Game } from "../../../../types";
 
 export default function PlayBar({
@@ -11,7 +12,9 @@ export default function PlayBar({
 	game: Game;
 }) {
 	function onPlay() {
-		fetchLaunchGame(game.id);
+		Socket.instance.send(MessageType.LaunchGame, {
+			id: game.id,
+		});
 	}
 
 	return (

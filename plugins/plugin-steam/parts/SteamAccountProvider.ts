@@ -3,8 +3,7 @@ import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { dataToDataURL } from "@corelauncher/file-to-dataurl";
 import { isProduction } from "@corelauncher/is-production";
 import type { JSONValue } from "@corelauncher/json-value";
-import { TypedEmitter } from "@corelauncher/typed-emitter";
-import type { AccountProviderShape } from "@corelauncher/types";
+import { AccountProviderShape } from "@corelauncher/types";
 import SteamSVG from "bootstrap-icons/icons/steam.svg" with { type: "file" };
 import { env } from "bun";
 import getPort from "get-port";
@@ -28,14 +27,11 @@ interface SteamAccountProviderEvents {
 	connection: (data: AccountData) => void;
 }
 
-export class SteamAccountProvider
-	extends TypedEmitter<SteamAccountProviderEvents>
-	implements AccountProviderShape
-{
+export class SteamAccountProvider extends AccountProviderShape<SteamAccountProviderEvents> {
 	id = "steam";
 	name = "Steam";
 	color = "#1a9fff";
-	logo = dataToDataURL(
+	logoUrl = dataToDataURL(
 		recolorSVG(readFileSync(SteamSVG, "utf-8"), "#ffffff"),
 		"image/svg+xml",
 	);

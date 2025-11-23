@@ -1,6 +1,6 @@
 import packageJSON from "../../../package.json";
 
-export async function getVersion() {
+export function getVersion() {
 	return packageJSON.version;
 }
 

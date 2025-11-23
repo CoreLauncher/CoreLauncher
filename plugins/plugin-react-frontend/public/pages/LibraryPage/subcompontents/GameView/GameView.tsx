@@ -4,10 +4,10 @@ import PlayBar from "../PlayBar/PlayBar";
 import "./GameView.css";
 import { Block } from "@corelauncher/react";
 import LogoPattern from "../../../../components/Atoms/LogoPattern/LogoPattern";
-import useGame from "../../../../hooks/useGame";
+import { useGameStore } from "../../../../stores/GameStore";
 
 export default function GameView({ gameId }: { gameId: string }) {
-	const game = useGame(gameId);
+	const game = useGameStore((state) => state.getGame(gameId));
 	if (!game) throw new Error(`Game with ID ${gameId} not found`);
 
 	return (
@@ -15,10 +15,12 @@ export default function GameView({ gameId }: { gameId: string }) {
 			<Block
 				className="banner"
 				style={{
-					backgroundImage: game.banner ? `url(${game.banner})` : undefined,
+					backgroundImage: game.bannerUrl
+						? `url(${game.bannerUrl})`
+						: undefined,
 				}}
 			>
-				{!game.banner && <LogoPattern />}
+				{!game.bannerUrl && <LogoPattern />}
 				<PlayBar
 					game={game}
 					meta={[

@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import useGame from "../../../hooks/useGame";
 import "./GameCapsule.css";
+import { useGameStore } from "../../../stores/GameStore";
 
 export default function GameCapsule({
 	id,
@@ -11,7 +11,7 @@ export default function GameCapsule({
 	onClick?: () => void;
 	className?: string;
 }) {
-	const game = useGame(id);
+	const game = useGameStore((state) => state.getGame(id));
 	if (!game) throw new Error(`Game with id ${id} not found`);
 
 	return (
@@ -24,7 +24,9 @@ export default function GameCapsule({
 			}}
 		>
 			<p>{game.name}</p>
-			{game.capsule && <img src={game.capsule} aria-label="game capsule" />}
+			{game.capsuleUrl && (
+				<img src={game.capsuleUrl} aria-label="game capsule" />
+			)}
 		</button>
 	);
 }

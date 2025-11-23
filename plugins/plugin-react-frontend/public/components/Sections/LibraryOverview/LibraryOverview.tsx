@@ -1,4 +1,4 @@
-import useGames from "../../../hooks/useGames";
+import { useGameStore } from "../../../stores/GameStore";
 import GameCapsule from "../../Atoms/GameCapsule/GameCapsule";
 import "./LibraryOverview.css";
 
@@ -7,7 +7,7 @@ export default function LibraryOverview({
 }: {
 	onSelect?: (gameId: string) => void;
 }) {
-	const games = useGames();
+	const games = useGameStore((state) => state.games);
 
 	return (
 		<div className="LibraryOverview">

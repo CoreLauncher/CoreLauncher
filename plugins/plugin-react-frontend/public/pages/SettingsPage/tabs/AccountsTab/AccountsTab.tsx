@@ -1,6 +1,6 @@
-import { fetchConnectAccountProvider } from "../../../../functions/api";
-import useAccountInstances from "../../../../hooks/useAccountInstances";
-import useAccountProviders from "../../../../hooks/useAccountProviders";
+import { MessageType } from "../../../../../types/messages";
+import Socket from "../../../../classes/Socket";
+import { useAccountStore } from "../../../../stores/AccountStore";
 import "./AccountsTab.css";
 import { QuestionLg } from "react-bootstrap-icons";
 
@@ -9,9 +9,13 @@ export default function AccountsTab({
 }: {
 	isVisible?: boolean;
 }) {
-	const accountProviders = useAccountProviders();
-	const accountInstances = useAccountInstances();
+	const accountProviders = useAccountStore((store) => store.providers);
+	const accountInstances = useAccountStore((store) => store.accounts);
 	if (!isVisible) return null;
+
+	function connect(id: string) {
+		Socket.instance.send(MessageType.StartAccountProviderConnection, { id });
+	}
 
 	return (
 		<div className="AccountsTab">
@@ -24,9 +28,9 @@ export default function AccountsTab({
 							type="button"
 							className="account-button"
 							style={{ ["--color" as string]: provider.color }}
-							onClick={() => fetchConnectAccountProvider(provider.id)}
+							onClick={() => connect(provider.id)}
 						>
-							<img src={provider.logo} alt={`${provider.name} logo`} />
+							<img src={provider.logoUrl} alt={`${provider.name} logo`} />
 						</button>
 					))}
 				</div>
@@ -45,7 +49,7 @@ export default function AccountsTab({
 							<div>
 								<p className="account-name">{instance.name}</p>
 								<div className="account-provider">
-									<img src={provider.logo} alt="Provider Logo" />
+									<img src={provider.logoUrl} alt="Provider Logo" />
 									<p>{provider.name} Account</p>
 								</div>
 							</div>

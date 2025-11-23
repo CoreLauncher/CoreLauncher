@@ -1,4 +1,4 @@
-import { type GameShape, GameStatus } from "@corelauncher/types";
+import { GameShape, GameStatus } from "@corelauncher/types";
 import open from "open";
 
 type EpicGameOptions = {
@@ -6,7 +6,7 @@ type EpicGameOptions = {
 	name: string;
 };
 
-export default class EpicGame implements GameShape {
+export default class EpicGame extends GameShape implements GameShape {
 	id: string;
 	name: string;
 	status = GameStatus.Installed;
@@ -17,6 +17,8 @@ export default class EpicGame implements GameShape {
 	private rawId: string;
 
 	constructor(options: EpicGameOptions) {
+		super();
+
 		this.id = `epic:${options.id}`;
 		this.name = options.name;
 

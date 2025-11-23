@@ -1,19 +1,18 @@
 import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { isProduction } from "@corelauncher/is-production";
-import type { JSONValue } from "@corelauncher/json-value";
-// import { Tray } from "@corelauncher/tray";
 import {
 	PluginClass,
 	type PluginPortal,
 	type PluginShape,
 } from "@corelauncher/types";
-import type { BunRequest, ServerWebSocket } from "bun";
-import getPort from "get-port";
 import temporaryDirectory from "temp-dir";
-import indexHTML from "./public/index.html";
+import Server from "./classes/Server";
+import {
+	type LaunchGameMessage,
+	MessageType,
+	type StartAccountProviderConnectionMessage,
+} from "./types/messages";
 import { getVersion } from "./util/version" with { type: "macro" };
-
-const port = await getPort({ port: isProduction ? undefined : 3000 });
 
 const icon = await import("../../icon.ico", {
 	with: { type: "file" },
@@ -28,86 +27,17 @@ export const description =
 	"A pretty frontend for CoreLauncher using React and a browserview.";
 
 export class Plugin extends PluginClass implements PluginShape {
-	private server: Bun.Server<never>;
+	private server: Server;
 	private window: Window;
-	private publishedData: Record<string, JSONValue> = {};
-	// tray: Tray;
 	constructor(portal: PluginPortal) {
 		super();
 
-		const serveOptions = {
-			port,
-			hostname: "localhost",
-			development: {
-				hmr: true,
-				console: true,
-			},
-			websocket: {
-				open: (ws: ServerWebSocket<never>) => {
-					ws.subscribe("client");
-
-					// Send all previously published data to the newly connected client
-					// We use a slight delay to ensure the client is ready to receive messages
-					// Was previously an issue on webkitgtk
-					setTimeout(() => {
-						for (const event in this.publishedData) {
-							ws.send(
-								JSON.stringify({
-									type: event,
-									data: this.publishedData[event],
-								}),
-							);
-						}
-					}, 10);
-				},
-				message: () => {},
-			},
-			routes: {
-				"/": indexHTML,
-
-				"/api/events": (request) => {
-					this.server.upgrade(request);
-				},
-
-				"/api/application/version": async () => {
-					return Response.json({
-						version: getVersion(),
-						environment: isProduction ? "production" : "development",
-					});
-				},
-
-				"/api/games/launch/:id": {
-					POST: async (request: BunRequest<"/api/games/launch/:id">) => {
-						const gameId = request.params.id;
-						const game = portal.getGame(gameId);
-
-						const result = await game.launch();
-						return Response.json(result);
-					},
-				},
-
-				"/api/account-providers/:id/connect": {
-					POST: async (
-						request: BunRequest<"/api/account-providers/:id/connect">,
-					) => {
-						const providerId = request.params.id;
-						const provider = portal.getAccountProvider(providerId);
-
-						const result = await provider.connect();
-						return Response.json(result);
-					},
-				},
-			},
-		} as Parameters<typeof Bun.serve>[0];
-
-		console.info(`Starting internal server on http://localhost:${port}`);
-
-		this.server = Bun.serve(serveOptions);
+		this.server = new Server();
 
 		const windowOptions = {
 			debug: !isProduction,
 			title: "CoreLauncher",
-			url: `http://localhost:${port}`,
+			url: this.server.url,
 			show: portal.arguments[0] !== "hidden",
 			size: {
 				width: 1200,
@@ -119,57 +49,59 @@ export class Plugin extends PluginClass implements PluginShape {
 		this.window = new Window(windowOptions);
 		this.window.on("close", () => {});
 
-		// this.tray = new Tray();
-		// this.tray.setLabel("CoreLauncher");
-		// this.tray.setIcon(tempIcon);
-		// this.tray.on("click", () => {
-		// 	console.log("Tray Icon Clicked!", this.window.shown);
-		// 	if (this.window.shown) return;
-		// 	this.window.show();
-		// });
+		this.server.send(
+			MessageType.ApplicationInformation,
+			{
+				version: getVersion(),
+				environment: isProduction ? "production" : "development",
+			},
+			true,
+		);
+
+		this.server.on("message", (type, message) => {
+			if (type !== MessageType.LaunchGame) return;
+			const data = message as LaunchGameMessage;
+			const game = portal.getGame(data.id);
+			game.launch();
+		});
+
+		this.server.on("message", (type, message) => {
+			if (type !== MessageType.StartAccountProviderConnection) return;
+			const data = message as StartAccountProviderConnectionMessage;
+			const provider = portal.getAccountProvider(data.id);
+			provider.connect();
+		});
 
 		portal.on("games", (games) => {
-			this.publish(
-				"games",
-				games.map((game) => ({
-					id: game.id,
-					name: game.name,
-					status: game.status,
-					icon: game.iconUrl,
-					banner: game.bannerUrl,
-					capsule: game.capsuleUrl,
-				})),
+			this.server.send(
+				MessageType.GamesUpdated,
+				{
+					games: games.map((game) => game.toJSON()),
+				},
+				true,
 			);
 		});
 
 		portal.on("account_providers", (providers) => {
-			this.publish(
-				"account_providers",
-				providers.map((provider) => ({
-					id: provider.id,
-					name: provider.name,
-					color: provider.color,
-					logo: provider.logo,
-				})),
+			this.server.send(
+				MessageType.AccountProvidersUpdated,
+				{
+					providers: providers.map((provider) => provider.toJSON()),
+				},
+				true,
 			);
 		});
 
-		portal.on("account_instances", (instances) => {
-			this.publish(
-				"account_instances",
-				instances.map((instance) => ({
-					id: instance.id,
-					name: instance.name,
-					providerId: instance.providerId,
-				})),
+		portal.on("account_instances", (accounts) => {
+			this.server.send(
+				MessageType.AccountInstancesUpdated,
+				{
+					accounts: accounts.map((account) => account.toJSON()),
+				},
+				true,
 			);
 		});
 
 		this.emit("ready");
-	}
-
-	private publish(type: string, data: JSONValue) {
-		this.publishedData[type] = data;
-		this.server.publish("client", JSON.stringify({ type, data }));
 	}
 }

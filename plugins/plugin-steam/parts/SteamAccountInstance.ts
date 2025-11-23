@@ -1,16 +1,12 @@
 import { SteamClient } from "@corelauncher/steam-client";
-import { TypedEmitter } from "@corelauncher/typed-emitter";
-import type { AccountInstanceShape } from "@corelauncher/types";
+import { AccountInstanceShape } from "@corelauncher/types";
 import SteamGame from "./SteamGame";
 
 interface SteamAccountInstanceEvents {
 	games: (games: SteamGame[]) => void;
 }
 
-export default class SteamAccountInstance
-	extends TypedEmitter<SteamAccountInstanceEvents>
-	implements AccountInstanceShape
-{
+export default class SteamAccountInstance extends AccountInstanceShape<SteamAccountInstanceEvents> {
 	providerId = "steam";
 
 	id: string;
