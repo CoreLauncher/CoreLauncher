@@ -9,13 +9,16 @@ export default function LibraryPage({
 }: {
 	isVisible?: boolean;
 }) {
-	const [selected, setSelected] = useState<string | undefined>(undefined);
-
+	const [selected, setSelected] = useState<string | null>(null);
 	if (!isVisible) return null;
 
 	return (
 		<main className="LibraryPage">
-			<LibraryList selected={selected} onSelect={setSelected} />
+			<LibraryList
+				selected={selected}
+				onSelect={setSelected}
+				onHome={() => setSelected(null)}
+			/>
 			{selected ? (
 				<GameView gameId={selected} />
 			) : (

@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import "./LibraryList.css";
-import { Input } from "@corelauncher/react";
-import { Question } from "react-bootstrap-icons";
+import { Button, Input } from "@corelauncher/react";
+import { HouseFill, Question } from "react-bootstrap-icons";
 import useGames from "../../../hooks/useGames";
 import VerticalList from "../../Atoms/VerticalList/VerticalList";
 
 export default function LibraryList({
 	selected,
 	onSelect,
+	onHome,
 }: {
-	selected?: string;
+	selected?: string | null;
 	onSelect?: (id: string) => void;
+	onHome?: () => void;
 }) {
 	const [query, setQuery] = useState("");
 	const games = useGames();
@@ -69,7 +71,12 @@ export default function LibraryList({
 
 	return (
 		<div className="LibraryList" ref={divRef}>
-			<Input type="text" placeholder="Search..." onChange={onQuery} />
+			<div className="search">
+				<Button className="home" onClick={onHome}>
+					<HouseFill />
+				</Button>
+				<Input type="text" placeholder="Search..." onChange={onQuery} />
+			</div>
 			<VerticalList
 				className="games"
 				gap={0}

@@ -1,14 +1,21 @@
+import clsx from "clsx";
 import "./Button.css";
 
 export function Button({
-	children,
 	onClick,
+	className,
+	children,
 }: {
-	children?: React.ReactNode;
 	onClick?: () => void;
+	className?: string;
+	children?: React.ReactNode;
 }) {
 	return (
-		<button className="cl-button" type="button" onClick={onClick}>
+		<button
+			className={clsx("cl-button", className)}
+			type="button"
+			onClick={onClick}
+		>
 			{children}
 		</button>
 	);
