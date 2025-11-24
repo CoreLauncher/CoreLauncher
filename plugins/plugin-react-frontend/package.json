@@ -16,7 +16,6 @@
 		"zustand": "^5.0.8"
 	},
 	"devDependencies": {
-		"@corelauncher/json-value": "*",
 		"@types/react": "^19.2.6",
 		"@types/react-dom": "^19.2.3"
 	}

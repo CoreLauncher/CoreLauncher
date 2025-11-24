@@ -4,7 +4,6 @@
 		"@corelauncher/database": "*",
 		"@corelauncher/react": "*",
 		"@corelauncher/types": "*",
-		"@corelauncher/typed-emitter": "*",
 		"@corelauncher/is-production": "*",
 		"@corelauncher/file-to-dataurl": "*",
 		"@corelauncher/steam-client": "*",

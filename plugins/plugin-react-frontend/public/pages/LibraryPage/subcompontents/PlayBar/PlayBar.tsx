@@ -2,18 +2,17 @@ import { type Icon, PlayFill } from "react-bootstrap-icons";
 import "./PlayBar.css";
 import { MessageType } from "../../../../../types/messages";
 import Socket from "../../../../classes/Socket";
-import type { Game } from "../../../../types";
 
 export default function PlayBar({
 	meta = [],
 	game,
 }: {
 	meta?: { icon: Icon; title: string; content: string }[];
-	game: Game;
+	game: string;
 }) {
 	function onPlay() {
 		Socket.instance.send(MessageType.LaunchGame, {
-			id: game.id,
+			id: game,
 		});
 	}
 

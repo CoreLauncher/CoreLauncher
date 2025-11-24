@@ -22,7 +22,7 @@ export default function GameView({ gameId }: { gameId: string }) {
 			>
 				{!game.bannerUrl && <LogoPattern />}
 				<PlayBar
-					game={game}
+					game={game.id}
 					meta={[
 						{ icon: Activity, title: "Last played", content: "Never" },
 						{ icon: ClockHistory, title: "Playtime", content: "Unknown" },
