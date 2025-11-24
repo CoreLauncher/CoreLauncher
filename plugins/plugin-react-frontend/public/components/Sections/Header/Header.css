@@ -68,6 +68,7 @@
 		justify-content: center;
 
 		aspect-ratio: 1 / 1;
+
 		background-color: transparent;
 		border: none;
 		border-radius: 5px;
@@ -75,7 +76,7 @@
 		transition: background-color 0.2s ease-in-out;
 
 		&:hover {
-			background-color: var(--cl-color-block);
+			background-color: var(--cl-color-accent);
 		}
 	}
 
