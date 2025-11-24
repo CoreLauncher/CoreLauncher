@@ -25,8 +25,8 @@ export default class Server extends TypedEmitter<ServerEvents> {
 			port,
 			hostname: "localhost",
 			development: {
-				hmr: isProduction,
-				console: isProduction,
+				hmr: !isProduction,
+				console: !isProduction,
 			},
 			websocket: {
 				open: (ws: ServerWebSocket<never>) => {
