@@ -26,7 +26,7 @@ export const name = "React frontend";
 export const description =
 	"A pretty frontend for CoreLauncher using React and a browserview.";
 
-export class Plugin extends PluginClass implements PluginShape {
+export class Plugin extends PluginClass {
 	private server: Server;
 	private window: Window;
 	constructor(portal: PluginPortal) {

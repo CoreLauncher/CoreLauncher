@@ -1,6 +1,6 @@
 import Transport from "./Transport";
 
-export default class WebsocketTransport extends Transport implements Transport {
+export default class WebsocketTransport extends Transport {
 	connection: WebSocket | null = null;
 
 	/**

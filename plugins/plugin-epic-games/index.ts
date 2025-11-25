@@ -10,7 +10,7 @@ export const format = 1;
 export const name = "Epic Games";
 export const description = "Allows you to launch Epic Games from CoreLauncher.";
 
-export class Plugin extends PluginClass implements PluginShape {
+export class Plugin extends PluginClass {
 	constructor() {
 		super();
 

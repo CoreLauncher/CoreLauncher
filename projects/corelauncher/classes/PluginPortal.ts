@@ -8,10 +8,7 @@ import type PluginManager from "./PluginManager";
 /**
  * The PluginPortal class is a plugins way to access the resources from other plugins.
  */
-export default class PluginPortal
-	extends AbstractPluginPortal
-	implements AbstractPluginPortal
-{
+export default class PluginPortal extends AbstractPluginPortal {
 	container: PluginContainer;
 	pluginManager: PluginManager;
 	constructor(container: PluginContainer) {

@@ -6,7 +6,7 @@ type EpicGameOptions = {
 	name: string;
 };
 
-export default class EpicGame extends GameShape implements GameShape {
+export default class EpicGame extends GameShape {
 	id: string;
 	name: string;
 	status = GameStatus.Installed;

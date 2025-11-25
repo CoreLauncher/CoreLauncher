@@ -18,7 +18,7 @@ export const name = "Steam";
 export const description =
 	"Allows you to launch Steam games from CoreLauncher.";
 
-export class Plugin extends PluginClass implements PluginShape {
+export class Plugin extends PluginClass {
 	constructor(portal: PluginPortal) {
 		super();
 
