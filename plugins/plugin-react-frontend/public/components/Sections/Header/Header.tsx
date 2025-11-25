@@ -1,5 +1,3 @@
-import { X } from "react-bootstrap-icons";
-
 import "./Header.css";
 import { Logo } from "@corelauncher/react";
 import clsx from "clsx";

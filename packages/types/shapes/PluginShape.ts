@@ -7,7 +7,7 @@ import type { AccountInstanceShape } from "./AccountInstanceShape";
 import type { AccountProviderShape } from "./AccountProviderShape";
 import type { GameShape } from "./GameShape";
 
-interface PluginShapeEvents {
+export interface PluginShapeEvents {
 	ready: () => void;
 	games: (games: GameShape[]) => void;
 	account_providers: (providers: AccountProviderShape[]) => void;
@@ -17,7 +17,7 @@ interface PluginShapeEvents {
 export abstract class PluginShape<
 	L extends ListenerSignature<L> = ListenerSignature<unknown>,
 > extends TypedEmitter<PluginShapeEvents & L> {
-	constructor(portal: PluginPortal) {
+	constructor(_portal: PluginPortal) {
 		super();
 	}
 }
