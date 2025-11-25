@@ -1,9 +1,20 @@
-import type { GameStatus } from "../enums/GameStatus";
+import type {
+	DefaultListener,
+	ListenerSignature,
+} from "@corelauncher/typed-emitter";
+import { TypedEmitter } from "@corelauncher/typed-emitter";
+import type { GameState } from "../enums/GameState";
 
-export abstract class GameShape {
+interface GameShapeEvents {
+	"state-changed": (newStatus: GameState, oldStatus: GameState) => void;
+}
+
+export abstract class GameShape<
+	L extends ListenerSignature<L> = DefaultListener,
+> extends TypedEmitter<GameShapeEvents & L> {
 	abstract id: string;
 	abstract name: string;
-	abstract status: GameStatus;
+	abstract state: GameState;
 	abstract iconUrl: string | null;
 	abstract bannerUrl: string | null;
 	abstract capsuleUrl: string | null;
@@ -18,7 +29,7 @@ export abstract class GameShape {
 		return {
 			id: this.id,
 			name: this.name,
-			status: this.status,
+			state: this.state,
 			iconUrl: this.iconUrl,
 			bannerUrl: this.bannerUrl,
 			capsuleUrl: this.capsuleUrl,

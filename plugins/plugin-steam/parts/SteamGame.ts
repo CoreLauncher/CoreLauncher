@@ -1,5 +1,5 @@
-import { type SteamApp, SteamAppStatus } from "@corelauncher/steam-client";
-import { GameShape, GameStatus } from "@corelauncher/types";
+import { type SteamApp, SteamAppState } from "@corelauncher/steam-client";
+import { GameShape, GameState } from "@corelauncher/types";
 import open from "open";
 
 export default class SteamGame extends GameShape {
@@ -8,6 +8,13 @@ export default class SteamGame extends GameShape {
 	constructor(app: SteamApp) {
 		super();
 		this.app = app;
+
+		let oldState: GameState = this.state;
+		setInterval(() => {
+			const newState = this.state;
+			if (newState !== oldState) this.emit("state-changed", newState, oldState);
+			oldState = newState;
+		}, 5000);
 	}
 
 	get id() {
@@ -18,12 +25,12 @@ export default class SteamGame extends GameShape {
 		return this.app.name;
 	}
 
-	get status() {
-		const status = this.app.getStatus();
-		if (status === SteamAppStatus.Running) return GameStatus.Running;
-		if (status === SteamAppStatus.Installed) return GameStatus.Installed;
-		if (status === SteamAppStatus.NotInstalled) return GameStatus.NotInstalled;
-		return GameStatus.Unknown;
+	get state() {
+		const status = this.app.getState();
+		if (status === SteamAppState.Running) return GameState.Running;
+		if (status === SteamAppState.Installed) return GameState.Installed;
+		if (status === SteamAppState.NotInstalled) return GameState.NotInstalled;
+		return GameState.Unknown;
 	}
 
 	get iconUrl() {

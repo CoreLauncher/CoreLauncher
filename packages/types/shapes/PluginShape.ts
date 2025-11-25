@@ -1,4 +1,8 @@
-import { TypedEmitter } from "@corelauncher/typed-emitter";
+import {
+	type DefaultListener,
+	type ListenerSignature,
+	TypedEmitter,
+} from "@corelauncher/typed-emitter";
 import type { PluginPortal } from "../types/PluginPortal";
 import type { AccountInstanceShape } from "./AccountInstanceShape";
 import type { AccountProviderShape } from "./AccountProviderShape";
@@ -11,9 +15,18 @@ export interface PluginShapeEvents {
 	account_instances: (instances: AccountInstanceShape[]) => void;
 }
 
-export abstract class PluginShape extends TypedEmitter<PluginShapeEvents> {
-	// biome-ignore lint/correctness/noUnusedFunctionParameters: <Its for typing>
+export abstract class PluginShape<
+	L extends ListenerSignature<L> = DefaultListener,
+> extends TypedEmitter<PluginShapeEvents & L> {
+	// biome-ignore lint/complexity/noUselessConstructor: no
 	constructor(portal: PluginPortal) {
 		super();
+
+		// this.once("ready", () => {
+		// 	if (this.listeners("ready").length === 1) return;
+		// 	setImmediate(() => {
+		// 		this.emit("ready");
+		// 	});
+		// });
 	}
 }

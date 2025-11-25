@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./LibraryList.css";
 import { Button, Input } from "@corelauncher/react";
-import { GameStatus } from "@corelauncher/types";
+import { GameState } from "@corelauncher/types";
 import clsx from "clsx";
 import { Question, ViewList } from "react-bootstrap-icons";
 import { useGameStore } from "../../../stores/GameStore";
@@ -96,12 +96,12 @@ export default function LibraryList({
 						onClick={() => onSelect?.(game.id)}
 						className={clsx("game", {
 							selected: game.id === selected,
-							running: game.status === GameStatus.Running,
-							installed: game.status === GameStatus.Installed,
-							"not-installed": game.status === GameStatus.NotInstalled,
-							updating: game.status === GameStatus.Updating,
-							"update-available": game.status === GameStatus.UpdateAvailable,
-							unknown: game.status === GameStatus.Unknown,
+							running: game.state === GameState.Running,
+							installed: game.state === GameState.Installed,
+							"not-installed": game.state === GameState.NotInstalled,
+							updating: game.state === GameState.Updating,
+							"update-available": game.state === GameState.UpdateAvailable,
+							unknown: game.state === GameState.Unknown,
 						})}
 					>
 						{game.iconUrl ? (
