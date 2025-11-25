@@ -98,6 +98,6 @@ export class Plugin extends PluginShape {
 			);
 		});
 
-		this.emit("ready");
+		setImmediate(() => this.emit("ready"));
 	}
 }
