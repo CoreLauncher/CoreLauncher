@@ -1,10 +1,6 @@
 import { join } from "node:path";
 import createDatabase from "@corelauncher/database";
-import {
-	PluginClass,
-	type PluginPortal,
-	type PluginShape,
-} from "@corelauncher/types";
+import { type PluginPortal, PluginShape } from "@corelauncher/types";
 import { migrations } from "./migrations";
 import SteamAccountInstance from "./parts/SteamAccountInstance";
 import { SteamAccountProvider } from "./parts/SteamAccountProvider";
@@ -18,9 +14,9 @@ export const name = "Steam";
 export const description =
 	"Allows you to launch Steam games from CoreLauncher.";
 
-export class Plugin extends PluginClass {
+export class Plugin extends PluginShape {
 	constructor(portal: PluginPortal) {
-		super();
+		super(portal);
 
 		noop().then(async () => {
 			const database = await createDatabase<Database>(

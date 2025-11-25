@@ -1,4 +1,4 @@
-import { PluginClass, type PluginShape } from "@corelauncher/types";
+import { type PluginPortal, PluginShape } from "@corelauncher/types";
 import EpicGame from "./parts/EpicGame.ts";
 import { getEpicGames } from "./util/epic";
 import { getEpicInstalled } from "./util/registry.ts";
@@ -10,9 +10,9 @@ export const format = 1;
 export const name = "Epic Games";
 export const description = "Allows you to launch Epic Games from CoreLauncher.";
 
-export class Plugin extends PluginClass {
-	constructor() {
-		super();
+export class Plugin extends PluginShape {
+	constructor(portal: PluginPortal) {
+		super(portal);
 
 		noop().then(async () => {
 			if (!(await getEpicInstalled())) return this.emit("ready");

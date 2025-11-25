@@ -1,10 +1,6 @@
 import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { isProduction } from "@corelauncher/is-production";
-import {
-	PluginClass,
-	type PluginPortal,
-	type PluginShape,
-} from "@corelauncher/types";
+import { type PluginPortal, PluginShape } from "@corelauncher/types";
 import temporaryDirectory from "temp-dir";
 import Server from "./classes/Server";
 import {
@@ -26,11 +22,11 @@ export const name = "React frontend";
 export const description =
 	"A pretty frontend for CoreLauncher using React and a browserview.";
 
-export class Plugin extends PluginClass {
+export class Plugin extends PluginShape {
 	private server: Server;
 	private window: Window;
 	constructor(portal: PluginPortal) {
-		super();
+		super(portal);
 
 		this.server = new Server();
 
