@@ -126,6 +126,7 @@
         "@fontsource/inter": "^5.2.8",
         "clsx": "^2.1.1",
         "get-port": "^7.1.0",
+        "open": "^11.0.0",
         "react": "^19.2.0",
         "react-bootstrap-icons": "^1.11.6",
         "react-dom": "^19.2.0",

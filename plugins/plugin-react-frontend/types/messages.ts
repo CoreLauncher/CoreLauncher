@@ -11,6 +11,7 @@ export enum MessageType {
 	AccountProvidersUpdated = "AccountProvidersUpdated",
 	StartAccountProviderConnection = "StartAccountProviderConnection",
 	LaunchGame = "LaunchGame",
+	OpenExternalLink = "OpenExternalLink",
 }
 
 export interface ApplicationInformationMessage {
@@ -38,13 +39,18 @@ export type LaunchGameMessage = {
 	id: string;
 };
 
+export type OpenExternalLinkMessage = {
+	url: string;
+};
+
 export type Message =
 	| ApplicationInformationMessage
 	| GamesUpdatedMessage
 	| AccountInstancesUpdatedMessage
 	| AccountProvidersUpdatedMessages
 	| StartAccountProviderConnectionMessage
-	| LaunchGameMessage;
+	| LaunchGameMessage
+	| OpenExternalLinkMessage;
 
 export type MessageTypeMap = {
 	[MessageType.ApplicationInformation]: ApplicationInformationMessage;
@@ -53,4 +59,5 @@ export type MessageTypeMap = {
 	[MessageType.AccountProvidersUpdated]: AccountProvidersUpdatedMessages;
 	[MessageType.StartAccountProviderConnection]: StartAccountProviderConnectionMessage;
 	[MessageType.LaunchGame]: LaunchGameMessage;
+	[MessageType.OpenExternalLink]: OpenExternalLinkMessage;
 };

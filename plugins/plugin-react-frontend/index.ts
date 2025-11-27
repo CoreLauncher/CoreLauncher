@@ -1,11 +1,13 @@
 import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { isProduction } from "@corelauncher/is-production";
 import { type PluginPortal, PluginShape } from "@corelauncher/types";
+import open from "open";
 import temporaryDirectory from "temp-dir";
 import Server from "./classes/Server";
 import {
 	type LaunchGameMessage,
 	MessageType,
+	type OpenExternalLinkMessage,
 	type StartAccountProviderConnectionMessage,
 } from "./types/messages";
 import { getVersion } from "./util/version" with { type: "macro" };
@@ -53,6 +55,12 @@ export class Plugin extends PluginShape {
 			},
 			true,
 		);
+
+		this.server.on("message", (type, message) => {
+			if (type !== MessageType.OpenExternalLink) return;
+			const data = message as OpenExternalLinkMessage;
+			open(data.url);
+		});
 
 		this.server.on("message", (type, message) => {
 			if (type !== MessageType.LaunchGame) return;
