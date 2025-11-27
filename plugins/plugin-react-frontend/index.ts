@@ -76,21 +76,23 @@ export class Plugin extends PluginShape {
 			provider.connect();
 		});
 
-		portal.on("games", (games) => {
+		portal.on("games", () => {
 			this.server.send(
 				MessageType.GamesUpdated,
 				{
-					games: games.map((game) => game.toJSON()),
+					games: portal.getGames().map((game) => game.toJSON()),
 				},
 				true,
 			);
 		});
 
-		portal.on("account_providers", (providers) => {
+		portal.on("account_providers", () => {
 			this.server.send(
 				MessageType.AccountProvidersUpdated,
 				{
-					providers: providers.map((provider) => provider.toJSON()),
+					providers: portal
+						.getAccountProviders()
+						.map((provider) => provider.toJSON()),
 				},
 				true,
 			);
@@ -100,7 +102,10 @@ export class Plugin extends PluginShape {
 			this.server.send(
 				MessageType.AccountInstancesUpdated,
 				{
-					accounts: accounts.map((account) => account.toJSON()),
+					// Change this later
+					accounts: portal
+						.getAccountInstances()
+						.map((account) => account.toJSON()),
 				},
 				true,
 			);

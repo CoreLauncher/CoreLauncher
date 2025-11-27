@@ -71,4 +71,18 @@ export abstract class PluginPortal extends TypedEmitter<PluginPortalEvents> {
 	 * @throws {Error} If the account provider with the specified ID does not exist.
 	 */
 	abstract getAccountProvider(id: string): AccountProviderShape;
+
+	/**
+	 * Returns a list of account instances from all plugins.
+	 * @returns {AccountInstanceShape[]} An array of AccountInstanceShape objects.
+	 */
+	abstract getAccountInstances(): AccountInstanceShape[];
+
+	/**
+	 *
+	 * @param id The ID of the account instance to retrieve/
+	 * @return {AccountInstanceShape} The AccountInstanceShape object representing the account instance.
+	 * @throws {Error} If the account instance with the specified ID does not exist.
+	 */
+	abstract getAccountInstance(id: string): AccountInstanceShape;
 }
