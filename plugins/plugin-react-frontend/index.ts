@@ -47,6 +47,10 @@ export class Plugin extends PluginShape {
 		this.window = new Window(windowOptions);
 		this.window.on("close", () => {});
 
+		portal.on("app_instance", () => {
+			this.window.show();
+		});
+
 		this.server.send(
 			MessageType.ApplicationInformation,
 			{

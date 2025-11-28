@@ -2,7 +2,9 @@ import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { PluginExport, PluginShapeEvents } from "@corelauncher/types";
 import PluginContainer from "./PluginContainer";
 
-interface PluginManagerEvents extends PluginShapeEvents {}
+interface PluginManagerEvents extends PluginShapeEvents {
+	app_instance: (args: string[]) => void;
+}
 
 /**
  * Manages plugins for CoreLauncher.
@@ -58,4 +60,8 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 	// async enablePlugin(id: string) {}
 
 	// async disablePlugin(id: string) {}
+
+	propagateAppInstance(args: string[]) {
+		this.emit("app_instance", args);
+	}
 }

@@ -18,5 +18,9 @@ export default class CoreLauncher {
 		this.plugins.loadPlugin(ReactPlugin);
 		this.plugins.loadPlugin(SteamPlugin);
 		this.plugins.loadPlugin(EpicPlugin);
+
+		this.singleInstanceLock.on("instance", (args) => {
+			this.plugins.propagateAppInstance(args);
+		});
 	}
 }

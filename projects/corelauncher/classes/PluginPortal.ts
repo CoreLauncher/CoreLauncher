@@ -31,6 +31,10 @@ export default class PluginPortal extends AbstractPluginPortal {
 		this.pluginManager.on("account_instances", (instances) => {
 			this.emit("account_instances", instances);
 		});
+
+		this.pluginManager.on("app_instance", (args) => {
+			this.emit("app_instance", this.arguments);
+		});
 	}
 
 	get arguments() {

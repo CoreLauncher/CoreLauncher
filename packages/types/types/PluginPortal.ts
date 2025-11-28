@@ -26,6 +26,12 @@ interface PluginPortalEvents {
 	 * @param instances The updated list of account instances.
 	 */
 	account_instances: (instances: AccountInstanceShape[]) => void;
+
+	/**
+	 * This event emits when a second instance of the application is started.
+	 * @param args The command line arguments.
+	 */
+	app_instance: (args: string[]) => void;
 }
 
 /**
