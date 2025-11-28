@@ -98,7 +98,7 @@ export class Plugin extends PluginShape {
 			);
 		});
 
-		portal.on("account_instances", (accounts) => {
+		portal.on("account_instances", () => {
 			this.server.send(
 				MessageType.AccountInstancesUpdated,
 				{
