@@ -1,5 +1,5 @@
 import "@corelauncher/console-addon";
-// import hideConsole from "@corelauncher/console-hide";
+import hideConsole from "@corelauncher/console-hide";
 import CoreLauncher from "./classes/CoreLauncher";
 import InstallationManager from "./classes/InstallationManager";
 import SingleInstanceLock from "./classes/SingleInstanceLock";
@@ -16,6 +16,6 @@ await SingleInstanceLock.check();
 await installation.checkApply();
 await installation.checkUpdate();
 
-// hideConsole();
+hideConsole();
 
 new CoreLauncher();
