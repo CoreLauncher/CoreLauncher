@@ -8,20 +8,22 @@ export default class WebsocketTransport extends Transport {
 	 * @param endpoint hostname and port of the endpoint
 	 */
 	connect(endpoint: string) {
-		console.log("Connecting to", endpoint);
+		console.info("[steam-client] Connecting to", endpoint);
 
 		this.connection = new WebSocket(`wss://${endpoint}/cmsocket/`);
 
 		this.connection.addEventListener("open", () => {
 			this.emit("connected");
+			console.info("[steam-client] Connected to WebSocket");
 		});
 
 		this.connection.addEventListener("close", () => {
 			// this.emit("disconnected");
+			console.info("[steam-client] Disconnected from WebSocket");
 		});
 
 		this.connection.addEventListener("error", (error) => {
-			console.error("[SteamClient] WebSocket error", error);
+			console.error("[steam-client] WebSocket error", error);
 			// this.emit("error", error);
 		});
 

@@ -220,7 +220,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 			return;
 		}
 
-		// console.log({ type, header, body });
+		// console.log({ type: getMessageName(type), header, body });
 		this.emit("message", { type, header, body: body } as Message);
 	}
 
