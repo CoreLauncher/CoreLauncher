@@ -33,7 +33,7 @@ export default class PluginPortal extends AbstractPluginPortal {
 		});
 
 		this.pluginManager.on("app_instance", (args) => {
-			this.emit("app_instance", this.arguments);
+			this.emit("app_instance", args);
 		});
 	}
 
