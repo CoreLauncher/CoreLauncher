@@ -1,19 +1,18 @@
+import { EMsg } from "./generated/enums_clientserver";
+import { CMsgMulti } from "./generated/steammessages_base";
+import { CMsgClientLicenseList } from "./generated/steammessages_clientserver";
+import {
+	CMsgClientPICSProductInfoRequest,
+	CMsgClientPICSProductInfoResponse,
+} from "./generated/steammessages_clientserver_appinfo";
 import {
 	CMsgClientHeartBeat,
-	CMsgClientLicenseList,
 	CMsgClientLoggedOff,
 	CMsgClientLogon,
 	CMsgClientLogonResponse,
-	CMsgClientPICSProductInfoRequest,
-	CMsgClientPICSProductInfoResponse,
-	CMsgMulti,
-	CMsgProtoBufHeader,
-	EMsg,
-} from "../../protobuf/compiled";
+} from "./generated/steammessages_clientserver_login";
 
-export const PROTOBUFFERS = {
-	CMsgProtoBufHeader: CMsgProtoBufHeader,
-
+export const PROTOBUF_MESSAGES = {
 	// 1+
 	[EMsg.k_EMsgMulti]: CMsgMulti,
 

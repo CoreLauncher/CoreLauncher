@@ -27,5 +27,5 @@
 		"noPropertyAccessFromIndexSignature": false,
 		"types": ["node"]
 	},
-	"exclude": ["node_modules/**", "packages/steam-client/protobuf/**"]
+	"exclude": ["node_modules/**"]
 }

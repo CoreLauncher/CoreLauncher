@@ -1,4 +1,4 @@
-import { EMsg } from "../protobuf/compiled";
+import { EMsg } from "../protobuf/generated/enums_clientserver";
 
 export default function getMessageName(type: number | string) {
 	if (typeof type === "string") return type;

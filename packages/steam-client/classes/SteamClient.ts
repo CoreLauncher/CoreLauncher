@@ -2,11 +2,12 @@ import type { JSONObject } from "@corelauncher/json-value";
 import { TypedEmitter } from "@corelauncher/typed-emitter";
 import { parse as parseVDF } from "@node-steam/vdf";
 import { parse as parseBinaryKV } from "binarykvparser";
-import {
-	type CMsgClientLicenseList,
-	type CMsgClientPICSProductInfoResponse,
-	EMsg,
-} from "../protobuf/compiled";
+import { EMsg } from "../protobuf/generated/enums_clientserver";
+import type {
+	CMsgClientLicenseList,
+	CMsgClientLicenseList_License,
+} from "../protobuf/generated/steammessages_clientserver";
+import type { CMsgClientPICSProductInfoResponse } from "../protobuf/generated/steammessages_clientserver_appinfo";
 import type { SteamAppInfo } from "../types/SteamAppInfo";
 import type { SteamPackageInfo } from "../types/SteamPackageInfo";
 import SteamAPI from "./SteamAPI";
@@ -52,7 +53,7 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 	/**
 	 * Owned Steam Licenses
 	 */
-	licenses: CMsgClientLicenseList.ILicense[];
+	licenses: CMsgClientLicenseList_License[];
 
 	constructor(options: SteamClientOptions) {
 		super();
@@ -75,7 +76,7 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 				clientOsType: 16,
 				chatMode: 2,
 				accessToken: options.refreshToken,
-				cellId: 15,
+				// cellId: 15,
 				// machineId: "",
 			});
 		});
@@ -138,16 +139,19 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 			this.transport.send(
 				EMsg.k_EMsgClientPICSProductInfoRequest,
 				{
-					apps: options.apps?.map((appid) => {
-						return { appid };
-					}),
-					packages: options.packages?.map((packageid) => {
-						return {
-							packageid,
-							accessToken: this.licenses.find((l) => l.packageId === packageid)
-								?.accessToken,
-						};
-					}),
+					apps:
+						options.apps?.map((appid) => {
+							return { appid };
+						}) ?? [],
+					packages:
+						options.packages?.map((packageid) => {
+							return {
+								packageid,
+								accessToken: this.licenses.find(
+									(l) => l.packageId === packageid,
+								)?.accessToken,
+							};
+						}) ?? [],
 				},
 				{
 					wait: true,

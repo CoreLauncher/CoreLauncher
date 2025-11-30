@@ -61,24 +61,20 @@ const plugin = join(
 
 console.log("Compiling protobuffers to TypeScript...");
 
-for (const file of files) {
-	console.info(`Compiling ${file}`);
-	const command = [
-		`bun`,
-		`protoc`,
-		`--proto_path=${DOWNLOAD_PATH}`,
-		`--plugin=${plugin}`,
-		`--ts_proto_opt=env=node`,
-		`--ts_proto_opt=outputJsonMethods=false`,
-		`--ts_proto_opt=outputPartialMethods=false`,
-		`--ts_proto_out=${GENERATED_PATH}`,
-		file,
-	];
+const command = [
+	`bun`,
+	`protoc`,
+	`--proto_path=${DOWNLOAD_PATH}`,
+	`--plugin=${plugin}`,
+	`--ts_proto_opt=env=node`,
+	`--ts_proto_opt=outputJsonMethods=false`,
+	`--ts_proto_opt=outputPartialMethods=false`,
+	`--ts_proto_out=${GENERATED_PATH}`,
+	...files,
+];
 
-	const result = spawnSync({ cmd: command });
-	console.log(result.stdout.toString());
-	console.log(result.stderr.toString());
-	// await $`${command.join(" ")}`;
-}
+const result = spawnSync({ cmd: command });
+console.log(result.stdout.toString());
+console.log(result.stderr.toString());
 
 console.info("All protobufs have been compiled!");

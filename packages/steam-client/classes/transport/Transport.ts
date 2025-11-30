@@ -1,12 +1,17 @@
 import { TypedEmitter } from "@corelauncher/typed-emitter";
-import type { ClassProperties } from "@corelauncher/types";
 import { gunzipSync } from "bun";
 import ByteBuffer from "bytebuffer";
 import { pEvent } from "p-event";
-import { type CMsgClientLogonResponse, EMsg } from "../../protobuf/compiled";
-import getMessageName from "../../util/getMessageName";
+import { EMsg } from "../../protobuf/generated/enums_clientserver";
+import {
+	type CMsgMulti,
+	CMsgProtoBufHeader,
+	type CMsgProtoBufHeader as TCMsgProtoBufHeader,
+} from "../../protobuf/generated/steammessages_base";
+import type { CMsgClientLogonResponse } from "../../protobuf/generated/steammessages_clientserver_login";
+import { PROTOBUF_MESSAGES } from "../../protobuf/messages";
+import getMessageName from "../../util/get-message-name";
 import type { SteamClient } from "../SteamClient";
-import { PROTOBUFFERS } from "./protobuffers";
 
 const MESSAGE_TYPE_MASK = 0x80000000;
 
@@ -16,16 +21,18 @@ interface TransportEvents {
 }
 
 type Message = {
-	type: keyof typeof PROTOBUFFERS | number;
-	header: ClassProperties<
-		InstanceType<(typeof PROTOBUFFERS)["CMsgProtoBufHeader"]>
-	>;
-	body: ClassProperties<
-		InstanceType<(typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS]>
-	>;
+	type: EMsg;
+	header: TCMsgProtoBufHeader;
+	body: ProtoType<ProtoFactories>;
 };
 
 type JobCallback = (response: Message) => void;
+
+type ProtoMessageIds = keyof typeof PROTOBUF_MESSAGES;
+
+type ProtoFactories = (typeof PROTOBUF_MESSAGES)[ProtoMessageIds];
+
+type ProtoType<Factory extends ProtoFactories> = ReturnType<Factory["decode"]>;
 
 /**
  * Base transport class
@@ -71,6 +78,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 			const body = message.body as CMsgClientLogonResponse;
 			if (type !== EMsg.k_EMsgClientLogOnResponse) return;
 			if (!body.heartbeatSeconds) return;
+			if (!message.header.clientSessionid) return;
 			this.sessionId = message.header.clientSessionid;
 			if (this.heartbeat) clearInterval(this.heartbeat);
 			this.heartbeat = setInterval(
@@ -80,6 +88,28 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		});
 	}
 
+	private encodeProto<Proto extends ProtoFactories>(
+		type: Proto,
+		message: ProtoType<Proto>,
+	): Buffer {
+		// biome-ignore lint/suspicious/noExplicitAny: ProtoType is already constrained to valid types
+		const data = type.encode(message as any).finish();
+		const buffer = Buffer.from(data);
+		return buffer;
+	}
+
+	protected decodeProto<Proto extends ProtoFactories>(
+		type: Proto,
+		data: Buffer,
+	): ProtoType<Proto> {
+		// The concrete decode() return types vary between protobuf factories and
+		// can produce union-type inference issues when used in generic/union
+		// contexts. Cast through any to avoid those diagnostic errors while still
+		// preserving the expected return type for callers.
+		// biome-ignore lint/suspicious/noExplicitAny: Read above
+		return (type.decode as any)(data) as ProtoType<Proto>;
+	}
+
 	/**
 	 * Encodes a message to be sent over the transport
 	 * @param type message type (EMsg)
@@ -87,23 +117,25 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 	 * @param options.jobId optional job ID for the message
 	 * @returns encoded message
 	 */
-	encodeMessage<Type extends keyof typeof PROTOBUFFERS & number>(
+	encodeMessage<Type extends ProtoMessageIds & number>(
 		type: Type,
-		body: Partial<ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>>,
+		body: ProtoType<(typeof PROTOBUF_MESSAGES)[Type]>,
 		options: {
 			jobId?: number;
 		} = {},
 	) {
-		if (!(type in PROTOBUFFERS))
-			throw new Error(`Message type ${type} not found in PROTOBUFFERS`);
+		if (!(type in PROTOBUF_MESSAGES))
+			throw new Error(`Message type ${type} not found in PROTOBUF_FACTORIES`);
 
-		const proto = PROTOBUFFERS[type];
+		const proto = PROTOBUF_MESSAGES[type];
 		const message = this.encodeProto(proto, body);
-		const header = this.encodeProto(PROTOBUFFERS.CMsgProtoBufHeader, {
+		const header = this.encodeProto(CMsgProtoBufHeader, {
 			clientSessionid: this.sessionId,
-			steamid: this.client.token.id as unknown as number,
-			jobidSource: (options.jobId || -1) as unknown as number,
-			jobidTarget: -1 as unknown as number,
+			steamid: Number(this.client.token.id),
+			jobidSource: options.jobId,
+			// jobidTarget: 18446744073709551615,
+			excludeClientSessionids: [],
+			forwardToSysid: [],
 		});
 
 		const buffer = new ByteBuffer(
@@ -118,24 +150,11 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 	}
 
 	/**
-	 * Encodes a protobuf message
-	 * @param proto protobuf class
-	 * @param data message data
-	 * @returns encoded message
-	 */
-	encodeProto<Proto extends (typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS]>(
-		proto: Proto,
-		data: Partial<ClassProperties<InstanceType<Proto>>>,
-	) {
-		return proto.encode(data).finish();
-	}
-
-	/**
 	 * Decodes a message received over the transport
 	 * @param message message buffer
 	 * @returns decoded message or null if not a protobuf message
 	 */
-	decodeMessage(message: Buffer) {
+	private decodeMessage(message: Buffer) {
 		const rawType = message.readUInt32LE(0);
 		const type = rawType & ~MESSAGE_TYPE_MASK;
 		const isProto = !!(rawType & MESSAGE_TYPE_MASK);
@@ -143,23 +162,21 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 
 		const headerLength = message.readUInt32LE(4);
 		const headerData = message.subarray(8, 8 + headerLength);
-		const header = this.decodeProto(
-			PROTOBUFFERS.CMsgProtoBufHeader,
-			headerData,
-		);
+		const header = CMsgProtoBufHeader.decode(headerData);
 
 		const bodyData = message.subarray(8 + headerLength);
-		let bodyProto: (typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS] | null =
-			null;
+		let bodyProto: ProtoFactories | null = null;
 
 		if (bodyData.length === 0) {
 			// There is no data to parse
 			return { type, header, body: {} };
-		} else if (type in PROTOBUFFERS) {
-			bodyProto = PROTOBUFFERS[type as keyof typeof PROTOBUFFERS];
+		} else if (type in PROTOBUF_MESSAGES) {
+			bodyProto = PROTOBUF_MESSAGES[type as keyof typeof PROTOBUF_MESSAGES];
 		} else if ([EMsg.k_EMsgServiceMethod].includes(type)) {
 			const proto =
-				PROTOBUFFERS[header.targetJobName as keyof typeof PROTOBUFFERS];
+				PROTOBUF_MESSAGES[
+					header.targetJobName as unknown as keyof typeof PROTOBUF_MESSAGES
+				];
 			if (!proto) {
 				console.warn(
 					`No protobuf found for service method ${header.targetJobName}`,
@@ -175,39 +192,28 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 			return null;
 		}
 
-		const body = this.decodeProto(bodyProto, bodyData);
+		const body = bodyProto.decode(bodyData);
 		return { type, header, body };
-	}
-
-	/**
-	 * Decodes a protobuf message
-	 * @param proto protobuf class
-	 * @param data message data
-	 * @returns decoded message
-	 */
-	decodeProto<Proto extends (typeof PROTOBUFFERS)[keyof typeof PROTOBUFFERS]>(
-		proto: Proto,
-		data: Buffer,
-	) {
-		return proto.decode(data).toJSON();
 	}
 
 	/**
 	 * Handles an incoming message buffer
 	 * @param message message buffer
 	 */
-	handleMessage(message: Buffer) {
+	protected handleMessage(message: Buffer) {
 		const decoded = this.decodeMessage(message);
 		if (!decoded) return;
 		const { type, header, body } = decoded;
 
 		if (type === EMsg.k_EMsgMulti) {
-			let buffer = Buffer.from(body.messageBody, "base64");
-			if (body.sizeUnzipped) {
-				buffer = Buffer.from(gunzipSync(buffer));
-				if (buffer.length !== body.sizeUnzipped)
+			const data = body as CMsgMulti;
+			if (!data.messageBody) throw new Error("CMsgMulti has no messageBody");
+			let buffer = data.messageBody;
+			if (data.sizeUnzipped) {
+				buffer = Buffer.from(gunzipSync(new Uint8Array(buffer)));
+				if (buffer.length !== data.sizeUnzipped)
 					throw new Error(
-						`Decompressed size mismatch: expected ${body.sizeUnzipped}, got ${buffer.length}`,
+						`Decompressed size mismatch: expected ${data.sizeUnzipped}, got ${buffer.length}`,
 					);
 			}
 
@@ -220,7 +226,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 			return;
 		}
 
-		// console.log({ type: getMessageName(type), header, body });
+		console.log({ type: getMessageName(type), header, body });
 		this.emit("message", { type, header, body: body } as Message);
 	}
 
@@ -231,9 +237,9 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 	 * @param type message type (EMsg)
 	 * @param body message body
 	 */
-	async send<Type extends keyof typeof PROTOBUFFERS & number>(
+	async send<Type extends ProtoMessageIds & number>(
 		type: Type,
-		body: Partial<ClassProperties<InstanceType<(typeof PROTOBUFFERS)[Type]>>>,
+		body: ProtoType<(typeof PROTOBUF_MESSAGES)[Type]>,
 		options: {
 			wait?: boolean;
 			callback?: JobCallback;
