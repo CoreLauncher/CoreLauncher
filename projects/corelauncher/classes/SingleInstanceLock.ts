@@ -17,7 +17,7 @@ export default class SingleInstanceLock extends TypedEmitter<SingleInstanceLockE
 
 	static async check() {
 		console.info("Checking for existing instance...");
-		const file = await Bun.file(SingleInstanceLock.lockfile);
+		const file = Bun.file(SingleInstanceLock.lockfile);
 		const exists = await file.exists();
 		if (!exists) return;
 		const port = await file.text();
