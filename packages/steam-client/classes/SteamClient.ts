@@ -76,7 +76,7 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 				clientOsType: 16,
 				chatMode: 2,
 				accessToken: options.refreshToken,
-				// cellId: 15,
+				cellId: 15,
 				// machineId: "",
 			});
 		});
