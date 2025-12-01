@@ -113,7 +113,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 	 * @param options.jobId optional job ID for the message
 	 * @returns encoded message
 	 */
-	encodeMessage<Type extends ProtoMessageIds & number>(
+	private encodeMessage<Type extends ProtoMessageIds & number>(
 		type: Type,
 		body: ProtoType<(typeof PROTOBUF_MESSAGES)[Type]>,
 		options: {
