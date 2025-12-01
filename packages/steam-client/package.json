@@ -13,6 +13,7 @@
 		"jsonschema": "^1.5.0"
 	},
 	"devDependencies": {
+		"@types/bytebuffer": "^5.0.49",
 		"@corelauncher/json-value": "*"
 	}
 }
