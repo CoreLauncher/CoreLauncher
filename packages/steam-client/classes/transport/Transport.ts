@@ -62,10 +62,10 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 
 		// Handle Job callbacks
 		this.on("message", (message) => {
-			const job = message.header.jobidTarget as number;
-			if (!job) return;
-			if (!this.jobs[job]) return;
-			this.jobs[job](message);
+			const jobId = message.header.jobidTarget?.toString();
+			if (!jobId) return;
+			if (!this.jobs[jobId]) return;
+			this.jobs[jobId](message);
 		});
 
 		// Start heartbeat on logon response
@@ -127,9 +127,9 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		const message = this.encodeProto(proto, body);
 		const header = this.encodeProto(CMsgProtoBufHeader, {
 			clientSessionid: this.sessionId,
-			steamid: Number(this.client.token.id),
-			jobidSource: options.jobId,
-			// jobidTarget: 18446744073709551615,
+			steamid: BigInt(this.client.token.id),
+			jobidSource: BigInt(options.jobId ?? "18446744073709551615"),
+			jobidTarget: BigInt("18446744073709551615"),
 			excludeClientSessionids: [],
 			forwardToSysid: [],
 		});
@@ -222,7 +222,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 			return;
 		}
 
-		console.log({ type: getMessageName(type), header, body });
+		// console.log({ type: getMessageName(type), header, body });
 		this.emit("message", { type, header, body: body } as Message);
 	}
 
@@ -255,7 +255,7 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 
 		const response = await pEvent(this, "message", {
 			filter: (message: Message) => {
-				return message.header.jobidTarget === job!;
+				return message.header.jobidTarget === BigInt(job!);
 			},
 		});
 

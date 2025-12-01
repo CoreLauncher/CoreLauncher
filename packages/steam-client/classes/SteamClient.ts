@@ -8,6 +8,7 @@ import type {
 	CMsgClientLicenseList_License,
 } from "../protobuf/generated/steammessages_clientserver";
 import type { CMsgClientPICSProductInfoResponse } from "../protobuf/generated/steammessages_clientserver_appinfo";
+import { CMsgClientLogon } from "../protobuf/generated/steammessages_clientserver_login";
 import type { SteamAppInfo } from "../types/SteamAppInfo";
 import type { SteamPackageInfo } from "../types/SteamPackageInfo";
 import SteamAPI from "./SteamAPI";
