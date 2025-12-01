@@ -28,7 +28,7 @@ export interface CMsgClientLBSSetScoreResponse {
 export interface CMsgClientLBSSetUGC {
   appId?: number | undefined;
   leaderboardId?: number | undefined;
-  ugcId?: number | undefined;
+  ugcId?: bigint | undefined;
 }
 
 export interface CMsgClientLBSSetUGCResponse {
@@ -58,7 +58,7 @@ export interface CMsgClientLBSGetLBEntries {
   rangeStart?: number | undefined;
   rangeEnd?: number | undefined;
   leaderboardDataRequest?: number | undefined;
-  steamids: number[];
+  steamids: bigint[];
 }
 
 export interface CMsgClientLBSGetLBEntriesResponse {
@@ -68,11 +68,11 @@ export interface CMsgClientLBSGetLBEntriesResponse {
 }
 
 export interface CMsgClientLBSGetLBEntriesResponse_Entry {
-  steamIdUser?: number | undefined;
+  steamIdUser?: bigint | undefined;
   globalRank?: number | undefined;
   score?: number | undefined;
   details?: Buffer | undefined;
-  ugcId?: number | undefined;
+  ugcId?: bigint | undefined;
 }
 
 function createBaseCMsgClientLBSSetScore(): CMsgClientLBSSetScore {
@@ -238,7 +238,7 @@ export const CMsgClientLBSSetScoreResponse: MessageFns<CMsgClientLBSSetScoreResp
 };
 
 function createBaseCMsgClientLBSSetUGC(): CMsgClientLBSSetUGC {
-  return { appId: 0, leaderboardId: 0, ugcId: 0 };
+  return { appId: 0, leaderboardId: 0, ugcId: 0n };
 }
 
 export const CMsgClientLBSSetUGC: MessageFns<CMsgClientLBSSetUGC> = {
@@ -249,7 +249,10 @@ export const CMsgClientLBSSetUGC: MessageFns<CMsgClientLBSSetUGC> = {
     if (message.leaderboardId !== undefined && message.leaderboardId !== 0) {
       writer.uint32(16).int32(message.leaderboardId);
     }
-    if (message.ugcId !== undefined && message.ugcId !== 0) {
+    if (message.ugcId !== undefined && message.ugcId !== 0n) {
+      if (BigInt.asUintN(64, message.ugcId) !== message.ugcId) {
+        throw new globalThis.Error("value provided for field message.ugcId of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.ugcId);
     }
     return writer;
@@ -283,7 +286,7 @@ export const CMsgClientLBSSetUGC: MessageFns<CMsgClientLBSSetUGC> = {
             break;
           }
 
-          message.ugcId = longToNumber(reader.fixed64());
+          message.ugcId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -541,6 +544,9 @@ export const CMsgClientLBSGetLBEntries: MessageFns<CMsgClientLBSGetLBEntries> = 
       writer.uint32(40).int32(message.leaderboardDataRequest);
     }
     for (const v of message.steamids) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(49).fixed64(v!);
     }
     return writer;
@@ -595,7 +601,7 @@ export const CMsgClientLBSGetLBEntries: MessageFns<CMsgClientLBSGetLBEntries> = 
         }
         case 6: {
           if (tag === 49) {
-            message.steamids.push(longToNumber(reader.fixed64()));
+            message.steamids.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -603,7 +609,7 @@ export const CMsgClientLBSGetLBEntries: MessageFns<CMsgClientLBSGetLBEntries> = 
           if (tag === 50) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.steamids.push(longToNumber(reader.fixed64()));
+              message.steamids.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -681,12 +687,15 @@ export const CMsgClientLBSGetLBEntriesResponse: MessageFns<CMsgClientLBSGetLBEnt
 };
 
 function createBaseCMsgClientLBSGetLBEntriesResponse_Entry(): CMsgClientLBSGetLBEntriesResponse_Entry {
-  return { steamIdUser: 0, globalRank: 0, score: 0, details: Buffer.alloc(0), ugcId: 0 };
+  return { steamIdUser: 0n, globalRank: 0, score: 0, details: Buffer.alloc(0), ugcId: 0n };
 }
 
 export const CMsgClientLBSGetLBEntriesResponse_Entry: MessageFns<CMsgClientLBSGetLBEntriesResponse_Entry> = {
   encode(message: CMsgClientLBSGetLBEntriesResponse_Entry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamIdUser !== undefined && message.steamIdUser !== 0) {
+    if (message.steamIdUser !== undefined && message.steamIdUser !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdUser) !== message.steamIdUser) {
+        throw new globalThis.Error("value provided for field message.steamIdUser of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamIdUser);
     }
     if (message.globalRank !== undefined && message.globalRank !== 0) {
@@ -698,7 +707,10 @@ export const CMsgClientLBSGetLBEntriesResponse_Entry: MessageFns<CMsgClientLBSGe
     if (message.details !== undefined && message.details.length !== 0) {
       writer.uint32(34).bytes(message.details);
     }
-    if (message.ugcId !== undefined && message.ugcId !== 0) {
+    if (message.ugcId !== undefined && message.ugcId !== 0n) {
+      if (BigInt.asUintN(64, message.ugcId) !== message.ugcId) {
+        throw new globalThis.Error("value provided for field message.ugcId of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.ugcId);
     }
     return writer;
@@ -716,7 +728,7 @@ export const CMsgClientLBSGetLBEntriesResponse_Entry: MessageFns<CMsgClientLBSGe
             break;
           }
 
-          message.steamIdUser = longToNumber(reader.fixed64());
+          message.steamIdUser = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -748,7 +760,7 @@ export const CMsgClientLBSGetLBEntriesResponse_Entry: MessageFns<CMsgClientLBSGe
             break;
           }
 
-          message.ugcId = longToNumber(reader.fixed64());
+          message.ugcId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -760,17 +772,6 @@ export const CMsgClientLBSGetLBEntriesResponse_Entry: MessageFns<CMsgClientLBSGe
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

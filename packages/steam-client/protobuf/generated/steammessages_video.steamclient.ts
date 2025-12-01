@@ -11,21 +11,21 @@ import { NoResponse } from "./steammessages_unified_base.steamclient";
 export const protobufPackage = "";
 
 export interface CVideoClientGetVideoURLRequest {
-  videoId?: number | undefined;
+  videoId?: bigint | undefined;
   clientCellid?: number | undefined;
 }
 
 export interface CVideoClientGetVideoURLResponse {
-  videoId?: number | undefined;
+  videoId?: bigint | undefined;
   videoUrl?: string | undefined;
 }
 
 export interface VideoBookmark {
   appId?: number | undefined;
   playbackPositionInSeconds?: number | undefined;
-  videoTrackId?: number | undefined;
-  audioTrackId?: number | undefined;
-  timedtextTrackId?: number | undefined;
+  videoTrackId?: bigint | undefined;
+  audioTrackId?: bigint | undefined;
+  timedtextTrackId?: bigint | undefined;
   lastModified?: number | undefined;
   hideFromWatchHistory?: boolean | undefined;
   hideFromLibrary?: boolean | undefined;
@@ -59,12 +59,15 @@ export interface CFovasVideoClientGetOPFSettingsResponse {
 }
 
 function createBaseCVideoClientGetVideoURLRequest(): CVideoClientGetVideoURLRequest {
-  return { videoId: 0, clientCellid: 0 };
+  return { videoId: 0n, clientCellid: 0 };
 }
 
 export const CVideoClientGetVideoURLRequest: MessageFns<CVideoClientGetVideoURLRequest> = {
   encode(message: CVideoClientGetVideoURLRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.videoId !== undefined && message.videoId !== 0) {
+    if (message.videoId !== undefined && message.videoId !== 0n) {
+      if (BigInt.asUintN(64, message.videoId) !== message.videoId) {
+        throw new globalThis.Error("value provided for field message.videoId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.videoId);
     }
     if (message.clientCellid !== undefined && message.clientCellid !== 0) {
@@ -85,7 +88,7 @@ export const CVideoClientGetVideoURLRequest: MessageFns<CVideoClientGetVideoURLR
             break;
           }
 
-          message.videoId = longToNumber(reader.uint64());
+          message.videoId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -107,12 +110,15 @@ export const CVideoClientGetVideoURLRequest: MessageFns<CVideoClientGetVideoURLR
 };
 
 function createBaseCVideoClientGetVideoURLResponse(): CVideoClientGetVideoURLResponse {
-  return { videoId: 0, videoUrl: "" };
+  return { videoId: 0n, videoUrl: "" };
 }
 
 export const CVideoClientGetVideoURLResponse: MessageFns<CVideoClientGetVideoURLResponse> = {
   encode(message: CVideoClientGetVideoURLResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.videoId !== undefined && message.videoId !== 0) {
+    if (message.videoId !== undefined && message.videoId !== 0n) {
+      if (BigInt.asUintN(64, message.videoId) !== message.videoId) {
+        throw new globalThis.Error("value provided for field message.videoId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.videoId);
     }
     if (message.videoUrl !== undefined && message.videoUrl !== "") {
@@ -133,7 +139,7 @@ export const CVideoClientGetVideoURLResponse: MessageFns<CVideoClientGetVideoURL
             break;
           }
 
-          message.videoId = longToNumber(reader.uint64());
+          message.videoId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -158,9 +164,9 @@ function createBaseVideoBookmark(): VideoBookmark {
   return {
     appId: 0,
     playbackPositionInSeconds: 0,
-    videoTrackId: 0,
-    audioTrackId: 0,
-    timedtextTrackId: 0,
+    videoTrackId: 0n,
+    audioTrackId: 0n,
+    timedtextTrackId: 0n,
     lastModified: 0,
     hideFromWatchHistory: false,
     hideFromLibrary: false,
@@ -175,13 +181,22 @@ export const VideoBookmark: MessageFns<VideoBookmark> = {
     if (message.playbackPositionInSeconds !== undefined && message.playbackPositionInSeconds !== 0) {
       writer.uint32(16).uint32(message.playbackPositionInSeconds);
     }
-    if (message.videoTrackId !== undefined && message.videoTrackId !== 0) {
+    if (message.videoTrackId !== undefined && message.videoTrackId !== 0n) {
+      if (BigInt.asUintN(64, message.videoTrackId) !== message.videoTrackId) {
+        throw new globalThis.Error("value provided for field message.videoTrackId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.videoTrackId);
     }
-    if (message.audioTrackId !== undefined && message.audioTrackId !== 0) {
+    if (message.audioTrackId !== undefined && message.audioTrackId !== 0n) {
+      if (BigInt.asUintN(64, message.audioTrackId) !== message.audioTrackId) {
+        throw new globalThis.Error("value provided for field message.audioTrackId of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.audioTrackId);
     }
-    if (message.timedtextTrackId !== undefined && message.timedtextTrackId !== 0) {
+    if (message.timedtextTrackId !== undefined && message.timedtextTrackId !== 0n) {
+      if (BigInt.asUintN(64, message.timedtextTrackId) !== message.timedtextTrackId) {
+        throw new globalThis.Error("value provided for field message.timedtextTrackId of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.timedtextTrackId);
     }
     if (message.lastModified !== undefined && message.lastModified !== 0) {
@@ -224,7 +239,7 @@ export const VideoBookmark: MessageFns<VideoBookmark> = {
             break;
           }
 
-          message.videoTrackId = longToNumber(reader.uint64());
+          message.videoTrackId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -232,7 +247,7 @@ export const VideoBookmark: MessageFns<VideoBookmark> = {
             break;
           }
 
-          message.audioTrackId = longToNumber(reader.uint64());
+          message.audioTrackId = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -240,7 +255,7 @@ export const VideoBookmark: MessageFns<VideoBookmark> = {
             break;
           }
 
-          message.timedtextTrackId = longToNumber(reader.uint64());
+          message.timedtextTrackId = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -624,17 +639,6 @@ export class FovasVideoClientImpl implements FovasVideo {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

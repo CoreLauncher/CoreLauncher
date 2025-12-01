@@ -15,14 +15,14 @@ export interface CPartnerAppsRequestUploadTokenRequest {
 }
 
 export interface CPartnerAppsRequestUploadTokenResponse {
-  uploadToken?: number | undefined;
+  uploadToken?: bigint | undefined;
   location?: string | undefined;
-  routingId?: number | undefined;
+  routingId?: bigint | undefined;
 }
 
 export interface CPartnerAppsFinishUploadRequest {
-  uploadToken?: number | undefined;
-  routingId?: number | undefined;
+  uploadToken?: bigint | undefined;
+  routingId?: bigint | undefined;
   appId?: number | undefined;
 }
 
@@ -31,8 +31,8 @@ export interface CPartnerAppsFinishUploadKVSignResponse {
 }
 
 export interface CPartnerAppsFinishUploadLegacyDRMRequest {
-  uploadToken?: number | undefined;
-  routingId?: number | undefined;
+  uploadToken?: bigint | undefined;
+  routingId?: bigint | undefined;
   appId?: number | undefined;
   flags?: number | undefined;
   toolName?: string | undefined;
@@ -47,24 +47,24 @@ export interface CPartnerAppsFinishUploadResponse {
 }
 
 export interface CPartnerAppsFinishUploadDepotRequest {
-  uploadToken?: number | undefined;
-  routingId?: number | undefined;
+  uploadToken?: bigint | undefined;
+  routingId?: bigint | undefined;
   appId?: number | undefined;
   depotId?: number | undefined;
   buildFlags?: number | undefined;
 }
 
 export interface CPartnerAppsFinishUploadDepotResponse {
-  buildRoutingId?: number | undefined;
+  buildRoutingId?: bigint | undefined;
 }
 
 export interface CPartnerAppsGetDepotBuildResultRequest {
-  uploadToken?: number | undefined;
-  routingId?: number | undefined;
+  uploadToken?: bigint | undefined;
+  routingId?: bigint | undefined;
 }
 
 export interface CPartnerAppsGetDepotBuildResultResponse {
-  manifestId?: number | undefined;
+  manifestId?: bigint | undefined;
   errorMsg?: string | undefined;
 }
 
@@ -146,18 +146,24 @@ export const CPartnerAppsRequestUploadTokenRequest: MessageFns<CPartnerAppsReque
 };
 
 function createBaseCPartnerAppsRequestUploadTokenResponse(): CPartnerAppsRequestUploadTokenResponse {
-  return { uploadToken: 0, location: "", routingId: 0 };
+  return { uploadToken: 0n, location: "", routingId: 0n };
 }
 
 export const CPartnerAppsRequestUploadTokenResponse: MessageFns<CPartnerAppsRequestUploadTokenResponse> = {
   encode(message: CPartnerAppsRequestUploadTokenResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.uploadToken !== undefined && message.uploadToken !== 0) {
+    if (message.uploadToken !== undefined && message.uploadToken !== 0n) {
+      if (BigInt.asUintN(64, message.uploadToken) !== message.uploadToken) {
+        throw new globalThis.Error("value provided for field message.uploadToken of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.uploadToken);
     }
     if (message.location !== undefined && message.location !== "") {
       writer.uint32(18).string(message.location);
     }
-    if (message.routingId !== undefined && message.routingId !== 0) {
+    if (message.routingId !== undefined && message.routingId !== 0n) {
+      if (BigInt.asUintN(64, message.routingId) !== message.routingId) {
+        throw new globalThis.Error("value provided for field message.routingId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.routingId);
     }
     return writer;
@@ -175,7 +181,7 @@ export const CPartnerAppsRequestUploadTokenResponse: MessageFns<CPartnerAppsRequ
             break;
           }
 
-          message.uploadToken = longToNumber(reader.uint64());
+          message.uploadToken = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -191,7 +197,7 @@ export const CPartnerAppsRequestUploadTokenResponse: MessageFns<CPartnerAppsRequ
             break;
           }
 
-          message.routingId = longToNumber(reader.uint64());
+          message.routingId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -205,15 +211,21 @@ export const CPartnerAppsRequestUploadTokenResponse: MessageFns<CPartnerAppsRequ
 };
 
 function createBaseCPartnerAppsFinishUploadRequest(): CPartnerAppsFinishUploadRequest {
-  return { uploadToken: 0, routingId: 0, appId: 0 };
+  return { uploadToken: 0n, routingId: 0n, appId: 0 };
 }
 
 export const CPartnerAppsFinishUploadRequest: MessageFns<CPartnerAppsFinishUploadRequest> = {
   encode(message: CPartnerAppsFinishUploadRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.uploadToken !== undefined && message.uploadToken !== 0) {
+    if (message.uploadToken !== undefined && message.uploadToken !== 0n) {
+      if (BigInt.asUintN(64, message.uploadToken) !== message.uploadToken) {
+        throw new globalThis.Error("value provided for field message.uploadToken of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.uploadToken);
     }
-    if (message.routingId !== undefined && message.routingId !== 0) {
+    if (message.routingId !== undefined && message.routingId !== 0n) {
+      if (BigInt.asUintN(64, message.routingId) !== message.routingId) {
+        throw new globalThis.Error("value provided for field message.routingId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.routingId);
     }
     if (message.appId !== undefined && message.appId !== 0) {
@@ -234,7 +246,7 @@ export const CPartnerAppsFinishUploadRequest: MessageFns<CPartnerAppsFinishUploa
             break;
           }
 
-          message.uploadToken = longToNumber(reader.uint64());
+          message.uploadToken = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -242,7 +254,7 @@ export const CPartnerAppsFinishUploadRequest: MessageFns<CPartnerAppsFinishUploa
             break;
           }
 
-          message.routingId = longToNumber(reader.uint64());
+          message.routingId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -301,15 +313,21 @@ export const CPartnerAppsFinishUploadKVSignResponse: MessageFns<CPartnerAppsFini
 };
 
 function createBaseCPartnerAppsFinishUploadLegacyDRMRequest(): CPartnerAppsFinishUploadLegacyDRMRequest {
-  return { uploadToken: 0, routingId: 0, appId: 0, flags: 0, toolName: "", useCloud: false };
+  return { uploadToken: 0n, routingId: 0n, appId: 0, flags: 0, toolName: "", useCloud: false };
 }
 
 export const CPartnerAppsFinishUploadLegacyDRMRequest: MessageFns<CPartnerAppsFinishUploadLegacyDRMRequest> = {
   encode(message: CPartnerAppsFinishUploadLegacyDRMRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.uploadToken !== undefined && message.uploadToken !== 0) {
+    if (message.uploadToken !== undefined && message.uploadToken !== 0n) {
+      if (BigInt.asUintN(64, message.uploadToken) !== message.uploadToken) {
+        throw new globalThis.Error("value provided for field message.uploadToken of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.uploadToken);
     }
-    if (message.routingId !== undefined && message.routingId !== 0) {
+    if (message.routingId !== undefined && message.routingId !== 0n) {
+      if (BigInt.asUintN(64, message.routingId) !== message.routingId) {
+        throw new globalThis.Error("value provided for field message.routingId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.routingId);
     }
     if (message.appId !== undefined && message.appId !== 0) {
@@ -339,7 +357,7 @@ export const CPartnerAppsFinishUploadLegacyDRMRequest: MessageFns<CPartnerAppsFi
             break;
           }
 
-          message.uploadToken = longToNumber(reader.uint64());
+          message.uploadToken = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -347,7 +365,7 @@ export const CPartnerAppsFinishUploadLegacyDRMRequest: MessageFns<CPartnerAppsFi
             break;
           }
 
-          message.routingId = longToNumber(reader.uint64());
+          message.routingId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -456,15 +474,21 @@ export const CPartnerAppsFinishUploadResponse: MessageFns<CPartnerAppsFinishUplo
 };
 
 function createBaseCPartnerAppsFinishUploadDepotRequest(): CPartnerAppsFinishUploadDepotRequest {
-  return { uploadToken: 0, routingId: 0, appId: 0, depotId: 0, buildFlags: 0 };
+  return { uploadToken: 0n, routingId: 0n, appId: 0, depotId: 0, buildFlags: 0 };
 }
 
 export const CPartnerAppsFinishUploadDepotRequest: MessageFns<CPartnerAppsFinishUploadDepotRequest> = {
   encode(message: CPartnerAppsFinishUploadDepotRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.uploadToken !== undefined && message.uploadToken !== 0) {
+    if (message.uploadToken !== undefined && message.uploadToken !== 0n) {
+      if (BigInt.asUintN(64, message.uploadToken) !== message.uploadToken) {
+        throw new globalThis.Error("value provided for field message.uploadToken of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.uploadToken);
     }
-    if (message.routingId !== undefined && message.routingId !== 0) {
+    if (message.routingId !== undefined && message.routingId !== 0n) {
+      if (BigInt.asUintN(64, message.routingId) !== message.routingId) {
+        throw new globalThis.Error("value provided for field message.routingId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.routingId);
     }
     if (message.appId !== undefined && message.appId !== 0) {
@@ -491,7 +515,7 @@ export const CPartnerAppsFinishUploadDepotRequest: MessageFns<CPartnerAppsFinish
             break;
           }
 
-          message.uploadToken = longToNumber(reader.uint64());
+          message.uploadToken = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -499,7 +523,7 @@ export const CPartnerAppsFinishUploadDepotRequest: MessageFns<CPartnerAppsFinish
             break;
           }
 
-          message.routingId = longToNumber(reader.uint64());
+          message.routingId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -537,12 +561,15 @@ export const CPartnerAppsFinishUploadDepotRequest: MessageFns<CPartnerAppsFinish
 };
 
 function createBaseCPartnerAppsFinishUploadDepotResponse(): CPartnerAppsFinishUploadDepotResponse {
-  return { buildRoutingId: 0 };
+  return { buildRoutingId: 0n };
 }
 
 export const CPartnerAppsFinishUploadDepotResponse: MessageFns<CPartnerAppsFinishUploadDepotResponse> = {
   encode(message: CPartnerAppsFinishUploadDepotResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.buildRoutingId !== undefined && message.buildRoutingId !== 0) {
+    if (message.buildRoutingId !== undefined && message.buildRoutingId !== 0n) {
+      if (BigInt.asUintN(64, message.buildRoutingId) !== message.buildRoutingId) {
+        throw new globalThis.Error("value provided for field message.buildRoutingId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.buildRoutingId);
     }
     return writer;
@@ -560,7 +587,7 @@ export const CPartnerAppsFinishUploadDepotResponse: MessageFns<CPartnerAppsFinis
             break;
           }
 
-          message.buildRoutingId = longToNumber(reader.uint64());
+          message.buildRoutingId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -574,15 +601,21 @@ export const CPartnerAppsFinishUploadDepotResponse: MessageFns<CPartnerAppsFinis
 };
 
 function createBaseCPartnerAppsGetDepotBuildResultRequest(): CPartnerAppsGetDepotBuildResultRequest {
-  return { uploadToken: 0, routingId: 0 };
+  return { uploadToken: 0n, routingId: 0n };
 }
 
 export const CPartnerAppsGetDepotBuildResultRequest: MessageFns<CPartnerAppsGetDepotBuildResultRequest> = {
   encode(message: CPartnerAppsGetDepotBuildResultRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.uploadToken !== undefined && message.uploadToken !== 0) {
+    if (message.uploadToken !== undefined && message.uploadToken !== 0n) {
+      if (BigInt.asUintN(64, message.uploadToken) !== message.uploadToken) {
+        throw new globalThis.Error("value provided for field message.uploadToken of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.uploadToken);
     }
-    if (message.routingId !== undefined && message.routingId !== 0) {
+    if (message.routingId !== undefined && message.routingId !== 0n) {
+      if (BigInt.asUintN(64, message.routingId) !== message.routingId) {
+        throw new globalThis.Error("value provided for field message.routingId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.routingId);
     }
     return writer;
@@ -600,7 +633,7 @@ export const CPartnerAppsGetDepotBuildResultRequest: MessageFns<CPartnerAppsGetD
             break;
           }
 
-          message.uploadToken = longToNumber(reader.uint64());
+          message.uploadToken = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -608,7 +641,7 @@ export const CPartnerAppsGetDepotBuildResultRequest: MessageFns<CPartnerAppsGetD
             break;
           }
 
-          message.routingId = longToNumber(reader.uint64());
+          message.routingId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -622,12 +655,15 @@ export const CPartnerAppsGetDepotBuildResultRequest: MessageFns<CPartnerAppsGetD
 };
 
 function createBaseCPartnerAppsGetDepotBuildResultResponse(): CPartnerAppsGetDepotBuildResultResponse {
-  return { manifestId: 0, errorMsg: "" };
+  return { manifestId: 0n, errorMsg: "" };
 }
 
 export const CPartnerAppsGetDepotBuildResultResponse: MessageFns<CPartnerAppsGetDepotBuildResultResponse> = {
   encode(message: CPartnerAppsGetDepotBuildResultResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.manifestId !== undefined && message.manifestId !== 0) {
+    if (message.manifestId !== undefined && message.manifestId !== 0n) {
+      if (BigInt.asUintN(64, message.manifestId) !== message.manifestId) {
+        throw new globalThis.Error("value provided for field message.manifestId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.manifestId);
     }
     if (message.errorMsg !== undefined && message.errorMsg !== "") {
@@ -648,7 +684,7 @@ export const CPartnerAppsGetDepotBuildResultResponse: MessageFns<CPartnerAppsGet
             break;
           }
 
-          message.manifestId = longToNumber(reader.uint64());
+          message.manifestId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1083,17 +1119,6 @@ export class PartnerAppsClientImpl implements PartnerApps {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

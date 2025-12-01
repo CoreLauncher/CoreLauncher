@@ -87,7 +87,7 @@ export interface CBluetoothManagerSetDiscoveringResponse {
 
 export interface CBluetoothManagerSetLoginAdvertisingRequest {
   enabled?: boolean | undefined;
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   deviceId?: number | undefined;
 }
 
@@ -883,7 +883,7 @@ export const CBluetoothManagerSetDiscoveringResponse: MessageFns<CBluetoothManag
 };
 
 function createBaseCBluetoothManagerSetLoginAdvertisingRequest(): CBluetoothManagerSetLoginAdvertisingRequest {
-  return { enabled: false, clientId: 0, deviceId: 0 };
+  return { enabled: false, clientId: 0n, deviceId: 0 };
 }
 
 export const CBluetoothManagerSetLoginAdvertisingRequest: MessageFns<CBluetoothManagerSetLoginAdvertisingRequest> = {
@@ -894,7 +894,10 @@ export const CBluetoothManagerSetLoginAdvertisingRequest: MessageFns<CBluetoothM
     if (message.enabled !== undefined && message.enabled !== false) {
       writer.uint32(8).bool(message.enabled);
     }
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.clientId);
     }
     if (message.deviceId !== undefined && message.deviceId !== 0) {
@@ -923,7 +926,7 @@ export const CBluetoothManagerSetLoginAdvertisingRequest: MessageFns<CBluetoothM
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1563,17 +1566,6 @@ export class BluetoothManagerClientImpl implements BluetoothManager {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

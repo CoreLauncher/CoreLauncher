@@ -69,6 +69,7 @@ const command = [
 	`--ts_proto_opt=env=node`,
 	`--ts_proto_opt=outputJsonMethods=false`,
 	`--ts_proto_opt=outputPartialMethods=false`,
+	`--ts_proto_opt=forceLong=bigint`,
 	`--ts_proto_out=${GENERATED_PATH}`,
 	...files,
 ];

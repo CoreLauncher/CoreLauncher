@@ -206,7 +206,7 @@ export interface CMsgStorageDevicesData_Drive {
   vendor?: string | undefined;
   serial?: string | undefined;
   isEjectable?: boolean | undefined;
-  sizeBytes?: number | undefined;
+  sizeBytes?: bigint | undefined;
   mediaType?: EStorageDriveMediaType | undefined;
 }
 
@@ -216,7 +216,7 @@ export interface CMsgStorageDevicesData_BlockDevice {
   path?: string | undefined;
   friendlyPath?: string | undefined;
   label?: string | undefined;
-  sizeBytes?: number | undefined;
+  sizeBytes?: bigint | undefined;
   isFormattable?: boolean | undefined;
   isReadOnly?: boolean | undefined;
   isRootDevice?: boolean | undefined;
@@ -228,7 +228,7 @@ export interface CMsgStorageDevicesData_BlockDevice {
 export interface CCloudPendingRemoteOperation {
   operation?: ECloudPendingRemoteOperation | undefined;
   machineName?: string | undefined;
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   timeLastUpdated?: number | undefined;
   osType?: number | undefined;
   deviceType?: number | undefined;
@@ -278,8 +278,8 @@ export interface CMsgSystemPerfDiagnosticEntry {
 export interface CMsgSystemPerfNetworkInterface {
   name?: string | undefined;
   timestamp?: number | undefined;
-  txBytesTotal?: number | undefined;
-  rxBytesTotal?: number | undefined;
+  txBytesTotal?: bigint | undefined;
+  rxBytesTotal?: bigint | undefined;
   txBytesPerSec?: number | undefined;
   rxBytesPerSec?: number | undefined;
 }
@@ -387,19 +387,19 @@ export interface CMsgSystemPerfSettingsV1 {
 export interface CMsgSystemPerfState {
   limits?: CMsgSystemPerfLimits | undefined;
   settings?: CMsgSystemPerfSettings | undefined;
-  currentGameId?: number | undefined;
-  activeProfileGameId?: number | undefined;
+  currentGameId?: bigint | undefined;
+  activeProfileGameId?: bigint | undefined;
 }
 
 export interface CMsgSystemPerfUpdateSettings {
-  gameid?: number | undefined;
+  gameid?: bigint | undefined;
   skipStorageUpdate?: boolean | undefined;
   resetToDefault?: boolean | undefined;
   settingsDelta?: CMsgSystemPerfSettings | undefined;
 }
 
 export interface CMsgSystemPerfLegacySettingEntry {
-  profileGameId?: number | undefined;
+  profileGameId?: bigint | undefined;
   settings?: CMsgSystemPerfSettingsPerApp | undefined;
 }
 
@@ -579,7 +579,7 @@ export interface CMsgSelectOSBranchParams {
 
 export interface CMsgSystemUpdateProgress {
   stageProgress?: number | undefined;
-  stageSizeBytes?: number | undefined;
+  stageSizeBytes?: bigint | undefined;
   rtimeEstimatedCompletion?: number | undefined;
 }
 
@@ -636,7 +636,7 @@ export interface CMsgShortcutInfo {
   overrideAppid?: number | undefined;
   flatpakAppid?: string | undefined;
   tags: string[];
-  remoteClientId?: number | undefined;
+  remoteClientId?: bigint | undefined;
   isHidden?: boolean | undefined;
   isTemporary?: boolean | undefined;
   isOpenvr?: boolean | undefined;
@@ -683,7 +683,7 @@ export interface CMsgWebUITransportFailure {
 export interface CMsgClientShaderHitCacheEntry {
   keySha?: Buffer | undefined;
   codeSha?: Buffer | undefined;
-  timeLastReported?: number | undefined;
+  timeLastReported?: bigint | undefined;
 }
 
 export interface CMsgClientShaderHitCache {
@@ -1914,7 +1914,7 @@ export const CMsgStorageDevicesData: MessageFns<CMsgStorageDevicesData> = {
 };
 
 function createBaseCMsgStorageDevicesData_Drive(): CMsgStorageDevicesData_Drive {
-  return { id: 0, model: "", vendor: "", serial: "", isEjectable: false, sizeBytes: 0, mediaType: 0 };
+  return { id: 0, model: "", vendor: "", serial: "", isEjectable: false, sizeBytes: 0n, mediaType: 0 };
 }
 
 export const CMsgStorageDevicesData_Drive: MessageFns<CMsgStorageDevicesData_Drive> = {
@@ -1934,7 +1934,10 @@ export const CMsgStorageDevicesData_Drive: MessageFns<CMsgStorageDevicesData_Dri
     if (message.isEjectable !== undefined && message.isEjectable !== false) {
       writer.uint32(40).bool(message.isEjectable);
     }
-    if (message.sizeBytes !== undefined && message.sizeBytes !== 0) {
+    if (message.sizeBytes !== undefined && message.sizeBytes !== 0n) {
+      if (BigInt.asUintN(64, message.sizeBytes) !== message.sizeBytes) {
+        throw new globalThis.Error("value provided for field message.sizeBytes of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.sizeBytes);
     }
     if (message.mediaType !== undefined && message.mediaType !== 0) {
@@ -1995,7 +1998,7 @@ export const CMsgStorageDevicesData_Drive: MessageFns<CMsgStorageDevicesData_Dri
             break;
           }
 
-          message.sizeBytes = longToNumber(reader.uint64());
+          message.sizeBytes = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -2023,7 +2026,7 @@ function createBaseCMsgStorageDevicesData_BlockDevice(): CMsgStorageDevicesData_
     path: "",
     friendlyPath: "",
     label: "",
-    sizeBytes: 0,
+    sizeBytes: 0n,
     isFormattable: false,
     isReadOnly: false,
     isRootDevice: false,
@@ -2050,7 +2053,10 @@ export const CMsgStorageDevicesData_BlockDevice: MessageFns<CMsgStorageDevicesDa
     if (message.label !== undefined && message.label !== "") {
       writer.uint32(42).string(message.label);
     }
-    if (message.sizeBytes !== undefined && message.sizeBytes !== 0) {
+    if (message.sizeBytes !== undefined && message.sizeBytes !== 0n) {
+      if (BigInt.asUintN(64, message.sizeBytes) !== message.sizeBytes) {
+        throw new globalThis.Error("value provided for field message.sizeBytes of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.sizeBytes);
     }
     if (message.isFormattable !== undefined && message.isFormattable !== false) {
@@ -2126,7 +2132,7 @@ export const CMsgStorageDevicesData_BlockDevice: MessageFns<CMsgStorageDevicesDa
             break;
           }
 
-          message.sizeBytes = longToNumber(reader.uint64());
+          message.sizeBytes = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -2188,7 +2194,7 @@ export const CMsgStorageDevicesData_BlockDevice: MessageFns<CMsgStorageDevicesDa
 };
 
 function createBaseCCloudPendingRemoteOperation(): CCloudPendingRemoteOperation {
-  return { operation: 0, machineName: "", clientId: 0, timeLastUpdated: 0, osType: 0, deviceType: 0 };
+  return { operation: 0, machineName: "", clientId: 0n, timeLastUpdated: 0, osType: 0, deviceType: 0 };
 }
 
 export const CCloudPendingRemoteOperation: MessageFns<CCloudPendingRemoteOperation> = {
@@ -2199,7 +2205,10 @@ export const CCloudPendingRemoteOperation: MessageFns<CCloudPendingRemoteOperati
     if (message.machineName !== undefined && message.machineName !== "") {
       writer.uint32(18).string(message.machineName);
     }
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.clientId);
     }
     if (message.timeLastUpdated !== undefined && message.timeLastUpdated !== 0) {
@@ -2242,7 +2251,7 @@ export const CCloudPendingRemoteOperation: MessageFns<CCloudPendingRemoteOperati
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -2701,7 +2710,7 @@ export const CMsgSystemPerfDiagnosticEntry: MessageFns<CMsgSystemPerfDiagnosticE
 };
 
 function createBaseCMsgSystemPerfNetworkInterface(): CMsgSystemPerfNetworkInterface {
-  return { name: "", timestamp: 0, txBytesTotal: 0, rxBytesTotal: 0, txBytesPerSec: 0, rxBytesPerSec: 0 };
+  return { name: "", timestamp: 0, txBytesTotal: 0n, rxBytesTotal: 0n, txBytesPerSec: 0, rxBytesPerSec: 0 };
 }
 
 export const CMsgSystemPerfNetworkInterface: MessageFns<CMsgSystemPerfNetworkInterface> = {
@@ -2712,10 +2721,16 @@ export const CMsgSystemPerfNetworkInterface: MessageFns<CMsgSystemPerfNetworkInt
     if (message.timestamp !== undefined && message.timestamp !== 0) {
       writer.uint32(17).double(message.timestamp);
     }
-    if (message.txBytesTotal !== undefined && message.txBytesTotal !== 0) {
+    if (message.txBytesTotal !== undefined && message.txBytesTotal !== 0n) {
+      if (BigInt.asIntN(64, message.txBytesTotal) !== message.txBytesTotal) {
+        throw new globalThis.Error("value provided for field message.txBytesTotal of type int64 too large");
+      }
       writer.uint32(24).int64(message.txBytesTotal);
     }
-    if (message.rxBytesTotal !== undefined && message.rxBytesTotal !== 0) {
+    if (message.rxBytesTotal !== undefined && message.rxBytesTotal !== 0n) {
+      if (BigInt.asIntN(64, message.rxBytesTotal) !== message.rxBytesTotal) {
+        throw new globalThis.Error("value provided for field message.rxBytesTotal of type int64 too large");
+      }
       writer.uint32(32).int64(message.rxBytesTotal);
     }
     if (message.txBytesPerSec !== undefined && message.txBytesPerSec !== 0) {
@@ -2755,7 +2770,7 @@ export const CMsgSystemPerfNetworkInterface: MessageFns<CMsgSystemPerfNetworkInt
             break;
           }
 
-          message.txBytesTotal = longToNumber(reader.int64());
+          message.txBytesTotal = reader.int64() as bigint;
           continue;
         }
         case 4: {
@@ -2763,7 +2778,7 @@ export const CMsgSystemPerfNetworkInterface: MessageFns<CMsgSystemPerfNetworkInt
             break;
           }
 
-          message.rxBytesTotal = longToNumber(reader.int64());
+          message.rxBytesTotal = reader.int64() as bigint;
           continue;
         }
         case 5: {
@@ -3993,7 +4008,7 @@ export const CMsgSystemPerfSettingsV1: MessageFns<CMsgSystemPerfSettingsV1> = {
 };
 
 function createBaseCMsgSystemPerfState(): CMsgSystemPerfState {
-  return { limits: undefined, settings: undefined, currentGameId: 0, activeProfileGameId: 0 };
+  return { limits: undefined, settings: undefined, currentGameId: 0n, activeProfileGameId: 0n };
 }
 
 export const CMsgSystemPerfState: MessageFns<CMsgSystemPerfState> = {
@@ -4004,10 +4019,16 @@ export const CMsgSystemPerfState: MessageFns<CMsgSystemPerfState> = {
     if (message.settings !== undefined) {
       CMsgSystemPerfSettings.encode(message.settings, writer.uint32(18).fork()).join();
     }
-    if (message.currentGameId !== undefined && message.currentGameId !== 0) {
+    if (message.currentGameId !== undefined && message.currentGameId !== 0n) {
+      if (BigInt.asUintN(64, message.currentGameId) !== message.currentGameId) {
+        throw new globalThis.Error("value provided for field message.currentGameId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.currentGameId);
     }
-    if (message.activeProfileGameId !== undefined && message.activeProfileGameId !== 0) {
+    if (message.activeProfileGameId !== undefined && message.activeProfileGameId !== 0n) {
+      if (BigInt.asUintN(64, message.activeProfileGameId) !== message.activeProfileGameId) {
+        throw new globalThis.Error("value provided for field message.activeProfileGameId of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.activeProfileGameId);
     }
     return writer;
@@ -4041,7 +4062,7 @@ export const CMsgSystemPerfState: MessageFns<CMsgSystemPerfState> = {
             break;
           }
 
-          message.currentGameId = longToNumber(reader.uint64());
+          message.currentGameId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -4049,7 +4070,7 @@ export const CMsgSystemPerfState: MessageFns<CMsgSystemPerfState> = {
             break;
           }
 
-          message.activeProfileGameId = longToNumber(reader.uint64());
+          message.activeProfileGameId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4063,12 +4084,15 @@ export const CMsgSystemPerfState: MessageFns<CMsgSystemPerfState> = {
 };
 
 function createBaseCMsgSystemPerfUpdateSettings(): CMsgSystemPerfUpdateSettings {
-  return { gameid: 0, skipStorageUpdate: false, resetToDefault: undefined, settingsDelta: undefined };
+  return { gameid: 0n, skipStorageUpdate: false, resetToDefault: undefined, settingsDelta: undefined };
 }
 
 export const CMsgSystemPerfUpdateSettings: MessageFns<CMsgSystemPerfUpdateSettings> = {
   encode(message: CMsgSystemPerfUpdateSettings, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gameid);
     }
     if (message.skipStorageUpdate !== undefined && message.skipStorageUpdate !== false) {
@@ -4095,7 +4119,7 @@ export const CMsgSystemPerfUpdateSettings: MessageFns<CMsgSystemPerfUpdateSettin
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -4133,12 +4157,15 @@ export const CMsgSystemPerfUpdateSettings: MessageFns<CMsgSystemPerfUpdateSettin
 };
 
 function createBaseCMsgSystemPerfLegacySettingEntry(): CMsgSystemPerfLegacySettingEntry {
-  return { profileGameId: 0, settings: undefined };
+  return { profileGameId: 0n, settings: undefined };
 }
 
 export const CMsgSystemPerfLegacySettingEntry: MessageFns<CMsgSystemPerfLegacySettingEntry> = {
   encode(message: CMsgSystemPerfLegacySettingEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.profileGameId !== undefined && message.profileGameId !== 0) {
+    if (message.profileGameId !== undefined && message.profileGameId !== 0n) {
+      if (BigInt.asUintN(64, message.profileGameId) !== message.profileGameId) {
+        throw new globalThis.Error("value provided for field message.profileGameId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.profileGameId);
     }
     if (message.settings !== undefined) {
@@ -4159,7 +4186,7 @@ export const CMsgSystemPerfLegacySettingEntry: MessageFns<CMsgSystemPerfLegacySe
             break;
           }
 
-          message.profileGameId = longToNumber(reader.uint64());
+          message.profileGameId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -6039,7 +6066,7 @@ export const CMsgSelectOSBranchParams: MessageFns<CMsgSelectOSBranchParams> = {
 };
 
 function createBaseCMsgSystemUpdateProgress(): CMsgSystemUpdateProgress {
-  return { stageProgress: 0, stageSizeBytes: 0, rtimeEstimatedCompletion: 0 };
+  return { stageProgress: 0, stageSizeBytes: 0n, rtimeEstimatedCompletion: 0 };
 }
 
 export const CMsgSystemUpdateProgress: MessageFns<CMsgSystemUpdateProgress> = {
@@ -6047,7 +6074,10 @@ export const CMsgSystemUpdateProgress: MessageFns<CMsgSystemUpdateProgress> = {
     if (message.stageProgress !== undefined && message.stageProgress !== 0) {
       writer.uint32(13).float(message.stageProgress);
     }
-    if (message.stageSizeBytes !== undefined && message.stageSizeBytes !== 0) {
+    if (message.stageSizeBytes !== undefined && message.stageSizeBytes !== 0n) {
+      if (BigInt.asIntN(64, message.stageSizeBytes) !== message.stageSizeBytes) {
+        throw new globalThis.Error("value provided for field message.stageSizeBytes of type int64 too large");
+      }
       writer.uint32(16).int64(message.stageSizeBytes);
     }
     if (message.rtimeEstimatedCompletion !== undefined && message.rtimeEstimatedCompletion !== 0) {
@@ -6076,7 +6106,7 @@ export const CMsgSystemUpdateProgress: MessageFns<CMsgSystemUpdateProgress> = {
             break;
           }
 
-          message.stageSizeBytes = longToNumber(reader.int64());
+          message.stageSizeBytes = reader.int64() as bigint;
           continue;
         }
         case 3: {
@@ -6540,7 +6570,7 @@ function createBaseCMsgShortcutInfo(): CMsgShortcutInfo {
     overrideAppid: 0,
     flatpakAppid: "",
     tags: [],
-    remoteClientId: 0,
+    remoteClientId: 0n,
     isHidden: false,
     isTemporary: false,
     isOpenvr: false,
@@ -6586,7 +6616,10 @@ export const CMsgShortcutInfo: MessageFns<CMsgShortcutInfo> = {
     for (const v of message.tags) {
       writer.uint32(82).string(v!);
     }
-    if (message.remoteClientId !== undefined && message.remoteClientId !== 0) {
+    if (message.remoteClientId !== undefined && message.remoteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.remoteClientId) !== message.remoteClientId) {
+        throw new globalThis.Error("value provided for field message.remoteClientId of type uint64 too large");
+      }
       writer.uint32(88).uint64(message.remoteClientId);
     }
     if (message.isHidden !== undefined && message.isHidden !== false) {
@@ -6714,7 +6747,7 @@ export const CMsgShortcutInfo: MessageFns<CMsgShortcutInfo> = {
             break;
           }
 
-          message.remoteClientId = longToNumber(reader.uint64());
+          message.remoteClientId = reader.uint64() as bigint;
           continue;
         }
         case 12: {
@@ -7110,7 +7143,7 @@ export const CMsgWebUITransportFailure: MessageFns<CMsgWebUITransportFailure> = 
 };
 
 function createBaseCMsgClientShaderHitCacheEntry(): CMsgClientShaderHitCacheEntry {
-  return { keySha: Buffer.alloc(0), codeSha: Buffer.alloc(0), timeLastReported: 0 };
+  return { keySha: Buffer.alloc(0), codeSha: Buffer.alloc(0), timeLastReported: 0n };
 }
 
 export const CMsgClientShaderHitCacheEntry: MessageFns<CMsgClientShaderHitCacheEntry> = {
@@ -7121,7 +7154,10 @@ export const CMsgClientShaderHitCacheEntry: MessageFns<CMsgClientShaderHitCacheE
     if (message.codeSha !== undefined && message.codeSha.length !== 0) {
       writer.uint32(18).bytes(message.codeSha);
     }
-    if (message.timeLastReported !== undefined && message.timeLastReported !== 0) {
+    if (message.timeLastReported !== undefined && message.timeLastReported !== 0n) {
+      if (BigInt.asUintN(64, message.timeLastReported) !== message.timeLastReported) {
+        throw new globalThis.Error("value provided for field message.timeLastReported of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.timeLastReported);
     }
     return writer;
@@ -7155,7 +7191,7 @@ export const CMsgClientShaderHitCacheEntry: MessageFns<CMsgClientShaderHitCacheE
             break;
           }
 
-          message.timeLastReported = longToNumber(reader.uint64());
+          message.timeLastReported = reader.uint64() as bigint;
           continue;
         }
       }
@@ -7204,17 +7240,6 @@ export const CMsgClientShaderHitCache: MessageFns<CMsgClientShaderHitCache> = {
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

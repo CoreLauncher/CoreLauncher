@@ -84,16 +84,16 @@ export interface CStoreRegisterCDKeyRequest {
 }
 
 export interface CStorePurchaseReceiptInfo {
-  transactionid?: number | undefined;
+  transactionid?: bigint | undefined;
   packageid?: number | undefined;
   purchaseStatus?: number | undefined;
   resultDetail?: number | undefined;
   transactionTime?: number | undefined;
   paymentMethod?: number | undefined;
-  basePrice?: number | undefined;
-  totalDiscount?: number | undefined;
-  tax?: number | undefined;
-  shipping?: number | undefined;
+  basePrice?: bigint | undefined;
+  totalDiscount?: bigint | undefined;
+  tax?: bigint | undefined;
+  shipping?: bigint | undefined;
   currencyCode?: number | undefined;
   countryCode?: string | undefined;
   errorHeadline?: string | undefined;
@@ -267,7 +267,7 @@ export interface CStoreGetUserGameInterestStateResponse_InQueue {
 }
 
 export interface CStoreGetGamesFollowedRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CStoreGetGamesFollowedResponse {
@@ -275,7 +275,7 @@ export interface CStoreGetGamesFollowedResponse {
 }
 
 export interface CStoreGetGamesFollowedCountRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CStoreGetGamesFollowedCountResponse {
@@ -283,7 +283,7 @@ export interface CStoreGetGamesFollowedCountResponse {
 }
 
 export interface CStoreGetDiscoveryQueueSkippedAppsRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   queueType?: EStoreDiscoveryQueueType | undefined;
   storePageFilter?: CStorePageFilter | undefined;
 }
@@ -346,13 +346,13 @@ export interface CStoreGetTrendingAppsAmongFriendsResponse {
 
 export interface CStoreGetTrendingAppsAmongFriendsResponse_TrendingAppData {
   appid?: number | undefined;
-  steamidsTopFriends: number[];
+  steamidsTopFriends: bigint[];
   totalFriends?: number | undefined;
 }
 
 export interface CStoreMigratePartnerLinkTrackingNotification {
   accountid?: number | undefined;
-  browserid?: number | undefined;
+  browserid?: bigint | undefined;
   backfillSource?: EPartnerLinkTrackingBackfillSource | undefined;
 }
 
@@ -508,16 +508,16 @@ export const CStoreRegisterCDKeyRequest: MessageFns<CStoreRegisterCDKeyRequest> 
 
 function createBaseCStorePurchaseReceiptInfo(): CStorePurchaseReceiptInfo {
   return {
-    transactionid: 0,
+    transactionid: 0n,
     packageid: 0,
     purchaseStatus: 0,
     resultDetail: 0,
     transactionTime: 0,
     paymentMethod: 0,
-    basePrice: 0,
-    totalDiscount: 0,
-    tax: 0,
-    shipping: 0,
+    basePrice: 0n,
+    totalDiscount: 0n,
+    tax: 0n,
+    shipping: 0n,
     currencyCode: 0,
     countryCode: "",
     errorHeadline: "",
@@ -531,7 +531,10 @@ function createBaseCStorePurchaseReceiptInfo(): CStorePurchaseReceiptInfo {
 
 export const CStorePurchaseReceiptInfo: MessageFns<CStorePurchaseReceiptInfo> = {
   encode(message: CStorePurchaseReceiptInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.transactionid !== undefined && message.transactionid !== 0) {
+    if (message.transactionid !== undefined && message.transactionid !== 0n) {
+      if (BigInt.asUintN(64, message.transactionid) !== message.transactionid) {
+        throw new globalThis.Error("value provided for field message.transactionid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.transactionid);
     }
     if (message.packageid !== undefined && message.packageid !== 0) {
@@ -549,16 +552,28 @@ export const CStorePurchaseReceiptInfo: MessageFns<CStorePurchaseReceiptInfo> = 
     if (message.paymentMethod !== undefined && message.paymentMethod !== 0) {
       writer.uint32(48).uint32(message.paymentMethod);
     }
-    if (message.basePrice !== undefined && message.basePrice !== 0) {
+    if (message.basePrice !== undefined && message.basePrice !== 0n) {
+      if (BigInt.asUintN(64, message.basePrice) !== message.basePrice) {
+        throw new globalThis.Error("value provided for field message.basePrice of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.basePrice);
     }
-    if (message.totalDiscount !== undefined && message.totalDiscount !== 0) {
+    if (message.totalDiscount !== undefined && message.totalDiscount !== 0n) {
+      if (BigInt.asUintN(64, message.totalDiscount) !== message.totalDiscount) {
+        throw new globalThis.Error("value provided for field message.totalDiscount of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.totalDiscount);
     }
-    if (message.tax !== undefined && message.tax !== 0) {
+    if (message.tax !== undefined && message.tax !== 0n) {
+      if (BigInt.asUintN(64, message.tax) !== message.tax) {
+        throw new globalThis.Error("value provided for field message.tax of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.tax);
     }
-    if (message.shipping !== undefined && message.shipping !== 0) {
+    if (message.shipping !== undefined && message.shipping !== 0n) {
+      if (BigInt.asUintN(64, message.shipping) !== message.shipping) {
+        throw new globalThis.Error("value provided for field message.shipping of type uint64 too large");
+      }
       writer.uint32(80).uint64(message.shipping);
     }
     if (message.currencyCode !== undefined && message.currencyCode !== 0) {
@@ -600,7 +615,7 @@ export const CStorePurchaseReceiptInfo: MessageFns<CStorePurchaseReceiptInfo> = 
             break;
           }
 
-          message.transactionid = longToNumber(reader.uint64());
+          message.transactionid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -648,7 +663,7 @@ export const CStorePurchaseReceiptInfo: MessageFns<CStorePurchaseReceiptInfo> = 
             break;
           }
 
-          message.basePrice = longToNumber(reader.uint64());
+          message.basePrice = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -656,7 +671,7 @@ export const CStorePurchaseReceiptInfo: MessageFns<CStorePurchaseReceiptInfo> = 
             break;
           }
 
-          message.totalDiscount = longToNumber(reader.uint64());
+          message.totalDiscount = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -664,7 +679,7 @@ export const CStorePurchaseReceiptInfo: MessageFns<CStorePurchaseReceiptInfo> = 
             break;
           }
 
-          message.tax = longToNumber(reader.uint64());
+          message.tax = reader.uint64() as bigint;
           continue;
         }
         case 10: {
@@ -672,7 +687,7 @@ export const CStorePurchaseReceiptInfo: MessageFns<CStorePurchaseReceiptInfo> = 
             break;
           }
 
-          message.shipping = longToNumber(reader.uint64());
+          message.shipping = reader.uint64() as bigint;
           continue;
         }
         case 11: {
@@ -2502,12 +2517,15 @@ export const CStoreGetUserGameInterestStateResponse_InQueue: MessageFns<
 };
 
 function createBaseCStoreGetGamesFollowedRequest(): CStoreGetGamesFollowedRequest {
-  return { steamid: 0 };
+  return { steamid: 0n };
 }
 
 export const CStoreGetGamesFollowedRequest: MessageFns<CStoreGetGamesFollowedRequest> = {
   encode(message: CStoreGetGamesFollowedRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     return writer;
@@ -2525,7 +2543,7 @@ export const CStoreGetGamesFollowedRequest: MessageFns<CStoreGetGamesFollowedReq
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2586,12 +2604,15 @@ export const CStoreGetGamesFollowedResponse: MessageFns<CStoreGetGamesFollowedRe
 };
 
 function createBaseCStoreGetGamesFollowedCountRequest(): CStoreGetGamesFollowedCountRequest {
-  return { steamid: 0 };
+  return { steamid: 0n };
 }
 
 export const CStoreGetGamesFollowedCountRequest: MessageFns<CStoreGetGamesFollowedCountRequest> = {
   encode(message: CStoreGetGamesFollowedCountRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     return writer;
@@ -2609,7 +2630,7 @@ export const CStoreGetGamesFollowedCountRequest: MessageFns<CStoreGetGamesFollow
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2660,12 +2681,15 @@ export const CStoreGetGamesFollowedCountResponse: MessageFns<CStoreGetGamesFollo
 };
 
 function createBaseCStoreGetDiscoveryQueueSkippedAppsRequest(): CStoreGetDiscoveryQueueSkippedAppsRequest {
-  return { steamid: 0, queueType: 0, storePageFilter: undefined };
+  return { steamid: 0n, queueType: 0, storePageFilter: undefined };
 }
 
 export const CStoreGetDiscoveryQueueSkippedAppsRequest: MessageFns<CStoreGetDiscoveryQueueSkippedAppsRequest> = {
   encode(message: CStoreGetDiscoveryQueueSkippedAppsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.queueType !== undefined && message.queueType !== 0) {
@@ -2689,7 +2713,7 @@ export const CStoreGetDiscoveryQueueSkippedAppsRequest: MessageFns<CStoreGetDisc
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3306,6 +3330,9 @@ export const CStoreGetTrendingAppsAmongFriendsResponse_TrendingAppData: MessageF
       writer.uint32(8).uint32(message.appid);
     }
     for (const v of message.steamidsTopFriends) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(16).uint64(v!);
     }
     if (message.totalFriends !== undefined && message.totalFriends !== 0) {
@@ -3331,7 +3358,7 @@ export const CStoreGetTrendingAppsAmongFriendsResponse_TrendingAppData: MessageF
         }
         case 2: {
           if (tag === 16) {
-            message.steamidsTopFriends.push(longToNumber(reader.uint64()));
+            message.steamidsTopFriends.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -3339,7 +3366,7 @@ export const CStoreGetTrendingAppsAmongFriendsResponse_TrendingAppData: MessageF
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.steamidsTopFriends.push(longToNumber(reader.uint64()));
+              message.steamidsTopFriends.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -3366,7 +3393,7 @@ export const CStoreGetTrendingAppsAmongFriendsResponse_TrendingAppData: MessageF
 };
 
 function createBaseCStoreMigratePartnerLinkTrackingNotification(): CStoreMigratePartnerLinkTrackingNotification {
-  return { accountid: 0, browserid: 0, backfillSource: 0 };
+  return { accountid: 0, browserid: 0n, backfillSource: 0 };
 }
 
 export const CStoreMigratePartnerLinkTrackingNotification: MessageFns<CStoreMigratePartnerLinkTrackingNotification> = {
@@ -3377,7 +3404,10 @@ export const CStoreMigratePartnerLinkTrackingNotification: MessageFns<CStoreMigr
     if (message.accountid !== undefined && message.accountid !== 0) {
       writer.uint32(8).uint32(message.accountid);
     }
-    if (message.browserid !== undefined && message.browserid !== 0) {
+    if (message.browserid !== undefined && message.browserid !== 0n) {
+      if (BigInt.asUintN(64, message.browserid) !== message.browserid) {
+        throw new globalThis.Error("value provided for field message.browserid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.browserid);
     }
     if (message.backfillSource !== undefined && message.backfillSource !== 0) {
@@ -3406,7 +3436,7 @@ export const CStoreMigratePartnerLinkTrackingNotification: MessageFns<CStoreMigr
             break;
           }
 
-          message.browserid = longToNumber(reader.uint64());
+          message.browserid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -4638,17 +4668,6 @@ export class StoreClientClientImpl implements StoreClient {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

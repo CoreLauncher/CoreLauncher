@@ -10,7 +10,7 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 export const protobufPackage = "";
 
 export interface CMsgClientSiteInfo {
-  siteId?: number | undefined;
+  siteId?: bigint | undefined;
   siteName?: string | undefined;
   allowCachedCredentials?: boolean | undefined;
 }
@@ -44,12 +44,15 @@ export interface CMsgClientSiteLicenseGetContentCacheInfoResponse {
 }
 
 function createBaseCMsgClientSiteInfo(): CMsgClientSiteInfo {
-  return { siteId: 0, siteName: "", allowCachedCredentials: false };
+  return { siteId: 0n, siteName: "", allowCachedCredentials: false };
 }
 
 export const CMsgClientSiteInfo: MessageFns<CMsgClientSiteInfo> = {
   encode(message: CMsgClientSiteInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.siteId !== undefined && message.siteId !== 0) {
+    if (message.siteId !== undefined && message.siteId !== 0n) {
+      if (BigInt.asUintN(64, message.siteId) !== message.siteId) {
+        throw new globalThis.Error("value provided for field message.siteId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.siteId);
     }
     if (message.siteName !== undefined && message.siteName !== "") {
@@ -73,7 +76,7 @@ export const CMsgClientSiteInfo: MessageFns<CMsgClientSiteInfo> = {
             break;
           }
 
-          message.siteId = longToNumber(reader.uint64());
+          message.siteId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -377,17 +380,6 @@ export const CMsgClientSiteLicenseGetContentCacheInfoResponse: MessageFns<
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

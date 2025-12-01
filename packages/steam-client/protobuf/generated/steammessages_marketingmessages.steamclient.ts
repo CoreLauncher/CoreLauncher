@@ -93,7 +93,7 @@ export interface CMarketingMessagesGetActiveMarketingMessagesRequest {
 }
 
 export interface CMarketingMessageProto {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
   title?: string | undefined;
   type?: EMarketingMessageType | undefined;
   visibility?: EMarketingMessageVisibility | undefined;
@@ -145,7 +145,7 @@ export interface CMarketingMessagesGetMarketingMessagesForUserRequest {
 }
 
 export interface CDisplayMarketingMessage {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
   title?: string | undefined;
   type?: EMarketingMessageType | undefined;
   associatedItemId?: StoreItemID | undefined;
@@ -177,7 +177,7 @@ export interface CMarketingMessagesDoesUserHavePendingMarketingMessagesResponse 
 }
 
 export interface CMarketingMessagesGetDisplayMarketingMessageRequest {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
   context?: StoreBrowseContext | undefined;
   dataRequest?: StoreBrowseItemDataRequest | undefined;
 }
@@ -187,20 +187,20 @@ export interface CMarketingMessagesGetDisplayMarketingMessageResponse {
 }
 
 export interface CMarketingMessagesMarkMessageSeenNotification {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
   displayIndex?: number | undefined;
   templateType?: EMarketingMessageTemplateType | undefined;
 }
 
 export interface CMarketingMessagesMarkMessageClickedNotification {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
   displayIndex?: number | undefined;
   templateType?: EMarketingMessageTemplateType | undefined;
   clickLocation?: EMarketingMessageClickLocation | undefined;
 }
 
 export interface CMarketingMessagesGetMarketingMessageRequest {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
 }
 
 export interface CMarketingMessagesGetMarketingMessageResponse {
@@ -213,11 +213,11 @@ export interface CMarketingMessagesCreateMarketingMessageRequest {
 }
 
 export interface CMarketingMessagesCreateMarketingMessageResponse {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
 }
 
 export interface CMarketingMessagesUpdateMarketingMessageRequest {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
   message?: CMarketingMessageProto | undefined;
   fromJson?: boolean | undefined;
 }
@@ -226,7 +226,7 @@ export interface CMarketingMessagesUpdateMarketingMessageResponse {
 }
 
 export interface CMarketingMessagesDeleteMarketingMessageRequest {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
 }
 
 export interface CMarketingMessagesDeleteMarketingMessageResponse {
@@ -234,9 +234,9 @@ export interface CMarketingMessagesDeleteMarketingMessageResponse {
 
 export interface CMarketingMessagesFindMarketingMessagesRequest {
   lookupType?: EMarketingMessageLookupType | undefined;
-  gid?: number | undefined;
+  gid?: bigint | undefined;
   messageType?: EMarketingMessageType | undefined;
-  gidlist: number[];
+  gidlist: bigint[];
   title?: string | undefined;
 }
 
@@ -245,7 +245,7 @@ export interface CMarketingMessagesFindMarketingMessagesResponse {
 }
 
 export interface CMarketingMessagesGetMarketingMessageViewerStatsRequest {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
 }
 
 export interface CMarketingMessageHourlyStats {
@@ -278,7 +278,7 @@ export interface CMarketingMessagesGetMarketingMessagesViewerRangeStatsResponse 
 }
 
 export interface CMarketingMessagesGetMarketingMessageClickedStatsRequest {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
 }
 
 export interface CMarketingMessagesGetMarketingMessageClickedStatsResponse {
@@ -294,7 +294,7 @@ export interface CMarketingMessagesGetPartnerReadyToPublishMessagesResponse {
 }
 
 export interface CMarketingMessagesPartnerPublishMessageRequest {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
   partnerid?: number | undefined;
 }
 
@@ -302,7 +302,7 @@ export interface CMarketingMessagesPartnerPublishMessageResponse {
 }
 
 export interface CMarketingMessagesGetPartnerMessagePreviewRequest {
-  gid?: number | undefined;
+  gid?: bigint | undefined;
   partnerid?: number | undefined;
 }
 
@@ -381,7 +381,7 @@ export const CMarketingMessagesGetActiveMarketingMessagesRequest: MessageFns<
 
 function createBaseCMarketingMessageProto(): CMarketingMessageProto {
   return {
-    gid: 0,
+    gid: 0n,
     title: "",
     type: 0,
     visibility: 1,
@@ -411,7 +411,10 @@ function createBaseCMarketingMessageProto(): CMarketingMessageProto {
 
 export const CMarketingMessageProto: MessageFns<CMarketingMessageProto> = {
   encode(message: CMarketingMessageProto, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     if (message.title !== undefined && message.title !== "") {
@@ -501,7 +504,7 @@ export const CMarketingMessageProto: MessageFns<CMarketingMessageProto> = {
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -972,7 +975,7 @@ export const CMarketingMessagesGetMarketingMessagesForUserRequest: MessageFns<
 
 function createBaseCDisplayMarketingMessage(): CDisplayMarketingMessage {
   return {
-    gid: 0,
+    gid: 0n,
     title: "",
     type: 0,
     associatedItemId: undefined,
@@ -985,7 +988,10 @@ function createBaseCDisplayMarketingMessage(): CDisplayMarketingMessage {
 
 export const CDisplayMarketingMessage: MessageFns<CDisplayMarketingMessage> = {
   encode(message: CDisplayMarketingMessage, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     if (message.title !== undefined && message.title !== "") {
@@ -1024,7 +1030,7 @@ export const CDisplayMarketingMessage: MessageFns<CDisplayMarketingMessage> = {
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1332,7 +1338,7 @@ export const CMarketingMessagesDoesUserHavePendingMarketingMessagesResponse: Mes
 };
 
 function createBaseCMarketingMessagesGetDisplayMarketingMessageRequest(): CMarketingMessagesGetDisplayMarketingMessageRequest {
-  return { gid: 0, context: undefined, dataRequest: undefined };
+  return { gid: 0n, context: undefined, dataRequest: undefined };
 }
 
 export const CMarketingMessagesGetDisplayMarketingMessageRequest: MessageFns<
@@ -1342,7 +1348,10 @@ export const CMarketingMessagesGetDisplayMarketingMessageRequest: MessageFns<
     message: CMarketingMessagesGetDisplayMarketingMessageRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     if (message.context !== undefined) {
@@ -1366,7 +1375,7 @@ export const CMarketingMessagesGetDisplayMarketingMessageRequest: MessageFns<
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1438,7 +1447,7 @@ export const CMarketingMessagesGetDisplayMarketingMessageResponse: MessageFns<
 };
 
 function createBaseCMarketingMessagesMarkMessageSeenNotification(): CMarketingMessagesMarkMessageSeenNotification {
-  return { gid: 0, displayIndex: 0, templateType: 0 };
+  return { gid: 0n, displayIndex: 0, templateType: 0 };
 }
 
 export const CMarketingMessagesMarkMessageSeenNotification: MessageFns<CMarketingMessagesMarkMessageSeenNotification> =
@@ -1447,7 +1456,10 @@ export const CMarketingMessagesMarkMessageSeenNotification: MessageFns<CMarketin
       message: CMarketingMessagesMarkMessageSeenNotification,
       writer: BinaryWriter = new BinaryWriter(),
     ): BinaryWriter {
-      if (message.gid !== undefined && message.gid !== 0) {
+      if (message.gid !== undefined && message.gid !== 0n) {
+        if (BigInt.asUintN(64, message.gid) !== message.gid) {
+          throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+        }
         writer.uint32(9).fixed64(message.gid);
       }
       if (message.displayIndex !== undefined && message.displayIndex !== 0) {
@@ -1471,7 +1483,7 @@ export const CMarketingMessagesMarkMessageSeenNotification: MessageFns<CMarketin
               break;
             }
 
-            message.gid = longToNumber(reader.fixed64());
+            message.gid = reader.fixed64() as bigint;
             continue;
           }
           case 2: {
@@ -1501,7 +1513,7 @@ export const CMarketingMessagesMarkMessageSeenNotification: MessageFns<CMarketin
   };
 
 function createBaseCMarketingMessagesMarkMessageClickedNotification(): CMarketingMessagesMarkMessageClickedNotification {
-  return { gid: 0, displayIndex: 0, templateType: 0, clickLocation: 0 };
+  return { gid: 0n, displayIndex: 0, templateType: 0, clickLocation: 0 };
 }
 
 export const CMarketingMessagesMarkMessageClickedNotification: MessageFns<
@@ -1511,7 +1523,10 @@ export const CMarketingMessagesMarkMessageClickedNotification: MessageFns<
     message: CMarketingMessagesMarkMessageClickedNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     if (message.displayIndex !== undefined && message.displayIndex !== 0) {
@@ -1538,7 +1553,7 @@ export const CMarketingMessagesMarkMessageClickedNotification: MessageFns<
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1576,7 +1591,7 @@ export const CMarketingMessagesMarkMessageClickedNotification: MessageFns<
 };
 
 function createBaseCMarketingMessagesGetMarketingMessageRequest(): CMarketingMessagesGetMarketingMessageRequest {
-  return { gid: 0 };
+  return { gid: 0n };
 }
 
 export const CMarketingMessagesGetMarketingMessageRequest: MessageFns<CMarketingMessagesGetMarketingMessageRequest> = {
@@ -1584,7 +1599,10 @@ export const CMarketingMessagesGetMarketingMessageRequest: MessageFns<CMarketing
     message: CMarketingMessagesGetMarketingMessageRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     return writer;
@@ -1602,7 +1620,7 @@ export const CMarketingMessagesGetMarketingMessageRequest: MessageFns<CMarketing
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1710,7 +1728,7 @@ export const CMarketingMessagesCreateMarketingMessageRequest: MessageFns<
 };
 
 function createBaseCMarketingMessagesCreateMarketingMessageResponse(): CMarketingMessagesCreateMarketingMessageResponse {
-  return { gid: 0 };
+  return { gid: 0n };
 }
 
 export const CMarketingMessagesCreateMarketingMessageResponse: MessageFns<
@@ -1720,7 +1738,10 @@ export const CMarketingMessagesCreateMarketingMessageResponse: MessageFns<
     message: CMarketingMessagesCreateMarketingMessageResponse,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     return writer;
@@ -1738,7 +1759,7 @@ export const CMarketingMessagesCreateMarketingMessageResponse: MessageFns<
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1752,7 +1773,7 @@ export const CMarketingMessagesCreateMarketingMessageResponse: MessageFns<
 };
 
 function createBaseCMarketingMessagesUpdateMarketingMessageRequest(): CMarketingMessagesUpdateMarketingMessageRequest {
-  return { gid: 0, message: undefined, fromJson: false };
+  return { gid: 0n, message: undefined, fromJson: false };
 }
 
 export const CMarketingMessagesUpdateMarketingMessageRequest: MessageFns<
@@ -1762,7 +1783,10 @@ export const CMarketingMessagesUpdateMarketingMessageRequest: MessageFns<
     message: CMarketingMessagesUpdateMarketingMessageRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     if (message.message !== undefined) {
@@ -1786,7 +1810,7 @@ export const CMarketingMessagesUpdateMarketingMessageRequest: MessageFns<
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1844,7 +1868,7 @@ export const CMarketingMessagesUpdateMarketingMessageResponse: MessageFns<
 };
 
 function createBaseCMarketingMessagesDeleteMarketingMessageRequest(): CMarketingMessagesDeleteMarketingMessageRequest {
-  return { gid: 0 };
+  return { gid: 0n };
 }
 
 export const CMarketingMessagesDeleteMarketingMessageRequest: MessageFns<
@@ -1854,7 +1878,10 @@ export const CMarketingMessagesDeleteMarketingMessageRequest: MessageFns<
     message: CMarketingMessagesDeleteMarketingMessageRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     return writer;
@@ -1872,7 +1899,7 @@ export const CMarketingMessagesDeleteMarketingMessageRequest: MessageFns<
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1914,7 +1941,7 @@ export const CMarketingMessagesDeleteMarketingMessageResponse: MessageFns<
 };
 
 function createBaseCMarketingMessagesFindMarketingMessagesRequest(): CMarketingMessagesFindMarketingMessagesRequest {
-  return { lookupType: 0, gid: 0, messageType: 0, gidlist: [], title: "" };
+  return { lookupType: 0, gid: 0n, messageType: 0, gidlist: [], title: "" };
 }
 
 export const CMarketingMessagesFindMarketingMessagesRequest: MessageFns<
@@ -1927,13 +1954,19 @@ export const CMarketingMessagesFindMarketingMessagesRequest: MessageFns<
     if (message.lookupType !== undefined && message.lookupType !== 0) {
       writer.uint32(8).int32(message.lookupType);
     }
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.gid);
     }
     if (message.messageType !== undefined && message.messageType !== 0) {
       writer.uint32(24).int32(message.messageType);
     }
     for (const v of message.gidlist) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(v!);
     }
     if (message.title !== undefined && message.title !== "") {
@@ -1962,7 +1995,7 @@ export const CMarketingMessagesFindMarketingMessagesRequest: MessageFns<
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1975,7 +2008,7 @@ export const CMarketingMessagesFindMarketingMessagesRequest: MessageFns<
         }
         case 4: {
           if (tag === 33) {
-            message.gidlist.push(longToNumber(reader.fixed64()));
+            message.gidlist.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -1983,7 +2016,7 @@ export const CMarketingMessagesFindMarketingMessagesRequest: MessageFns<
           if (tag === 34) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.gidlist.push(longToNumber(reader.fixed64()));
+              message.gidlist.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -2052,7 +2085,7 @@ export const CMarketingMessagesFindMarketingMessagesResponse: MessageFns<
 };
 
 function createBaseCMarketingMessagesGetMarketingMessageViewerStatsRequest(): CMarketingMessagesGetMarketingMessageViewerStatsRequest {
-  return { gid: 0 };
+  return { gid: 0n };
 }
 
 export const CMarketingMessagesGetMarketingMessageViewerStatsRequest: MessageFns<
@@ -2062,7 +2095,10 @@ export const CMarketingMessagesGetMarketingMessageViewerStatsRequest: MessageFns
     message: CMarketingMessagesGetMarketingMessageViewerStatsRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     return writer;
@@ -2080,7 +2116,7 @@ export const CMarketingMessagesGetMarketingMessageViewerStatsRequest: MessageFns
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2399,7 +2435,7 @@ export const CMarketingMessagesGetMarketingMessagesViewerRangeStatsResponse: Mes
 };
 
 function createBaseCMarketingMessagesGetMarketingMessageClickedStatsRequest(): CMarketingMessagesGetMarketingMessageClickedStatsRequest {
-  return { gid: 0 };
+  return { gid: 0n };
 }
 
 export const CMarketingMessagesGetMarketingMessageClickedStatsRequest: MessageFns<
@@ -2409,7 +2445,10 @@ export const CMarketingMessagesGetMarketingMessageClickedStatsRequest: MessageFn
     message: CMarketingMessagesGetMarketingMessageClickedStatsRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     return writer;
@@ -2427,7 +2466,7 @@ export const CMarketingMessagesGetMarketingMessageClickedStatsRequest: MessageFn
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2570,7 +2609,7 @@ export const CMarketingMessagesGetPartnerReadyToPublishMessagesResponse: Message
 };
 
 function createBaseCMarketingMessagesPartnerPublishMessageRequest(): CMarketingMessagesPartnerPublishMessageRequest {
-  return { gid: 0, partnerid: 0 };
+  return { gid: 0n, partnerid: 0 };
 }
 
 export const CMarketingMessagesPartnerPublishMessageRequest: MessageFns<
@@ -2580,7 +2619,10 @@ export const CMarketingMessagesPartnerPublishMessageRequest: MessageFns<
     message: CMarketingMessagesPartnerPublishMessageRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     if (message.partnerid !== undefined && message.partnerid !== 0) {
@@ -2601,7 +2643,7 @@ export const CMarketingMessagesPartnerPublishMessageRequest: MessageFns<
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2651,7 +2693,7 @@ export const CMarketingMessagesPartnerPublishMessageResponse: MessageFns<
 };
 
 function createBaseCMarketingMessagesGetPartnerMessagePreviewRequest(): CMarketingMessagesGetPartnerMessagePreviewRequest {
-  return { gid: 0, partnerid: 0 };
+  return { gid: 0n, partnerid: 0 };
 }
 
 export const CMarketingMessagesGetPartnerMessagePreviewRequest: MessageFns<
@@ -2661,7 +2703,10 @@ export const CMarketingMessagesGetPartnerMessagePreviewRequest: MessageFns<
     message: CMarketingMessagesGetPartnerMessagePreviewRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
     if (message.partnerid !== undefined && message.partnerid !== 0) {
@@ -2682,7 +2727,7 @@ export const CMarketingMessagesGetPartnerMessagePreviewRequest: MessageFns<
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3205,17 +3250,6 @@ export class MarketingMessagesClientImpl implements MarketingMessages {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

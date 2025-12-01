@@ -23,7 +23,7 @@ export interface CKeyEscrowRequest {
 
 export interface CKeyEscrowTicket {
   password?: Buffer | undefined;
-  identifier?: number | undefined;
+  identifier?: bigint | undefined;
   payload?: Buffer | undefined;
   timestamp?: number | undefined;
   usage?: EKeyEscrowUsage | undefined;
@@ -110,7 +110,7 @@ export const CKeyEscrowRequest: MessageFns<CKeyEscrowRequest> = {
 function createBaseCKeyEscrowTicket(): CKeyEscrowTicket {
   return {
     password: Buffer.alloc(0),
-    identifier: 0,
+    identifier: 0n,
     payload: Buffer.alloc(0),
     timestamp: 0,
     usage: 0,
@@ -126,7 +126,10 @@ export const CKeyEscrowTicket: MessageFns<CKeyEscrowTicket> = {
     if (message.password !== undefined && message.password.length !== 0) {
       writer.uint32(10).bytes(message.password);
     }
-    if (message.identifier !== undefined && message.identifier !== 0) {
+    if (message.identifier !== undefined && message.identifier !== 0n) {
+      if (BigInt.asUintN(64, message.identifier) !== message.identifier) {
+        throw new globalThis.Error("value provided for field message.identifier of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.identifier);
     }
     if (message.payload !== undefined && message.payload.length !== 0) {
@@ -173,7 +176,7 @@ export const CKeyEscrowTicket: MessageFns<CKeyEscrowTicket> = {
             break;
           }
 
-          message.identifier = longToNumber(reader.uint64());
+          message.identifier = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -301,17 +304,6 @@ export class SecretsClientImpl implements Secrets {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

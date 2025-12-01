@@ -10,7 +10,7 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 export const protobufPackage = "";
 
 export interface CMsgSteamNetworkingIdentityLegacyBinary {
-  steamId?: number | undefined;
+  steamId?: bigint | undefined;
   genericBytes?: Buffer | undefined;
   genericString?: string | undefined;
   ipv6AndPort?: Buffer | undefined;
@@ -19,7 +19,7 @@ export interface CMsgSteamNetworkingIdentityLegacyBinary {
 export interface CMsgSteamDatagramCertificate {
   keyType?: CMsgSteamDatagramCertificate_EKeyType | undefined;
   keyData?: Buffer | undefined;
-  legacySteamId?: number | undefined;
+  legacySteamId?: bigint | undefined;
   legacyIdentityBinary?: CMsgSteamNetworkingIdentityLegacyBinary | undefined;
   identityString?: string | undefined;
   gameserverDatacenterIds: number[];
@@ -37,7 +37,7 @@ export enum CMsgSteamDatagramCertificate_EKeyType {
 
 export interface CMsgSteamDatagramCertificateSigned {
   cert?: Buffer | undefined;
-  caKeyId?: number | undefined;
+  caKeyId?: bigint | undefined;
   caSignature?: Buffer | undefined;
   privateKeyData?: Buffer | undefined;
 }
@@ -47,12 +47,15 @@ export interface CMsgSteamDatagramCertificateRequest {
 }
 
 function createBaseCMsgSteamNetworkingIdentityLegacyBinary(): CMsgSteamNetworkingIdentityLegacyBinary {
-  return { steamId: 0, genericBytes: Buffer.alloc(0), genericString: "", ipv6AndPort: Buffer.alloc(0) };
+  return { steamId: 0n, genericBytes: Buffer.alloc(0), genericString: "", ipv6AndPort: Buffer.alloc(0) };
 }
 
 export const CMsgSteamNetworkingIdentityLegacyBinary: MessageFns<CMsgSteamNetworkingIdentityLegacyBinary> = {
   encode(message: CMsgSteamNetworkingIdentityLegacyBinary, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamId !== undefined && message.steamId !== 0) {
+    if (message.steamId !== undefined && message.steamId !== 0n) {
+      if (BigInt.asUintN(64, message.steamId) !== message.steamId) {
+        throw new globalThis.Error("value provided for field message.steamId of type fixed64 too large");
+      }
       writer.uint32(129).fixed64(message.steamId);
     }
     if (message.genericBytes !== undefined && message.genericBytes.length !== 0) {
@@ -79,7 +82,7 @@ export const CMsgSteamNetworkingIdentityLegacyBinary: MessageFns<CMsgSteamNetwor
             break;
           }
 
-          message.steamId = longToNumber(reader.fixed64());
+          message.steamId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -120,7 +123,7 @@ function createBaseCMsgSteamDatagramCertificate(): CMsgSteamDatagramCertificate 
   return {
     keyType: 0,
     keyData: Buffer.alloc(0),
-    legacySteamId: 0,
+    legacySteamId: 0n,
     legacyIdentityBinary: undefined,
     identityString: "",
     gameserverDatacenterIds: [],
@@ -139,7 +142,10 @@ export const CMsgSteamDatagramCertificate: MessageFns<CMsgSteamDatagramCertifica
     if (message.keyData !== undefined && message.keyData.length !== 0) {
       writer.uint32(18).bytes(message.keyData);
     }
-    if (message.legacySteamId !== undefined && message.legacySteamId !== 0) {
+    if (message.legacySteamId !== undefined && message.legacySteamId !== 0n) {
+      if (BigInt.asUintN(64, message.legacySteamId) !== message.legacySteamId) {
+        throw new globalThis.Error("value provided for field message.legacySteamId of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.legacySteamId);
     }
     if (message.legacyIdentityBinary !== undefined) {
@@ -194,7 +200,7 @@ export const CMsgSteamDatagramCertificate: MessageFns<CMsgSteamDatagramCertifica
             break;
           }
 
-          message.legacySteamId = longToNumber(reader.fixed64());
+          message.legacySteamId = reader.fixed64() as bigint;
           continue;
         }
         case 11: {
@@ -284,7 +290,7 @@ export const CMsgSteamDatagramCertificate: MessageFns<CMsgSteamDatagramCertifica
 };
 
 function createBaseCMsgSteamDatagramCertificateSigned(): CMsgSteamDatagramCertificateSigned {
-  return { cert: Buffer.alloc(0), caKeyId: 0, caSignature: Buffer.alloc(0), privateKeyData: Buffer.alloc(0) };
+  return { cert: Buffer.alloc(0), caKeyId: 0n, caSignature: Buffer.alloc(0), privateKeyData: Buffer.alloc(0) };
 }
 
 export const CMsgSteamDatagramCertificateSigned: MessageFns<CMsgSteamDatagramCertificateSigned> = {
@@ -292,7 +298,10 @@ export const CMsgSteamDatagramCertificateSigned: MessageFns<CMsgSteamDatagramCer
     if (message.cert !== undefined && message.cert.length !== 0) {
       writer.uint32(34).bytes(message.cert);
     }
-    if (message.caKeyId !== undefined && message.caKeyId !== 0) {
+    if (message.caKeyId !== undefined && message.caKeyId !== 0n) {
+      if (BigInt.asUintN(64, message.caKeyId) !== message.caKeyId) {
+        throw new globalThis.Error("value provided for field message.caKeyId of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.caKeyId);
     }
     if (message.caSignature !== undefined && message.caSignature.length !== 0) {
@@ -324,7 +333,7 @@ export const CMsgSteamDatagramCertificateSigned: MessageFns<CMsgSteamDatagramCer
             break;
           }
 
-          message.caKeyId = longToNumber(reader.fixed64());
+          message.caKeyId = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -389,17 +398,6 @@ export const CMsgSteamDatagramCertificateRequest: MessageFns<CMsgSteamDatagramCe
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

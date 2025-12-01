@@ -76,20 +76,20 @@ export interface CMsgIPAddress {
 
 export interface CMsgIPAddressBucket {
   originalIpAddress?: CMsgIPAddress | undefined;
-  bucket?: number | undefined;
+  bucket?: bigint | undefined;
 }
 
 export interface CMsgGCRoutingProtoBufHeader {
-  dstGcidQueue?: number | undefined;
+  dstGcidQueue?: bigint | undefined;
   dstGcDirIndex?: number | undefined;
 }
 
 export interface CMsgProtoBufHeader {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   clientSessionid?: number | undefined;
   routingAppid?: number | undefined;
-  jobidSource?: number | undefined;
-  jobidTarget?: number | undefined;
+  jobidSource?: bigint | undefined;
+  jobidTarget?: bigint | undefined;
   targetJobName?: string | undefined;
   seqNum?: number | undefined;
   eresult?: number | undefined;
@@ -98,7 +98,7 @@ export interface CMsgProtoBufHeader {
   tokenSource?: number | undefined;
   adminSpoofingUser?: boolean | undefined;
   transportError?: number | undefined;
-  messageid?: number | undefined;
+  messageid?: bigint | undefined;
   publisherGroupId?: number | undefined;
   sysid?: number | undefined;
   webapiKeyId?: number | undefined;
@@ -110,15 +110,15 @@ export interface CMsgProtoBufHeader {
   timeoutMs?: number | undefined;
   debugSource?: string | undefined;
   debugSourceStringIndex?: number | undefined;
-  tokenId?: number | undefined;
+  tokenId?: bigint | undefined;
   routingGc?: CMsgGCRoutingProtoBufHeader | undefined;
   sessionDisposition?: CMsgProtoBufHeader_ESessionDisposition | undefined;
   wgToken?: string | undefined;
   webuiAuthKey?: string | undefined;
   excludeClientSessionids: number[];
-  adminRequestSpoofingSteamid?: number | undefined;
+  adminRequestSpoofingSteamid?: bigint | undefined;
   isValveds?: boolean | undefined;
-  traceTag?: number | undefined;
+  traceTag?: bigint | undefined;
   ip?: number | undefined;
   ipV6?: Buffer | undefined;
 }
@@ -135,8 +135,8 @@ export interface CMsgKubeRPCPacket {
 }
 
 export interface CMsgKubeRPCPacket_Hdr {
-  jobidSource?: number | undefined;
-  jobidTarget?: number | undefined;
+  jobidSource?: bigint | undefined;
+  jobidTarget?: bigint | undefined;
   eresult?: number | undefined;
   targetJobName?: string | undefined;
   errorMessage?: string | undefined;
@@ -155,8 +155,8 @@ export interface CMsgProtobufWrapped {
 export interface CMsgAuthTicket {
   estate?: number | undefined;
   eresult?: number | undefined;
-  steamid?: number | undefined;
-  gameid?: number | undefined;
+  steamid?: bigint | undefined;
+  gameid?: bigint | undefined;
   hSteamPipe?: number | undefined;
   ticketCrc?: number | undefined;
   ticket?: Buffer | undefined;
@@ -227,8 +227,8 @@ export interface CLocalizationToken {
 
 export interface CClanEventUserNewsTuple {
   clanid?: number | undefined;
-  eventGid?: number | undefined;
-  announcementGid?: number | undefined;
+  eventGid?: bigint | undefined;
+  announcementGid?: bigint | undefined;
   rtimeStart?: number | undefined;
   rtimeEnd?: number | undefined;
   priorityScore?: number | undefined;
@@ -246,9 +246,9 @@ export interface CClanMatchEventByRange {
 }
 
 export interface CCommunityClanAnnouncementInfo {
-  gid?: number | undefined;
-  clanid?: number | undefined;
-  posterid?: number | undefined;
+  gid?: bigint | undefined;
+  clanid?: bigint | undefined;
+  posterid?: bigint | undefined;
   headline?: string | undefined;
   posttime?: number | undefined;
   updatetime?: number | undefined;
@@ -257,8 +257,8 @@ export interface CCommunityClanAnnouncementInfo {
   tags: string[];
   language?: number | undefined;
   hidden?: boolean | undefined;
-  forumTopicId?: number | undefined;
-  eventGid?: number | undefined;
+  forumTopicId?: bigint | undefined;
+  eventGid?: bigint | undefined;
   voteupcount?: number | undefined;
   votedowncount?: number | undefined;
   banCheckResult?: EBanContentCheckResult | undefined;
@@ -266,8 +266,8 @@ export interface CCommunityClanAnnouncementInfo {
 }
 
 export interface CClanEventData {
-  gid?: number | undefined;
-  clanSteamid?: number | undefined;
+  gid?: bigint | undefined;
+  clanSteamid?: bigint | undefined;
   eventName?: string | undefined;
   eventType?: EProtoClanEventType | undefined;
   appid?: number | undefined;
@@ -276,8 +276,8 @@ export interface CClanEventData {
   rtime32StartTime?: number | undefined;
   rtime32EndTime?: number | undefined;
   commentCount?: number | undefined;
-  creatorSteamid?: number | undefined;
-  lastUpdateSteamid?: number | undefined;
+  creatorSteamid?: bigint | undefined;
+  lastUpdateSteamid?: bigint | undefined;
   eventNotes?: string | undefined;
   jsondata?: string | undefined;
   announcementBody?: CCommunityClanAnnouncementInfo | undefined;
@@ -288,9 +288,9 @@ export interface CClanEventData {
   broadcasterAccountid?: number | undefined;
   followerCount?: number | undefined;
   ignoreCount?: number | undefined;
-  forumTopicId?: number | undefined;
+  forumTopicId?: bigint | undefined;
   rtime32LastModified?: number | undefined;
-  newsPostGid?: number | undefined;
+  newsPostGid?: bigint | undefined;
   rtimeModReviewed?: number | undefined;
   featuredAppTagid?: number | undefined;
   referencedAppids: number[];
@@ -394,7 +394,7 @@ export const CMsgIPAddress: MessageFns<CMsgIPAddress> = {
 };
 
 function createBaseCMsgIPAddressBucket(): CMsgIPAddressBucket {
-  return { originalIpAddress: undefined, bucket: 0 };
+  return { originalIpAddress: undefined, bucket: 0n };
 }
 
 export const CMsgIPAddressBucket: MessageFns<CMsgIPAddressBucket> = {
@@ -402,7 +402,10 @@ export const CMsgIPAddressBucket: MessageFns<CMsgIPAddressBucket> = {
     if (message.originalIpAddress !== undefined) {
       CMsgIPAddress.encode(message.originalIpAddress, writer.uint32(10).fork()).join();
     }
-    if (message.bucket !== undefined && message.bucket !== 0) {
+    if (message.bucket !== undefined && message.bucket !== 0n) {
+      if (BigInt.asUintN(64, message.bucket) !== message.bucket) {
+        throw new globalThis.Error("value provided for field message.bucket of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.bucket);
     }
     return writer;
@@ -428,7 +431,7 @@ export const CMsgIPAddressBucket: MessageFns<CMsgIPAddressBucket> = {
             break;
           }
 
-          message.bucket = longToNumber(reader.fixed64());
+          message.bucket = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -442,12 +445,15 @@ export const CMsgIPAddressBucket: MessageFns<CMsgIPAddressBucket> = {
 };
 
 function createBaseCMsgGCRoutingProtoBufHeader(): CMsgGCRoutingProtoBufHeader {
-  return { dstGcidQueue: 0, dstGcDirIndex: 0 };
+  return { dstGcidQueue: 0n, dstGcDirIndex: 0 };
 }
 
 export const CMsgGCRoutingProtoBufHeader: MessageFns<CMsgGCRoutingProtoBufHeader> = {
   encode(message: CMsgGCRoutingProtoBufHeader, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.dstGcidQueue !== undefined && message.dstGcidQueue !== 0) {
+    if (message.dstGcidQueue !== undefined && message.dstGcidQueue !== 0n) {
+      if (BigInt.asUintN(64, message.dstGcidQueue) !== message.dstGcidQueue) {
+        throw new globalThis.Error("value provided for field message.dstGcidQueue of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.dstGcidQueue);
     }
     if (message.dstGcDirIndex !== undefined && message.dstGcDirIndex !== 0) {
@@ -468,7 +474,7 @@ export const CMsgGCRoutingProtoBufHeader: MessageFns<CMsgGCRoutingProtoBufHeader
             break;
           }
 
-          message.dstGcidQueue = longToNumber(reader.uint64());
+          message.dstGcidQueue = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -491,11 +497,11 @@ export const CMsgGCRoutingProtoBufHeader: MessageFns<CMsgGCRoutingProtoBufHeader
 
 function createBaseCMsgProtoBufHeader(): CMsgProtoBufHeader {
   return {
-    steamid: 0,
+    steamid: 0n,
     clientSessionid: 0,
     routingAppid: 0,
-    jobidSource: 18446744073709551615,
-    jobidTarget: 18446744073709551615,
+    jobidSource: 18446744073709551615n,
+    jobidTarget: 18446744073709551615n,
     targetJobName: "",
     seqNum: 0,
     eresult: 2,
@@ -504,7 +510,7 @@ function createBaseCMsgProtoBufHeader(): CMsgProtoBufHeader {
     tokenSource: 0,
     adminSpoofingUser: false,
     transportError: 1,
-    messageid: 18446744073709551615,
+    messageid: 18446744073709551615n,
     publisherGroupId: 0,
     sysid: 0,
     webapiKeyId: 0,
@@ -516,15 +522,15 @@ function createBaseCMsgProtoBufHeader(): CMsgProtoBufHeader {
     timeoutMs: -1,
     debugSource: "",
     debugSourceStringIndex: 0,
-    tokenId: 0,
+    tokenId: 0n,
     routingGc: undefined,
     sessionDisposition: 0,
     wgToken: "",
     webuiAuthKey: "",
     excludeClientSessionids: [],
-    adminRequestSpoofingSteamid: 0,
+    adminRequestSpoofingSteamid: 0n,
     isValveds: false,
-    traceTag: 0,
+    traceTag: 0n,
     ip: undefined,
     ipV6: undefined,
   };
@@ -532,7 +538,10 @@ function createBaseCMsgProtoBufHeader(): CMsgProtoBufHeader {
 
 export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
   encode(message: CMsgProtoBufHeader, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.clientSessionid !== undefined && message.clientSessionid !== 0) {
@@ -541,10 +550,16 @@ export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
     if (message.routingAppid !== undefined && message.routingAppid !== 0) {
       writer.uint32(24).uint32(message.routingAppid);
     }
-    if (message.jobidSource !== undefined && message.jobidSource !== 18446744073709551615) {
+    if (message.jobidSource !== undefined && message.jobidSource !== 18446744073709551615n) {
+      if (BigInt.asUintN(64, message.jobidSource) !== message.jobidSource) {
+        throw new globalThis.Error("value provided for field message.jobidSource of type fixed64 too large");
+      }
       writer.uint32(81).fixed64(message.jobidSource);
     }
-    if (message.jobidTarget !== undefined && message.jobidTarget !== 18446744073709551615) {
+    if (message.jobidTarget !== undefined && message.jobidTarget !== 18446744073709551615n) {
+      if (BigInt.asUintN(64, message.jobidTarget) !== message.jobidTarget) {
+        throw new globalThis.Error("value provided for field message.jobidTarget of type fixed64 too large");
+      }
       writer.uint32(89).fixed64(message.jobidTarget);
     }
     if (message.targetJobName !== undefined && message.targetJobName !== "") {
@@ -571,7 +586,10 @@ export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
     if (message.transportError !== undefined && message.transportError !== 1) {
       writer.uint32(136).int32(message.transportError);
     }
-    if (message.messageid !== undefined && message.messageid !== 18446744073709551615) {
+    if (message.messageid !== undefined && message.messageid !== 18446744073709551615n) {
+      if (BigInt.asUintN(64, message.messageid) !== message.messageid) {
+        throw new globalThis.Error("value provided for field message.messageid of type uint64 too large");
+      }
       writer.uint32(144).uint64(message.messageid);
     }
     if (message.publisherGroupId !== undefined && message.publisherGroupId !== 0) {
@@ -607,7 +625,10 @@ export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
     if (message.debugSourceStringIndex !== undefined && message.debugSourceStringIndex !== 0) {
       writer.uint32(280).uint32(message.debugSourceStringIndex);
     }
-    if (message.tokenId !== undefined && message.tokenId !== 0) {
+    if (message.tokenId !== undefined && message.tokenId !== 0n) {
+      if (BigInt.asUintN(64, message.tokenId) !== message.tokenId) {
+        throw new globalThis.Error("value provided for field message.tokenId of type uint64 too large");
+      }
       writer.uint32(288).uint64(message.tokenId);
     }
     if (message.routingGc !== undefined) {
@@ -625,13 +646,21 @@ export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
     for (const v of message.excludeClientSessionids) {
       writer.uint32(328).int32(v!);
     }
-    if (message.adminRequestSpoofingSteamid !== undefined && message.adminRequestSpoofingSteamid !== 0) {
+    if (message.adminRequestSpoofingSteamid !== undefined && message.adminRequestSpoofingSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.adminRequestSpoofingSteamid) !== message.adminRequestSpoofingSteamid) {
+        throw new globalThis.Error(
+          "value provided for field message.adminRequestSpoofingSteamid of type fixed64 too large",
+        );
+      }
       writer.uint32(345).fixed64(message.adminRequestSpoofingSteamid);
     }
     if (message.isValveds !== undefined && message.isValveds !== false) {
       writer.uint32(352).bool(message.isValveds);
     }
-    if (message.traceTag !== undefined && message.traceTag !== 0) {
+    if (message.traceTag !== undefined && message.traceTag !== 0n) {
+      if (BigInt.asUintN(64, message.traceTag) !== message.traceTag) {
+        throw new globalThis.Error("value provided for field message.traceTag of type fixed64 too large");
+      }
       writer.uint32(361).fixed64(message.traceTag);
     }
     if (message.ip !== undefined) {
@@ -655,7 +684,7 @@ export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -679,7 +708,7 @@ export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
             break;
           }
 
-          message.jobidSource = longToNumber(reader.fixed64());
+          message.jobidSource = reader.fixed64() as bigint;
           continue;
         }
         case 11: {
@@ -687,7 +716,7 @@ export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
             break;
           }
 
-          message.jobidTarget = longToNumber(reader.fixed64());
+          message.jobidTarget = reader.fixed64() as bigint;
           continue;
         }
         case 12: {
@@ -759,7 +788,7 @@ export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
             break;
           }
 
-          message.messageid = longToNumber(reader.uint64());
+          message.messageid = reader.uint64() as bigint;
           continue;
         }
         case 19: {
@@ -865,7 +894,7 @@ export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
             break;
           }
 
-          message.tokenId = longToNumber(reader.uint64());
+          message.tokenId = reader.uint64() as bigint;
           continue;
         }
         case 37: {
@@ -923,7 +952,7 @@ export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
             break;
           }
 
-          message.adminRequestSpoofingSteamid = longToNumber(reader.fixed64());
+          message.adminRequestSpoofingSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 44: {
@@ -939,7 +968,7 @@ export const CMsgProtoBufHeader: MessageFns<CMsgProtoBufHeader> = {
             break;
           }
 
-          message.traceTag = longToNumber(reader.fixed64());
+          message.traceTag = reader.fixed64() as bigint;
           continue;
         }
         case 15: {
@@ -1018,8 +1047,8 @@ export const CMsgKubeRPCPacket: MessageFns<CMsgKubeRPCPacket> = {
 
 function createBaseCMsgKubeRPCPacket_Hdr(): CMsgKubeRPCPacket_Hdr {
   return {
-    jobidSource: 18446744073709551615,
-    jobidTarget: 18446744073709551615,
+    jobidSource: 18446744073709551615n,
+    jobidTarget: 18446744073709551615n,
     eresult: 2,
     targetJobName: "",
     errorMessage: "",
@@ -1029,10 +1058,16 @@ function createBaseCMsgKubeRPCPacket_Hdr(): CMsgKubeRPCPacket_Hdr {
 
 export const CMsgKubeRPCPacket_Hdr: MessageFns<CMsgKubeRPCPacket_Hdr> = {
   encode(message: CMsgKubeRPCPacket_Hdr, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.jobidSource !== undefined && message.jobidSource !== 18446744073709551615) {
+    if (message.jobidSource !== undefined && message.jobidSource !== 18446744073709551615n) {
+      if (BigInt.asUintN(64, message.jobidSource) !== message.jobidSource) {
+        throw new globalThis.Error("value provided for field message.jobidSource of type fixed64 too large");
+      }
       writer.uint32(81).fixed64(message.jobidSource);
     }
-    if (message.jobidTarget !== undefined && message.jobidTarget !== 18446744073709551615) {
+    if (message.jobidTarget !== undefined && message.jobidTarget !== 18446744073709551615n) {
+      if (BigInt.asUintN(64, message.jobidTarget) !== message.jobidTarget) {
+        throw new globalThis.Error("value provided for field message.jobidTarget of type fixed64 too large");
+      }
       writer.uint32(89).fixed64(message.jobidTarget);
     }
     if (message.eresult !== undefined && message.eresult !== 2) {
@@ -1062,7 +1097,7 @@ export const CMsgKubeRPCPacket_Hdr: MessageFns<CMsgKubeRPCPacket_Hdr> = {
             break;
           }
 
-          message.jobidSource = longToNumber(reader.fixed64());
+          message.jobidSource = reader.fixed64() as bigint;
           continue;
         }
         case 11: {
@@ -1070,7 +1105,7 @@ export const CMsgKubeRPCPacket_Hdr: MessageFns<CMsgKubeRPCPacket_Hdr> = {
             break;
           }
 
-          message.jobidTarget = longToNumber(reader.fixed64());
+          message.jobidTarget = reader.fixed64() as bigint;
           continue;
         }
         case 13: {
@@ -1204,8 +1239,8 @@ function createBaseCMsgAuthTicket(): CMsgAuthTicket {
   return {
     estate: 0,
     eresult: 2,
-    steamid: 0,
-    gameid: 0,
+    steamid: 0n,
+    gameid: 0n,
     hSteamPipe: 0,
     ticketCrc: 0,
     ticket: Buffer.alloc(0),
@@ -1222,10 +1257,16 @@ export const CMsgAuthTicket: MessageFns<CMsgAuthTicket> = {
     if (message.eresult !== undefined && message.eresult !== 2) {
       writer.uint32(16).uint32(message.eresult);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamid);
     }
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.gameid);
     }
     if (message.hSteamPipe !== undefined && message.hSteamPipe !== 0) {
@@ -1274,7 +1315,7 @@ export const CMsgAuthTicket: MessageFns<CMsgAuthTicket> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1282,7 +1323,7 @@ export const CMsgAuthTicket: MessageFns<CMsgAuthTicket> = {
             break;
           }
 
-          message.gameid = longToNumber(reader.fixed64());
+          message.gameid = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -2071,8 +2112,8 @@ export const CLocalizationToken: MessageFns<CLocalizationToken> = {
 function createBaseCClanEventUserNewsTuple(): CClanEventUserNewsTuple {
   return {
     clanid: 0,
-    eventGid: 0,
-    announcementGid: 0,
+    eventGid: 0n,
+    announcementGid: 0n,
     rtimeStart: 0,
     rtimeEnd: 0,
     priorityScore: 0,
@@ -2088,10 +2129,16 @@ export const CClanEventUserNewsTuple: MessageFns<CClanEventUserNewsTuple> = {
     if (message.clanid !== undefined && message.clanid !== 0) {
       writer.uint32(8).uint32(message.clanid);
     }
-    if (message.eventGid !== undefined && message.eventGid !== 0) {
+    if (message.eventGid !== undefined && message.eventGid !== 0n) {
+      if (BigInt.asUintN(64, message.eventGid) !== message.eventGid) {
+        throw new globalThis.Error("value provided for field message.eventGid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.eventGid);
     }
-    if (message.announcementGid !== undefined && message.announcementGid !== 0) {
+    if (message.announcementGid !== undefined && message.announcementGid !== 0n) {
+      if (BigInt.asUintN(64, message.announcementGid) !== message.announcementGid) {
+        throw new globalThis.Error("value provided for field message.announcementGid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.announcementGid);
     }
     if (message.rtimeStart !== undefined && message.rtimeStart !== 0) {
@@ -2138,7 +2185,7 @@ export const CClanEventUserNewsTuple: MessageFns<CClanEventUserNewsTuple> = {
             break;
           }
 
-          message.eventGid = longToNumber(reader.fixed64());
+          message.eventGid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2146,7 +2193,7 @@ export const CClanEventUserNewsTuple: MessageFns<CClanEventUserNewsTuple> = {
             break;
           }
 
-          message.announcementGid = longToNumber(reader.fixed64());
+          message.announcementGid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -2287,9 +2334,9 @@ export const CClanMatchEventByRange: MessageFns<CClanMatchEventByRange> = {
 
 function createBaseCCommunityClanAnnouncementInfo(): CCommunityClanAnnouncementInfo {
   return {
-    gid: 0,
-    clanid: 0,
-    posterid: 0,
+    gid: 0n,
+    clanid: 0n,
+    posterid: 0n,
     headline: "",
     posttime: 0,
     updatetime: 0,
@@ -2298,8 +2345,8 @@ function createBaseCCommunityClanAnnouncementInfo(): CCommunityClanAnnouncementI
     tags: [],
     language: 0,
     hidden: false,
-    forumTopicId: 0,
-    eventGid: 0,
+    forumTopicId: 0n,
+    eventGid: 0n,
     voteupcount: 0,
     votedowncount: 0,
     banCheckResult: 0,
@@ -2309,13 +2356,22 @@ function createBaseCCommunityClanAnnouncementInfo(): CCommunityClanAnnouncementI
 
 export const CCommunityClanAnnouncementInfo: MessageFns<CCommunityClanAnnouncementInfo> = {
   encode(message: CCommunityClanAnnouncementInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gid);
     }
-    if (message.clanid !== undefined && message.clanid !== 0) {
+    if (message.clanid !== undefined && message.clanid !== 0n) {
+      if (BigInt.asUintN(64, message.clanid) !== message.clanid) {
+        throw new globalThis.Error("value provided for field message.clanid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.clanid);
     }
-    if (message.posterid !== undefined && message.posterid !== 0) {
+    if (message.posterid !== undefined && message.posterid !== 0n) {
+      if (BigInt.asUintN(64, message.posterid) !== message.posterid) {
+        throw new globalThis.Error("value provided for field message.posterid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.posterid);
     }
     if (message.headline !== undefined && message.headline !== "") {
@@ -2342,10 +2398,16 @@ export const CCommunityClanAnnouncementInfo: MessageFns<CCommunityClanAnnounceme
     if (message.hidden !== undefined && message.hidden !== false) {
       writer.uint32(88).bool(message.hidden);
     }
-    if (message.forumTopicId !== undefined && message.forumTopicId !== 0) {
+    if (message.forumTopicId !== undefined && message.forumTopicId !== 0n) {
+      if (BigInt.asUintN(64, message.forumTopicId) !== message.forumTopicId) {
+        throw new globalThis.Error("value provided for field message.forumTopicId of type fixed64 too large");
+      }
       writer.uint32(97).fixed64(message.forumTopicId);
     }
-    if (message.eventGid !== undefined && message.eventGid !== 0) {
+    if (message.eventGid !== undefined && message.eventGid !== 0n) {
+      if (BigInt.asUintN(64, message.eventGid) !== message.eventGid) {
+        throw new globalThis.Error("value provided for field message.eventGid of type fixed64 too large");
+      }
       writer.uint32(105).fixed64(message.eventGid);
     }
     if (message.voteupcount !== undefined && message.voteupcount !== 0) {
@@ -2375,7 +2437,7 @@ export const CCommunityClanAnnouncementInfo: MessageFns<CCommunityClanAnnounceme
             break;
           }
 
-          message.gid = longToNumber(reader.uint64());
+          message.gid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2383,7 +2445,7 @@ export const CCommunityClanAnnouncementInfo: MessageFns<CCommunityClanAnnounceme
             break;
           }
 
-          message.clanid = longToNumber(reader.uint64());
+          message.clanid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -2391,7 +2453,7 @@ export const CCommunityClanAnnouncementInfo: MessageFns<CCommunityClanAnnounceme
             break;
           }
 
-          message.posterid = longToNumber(reader.uint64());
+          message.posterid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -2463,7 +2525,7 @@ export const CCommunityClanAnnouncementInfo: MessageFns<CCommunityClanAnnounceme
             break;
           }
 
-          message.forumTopicId = longToNumber(reader.fixed64());
+          message.forumTopicId = reader.fixed64() as bigint;
           continue;
         }
         case 13: {
@@ -2471,7 +2533,7 @@ export const CCommunityClanAnnouncementInfo: MessageFns<CCommunityClanAnnounceme
             break;
           }
 
-          message.eventGid = longToNumber(reader.fixed64());
+          message.eventGid = reader.fixed64() as bigint;
           continue;
         }
         case 14: {
@@ -2518,8 +2580,8 @@ export const CCommunityClanAnnouncementInfo: MessageFns<CCommunityClanAnnounceme
 
 function createBaseCClanEventData(): CClanEventData {
   return {
-    gid: 0,
-    clanSteamid: 0,
+    gid: 0n,
+    clanSteamid: 0n,
     eventName: "",
     eventType: 1,
     appid: 0,
@@ -2528,8 +2590,8 @@ function createBaseCClanEventData(): CClanEventData {
     rtime32StartTime: 0,
     rtime32EndTime: 0,
     commentCount: 0,
-    creatorSteamid: 0,
-    lastUpdateSteamid: 0,
+    creatorSteamid: 0n,
+    lastUpdateSteamid: 0n,
     eventNotes: "",
     jsondata: "",
     announcementBody: undefined,
@@ -2540,9 +2602,9 @@ function createBaseCClanEventData(): CClanEventData {
     broadcasterAccountid: 0,
     followerCount: 0,
     ignoreCount: 0,
-    forumTopicId: 0,
+    forumTopicId: 0n,
     rtime32LastModified: 0,
-    newsPostGid: 0,
+    newsPostGid: 0n,
     rtimeModReviewed: 0,
     featuredAppTagid: 0,
     referencedAppids: [],
@@ -2554,10 +2616,16 @@ function createBaseCClanEventData(): CClanEventData {
 
 export const CClanEventData: MessageFns<CClanEventData> = {
   encode(message: CClanEventData, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gid !== undefined && message.gid !== 0) {
+    if (message.gid !== undefined && message.gid !== 0n) {
+      if (BigInt.asUintN(64, message.gid) !== message.gid) {
+        throw new globalThis.Error("value provided for field message.gid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gid);
     }
-    if (message.clanSteamid !== undefined && message.clanSteamid !== 0) {
+    if (message.clanSteamid !== undefined && message.clanSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.clanSteamid) !== message.clanSteamid) {
+        throw new globalThis.Error("value provided for field message.clanSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.clanSteamid);
     }
     if (message.eventName !== undefined && message.eventName !== "") {
@@ -2584,10 +2652,16 @@ export const CClanEventData: MessageFns<CClanEventData> = {
     if (message.commentCount !== undefined && message.commentCount !== 0) {
       writer.uint32(80).int32(message.commentCount);
     }
-    if (message.creatorSteamid !== undefined && message.creatorSteamid !== 0) {
+    if (message.creatorSteamid !== undefined && message.creatorSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.creatorSteamid) !== message.creatorSteamid) {
+        throw new globalThis.Error("value provided for field message.creatorSteamid of type fixed64 too large");
+      }
       writer.uint32(89).fixed64(message.creatorSteamid);
     }
-    if (message.lastUpdateSteamid !== undefined && message.lastUpdateSteamid !== 0) {
+    if (message.lastUpdateSteamid !== undefined && message.lastUpdateSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.lastUpdateSteamid) !== message.lastUpdateSteamid) {
+        throw new globalThis.Error("value provided for field message.lastUpdateSteamid of type fixed64 too large");
+      }
       writer.uint32(97).fixed64(message.lastUpdateSteamid);
     }
     if (message.eventNotes !== undefined && message.eventNotes !== "") {
@@ -2620,13 +2694,19 @@ export const CClanEventData: MessageFns<CClanEventData> = {
     if (message.ignoreCount !== undefined && message.ignoreCount !== 0) {
       writer.uint32(176).uint32(message.ignoreCount);
     }
-    if (message.forumTopicId !== undefined && message.forumTopicId !== 0) {
+    if (message.forumTopicId !== undefined && message.forumTopicId !== 0n) {
+      if (BigInt.asUintN(64, message.forumTopicId) !== message.forumTopicId) {
+        throw new globalThis.Error("value provided for field message.forumTopicId of type fixed64 too large");
+      }
       writer.uint32(185).fixed64(message.forumTopicId);
     }
     if (message.rtime32LastModified !== undefined && message.rtime32LastModified !== 0) {
       writer.uint32(192).uint32(message.rtime32LastModified);
     }
-    if (message.newsPostGid !== undefined && message.newsPostGid !== 0) {
+    if (message.newsPostGid !== undefined && message.newsPostGid !== 0n) {
+      if (BigInt.asUintN(64, message.newsPostGid) !== message.newsPostGid) {
+        throw new globalThis.Error("value provided for field message.newsPostGid of type fixed64 too large");
+      }
       writer.uint32(201).fixed64(message.newsPostGid);
     }
     if (message.rtimeModReviewed !== undefined && message.rtimeModReviewed !== 0) {
@@ -2662,7 +2742,7 @@ export const CClanEventData: MessageFns<CClanEventData> = {
             break;
           }
 
-          message.gid = longToNumber(reader.fixed64());
+          message.gid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2670,7 +2750,7 @@ export const CClanEventData: MessageFns<CClanEventData> = {
             break;
           }
 
-          message.clanSteamid = longToNumber(reader.fixed64());
+          message.clanSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2742,7 +2822,7 @@ export const CClanEventData: MessageFns<CClanEventData> = {
             break;
           }
 
-          message.creatorSteamid = longToNumber(reader.fixed64());
+          message.creatorSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 12: {
@@ -2750,7 +2830,7 @@ export const CClanEventData: MessageFns<CClanEventData> = {
             break;
           }
 
-          message.lastUpdateSteamid = longToNumber(reader.fixed64());
+          message.lastUpdateSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 13: {
@@ -2838,7 +2918,7 @@ export const CClanEventData: MessageFns<CClanEventData> = {
             break;
           }
 
-          message.forumTopicId = longToNumber(reader.fixed64());
+          message.forumTopicId = reader.fixed64() as bigint;
           continue;
         }
         case 24: {
@@ -2854,7 +2934,7 @@ export const CClanEventData: MessageFns<CClanEventData> = {
             break;
           }
 
-          message.newsPostGid = longToNumber(reader.fixed64());
+          message.newsPostGid = reader.fixed64() as bigint;
           continue;
         }
         case 26: {
@@ -3419,17 +3499,6 @@ export const UserContentDescriptorPreferences_ContentDescriptor: MessageFns<
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

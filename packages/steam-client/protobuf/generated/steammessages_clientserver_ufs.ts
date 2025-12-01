@@ -10,7 +10,7 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 export const protobufPackage = "";
 
 export interface CMsgClientUFSGetUGCDetails {
-  hcontent?: number | undefined;
+  hcontent?: bigint | undefined;
 }
 
 export interface CMsgClientUFSGetUGCDetailsResponse {
@@ -18,7 +18,7 @@ export interface CMsgClientUFSGetUGCDetailsResponse {
   url?: string | undefined;
   appId?: number | undefined;
   filename?: string | undefined;
-  steamidCreator?: number | undefined;
+  steamidCreator?: bigint | undefined;
   fileSize?: number | undefined;
   compressedFileSize?: number | undefined;
   rangecheckHost?: string | undefined;
@@ -35,7 +35,7 @@ export interface CMsgClientUFSGetSingleFileInfoResponse {
   appId?: number | undefined;
   fileName?: string | undefined;
   shaFile?: Buffer | undefined;
-  timeStamp?: number | undefined;
+  timeStamp?: bigint | undefined;
   rawFileSize?: number | undefined;
   isExplicitDelete?: boolean | undefined;
 }
@@ -47,16 +47,19 @@ export interface CMsgClientUFSShareFile {
 
 export interface CMsgClientUFSShareFileResponse {
   eresult?: number | undefined;
-  hcontent?: number | undefined;
+  hcontent?: bigint | undefined;
 }
 
 function createBaseCMsgClientUFSGetUGCDetails(): CMsgClientUFSGetUGCDetails {
-  return { hcontent: 18446744073709551615 };
+  return { hcontent: 18446744073709551615n };
 }
 
 export const CMsgClientUFSGetUGCDetails: MessageFns<CMsgClientUFSGetUGCDetails> = {
   encode(message: CMsgClientUFSGetUGCDetails, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.hcontent !== undefined && message.hcontent !== 18446744073709551615) {
+    if (message.hcontent !== undefined && message.hcontent !== 18446744073709551615n) {
+      if (BigInt.asUintN(64, message.hcontent) !== message.hcontent) {
+        throw new globalThis.Error("value provided for field message.hcontent of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.hcontent);
     }
     return writer;
@@ -74,7 +77,7 @@ export const CMsgClientUFSGetUGCDetails: MessageFns<CMsgClientUFSGetUGCDetails> 
             break;
           }
 
-          message.hcontent = longToNumber(reader.fixed64());
+          message.hcontent = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -93,7 +96,7 @@ function createBaseCMsgClientUFSGetUGCDetailsResponse(): CMsgClientUFSGetUGCDeta
     url: "",
     appId: 0,
     filename: "",
-    steamidCreator: 0,
+    steamidCreator: 0n,
     fileSize: 0,
     compressedFileSize: 0,
     rangecheckHost: "",
@@ -115,7 +118,10 @@ export const CMsgClientUFSGetUGCDetailsResponse: MessageFns<CMsgClientUFSGetUGCD
     if (message.filename !== undefined && message.filename !== "") {
       writer.uint32(34).string(message.filename);
     }
-    if (message.steamidCreator !== undefined && message.steamidCreator !== 0) {
+    if (message.steamidCreator !== undefined && message.steamidCreator !== 0n) {
+      if (BigInt.asUintN(64, message.steamidCreator) !== message.steamidCreator) {
+        throw new globalThis.Error("value provided for field message.steamidCreator of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.steamidCreator);
     }
     if (message.fileSize !== undefined && message.fileSize !== 0) {
@@ -177,7 +183,7 @@ export const CMsgClientUFSGetUGCDetailsResponse: MessageFns<CMsgClientUFSGetUGCD
             break;
           }
 
-          message.steamidCreator = longToNumber(reader.fixed64());
+          message.steamidCreator = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -276,7 +282,7 @@ function createBaseCMsgClientUFSGetSingleFileInfoResponse(): CMsgClientUFSGetSin
     appId: 0,
     fileName: "",
     shaFile: Buffer.alloc(0),
-    timeStamp: 0,
+    timeStamp: 0n,
     rawFileSize: 0,
     isExplicitDelete: false,
   };
@@ -296,7 +302,10 @@ export const CMsgClientUFSGetSingleFileInfoResponse: MessageFns<CMsgClientUFSGet
     if (message.shaFile !== undefined && message.shaFile.length !== 0) {
       writer.uint32(34).bytes(message.shaFile);
     }
-    if (message.timeStamp !== undefined && message.timeStamp !== 0) {
+    if (message.timeStamp !== undefined && message.timeStamp !== 0n) {
+      if (BigInt.asUintN(64, message.timeStamp) !== message.timeStamp) {
+        throw new globalThis.Error("value provided for field message.timeStamp of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.timeStamp);
     }
     if (message.rawFileSize !== undefined && message.rawFileSize !== 0) {
@@ -352,7 +361,7 @@ export const CMsgClientUFSGetSingleFileInfoResponse: MessageFns<CMsgClientUFSGet
             break;
           }
 
-          message.timeStamp = longToNumber(reader.uint64());
+          message.timeStamp = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -430,7 +439,7 @@ export const CMsgClientUFSShareFile: MessageFns<CMsgClientUFSShareFile> = {
 };
 
 function createBaseCMsgClientUFSShareFileResponse(): CMsgClientUFSShareFileResponse {
-  return { eresult: 2, hcontent: 18446744073709551615 };
+  return { eresult: 2, hcontent: 18446744073709551615n };
 }
 
 export const CMsgClientUFSShareFileResponse: MessageFns<CMsgClientUFSShareFileResponse> = {
@@ -438,7 +447,10 @@ export const CMsgClientUFSShareFileResponse: MessageFns<CMsgClientUFSShareFileRe
     if (message.eresult !== undefined && message.eresult !== 2) {
       writer.uint32(8).int32(message.eresult);
     }
-    if (message.hcontent !== undefined && message.hcontent !== 18446744073709551615) {
+    if (message.hcontent !== undefined && message.hcontent !== 18446744073709551615n) {
+      if (BigInt.asUintN(64, message.hcontent) !== message.hcontent) {
+        throw new globalThis.Error("value provided for field message.hcontent of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.hcontent);
     }
     return writer;
@@ -464,7 +476,7 @@ export const CMsgClientUFSShareFileResponse: MessageFns<CMsgClientUFSShareFileRe
             break;
           }
 
-          message.hcontent = longToNumber(reader.fixed64());
+          message.hcontent = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -476,17 +488,6 @@ export const CMsgClientUFSShareFileResponse: MessageFns<CMsgClientUFSShareFileRe
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

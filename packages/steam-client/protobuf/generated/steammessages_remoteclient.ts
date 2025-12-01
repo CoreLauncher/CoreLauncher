@@ -22,8 +22,8 @@ export enum ERemoteClientPairWifiAPResult {
 }
 
 export interface CMsgRemoteClientStatus {
-  clientId?: number | undefined;
-  instanceId?: number | undefined;
+  clientId?: bigint | undefined;
+  instanceId?: bigint | undefined;
   status?: CMsgRemoteClientBroadcastStatus | undefined;
 }
 
@@ -33,10 +33,10 @@ export interface CMsgRemoteClientAppStatus {
 
 export interface CMsgRemoteClientAppStatus_AppUpdateInfo {
   timeUpdateStart?: number | undefined;
-  bytesToDownload?: number | undefined;
-  bytesDownloaded?: number | undefined;
-  bytesToProcess?: number | undefined;
-  bytesProcessed?: number | undefined;
+  bytesToDownload?: bigint | undefined;
+  bytesDownloaded?: bigint | undefined;
+  bytesToProcess?: bigint | undefined;
+  bytesProcessed?: bigint | undefined;
   estimatedSecondsRemaining?: number | undefined;
   updateResult?: number | undefined;
   updateState?: number | undefined;
@@ -121,7 +121,7 @@ export interface CMsgRemoteClientWifiAPStatus {
   password?: string | undefined;
   wpa2Deprecated?: boolean | undefined;
   isPairingCapable?: boolean | undefined;
-  pairedNetworkHash?: number | undefined;
+  pairedNetworkHash?: bigint | undefined;
 }
 
 export interface CMsgRemoteClientPairWifiAP {
@@ -136,15 +136,21 @@ export interface CMsgRemoteClientPairWifiAPResponse {
 }
 
 function createBaseCMsgRemoteClientStatus(): CMsgRemoteClientStatus {
-  return { clientId: 0, instanceId: 0, status: undefined };
+  return { clientId: 0n, instanceId: 0n, status: undefined };
 }
 
 export const CMsgRemoteClientStatus: MessageFns<CMsgRemoteClientStatus> = {
   encode(message: CMsgRemoteClientStatus, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientId);
     }
-    if (message.instanceId !== undefined && message.instanceId !== 0) {
+    if (message.instanceId !== undefined && message.instanceId !== 0n) {
+      if (BigInt.asUintN(64, message.instanceId) !== message.instanceId) {
+        throw new globalThis.Error("value provided for field message.instanceId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.instanceId);
     }
     if (message.status !== undefined) {
@@ -165,7 +171,7 @@ export const CMsgRemoteClientStatus: MessageFns<CMsgRemoteClientStatus> = {
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -173,7 +179,7 @@ export const CMsgRemoteClientStatus: MessageFns<CMsgRemoteClientStatus> = {
             break;
           }
 
-          message.instanceId = longToNumber(reader.uint64());
+          message.instanceId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -234,10 +240,10 @@ export const CMsgRemoteClientAppStatus: MessageFns<CMsgRemoteClientAppStatus> = 
 function createBaseCMsgRemoteClientAppStatus_AppUpdateInfo(): CMsgRemoteClientAppStatus_AppUpdateInfo {
   return {
     timeUpdateStart: 0,
-    bytesToDownload: 0,
-    bytesDownloaded: 0,
-    bytesToProcess: 0,
-    bytesProcessed: 0,
+    bytesToDownload: 0n,
+    bytesDownloaded: 0n,
+    bytesToProcess: 0n,
+    bytesProcessed: 0n,
     estimatedSecondsRemaining: -1,
     updateResult: 0,
     updateState: 0,
@@ -249,16 +255,28 @@ export const CMsgRemoteClientAppStatus_AppUpdateInfo: MessageFns<CMsgRemoteClien
     if (message.timeUpdateStart !== undefined && message.timeUpdateStart !== 0) {
       writer.uint32(13).fixed32(message.timeUpdateStart);
     }
-    if (message.bytesToDownload !== undefined && message.bytesToDownload !== 0) {
+    if (message.bytesToDownload !== undefined && message.bytesToDownload !== 0n) {
+      if (BigInt.asUintN(64, message.bytesToDownload) !== message.bytesToDownload) {
+        throw new globalThis.Error("value provided for field message.bytesToDownload of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.bytesToDownload);
     }
-    if (message.bytesDownloaded !== undefined && message.bytesDownloaded !== 0) {
+    if (message.bytesDownloaded !== undefined && message.bytesDownloaded !== 0n) {
+      if (BigInt.asUintN(64, message.bytesDownloaded) !== message.bytesDownloaded) {
+        throw new globalThis.Error("value provided for field message.bytesDownloaded of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.bytesDownloaded);
     }
-    if (message.bytesToProcess !== undefined && message.bytesToProcess !== 0) {
+    if (message.bytesToProcess !== undefined && message.bytesToProcess !== 0n) {
+      if (BigInt.asUintN(64, message.bytesToProcess) !== message.bytesToProcess) {
+        throw new globalThis.Error("value provided for field message.bytesToProcess of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.bytesToProcess);
     }
-    if (message.bytesProcessed !== undefined && message.bytesProcessed !== 0) {
+    if (message.bytesProcessed !== undefined && message.bytesProcessed !== 0n) {
+      if (BigInt.asUintN(64, message.bytesProcessed) !== message.bytesProcessed) {
+        throw new globalThis.Error("value provided for field message.bytesProcessed of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.bytesProcessed);
     }
     if (message.estimatedSecondsRemaining !== undefined && message.estimatedSecondsRemaining !== -1) {
@@ -293,7 +311,7 @@ export const CMsgRemoteClientAppStatus_AppUpdateInfo: MessageFns<CMsgRemoteClien
             break;
           }
 
-          message.bytesToDownload = longToNumber(reader.uint64());
+          message.bytesToDownload = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -301,7 +319,7 @@ export const CMsgRemoteClientAppStatus_AppUpdateInfo: MessageFns<CMsgRemoteClien
             break;
           }
 
-          message.bytesDownloaded = longToNumber(reader.uint64());
+          message.bytesDownloaded = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -309,7 +327,7 @@ export const CMsgRemoteClientAppStatus_AppUpdateInfo: MessageFns<CMsgRemoteClien
             break;
           }
 
-          message.bytesToProcess = longToNumber(reader.uint64());
+          message.bytesToProcess = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -317,7 +335,7 @@ export const CMsgRemoteClientAppStatus_AppUpdateInfo: MessageFns<CMsgRemoteClien
             break;
           }
 
-          message.bytesProcessed = longToNumber(reader.uint64());
+          message.bytesProcessed = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -1162,7 +1180,7 @@ export const CMsgRemoteClientStreamingEnabled: MessageFns<CMsgRemoteClientStream
 };
 
 function createBaseCMsgRemoteClientWifiAPStatus(): CMsgRemoteClientWifiAPStatus {
-  return { ssid: "", password: "", wpa2Deprecated: false, isPairingCapable: false, pairedNetworkHash: 0 };
+  return { ssid: "", password: "", wpa2Deprecated: false, isPairingCapable: false, pairedNetworkHash: 0n };
 }
 
 export const CMsgRemoteClientWifiAPStatus: MessageFns<CMsgRemoteClientWifiAPStatus> = {
@@ -1179,7 +1197,10 @@ export const CMsgRemoteClientWifiAPStatus: MessageFns<CMsgRemoteClientWifiAPStat
     if (message.isPairingCapable !== undefined && message.isPairingCapable !== false) {
       writer.uint32(32).bool(message.isPairingCapable);
     }
-    if (message.pairedNetworkHash !== undefined && message.pairedNetworkHash !== 0) {
+    if (message.pairedNetworkHash !== undefined && message.pairedNetworkHash !== 0n) {
+      if (BigInt.asUintN(64, message.pairedNetworkHash) !== message.pairedNetworkHash) {
+        throw new globalThis.Error("value provided for field message.pairedNetworkHash of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.pairedNetworkHash);
     }
     return writer;
@@ -1229,7 +1250,7 @@ export const CMsgRemoteClientWifiAPStatus: MessageFns<CMsgRemoteClientWifiAPStat
             break;
           }
 
-          message.pairedNetworkHash = longToNumber(reader.fixed64());
+          message.pairedNetworkHash = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1348,17 +1369,6 @@ export const CMsgRemoteClientPairWifiAPResponse: MessageFns<CMsgRemoteClientPair
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

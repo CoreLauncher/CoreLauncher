@@ -92,7 +92,7 @@ export interface CAuthenticationGetPasswordRSAPublicKeyRequest {
 export interface CAuthenticationGetPasswordRSAPublicKeyResponse {
   publickeyMod?: string | undefined;
   publickeyExp?: string | undefined;
-  timestamp?: number | undefined;
+  timestamp?: bigint | undefined;
 }
 
 export interface CAuthenticationDeviceDetails {
@@ -118,7 +118,7 @@ export interface CAuthenticationAllowedConfirmation {
 }
 
 export interface CAuthenticationBeginAuthSessionViaQRResponse {
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   challengeUrl?: string | undefined;
   requestId?: Buffer | undefined;
   interval?: number | undefined;
@@ -130,7 +130,7 @@ export interface CAuthenticationBeginAuthSessionViaCredentialsRequest {
   deviceFriendlyName?: string | undefined;
   accountName?: string | undefined;
   encryptedPassword?: string | undefined;
-  encryptionTimestamp?: number | undefined;
+  encryptionTimestamp?: bigint | undefined;
   rememberLogin?: boolean | undefined;
   platformType?: EAuthTokenPlatformType | undefined;
   persistence?: ESessionPersistence | undefined;
@@ -142,24 +142,24 @@ export interface CAuthenticationBeginAuthSessionViaCredentialsRequest {
 }
 
 export interface CAuthenticationBeginAuthSessionViaCredentialsResponse {
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   requestId?: Buffer | undefined;
   interval?: number | undefined;
   allowedConfirmations: CAuthenticationAllowedConfirmation[];
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   weakToken?: string | undefined;
   agreementSessionUrl?: string | undefined;
   extendedErrorMessage?: string | undefined;
 }
 
 export interface CAuthenticationPollAuthSessionStatusRequest {
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   requestId?: Buffer | undefined;
-  tokenToRevoke?: number | undefined;
+  tokenToRevoke?: bigint | undefined;
 }
 
 export interface CAuthenticationPollAuthSessionStatusResponse {
-  newClientId?: number | undefined;
+  newClientId?: bigint | undefined;
   newChallengeUrl?: string | undefined;
   refreshToken?: string | undefined;
   accessToken?: string | undefined;
@@ -170,7 +170,7 @@ export interface CAuthenticationPollAuthSessionStatusResponse {
 }
 
 export interface CAuthenticationGetAuthSessionInfoRequest {
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
 }
 
 export interface CAuthenticationGetAuthSessionInfoResponse {
@@ -191,7 +191,7 @@ export interface CAuthenticationGetAuthSessionInfoResponse {
 }
 
 export interface CAuthenticationGetAuthSessionRiskInfoRequest {
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   language?: number | undefined;
 }
 
@@ -203,7 +203,7 @@ export interface CAuthenticationGetAuthSessionRiskInfoResponse {
 }
 
 export interface CAuthenticationNotifyRiskQuizResultsNotification {
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   results?: CAuthenticationNotifyRiskQuizResultsNotification_RiskQuizResults | undefined;
   selectedAction?: string | undefined;
   didConfirmLogin?: boolean | undefined;
@@ -217,8 +217,8 @@ export interface CAuthenticationNotifyRiskQuizResultsNotification_RiskQuizResult
 
 export interface CAuthenticationUpdateAuthSessionWithMobileConfirmationRequest {
   version?: number | undefined;
-  clientId?: number | undefined;
-  steamid?: number | undefined;
+  clientId?: bigint | undefined;
+  steamid?: bigint | undefined;
   signature?: Buffer | undefined;
   confirm?: boolean | undefined;
   persistence?: ESessionPersistence | undefined;
@@ -228,8 +228,8 @@ export interface CAuthenticationUpdateAuthSessionWithMobileConfirmationResponse 
 }
 
 export interface CAuthenticationUpdateAuthSessionWithSteamGuardCodeRequest {
-  clientId?: number | undefined;
-  steamid?: number | undefined;
+  clientId?: bigint | undefined;
+  steamid?: bigint | undefined;
   code?: string | undefined;
   codeType?: EAuthSessionGuardType | undefined;
 }
@@ -240,7 +240,7 @@ export interface CAuthenticationUpdateAuthSessionWithSteamGuardCodeResponse {
 
 export interface CAuthenticationAccessTokenGenerateForAppRequest {
   refreshToken?: string | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   renewalType?: ETokenRenewalType | undefined;
 }
 
@@ -255,7 +255,7 @@ export interface CAuthenticationRefreshTokenEnumerateRequest {
 
 export interface CAuthenticationRefreshTokenEnumerateResponse {
   refreshTokens: CAuthenticationRefreshTokenEnumerateResponse_RefreshTokenDescription[];
-  requestingToken?: number | undefined;
+  requestingToken?: bigint | undefined;
 }
 
 export interface CAuthenticationRefreshTokenEnumerateResponse_TokenUsageEvent {
@@ -268,7 +268,7 @@ export interface CAuthenticationRefreshTokenEnumerateResponse_TokenUsageEvent {
 }
 
 export interface CAuthenticationRefreshTokenEnumerateResponse_RefreshTokenDescription {
-  tokenId?: number | undefined;
+  tokenId?: bigint | undefined;
   tokenDescription?: string | undefined;
   timeUpdated?: number | undefined;
   platformType?: EAuthTokenPlatformType | undefined;
@@ -287,11 +287,11 @@ export interface CAuthenticationGetAuthSessionsForAccountRequest {
 }
 
 export interface CAuthenticationGetAuthSessionsForAccountResponse {
-  clientIds: number[];
+  clientIds: bigint[];
 }
 
 export interface CAuthenticationMigrateMobileSessionRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   token?: string | undefined;
   signature?: string | undefined;
 }
@@ -310,8 +310,8 @@ export interface CAuthenticationTokenRevokeResponse {
 }
 
 export interface CAuthenticationRefreshTokenRevokeRequest {
-  tokenId?: number | undefined;
-  steamid?: number | undefined;
+  tokenId?: bigint | undefined;
+  steamid?: bigint | undefined;
   revokeAction?: EAuthTokenRevokeAction | undefined;
   signature?: Buffer | undefined;
 }
@@ -320,17 +320,17 @@ export interface CAuthenticationRefreshTokenRevokeResponse {
 }
 
 export interface CAuthenticationSupportQueryRefreshTokensByAccountRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   includeRevokedTokens?: boolean | undefined;
 }
 
 export interface CSupportRefreshTokenDescription {
-  tokenId?: number | undefined;
+  tokenId?: bigint | undefined;
   tokenDescription?: string | undefined;
   timeUpdated?: number | undefined;
   platformType?: EAuthTokenPlatformType | undefined;
   tokenState?: EAuthTokenState | undefined;
-  ownerSteamid?: number | undefined;
+  ownerSteamid?: bigint | undefined;
   osPlatform?: number | undefined;
   osType?: number | undefined;
   authType?: number | undefined;
@@ -353,7 +353,7 @@ export interface CAuthenticationSupportQueryRefreshTokensByAccountResponse {
 }
 
 export interface CAuthenticationSupportQueryRefreshTokenByIDRequest {
-  tokenId?: number | undefined;
+  tokenId?: bigint | undefined;
 }
 
 export interface CAuthenticationSupportQueryRefreshTokenByIDResponse {
@@ -361,22 +361,22 @@ export interface CAuthenticationSupportQueryRefreshTokenByIDResponse {
 }
 
 export interface CAuthenticationSupportRevokeTokenRequest {
-  tokenId?: number | undefined;
-  steamid?: number | undefined;
+  tokenId?: bigint | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CAuthenticationSupportRevokeTokenResponse {
 }
 
 export interface CAuthenticationSupportGetTokenHistoryRequest {
-  tokenId?: number | undefined;
+  tokenId?: bigint | undefined;
 }
 
 export interface CSupportRefreshTokenAudit {
   action?: number | undefined;
   time?: number | undefined;
   ip?: CMsgIPAddress | undefined;
-  actor?: number | undefined;
+  actor?: bigint | undefined;
 }
 
 export interface CAuthenticationSupportGetTokenHistoryResponse {
@@ -384,8 +384,8 @@ export interface CAuthenticationSupportGetTokenHistoryResponse {
 }
 
 export interface CAuthenticationSupportMarkTokenCompromisedRequest {
-  steamid?: number | undefined;
-  tokenId?: number | undefined;
+  steamid?: bigint | undefined;
+  tokenId?: bigint | undefined;
 }
 
 export interface CAuthenticationSupportMarkTokenCompromisedResponse {
@@ -457,7 +457,7 @@ export const CAuthenticationGetPasswordRSAPublicKeyRequest: MessageFns<CAuthenti
   };
 
 function createBaseCAuthenticationGetPasswordRSAPublicKeyResponse(): CAuthenticationGetPasswordRSAPublicKeyResponse {
-  return { publickeyMod: "", publickeyExp: "", timestamp: 0 };
+  return { publickeyMod: "", publickeyExp: "", timestamp: 0n };
 }
 
 export const CAuthenticationGetPasswordRSAPublicKeyResponse: MessageFns<
@@ -473,7 +473,10 @@ export const CAuthenticationGetPasswordRSAPublicKeyResponse: MessageFns<
     if (message.publickeyExp !== undefined && message.publickeyExp !== "") {
       writer.uint32(18).string(message.publickeyExp);
     }
-    if (message.timestamp !== undefined && message.timestamp !== 0) {
+    if (message.timestamp !== undefined && message.timestamp !== 0n) {
+      if (BigInt.asUintN(64, message.timestamp) !== message.timestamp) {
+        throw new globalThis.Error("value provided for field message.timestamp of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.timestamp);
     }
     return writer;
@@ -507,7 +510,7 @@ export const CAuthenticationGetPasswordRSAPublicKeyResponse: MessageFns<
             break;
           }
 
-          message.timestamp = longToNumber(reader.uint64());
+          message.timestamp = reader.uint64() as bigint;
           continue;
         }
       }
@@ -754,7 +757,7 @@ export const CAuthenticationAllowedConfirmation: MessageFns<CAuthenticationAllow
 
 function createBaseCAuthenticationBeginAuthSessionViaQRResponse(): CAuthenticationBeginAuthSessionViaQRResponse {
   return {
-    clientId: 0,
+    clientId: 0n,
     challengeUrl: "",
     requestId: Buffer.alloc(0),
     interval: 0,
@@ -768,7 +771,10 @@ export const CAuthenticationBeginAuthSessionViaQRResponse: MessageFns<CAuthentic
     message: CAuthenticationBeginAuthSessionViaQRResponse,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientId);
     }
     if (message.challengeUrl !== undefined && message.challengeUrl !== "") {
@@ -801,7 +807,7 @@ export const CAuthenticationBeginAuthSessionViaQRResponse: MessageFns<CAuthentic
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -859,7 +865,7 @@ function createBaseCAuthenticationBeginAuthSessionViaCredentialsRequest(): CAuth
     deviceFriendlyName: "",
     accountName: "",
     encryptedPassword: "",
-    encryptionTimestamp: 0,
+    encryptionTimestamp: 0n,
     rememberLogin: false,
     platformType: 0,
     persistence: 1,
@@ -887,7 +893,10 @@ export const CAuthenticationBeginAuthSessionViaCredentialsRequest: MessageFns<
     if (message.encryptedPassword !== undefined && message.encryptedPassword !== "") {
       writer.uint32(26).string(message.encryptedPassword);
     }
-    if (message.encryptionTimestamp !== undefined && message.encryptionTimestamp !== 0) {
+    if (message.encryptionTimestamp !== undefined && message.encryptionTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.encryptionTimestamp) !== message.encryptionTimestamp) {
+        throw new globalThis.Error("value provided for field message.encryptionTimestamp of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.encryptionTimestamp);
     }
     if (message.rememberLogin !== undefined && message.rememberLogin !== false) {
@@ -953,7 +962,7 @@ export const CAuthenticationBeginAuthSessionViaCredentialsRequest: MessageFns<
             break;
           }
 
-          message.encryptionTimestamp = longToNumber(reader.uint64());
+          message.encryptionTimestamp = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -1032,11 +1041,11 @@ export const CAuthenticationBeginAuthSessionViaCredentialsRequest: MessageFns<
 
 function createBaseCAuthenticationBeginAuthSessionViaCredentialsResponse(): CAuthenticationBeginAuthSessionViaCredentialsResponse {
   return {
-    clientId: 0,
+    clientId: 0n,
     requestId: Buffer.alloc(0),
     interval: 0,
     allowedConfirmations: [],
-    steamid: 0,
+    steamid: 0n,
     weakToken: "",
     agreementSessionUrl: "",
     extendedErrorMessage: "",
@@ -1050,7 +1059,10 @@ export const CAuthenticationBeginAuthSessionViaCredentialsResponse: MessageFns<
     message: CAuthenticationBeginAuthSessionViaCredentialsResponse,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientId);
     }
     if (message.requestId !== undefined && message.requestId.length !== 0) {
@@ -1062,7 +1074,10 @@ export const CAuthenticationBeginAuthSessionViaCredentialsResponse: MessageFns<
     for (const v of message.allowedConfirmations) {
       CAuthenticationAllowedConfirmation.encode(v!, writer.uint32(34).fork()).join();
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.steamid);
     }
     if (message.weakToken !== undefined && message.weakToken !== "") {
@@ -1089,7 +1104,7 @@ export const CAuthenticationBeginAuthSessionViaCredentialsResponse: MessageFns<
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1121,7 +1136,7 @@ export const CAuthenticationBeginAuthSessionViaCredentialsResponse: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -1159,7 +1174,7 @@ export const CAuthenticationBeginAuthSessionViaCredentialsResponse: MessageFns<
 };
 
 function createBaseCAuthenticationPollAuthSessionStatusRequest(): CAuthenticationPollAuthSessionStatusRequest {
-  return { clientId: 0, requestId: Buffer.alloc(0), tokenToRevoke: 0 };
+  return { clientId: 0n, requestId: Buffer.alloc(0), tokenToRevoke: 0n };
 }
 
 export const CAuthenticationPollAuthSessionStatusRequest: MessageFns<CAuthenticationPollAuthSessionStatusRequest> = {
@@ -1167,13 +1182,19 @@ export const CAuthenticationPollAuthSessionStatusRequest: MessageFns<CAuthentica
     message: CAuthenticationPollAuthSessionStatusRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientId);
     }
     if (message.requestId !== undefined && message.requestId.length !== 0) {
       writer.uint32(18).bytes(message.requestId);
     }
-    if (message.tokenToRevoke !== undefined && message.tokenToRevoke !== 0) {
+    if (message.tokenToRevoke !== undefined && message.tokenToRevoke !== 0n) {
+      if (BigInt.asUintN(64, message.tokenToRevoke) !== message.tokenToRevoke) {
+        throw new globalThis.Error("value provided for field message.tokenToRevoke of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.tokenToRevoke);
     }
     return writer;
@@ -1191,7 +1212,7 @@ export const CAuthenticationPollAuthSessionStatusRequest: MessageFns<CAuthentica
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1207,7 +1228,7 @@ export const CAuthenticationPollAuthSessionStatusRequest: MessageFns<CAuthentica
             break;
           }
 
-          message.tokenToRevoke = longToNumber(reader.fixed64());
+          message.tokenToRevoke = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1222,7 +1243,7 @@ export const CAuthenticationPollAuthSessionStatusRequest: MessageFns<CAuthentica
 
 function createBaseCAuthenticationPollAuthSessionStatusResponse(): CAuthenticationPollAuthSessionStatusResponse {
   return {
-    newClientId: 0,
+    newClientId: 0n,
     newChallengeUrl: "",
     refreshToken: "",
     accessToken: "",
@@ -1238,7 +1259,10 @@ export const CAuthenticationPollAuthSessionStatusResponse: MessageFns<CAuthentic
     message: CAuthenticationPollAuthSessionStatusResponse,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.newClientId !== undefined && message.newClientId !== 0) {
+    if (message.newClientId !== undefined && message.newClientId !== 0n) {
+      if (BigInt.asUintN(64, message.newClientId) !== message.newClientId) {
+        throw new globalThis.Error("value provided for field message.newClientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.newClientId);
     }
     if (message.newChallengeUrl !== undefined && message.newChallengeUrl !== "") {
@@ -1277,7 +1301,7 @@ export const CAuthenticationPollAuthSessionStatusResponse: MessageFns<CAuthentic
             break;
           }
 
-          message.newClientId = longToNumber(reader.uint64());
+          message.newClientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1347,12 +1371,15 @@ export const CAuthenticationPollAuthSessionStatusResponse: MessageFns<CAuthentic
 };
 
 function createBaseCAuthenticationGetAuthSessionInfoRequest(): CAuthenticationGetAuthSessionInfoRequest {
-  return { clientId: 0 };
+  return { clientId: 0n };
 }
 
 export const CAuthenticationGetAuthSessionInfoRequest: MessageFns<CAuthenticationGetAuthSessionInfoRequest> = {
   encode(message: CAuthenticationGetAuthSessionInfoRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientId);
     }
     return writer;
@@ -1370,7 +1397,7 @@ export const CAuthenticationGetAuthSessionInfoRequest: MessageFns<CAuthenticatio
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1579,7 +1606,7 @@ export const CAuthenticationGetAuthSessionInfoResponse: MessageFns<CAuthenticati
 };
 
 function createBaseCAuthenticationGetAuthSessionRiskInfoRequest(): CAuthenticationGetAuthSessionRiskInfoRequest {
-  return { clientId: 0, language: 0 };
+  return { clientId: 0n, language: 0 };
 }
 
 export const CAuthenticationGetAuthSessionRiskInfoRequest: MessageFns<CAuthenticationGetAuthSessionRiskInfoRequest> = {
@@ -1587,7 +1614,10 @@ export const CAuthenticationGetAuthSessionRiskInfoRequest: MessageFns<CAuthentic
     message: CAuthenticationGetAuthSessionRiskInfoRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientId);
     }
     if (message.language !== undefined && message.language !== 0) {
@@ -1608,7 +1638,7 @@ export const CAuthenticationGetAuthSessionRiskInfoRequest: MessageFns<CAuthentic
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1704,7 +1734,7 @@ export const CAuthenticationGetAuthSessionRiskInfoResponse: MessageFns<CAuthenti
   };
 
 function createBaseCAuthenticationNotifyRiskQuizResultsNotification(): CAuthenticationNotifyRiskQuizResultsNotification {
-  return { clientId: 0, results: undefined, selectedAction: "", didConfirmLogin: false };
+  return { clientId: 0n, results: undefined, selectedAction: "", didConfirmLogin: false };
 }
 
 export const CAuthenticationNotifyRiskQuizResultsNotification: MessageFns<
@@ -1714,7 +1744,10 @@ export const CAuthenticationNotifyRiskQuizResultsNotification: MessageFns<
     message: CAuthenticationNotifyRiskQuizResultsNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientId);
     }
     if (message.results !== undefined) {
@@ -1742,7 +1775,7 @@ export const CAuthenticationNotifyRiskQuizResultsNotification: MessageFns<
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1850,7 +1883,7 @@ export const CAuthenticationNotifyRiskQuizResultsNotification_RiskQuizResults: M
 };
 
 function createBaseCAuthenticationUpdateAuthSessionWithMobileConfirmationRequest(): CAuthenticationUpdateAuthSessionWithMobileConfirmationRequest {
-  return { version: 0, clientId: 0, steamid: 0, signature: Buffer.alloc(0), confirm: false, persistence: 1 };
+  return { version: 0, clientId: 0n, steamid: 0n, signature: Buffer.alloc(0), confirm: false, persistence: 1 };
 }
 
 export const CAuthenticationUpdateAuthSessionWithMobileConfirmationRequest: MessageFns<
@@ -1863,10 +1896,16 @@ export const CAuthenticationUpdateAuthSessionWithMobileConfirmationRequest: Mess
     if (message.version !== undefined && message.version !== 0) {
       writer.uint32(8).int32(message.version);
     }
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.clientId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamid);
     }
     if (message.signature !== undefined && message.signature.length !== 0) {
@@ -1904,7 +1943,7 @@ export const CAuthenticationUpdateAuthSessionWithMobileConfirmationRequest: Mess
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1912,7 +1951,7 @@ export const CAuthenticationUpdateAuthSessionWithMobileConfirmationRequest: Mess
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1984,7 +2023,7 @@ export const CAuthenticationUpdateAuthSessionWithMobileConfirmationResponse: Mes
 };
 
 function createBaseCAuthenticationUpdateAuthSessionWithSteamGuardCodeRequest(): CAuthenticationUpdateAuthSessionWithSteamGuardCodeRequest {
-  return { clientId: 0, steamid: 0, code: "", codeType: 0 };
+  return { clientId: 0n, steamid: 0n, code: "", codeType: 0 };
 }
 
 export const CAuthenticationUpdateAuthSessionWithSteamGuardCodeRequest: MessageFns<
@@ -1994,10 +2033,16 @@ export const CAuthenticationUpdateAuthSessionWithSteamGuardCodeRequest: MessageF
     message: CAuthenticationUpdateAuthSessionWithSteamGuardCodeRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     if (message.code !== undefined && message.code !== "") {
@@ -2021,7 +2066,7 @@ export const CAuthenticationUpdateAuthSessionWithSteamGuardCodeRequest: MessageF
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2029,7 +2074,7 @@ export const CAuthenticationUpdateAuthSessionWithSteamGuardCodeRequest: MessageF
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2104,7 +2149,7 @@ export const CAuthenticationUpdateAuthSessionWithSteamGuardCodeResponse: Message
 };
 
 function createBaseCAuthenticationAccessTokenGenerateForAppRequest(): CAuthenticationAccessTokenGenerateForAppRequest {
-  return { refreshToken: "", steamid: 0, renewalType: 0 };
+  return { refreshToken: "", steamid: 0n, renewalType: 0 };
 }
 
 export const CAuthenticationAccessTokenGenerateForAppRequest: MessageFns<
@@ -2117,7 +2162,10 @@ export const CAuthenticationAccessTokenGenerateForAppRequest: MessageFns<
     if (message.refreshToken !== undefined && message.refreshToken !== "") {
       writer.uint32(10).string(message.refreshToken);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     if (message.renewalType !== undefined && message.renewalType !== 0) {
@@ -2146,7 +2194,7 @@ export const CAuthenticationAccessTokenGenerateForAppRequest: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2261,7 +2309,7 @@ export const CAuthenticationRefreshTokenEnumerateRequest: MessageFns<CAuthentica
 };
 
 function createBaseCAuthenticationRefreshTokenEnumerateResponse(): CAuthenticationRefreshTokenEnumerateResponse {
-  return { refreshTokens: [], requestingToken: 0 };
+  return { refreshTokens: [], requestingToken: 0n };
 }
 
 export const CAuthenticationRefreshTokenEnumerateResponse: MessageFns<CAuthenticationRefreshTokenEnumerateResponse> = {
@@ -2272,7 +2320,10 @@ export const CAuthenticationRefreshTokenEnumerateResponse: MessageFns<CAuthentic
     for (const v of message.refreshTokens) {
       CAuthenticationRefreshTokenEnumerateResponse_RefreshTokenDescription.encode(v!, writer.uint32(10).fork()).join();
     }
-    if (message.requestingToken !== undefined && message.requestingToken !== 0) {
+    if (message.requestingToken !== undefined && message.requestingToken !== 0n) {
+      if (BigInt.asUintN(64, message.requestingToken) !== message.requestingToken) {
+        throw new globalThis.Error("value provided for field message.requestingToken of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.requestingToken);
     }
     return writer;
@@ -2300,7 +2351,7 @@ export const CAuthenticationRefreshTokenEnumerateResponse: MessageFns<CAuthentic
             break;
           }
 
-          message.requestingToken = longToNumber(reader.fixed64());
+          message.requestingToken = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2415,7 +2466,7 @@ export const CAuthenticationRefreshTokenEnumerateResponse_TokenUsageEvent: Messa
 
 function createBaseCAuthenticationRefreshTokenEnumerateResponse_RefreshTokenDescription(): CAuthenticationRefreshTokenEnumerateResponse_RefreshTokenDescription {
   return {
-    tokenId: 0,
+    tokenId: 0n,
     tokenDescription: "",
     timeUpdated: 0,
     platformType: 0,
@@ -2438,7 +2489,10 @@ export const CAuthenticationRefreshTokenEnumerateResponse_RefreshTokenDescriptio
     message: CAuthenticationRefreshTokenEnumerateResponse_RefreshTokenDescription,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.tokenId !== undefined && message.tokenId !== 0) {
+    if (message.tokenId !== undefined && message.tokenId !== 0n) {
+      if (BigInt.asUintN(64, message.tokenId) !== message.tokenId) {
+        throw new globalThis.Error("value provided for field message.tokenId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.tokenId);
     }
     if (message.tokenDescription !== undefined && message.tokenDescription !== "") {
@@ -2497,7 +2551,7 @@ export const CAuthenticationRefreshTokenEnumerateResponse_RefreshTokenDescriptio
             break;
           }
 
-          message.tokenId = longToNumber(reader.fixed64());
+          message.tokenId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2652,6 +2706,9 @@ export const CAuthenticationGetAuthSessionsForAccountResponse: MessageFns<
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
     for (const v of message.clientIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(8).uint64(v!);
     }
     return writer;
@@ -2666,7 +2723,7 @@ export const CAuthenticationGetAuthSessionsForAccountResponse: MessageFns<
       switch (tag >>> 3) {
         case 1: {
           if (tag === 8) {
-            message.clientIds.push(longToNumber(reader.uint64()));
+            message.clientIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -2674,7 +2731,7 @@ export const CAuthenticationGetAuthSessionsForAccountResponse: MessageFns<
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.clientIds.push(longToNumber(reader.uint64()));
+              message.clientIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -2693,12 +2750,15 @@ export const CAuthenticationGetAuthSessionsForAccountResponse: MessageFns<
 };
 
 function createBaseCAuthenticationMigrateMobileSessionRequest(): CAuthenticationMigrateMobileSessionRequest {
-  return { steamid: 0, token: "", signature: "" };
+  return { steamid: 0n, token: "", signature: "" };
 }
 
 export const CAuthenticationMigrateMobileSessionRequest: MessageFns<CAuthenticationMigrateMobileSessionRequest> = {
   encode(message: CAuthenticationMigrateMobileSessionRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.token !== undefined && message.token !== "") {
@@ -2722,7 +2782,7 @@ export const CAuthenticationMigrateMobileSessionRequest: MessageFns<CAuthenticat
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2877,15 +2937,21 @@ export const CAuthenticationTokenRevokeResponse: MessageFns<CAuthenticationToken
 };
 
 function createBaseCAuthenticationRefreshTokenRevokeRequest(): CAuthenticationRefreshTokenRevokeRequest {
-  return { tokenId: 0, steamid: 0, revokeAction: 1, signature: Buffer.alloc(0) };
+  return { tokenId: 0n, steamid: 0n, revokeAction: 1, signature: Buffer.alloc(0) };
 }
 
 export const CAuthenticationRefreshTokenRevokeRequest: MessageFns<CAuthenticationRefreshTokenRevokeRequest> = {
   encode(message: CAuthenticationRefreshTokenRevokeRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.tokenId !== undefined && message.tokenId !== 0) {
+    if (message.tokenId !== undefined && message.tokenId !== 0n) {
+      if (BigInt.asUintN(64, message.tokenId) !== message.tokenId) {
+        throw new globalThis.Error("value provided for field message.tokenId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.tokenId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     if (message.revokeAction !== undefined && message.revokeAction !== 1) {
@@ -2909,7 +2975,7 @@ export const CAuthenticationRefreshTokenRevokeRequest: MessageFns<CAuthenticatio
             break;
           }
 
-          message.tokenId = longToNumber(reader.fixed64());
+          message.tokenId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2917,7 +2983,7 @@ export const CAuthenticationRefreshTokenRevokeRequest: MessageFns<CAuthenticatio
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2973,7 +3039,7 @@ export const CAuthenticationRefreshTokenRevokeResponse: MessageFns<CAuthenticati
 };
 
 function createBaseCAuthenticationSupportQueryRefreshTokensByAccountRequest(): CAuthenticationSupportQueryRefreshTokensByAccountRequest {
-  return { steamid: 0, includeRevokedTokens: false };
+  return { steamid: 0n, includeRevokedTokens: false };
 }
 
 export const CAuthenticationSupportQueryRefreshTokensByAccountRequest: MessageFns<
@@ -2983,7 +3049,10 @@ export const CAuthenticationSupportQueryRefreshTokensByAccountRequest: MessageFn
     message: CAuthenticationSupportQueryRefreshTokensByAccountRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.includeRevokedTokens !== undefined && message.includeRevokedTokens !== false) {
@@ -3004,7 +3073,7 @@ export const CAuthenticationSupportQueryRefreshTokensByAccountRequest: MessageFn
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3027,12 +3096,12 @@ export const CAuthenticationSupportQueryRefreshTokensByAccountRequest: MessageFn
 
 function createBaseCSupportRefreshTokenDescription(): CSupportRefreshTokenDescription {
   return {
-    tokenId: 0,
+    tokenId: 0n,
     tokenDescription: "",
     timeUpdated: 0,
     platformType: 0,
     tokenState: 0,
-    ownerSteamid: 0,
+    ownerSteamid: 0n,
     osPlatform: 0,
     osType: 0,
     authType: 0,
@@ -3044,7 +3113,10 @@ function createBaseCSupportRefreshTokenDescription(): CSupportRefreshTokenDescri
 
 export const CSupportRefreshTokenDescription: MessageFns<CSupportRefreshTokenDescription> = {
   encode(message: CSupportRefreshTokenDescription, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.tokenId !== undefined && message.tokenId !== 0) {
+    if (message.tokenId !== undefined && message.tokenId !== 0n) {
+      if (BigInt.asUintN(64, message.tokenId) !== message.tokenId) {
+        throw new globalThis.Error("value provided for field message.tokenId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.tokenId);
     }
     if (message.tokenDescription !== undefined && message.tokenDescription !== "") {
@@ -3059,7 +3131,10 @@ export const CSupportRefreshTokenDescription: MessageFns<CSupportRefreshTokenDes
     if (message.tokenState !== undefined && message.tokenState !== 0) {
       writer.uint32(40).int32(message.tokenState);
     }
-    if (message.ownerSteamid !== undefined && message.ownerSteamid !== 0) {
+    if (message.ownerSteamid !== undefined && message.ownerSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.ownerSteamid) !== message.ownerSteamid) {
+        throw new globalThis.Error("value provided for field message.ownerSteamid of type fixed64 too large");
+      }
       writer.uint32(49).fixed64(message.ownerSteamid);
     }
     if (message.osPlatform !== undefined && message.osPlatform !== 0) {
@@ -3095,7 +3170,7 @@ export const CSupportRefreshTokenDescription: MessageFns<CSupportRefreshTokenDes
             break;
           }
 
-          message.tokenId = longToNumber(reader.fixed64());
+          message.tokenId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3135,7 +3210,7 @@ export const CSupportRefreshTokenDescription: MessageFns<CSupportRefreshTokenDes
             break;
           }
 
-          message.ownerSteamid = longToNumber(reader.fixed64());
+          message.ownerSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 7: {
@@ -3336,7 +3411,7 @@ export const CAuthenticationSupportQueryRefreshTokensByAccountResponse: MessageF
 };
 
 function createBaseCAuthenticationSupportQueryRefreshTokenByIDRequest(): CAuthenticationSupportQueryRefreshTokenByIDRequest {
-  return { tokenId: 0 };
+  return { tokenId: 0n };
 }
 
 export const CAuthenticationSupportQueryRefreshTokenByIDRequest: MessageFns<
@@ -3346,7 +3421,10 @@ export const CAuthenticationSupportQueryRefreshTokenByIDRequest: MessageFns<
     message: CAuthenticationSupportQueryRefreshTokenByIDRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.tokenId !== undefined && message.tokenId !== 0) {
+    if (message.tokenId !== undefined && message.tokenId !== 0n) {
+      if (BigInt.asUintN(64, message.tokenId) !== message.tokenId) {
+        throw new globalThis.Error("value provided for field message.tokenId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.tokenId);
     }
     return writer;
@@ -3364,7 +3442,7 @@ export const CAuthenticationSupportQueryRefreshTokenByIDRequest: MessageFns<
             break;
           }
 
-          message.tokenId = longToNumber(reader.fixed64());
+          message.tokenId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3420,15 +3498,21 @@ export const CAuthenticationSupportQueryRefreshTokenByIDResponse: MessageFns<
 };
 
 function createBaseCAuthenticationSupportRevokeTokenRequest(): CAuthenticationSupportRevokeTokenRequest {
-  return { tokenId: 0, steamid: 0 };
+  return { tokenId: 0n, steamid: 0n };
 }
 
 export const CAuthenticationSupportRevokeTokenRequest: MessageFns<CAuthenticationSupportRevokeTokenRequest> = {
   encode(message: CAuthenticationSupportRevokeTokenRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.tokenId !== undefined && message.tokenId !== 0) {
+    if (message.tokenId !== undefined && message.tokenId !== 0n) {
+      if (BigInt.asUintN(64, message.tokenId) !== message.tokenId) {
+        throw new globalThis.Error("value provided for field message.tokenId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.tokenId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     return writer;
@@ -3446,7 +3530,7 @@ export const CAuthenticationSupportRevokeTokenRequest: MessageFns<CAuthenticatio
             break;
           }
 
-          message.tokenId = longToNumber(reader.fixed64());
+          message.tokenId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3454,7 +3538,7 @@ export const CAuthenticationSupportRevokeTokenRequest: MessageFns<CAuthenticatio
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3494,7 +3578,7 @@ export const CAuthenticationSupportRevokeTokenResponse: MessageFns<CAuthenticati
 };
 
 function createBaseCAuthenticationSupportGetTokenHistoryRequest(): CAuthenticationSupportGetTokenHistoryRequest {
-  return { tokenId: 0 };
+  return { tokenId: 0n };
 }
 
 export const CAuthenticationSupportGetTokenHistoryRequest: MessageFns<CAuthenticationSupportGetTokenHistoryRequest> = {
@@ -3502,7 +3586,10 @@ export const CAuthenticationSupportGetTokenHistoryRequest: MessageFns<CAuthentic
     message: CAuthenticationSupportGetTokenHistoryRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.tokenId !== undefined && message.tokenId !== 0) {
+    if (message.tokenId !== undefined && message.tokenId !== 0n) {
+      if (BigInt.asUintN(64, message.tokenId) !== message.tokenId) {
+        throw new globalThis.Error("value provided for field message.tokenId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.tokenId);
     }
     return writer;
@@ -3520,7 +3607,7 @@ export const CAuthenticationSupportGetTokenHistoryRequest: MessageFns<CAuthentic
             break;
           }
 
-          message.tokenId = longToNumber(reader.fixed64());
+          message.tokenId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3534,7 +3621,7 @@ export const CAuthenticationSupportGetTokenHistoryRequest: MessageFns<CAuthentic
 };
 
 function createBaseCSupportRefreshTokenAudit(): CSupportRefreshTokenAudit {
-  return { action: 0, time: 0, ip: undefined, actor: 0 };
+  return { action: 0, time: 0, ip: undefined, actor: 0n };
 }
 
 export const CSupportRefreshTokenAudit: MessageFns<CSupportRefreshTokenAudit> = {
@@ -3548,7 +3635,10 @@ export const CSupportRefreshTokenAudit: MessageFns<CSupportRefreshTokenAudit> = 
     if (message.ip !== undefined) {
       CMsgIPAddress.encode(message.ip, writer.uint32(26).fork()).join();
     }
-    if (message.actor !== undefined && message.actor !== 0) {
+    if (message.actor !== undefined && message.actor !== 0n) {
+      if (BigInt.asUintN(64, message.actor) !== message.actor) {
+        throw new globalThis.Error("value provided for field message.actor of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.actor);
     }
     return writer;
@@ -3590,7 +3680,7 @@ export const CSupportRefreshTokenAudit: MessageFns<CSupportRefreshTokenAudit> = 
             break;
           }
 
-          message.actor = longToNumber(reader.fixed64());
+          message.actor = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3645,7 +3735,7 @@ export const CAuthenticationSupportGetTokenHistoryResponse: MessageFns<CAuthenti
   };
 
 function createBaseCAuthenticationSupportMarkTokenCompromisedRequest(): CAuthenticationSupportMarkTokenCompromisedRequest {
-  return { steamid: 0, tokenId: 0 };
+  return { steamid: 0n, tokenId: 0n };
 }
 
 export const CAuthenticationSupportMarkTokenCompromisedRequest: MessageFns<
@@ -3655,10 +3745,16 @@ export const CAuthenticationSupportMarkTokenCompromisedRequest: MessageFns<
     message: CAuthenticationSupportMarkTokenCompromisedRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.tokenId !== undefined && message.tokenId !== 0) {
+    if (message.tokenId !== undefined && message.tokenId !== 0n) {
+      if (BigInt.asUintN(64, message.tokenId) !== message.tokenId) {
+        throw new globalThis.Error("value provided for field message.tokenId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.tokenId);
     }
     return writer;
@@ -3676,7 +3772,7 @@ export const CAuthenticationSupportMarkTokenCompromisedRequest: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3684,7 +3780,7 @@ export const CAuthenticationSupportMarkTokenCompromisedRequest: MessageFns<
             break;
           }
 
-          message.tokenId = longToNumber(reader.fixed64());
+          message.tokenId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -4255,17 +4351,6 @@ export class CloudGamingClientImpl implements CloudGaming {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

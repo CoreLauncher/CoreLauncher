@@ -91,12 +91,12 @@ export interface SiteServerUIClientStatusResponse_ClientInfo {
   ip?: number | undefined;
   hostname?: string | undefined;
   connected?: boolean | undefined;
-  instanceId?: number | undefined;
+  instanceId?: bigint | undefined;
 }
 
 export interface SiteServerUIClientStatusResponse_Payment {
-  transid?: number | undefined;
-  steamid?: number | undefined;
+  transid?: bigint | undefined;
+  steamid?: bigint | undefined;
   amount?: string | undefined;
   timeCreated?: number | undefined;
   purchaseStatus?: number | undefined;
@@ -118,8 +118,8 @@ export interface SiteServerUIContentCacheStatusResponse {
   explicitIpAddress?: string | undefined;
   externalProcess?: boolean | undefined;
   currentSizeGb?: number | undefined;
-  currentBw?: number | undefined;
-  totalBytesServed?: number | undefined;
+  currentBw?: bigint | undefined;
+  totalBytesServed?: bigint | undefined;
 }
 
 export interface SiteServerUIContentCacheConfigRequest {
@@ -868,7 +868,7 @@ export const SiteServerUIClientStatusResponse: MessageFns<SiteServerUIClientStat
 };
 
 function createBaseSiteServerUIClientStatusResponse_ClientInfo(): SiteServerUIClientStatusResponse_ClientInfo {
-  return { ip: 0, hostname: "", connected: false, instanceId: 0 };
+  return { ip: 0, hostname: "", connected: false, instanceId: 0n };
 }
 
 export const SiteServerUIClientStatusResponse_ClientInfo: MessageFns<SiteServerUIClientStatusResponse_ClientInfo> = {
@@ -885,7 +885,10 @@ export const SiteServerUIClientStatusResponse_ClientInfo: MessageFns<SiteServerU
     if (message.connected !== undefined && message.connected !== false) {
       writer.uint32(24).bool(message.connected);
     }
-    if (message.instanceId !== undefined && message.instanceId !== 0) {
+    if (message.instanceId !== undefined && message.instanceId !== 0n) {
+      if (BigInt.asUintN(64, message.instanceId) !== message.instanceId) {
+        throw new globalThis.Error("value provided for field message.instanceId of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.instanceId);
     }
     return writer;
@@ -927,7 +930,7 @@ export const SiteServerUIClientStatusResponse_ClientInfo: MessageFns<SiteServerU
             break;
           }
 
-          message.instanceId = longToNumber(reader.uint64());
+          message.instanceId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -942,8 +945,8 @@ export const SiteServerUIClientStatusResponse_ClientInfo: MessageFns<SiteServerU
 
 function createBaseSiteServerUIClientStatusResponse_Payment(): SiteServerUIClientStatusResponse_Payment {
   return {
-    transid: 0,
-    steamid: 0,
+    transid: 0n,
+    steamid: 0n,
     amount: "",
     timeCreated: 0,
     purchaseStatus: 0,
@@ -956,10 +959,16 @@ function createBaseSiteServerUIClientStatusResponse_Payment(): SiteServerUIClien
 
 export const SiteServerUIClientStatusResponse_Payment: MessageFns<SiteServerUIClientStatusResponse_Payment> = {
   encode(message: SiteServerUIClientStatusResponse_Payment, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.transid !== undefined && message.transid !== 0) {
+    if (message.transid !== undefined && message.transid !== 0n) {
+      if (BigInt.asUintN(64, message.transid) !== message.transid) {
+        throw new globalThis.Error("value provided for field message.transid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.transid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
     if (message.amount !== undefined && message.amount !== "") {
@@ -998,7 +1007,7 @@ export const SiteServerUIClientStatusResponse_Payment: MessageFns<SiteServerUICl
             break;
           }
 
-          message.transid = longToNumber(reader.uint64());
+          message.transid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1006,7 +1015,7 @@ export const SiteServerUIClientStatusResponse_Payment: MessageFns<SiteServerUICl
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1111,8 +1120,8 @@ function createBaseSiteServerUIContentCacheStatusResponse(): SiteServerUIContent
     explicitIpAddress: "",
     externalProcess: false,
     currentSizeGb: 0,
-    currentBw: 0,
-    totalBytesServed: 0,
+    currentBw: 0n,
+    totalBytesServed: 0n,
   };
 }
 
@@ -1142,10 +1151,16 @@ export const SiteServerUIContentCacheStatusResponse: MessageFns<SiteServerUICont
     if (message.currentSizeGb !== undefined && message.currentSizeGb !== 0) {
       writer.uint32(48).uint32(message.currentSizeGb);
     }
-    if (message.currentBw !== undefined && message.currentBw !== 0) {
+    if (message.currentBw !== undefined && message.currentBw !== 0n) {
+      if (BigInt.asUintN(64, message.currentBw) !== message.currentBw) {
+        throw new globalThis.Error("value provided for field message.currentBw of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.currentBw);
     }
-    if (message.totalBytesServed !== undefined && message.totalBytesServed !== 0) {
+    if (message.totalBytesServed !== undefined && message.totalBytesServed !== 0n) {
+      if (BigInt.asUintN(64, message.totalBytesServed) !== message.totalBytesServed) {
+        throw new globalThis.Error("value provided for field message.totalBytesServed of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.totalBytesServed);
     }
     return writer;
@@ -1227,7 +1242,7 @@ export const SiteServerUIContentCacheStatusResponse: MessageFns<SiteServerUICont
             break;
           }
 
-          message.currentBw = longToNumber(reader.uint64());
+          message.currentBw = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -1235,7 +1250,7 @@ export const SiteServerUIContentCacheStatusResponse: MessageFns<SiteServerUICont
             break;
           }
 
-          message.totalBytesServed = longToNumber(reader.uint64());
+          message.totalBytesServed = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1384,17 +1399,6 @@ export const SiteServerUIContentCacheConfigResponse: MessageFns<SiteServerUICont
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

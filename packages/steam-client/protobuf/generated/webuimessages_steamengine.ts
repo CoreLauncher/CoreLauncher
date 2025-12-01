@@ -34,11 +34,11 @@ export interface CSteamEngineGetGameIDForPIDRequest {
 }
 
 export interface CSteamEngineGetGameIDForPIDResponse {
-  gameid?: number | undefined;
+  gameid?: bigint | undefined;
 }
 
 export interface CSteamEngineSetOverlayEscapeKeyHandlingNotification {
-  gameid: number;
+  gameid: bigint;
   shouldHandle: boolean;
 }
 
@@ -283,12 +283,15 @@ export const CSteamEngineGetGameIDForPIDRequest: MessageFns<CSteamEngineGetGameI
 };
 
 function createBaseCSteamEngineGetGameIDForPIDResponse(): CSteamEngineGetGameIDForPIDResponse {
-  return { gameid: 0 };
+  return { gameid: 0n };
 }
 
 export const CSteamEngineGetGameIDForPIDResponse: MessageFns<CSteamEngineGetGameIDForPIDResponse> = {
   encode(message: CSteamEngineGetGameIDForPIDResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gameid);
     }
     return writer;
@@ -306,7 +309,7 @@ export const CSteamEngineGetGameIDForPIDResponse: MessageFns<CSteamEngineGetGame
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -320,7 +323,7 @@ export const CSteamEngineGetGameIDForPIDResponse: MessageFns<CSteamEngineGetGame
 };
 
 function createBaseCSteamEngineSetOverlayEscapeKeyHandlingNotification(): CSteamEngineSetOverlayEscapeKeyHandlingNotification {
-  return { gameid: 0, shouldHandle: false };
+  return { gameid: 0n, shouldHandle: false };
 }
 
 export const CSteamEngineSetOverlayEscapeKeyHandlingNotification: MessageFns<
@@ -330,7 +333,10 @@ export const CSteamEngineSetOverlayEscapeKeyHandlingNotification: MessageFns<
     message: CSteamEngineSetOverlayEscapeKeyHandlingNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gameid !== 0) {
+    if (message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gameid);
     }
     if (message.shouldHandle !== false) {
@@ -351,7 +357,7 @@ export const CSteamEngineSetOverlayEscapeKeyHandlingNotification: MessageFns<
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -551,17 +557,6 @@ export class SteamEngineClientImpl implements SteamEngine {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

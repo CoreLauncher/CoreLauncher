@@ -19,20 +19,20 @@ export enum EAssetPropertyType {
 }
 
 export interface CEconGetInventoryItemsWithDescriptionsRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   appid?: number | undefined;
-  contextid?: number | undefined;
+  contextid?: bigint | undefined;
   getDescriptions?: boolean | undefined;
   getAssetProperties?: boolean | undefined;
   forTradeOfferVerification?: boolean | undefined;
   language?: string | undefined;
   filters?: CEconGetInventoryItemsWithDescriptionsRequest_FilterOptions | undefined;
-  startAssetid?: number | undefined;
+  startAssetid?: bigint | undefined;
   count?: number | undefined;
 }
 
 export interface CEconGetInventoryItemsWithDescriptionsRequest_FilterOptions {
-  assetids: number[];
+  assetids: bigint[];
   currencyids: number[];
   tradableOnly?: boolean | undefined;
   marketableOnly?: boolean | undefined;
@@ -40,14 +40,14 @@ export interface CEconGetInventoryItemsWithDescriptionsRequest_FilterOptions {
 
 export interface CEconAsset {
   appid?: number | undefined;
-  contextid?: number | undefined;
-  assetid?: number | undefined;
-  classid?: number | undefined;
-  instanceid?: number | undefined;
+  contextid?: bigint | undefined;
+  assetid?: bigint | undefined;
+  classid?: bigint | undefined;
+  instanceid?: bigint | undefined;
   currencyid?: number | undefined;
-  amount?: number | undefined;
+  amount?: bigint | undefined;
   missing?: boolean | undefined;
-  estUsd?: number | undefined;
+  estUsd?: bigint | undefined;
 }
 
 export interface CEconItemDescriptionLine {
@@ -65,8 +65,8 @@ export interface CEconItemAction {
 
 export interface CEconItemDescription {
   appid?: number | undefined;
-  classid?: number | undefined;
-  instanceid?: number | undefined;
+  classid?: bigint | undefined;
+  instanceid?: bigint | undefined;
   currency?: boolean | undefined;
   backgroundColor?: string | undefined;
   iconUrl?: string | undefined;
@@ -108,8 +108,8 @@ export interface CEconItemTag {
 }
 
 export interface CEconItemClassIdentifiers {
-  classid?: number | undefined;
-  instanceid?: number | undefined;
+  classid?: bigint | undefined;
+  instanceid?: bigint | undefined;
 }
 
 export interface CEconItemContainerProperties {
@@ -119,14 +119,14 @@ export interface CEconItemContainerProperties {
 
 export interface CEconItemAssetProperty {
   propertyid?: number | undefined;
-  intValue?: number | undefined;
+  intValue?: bigint | undefined;
   floatValue?: number | undefined;
   stringValue?: string | undefined;
 }
 
 export interface CEconItemAssetAccessory {
-  classid?: number | undefined;
-  instanceid?: number | undefined;
+  classid?: bigint | undefined;
+  instanceid?: bigint | undefined;
   standaloneProperties: CEconItemAssetProperty[];
   parentRelationshipProperties: CEconItemAssetProperty[];
   nestedAccessories: CEconItemAssetAccessory[];
@@ -134,8 +134,8 @@ export interface CEconItemAssetAccessory {
 
 export interface CEconItemAssetProperties {
   appid?: number | undefined;
-  contextid?: number | undefined;
-  assetid?: number | undefined;
+  contextid?: bigint | undefined;
+  assetid?: bigint | undefined;
   assetProperties: CEconItemAssetProperty[];
   assetAccessories: CEconItemAssetAccessory[];
 }
@@ -146,7 +146,7 @@ export interface CEconGetInventoryItemsWithDescriptionsResponse {
   missingAssets: CEconAsset[];
   assetProperties: CEconItemAssetProperties[];
   moreItems?: boolean | undefined;
-  lastAssetid?: number | undefined;
+  lastAssetid?: bigint | undefined;
   totalInventoryCount?: number | undefined;
 }
 
@@ -188,8 +188,8 @@ export interface CEconItemAssetPropertySchema {
   type?: EAssetPropertyType | undefined;
   floatMin?: number | undefined;
   floatMax?: number | undefined;
-  intMin?: number | undefined;
-  intMax?: number | undefined;
+  intMin?: bigint | undefined;
+  intMax?: bigint | undefined;
   localizedLabel?: string | undefined;
   hideFromDescription?: boolean | undefined;
 }
@@ -200,15 +200,15 @@ export interface CEconGetAssetPropertySchemaResponse {
 
 function createBaseCEconGetInventoryItemsWithDescriptionsRequest(): CEconGetInventoryItemsWithDescriptionsRequest {
   return {
-    steamid: 0,
+    steamid: 0n,
     appid: 0,
-    contextid: 0,
+    contextid: 0n,
     getDescriptions: false,
     getAssetProperties: false,
     forTradeOfferVerification: false,
     language: "",
     filters: undefined,
-    startAssetid: 0,
+    startAssetid: 0n,
     count: 0,
   };
 }
@@ -219,13 +219,19 @@ export const CEconGetInventoryItemsWithDescriptionsRequest: MessageFns<CEconGetI
       message: CEconGetInventoryItemsWithDescriptionsRequest,
       writer: BinaryWriter = new BinaryWriter(),
     ): BinaryWriter {
-      if (message.steamid !== undefined && message.steamid !== 0) {
+      if (message.steamid !== undefined && message.steamid !== 0n) {
+        if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+          throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+        }
         writer.uint32(9).fixed64(message.steamid);
       }
       if (message.appid !== undefined && message.appid !== 0) {
         writer.uint32(16).uint32(message.appid);
       }
-      if (message.contextid !== undefined && message.contextid !== 0) {
+      if (message.contextid !== undefined && message.contextid !== 0n) {
+        if (BigInt.asUintN(64, message.contextid) !== message.contextid) {
+          throw new globalThis.Error("value provided for field message.contextid of type uint64 too large");
+        }
         writer.uint32(24).uint64(message.contextid);
       }
       if (message.getDescriptions !== undefined && message.getDescriptions !== false) {
@@ -244,7 +250,10 @@ export const CEconGetInventoryItemsWithDescriptionsRequest: MessageFns<CEconGetI
         CEconGetInventoryItemsWithDescriptionsRequest_FilterOptions.encode(message.filters, writer.uint32(50).fork())
           .join();
       }
-      if (message.startAssetid !== undefined && message.startAssetid !== 0) {
+      if (message.startAssetid !== undefined && message.startAssetid !== 0n) {
+        if (BigInt.asUintN(64, message.startAssetid) !== message.startAssetid) {
+          throw new globalThis.Error("value provided for field message.startAssetid of type uint64 too large");
+        }
         writer.uint32(64).uint64(message.startAssetid);
       }
       if (message.count !== undefined && message.count !== 0) {
@@ -265,7 +274,7 @@ export const CEconGetInventoryItemsWithDescriptionsRequest: MessageFns<CEconGetI
               break;
             }
 
-            message.steamid = longToNumber(reader.fixed64());
+            message.steamid = reader.fixed64() as bigint;
             continue;
           }
           case 2: {
@@ -281,7 +290,7 @@ export const CEconGetInventoryItemsWithDescriptionsRequest: MessageFns<CEconGetI
               break;
             }
 
-            message.contextid = longToNumber(reader.uint64());
+            message.contextid = reader.uint64() as bigint;
             continue;
           }
           case 4: {
@@ -332,7 +341,7 @@ export const CEconGetInventoryItemsWithDescriptionsRequest: MessageFns<CEconGetI
               break;
             }
 
-            message.startAssetid = longToNumber(reader.uint64());
+            message.startAssetid = reader.uint64() as bigint;
             continue;
           }
           case 9: {
@@ -365,6 +374,9 @@ export const CEconGetInventoryItemsWithDescriptionsRequest_FilterOptions: Messag
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
     for (const v of message.assetids) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(8).uint64(v!);
     }
     for (const v of message.currencyids) {
@@ -391,7 +403,7 @@ export const CEconGetInventoryItemsWithDescriptionsRequest_FilterOptions: Messag
       switch (tag >>> 3) {
         case 1: {
           if (tag === 8) {
-            message.assetids.push(longToNumber(reader.uint64()));
+            message.assetids.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -399,7 +411,7 @@ export const CEconGetInventoryItemsWithDescriptionsRequest_FilterOptions: Messag
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.assetids.push(longToNumber(reader.uint64()));
+              message.assetids.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -454,14 +466,14 @@ export const CEconGetInventoryItemsWithDescriptionsRequest_FilterOptions: Messag
 function createBaseCEconAsset(): CEconAsset {
   return {
     appid: 0,
-    contextid: 0,
-    assetid: 0,
-    classid: 0,
-    instanceid: 0,
+    contextid: 0n,
+    assetid: 0n,
+    classid: 0n,
+    instanceid: 0n,
     currencyid: 0,
-    amount: 0,
+    amount: 0n,
     missing: false,
-    estUsd: 0,
+    estUsd: 0n,
   };
 }
 
@@ -470,28 +482,46 @@ export const CEconAsset: MessageFns<CEconAsset> = {
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.contextid !== undefined && message.contextid !== 0) {
+    if (message.contextid !== undefined && message.contextid !== 0n) {
+      if (BigInt.asUintN(64, message.contextid) !== message.contextid) {
+        throw new globalThis.Error("value provided for field message.contextid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.contextid);
     }
-    if (message.assetid !== undefined && message.assetid !== 0) {
+    if (message.assetid !== undefined && message.assetid !== 0n) {
+      if (BigInt.asUintN(64, message.assetid) !== message.assetid) {
+        throw new globalThis.Error("value provided for field message.assetid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.assetid);
     }
-    if (message.classid !== undefined && message.classid !== 0) {
+    if (message.classid !== undefined && message.classid !== 0n) {
+      if (BigInt.asUintN(64, message.classid) !== message.classid) {
+        throw new globalThis.Error("value provided for field message.classid of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.classid);
     }
-    if (message.instanceid !== undefined && message.instanceid !== 0) {
+    if (message.instanceid !== undefined && message.instanceid !== 0n) {
+      if (BigInt.asUintN(64, message.instanceid) !== message.instanceid) {
+        throw new globalThis.Error("value provided for field message.instanceid of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.instanceid);
     }
     if (message.currencyid !== undefined && message.currencyid !== 0) {
       writer.uint32(48).uint32(message.currencyid);
     }
-    if (message.amount !== undefined && message.amount !== 0) {
+    if (message.amount !== undefined && message.amount !== 0n) {
+      if (BigInt.asIntN(64, message.amount) !== message.amount) {
+        throw new globalThis.Error("value provided for field message.amount of type int64 too large");
+      }
       writer.uint32(56).int64(message.amount);
     }
     if (message.missing !== undefined && message.missing !== false) {
       writer.uint32(64).bool(message.missing);
     }
-    if (message.estUsd !== undefined && message.estUsd !== 0) {
+    if (message.estUsd !== undefined && message.estUsd !== 0n) {
+      if (BigInt.asIntN(64, message.estUsd) !== message.estUsd) {
+        throw new globalThis.Error("value provided for field message.estUsd of type int64 too large");
+      }
       writer.uint32(72).int64(message.estUsd);
     }
     return writer;
@@ -517,7 +547,7 @@ export const CEconAsset: MessageFns<CEconAsset> = {
             break;
           }
 
-          message.contextid = longToNumber(reader.uint64());
+          message.contextid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -525,7 +555,7 @@ export const CEconAsset: MessageFns<CEconAsset> = {
             break;
           }
 
-          message.assetid = longToNumber(reader.uint64());
+          message.assetid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -533,7 +563,7 @@ export const CEconAsset: MessageFns<CEconAsset> = {
             break;
           }
 
-          message.classid = longToNumber(reader.uint64());
+          message.classid = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -541,7 +571,7 @@ export const CEconAsset: MessageFns<CEconAsset> = {
             break;
           }
 
-          message.instanceid = longToNumber(reader.uint64());
+          message.instanceid = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -557,7 +587,7 @@ export const CEconAsset: MessageFns<CEconAsset> = {
             break;
           }
 
-          message.amount = longToNumber(reader.int64());
+          message.amount = reader.int64() as bigint;
           continue;
         }
         case 8: {
@@ -573,7 +603,7 @@ export const CEconAsset: MessageFns<CEconAsset> = {
             break;
           }
 
-          message.estUsd = longToNumber(reader.int64());
+          message.estUsd = reader.int64() as bigint;
           continue;
         }
       }
@@ -718,8 +748,8 @@ export const CEconItemAction: MessageFns<CEconItemAction> = {
 function createBaseCEconItemDescription(): CEconItemDescription {
   return {
     appid: 0,
-    classid: 0,
-    instanceid: 0,
+    classid: 0n,
+    instanceid: 0n,
     currency: false,
     backgroundColor: "",
     iconUrl: "",
@@ -757,10 +787,16 @@ export const CEconItemDescription: MessageFns<CEconItemDescription> = {
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).int32(message.appid);
     }
-    if (message.classid !== undefined && message.classid !== 0) {
+    if (message.classid !== undefined && message.classid !== 0n) {
+      if (BigInt.asUintN(64, message.classid) !== message.classid) {
+        throw new globalThis.Error("value provided for field message.classid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.classid);
     }
-    if (message.instanceid !== undefined && message.instanceid !== 0) {
+    if (message.instanceid !== undefined && message.instanceid !== 0n) {
+      if (BigInt.asUintN(64, message.instanceid) !== message.instanceid) {
+        throw new globalThis.Error("value provided for field message.instanceid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.instanceid);
     }
     if (message.currency !== undefined && message.currency !== false) {
@@ -873,7 +909,7 @@ export const CEconItemDescription: MessageFns<CEconItemDescription> = {
             break;
           }
 
-          message.classid = longToNumber(reader.uint64());
+          message.classid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -881,7 +917,7 @@ export const CEconItemDescription: MessageFns<CEconItemDescription> = {
             break;
           }
 
-          message.instanceid = longToNumber(reader.uint64());
+          message.instanceid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -1219,15 +1255,21 @@ export const CEconItemTag: MessageFns<CEconItemTag> = {
 };
 
 function createBaseCEconItemClassIdentifiers(): CEconItemClassIdentifiers {
-  return { classid: 0, instanceid: 0 };
+  return { classid: 0n, instanceid: 0n };
 }
 
 export const CEconItemClassIdentifiers: MessageFns<CEconItemClassIdentifiers> = {
   encode(message: CEconItemClassIdentifiers, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.classid !== undefined && message.classid !== 0) {
+    if (message.classid !== undefined && message.classid !== 0n) {
+      if (BigInt.asUintN(64, message.classid) !== message.classid) {
+        throw new globalThis.Error("value provided for field message.classid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.classid);
     }
-    if (message.instanceid !== undefined && message.instanceid !== 0) {
+    if (message.instanceid !== undefined && message.instanceid !== 0n) {
+      if (BigInt.asUintN(64, message.instanceid) !== message.instanceid) {
+        throw new globalThis.Error("value provided for field message.instanceid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.instanceid);
     }
     return writer;
@@ -1245,7 +1287,7 @@ export const CEconItemClassIdentifiers: MessageFns<CEconItemClassIdentifiers> = 
             break;
           }
 
-          message.classid = longToNumber(reader.uint64());
+          message.classid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1253,7 +1295,7 @@ export const CEconItemClassIdentifiers: MessageFns<CEconItemClassIdentifiers> = 
             break;
           }
 
-          message.instanceid = longToNumber(reader.uint64());
+          message.instanceid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1315,7 +1357,7 @@ export const CEconItemContainerProperties: MessageFns<CEconItemContainerProperti
 };
 
 function createBaseCEconItemAssetProperty(): CEconItemAssetProperty {
-  return { propertyid: 0, intValue: 0, floatValue: 0, stringValue: "" };
+  return { propertyid: 0, intValue: 0n, floatValue: 0, stringValue: "" };
 }
 
 export const CEconItemAssetProperty: MessageFns<CEconItemAssetProperty> = {
@@ -1323,7 +1365,10 @@ export const CEconItemAssetProperty: MessageFns<CEconItemAssetProperty> = {
     if (message.propertyid !== undefined && message.propertyid !== 0) {
       writer.uint32(8).uint32(message.propertyid);
     }
-    if (message.intValue !== undefined && message.intValue !== 0) {
+    if (message.intValue !== undefined && message.intValue !== 0n) {
+      if (BigInt.asIntN(64, message.intValue) !== message.intValue) {
+        throw new globalThis.Error("value provided for field message.intValue of type int64 too large");
+      }
       writer.uint32(16).int64(message.intValue);
     }
     if (message.floatValue !== undefined && message.floatValue !== 0) {
@@ -1355,7 +1400,7 @@ export const CEconItemAssetProperty: MessageFns<CEconItemAssetProperty> = {
             break;
           }
 
-          message.intValue = longToNumber(reader.int64());
+          message.intValue = reader.int64() as bigint;
           continue;
         }
         case 3: {
@@ -1386,8 +1431,8 @@ export const CEconItemAssetProperty: MessageFns<CEconItemAssetProperty> = {
 
 function createBaseCEconItemAssetAccessory(): CEconItemAssetAccessory {
   return {
-    classid: 0,
-    instanceid: 0,
+    classid: 0n,
+    instanceid: 0n,
     standaloneProperties: [],
     parentRelationshipProperties: [],
     nestedAccessories: [],
@@ -1396,10 +1441,16 @@ function createBaseCEconItemAssetAccessory(): CEconItemAssetAccessory {
 
 export const CEconItemAssetAccessory: MessageFns<CEconItemAssetAccessory> = {
   encode(message: CEconItemAssetAccessory, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.classid !== undefined && message.classid !== 0) {
+    if (message.classid !== undefined && message.classid !== 0n) {
+      if (BigInt.asUintN(64, message.classid) !== message.classid) {
+        throw new globalThis.Error("value provided for field message.classid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.classid);
     }
-    if (message.instanceid !== undefined && message.instanceid !== 0) {
+    if (message.instanceid !== undefined && message.instanceid !== 0n) {
+      if (BigInt.asUintN(64, message.instanceid) !== message.instanceid) {
+        throw new globalThis.Error("value provided for field message.instanceid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.instanceid);
     }
     for (const v of message.standaloneProperties) {
@@ -1426,7 +1477,7 @@ export const CEconItemAssetAccessory: MessageFns<CEconItemAssetAccessory> = {
             break;
           }
 
-          message.classid = longToNumber(reader.uint64());
+          message.classid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1434,7 +1485,7 @@ export const CEconItemAssetAccessory: MessageFns<CEconItemAssetAccessory> = {
             break;
           }
 
-          message.instanceid = longToNumber(reader.uint64());
+          message.instanceid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1472,7 +1523,7 @@ export const CEconItemAssetAccessory: MessageFns<CEconItemAssetAccessory> = {
 };
 
 function createBaseCEconItemAssetProperties(): CEconItemAssetProperties {
-  return { appid: 0, contextid: 0, assetid: 0, assetProperties: [], assetAccessories: [] };
+  return { appid: 0, contextid: 0n, assetid: 0n, assetProperties: [], assetAccessories: [] };
 }
 
 export const CEconItemAssetProperties: MessageFns<CEconItemAssetProperties> = {
@@ -1480,10 +1531,16 @@ export const CEconItemAssetProperties: MessageFns<CEconItemAssetProperties> = {
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.contextid !== undefined && message.contextid !== 0) {
+    if (message.contextid !== undefined && message.contextid !== 0n) {
+      if (BigInt.asUintN(64, message.contextid) !== message.contextid) {
+        throw new globalThis.Error("value provided for field message.contextid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.contextid);
     }
-    if (message.assetid !== undefined && message.assetid !== 0) {
+    if (message.assetid !== undefined && message.assetid !== 0n) {
+      if (BigInt.asUintN(64, message.assetid) !== message.assetid) {
+        throw new globalThis.Error("value provided for field message.assetid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.assetid);
     }
     for (const v of message.assetProperties) {
@@ -1515,7 +1572,7 @@ export const CEconItemAssetProperties: MessageFns<CEconItemAssetProperties> = {
             break;
           }
 
-          message.contextid = longToNumber(reader.uint64());
+          message.contextid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1523,7 +1580,7 @@ export const CEconItemAssetProperties: MessageFns<CEconItemAssetProperties> = {
             break;
           }
 
-          message.assetid = longToNumber(reader.uint64());
+          message.assetid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -1559,7 +1616,7 @@ function createBaseCEconGetInventoryItemsWithDescriptionsResponse(): CEconGetInv
     missingAssets: [],
     assetProperties: [],
     moreItems: false,
-    lastAssetid: 0,
+    lastAssetid: 0n,
     totalInventoryCount: 0,
   };
 }
@@ -1586,7 +1643,10 @@ export const CEconGetInventoryItemsWithDescriptionsResponse: MessageFns<
     if (message.moreItems !== undefined && message.moreItems !== false) {
       writer.uint32(32).bool(message.moreItems);
     }
-    if (message.lastAssetid !== undefined && message.lastAssetid !== 0) {
+    if (message.lastAssetid !== undefined && message.lastAssetid !== 0n) {
+      if (BigInt.asUintN(64, message.lastAssetid) !== message.lastAssetid) {
+        throw new globalThis.Error("value provided for field message.lastAssetid of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.lastAssetid);
     }
     if (message.totalInventoryCount !== undefined && message.totalInventoryCount !== 0) {
@@ -1647,7 +1707,7 @@ export const CEconGetInventoryItemsWithDescriptionsResponse: MessageFns<
             break;
           }
 
-          message.lastAssetid = longToNumber(reader.uint64());
+          message.lastAssetid = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -1984,8 +2044,8 @@ function createBaseCEconItemAssetPropertySchema(): CEconItemAssetPropertySchema 
     type: 0,
     floatMin: 0,
     floatMax: 0,
-    intMin: 0,
-    intMax: 0,
+    intMin: 0n,
+    intMax: 0n,
     localizedLabel: "",
     hideFromDescription: false,
   };
@@ -2008,10 +2068,16 @@ export const CEconItemAssetPropertySchema: MessageFns<CEconItemAssetPropertySche
     if (message.floatMax !== undefined && message.floatMax !== 0) {
       writer.uint32(45).float(message.floatMax);
     }
-    if (message.intMin !== undefined && message.intMin !== 0) {
+    if (message.intMin !== undefined && message.intMin !== 0n) {
+      if (BigInt.asIntN(64, message.intMin) !== message.intMin) {
+        throw new globalThis.Error("value provided for field message.intMin of type int64 too large");
+      }
       writer.uint32(48).int64(message.intMin);
     }
-    if (message.intMax !== undefined && message.intMax !== 0) {
+    if (message.intMax !== undefined && message.intMax !== 0n) {
+      if (BigInt.asIntN(64, message.intMax) !== message.intMax) {
+        throw new globalThis.Error("value provided for field message.intMax of type int64 too large");
+      }
       writer.uint32(56).int64(message.intMax);
     }
     if (message.localizedLabel !== undefined && message.localizedLabel !== "") {
@@ -2075,7 +2141,7 @@ export const CEconItemAssetPropertySchema: MessageFns<CEconItemAssetPropertySche
             break;
           }
 
-          message.intMin = longToNumber(reader.int64());
+          message.intMin = reader.int64() as bigint;
           continue;
         }
         case 7: {
@@ -2083,7 +2149,7 @@ export const CEconItemAssetPropertySchema: MessageFns<CEconItemAssetPropertySche
             break;
           }
 
-          message.intMax = longToNumber(reader.int64());
+          message.intMax = reader.int64() as bigint;
           continue;
         }
         case 8: {
@@ -2215,17 +2281,6 @@ export class EconClientImpl implements Econ {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

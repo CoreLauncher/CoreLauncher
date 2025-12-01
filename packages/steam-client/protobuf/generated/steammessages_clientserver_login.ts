@@ -15,19 +15,19 @@ export interface CMsgClientHeartBeat {
 }
 
 export interface CMsgClientServerTimestampRequest {
-  clientRequestTimestamp?: number | undefined;
+  clientRequestTimestamp?: bigint | undefined;
 }
 
 export interface CMsgClientServerTimestampResponse {
-  clientRequestTimestamp?: number | undefined;
-  serverTimestampMs?: number | undefined;
+  clientRequestTimestamp?: bigint | undefined;
+  serverTimestampMs?: bigint | undefined;
 }
 
 export interface CMsgClientSecret {
   version?: number | undefined;
   appid?: number | undefined;
   deviceid?: number | undefined;
-  nonce?: number | undefined;
+  nonce?: bigint | undefined;
   hmac?: Buffer | undefined;
 }
 
@@ -49,7 +49,7 @@ export interface CMsgClientLogon {
   obfuscatedPrivateIp?: CMsgIPAddress | undefined;
   deprecatedPublicIp?: number | undefined;
   qosLevel?: number | undefined;
-  clientSuppliedSteamId?: number | undefined;
+  clientSuppliedSteamId?: bigint | undefined;
   publicIp?: CMsgIPAddress | undefined;
   machineId?: Buffer | undefined;
   launcherType?: number | undefined;
@@ -64,7 +64,7 @@ export interface CMsgClientLogon {
   loginKey?: string | undefined;
   wasConvertedDeprecatedMsg?: boolean | undefined;
   anonUserTargetAccountName?: string | undefined;
-  resolvedUserSteamId?: number | undefined;
+  resolvedUserSteamId?: bigint | undefined;
   eresultSentryfile?: number | undefined;
   shaSentryfile?: Buffer | undefined;
   authCode?: string | undefined;
@@ -81,7 +81,7 @@ export interface CMsgClientLogon {
   machineName?: string | undefined;
   machineNameUserchosen?: string | undefined;
   countryOverride?: string | undefined;
-  clientInstanceId?: number | undefined;
+  clientInstanceId?: bigint | undefined;
   twoFactorCode?: string | undefined;
   supportsRateLimitResponse?: boolean | undefined;
   webLogonNonce?: string | undefined;
@@ -112,18 +112,18 @@ export interface CMsgClientLogonResponse {
   vanityUrl?: string | undefined;
   publicIp?: CMsgIPAddress | undefined;
   userCountry?: string | undefined;
-  clientSuppliedSteamid?: number | undefined;
+  clientSuppliedSteamid?: bigint | undefined;
   ipCountryCode?: string | undefined;
   parentalSettings?: Buffer | undefined;
   parentalSettingSignature?: Buffer | undefined;
   countLoginfailuresToMigrate?: number | undefined;
   countDisconnectsToMigrate?: number | undefined;
   ogsDataReportTimeWindow?: number | undefined;
-  clientInstanceId?: number | undefined;
+  clientInstanceId?: bigint | undefined;
   forceClientUpdateCheck?: boolean | undefined;
   agreementSessionUrl?: string | undefined;
-  tokenId?: number | undefined;
-  familyGroupId?: number | undefined;
+  tokenId?: bigint | undefined;
+  familyGroupId?: bigint | undefined;
 }
 
 export interface CMsgClientRequestWebAPIAuthenticateUserNonce {
@@ -165,11 +165,11 @@ export interface CMsgClientAccountInfo {
 }
 
 export interface CMsgClientChallengeRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CMsgClientChallengeResponse {
-  challenge?: number | undefined;
+  challenge?: bigint | undefined;
 }
 
 function createBaseCMsgClientHeartBeat(): CMsgClientHeartBeat {
@@ -210,12 +210,15 @@ export const CMsgClientHeartBeat: MessageFns<CMsgClientHeartBeat> = {
 };
 
 function createBaseCMsgClientServerTimestampRequest(): CMsgClientServerTimestampRequest {
-  return { clientRequestTimestamp: 0 };
+  return { clientRequestTimestamp: 0n };
 }
 
 export const CMsgClientServerTimestampRequest: MessageFns<CMsgClientServerTimestampRequest> = {
   encode(message: CMsgClientServerTimestampRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.clientRequestTimestamp !== undefined && message.clientRequestTimestamp !== 0) {
+    if (message.clientRequestTimestamp !== undefined && message.clientRequestTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.clientRequestTimestamp) !== message.clientRequestTimestamp) {
+        throw new globalThis.Error("value provided for field message.clientRequestTimestamp of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientRequestTimestamp);
     }
     return writer;
@@ -233,7 +236,7 @@ export const CMsgClientServerTimestampRequest: MessageFns<CMsgClientServerTimest
             break;
           }
 
-          message.clientRequestTimestamp = longToNumber(reader.uint64());
+          message.clientRequestTimestamp = reader.uint64() as bigint;
           continue;
         }
       }
@@ -247,15 +250,21 @@ export const CMsgClientServerTimestampRequest: MessageFns<CMsgClientServerTimest
 };
 
 function createBaseCMsgClientServerTimestampResponse(): CMsgClientServerTimestampResponse {
-  return { clientRequestTimestamp: 0, serverTimestampMs: 0 };
+  return { clientRequestTimestamp: 0n, serverTimestampMs: 0n };
 }
 
 export const CMsgClientServerTimestampResponse: MessageFns<CMsgClientServerTimestampResponse> = {
   encode(message: CMsgClientServerTimestampResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.clientRequestTimestamp !== undefined && message.clientRequestTimestamp !== 0) {
+    if (message.clientRequestTimestamp !== undefined && message.clientRequestTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.clientRequestTimestamp) !== message.clientRequestTimestamp) {
+        throw new globalThis.Error("value provided for field message.clientRequestTimestamp of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientRequestTimestamp);
     }
-    if (message.serverTimestampMs !== undefined && message.serverTimestampMs !== 0) {
+    if (message.serverTimestampMs !== undefined && message.serverTimestampMs !== 0n) {
+      if (BigInt.asUintN(64, message.serverTimestampMs) !== message.serverTimestampMs) {
+        throw new globalThis.Error("value provided for field message.serverTimestampMs of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.serverTimestampMs);
     }
     return writer;
@@ -273,7 +282,7 @@ export const CMsgClientServerTimestampResponse: MessageFns<CMsgClientServerTimes
             break;
           }
 
-          message.clientRequestTimestamp = longToNumber(reader.uint64());
+          message.clientRequestTimestamp = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -281,7 +290,7 @@ export const CMsgClientServerTimestampResponse: MessageFns<CMsgClientServerTimes
             break;
           }
 
-          message.serverTimestampMs = longToNumber(reader.uint64());
+          message.serverTimestampMs = reader.uint64() as bigint;
           continue;
         }
       }
@@ -295,7 +304,7 @@ export const CMsgClientServerTimestampResponse: MessageFns<CMsgClientServerTimes
 };
 
 function createBaseCMsgClientSecret(): CMsgClientSecret {
-  return { version: 0, appid: 0, deviceid: 0, nonce: 0, hmac: Buffer.alloc(0) };
+  return { version: 0, appid: 0, deviceid: 0, nonce: 0n, hmac: Buffer.alloc(0) };
 }
 
 export const CMsgClientSecret: MessageFns<CMsgClientSecret> = {
@@ -309,7 +318,10 @@ export const CMsgClientSecret: MessageFns<CMsgClientSecret> = {
     if (message.deviceid !== undefined && message.deviceid !== 0) {
       writer.uint32(24).uint32(message.deviceid);
     }
-    if (message.nonce !== undefined && message.nonce !== 0) {
+    if (message.nonce !== undefined && message.nonce !== 0n) {
+      if (BigInt.asUintN(64, message.nonce) !== message.nonce) {
+        throw new globalThis.Error("value provided for field message.nonce of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.nonce);
     }
     if (message.hmac !== undefined && message.hmac.length !== 0) {
@@ -354,7 +366,7 @@ export const CMsgClientSecret: MessageFns<CMsgClientSecret> = {
             break;
           }
 
-          message.nonce = longToNumber(reader.fixed64());
+          message.nonce = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -427,7 +439,7 @@ function createBaseCMsgClientLogon(): CMsgClientLogon {
     obfuscatedPrivateIp: undefined,
     deprecatedPublicIp: 0,
     qosLevel: 0,
-    clientSuppliedSteamId: 0,
+    clientSuppliedSteamId: 0n,
     publicIp: undefined,
     machineId: Buffer.alloc(0),
     launcherType: 0,
@@ -442,7 +454,7 @@ function createBaseCMsgClientLogon(): CMsgClientLogon {
     loginKey: "",
     wasConvertedDeprecatedMsg: false,
     anonUserTargetAccountName: "",
-    resolvedUserSteamId: 0,
+    resolvedUserSteamId: 0n,
     eresultSentryfile: 0,
     shaSentryfile: Buffer.alloc(0),
     authCode: "",
@@ -459,7 +471,7 @@ function createBaseCMsgClientLogon(): CMsgClientLogon {
     machineName: "",
     machineNameUserchosen: "",
     countryOverride: "",
-    clientInstanceId: 0,
+    clientInstanceId: 0n,
     twoFactorCode: "",
     supportsRateLimitResponse: false,
     webLogonNonce: "",
@@ -516,7 +528,10 @@ export const CMsgClientLogon: MessageFns<CMsgClientLogon> = {
     if (message.qosLevel !== undefined && message.qosLevel !== 0) {
       writer.uint32(168).uint32(message.qosLevel);
     }
-    if (message.clientSuppliedSteamId !== undefined && message.clientSuppliedSteamId !== 0) {
+    if (message.clientSuppliedSteamId !== undefined && message.clientSuppliedSteamId !== 0n) {
+      if (BigInt.asUintN(64, message.clientSuppliedSteamId) !== message.clientSuppliedSteamId) {
+        throw new globalThis.Error("value provided for field message.clientSuppliedSteamId of type fixed64 too large");
+      }
       writer.uint32(177).fixed64(message.clientSuppliedSteamId);
     }
     if (message.publicIp !== undefined) {
@@ -561,7 +576,10 @@ export const CMsgClientLogon: MessageFns<CMsgClientLogon> = {
     if (message.anonUserTargetAccountName !== undefined && message.anonUserTargetAccountName !== "") {
       writer.uint32(642).string(message.anonUserTargetAccountName);
     }
-    if (message.resolvedUserSteamId !== undefined && message.resolvedUserSteamId !== 0) {
+    if (message.resolvedUserSteamId !== undefined && message.resolvedUserSteamId !== 0n) {
+      if (BigInt.asUintN(64, message.resolvedUserSteamId) !== message.resolvedUserSteamId) {
+        throw new globalThis.Error("value provided for field message.resolvedUserSteamId of type fixed64 too large");
+      }
       writer.uint32(649).fixed64(message.resolvedUserSteamId);
     }
     if (message.eresultSentryfile !== undefined && message.eresultSentryfile !== 0) {
@@ -614,7 +632,10 @@ export const CMsgClientLogon: MessageFns<CMsgClientLogon> = {
     if (message.countryOverride !== undefined && message.countryOverride !== "") {
       writer.uint32(786).string(message.countryOverride);
     }
-    if (message.clientInstanceId !== undefined && message.clientInstanceId !== 0) {
+    if (message.clientInstanceId !== undefined && message.clientInstanceId !== 0n) {
+      if (BigInt.asUintN(64, message.clientInstanceId) !== message.clientInstanceId) {
+        throw new globalThis.Error("value provided for field message.clientInstanceId of type uint64 too large");
+      }
       writer.uint32(800).uint64(message.clientInstanceId);
     }
     if (message.twoFactorCode !== undefined && message.twoFactorCode !== "") {
@@ -772,7 +793,7 @@ export const CMsgClientLogon: MessageFns<CMsgClientLogon> = {
             break;
           }
 
-          message.clientSuppliedSteamId = longToNumber(reader.fixed64());
+          message.clientSuppliedSteamId = reader.fixed64() as bigint;
           continue;
         }
         case 23: {
@@ -892,7 +913,7 @@ export const CMsgClientLogon: MessageFns<CMsgClientLogon> = {
             break;
           }
 
-          message.resolvedUserSteamId = longToNumber(reader.fixed64());
+          message.resolvedUserSteamId = reader.fixed64() as bigint;
           continue;
         }
         case 82: {
@@ -1028,7 +1049,7 @@ export const CMsgClientLogon: MessageFns<CMsgClientLogon> = {
             break;
           }
 
-          message.clientInstanceId = longToNumber(reader.uint64());
+          message.clientInstanceId = reader.uint64() as bigint;
           continue;
         }
         case 101: {
@@ -1154,18 +1175,18 @@ function createBaseCMsgClientLogonResponse(): CMsgClientLogonResponse {
     vanityUrl: "",
     publicIp: undefined,
     userCountry: "",
-    clientSuppliedSteamid: 0,
+    clientSuppliedSteamid: 0n,
     ipCountryCode: "",
     parentalSettings: Buffer.alloc(0),
     parentalSettingSignature: Buffer.alloc(0),
     countLoginfailuresToMigrate: 0,
     countDisconnectsToMigrate: 0,
     ogsDataReportTimeWindow: 0,
-    clientInstanceId: 0,
+    clientInstanceId: 0n,
     forceClientUpdateCheck: false,
     agreementSessionUrl: "",
-    tokenId: 0,
-    familyGroupId: 0,
+    tokenId: 0n,
+    familyGroupId: 0n,
   };
 }
 
@@ -1216,7 +1237,10 @@ export const CMsgClientLogonResponse: MessageFns<CMsgClientLogonResponse> = {
     if (message.userCountry !== undefined && message.userCountry !== "") {
       writer.uint32(130).string(message.userCountry);
     }
-    if (message.clientSuppliedSteamid !== undefined && message.clientSuppliedSteamid !== 0) {
+    if (message.clientSuppliedSteamid !== undefined && message.clientSuppliedSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.clientSuppliedSteamid) !== message.clientSuppliedSteamid) {
+        throw new globalThis.Error("value provided for field message.clientSuppliedSteamid of type fixed64 too large");
+      }
       writer.uint32(161).fixed64(message.clientSuppliedSteamid);
     }
     if (message.ipCountryCode !== undefined && message.ipCountryCode !== "") {
@@ -1237,7 +1261,10 @@ export const CMsgClientLogonResponse: MessageFns<CMsgClientLogonResponse> = {
     if (message.ogsDataReportTimeWindow !== undefined && message.ogsDataReportTimeWindow !== 0) {
       writer.uint32(208).int32(message.ogsDataReportTimeWindow);
     }
-    if (message.clientInstanceId !== undefined && message.clientInstanceId !== 0) {
+    if (message.clientInstanceId !== undefined && message.clientInstanceId !== 0n) {
+      if (BigInt.asUintN(64, message.clientInstanceId) !== message.clientInstanceId) {
+        throw new globalThis.Error("value provided for field message.clientInstanceId of type uint64 too large");
+      }
       writer.uint32(216).uint64(message.clientInstanceId);
     }
     if (message.forceClientUpdateCheck !== undefined && message.forceClientUpdateCheck !== false) {
@@ -1246,10 +1273,16 @@ export const CMsgClientLogonResponse: MessageFns<CMsgClientLogonResponse> = {
     if (message.agreementSessionUrl !== undefined && message.agreementSessionUrl !== "") {
       writer.uint32(234).string(message.agreementSessionUrl);
     }
-    if (message.tokenId !== undefined && message.tokenId !== 0) {
+    if (message.tokenId !== undefined && message.tokenId !== 0n) {
+      if (BigInt.asUintN(64, message.tokenId) !== message.tokenId) {
+        throw new globalThis.Error("value provided for field message.tokenId of type uint64 too large");
+      }
       writer.uint32(240).uint64(message.tokenId);
     }
-    if (message.familyGroupId !== undefined && message.familyGroupId !== 0) {
+    if (message.familyGroupId !== undefined && message.familyGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupId) !== message.familyGroupId) {
+        throw new globalThis.Error("value provided for field message.familyGroupId of type uint64 too large");
+      }
       writer.uint32(248).uint64(message.familyGroupId);
     }
     return writer;
@@ -1387,7 +1420,7 @@ export const CMsgClientLogonResponse: MessageFns<CMsgClientLogonResponse> = {
             break;
           }
 
-          message.clientSuppliedSteamid = longToNumber(reader.fixed64());
+          message.clientSuppliedSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 21: {
@@ -1443,7 +1476,7 @@ export const CMsgClientLogonResponse: MessageFns<CMsgClientLogonResponse> = {
             break;
           }
 
-          message.clientInstanceId = longToNumber(reader.uint64());
+          message.clientInstanceId = reader.uint64() as bigint;
           continue;
         }
         case 28: {
@@ -1467,7 +1500,7 @@ export const CMsgClientLogonResponse: MessageFns<CMsgClientLogonResponse> = {
             break;
           }
 
-          message.tokenId = longToNumber(reader.uint64());
+          message.tokenId = reader.uint64() as bigint;
           continue;
         }
         case 31: {
@@ -1475,7 +1508,7 @@ export const CMsgClientLogonResponse: MessageFns<CMsgClientLogonResponse> = {
             break;
           }
 
-          message.familyGroupId = longToNumber(reader.uint64());
+          message.familyGroupId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1876,12 +1909,15 @@ export const CMsgClientAccountInfo: MessageFns<CMsgClientAccountInfo> = {
 };
 
 function createBaseCMsgClientChallengeRequest(): CMsgClientChallengeRequest {
-  return { steamid: 0 };
+  return { steamid: 0n };
 }
 
 export const CMsgClientChallengeRequest: MessageFns<CMsgClientChallengeRequest> = {
   encode(message: CMsgClientChallengeRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     return writer;
@@ -1899,7 +1935,7 @@ export const CMsgClientChallengeRequest: MessageFns<CMsgClientChallengeRequest> 
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1913,12 +1949,15 @@ export const CMsgClientChallengeRequest: MessageFns<CMsgClientChallengeRequest> 
 };
 
 function createBaseCMsgClientChallengeResponse(): CMsgClientChallengeResponse {
-  return { challenge: 0 };
+  return { challenge: 0n };
 }
 
 export const CMsgClientChallengeResponse: MessageFns<CMsgClientChallengeResponse> = {
   encode(message: CMsgClientChallengeResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.challenge !== undefined && message.challenge !== 0) {
+    if (message.challenge !== undefined && message.challenge !== 0n) {
+      if (BigInt.asUintN(64, message.challenge) !== message.challenge) {
+        throw new globalThis.Error("value provided for field message.challenge of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.challenge);
     }
     return writer;
@@ -1936,7 +1975,7 @@ export const CMsgClientChallengeResponse: MessageFns<CMsgClientChallengeResponse
             break;
           }
 
-          message.challenge = longToNumber(reader.fixed64());
+          message.challenge = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1948,17 +1987,6 @@ export const CMsgClientChallengeResponse: MessageFns<CMsgClientChallengeResponse
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

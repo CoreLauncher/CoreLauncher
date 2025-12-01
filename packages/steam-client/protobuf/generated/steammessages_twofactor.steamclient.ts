@@ -24,13 +24,13 @@ export enum ETwoFactorUsageType {
 }
 
 export interface CTwoFactorTimeRequest {
-  senderTime?: number | undefined;
+  senderTime?: bigint | undefined;
 }
 
 export interface CTwoFactorTimeResponse {
-  serverTime?: number | undefined;
-  skewToleranceSeconds?: number | undefined;
-  largeTimeJink?: number | undefined;
+  serverTime?: bigint | undefined;
+  skewToleranceSeconds?: bigint | undefined;
+  largeTimeJink?: bigint | undefined;
   probeFrequencySeconds?: number | undefined;
   adjustedTimeProbeFrequencySeconds?: number | undefined;
   hintProbeFrequencySeconds?: number | undefined;
@@ -40,7 +40,7 @@ export interface CTwoFactorTimeResponse {
 }
 
 export interface CTwoFactorStatusRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   include?: ETwoFactorStatusFieldFlag | undefined;
 }
 
@@ -66,14 +66,14 @@ export interface CTwoFactorStatusResponse {
   allowExternalAuthenticator?: boolean | undefined;
   timeTransferred?: number | undefined;
   version?: number | undefined;
-  lastSeenAuthTokenId?: number | undefined;
+  lastSeenAuthTokenId?: bigint | undefined;
   usages: CTwoFactorUsageEvent[];
 }
 
 export interface CTwoFactorAddAuthenticatorRequest {
-  steamid?: number | undefined;
-  authenticatorTime?: number | undefined;
-  serialNumber?: number | undefined;
+  steamid?: bigint | undefined;
+  authenticatorTime?: bigint | undefined;
+  serialNumber?: bigint | undefined;
   authenticatorType?: number | undefined;
   deviceIdentifier?: string | undefined;
   httpHeaders: string[];
@@ -82,10 +82,10 @@ export interface CTwoFactorAddAuthenticatorRequest {
 
 export interface CTwoFactorAddAuthenticatorResponse {
   sharedSecret?: Buffer | undefined;
-  serialNumber?: number | undefined;
+  serialNumber?: bigint | undefined;
   revocationCode?: string | undefined;
   uri?: string | undefined;
-  serverTime?: number | undefined;
+  serverTime?: bigint | undefined;
   accountName?: string | undefined;
   tokenGid?: string | undefined;
   identitySecret?: Buffer | undefined;
@@ -96,9 +96,9 @@ export interface CTwoFactorAddAuthenticatorResponse {
 }
 
 export interface CTwoFactorFinalizeAddAuthenticatorRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   authenticatorCode?: string | undefined;
-  authenticatorTime?: number | undefined;
+  authenticatorTime?: bigint | undefined;
   activationCode?: string | undefined;
   httpHeaders: string[];
   validateSmsCode?: boolean | undefined;
@@ -106,12 +106,12 @@ export interface CTwoFactorFinalizeAddAuthenticatorRequest {
 
 export interface CTwoFactorFinalizeAddAuthenticatorResponse {
   success?: boolean | undefined;
-  serverTime?: number | undefined;
+  serverTime?: bigint | undefined;
   status?: number | undefined;
 }
 
 export interface CTwoFactorUpdateTokenVersionRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   version?: number | undefined;
   signature?: Buffer | undefined;
 }
@@ -128,7 +128,7 @@ export interface CTwoFactorRemoveAuthenticatorRequest {
 
 export interface CTwoFactorRemoveAuthenticatorResponse {
   success?: boolean | undefined;
-  serverTime?: number | undefined;
+  serverTime?: bigint | undefined;
   revocationAttemptsRemaining?: number | undefined;
 }
 
@@ -147,17 +147,17 @@ export interface CTwoFactorRemoveAuthenticatorViaChallengeContinueRequest {
 
 export interface CRemoveAuthenticatorViaChallengeContinueReplacementToken {
   sharedSecret?: Buffer | undefined;
-  serialNumber?: number | undefined;
+  serialNumber?: bigint | undefined;
   revocationCode?: string | undefined;
   uri?: string | undefined;
-  serverTime?: number | undefined;
+  serverTime?: bigint | undefined;
   accountName?: string | undefined;
   tokenGid?: string | undefined;
   identitySecret?: Buffer | undefined;
   secret1?: Buffer | undefined;
   status?: number | undefined;
   steamguardScheme?: number | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CTwoFactorRemoveAuthenticatorViaChallengeContinueResponse {
@@ -166,12 +166,15 @@ export interface CTwoFactorRemoveAuthenticatorViaChallengeContinueResponse {
 }
 
 function createBaseCTwoFactorTimeRequest(): CTwoFactorTimeRequest {
-  return { senderTime: 0 };
+  return { senderTime: 0n };
 }
 
 export const CTwoFactorTimeRequest: MessageFns<CTwoFactorTimeRequest> = {
   encode(message: CTwoFactorTimeRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.senderTime !== undefined && message.senderTime !== 0) {
+    if (message.senderTime !== undefined && message.senderTime !== 0n) {
+      if (BigInt.asUintN(64, message.senderTime) !== message.senderTime) {
+        throw new globalThis.Error("value provided for field message.senderTime of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.senderTime);
     }
     return writer;
@@ -189,7 +192,7 @@ export const CTwoFactorTimeRequest: MessageFns<CTwoFactorTimeRequest> = {
             break;
           }
 
-          message.senderTime = longToNumber(reader.uint64());
+          message.senderTime = reader.uint64() as bigint;
           continue;
         }
       }
@@ -204,9 +207,9 @@ export const CTwoFactorTimeRequest: MessageFns<CTwoFactorTimeRequest> = {
 
 function createBaseCTwoFactorTimeResponse(): CTwoFactorTimeResponse {
   return {
-    serverTime: 0,
-    skewToleranceSeconds: 0,
-    largeTimeJink: 0,
+    serverTime: 0n,
+    skewToleranceSeconds: 0n,
+    largeTimeJink: 0n,
     probeFrequencySeconds: 0,
     adjustedTimeProbeFrequencySeconds: 0,
     hintProbeFrequencySeconds: 0,
@@ -218,13 +221,22 @@ function createBaseCTwoFactorTimeResponse(): CTwoFactorTimeResponse {
 
 export const CTwoFactorTimeResponse: MessageFns<CTwoFactorTimeResponse> = {
   encode(message: CTwoFactorTimeResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.serverTime !== undefined && message.serverTime !== 0) {
+    if (message.serverTime !== undefined && message.serverTime !== 0n) {
+      if (BigInt.asUintN(64, message.serverTime) !== message.serverTime) {
+        throw new globalThis.Error("value provided for field message.serverTime of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.serverTime);
     }
-    if (message.skewToleranceSeconds !== undefined && message.skewToleranceSeconds !== 0) {
+    if (message.skewToleranceSeconds !== undefined && message.skewToleranceSeconds !== 0n) {
+      if (BigInt.asUintN(64, message.skewToleranceSeconds) !== message.skewToleranceSeconds) {
+        throw new globalThis.Error("value provided for field message.skewToleranceSeconds of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.skewToleranceSeconds);
     }
-    if (message.largeTimeJink !== undefined && message.largeTimeJink !== 0) {
+    if (message.largeTimeJink !== undefined && message.largeTimeJink !== 0n) {
+      if (BigInt.asUintN(64, message.largeTimeJink) !== message.largeTimeJink) {
+        throw new globalThis.Error("value provided for field message.largeTimeJink of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.largeTimeJink);
     }
     if (message.probeFrequencySeconds !== undefined && message.probeFrequencySeconds !== 0) {
@@ -260,7 +272,7 @@ export const CTwoFactorTimeResponse: MessageFns<CTwoFactorTimeResponse> = {
             break;
           }
 
-          message.serverTime = longToNumber(reader.uint64());
+          message.serverTime = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -268,7 +280,7 @@ export const CTwoFactorTimeResponse: MessageFns<CTwoFactorTimeResponse> = {
             break;
           }
 
-          message.skewToleranceSeconds = longToNumber(reader.uint64());
+          message.skewToleranceSeconds = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -276,7 +288,7 @@ export const CTwoFactorTimeResponse: MessageFns<CTwoFactorTimeResponse> = {
             break;
           }
 
-          message.largeTimeJink = longToNumber(reader.uint64());
+          message.largeTimeJink = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -338,12 +350,15 @@ export const CTwoFactorTimeResponse: MessageFns<CTwoFactorTimeResponse> = {
 };
 
 function createBaseCTwoFactorStatusRequest(): CTwoFactorStatusRequest {
-  return { steamid: 0, include: 0 };
+  return { steamid: 0n, include: 0 };
 }
 
 export const CTwoFactorStatusRequest: MessageFns<CTwoFactorStatusRequest> = {
   encode(message: CTwoFactorStatusRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.include !== undefined && message.include !== 0) {
@@ -364,7 +379,7 @@ export const CTwoFactorStatusRequest: MessageFns<CTwoFactorStatusRequest> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -471,7 +486,7 @@ function createBaseCTwoFactorStatusResponse(): CTwoFactorStatusResponse {
     allowExternalAuthenticator: false,
     timeTransferred: 0,
     version: 0,
-    lastSeenAuthTokenId: 0,
+    lastSeenAuthTokenId: 0n,
     usages: [],
   };
 }
@@ -520,7 +535,10 @@ export const CTwoFactorStatusResponse: MessageFns<CTwoFactorStatusResponse> = {
     if (message.version !== undefined && message.version !== 0) {
       writer.uint32(112).uint32(message.version);
     }
-    if (message.lastSeenAuthTokenId !== undefined && message.lastSeenAuthTokenId !== 0) {
+    if (message.lastSeenAuthTokenId !== undefined && message.lastSeenAuthTokenId !== 0n) {
+      if (BigInt.asUintN(64, message.lastSeenAuthTokenId) !== message.lastSeenAuthTokenId) {
+        throw new globalThis.Error("value provided for field message.lastSeenAuthTokenId of type fixed64 too large");
+      }
       writer.uint32(121).fixed64(message.lastSeenAuthTokenId);
     }
     for (const v of message.usages) {
@@ -653,7 +671,7 @@ export const CTwoFactorStatusResponse: MessageFns<CTwoFactorStatusResponse> = {
             break;
           }
 
-          message.lastSeenAuthTokenId = longToNumber(reader.fixed64());
+          message.lastSeenAuthTokenId = reader.fixed64() as bigint;
           continue;
         }
         case 16: {
@@ -676,9 +694,9 @@ export const CTwoFactorStatusResponse: MessageFns<CTwoFactorStatusResponse> = {
 
 function createBaseCTwoFactorAddAuthenticatorRequest(): CTwoFactorAddAuthenticatorRequest {
   return {
-    steamid: 0,
-    authenticatorTime: 0,
-    serialNumber: 0,
+    steamid: 0n,
+    authenticatorTime: 0n,
+    serialNumber: 0n,
     authenticatorType: 0,
     deviceIdentifier: "",
     httpHeaders: [],
@@ -688,13 +706,22 @@ function createBaseCTwoFactorAddAuthenticatorRequest(): CTwoFactorAddAuthenticat
 
 export const CTwoFactorAddAuthenticatorRequest: MessageFns<CTwoFactorAddAuthenticatorRequest> = {
   encode(message: CTwoFactorAddAuthenticatorRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.authenticatorTime !== undefined && message.authenticatorTime !== 0) {
+    if (message.authenticatorTime !== undefined && message.authenticatorTime !== 0n) {
+      if (BigInt.asUintN(64, message.authenticatorTime) !== message.authenticatorTime) {
+        throw new globalThis.Error("value provided for field message.authenticatorTime of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.authenticatorTime);
     }
-    if (message.serialNumber !== undefined && message.serialNumber !== 0) {
+    if (message.serialNumber !== undefined && message.serialNumber !== 0n) {
+      if (BigInt.asUintN(64, message.serialNumber) !== message.serialNumber) {
+        throw new globalThis.Error("value provided for field message.serialNumber of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.serialNumber);
     }
     if (message.authenticatorType !== undefined && message.authenticatorType !== 0) {
@@ -724,7 +751,7 @@ export const CTwoFactorAddAuthenticatorRequest: MessageFns<CTwoFactorAddAuthenti
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -732,7 +759,7 @@ export const CTwoFactorAddAuthenticatorRequest: MessageFns<CTwoFactorAddAuthenti
             break;
           }
 
-          message.authenticatorTime = longToNumber(reader.uint64());
+          message.authenticatorTime = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -740,7 +767,7 @@ export const CTwoFactorAddAuthenticatorRequest: MessageFns<CTwoFactorAddAuthenti
             break;
           }
 
-          message.serialNumber = longToNumber(reader.fixed64());
+          message.serialNumber = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -788,10 +815,10 @@ export const CTwoFactorAddAuthenticatorRequest: MessageFns<CTwoFactorAddAuthenti
 function createBaseCTwoFactorAddAuthenticatorResponse(): CTwoFactorAddAuthenticatorResponse {
   return {
     sharedSecret: Buffer.alloc(0),
-    serialNumber: 0,
+    serialNumber: 0n,
     revocationCode: "",
     uri: "",
-    serverTime: 0,
+    serverTime: 0n,
     accountName: "",
     tokenGid: "",
     identitySecret: Buffer.alloc(0),
@@ -807,7 +834,10 @@ export const CTwoFactorAddAuthenticatorResponse: MessageFns<CTwoFactorAddAuthent
     if (message.sharedSecret !== undefined && message.sharedSecret.length !== 0) {
       writer.uint32(10).bytes(message.sharedSecret);
     }
-    if (message.serialNumber !== undefined && message.serialNumber !== 0) {
+    if (message.serialNumber !== undefined && message.serialNumber !== 0n) {
+      if (BigInt.asUintN(64, message.serialNumber) !== message.serialNumber) {
+        throw new globalThis.Error("value provided for field message.serialNumber of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.serialNumber);
     }
     if (message.revocationCode !== undefined && message.revocationCode !== "") {
@@ -816,7 +846,10 @@ export const CTwoFactorAddAuthenticatorResponse: MessageFns<CTwoFactorAddAuthent
     if (message.uri !== undefined && message.uri !== "") {
       writer.uint32(34).string(message.uri);
     }
-    if (message.serverTime !== undefined && message.serverTime !== 0) {
+    if (message.serverTime !== undefined && message.serverTime !== 0n) {
+      if (BigInt.asUintN(64, message.serverTime) !== message.serverTime) {
+        throw new globalThis.Error("value provided for field message.serverTime of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.serverTime);
     }
     if (message.accountName !== undefined && message.accountName !== "") {
@@ -863,7 +896,7 @@ export const CTwoFactorAddAuthenticatorResponse: MessageFns<CTwoFactorAddAuthent
             break;
           }
 
-          message.serialNumber = longToNumber(reader.fixed64());
+          message.serialNumber = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -887,7 +920,7 @@ export const CTwoFactorAddAuthenticatorResponse: MessageFns<CTwoFactorAddAuthent
             break;
           }
 
-          message.serverTime = longToNumber(reader.uint64());
+          message.serverTime = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -958,9 +991,9 @@ export const CTwoFactorAddAuthenticatorResponse: MessageFns<CTwoFactorAddAuthent
 
 function createBaseCTwoFactorFinalizeAddAuthenticatorRequest(): CTwoFactorFinalizeAddAuthenticatorRequest {
   return {
-    steamid: 0,
+    steamid: 0n,
     authenticatorCode: "",
-    authenticatorTime: 0,
+    authenticatorTime: 0n,
     activationCode: "",
     httpHeaders: [],
     validateSmsCode: false,
@@ -969,13 +1002,19 @@ function createBaseCTwoFactorFinalizeAddAuthenticatorRequest(): CTwoFactorFinali
 
 export const CTwoFactorFinalizeAddAuthenticatorRequest: MessageFns<CTwoFactorFinalizeAddAuthenticatorRequest> = {
   encode(message: CTwoFactorFinalizeAddAuthenticatorRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.authenticatorCode !== undefined && message.authenticatorCode !== "") {
       writer.uint32(18).string(message.authenticatorCode);
     }
-    if (message.authenticatorTime !== undefined && message.authenticatorTime !== 0) {
+    if (message.authenticatorTime !== undefined && message.authenticatorTime !== 0n) {
+      if (BigInt.asUintN(64, message.authenticatorTime) !== message.authenticatorTime) {
+        throw new globalThis.Error("value provided for field message.authenticatorTime of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.authenticatorTime);
     }
     if (message.activationCode !== undefined && message.activationCode !== "") {
@@ -1002,7 +1041,7 @@ export const CTwoFactorFinalizeAddAuthenticatorRequest: MessageFns<CTwoFactorFin
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1018,7 +1057,7 @@ export const CTwoFactorFinalizeAddAuthenticatorRequest: MessageFns<CTwoFactorFin
             break;
           }
 
-          message.authenticatorTime = longToNumber(reader.uint64());
+          message.authenticatorTime = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -1056,7 +1095,7 @@ export const CTwoFactorFinalizeAddAuthenticatorRequest: MessageFns<CTwoFactorFin
 };
 
 function createBaseCTwoFactorFinalizeAddAuthenticatorResponse(): CTwoFactorFinalizeAddAuthenticatorResponse {
-  return { success: false, serverTime: 0, status: 0 };
+  return { success: false, serverTime: 0n, status: 0 };
 }
 
 export const CTwoFactorFinalizeAddAuthenticatorResponse: MessageFns<CTwoFactorFinalizeAddAuthenticatorResponse> = {
@@ -1064,7 +1103,10 @@ export const CTwoFactorFinalizeAddAuthenticatorResponse: MessageFns<CTwoFactorFi
     if (message.success !== undefined && message.success !== false) {
       writer.uint32(8).bool(message.success);
     }
-    if (message.serverTime !== undefined && message.serverTime !== 0) {
+    if (message.serverTime !== undefined && message.serverTime !== 0n) {
+      if (BigInt.asUintN(64, message.serverTime) !== message.serverTime) {
+        throw new globalThis.Error("value provided for field message.serverTime of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.serverTime);
     }
     if (message.status !== undefined && message.status !== 0) {
@@ -1093,7 +1135,7 @@ export const CTwoFactorFinalizeAddAuthenticatorResponse: MessageFns<CTwoFactorFi
             break;
           }
 
-          message.serverTime = longToNumber(reader.uint64());
+          message.serverTime = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -1115,12 +1157,15 @@ export const CTwoFactorFinalizeAddAuthenticatorResponse: MessageFns<CTwoFactorFi
 };
 
 function createBaseCTwoFactorUpdateTokenVersionRequest(): CTwoFactorUpdateTokenVersionRequest {
-  return { steamid: 0, version: 0, signature: Buffer.alloc(0) };
+  return { steamid: 0n, version: 0, signature: Buffer.alloc(0) };
 }
 
 export const CTwoFactorUpdateTokenVersionRequest: MessageFns<CTwoFactorUpdateTokenVersionRequest> = {
   encode(message: CTwoFactorUpdateTokenVersionRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.version !== undefined && message.version !== 0) {
@@ -1144,7 +1189,7 @@ export const CTwoFactorUpdateTokenVersionRequest: MessageFns<CTwoFactorUpdateTok
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1270,7 +1315,7 @@ export const CTwoFactorRemoveAuthenticatorRequest: MessageFns<CTwoFactorRemoveAu
 };
 
 function createBaseCTwoFactorRemoveAuthenticatorResponse(): CTwoFactorRemoveAuthenticatorResponse {
-  return { success: false, serverTime: 0, revocationAttemptsRemaining: 0 };
+  return { success: false, serverTime: 0n, revocationAttemptsRemaining: 0 };
 }
 
 export const CTwoFactorRemoveAuthenticatorResponse: MessageFns<CTwoFactorRemoveAuthenticatorResponse> = {
@@ -1278,7 +1323,10 @@ export const CTwoFactorRemoveAuthenticatorResponse: MessageFns<CTwoFactorRemoveA
     if (message.success !== undefined && message.success !== false) {
       writer.uint32(8).bool(message.success);
     }
-    if (message.serverTime !== undefined && message.serverTime !== 0) {
+    if (message.serverTime !== undefined && message.serverTime !== 0n) {
+      if (BigInt.asUintN(64, message.serverTime) !== message.serverTime) {
+        throw new globalThis.Error("value provided for field message.serverTime of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.serverTime);
     }
     if (message.revocationAttemptsRemaining !== undefined && message.revocationAttemptsRemaining !== 0) {
@@ -1307,7 +1355,7 @@ export const CTwoFactorRemoveAuthenticatorResponse: MessageFns<CTwoFactorRemoveA
             break;
           }
 
-          message.serverTime = longToNumber(reader.uint64());
+          message.serverTime = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -1468,17 +1516,17 @@ export const CTwoFactorRemoveAuthenticatorViaChallengeContinueRequest: MessageFn
 function createBaseCRemoveAuthenticatorViaChallengeContinueReplacementToken(): CRemoveAuthenticatorViaChallengeContinueReplacementToken {
   return {
     sharedSecret: Buffer.alloc(0),
-    serialNumber: 0,
+    serialNumber: 0n,
     revocationCode: "",
     uri: "",
-    serverTime: 0,
+    serverTime: 0n,
     accountName: "",
     tokenGid: "",
     identitySecret: Buffer.alloc(0),
     secret1: Buffer.alloc(0),
     status: 0,
     steamguardScheme: 0,
-    steamid: 0,
+    steamid: 0n,
   };
 }
 
@@ -1492,7 +1540,10 @@ export const CRemoveAuthenticatorViaChallengeContinueReplacementToken: MessageFn
     if (message.sharedSecret !== undefined && message.sharedSecret.length !== 0) {
       writer.uint32(10).bytes(message.sharedSecret);
     }
-    if (message.serialNumber !== undefined && message.serialNumber !== 0) {
+    if (message.serialNumber !== undefined && message.serialNumber !== 0n) {
+      if (BigInt.asUintN(64, message.serialNumber) !== message.serialNumber) {
+        throw new globalThis.Error("value provided for field message.serialNumber of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.serialNumber);
     }
     if (message.revocationCode !== undefined && message.revocationCode !== "") {
@@ -1501,7 +1552,10 @@ export const CRemoveAuthenticatorViaChallengeContinueReplacementToken: MessageFn
     if (message.uri !== undefined && message.uri !== "") {
       writer.uint32(34).string(message.uri);
     }
-    if (message.serverTime !== undefined && message.serverTime !== 0) {
+    if (message.serverTime !== undefined && message.serverTime !== 0n) {
+      if (BigInt.asUintN(64, message.serverTime) !== message.serverTime) {
+        throw new globalThis.Error("value provided for field message.serverTime of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.serverTime);
     }
     if (message.accountName !== undefined && message.accountName !== "") {
@@ -1522,7 +1576,10 @@ export const CRemoveAuthenticatorViaChallengeContinueReplacementToken: MessageFn
     if (message.steamguardScheme !== undefined && message.steamguardScheme !== 0) {
       writer.uint32(88).uint32(message.steamguardScheme);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(97).fixed64(message.steamid);
     }
     return writer;
@@ -1548,7 +1605,7 @@ export const CRemoveAuthenticatorViaChallengeContinueReplacementToken: MessageFn
             break;
           }
 
-          message.serialNumber = longToNumber(reader.fixed64());
+          message.serialNumber = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1572,7 +1629,7 @@ export const CRemoveAuthenticatorViaChallengeContinueReplacementToken: MessageFn
             break;
           }
 
-          message.serverTime = longToNumber(reader.uint64());
+          message.serverTime = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -1628,7 +1685,7 @@ export const CRemoveAuthenticatorViaChallengeContinueReplacementToken: MessageFn
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1794,17 +1851,6 @@ export class TwoFactorClientImpl implements TwoFactor {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

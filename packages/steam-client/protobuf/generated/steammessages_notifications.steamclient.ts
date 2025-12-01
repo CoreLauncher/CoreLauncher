@@ -45,7 +45,7 @@ export enum ESteamNotificationType {
 }
 
 export interface SteamNotificationData {
-  notificationId?: number | undefined;
+  notificationId?: bigint | undefined;
   notificationTargets?: number | undefined;
   notificationType?: ESteamNotificationType | undefined;
   bodyData?: string | undefined;
@@ -74,7 +74,7 @@ export interface CSteamNotificationPreferencesUpdatedNotification {
 
 function createBaseSteamNotificationData(): SteamNotificationData {
   return {
-    notificationId: 0,
+    notificationId: 0n,
     notificationTargets: 0,
     notificationType: 0,
     bodyData: "",
@@ -88,7 +88,10 @@ function createBaseSteamNotificationData(): SteamNotificationData {
 
 export const SteamNotificationData: MessageFns<SteamNotificationData> = {
   encode(message: SteamNotificationData, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.notificationId !== undefined && message.notificationId !== 0) {
+    if (message.notificationId !== undefined && message.notificationId !== 0n) {
+      if (BigInt.asUintN(64, message.notificationId) !== message.notificationId) {
+        throw new globalThis.Error("value provided for field message.notificationId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.notificationId);
     }
     if (message.notificationTargets !== undefined && message.notificationTargets !== 0) {
@@ -130,7 +133,7 @@ export const SteamNotificationData: MessageFns<SteamNotificationData> = {
             break;
           }
 
-          message.notificationId = longToNumber(reader.uint64());
+          message.notificationId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -402,17 +405,6 @@ export class SteamNotificationClientClientImpl implements SteamNotificationClien
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

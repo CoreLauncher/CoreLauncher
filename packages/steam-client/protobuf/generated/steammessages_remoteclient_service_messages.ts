@@ -18,16 +18,16 @@ export interface CRemoteClientCreateSessionRequest {
 }
 
 export interface CRemoteClientCreateSessionResponse {
-  sessionId?: number | undefined;
+  sessionId?: bigint | undefined;
   euniverse?: number | undefined;
 }
 
 export interface CRemoteClientDeleteSessionNotification {
-  sessionId?: number | undefined;
+  sessionId?: bigint | undefined;
 }
 
 export interface CRemoteClientStartPairingRequest {
-  sessionId?: number | undefined;
+  sessionId?: bigint | undefined;
 }
 
 export interface CRemoteClientStartPairingResponse {
@@ -35,8 +35,8 @@ export interface CRemoteClientStartPairingResponse {
 }
 
 export interface CRemoteClientSetPairingInfoRequest {
-  sessionId?: number | undefined;
-  deviceId?: number | undefined;
+  sessionId?: bigint | undefined;
+  deviceId?: bigint | undefined;
   request?: Buffer | undefined;
 }
 
@@ -48,27 +48,27 @@ export interface CRemoteClientGetPairingInfoRequest {
 }
 
 export interface CRemoteClientGetPairingInfoResponse {
-  sessionId?: number | undefined;
-  deviceId?: number | undefined;
+  sessionId?: bigint | undefined;
+  deviceId?: bigint | undefined;
   request?: Buffer | undefined;
 }
 
 export interface CRemoteClientCancelPairingRequest {
-  sessionId?: number | undefined;
+  sessionId?: bigint | undefined;
 }
 
 export interface CRemoteClientCancelPairingResponse {
 }
 
 export interface CRemoteClientRegisterStatusUpdateNotification {
-  sessionId?: number | undefined;
-  steamid?: number | undefined;
-  deviceId?: number | undefined;
+  sessionId?: bigint | undefined;
+  steamid?: bigint | undefined;
+  deviceId?: bigint | undefined;
 }
 
 export interface CRemoteClientUnregisterStatusUpdateNotification {
-  sessionId?: number | undefined;
-  steamid?: number | undefined;
+  sessionId?: bigint | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CRemoteClientDeviceDetails {
@@ -78,8 +78,8 @@ export interface CRemoteClientDeviceDetails {
 }
 
 export interface CRemoteClientOnlineNotification {
-  steamid?: number | undefined;
-  remoteClientId?: number | undefined;
+  steamid?: bigint | undefined;
+  remoteClientId?: bigint | undefined;
   deviceDetails?: CRemoteClientDeviceDetails | undefined;
 }
 
@@ -87,15 +87,15 @@ export interface CRemoteClientGetRecentClientsRequest {
 }
 
 export interface CRemoteClientClientLogin {
-  remoteClientId?: number | undefined;
-  tokenId?: number | undefined;
+  remoteClientId?: bigint | undefined;
+  tokenId?: bigint | undefined;
   deviceDetails?: CRemoteClientDeviceDetails | undefined;
 }
 
 export interface CRemoteClientClientDetails {
-  remoteClientId?: number | undefined;
+  remoteClientId?: bigint | undefined;
   deviceDetails?: CRemoteClientDeviceDetails | undefined;
-  lastSeen?: number | undefined;
+  lastSeen?: bigint | undefined;
   city?: string | undefined;
   state?: string | undefined;
   country?: string | undefined;
@@ -108,13 +108,13 @@ export interface CRemoteClientGetRecentClientsResponse {
 
 export interface CRemoteClientTask {
   type?: ECLientTaskListType | undefined;
-  taskId?: number | undefined;
+  taskId?: bigint | undefined;
   url?: string | undefined;
-  fileId?: number | undefined;
+  fileId?: bigint | undefined;
 }
 
 export interface CRemoteClientAddClientTaskRequest {
-  remoteClientId?: number | undefined;
+  remoteClientId?: bigint | undefined;
   task?: CRemoteClientTask | undefined;
 }
 
@@ -122,13 +122,13 @@ export interface CRemoteClientAddClientTaskResponse {
 }
 
 export interface CRemoteClientTaskListNotification {
-  remoteClientId?: number | undefined;
+  remoteClientId?: bigint | undefined;
   tasklist: CRemoteClientTask[];
 }
 
 export interface CRemoteClientMarkTaskCompleteRequest {
-  remoteClientId?: number | undefined;
-  taskId?: number | undefined;
+  remoteClientId?: bigint | undefined;
+  taskId?: bigint | undefined;
   contentId?: string | undefined;
 }
 
@@ -136,18 +136,18 @@ export interface CRemoteClientMarkTaskCompleteResponse {
 }
 
 export interface CRemoteClientRemotePacketNotification {
-  sessionId?: number | undefined;
-  steamid?: number | undefined;
+  sessionId?: bigint | undefined;
+  steamid?: bigint | undefined;
   payload?: Buffer | undefined;
 }
 
 export interface CRemoteClientReplyPacketNotification {
-  sessionId?: number | undefined;
+  sessionId?: bigint | undefined;
   payload?: Buffer | undefined;
 }
 
 export interface CRemoteClientGetRepliesRequest {
-  sessionId?: number | undefined;
+  sessionId?: bigint | undefined;
 }
 
 export interface CRemoteClientGetRepliesResponse {
@@ -171,15 +171,15 @@ export interface CRemoteClientAllocateSDRResponse {
 }
 
 export interface CRemoteClientSteamBroadcastNotification {
-  steamid?: number | undefined;
-  clientid?: number | undefined;
+  steamid?: bigint | undefined;
+  clientid?: bigint | undefined;
   payload?: Buffer | undefined;
 }
 
 export interface CRemoteClientSteamToSteamNotification {
-  steamid?: number | undefined;
-  srcClientid?: number | undefined;
-  dstClientid?: number | undefined;
+  steamid?: bigint | undefined;
+  srcClientid?: bigint | undefined;
+  dstClientid?: bigint | undefined;
   secretid?: number | undefined;
   encryptedPayload?: Buffer | undefined;
 }
@@ -194,23 +194,23 @@ export interface CRemotePlaySessionStartedRequest {
 }
 
 export interface CRemotePlaySessionStartedResponse {
-  recordId?: number | undefined;
+  recordId?: bigint | undefined;
 }
 
 export interface CRemotePlaySessionStoppedNotification {
-  recordId?: number | undefined;
+  recordId?: bigint | undefined;
   usedX264?: boolean | undefined;
   usedH264?: boolean | undefined;
   usedHevc?: boolean | undefined;
 }
 
 export interface CRemotePlayTogetherNotification {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   groupUpdated?: CRemotePlayTogetherNotification_GroupUpdated | undefined;
 }
 
 export interface CRemotePlayTogetherNotification_Player {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   guestid?: number | undefined;
   avatarHash?: Buffer | undefined;
   keyboardEnabled?: boolean | undefined;
@@ -220,7 +220,7 @@ export interface CRemotePlayTogetherNotification_Player {
 
 export interface CRemotePlayTogetherNotification_ControllerSlotObsolete {
   slotid?: number | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CRemotePlayTogetherNotification_ControllerSlot {
@@ -230,10 +230,10 @@ export interface CRemotePlayTogetherNotification_ControllerSlot {
 }
 
 export interface CRemotePlayTogetherNotification_GroupUpdated {
-  hostSteamid?: number | undefined;
-  hostClientid?: number | undefined;
-  playersObsolete: number[];
-  hostGameid?: number | undefined;
+  hostSteamid?: bigint | undefined;
+  hostClientid?: bigint | undefined;
+  playersObsolete: bigint[];
+  hostGameid?: bigint | undefined;
   controllerSlotsObsolete: CRemotePlayTogetherNotification_ControllerSlotObsolete[];
   hasNewPlayers?: boolean | undefined;
   playerSlots: CRemotePlayTogetherNotification_Player[];
@@ -310,12 +310,15 @@ export const CRemoteClientCreateSessionRequest: MessageFns<CRemoteClientCreateSe
 };
 
 function createBaseCRemoteClientCreateSessionResponse(): CRemoteClientCreateSessionResponse {
-  return { sessionId: 0, euniverse: 0 };
+  return { sessionId: 0n, euniverse: 0 };
 }
 
 export const CRemoteClientCreateSessionResponse: MessageFns<CRemoteClientCreateSessionResponse> = {
   encode(message: CRemoteClientCreateSessionResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.sessionId);
     }
     if (message.euniverse !== undefined && message.euniverse !== 0) {
@@ -336,7 +339,7 @@ export const CRemoteClientCreateSessionResponse: MessageFns<CRemoteClientCreateS
             break;
           }
 
-          message.sessionId = longToNumber(reader.fixed64());
+          message.sessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -358,12 +361,15 @@ export const CRemoteClientCreateSessionResponse: MessageFns<CRemoteClientCreateS
 };
 
 function createBaseCRemoteClientDeleteSessionNotification(): CRemoteClientDeleteSessionNotification {
-  return { sessionId: 0 };
+  return { sessionId: 0n };
 }
 
 export const CRemoteClientDeleteSessionNotification: MessageFns<CRemoteClientDeleteSessionNotification> = {
   encode(message: CRemoteClientDeleteSessionNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.sessionId);
     }
     return writer;
@@ -381,7 +387,7 @@ export const CRemoteClientDeleteSessionNotification: MessageFns<CRemoteClientDel
             break;
           }
 
-          message.sessionId = longToNumber(reader.fixed64());
+          message.sessionId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -395,12 +401,15 @@ export const CRemoteClientDeleteSessionNotification: MessageFns<CRemoteClientDel
 };
 
 function createBaseCRemoteClientStartPairingRequest(): CRemoteClientStartPairingRequest {
-  return { sessionId: 0 };
+  return { sessionId: 0n };
 }
 
 export const CRemoteClientStartPairingRequest: MessageFns<CRemoteClientStartPairingRequest> = {
   encode(message: CRemoteClientStartPairingRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.sessionId);
     }
     return writer;
@@ -418,7 +427,7 @@ export const CRemoteClientStartPairingRequest: MessageFns<CRemoteClientStartPair
             break;
           }
 
-          message.sessionId = longToNumber(reader.fixed64());
+          message.sessionId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -469,15 +478,21 @@ export const CRemoteClientStartPairingResponse: MessageFns<CRemoteClientStartPai
 };
 
 function createBaseCRemoteClientSetPairingInfoRequest(): CRemoteClientSetPairingInfoRequest {
-  return { sessionId: 0, deviceId: 0, request: Buffer.alloc(0) };
+  return { sessionId: 0n, deviceId: 0n, request: Buffer.alloc(0) };
 }
 
 export const CRemoteClientSetPairingInfoRequest: MessageFns<CRemoteClientSetPairingInfoRequest> = {
   encode(message: CRemoteClientSetPairingInfoRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.sessionId);
     }
-    if (message.deviceId !== undefined && message.deviceId !== 0) {
+    if (message.deviceId !== undefined && message.deviceId !== 0n) {
+      if (BigInt.asUintN(64, message.deviceId) !== message.deviceId) {
+        throw new globalThis.Error("value provided for field message.deviceId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.deviceId);
     }
     if (message.request !== undefined && message.request.length !== 0) {
@@ -498,7 +513,7 @@ export const CRemoteClientSetPairingInfoRequest: MessageFns<CRemoteClientSetPair
             break;
           }
 
-          message.sessionId = longToNumber(reader.fixed64());
+          message.sessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -506,7 +521,7 @@ export const CRemoteClientSetPairingInfoRequest: MessageFns<CRemoteClientSetPair
             break;
           }
 
-          message.deviceId = longToNumber(reader.fixed64());
+          message.deviceId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -591,15 +606,21 @@ export const CRemoteClientGetPairingInfoRequest: MessageFns<CRemoteClientGetPair
 };
 
 function createBaseCRemoteClientGetPairingInfoResponse(): CRemoteClientGetPairingInfoResponse {
-  return { sessionId: 0, deviceId: 0, request: Buffer.alloc(0) };
+  return { sessionId: 0n, deviceId: 0n, request: Buffer.alloc(0) };
 }
 
 export const CRemoteClientGetPairingInfoResponse: MessageFns<CRemoteClientGetPairingInfoResponse> = {
   encode(message: CRemoteClientGetPairingInfoResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.sessionId);
     }
-    if (message.deviceId !== undefined && message.deviceId !== 0) {
+    if (message.deviceId !== undefined && message.deviceId !== 0n) {
+      if (BigInt.asUintN(64, message.deviceId) !== message.deviceId) {
+        throw new globalThis.Error("value provided for field message.deviceId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.deviceId);
     }
     if (message.request !== undefined && message.request.length !== 0) {
@@ -620,7 +641,7 @@ export const CRemoteClientGetPairingInfoResponse: MessageFns<CRemoteClientGetPai
             break;
           }
 
-          message.sessionId = longToNumber(reader.fixed64());
+          message.sessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -628,7 +649,7 @@ export const CRemoteClientGetPairingInfoResponse: MessageFns<CRemoteClientGetPai
             break;
           }
 
-          message.deviceId = longToNumber(reader.fixed64());
+          message.deviceId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -650,12 +671,15 @@ export const CRemoteClientGetPairingInfoResponse: MessageFns<CRemoteClientGetPai
 };
 
 function createBaseCRemoteClientCancelPairingRequest(): CRemoteClientCancelPairingRequest {
-  return { sessionId: 0 };
+  return { sessionId: 0n };
 }
 
 export const CRemoteClientCancelPairingRequest: MessageFns<CRemoteClientCancelPairingRequest> = {
   encode(message: CRemoteClientCancelPairingRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.sessionId);
     }
     return writer;
@@ -673,7 +697,7 @@ export const CRemoteClientCancelPairingRequest: MessageFns<CRemoteClientCancelPa
             break;
           }
 
-          message.sessionId = longToNumber(reader.fixed64());
+          message.sessionId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -713,7 +737,7 @@ export const CRemoteClientCancelPairingResponse: MessageFns<CRemoteClientCancelP
 };
 
 function createBaseCRemoteClientRegisterStatusUpdateNotification(): CRemoteClientRegisterStatusUpdateNotification {
-  return { sessionId: 0, steamid: 0, deviceId: 0 };
+  return { sessionId: 0n, steamid: 0n, deviceId: 0n };
 }
 
 export const CRemoteClientRegisterStatusUpdateNotification: MessageFns<CRemoteClientRegisterStatusUpdateNotification> =
@@ -722,13 +746,22 @@ export const CRemoteClientRegisterStatusUpdateNotification: MessageFns<CRemoteCl
       message: CRemoteClientRegisterStatusUpdateNotification,
       writer: BinaryWriter = new BinaryWriter(),
     ): BinaryWriter {
-      if (message.sessionId !== undefined && message.sessionId !== 0) {
+      if (message.sessionId !== undefined && message.sessionId !== 0n) {
+        if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+          throw new globalThis.Error("value provided for field message.sessionId of type fixed64 too large");
+        }
         writer.uint32(9).fixed64(message.sessionId);
       }
-      if (message.steamid !== undefined && message.steamid !== 0) {
+      if (message.steamid !== undefined && message.steamid !== 0n) {
+        if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+          throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+        }
         writer.uint32(17).fixed64(message.steamid);
       }
-      if (message.deviceId !== undefined && message.deviceId !== 0) {
+      if (message.deviceId !== undefined && message.deviceId !== 0n) {
+        if (BigInt.asUintN(64, message.deviceId) !== message.deviceId) {
+          throw new globalThis.Error("value provided for field message.deviceId of type fixed64 too large");
+        }
         writer.uint32(25).fixed64(message.deviceId);
       }
       return writer;
@@ -746,7 +779,7 @@ export const CRemoteClientRegisterStatusUpdateNotification: MessageFns<CRemoteCl
               break;
             }
 
-            message.sessionId = longToNumber(reader.fixed64());
+            message.sessionId = reader.fixed64() as bigint;
             continue;
           }
           case 2: {
@@ -754,7 +787,7 @@ export const CRemoteClientRegisterStatusUpdateNotification: MessageFns<CRemoteCl
               break;
             }
 
-            message.steamid = longToNumber(reader.fixed64());
+            message.steamid = reader.fixed64() as bigint;
             continue;
           }
           case 3: {
@@ -762,7 +795,7 @@ export const CRemoteClientRegisterStatusUpdateNotification: MessageFns<CRemoteCl
               break;
             }
 
-            message.deviceId = longToNumber(reader.fixed64());
+            message.deviceId = reader.fixed64() as bigint;
             continue;
           }
         }
@@ -776,7 +809,7 @@ export const CRemoteClientRegisterStatusUpdateNotification: MessageFns<CRemoteCl
   };
 
 function createBaseCRemoteClientUnregisterStatusUpdateNotification(): CRemoteClientUnregisterStatusUpdateNotification {
-  return { sessionId: 0, steamid: 0 };
+  return { sessionId: 0n, steamid: 0n };
 }
 
 export const CRemoteClientUnregisterStatusUpdateNotification: MessageFns<
@@ -786,10 +819,16 @@ export const CRemoteClientUnregisterStatusUpdateNotification: MessageFns<
     message: CRemoteClientUnregisterStatusUpdateNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.sessionId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     return writer;
@@ -807,7 +846,7 @@ export const CRemoteClientUnregisterStatusUpdateNotification: MessageFns<
             break;
           }
 
-          message.sessionId = longToNumber(reader.fixed64());
+          message.sessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -815,7 +854,7 @@ export const CRemoteClientUnregisterStatusUpdateNotification: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -888,15 +927,21 @@ export const CRemoteClientDeviceDetails: MessageFns<CRemoteClientDeviceDetails> 
 };
 
 function createBaseCRemoteClientOnlineNotification(): CRemoteClientOnlineNotification {
-  return { steamid: 0, remoteClientId: 0, deviceDetails: undefined };
+  return { steamid: 0n, remoteClientId: 0n, deviceDetails: undefined };
 }
 
 export const CRemoteClientOnlineNotification: MessageFns<CRemoteClientOnlineNotification> = {
   encode(message: CRemoteClientOnlineNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.remoteClientId !== undefined && message.remoteClientId !== 0) {
+    if (message.remoteClientId !== undefined && message.remoteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.remoteClientId) !== message.remoteClientId) {
+        throw new globalThis.Error("value provided for field message.remoteClientId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.remoteClientId);
     }
     if (message.deviceDetails !== undefined) {
@@ -917,7 +962,7 @@ export const CRemoteClientOnlineNotification: MessageFns<CRemoteClientOnlineNoti
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -925,7 +970,7 @@ export const CRemoteClientOnlineNotification: MessageFns<CRemoteClientOnlineNoti
             break;
           }
 
-          message.remoteClientId = longToNumber(reader.fixed64());
+          message.remoteClientId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -973,15 +1018,21 @@ export const CRemoteClientGetRecentClientsRequest: MessageFns<CRemoteClientGetRe
 };
 
 function createBaseCRemoteClientClientLogin(): CRemoteClientClientLogin {
-  return { remoteClientId: 0, tokenId: 0, deviceDetails: undefined };
+  return { remoteClientId: 0n, tokenId: 0n, deviceDetails: undefined };
 }
 
 export const CRemoteClientClientLogin: MessageFns<CRemoteClientClientLogin> = {
   encode(message: CRemoteClientClientLogin, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.remoteClientId !== undefined && message.remoteClientId !== 0) {
+    if (message.remoteClientId !== undefined && message.remoteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.remoteClientId) !== message.remoteClientId) {
+        throw new globalThis.Error("value provided for field message.remoteClientId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.remoteClientId);
     }
-    if (message.tokenId !== undefined && message.tokenId !== 0) {
+    if (message.tokenId !== undefined && message.tokenId !== 0n) {
+      if (BigInt.asUintN(64, message.tokenId) !== message.tokenId) {
+        throw new globalThis.Error("value provided for field message.tokenId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.tokenId);
     }
     if (message.deviceDetails !== undefined) {
@@ -1002,7 +1053,7 @@ export const CRemoteClientClientLogin: MessageFns<CRemoteClientClientLogin> = {
             break;
           }
 
-          message.remoteClientId = longToNumber(reader.fixed64());
+          message.remoteClientId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1010,7 +1061,7 @@ export const CRemoteClientClientLogin: MessageFns<CRemoteClientClientLogin> = {
             break;
           }
 
-          message.tokenId = longToNumber(reader.fixed64());
+          message.tokenId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1033,9 +1084,9 @@ export const CRemoteClientClientLogin: MessageFns<CRemoteClientClientLogin> = {
 
 function createBaseCRemoteClientClientDetails(): CRemoteClientClientDetails {
   return {
-    remoteClientId: 0,
+    remoteClientId: 0n,
     deviceDetails: undefined,
-    lastSeen: 0,
+    lastSeen: 0n,
     city: "",
     state: "",
     country: "",
@@ -1045,13 +1096,19 @@ function createBaseCRemoteClientClientDetails(): CRemoteClientClientDetails {
 
 export const CRemoteClientClientDetails: MessageFns<CRemoteClientClientDetails> = {
   encode(message: CRemoteClientClientDetails, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.remoteClientId !== undefined && message.remoteClientId !== 0) {
+    if (message.remoteClientId !== undefined && message.remoteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.remoteClientId) !== message.remoteClientId) {
+        throw new globalThis.Error("value provided for field message.remoteClientId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.remoteClientId);
     }
     if (message.deviceDetails !== undefined) {
       CRemoteClientDeviceDetails.encode(message.deviceDetails, writer.uint32(18).fork()).join();
     }
-    if (message.lastSeen !== undefined && message.lastSeen !== 0) {
+    if (message.lastSeen !== undefined && message.lastSeen !== 0n) {
+      if (BigInt.asUintN(64, message.lastSeen) !== message.lastSeen) {
+        throw new globalThis.Error("value provided for field message.lastSeen of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.lastSeen);
     }
     if (message.city !== undefined && message.city !== "") {
@@ -1081,7 +1138,7 @@ export const CRemoteClientClientDetails: MessageFns<CRemoteClientClientDetails> 
             break;
           }
 
-          message.remoteClientId = longToNumber(reader.fixed64());
+          message.remoteClientId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1097,7 +1154,7 @@ export const CRemoteClientClientDetails: MessageFns<CRemoteClientClientDetails> 
             break;
           }
 
-          message.lastSeen = longToNumber(reader.uint64());
+          message.lastSeen = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -1180,7 +1237,7 @@ export const CRemoteClientGetRecentClientsResponse: MessageFns<CRemoteClientGetR
 };
 
 function createBaseCRemoteClientTask(): CRemoteClientTask {
-  return { type: 1, taskId: 0, url: "", fileId: 0 };
+  return { type: 1, taskId: 0n, url: "", fileId: 0n };
 }
 
 export const CRemoteClientTask: MessageFns<CRemoteClientTask> = {
@@ -1188,13 +1245,19 @@ export const CRemoteClientTask: MessageFns<CRemoteClientTask> = {
     if (message.type !== undefined && message.type !== 1) {
       writer.uint32(8).int32(message.type);
     }
-    if (message.taskId !== undefined && message.taskId !== 0) {
+    if (message.taskId !== undefined && message.taskId !== 0n) {
+      if (BigInt.asUintN(64, message.taskId) !== message.taskId) {
+        throw new globalThis.Error("value provided for field message.taskId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.taskId);
     }
     if (message.url !== undefined && message.url !== "") {
       writer.uint32(26).string(message.url);
     }
-    if (message.fileId !== undefined && message.fileId !== 0) {
+    if (message.fileId !== undefined && message.fileId !== 0n) {
+      if (BigInt.asIntN(64, message.fileId) !== message.fileId) {
+        throw new globalThis.Error("value provided for field message.fileId of type int64 too large");
+      }
       writer.uint32(32).int64(message.fileId);
     }
     return writer;
@@ -1220,7 +1283,7 @@ export const CRemoteClientTask: MessageFns<CRemoteClientTask> = {
             break;
           }
 
-          message.taskId = longToNumber(reader.fixed64());
+          message.taskId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1236,7 +1299,7 @@ export const CRemoteClientTask: MessageFns<CRemoteClientTask> = {
             break;
           }
 
-          message.fileId = longToNumber(reader.int64());
+          message.fileId = reader.int64() as bigint;
           continue;
         }
       }
@@ -1250,12 +1313,15 @@ export const CRemoteClientTask: MessageFns<CRemoteClientTask> = {
 };
 
 function createBaseCRemoteClientAddClientTaskRequest(): CRemoteClientAddClientTaskRequest {
-  return { remoteClientId: 0, task: undefined };
+  return { remoteClientId: 0n, task: undefined };
 }
 
 export const CRemoteClientAddClientTaskRequest: MessageFns<CRemoteClientAddClientTaskRequest> = {
   encode(message: CRemoteClientAddClientTaskRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.remoteClientId !== undefined && message.remoteClientId !== 0) {
+    if (message.remoteClientId !== undefined && message.remoteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.remoteClientId) !== message.remoteClientId) {
+        throw new globalThis.Error("value provided for field message.remoteClientId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.remoteClientId);
     }
     if (message.task !== undefined) {
@@ -1276,7 +1342,7 @@ export const CRemoteClientAddClientTaskRequest: MessageFns<CRemoteClientAddClien
             break;
           }
 
-          message.remoteClientId = longToNumber(reader.fixed64());
+          message.remoteClientId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1324,12 +1390,15 @@ export const CRemoteClientAddClientTaskResponse: MessageFns<CRemoteClientAddClie
 };
 
 function createBaseCRemoteClientTaskListNotification(): CRemoteClientTaskListNotification {
-  return { remoteClientId: 0, tasklist: [] };
+  return { remoteClientId: 0n, tasklist: [] };
 }
 
 export const CRemoteClientTaskListNotification: MessageFns<CRemoteClientTaskListNotification> = {
   encode(message: CRemoteClientTaskListNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.remoteClientId !== undefined && message.remoteClientId !== 0) {
+    if (message.remoteClientId !== undefined && message.remoteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.remoteClientId) !== message.remoteClientId) {
+        throw new globalThis.Error("value provided for field message.remoteClientId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.remoteClientId);
     }
     for (const v of message.tasklist) {
@@ -1350,7 +1419,7 @@ export const CRemoteClientTaskListNotification: MessageFns<CRemoteClientTaskList
             break;
           }
 
-          message.remoteClientId = longToNumber(reader.fixed64());
+          message.remoteClientId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1372,15 +1441,21 @@ export const CRemoteClientTaskListNotification: MessageFns<CRemoteClientTaskList
 };
 
 function createBaseCRemoteClientMarkTaskCompleteRequest(): CRemoteClientMarkTaskCompleteRequest {
-  return { remoteClientId: 0, taskId: 0, contentId: "" };
+  return { remoteClientId: 0n, taskId: 0n, contentId: "" };
 }
 
 export const CRemoteClientMarkTaskCompleteRequest: MessageFns<CRemoteClientMarkTaskCompleteRequest> = {
   encode(message: CRemoteClientMarkTaskCompleteRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.remoteClientId !== undefined && message.remoteClientId !== 0) {
+    if (message.remoteClientId !== undefined && message.remoteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.remoteClientId) !== message.remoteClientId) {
+        throw new globalThis.Error("value provided for field message.remoteClientId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.remoteClientId);
     }
-    if (message.taskId !== undefined && message.taskId !== 0) {
+    if (message.taskId !== undefined && message.taskId !== 0n) {
+      if (BigInt.asUintN(64, message.taskId) !== message.taskId) {
+        throw new globalThis.Error("value provided for field message.taskId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.taskId);
     }
     if (message.contentId !== undefined && message.contentId !== "") {
@@ -1401,7 +1476,7 @@ export const CRemoteClientMarkTaskCompleteRequest: MessageFns<CRemoteClientMarkT
             break;
           }
 
-          message.remoteClientId = longToNumber(reader.fixed64());
+          message.remoteClientId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1409,7 +1484,7 @@ export const CRemoteClientMarkTaskCompleteRequest: MessageFns<CRemoteClientMarkT
             break;
           }
 
-          message.taskId = longToNumber(reader.fixed64());
+          message.taskId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1457,15 +1532,21 @@ export const CRemoteClientMarkTaskCompleteResponse: MessageFns<CRemoteClientMark
 };
 
 function createBaseCRemoteClientRemotePacketNotification(): CRemoteClientRemotePacketNotification {
-  return { sessionId: 0, steamid: 0, payload: Buffer.alloc(0) };
+  return { sessionId: 0n, steamid: 0n, payload: Buffer.alloc(0) };
 }
 
 export const CRemoteClientRemotePacketNotification: MessageFns<CRemoteClientRemotePacketNotification> = {
   encode(message: CRemoteClientRemotePacketNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.sessionId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     if (message.payload !== undefined && message.payload.length !== 0) {
@@ -1486,7 +1567,7 @@ export const CRemoteClientRemotePacketNotification: MessageFns<CRemoteClientRemo
             break;
           }
 
-          message.sessionId = longToNumber(reader.fixed64());
+          message.sessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1494,7 +1575,7 @@ export const CRemoteClientRemotePacketNotification: MessageFns<CRemoteClientRemo
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1516,12 +1597,15 @@ export const CRemoteClientRemotePacketNotification: MessageFns<CRemoteClientRemo
 };
 
 function createBaseCRemoteClientReplyPacketNotification(): CRemoteClientReplyPacketNotification {
-  return { sessionId: 0, payload: Buffer.alloc(0) };
+  return { sessionId: 0n, payload: Buffer.alloc(0) };
 }
 
 export const CRemoteClientReplyPacketNotification: MessageFns<CRemoteClientReplyPacketNotification> = {
   encode(message: CRemoteClientReplyPacketNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.sessionId);
     }
     if (message.payload !== undefined && message.payload.length !== 0) {
@@ -1542,7 +1626,7 @@ export const CRemoteClientReplyPacketNotification: MessageFns<CRemoteClientReply
             break;
           }
 
-          message.sessionId = longToNumber(reader.fixed64());
+          message.sessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1564,12 +1648,15 @@ export const CRemoteClientReplyPacketNotification: MessageFns<CRemoteClientReply
 };
 
 function createBaseCRemoteClientGetRepliesRequest(): CRemoteClientGetRepliesRequest {
-  return { sessionId: 0 };
+  return { sessionId: 0n };
 }
 
 export const CRemoteClientGetRepliesRequest: MessageFns<CRemoteClientGetRepliesRequest> = {
   encode(message: CRemoteClientGetRepliesRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.sessionId);
     }
     return writer;
@@ -1587,7 +1674,7 @@ export const CRemoteClientGetRepliesRequest: MessageFns<CRemoteClientGetRepliesR
             break;
           }
 
-          message.sessionId = longToNumber(reader.fixed64());
+          message.sessionId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1786,15 +1873,21 @@ export const CRemoteClientAllocateSDRResponse: MessageFns<CRemoteClientAllocateS
 };
 
 function createBaseCRemoteClientSteamBroadcastNotification(): CRemoteClientSteamBroadcastNotification {
-  return { steamid: 0, clientid: 0, payload: Buffer.alloc(0) };
+  return { steamid: 0n, clientid: 0n, payload: Buffer.alloc(0) };
 }
 
 export const CRemoteClientSteamBroadcastNotification: MessageFns<CRemoteClientSteamBroadcastNotification> = {
   encode(message: CRemoteClientSteamBroadcastNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.clientid !== undefined && message.clientid !== 0) {
+    if (message.clientid !== undefined && message.clientid !== 0n) {
+      if (BigInt.asUintN(64, message.clientid) !== message.clientid) {
+        throw new globalThis.Error("value provided for field message.clientid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.clientid);
     }
     if (message.payload !== undefined && message.payload.length !== 0) {
@@ -1815,7 +1908,7 @@ export const CRemoteClientSteamBroadcastNotification: MessageFns<CRemoteClientSt
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1823,7 +1916,7 @@ export const CRemoteClientSteamBroadcastNotification: MessageFns<CRemoteClientSt
             break;
           }
 
-          message.clientid = longToNumber(reader.fixed64());
+          message.clientid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1845,18 +1938,27 @@ export const CRemoteClientSteamBroadcastNotification: MessageFns<CRemoteClientSt
 };
 
 function createBaseCRemoteClientSteamToSteamNotification(): CRemoteClientSteamToSteamNotification {
-  return { steamid: 0, srcClientid: 0, dstClientid: 0, secretid: 0, encryptedPayload: Buffer.alloc(0) };
+  return { steamid: 0n, srcClientid: 0n, dstClientid: 0n, secretid: 0, encryptedPayload: Buffer.alloc(0) };
 }
 
 export const CRemoteClientSteamToSteamNotification: MessageFns<CRemoteClientSteamToSteamNotification> = {
   encode(message: CRemoteClientSteamToSteamNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.srcClientid !== undefined && message.srcClientid !== 0) {
+    if (message.srcClientid !== undefined && message.srcClientid !== 0n) {
+      if (BigInt.asUintN(64, message.srcClientid) !== message.srcClientid) {
+        throw new globalThis.Error("value provided for field message.srcClientid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.srcClientid);
     }
-    if (message.dstClientid !== undefined && message.dstClientid !== 0) {
+    if (message.dstClientid !== undefined && message.dstClientid !== 0n) {
+      if (BigInt.asUintN(64, message.dstClientid) !== message.dstClientid) {
+        throw new globalThis.Error("value provided for field message.dstClientid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.dstClientid);
     }
     if (message.secretid !== undefined && message.secretid !== 0) {
@@ -1880,7 +1982,7 @@ export const CRemoteClientSteamToSteamNotification: MessageFns<CRemoteClientStea
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1888,7 +1990,7 @@ export const CRemoteClientSteamToSteamNotification: MessageFns<CRemoteClientStea
             break;
           }
 
-          message.srcClientid = longToNumber(reader.fixed64());
+          message.srcClientid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1896,7 +1998,7 @@ export const CRemoteClientSteamToSteamNotification: MessageFns<CRemoteClientStea
             break;
           }
 
-          message.dstClientid = longToNumber(reader.fixed64());
+          message.dstClientid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -2025,12 +2127,15 @@ export const CRemotePlaySessionStartedRequest: MessageFns<CRemotePlaySessionStar
 };
 
 function createBaseCRemotePlaySessionStartedResponse(): CRemotePlaySessionStartedResponse {
-  return { recordId: 0 };
+  return { recordId: 0n };
 }
 
 export const CRemotePlaySessionStartedResponse: MessageFns<CRemotePlaySessionStartedResponse> = {
   encode(message: CRemotePlaySessionStartedResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.recordId !== undefined && message.recordId !== 0) {
+    if (message.recordId !== undefined && message.recordId !== 0n) {
+      if (BigInt.asUintN(64, message.recordId) !== message.recordId) {
+        throw new globalThis.Error("value provided for field message.recordId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.recordId);
     }
     return writer;
@@ -2048,7 +2153,7 @@ export const CRemotePlaySessionStartedResponse: MessageFns<CRemotePlaySessionSta
             break;
           }
 
-          message.recordId = longToNumber(reader.fixed64());
+          message.recordId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2062,12 +2167,15 @@ export const CRemotePlaySessionStartedResponse: MessageFns<CRemotePlaySessionSta
 };
 
 function createBaseCRemotePlaySessionStoppedNotification(): CRemotePlaySessionStoppedNotification {
-  return { recordId: 0, usedX264: false, usedH264: false, usedHevc: false };
+  return { recordId: 0n, usedX264: false, usedH264: false, usedHevc: false };
 }
 
 export const CRemotePlaySessionStoppedNotification: MessageFns<CRemotePlaySessionStoppedNotification> = {
   encode(message: CRemotePlaySessionStoppedNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.recordId !== undefined && message.recordId !== 0) {
+    if (message.recordId !== undefined && message.recordId !== 0n) {
+      if (BigInt.asUintN(64, message.recordId) !== message.recordId) {
+        throw new globalThis.Error("value provided for field message.recordId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.recordId);
     }
     if (message.usedX264 !== undefined && message.usedX264 !== false) {
@@ -2094,7 +2202,7 @@ export const CRemotePlaySessionStoppedNotification: MessageFns<CRemotePlaySessio
             break;
           }
 
-          message.recordId = longToNumber(reader.fixed64());
+          message.recordId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2132,12 +2240,15 @@ export const CRemotePlaySessionStoppedNotification: MessageFns<CRemotePlaySessio
 };
 
 function createBaseCRemotePlayTogetherNotification(): CRemotePlayTogetherNotification {
-  return { steamid: 0, groupUpdated: undefined };
+  return { steamid: 0n, groupUpdated: undefined };
 }
 
 export const CRemotePlayTogetherNotification: MessageFns<CRemotePlayTogetherNotification> = {
   encode(message: CRemotePlayTogetherNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.groupUpdated !== undefined) {
@@ -2158,7 +2269,7 @@ export const CRemotePlayTogetherNotification: MessageFns<CRemotePlayTogetherNoti
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2181,7 +2292,7 @@ export const CRemotePlayTogetherNotification: MessageFns<CRemotePlayTogetherNoti
 
 function createBaseCRemotePlayTogetherNotification_Player(): CRemotePlayTogetherNotification_Player {
   return {
-    steamid: 0,
+    steamid: 0n,
     guestid: 0,
     avatarHash: Buffer.alloc(0),
     keyboardEnabled: false,
@@ -2192,7 +2303,10 @@ function createBaseCRemotePlayTogetherNotification_Player(): CRemotePlayTogether
 
 export const CRemotePlayTogetherNotification_Player: MessageFns<CRemotePlayTogetherNotification_Player> = {
   encode(message: CRemotePlayTogetherNotification_Player, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.guestid !== undefined && message.guestid !== 0) {
@@ -2225,7 +2339,7 @@ export const CRemotePlayTogetherNotification_Player: MessageFns<CRemotePlayToget
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2279,7 +2393,7 @@ export const CRemotePlayTogetherNotification_Player: MessageFns<CRemotePlayToget
 };
 
 function createBaseCRemotePlayTogetherNotification_ControllerSlotObsolete(): CRemotePlayTogetherNotification_ControllerSlotObsolete {
-  return { slotid: 0, steamid: 0 };
+  return { slotid: 0, steamid: 0n };
 }
 
 export const CRemotePlayTogetherNotification_ControllerSlotObsolete: MessageFns<
@@ -2292,7 +2406,10 @@ export const CRemotePlayTogetherNotification_ControllerSlotObsolete: MessageFns<
     if (message.slotid !== undefined && message.slotid !== 0) {
       writer.uint32(8).uint32(message.slotid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     return writer;
@@ -2318,7 +2435,7 @@ export const CRemotePlayTogetherNotification_ControllerSlotObsolete: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2397,10 +2514,10 @@ export const CRemotePlayTogetherNotification_ControllerSlot: MessageFns<
 
 function createBaseCRemotePlayTogetherNotification_GroupUpdated(): CRemotePlayTogetherNotification_GroupUpdated {
   return {
-    hostSteamid: 0,
-    hostClientid: 0,
+    hostSteamid: 0n,
+    hostClientid: 0n,
     playersObsolete: [],
-    hostGameid: 0,
+    hostGameid: 0n,
     controllerSlotsObsolete: [],
     hasNewPlayers: false,
     playerSlots: [],
@@ -2413,16 +2530,28 @@ export const CRemotePlayTogetherNotification_GroupUpdated: MessageFns<CRemotePla
     message: CRemotePlayTogetherNotification_GroupUpdated,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.hostSteamid !== undefined && message.hostSteamid !== 0) {
+    if (message.hostSteamid !== undefined && message.hostSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.hostSteamid) !== message.hostSteamid) {
+        throw new globalThis.Error("value provided for field message.hostSteamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.hostSteamid);
     }
-    if (message.hostClientid !== undefined && message.hostClientid !== 0) {
+    if (message.hostClientid !== undefined && message.hostClientid !== 0n) {
+      if (BigInt.asUintN(64, message.hostClientid) !== message.hostClientid) {
+        throw new globalThis.Error("value provided for field message.hostClientid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.hostClientid);
     }
     for (const v of message.playersObsolete) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(v!);
     }
-    if (message.hostGameid !== undefined && message.hostGameid !== 0) {
+    if (message.hostGameid !== undefined && message.hostGameid !== 0n) {
+      if (BigInt.asUintN(64, message.hostGameid) !== message.hostGameid) {
+        throw new globalThis.Error("value provided for field message.hostGameid of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.hostGameid);
     }
     for (const v of message.controllerSlotsObsolete) {
@@ -2452,7 +2581,7 @@ export const CRemotePlayTogetherNotification_GroupUpdated: MessageFns<CRemotePla
             break;
           }
 
-          message.hostSteamid = longToNumber(reader.fixed64());
+          message.hostSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2460,12 +2589,12 @@ export const CRemotePlayTogetherNotification_GroupUpdated: MessageFns<CRemotePla
             break;
           }
 
-          message.hostClientid = longToNumber(reader.fixed64());
+          message.hostClientid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
           if (tag === 25) {
-            message.playersObsolete.push(longToNumber(reader.fixed64()));
+            message.playersObsolete.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -2473,7 +2602,7 @@ export const CRemotePlayTogetherNotification_GroupUpdated: MessageFns<CRemotePla
           if (tag === 26) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.playersObsolete.push(longToNumber(reader.fixed64()));
+              message.playersObsolete.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -2486,7 +2615,7 @@ export const CRemotePlayTogetherNotification_GroupUpdated: MessageFns<CRemotePla
             break;
           }
 
-          message.hostGameid = longToNumber(reader.fixed64());
+          message.hostGameid = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -2999,17 +3128,6 @@ export const CCMRemoteClientServerMessage: MessageFns<CCMRemoteClientServerMessa
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

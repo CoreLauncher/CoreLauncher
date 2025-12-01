@@ -40,13 +40,13 @@ export interface CMsgClientMMSCreateLobby {
 
 export interface CMsgClientMMSCreateLobbyResponse {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
   eresult?: number | undefined;
 }
 
 export interface CMsgClientMMSJoinLobby {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
   personaName?: string | undefined;
   networkPingLocation?: string | undefined;
   cellId?: number | undefined;
@@ -54,30 +54,30 @@ export interface CMsgClientMMSJoinLobby {
 
 export interface CMsgClientMMSJoinLobbyResponse {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
   chatRoomEnterResponse?: number | undefined;
   maxMembers?: number | undefined;
   lobbyType?: number | undefined;
   lobbyFlags?: number | undefined;
-  steamIdOwner?: number | undefined;
+  steamIdOwner?: bigint | undefined;
   metadata?: Buffer | undefined;
   members: CMsgClientMMSJoinLobbyResponse_Member[];
 }
 
 export interface CMsgClientMMSJoinLobbyResponse_Member {
-  steamId?: number | undefined;
+  steamId?: bigint | undefined;
   personaName?: string | undefined;
   metadata?: Buffer | undefined;
 }
 
 export interface CMsgClientMMSLeaveLobby {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
 }
 
 export interface CMsgClientMMSLeaveLobbyResponse {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
   eresult?: number | undefined;
 }
 
@@ -105,22 +105,22 @@ export interface CMsgClientMMSGetLobbyListResponse {
 }
 
 export interface CMsgClientMMSGetLobbyListResponse_Lobby {
-  steamId?: number | undefined;
+  steamId?: bigint | undefined;
   maxMembers?: number | undefined;
   lobbyType?: number | undefined;
   lobbyFlags?: number | undefined;
   metadata?: Buffer | undefined;
   numMembers?: number | undefined;
   distance?: number | undefined;
-  weight?: number | undefined;
+  weight?: bigint | undefined;
   ping?: number | undefined;
   missingPing?: number | undefined;
 }
 
 export interface CMsgClientMMSSetLobbyData {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
-  steamIdMember?: number | undefined;
+  steamIdLobby?: bigint | undefined;
+  steamIdMember?: bigint | undefined;
   maxMembers?: number | undefined;
   lobbyType?: number | undefined;
   lobbyFlags?: number | undefined;
@@ -130,23 +130,23 @@ export interface CMsgClientMMSSetLobbyData {
 
 export interface CMsgClientMMSSetLobbyDataResponse {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
   eresult?: number | undefined;
 }
 
 export interface CMsgClientMMSGetLobbyData {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
 }
 
 export interface CMsgClientMMSLobbyData {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
   numMembers?: number | undefined;
   maxMembers?: number | undefined;
   lobbyType?: number | undefined;
   lobbyFlags?: number | undefined;
-  steamIdOwner?: number | undefined;
+  steamIdOwner?: bigint | undefined;
   metadata?: Buffer | undefined;
   members: CMsgClientMMSLobbyData_Member[];
   lobbyCellid?: number | undefined;
@@ -154,7 +154,7 @@ export interface CMsgClientMMSLobbyData {
 }
 
 export interface CMsgClientMMSLobbyData_Member {
-  steamId?: number | undefined;
+  steamId?: bigint | undefined;
   personaName?: string | undefined;
   metadata?: Buffer | undefined;
   pingData?: string | undefined;
@@ -162,85 +162,85 @@ export interface CMsgClientMMSLobbyData_Member {
 
 export interface CMsgClientMMSSendLobbyChatMsg {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
-  steamIdTarget?: number | undefined;
+  steamIdLobby?: bigint | undefined;
+  steamIdTarget?: bigint | undefined;
   lobbyMessage?: Buffer | undefined;
 }
 
 export interface CMsgClientMMSLobbyChatMsg {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
-  steamIdSender?: number | undefined;
+  steamIdLobby?: bigint | undefined;
+  steamIdSender?: bigint | undefined;
   lobbyMessage?: Buffer | undefined;
 }
 
 export interface CMsgClientMMSSetLobbyOwner {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
-  steamIdNewOwner?: number | undefined;
+  steamIdLobby?: bigint | undefined;
+  steamIdNewOwner?: bigint | undefined;
 }
 
 export interface CMsgClientMMSSetLobbyOwnerResponse {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
   eresult?: number | undefined;
 }
 
 export interface CMsgClientMMSSetLobbyLinked {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
-  steamIdLobby2?: number | undefined;
+  steamIdLobby?: bigint | undefined;
+  steamIdLobby2?: bigint | undefined;
 }
 
 export interface CMsgClientMMSSetLobbyGameServer {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
   deprecatedGameServerIp?: number | undefined;
   gameServerPort?: number | undefined;
-  gameServerSteamId?: number | undefined;
+  gameServerSteamId?: bigint | undefined;
   gameServerIp?: CMsgIPAddress | undefined;
   networkPingLocation?: string | undefined;
 }
 
 export interface CMsgClientMMSLobbyGameServerSet {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
   deprecatedGameServerIp?: number | undefined;
   gameServerPort?: number | undefined;
-  gameServerSteamId?: number | undefined;
+  gameServerSteamId?: bigint | undefined;
   gameServerIp?: CMsgIPAddress | undefined;
 }
 
 export interface CMsgClientMMSUserJoinedLobby {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
-  steamIdUser?: number | undefined;
+  steamIdLobby?: bigint | undefined;
+  steamIdUser?: bigint | undefined;
   personaName?: string | undefined;
 }
 
 export interface CMsgClientMMSUserLeftLobby {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
-  steamIdUser?: number | undefined;
+  steamIdLobby?: bigint | undefined;
+  steamIdUser?: bigint | undefined;
   personaName?: string | undefined;
 }
 
 export interface CMsgClientMMSInviteToLobby {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
-  steamIdUserInvited?: number | undefined;
+  steamIdLobby?: bigint | undefined;
+  steamIdUserInvited?: bigint | undefined;
 }
 
 export interface CMsgClientMMSGetLobbyStatus {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
   claimMembership?: boolean | undefined;
   claimOwnership?: boolean | undefined;
 }
 
 export interface CMsgClientMMSGetLobbyStatusResponse {
   appId?: number | undefined;
-  steamIdLobby?: number | undefined;
+  steamIdLobby?: bigint | undefined;
   lobbyStatus?: EMMSLobbyStatus | undefined;
 }
 
@@ -462,7 +462,7 @@ export const CMsgClientMMSCreateLobby: MessageFns<CMsgClientMMSCreateLobby> = {
 };
 
 function createBaseCMsgClientMMSCreateLobbyResponse(): CMsgClientMMSCreateLobbyResponse {
-  return { appId: 0, steamIdLobby: 0, eresult: 2 };
+  return { appId: 0, steamIdLobby: 0n, eresult: 2 };
 }
 
 export const CMsgClientMMSCreateLobbyResponse: MessageFns<CMsgClientMMSCreateLobbyResponse> = {
@@ -470,7 +470,10 @@ export const CMsgClientMMSCreateLobbyResponse: MessageFns<CMsgClientMMSCreateLob
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     if (message.eresult !== undefined && message.eresult !== 2) {
@@ -499,7 +502,7 @@ export const CMsgClientMMSCreateLobbyResponse: MessageFns<CMsgClientMMSCreateLob
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -521,7 +524,7 @@ export const CMsgClientMMSCreateLobbyResponse: MessageFns<CMsgClientMMSCreateLob
 };
 
 function createBaseCMsgClientMMSJoinLobby(): CMsgClientMMSJoinLobby {
-  return { appId: 0, steamIdLobby: 0, personaName: "", networkPingLocation: "", cellId: 0 };
+  return { appId: 0, steamIdLobby: 0n, personaName: "", networkPingLocation: "", cellId: 0 };
 }
 
 export const CMsgClientMMSJoinLobby: MessageFns<CMsgClientMMSJoinLobby> = {
@@ -529,7 +532,10 @@ export const CMsgClientMMSJoinLobby: MessageFns<CMsgClientMMSJoinLobby> = {
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     if (message.personaName !== undefined && message.personaName !== "") {
@@ -564,7 +570,7 @@ export const CMsgClientMMSJoinLobby: MessageFns<CMsgClientMMSJoinLobby> = {
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -604,12 +610,12 @@ export const CMsgClientMMSJoinLobby: MessageFns<CMsgClientMMSJoinLobby> = {
 function createBaseCMsgClientMMSJoinLobbyResponse(): CMsgClientMMSJoinLobbyResponse {
   return {
     appId: 0,
-    steamIdLobby: 0,
+    steamIdLobby: 0n,
     chatRoomEnterResponse: 0,
     maxMembers: 0,
     lobbyType: 0,
     lobbyFlags: 0,
-    steamIdOwner: 0,
+    steamIdOwner: 0n,
     metadata: Buffer.alloc(0),
     members: [],
   };
@@ -620,7 +626,10 @@ export const CMsgClientMMSJoinLobbyResponse: MessageFns<CMsgClientMMSJoinLobbyRe
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     if (message.chatRoomEnterResponse !== undefined && message.chatRoomEnterResponse !== 0) {
@@ -635,7 +644,10 @@ export const CMsgClientMMSJoinLobbyResponse: MessageFns<CMsgClientMMSJoinLobbyRe
     if (message.lobbyFlags !== undefined && message.lobbyFlags !== 0) {
       writer.uint32(48).int32(message.lobbyFlags);
     }
-    if (message.steamIdOwner !== undefined && message.steamIdOwner !== 0) {
+    if (message.steamIdOwner !== undefined && message.steamIdOwner !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdOwner) !== message.steamIdOwner) {
+        throw new globalThis.Error("value provided for field message.steamIdOwner of type fixed64 too large");
+      }
       writer.uint32(57).fixed64(message.steamIdOwner);
     }
     if (message.metadata !== undefined && message.metadata.length !== 0) {
@@ -667,7 +679,7 @@ export const CMsgClientMMSJoinLobbyResponse: MessageFns<CMsgClientMMSJoinLobbyRe
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -707,7 +719,7 @@ export const CMsgClientMMSJoinLobbyResponse: MessageFns<CMsgClientMMSJoinLobbyRe
             break;
           }
 
-          message.steamIdOwner = longToNumber(reader.fixed64());
+          message.steamIdOwner = reader.fixed64() as bigint;
           continue;
         }
         case 8: {
@@ -737,12 +749,15 @@ export const CMsgClientMMSJoinLobbyResponse: MessageFns<CMsgClientMMSJoinLobbyRe
 };
 
 function createBaseCMsgClientMMSJoinLobbyResponse_Member(): CMsgClientMMSJoinLobbyResponse_Member {
-  return { steamId: 0, personaName: "", metadata: Buffer.alloc(0) };
+  return { steamId: 0n, personaName: "", metadata: Buffer.alloc(0) };
 }
 
 export const CMsgClientMMSJoinLobbyResponse_Member: MessageFns<CMsgClientMMSJoinLobbyResponse_Member> = {
   encode(message: CMsgClientMMSJoinLobbyResponse_Member, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamId !== undefined && message.steamId !== 0) {
+    if (message.steamId !== undefined && message.steamId !== 0n) {
+      if (BigInt.asUintN(64, message.steamId) !== message.steamId) {
+        throw new globalThis.Error("value provided for field message.steamId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamId);
     }
     if (message.personaName !== undefined && message.personaName !== "") {
@@ -766,7 +781,7 @@ export const CMsgClientMMSJoinLobbyResponse_Member: MessageFns<CMsgClientMMSJoin
             break;
           }
 
-          message.steamId = longToNumber(reader.fixed64());
+          message.steamId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -796,7 +811,7 @@ export const CMsgClientMMSJoinLobbyResponse_Member: MessageFns<CMsgClientMMSJoin
 };
 
 function createBaseCMsgClientMMSLeaveLobby(): CMsgClientMMSLeaveLobby {
-  return { appId: 0, steamIdLobby: 0 };
+  return { appId: 0, steamIdLobby: 0n };
 }
 
 export const CMsgClientMMSLeaveLobby: MessageFns<CMsgClientMMSLeaveLobby> = {
@@ -804,7 +819,10 @@ export const CMsgClientMMSLeaveLobby: MessageFns<CMsgClientMMSLeaveLobby> = {
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     return writer;
@@ -830,7 +848,7 @@ export const CMsgClientMMSLeaveLobby: MessageFns<CMsgClientMMSLeaveLobby> = {
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -844,7 +862,7 @@ export const CMsgClientMMSLeaveLobby: MessageFns<CMsgClientMMSLeaveLobby> = {
 };
 
 function createBaseCMsgClientMMSLeaveLobbyResponse(): CMsgClientMMSLeaveLobbyResponse {
-  return { appId: 0, steamIdLobby: 0, eresult: 2 };
+  return { appId: 0, steamIdLobby: 0n, eresult: 2 };
 }
 
 export const CMsgClientMMSLeaveLobbyResponse: MessageFns<CMsgClientMMSLeaveLobbyResponse> = {
@@ -852,7 +870,10 @@ export const CMsgClientMMSLeaveLobbyResponse: MessageFns<CMsgClientMMSLeaveLobby
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     if (message.eresult !== undefined && message.eresult !== 2) {
@@ -881,7 +902,7 @@ export const CMsgClientMMSLeaveLobbyResponse: MessageFns<CMsgClientMMSLeaveLobby
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1144,14 +1165,14 @@ export const CMsgClientMMSGetLobbyListResponse: MessageFns<CMsgClientMMSGetLobby
 
 function createBaseCMsgClientMMSGetLobbyListResponse_Lobby(): CMsgClientMMSGetLobbyListResponse_Lobby {
   return {
-    steamId: 0,
+    steamId: 0n,
     maxMembers: 0,
     lobbyType: 0,
     lobbyFlags: 0,
     metadata: Buffer.alloc(0),
     numMembers: 0,
     distance: 0,
-    weight: 0,
+    weight: 0n,
     ping: 0,
     missingPing: 0,
   };
@@ -1159,7 +1180,10 @@ function createBaseCMsgClientMMSGetLobbyListResponse_Lobby(): CMsgClientMMSGetLo
 
 export const CMsgClientMMSGetLobbyListResponse_Lobby: MessageFns<CMsgClientMMSGetLobbyListResponse_Lobby> = {
   encode(message: CMsgClientMMSGetLobbyListResponse_Lobby, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamId !== undefined && message.steamId !== 0) {
+    if (message.steamId !== undefined && message.steamId !== 0n) {
+      if (BigInt.asUintN(64, message.steamId) !== message.steamId) {
+        throw new globalThis.Error("value provided for field message.steamId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamId);
     }
     if (message.maxMembers !== undefined && message.maxMembers !== 0) {
@@ -1180,7 +1204,10 @@ export const CMsgClientMMSGetLobbyListResponse_Lobby: MessageFns<CMsgClientMMSGe
     if (message.distance !== undefined && message.distance !== 0) {
       writer.uint32(61).float(message.distance);
     }
-    if (message.weight !== undefined && message.weight !== 0) {
+    if (message.weight !== undefined && message.weight !== 0n) {
+      if (BigInt.asIntN(64, message.weight) !== message.weight) {
+        throw new globalThis.Error("value provided for field message.weight of type int64 too large");
+      }
       writer.uint32(64).int64(message.weight);
     }
     if (message.ping !== undefined && message.ping !== 0) {
@@ -1204,7 +1231,7 @@ export const CMsgClientMMSGetLobbyListResponse_Lobby: MessageFns<CMsgClientMMSGe
             break;
           }
 
-          message.steamId = longToNumber(reader.fixed64());
+          message.steamId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1260,7 +1287,7 @@ export const CMsgClientMMSGetLobbyListResponse_Lobby: MessageFns<CMsgClientMMSGe
             break;
           }
 
-          message.weight = longToNumber(reader.int64());
+          message.weight = reader.int64() as bigint;
           continue;
         }
         case 9: {
@@ -1292,8 +1319,8 @@ export const CMsgClientMMSGetLobbyListResponse_Lobby: MessageFns<CMsgClientMMSGe
 function createBaseCMsgClientMMSSetLobbyData(): CMsgClientMMSSetLobbyData {
   return {
     appId: 0,
-    steamIdLobby: 0,
-    steamIdMember: 0,
+    steamIdLobby: 0n,
+    steamIdMember: 0n,
     maxMembers: 0,
     lobbyType: 0,
     lobbyFlags: 0,
@@ -1307,10 +1334,16 @@ export const CMsgClientMMSSetLobbyData: MessageFns<CMsgClientMMSSetLobbyData> = 
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
-    if (message.steamIdMember !== undefined && message.steamIdMember !== 0) {
+    if (message.steamIdMember !== undefined && message.steamIdMember !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdMember) !== message.steamIdMember) {
+        throw new globalThis.Error("value provided for field message.steamIdMember of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamIdMember);
     }
     if (message.maxMembers !== undefined && message.maxMembers !== 0) {
@@ -1351,7 +1384,7 @@ export const CMsgClientMMSSetLobbyData: MessageFns<CMsgClientMMSSetLobbyData> = 
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1359,7 +1392,7 @@ export const CMsgClientMMSSetLobbyData: MessageFns<CMsgClientMMSSetLobbyData> = 
             break;
           }
 
-          message.steamIdMember = longToNumber(reader.fixed64());
+          message.steamIdMember = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1413,7 +1446,7 @@ export const CMsgClientMMSSetLobbyData: MessageFns<CMsgClientMMSSetLobbyData> = 
 };
 
 function createBaseCMsgClientMMSSetLobbyDataResponse(): CMsgClientMMSSetLobbyDataResponse {
-  return { appId: 0, steamIdLobby: 0, eresult: 2 };
+  return { appId: 0, steamIdLobby: 0n, eresult: 2 };
 }
 
 export const CMsgClientMMSSetLobbyDataResponse: MessageFns<CMsgClientMMSSetLobbyDataResponse> = {
@@ -1421,7 +1454,10 @@ export const CMsgClientMMSSetLobbyDataResponse: MessageFns<CMsgClientMMSSetLobby
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     if (message.eresult !== undefined && message.eresult !== 2) {
@@ -1450,7 +1486,7 @@ export const CMsgClientMMSSetLobbyDataResponse: MessageFns<CMsgClientMMSSetLobby
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1472,7 +1508,7 @@ export const CMsgClientMMSSetLobbyDataResponse: MessageFns<CMsgClientMMSSetLobby
 };
 
 function createBaseCMsgClientMMSGetLobbyData(): CMsgClientMMSGetLobbyData {
-  return { appId: 0, steamIdLobby: 0 };
+  return { appId: 0, steamIdLobby: 0n };
 }
 
 export const CMsgClientMMSGetLobbyData: MessageFns<CMsgClientMMSGetLobbyData> = {
@@ -1480,7 +1516,10 @@ export const CMsgClientMMSGetLobbyData: MessageFns<CMsgClientMMSGetLobbyData> = 
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     return writer;
@@ -1506,7 +1545,7 @@ export const CMsgClientMMSGetLobbyData: MessageFns<CMsgClientMMSGetLobbyData> = 
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1522,12 +1561,12 @@ export const CMsgClientMMSGetLobbyData: MessageFns<CMsgClientMMSGetLobbyData> = 
 function createBaseCMsgClientMMSLobbyData(): CMsgClientMMSLobbyData {
   return {
     appId: 0,
-    steamIdLobby: 0,
+    steamIdLobby: 0n,
     numMembers: 0,
     maxMembers: 0,
     lobbyType: 0,
     lobbyFlags: 0,
-    steamIdOwner: 0,
+    steamIdOwner: 0n,
     metadata: Buffer.alloc(0),
     members: [],
     lobbyCellid: 0,
@@ -1540,7 +1579,10 @@ export const CMsgClientMMSLobbyData: MessageFns<CMsgClientMMSLobbyData> = {
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     if (message.numMembers !== undefined && message.numMembers !== 0) {
@@ -1555,7 +1597,10 @@ export const CMsgClientMMSLobbyData: MessageFns<CMsgClientMMSLobbyData> = {
     if (message.lobbyFlags !== undefined && message.lobbyFlags !== 0) {
       writer.uint32(48).int32(message.lobbyFlags);
     }
-    if (message.steamIdOwner !== undefined && message.steamIdOwner !== 0) {
+    if (message.steamIdOwner !== undefined && message.steamIdOwner !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdOwner) !== message.steamIdOwner) {
+        throw new globalThis.Error("value provided for field message.steamIdOwner of type fixed64 too large");
+      }
       writer.uint32(57).fixed64(message.steamIdOwner);
     }
     if (message.metadata !== undefined && message.metadata.length !== 0) {
@@ -1593,7 +1638,7 @@ export const CMsgClientMMSLobbyData: MessageFns<CMsgClientMMSLobbyData> = {
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1633,7 +1678,7 @@ export const CMsgClientMMSLobbyData: MessageFns<CMsgClientMMSLobbyData> = {
             break;
           }
 
-          message.steamIdOwner = longToNumber(reader.fixed64());
+          message.steamIdOwner = reader.fixed64() as bigint;
           continue;
         }
         case 8: {
@@ -1679,12 +1724,15 @@ export const CMsgClientMMSLobbyData: MessageFns<CMsgClientMMSLobbyData> = {
 };
 
 function createBaseCMsgClientMMSLobbyData_Member(): CMsgClientMMSLobbyData_Member {
-  return { steamId: 0, personaName: "", metadata: Buffer.alloc(0), pingData: "" };
+  return { steamId: 0n, personaName: "", metadata: Buffer.alloc(0), pingData: "" };
 }
 
 export const CMsgClientMMSLobbyData_Member: MessageFns<CMsgClientMMSLobbyData_Member> = {
   encode(message: CMsgClientMMSLobbyData_Member, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamId !== undefined && message.steamId !== 0) {
+    if (message.steamId !== undefined && message.steamId !== 0n) {
+      if (BigInt.asUintN(64, message.steamId) !== message.steamId) {
+        throw new globalThis.Error("value provided for field message.steamId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamId);
     }
     if (message.personaName !== undefined && message.personaName !== "") {
@@ -1711,7 +1759,7 @@ export const CMsgClientMMSLobbyData_Member: MessageFns<CMsgClientMMSLobbyData_Me
             break;
           }
 
-          message.steamId = longToNumber(reader.fixed64());
+          message.steamId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1749,7 +1797,7 @@ export const CMsgClientMMSLobbyData_Member: MessageFns<CMsgClientMMSLobbyData_Me
 };
 
 function createBaseCMsgClientMMSSendLobbyChatMsg(): CMsgClientMMSSendLobbyChatMsg {
-  return { appId: 0, steamIdLobby: 0, steamIdTarget: 0, lobbyMessage: Buffer.alloc(0) };
+  return { appId: 0, steamIdLobby: 0n, steamIdTarget: 0n, lobbyMessage: Buffer.alloc(0) };
 }
 
 export const CMsgClientMMSSendLobbyChatMsg: MessageFns<CMsgClientMMSSendLobbyChatMsg> = {
@@ -1757,10 +1805,16 @@ export const CMsgClientMMSSendLobbyChatMsg: MessageFns<CMsgClientMMSSendLobbyCha
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
-    if (message.steamIdTarget !== undefined && message.steamIdTarget !== 0) {
+    if (message.steamIdTarget !== undefined && message.steamIdTarget !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdTarget) !== message.steamIdTarget) {
+        throw new globalThis.Error("value provided for field message.steamIdTarget of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamIdTarget);
     }
     if (message.lobbyMessage !== undefined && message.lobbyMessage.length !== 0) {
@@ -1789,7 +1843,7 @@ export const CMsgClientMMSSendLobbyChatMsg: MessageFns<CMsgClientMMSSendLobbyCha
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1797,7 +1851,7 @@ export const CMsgClientMMSSendLobbyChatMsg: MessageFns<CMsgClientMMSSendLobbyCha
             break;
           }
 
-          message.steamIdTarget = longToNumber(reader.fixed64());
+          message.steamIdTarget = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1819,7 +1873,7 @@ export const CMsgClientMMSSendLobbyChatMsg: MessageFns<CMsgClientMMSSendLobbyCha
 };
 
 function createBaseCMsgClientMMSLobbyChatMsg(): CMsgClientMMSLobbyChatMsg {
-  return { appId: 0, steamIdLobby: 0, steamIdSender: 0, lobbyMessage: Buffer.alloc(0) };
+  return { appId: 0, steamIdLobby: 0n, steamIdSender: 0n, lobbyMessage: Buffer.alloc(0) };
 }
 
 export const CMsgClientMMSLobbyChatMsg: MessageFns<CMsgClientMMSLobbyChatMsg> = {
@@ -1827,10 +1881,16 @@ export const CMsgClientMMSLobbyChatMsg: MessageFns<CMsgClientMMSLobbyChatMsg> = 
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
-    if (message.steamIdSender !== undefined && message.steamIdSender !== 0) {
+    if (message.steamIdSender !== undefined && message.steamIdSender !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdSender) !== message.steamIdSender) {
+        throw new globalThis.Error("value provided for field message.steamIdSender of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamIdSender);
     }
     if (message.lobbyMessage !== undefined && message.lobbyMessage.length !== 0) {
@@ -1859,7 +1919,7 @@ export const CMsgClientMMSLobbyChatMsg: MessageFns<CMsgClientMMSLobbyChatMsg> = 
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1867,7 +1927,7 @@ export const CMsgClientMMSLobbyChatMsg: MessageFns<CMsgClientMMSLobbyChatMsg> = 
             break;
           }
 
-          message.steamIdSender = longToNumber(reader.fixed64());
+          message.steamIdSender = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1889,7 +1949,7 @@ export const CMsgClientMMSLobbyChatMsg: MessageFns<CMsgClientMMSLobbyChatMsg> = 
 };
 
 function createBaseCMsgClientMMSSetLobbyOwner(): CMsgClientMMSSetLobbyOwner {
-  return { appId: 0, steamIdLobby: 0, steamIdNewOwner: 0 };
+  return { appId: 0, steamIdLobby: 0n, steamIdNewOwner: 0n };
 }
 
 export const CMsgClientMMSSetLobbyOwner: MessageFns<CMsgClientMMSSetLobbyOwner> = {
@@ -1897,10 +1957,16 @@ export const CMsgClientMMSSetLobbyOwner: MessageFns<CMsgClientMMSSetLobbyOwner> 
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
-    if (message.steamIdNewOwner !== undefined && message.steamIdNewOwner !== 0) {
+    if (message.steamIdNewOwner !== undefined && message.steamIdNewOwner !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdNewOwner) !== message.steamIdNewOwner) {
+        throw new globalThis.Error("value provided for field message.steamIdNewOwner of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamIdNewOwner);
     }
     return writer;
@@ -1926,7 +1992,7 @@ export const CMsgClientMMSSetLobbyOwner: MessageFns<CMsgClientMMSSetLobbyOwner> 
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1934,7 +2000,7 @@ export const CMsgClientMMSSetLobbyOwner: MessageFns<CMsgClientMMSSetLobbyOwner> 
             break;
           }
 
-          message.steamIdNewOwner = longToNumber(reader.fixed64());
+          message.steamIdNewOwner = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1948,7 +2014,7 @@ export const CMsgClientMMSSetLobbyOwner: MessageFns<CMsgClientMMSSetLobbyOwner> 
 };
 
 function createBaseCMsgClientMMSSetLobbyOwnerResponse(): CMsgClientMMSSetLobbyOwnerResponse {
-  return { appId: 0, steamIdLobby: 0, eresult: 2 };
+  return { appId: 0, steamIdLobby: 0n, eresult: 2 };
 }
 
 export const CMsgClientMMSSetLobbyOwnerResponse: MessageFns<CMsgClientMMSSetLobbyOwnerResponse> = {
@@ -1956,7 +2022,10 @@ export const CMsgClientMMSSetLobbyOwnerResponse: MessageFns<CMsgClientMMSSetLobb
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     if (message.eresult !== undefined && message.eresult !== 2) {
@@ -1985,7 +2054,7 @@ export const CMsgClientMMSSetLobbyOwnerResponse: MessageFns<CMsgClientMMSSetLobb
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2007,7 +2076,7 @@ export const CMsgClientMMSSetLobbyOwnerResponse: MessageFns<CMsgClientMMSSetLobb
 };
 
 function createBaseCMsgClientMMSSetLobbyLinked(): CMsgClientMMSSetLobbyLinked {
-  return { appId: 0, steamIdLobby: 0, steamIdLobby2: 0 };
+  return { appId: 0, steamIdLobby: 0n, steamIdLobby2: 0n };
 }
 
 export const CMsgClientMMSSetLobbyLinked: MessageFns<CMsgClientMMSSetLobbyLinked> = {
@@ -2015,10 +2084,16 @@ export const CMsgClientMMSSetLobbyLinked: MessageFns<CMsgClientMMSSetLobbyLinked
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
-    if (message.steamIdLobby2 !== undefined && message.steamIdLobby2 !== 0) {
+    if (message.steamIdLobby2 !== undefined && message.steamIdLobby2 !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby2) !== message.steamIdLobby2) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby2 of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamIdLobby2);
     }
     return writer;
@@ -2044,7 +2119,7 @@ export const CMsgClientMMSSetLobbyLinked: MessageFns<CMsgClientMMSSetLobbyLinked
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2052,7 +2127,7 @@ export const CMsgClientMMSSetLobbyLinked: MessageFns<CMsgClientMMSSetLobbyLinked
             break;
           }
 
-          message.steamIdLobby2 = longToNumber(reader.fixed64());
+          message.steamIdLobby2 = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2068,10 +2143,10 @@ export const CMsgClientMMSSetLobbyLinked: MessageFns<CMsgClientMMSSetLobbyLinked
 function createBaseCMsgClientMMSSetLobbyGameServer(): CMsgClientMMSSetLobbyGameServer {
   return {
     appId: 0,
-    steamIdLobby: 0,
+    steamIdLobby: 0n,
     deprecatedGameServerIp: 0,
     gameServerPort: 0,
-    gameServerSteamId: 0,
+    gameServerSteamId: 0n,
     gameServerIp: undefined,
     networkPingLocation: "",
   };
@@ -2082,7 +2157,10 @@ export const CMsgClientMMSSetLobbyGameServer: MessageFns<CMsgClientMMSSetLobbyGa
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     if (message.deprecatedGameServerIp !== undefined && message.deprecatedGameServerIp !== 0) {
@@ -2091,7 +2169,10 @@ export const CMsgClientMMSSetLobbyGameServer: MessageFns<CMsgClientMMSSetLobbyGa
     if (message.gameServerPort !== undefined && message.gameServerPort !== 0) {
       writer.uint32(32).uint32(message.gameServerPort);
     }
-    if (message.gameServerSteamId !== undefined && message.gameServerSteamId !== 0) {
+    if (message.gameServerSteamId !== undefined && message.gameServerSteamId !== 0n) {
+      if (BigInt.asUintN(64, message.gameServerSteamId) !== message.gameServerSteamId) {
+        throw new globalThis.Error("value provided for field message.gameServerSteamId of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.gameServerSteamId);
     }
     if (message.gameServerIp !== undefined) {
@@ -2123,7 +2204,7 @@ export const CMsgClientMMSSetLobbyGameServer: MessageFns<CMsgClientMMSSetLobbyGa
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2147,7 +2228,7 @@ export const CMsgClientMMSSetLobbyGameServer: MessageFns<CMsgClientMMSSetLobbyGa
             break;
           }
 
-          message.gameServerSteamId = longToNumber(reader.fixed64());
+          message.gameServerSteamId = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -2179,10 +2260,10 @@ export const CMsgClientMMSSetLobbyGameServer: MessageFns<CMsgClientMMSSetLobbyGa
 function createBaseCMsgClientMMSLobbyGameServerSet(): CMsgClientMMSLobbyGameServerSet {
   return {
     appId: 0,
-    steamIdLobby: 0,
+    steamIdLobby: 0n,
     deprecatedGameServerIp: 0,
     gameServerPort: 0,
-    gameServerSteamId: 0,
+    gameServerSteamId: 0n,
     gameServerIp: undefined,
   };
 }
@@ -2192,7 +2273,10 @@ export const CMsgClientMMSLobbyGameServerSet: MessageFns<CMsgClientMMSLobbyGameS
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     if (message.deprecatedGameServerIp !== undefined && message.deprecatedGameServerIp !== 0) {
@@ -2201,7 +2285,10 @@ export const CMsgClientMMSLobbyGameServerSet: MessageFns<CMsgClientMMSLobbyGameS
     if (message.gameServerPort !== undefined && message.gameServerPort !== 0) {
       writer.uint32(32).uint32(message.gameServerPort);
     }
-    if (message.gameServerSteamId !== undefined && message.gameServerSteamId !== 0) {
+    if (message.gameServerSteamId !== undefined && message.gameServerSteamId !== 0n) {
+      if (BigInt.asUintN(64, message.gameServerSteamId) !== message.gameServerSteamId) {
+        throw new globalThis.Error("value provided for field message.gameServerSteamId of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.gameServerSteamId);
     }
     if (message.gameServerIp !== undefined) {
@@ -2230,7 +2317,7 @@ export const CMsgClientMMSLobbyGameServerSet: MessageFns<CMsgClientMMSLobbyGameS
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2254,7 +2341,7 @@ export const CMsgClientMMSLobbyGameServerSet: MessageFns<CMsgClientMMSLobbyGameS
             break;
           }
 
-          message.gameServerSteamId = longToNumber(reader.fixed64());
+          message.gameServerSteamId = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -2276,7 +2363,7 @@ export const CMsgClientMMSLobbyGameServerSet: MessageFns<CMsgClientMMSLobbyGameS
 };
 
 function createBaseCMsgClientMMSUserJoinedLobby(): CMsgClientMMSUserJoinedLobby {
-  return { appId: 0, steamIdLobby: 0, steamIdUser: 0, personaName: "" };
+  return { appId: 0, steamIdLobby: 0n, steamIdUser: 0n, personaName: "" };
 }
 
 export const CMsgClientMMSUserJoinedLobby: MessageFns<CMsgClientMMSUserJoinedLobby> = {
@@ -2284,10 +2371,16 @@ export const CMsgClientMMSUserJoinedLobby: MessageFns<CMsgClientMMSUserJoinedLob
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
-    if (message.steamIdUser !== undefined && message.steamIdUser !== 0) {
+    if (message.steamIdUser !== undefined && message.steamIdUser !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdUser) !== message.steamIdUser) {
+        throw new globalThis.Error("value provided for field message.steamIdUser of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamIdUser);
     }
     if (message.personaName !== undefined && message.personaName !== "") {
@@ -2316,7 +2409,7 @@ export const CMsgClientMMSUserJoinedLobby: MessageFns<CMsgClientMMSUserJoinedLob
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2324,7 +2417,7 @@ export const CMsgClientMMSUserJoinedLobby: MessageFns<CMsgClientMMSUserJoinedLob
             break;
           }
 
-          message.steamIdUser = longToNumber(reader.fixed64());
+          message.steamIdUser = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -2346,7 +2439,7 @@ export const CMsgClientMMSUserJoinedLobby: MessageFns<CMsgClientMMSUserJoinedLob
 };
 
 function createBaseCMsgClientMMSUserLeftLobby(): CMsgClientMMSUserLeftLobby {
-  return { appId: 0, steamIdLobby: 0, steamIdUser: 0, personaName: "" };
+  return { appId: 0, steamIdLobby: 0n, steamIdUser: 0n, personaName: "" };
 }
 
 export const CMsgClientMMSUserLeftLobby: MessageFns<CMsgClientMMSUserLeftLobby> = {
@@ -2354,10 +2447,16 @@ export const CMsgClientMMSUserLeftLobby: MessageFns<CMsgClientMMSUserLeftLobby> 
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
-    if (message.steamIdUser !== undefined && message.steamIdUser !== 0) {
+    if (message.steamIdUser !== undefined && message.steamIdUser !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdUser) !== message.steamIdUser) {
+        throw new globalThis.Error("value provided for field message.steamIdUser of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamIdUser);
     }
     if (message.personaName !== undefined && message.personaName !== "") {
@@ -2386,7 +2485,7 @@ export const CMsgClientMMSUserLeftLobby: MessageFns<CMsgClientMMSUserLeftLobby> 
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2394,7 +2493,7 @@ export const CMsgClientMMSUserLeftLobby: MessageFns<CMsgClientMMSUserLeftLobby> 
             break;
           }
 
-          message.steamIdUser = longToNumber(reader.fixed64());
+          message.steamIdUser = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -2416,7 +2515,7 @@ export const CMsgClientMMSUserLeftLobby: MessageFns<CMsgClientMMSUserLeftLobby> 
 };
 
 function createBaseCMsgClientMMSInviteToLobby(): CMsgClientMMSInviteToLobby {
-  return { appId: 0, steamIdLobby: 0, steamIdUserInvited: 0 };
+  return { appId: 0, steamIdLobby: 0n, steamIdUserInvited: 0n };
 }
 
 export const CMsgClientMMSInviteToLobby: MessageFns<CMsgClientMMSInviteToLobby> = {
@@ -2424,10 +2523,16 @@ export const CMsgClientMMSInviteToLobby: MessageFns<CMsgClientMMSInviteToLobby> 
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
-    if (message.steamIdUserInvited !== undefined && message.steamIdUserInvited !== 0) {
+    if (message.steamIdUserInvited !== undefined && message.steamIdUserInvited !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdUserInvited) !== message.steamIdUserInvited) {
+        throw new globalThis.Error("value provided for field message.steamIdUserInvited of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamIdUserInvited);
     }
     return writer;
@@ -2453,7 +2558,7 @@ export const CMsgClientMMSInviteToLobby: MessageFns<CMsgClientMMSInviteToLobby> 
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2461,7 +2566,7 @@ export const CMsgClientMMSInviteToLobby: MessageFns<CMsgClientMMSInviteToLobby> 
             break;
           }
 
-          message.steamIdUserInvited = longToNumber(reader.fixed64());
+          message.steamIdUserInvited = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2475,7 +2580,7 @@ export const CMsgClientMMSInviteToLobby: MessageFns<CMsgClientMMSInviteToLobby> 
 };
 
 function createBaseCMsgClientMMSGetLobbyStatus(): CMsgClientMMSGetLobbyStatus {
-  return { appId: 0, steamIdLobby: 0, claimMembership: false, claimOwnership: false };
+  return { appId: 0, steamIdLobby: 0n, claimMembership: false, claimOwnership: false };
 }
 
 export const CMsgClientMMSGetLobbyStatus: MessageFns<CMsgClientMMSGetLobbyStatus> = {
@@ -2483,7 +2588,10 @@ export const CMsgClientMMSGetLobbyStatus: MessageFns<CMsgClientMMSGetLobbyStatus
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     if (message.claimMembership !== undefined && message.claimMembership !== false) {
@@ -2515,7 +2623,7 @@ export const CMsgClientMMSGetLobbyStatus: MessageFns<CMsgClientMMSGetLobbyStatus
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2545,7 +2653,7 @@ export const CMsgClientMMSGetLobbyStatus: MessageFns<CMsgClientMMSGetLobbyStatus
 };
 
 function createBaseCMsgClientMMSGetLobbyStatusResponse(): CMsgClientMMSGetLobbyStatusResponse {
-  return { appId: 0, steamIdLobby: 0, lobbyStatus: 0 };
+  return { appId: 0, steamIdLobby: 0n, lobbyStatus: 0 };
 }
 
 export const CMsgClientMMSGetLobbyStatusResponse: MessageFns<CMsgClientMMSGetLobbyStatusResponse> = {
@@ -2553,7 +2661,10 @@ export const CMsgClientMMSGetLobbyStatusResponse: MessageFns<CMsgClientMMSGetLob
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0) {
+    if (message.steamIdLobby !== undefined && message.steamIdLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdLobby) !== message.steamIdLobby) {
+        throw new globalThis.Error("value provided for field message.steamIdLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdLobby);
     }
     if (message.lobbyStatus !== undefined && message.lobbyStatus !== 0) {
@@ -2582,7 +2693,7 @@ export const CMsgClientMMSGetLobbyStatusResponse: MessageFns<CMsgClientMMSGetLob
             break;
           }
 
-          message.steamIdLobby = longToNumber(reader.fixed64());
+          message.steamIdLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2602,17 +2713,6 @@ export const CMsgClientMMSGetLobbyStatusResponse: MessageFns<CMsgClientMMSGetLob
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

@@ -83,22 +83,22 @@ export interface CChatRequestFriendPersonaStatesResponse {
 }
 
 export interface CChatRoomCreateChatRoomGroupRequest {
-  steamidPartner?: number | undefined;
-  steamidInvited?: number | undefined;
+  steamidPartner?: bigint | undefined;
+  steamidInvited?: bigint | undefined;
   name?: string | undefined;
-  steamidInvitees: number[];
+  steamidInvitees: bigint[];
   watchingBroadcastAccountid?: number | undefined;
-  watchingBroadcastChannelId?: number | undefined;
+  watchingBroadcastChannelId?: bigint | undefined;
 }
 
 export interface CChatRole {
-  roleId?: number | undefined;
+  roleId?: bigint | undefined;
   name?: string | undefined;
   ordinal?: number | undefined;
 }
 
 export interface CChatRoleActions {
-  roleId?: number | undefined;
+  roleId?: bigint | undefined;
   canCreateRenameDeleteChannel?: boolean | undefined;
   canKick?: boolean | undefined;
   canBan?: boolean | undefined;
@@ -114,26 +114,26 @@ export interface CChatRoleActions {
 
 export interface CChatPartyBeacon {
   appId?: number | undefined;
-  steamidOwner?: number | undefined;
-  beaconId?: number | undefined;
+  steamidOwner?: bigint | undefined;
+  beaconId?: bigint | undefined;
   gameMetadata?: string | undefined;
 }
 
 export interface CChatRoomGroupHeaderState {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   chatName?: string | undefined;
   clanid?: number | undefined;
   accountidOwner?: number | undefined;
   appid?: number | undefined;
   tagline?: string | undefined;
   avatarSha?: Buffer | undefined;
-  defaultRoleId?: number | undefined;
+  defaultRoleId?: bigint | undefined;
   roles: CChatRole[];
   roleActions: CChatRoleActions[];
   watchingBroadcastAccountid?: number | undefined;
   partyBeacons: CChatPartyBeacon[];
-  watchingBroadcastChannelId?: number | undefined;
-  activeMinigameId?: number | undefined;
+  watchingBroadcastChannelId?: bigint | undefined;
+  activeMinigameId?: bigint | undefined;
   avatarUgcUrl?: string | undefined;
   disabled?: boolean | undefined;
 }
@@ -143,11 +143,11 @@ export interface CChatRoomMember {
   state?: EChatRoomJoinState | undefined;
   rank?: EChatRoomGroupRank | undefined;
   timeKickExpire?: number | undefined;
-  roleIds: number[];
+  roleIds: bigint[];
 }
 
 export interface CChatRoomState {
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
   chatName?: string | undefined;
   voiceAllowed?: boolean | undefined;
   membersInVoice: number[];
@@ -160,13 +160,13 @@ export interface CChatRoomState {
 export interface CChatRoomGroupState {
   headerState?: CChatRoomGroupHeaderState | undefined;
   members: CChatRoomMember[];
-  defaultChatId?: number | undefined;
+  defaultChatId?: bigint | undefined;
   chatRooms: CChatRoomState[];
   kicked: CChatRoomMember[];
 }
 
 export interface CUserChatRoomState {
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
   timeJoined?: number | undefined;
   timeLastAck?: number | undefined;
   desktopNotificationLevel?: EChatRoomNotificationLevel | undefined;
@@ -177,7 +177,7 @@ export interface CUserChatRoomState {
 }
 
 export interface CUserChatRoomGroupState {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   timeJoined?: number | undefined;
   userChatRoomState: CUserChatRoomState[];
   desktopNotificationLevel?: EChatRoomNotificationLevel | undefined;
@@ -188,13 +188,13 @@ export interface CUserChatRoomGroupState {
 }
 
 export interface CChatRoomCreateChatRoomGroupResponse {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   state?: CChatRoomGroupState | undefined;
   userChatState?: CUserChatRoomGroupState | undefined;
 }
 
 export interface CChatRoomSaveChatRoomGroupRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   name?: string | undefined;
 }
 
@@ -202,7 +202,7 @@ export interface CChatRoomSaveChatRoomGroupResponse {
 }
 
 export interface CChatRoomRenameChatRoomGroupRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   name?: string | undefined;
 }
 
@@ -211,7 +211,7 @@ export interface CChatRoomRenameChatRoomGroupResponse {
 }
 
 export interface CChatRoomSetChatRoomGroupTaglineRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   tagline?: string | undefined;
 }
 
@@ -219,7 +219,7 @@ export interface CChatRoomSetChatRoomGroupTaglineResponse {
 }
 
 export interface CChatRoomSetChatRoomGroupAvatarRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   avatarSha?: Buffer | undefined;
 }
 
@@ -227,35 +227,35 @@ export interface CChatRoomSetChatRoomGroupAvatarResponse {
 }
 
 export interface CChatRoomSetChatRoomGroupWatchingBroadcastRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   watchingBroadcastAccountid?: number | undefined;
-  watchingBroadcastChannelId?: number | undefined;
+  watchingBroadcastChannelId?: bigint | undefined;
 }
 
 export interface CChatRoomSetChatRoomGroupWatchingBroadcastResponse {
 }
 
 export interface CChatRoomJoinMiniGameForChatRoomGroupRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
 }
 
 export interface CChatRoomJoinMiniGameForChatRoomGroupResponse {
-  minigameId?: number | undefined;
+  minigameId?: bigint | undefined;
 }
 
 export interface CChatRoomEndMiniGameForChatRoomGroupRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
-  minigameId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
+  minigameId?: bigint | undefined;
 }
 
 export interface CChatRoomEndMiniGameForChatRoomGroupResponse {
 }
 
 export interface CChatRoomMuteUserRequest {
-  chatGroupId?: number | undefined;
-  steamid?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  steamid?: bigint | undefined;
   expiration?: number | undefined;
 }
 
@@ -263,8 +263,8 @@ export interface CChatRoomMuteUserResponse {
 }
 
 export interface CChatRoomKickUserRequest {
-  chatGroupId?: number | undefined;
-  steamid?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  steamid?: bigint | undefined;
   expiration?: number | undefined;
 }
 
@@ -272,8 +272,8 @@ export interface CChatRoomKickUserResponse {
 }
 
 export interface CChatRoomSetUserBanStateRequest {
-  chatGroupId?: number | undefined;
-  steamid?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  steamid?: bigint | undefined;
   banState?: boolean | undefined;
 }
 
@@ -281,15 +281,15 @@ export interface CChatRoomSetUserBanStateResponse {
 }
 
 export interface CChatRoomRevokeInviteRequest {
-  chatGroupId?: number | undefined;
-  steamid?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CChatRoomRevokeInviteResponse {
 }
 
 export interface CChatRoomCreateRoleRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   name?: string | undefined;
 }
 
@@ -298,7 +298,7 @@ export interface CChatRoomCreateRoleResponse {
 }
 
 export interface CChatRoomGetRolesRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
 }
 
 export interface CChatRoomGetRolesResponse {
@@ -306,8 +306,8 @@ export interface CChatRoomGetRolesResponse {
 }
 
 export interface CChatRoomRenameRoleRequest {
-  chatGroupId?: number | undefined;
-  roleId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  roleId?: bigint | undefined;
   name?: string | undefined;
 }
 
@@ -315,8 +315,8 @@ export interface CChatRoomRenameRoleResponse {
 }
 
 export interface CChatRoomReorderRoleRequest {
-  chatGroupId?: number | undefined;
-  roleId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  roleId?: bigint | undefined;
   ordinal?: number | undefined;
 }
 
@@ -324,16 +324,16 @@ export interface CChatRoomReorderRoleResponse {
 }
 
 export interface CChatRoomDeleteRoleRequest {
-  chatGroupId?: number | undefined;
-  roleId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  roleId?: bigint | undefined;
 }
 
 export interface CChatRoomDeleteRoleResponse {
 }
 
 export interface CChatRoomGetRoleActionsRequest {
-  chatGroupId?: number | undefined;
-  roleId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  roleId?: bigint | undefined;
 }
 
 export interface CChatRoomGetRoleActionsResponse {
@@ -341,8 +341,8 @@ export interface CChatRoomGetRoleActionsResponse {
 }
 
 export interface CChatRoomReplaceRoleActionsRequest {
-  chatGroupId?: number | undefined;
-  roleId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  roleId?: bigint | undefined;
   actions?: CChatRoleActions | undefined;
 }
 
@@ -350,49 +350,49 @@ export interface CChatRoomReplaceRoleActionsResponse {
 }
 
 export interface CChatRoomAddRoleToUserRequest {
-  chatGroupId?: number | undefined;
-  roleId?: number | undefined;
-  steamid?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  roleId?: bigint | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CChatRoomAddRoleToUserResponse {
 }
 
 export interface CChatRoomGetRolesForUserRequest {
-  chatGroupId?: number | undefined;
-  steamid?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CChatRoomGetRolesForUserResponse {
-  roleIds: number[];
+  roleIds: bigint[];
 }
 
 export interface CChatRoomDeleteRoleFromUserRequest {
-  chatGroupId?: number | undefined;
-  roleId?: number | undefined;
-  steamid?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  roleId?: bigint | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CChatRoomDeleteRoleFromUserResponse {
 }
 
 export interface CChatRoomJoinChatRoomGroupRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   inviteCode?: string | undefined;
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
 }
 
 export interface CChatRoomJoinChatRoomGroupResponse {
   state?: CChatRoomGroupState | undefined;
   userChatState?: CUserChatRoomGroupState | undefined;
-  joinChatId?: number | undefined;
+  joinChatId?: bigint | undefined;
   timeExpire?: number | undefined;
 }
 
 export interface CChatRoomInviteFriendToChatRoomGroupRequest {
-  chatGroupId?: number | undefined;
-  steamid?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  steamid?: bigint | undefined;
+  chatId?: bigint | undefined;
   skipFriendsuiCheck?: boolean | undefined;
 }
 
@@ -400,14 +400,14 @@ export interface CChatRoomInviteFriendToChatRoomGroupResponse {
 }
 
 export interface CChatRoomLeaveChatRoomGroupRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
 }
 
 export interface CChatRoomLeaveChatRoomGroupResponse {
 }
 
 export interface CChatRoomCreateChatRoomRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   name?: string | undefined;
   allowVoice?: boolean | undefined;
 }
@@ -417,16 +417,16 @@ export interface CChatRoomCreateChatRoomResponse {
 }
 
 export interface CChatRoomDeleteChatRoomRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
 }
 
 export interface CChatRoomDeleteChatRoomResponse {
 }
 
 export interface CChatRoomRenameChatRoomRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
   name?: string | undefined;
 }
 
@@ -434,17 +434,17 @@ export interface CChatRoomRenameChatRoomResponse {
 }
 
 export interface CChatRoomReorderChatRoomRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
-  moveAfterChatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
+  moveAfterChatId?: bigint | undefined;
 }
 
 export interface CChatRoomReorderChatRoomResponse {
 }
 
 export interface CChatRoomSendChatMessageRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
   message?: string | undefined;
   echoToSender?: boolean | undefined;
 }
@@ -457,25 +457,25 @@ export interface CChatRoomSendChatMessageResponse {
 }
 
 export interface CChatRoomJoinVoiceChatRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
 }
 
 export interface CChatRoomJoinVoiceChatResponse {
-  voiceChatid?: number | undefined;
+  voiceChatid?: bigint | undefined;
 }
 
 export interface CChatRoomLeaveVoiceChatRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
 }
 
 export interface CChatRoomLeaveVoiceChatResponse {
 }
 
 export interface CChatRoomGetMessageHistoryRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
   lastTime?: number | undefined;
   lastOrdinal?: number | undefined;
   startTime?: number | undefined;
@@ -515,11 +515,11 @@ export interface CChatRoomGetMyChatRoomGroupsRequest {
 }
 
 export interface CChatRoomGetChatRoomGroupSummaryResponse {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   chatGroupName?: string | undefined;
   activeMemberCount?: number | undefined;
   activeVoiceMemberCount?: number | undefined;
-  defaultChatId?: number | undefined;
+  defaultChatId?: bigint | undefined;
   chatRooms: CChatRoomState[];
   clanid?: number | undefined;
   chatGroupTagline?: string | undefined;
@@ -527,14 +527,14 @@ export interface CChatRoomGetChatRoomGroupSummaryResponse {
   topMembers: number[];
   chatGroupAvatarSha?: Buffer | undefined;
   rank?: EChatRoomGroupRank | undefined;
-  defaultRoleId?: number | undefined;
-  roleIds: number[];
+  defaultRoleId?: bigint | undefined;
+  roleIds: bigint[];
   roleActions: CChatRoleActions[];
   watchingBroadcastAccountid?: number | undefined;
   appid?: number | undefined;
   partyBeacons: CChatPartyBeacon[];
-  watchingBroadcastChannelId?: number | undefined;
-  activeMinigameId?: number | undefined;
+  watchingBroadcastChannelId?: bigint | undefined;
+  activeMinigameId?: bigint | undefined;
   avatarUgcUrl?: string | undefined;
   disabled?: boolean | undefined;
 }
@@ -549,7 +549,7 @@ export interface CChatRoomGetMyChatRoomGroupsResponse {
 }
 
 export interface CChatRoomGetChatRoomGroupStateRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
 }
 
 export interface CChatRoomGetChatRoomGroupStateResponse {
@@ -557,7 +557,7 @@ export interface CChatRoomGetChatRoomGroupStateResponse {
 }
 
 export interface CChatRoomSetAppChatRoomGroupForceActiveRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   requestingAppId?: number | undefined;
 }
 
@@ -567,20 +567,20 @@ export interface CChatRoomSetAppChatRoomGroupForceActiveResponse {
 }
 
 export interface CChatRoomSetAppChatRoomGroupStopForceActiveNotification {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   requestingAppId?: number | undefined;
 }
 
 export interface CChatRoomAckChatMessageNotification {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
   timestamp?: number | undefined;
 }
 
 export interface CChatRoomCreateInviteLinkRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   secondsValid?: number | undefined;
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
 }
 
 export interface CChatRoomCreateInviteLinkResponse {
@@ -593,9 +593,9 @@ export interface CChatRoomGetInviteLinkInfoRequest {
 }
 
 export interface CChatRoomGetInviteLinkInfoResponse {
-  steamidSender?: number | undefined;
+  steamidSender?: bigint | undefined;
   timeExpires?: number | undefined;
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
   groupSummary?: CChatRoomGetChatRoomGroupSummaryResponse | undefined;
   userChatGroupState?: CUserChatRoomGroupState | undefined;
   timeKickExpire?: number | undefined;
@@ -603,9 +603,9 @@ export interface CChatRoomGetInviteLinkInfoResponse {
 }
 
 export interface CChatRoomGetInviteInfoRequest {
-  steamidInvitee?: number | undefined;
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  steamidInvitee?: bigint | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
   inviteCode?: string | undefined;
 }
 
@@ -616,7 +616,7 @@ export interface CChatRoomGetInviteInfoResponse {
 }
 
 export interface CChatRoomGetInviteLinksForGroupRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
 }
 
 export interface CChatRoomGetInviteLinksForGroupResponse {
@@ -625,13 +625,13 @@ export interface CChatRoomGetInviteLinksForGroupResponse {
 
 export interface CChatRoomGetInviteLinksForGroupResponse_LinkInfo {
   inviteCode?: string | undefined;
-  steamidCreator?: number | undefined;
+  steamidCreator?: bigint | undefined;
   timeExpires?: number | undefined;
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
 }
 
 export interface CChatRoomGetBanListRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
 }
 
 export interface CChatRoomGetBanListResponse {
@@ -646,7 +646,7 @@ export interface CChatRoomGetBanListResponse_BanInfo {
 }
 
 export interface CChatRoomGetInviteListRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
 }
 
 export interface CChatRoomGroupInvite {
@@ -660,7 +660,7 @@ export interface CChatRoomGetInviteListResponse {
 }
 
 export interface CChatRoomDeleteInviteLinkRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   inviteCode?: string | undefined;
 }
 
@@ -668,18 +668,18 @@ export interface CChatRoomDeleteInviteLinkResponse {
 }
 
 export interface CChatRoomSetSessionActiveChatRoomGroupsRequest {
-  chatGroupIds: number[];
-  chatGroupsDataRequested: number[];
+  chatGroupIds: bigint[];
+  chatGroupsDataRequested: bigint[];
   virtualizeMembersThreshold?: number | undefined;
 }
 
 export interface CChatRoomSetSessionActiveChatRoomGroupsResponse {
   chatStates: CChatRoomGroupState[];
-  virtualizeMembersChatGroupIds: number[];
+  virtualizeMembersChatGroupIds: bigint[];
 }
 
 export interface CChatRoomSetUserChatGroupPreferencesRequest {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   chatGroupPreferences?: CChatRoomSetUserChatGroupPreferencesRequest_ChatGroupPreferences | undefined;
   chatRoomPreferences: CChatRoomSetUserChatGroupPreferencesRequest_ChatRoomPreferences[];
 }
@@ -692,7 +692,7 @@ export interface CChatRoomSetUserChatGroupPreferencesRequest_ChatGroupPreference
 }
 
 export interface CChatRoomSetUserChatGroupPreferencesRequest_ChatRoomPreferences {
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
   desktopNotificationLevel?: EChatRoomNotificationLevel | undefined;
   mobileNotificationLevel?: EChatRoomNotificationLevel | undefined;
   unreadIndicatorMuted?: boolean | undefined;
@@ -702,8 +702,8 @@ export interface CChatRoomSetUserChatGroupPreferencesResponse {
 }
 
 export interface CChatRoomDeleteChatMessagesRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
   messages: CChatRoomDeleteChatMessagesRequest_Message[];
 }
 
@@ -716,8 +716,8 @@ export interface CChatRoomDeleteChatMessagesResponse {
 }
 
 export interface CChatRoomUpdateMemberListViewNotification {
-  chatGroupId?: number | undefined;
-  viewId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  viewId?: bigint | undefined;
   start?: number | undefined;
   end?: number | undefined;
   clientChangenumber?: number | undefined;
@@ -727,8 +727,8 @@ export interface CChatRoomUpdateMemberListViewNotification {
 }
 
 export interface CChatRoomSearchMembersRequest {
-  chatGroupId?: number | undefined;
-  searchId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  searchId?: bigint | undefined;
   searchText?: string | undefined;
   maxResults?: number | undefined;
 }
@@ -744,8 +744,8 @@ export interface CChatRoomSearchMembersResponse_MemberMatch {
 }
 
 export interface CChatRoomUpdateMessageReactionRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
   serverTimestamp?: number | undefined;
   ordinal?: number | undefined;
   reactionType?: EChatRoomMessageReactionType | undefined;
@@ -758,8 +758,8 @@ export interface CChatRoomUpdateMessageReactionResponse {
 }
 
 export interface CChatRoomGetMessageReactionReactorsRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
   serverTimestamp?: number | undefined;
   ordinal?: number | undefined;
   reactionType?: EChatRoomMessageReactionType | undefined;
@@ -772,9 +772,9 @@ export interface CChatRoomGetMessageReactionReactorsResponse {
 }
 
 export interface CChatRoomReportMessageRequest {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
-  steamidFrom?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
+  steamidFrom?: bigint | undefined;
   timestamp?: number | undefined;
   ordinal?: number | undefined;
   reportReason?: EContentReportReason | undefined;
@@ -787,8 +787,8 @@ export interface CChatRoomReportMessageResponse {
 }
 
 export interface CChatRoomResolveReportRequest {
-  subjectGroupId?: number | undefined;
-  subjectId?: number | undefined;
+  subjectGroupId?: bigint | undefined;
+  subjectId?: bigint | undefined;
   resolution?: EContentReportResolution | undefined;
   reason?: EContentReportReason | undefined;
 }
@@ -797,7 +797,7 @@ export interface CChatRoomResolveReportResponse {
 }
 
 export interface CClanChatRoomsGetClanChatRoomInfoRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   autocreate?: boolean | undefined;
 }
 
@@ -806,7 +806,7 @@ export interface CClanChatRoomsGetClanChatRoomInfoResponse {
 }
 
 export interface CClanChatRoomsSetClanChatRoomPrivateRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   chatRoomPrivate?: boolean | undefined;
 }
 
@@ -821,9 +821,9 @@ export interface CChatMentions {
 }
 
 export interface CChatRoomIncomingChatMessageNotification {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
-  steamidSender?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
+  steamidSender?: bigint | undefined;
   message?: string | undefined;
   timestamp?: number | undefined;
   mentions?: CChatMentions | undefined;
@@ -835,8 +835,8 @@ export interface CChatRoomIncomingChatMessageNotification {
 }
 
 export interface CChatRoomChatMessageModifiedNotification {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
   messages: CChatRoomChatMessageModifiedNotification_ChatMessage[];
 }
 
@@ -847,7 +847,7 @@ export interface CChatRoomChatMessageModifiedNotification_ChatMessage {
 }
 
 export interface CChatRoomMemberStateChangeNotification {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   member?: CChatRoomMember | undefined;
   change?: EChatRoomMemberStateChange | undefined;
 }
@@ -857,25 +857,25 @@ export interface CChatRoomChatRoomHeaderStateNotification {
 }
 
 export interface CChatRoomChatRoomGroupRoomsChangeNotification {
-  chatGroupId?: number | undefined;
-  defaultChatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  defaultChatId?: bigint | undefined;
   chatRooms: CChatRoomState[];
 }
 
 export interface CChatRoomNotifyShouldRejoinChatRoomVoiceChatNotification {
-  chatId?: number | undefined;
-  chatGroupId?: number | undefined;
+  chatId?: bigint | undefined;
+  chatGroupId?: bigint | undefined;
 }
 
 export interface ChatRoomClientNotifyChatGroupUserStateChangedNotification {
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
   userChatGroupState?: CUserChatRoomGroupState | undefined;
   groupSummary?: CChatRoomGetChatRoomGroupSummaryResponse | undefined;
   userAction?: EChatRoomMemberStateChange | undefined;
 }
 
 export interface ChatRoomClientNotifyChatRoomDisconnectNotification {
-  chatGroupIds: number[];
+  chatGroupIds: bigint[];
 }
 
 export interface CChatRoomMemberListView {
@@ -893,8 +893,8 @@ export interface CChatRoomMemberSummaryCounts {
 }
 
 export interface CChatRoomClientMemberListViewUpdatedNotification {
-  chatGroupId?: number | undefined;
-  viewId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  viewId?: bigint | undefined;
   view?: CChatRoomMemberListView | undefined;
   members: CChatRoomClientMemberListViewUpdatedNotification_MemberListViewEntry[];
   statusFlags?: number | undefined;
@@ -909,11 +909,11 @@ export interface CChatRoomClientMemberListViewUpdatedNotification_MemberListView
 }
 
 export interface CChatRoomMessageReactionNotification {
-  chatGroupId?: number | undefined;
-  chatId?: number | undefined;
+  chatGroupId?: bigint | undefined;
+  chatId?: bigint | undefined;
   serverTimestamp?: number | undefined;
   ordinal?: number | undefined;
-  reactor?: number | undefined;
+  reactor?: bigint | undefined;
   reactionType?: EChatRoomMessageReactionType | undefined;
   reaction?: string | undefined;
   isAdd?: boolean | undefined;
@@ -1070,33 +1070,47 @@ export const CChatRequestFriendPersonaStatesResponse: MessageFns<CChatRequestFri
 
 function createBaseCChatRoomCreateChatRoomGroupRequest(): CChatRoomCreateChatRoomGroupRequest {
   return {
-    steamidPartner: 0,
-    steamidInvited: 0,
+    steamidPartner: 0n,
+    steamidInvited: 0n,
     name: "",
     steamidInvitees: [],
     watchingBroadcastAccountid: 0,
-    watchingBroadcastChannelId: 0,
+    watchingBroadcastChannelId: 0n,
   };
 }
 
 export const CChatRoomCreateChatRoomGroupRequest: MessageFns<CChatRoomCreateChatRoomGroupRequest> = {
   encode(message: CChatRoomCreateChatRoomGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidPartner !== undefined && message.steamidPartner !== 0) {
+    if (message.steamidPartner !== undefined && message.steamidPartner !== 0n) {
+      if (BigInt.asUintN(64, message.steamidPartner) !== message.steamidPartner) {
+        throw new globalThis.Error("value provided for field message.steamidPartner of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidPartner);
     }
-    if (message.steamidInvited !== undefined && message.steamidInvited !== 0) {
+    if (message.steamidInvited !== undefined && message.steamidInvited !== 0n) {
+      if (BigInt.asUintN(64, message.steamidInvited) !== message.steamidInvited) {
+        throw new globalThis.Error("value provided for field message.steamidInvited of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamidInvited);
     }
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(26).string(message.name);
     }
     for (const v of message.steamidInvitees) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(v!);
     }
     if (message.watchingBroadcastAccountid !== undefined && message.watchingBroadcastAccountid !== 0) {
       writer.uint32(48).uint32(message.watchingBroadcastAccountid);
     }
-    if (message.watchingBroadcastChannelId !== undefined && message.watchingBroadcastChannelId !== 0) {
+    if (message.watchingBroadcastChannelId !== undefined && message.watchingBroadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.watchingBroadcastChannelId) !== message.watchingBroadcastChannelId) {
+        throw new globalThis.Error(
+          "value provided for field message.watchingBroadcastChannelId of type uint64 too large",
+        );
+      }
       writer.uint32(56).uint64(message.watchingBroadcastChannelId);
     }
     return writer;
@@ -1114,7 +1128,7 @@ export const CChatRoomCreateChatRoomGroupRequest: MessageFns<CChatRoomCreateChat
             break;
           }
 
-          message.steamidPartner = longToNumber(reader.fixed64());
+          message.steamidPartner = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1122,7 +1136,7 @@ export const CChatRoomCreateChatRoomGroupRequest: MessageFns<CChatRoomCreateChat
             break;
           }
 
-          message.steamidInvited = longToNumber(reader.fixed64());
+          message.steamidInvited = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1135,7 +1149,7 @@ export const CChatRoomCreateChatRoomGroupRequest: MessageFns<CChatRoomCreateChat
         }
         case 4: {
           if (tag === 33) {
-            message.steamidInvitees.push(longToNumber(reader.fixed64()));
+            message.steamidInvitees.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -1143,7 +1157,7 @@ export const CChatRoomCreateChatRoomGroupRequest: MessageFns<CChatRoomCreateChat
           if (tag === 34) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.steamidInvitees.push(longToNumber(reader.fixed64()));
+              message.steamidInvitees.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -1164,7 +1178,7 @@ export const CChatRoomCreateChatRoomGroupRequest: MessageFns<CChatRoomCreateChat
             break;
           }
 
-          message.watchingBroadcastChannelId = longToNumber(reader.uint64());
+          message.watchingBroadcastChannelId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1178,12 +1192,15 @@ export const CChatRoomCreateChatRoomGroupRequest: MessageFns<CChatRoomCreateChat
 };
 
 function createBaseCChatRole(): CChatRole {
-  return { roleId: 0, name: "", ordinal: 0 };
+  return { roleId: 0n, name: "", ordinal: 0 };
 }
 
 export const CChatRole: MessageFns<CChatRole> = {
   encode(message: CChatRole, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.roleId !== undefined && message.roleId !== 0) {
+    if (message.roleId !== undefined && message.roleId !== 0n) {
+      if (BigInt.asUintN(64, message.roleId) !== message.roleId) {
+        throw new globalThis.Error("value provided for field message.roleId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.roleId);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -1207,7 +1224,7 @@ export const CChatRole: MessageFns<CChatRole> = {
             break;
           }
 
-          message.roleId = longToNumber(reader.uint64());
+          message.roleId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1238,7 +1255,7 @@ export const CChatRole: MessageFns<CChatRole> = {
 
 function createBaseCChatRoleActions(): CChatRoleActions {
   return {
-    roleId: 0,
+    roleId: 0n,
     canCreateRenameDeleteChannel: false,
     canKick: false,
     canBan: false,
@@ -1255,7 +1272,10 @@ function createBaseCChatRoleActions(): CChatRoleActions {
 
 export const CChatRoleActions: MessageFns<CChatRoleActions> = {
   encode(message: CChatRoleActions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.roleId !== undefined && message.roleId !== 0) {
+    if (message.roleId !== undefined && message.roleId !== 0n) {
+      if (BigInt.asUintN(64, message.roleId) !== message.roleId) {
+        throw new globalThis.Error("value provided for field message.roleId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.roleId);
     }
     if (message.canCreateRenameDeleteChannel !== undefined && message.canCreateRenameDeleteChannel !== false) {
@@ -1306,7 +1326,7 @@ export const CChatRoleActions: MessageFns<CChatRoleActions> = {
             break;
           }
 
-          message.roleId = longToNumber(reader.uint64());
+          message.roleId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1408,7 +1428,7 @@ export const CChatRoleActions: MessageFns<CChatRoleActions> = {
 };
 
 function createBaseCChatPartyBeacon(): CChatPartyBeacon {
-  return { appId: 0, steamidOwner: 0, beaconId: 0, gameMetadata: "" };
+  return { appId: 0, steamidOwner: 0n, beaconId: 0n, gameMetadata: "" };
 }
 
 export const CChatPartyBeacon: MessageFns<CChatPartyBeacon> = {
@@ -1416,10 +1436,16 @@ export const CChatPartyBeacon: MessageFns<CChatPartyBeacon> = {
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamidOwner !== undefined && message.steamidOwner !== 0) {
+    if (message.steamidOwner !== undefined && message.steamidOwner !== 0n) {
+      if (BigInt.asUintN(64, message.steamidOwner) !== message.steamidOwner) {
+        throw new globalThis.Error("value provided for field message.steamidOwner of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamidOwner);
     }
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.beaconId);
     }
     if (message.gameMetadata !== undefined && message.gameMetadata !== "") {
@@ -1448,7 +1474,7 @@ export const CChatPartyBeacon: MessageFns<CChatPartyBeacon> = {
             break;
           }
 
-          message.steamidOwner = longToNumber(reader.fixed64());
+          message.steamidOwner = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1456,7 +1482,7 @@ export const CChatPartyBeacon: MessageFns<CChatPartyBeacon> = {
             break;
           }
 
-          message.beaconId = longToNumber(reader.fixed64());
+          message.beaconId = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1479,20 +1505,20 @@ export const CChatPartyBeacon: MessageFns<CChatPartyBeacon> = {
 
 function createBaseCChatRoomGroupHeaderState(): CChatRoomGroupHeaderState {
   return {
-    chatGroupId: 0,
+    chatGroupId: 0n,
     chatName: "",
     clanid: 0,
     accountidOwner: 0,
     appid: 0,
     tagline: "",
     avatarSha: Buffer.alloc(0),
-    defaultRoleId: 0,
+    defaultRoleId: 0n,
     roles: [],
     roleActions: [],
     watchingBroadcastAccountid: 0,
     partyBeacons: [],
-    watchingBroadcastChannelId: 0,
-    activeMinigameId: 0,
+    watchingBroadcastChannelId: 0n,
+    activeMinigameId: 0n,
     avatarUgcUrl: "",
     disabled: false,
   };
@@ -1500,7 +1526,10 @@ function createBaseCChatRoomGroupHeaderState(): CChatRoomGroupHeaderState {
 
 export const CChatRoomGroupHeaderState: MessageFns<CChatRoomGroupHeaderState> = {
   encode(message: CChatRoomGroupHeaderState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.chatName !== undefined && message.chatName !== "") {
@@ -1521,7 +1550,10 @@ export const CChatRoomGroupHeaderState: MessageFns<CChatRoomGroupHeaderState> = 
     if (message.avatarSha !== undefined && message.avatarSha.length !== 0) {
       writer.uint32(130).bytes(message.avatarSha);
     }
-    if (message.defaultRoleId !== undefined && message.defaultRoleId !== 0) {
+    if (message.defaultRoleId !== undefined && message.defaultRoleId !== 0n) {
+      if (BigInt.asUintN(64, message.defaultRoleId) !== message.defaultRoleId) {
+        throw new globalThis.Error("value provided for field message.defaultRoleId of type uint64 too large");
+      }
       writer.uint32(136).uint64(message.defaultRoleId);
     }
     for (const v of message.roles) {
@@ -1536,10 +1568,18 @@ export const CChatRoomGroupHeaderState: MessageFns<CChatRoomGroupHeaderState> = 
     for (const v of message.partyBeacons) {
       CChatPartyBeacon.encode(v!, writer.uint32(178).fork()).join();
     }
-    if (message.watchingBroadcastChannelId !== undefined && message.watchingBroadcastChannelId !== 0) {
+    if (message.watchingBroadcastChannelId !== undefined && message.watchingBroadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.watchingBroadcastChannelId) !== message.watchingBroadcastChannelId) {
+        throw new globalThis.Error(
+          "value provided for field message.watchingBroadcastChannelId of type uint64 too large",
+        );
+      }
       writer.uint32(184).uint64(message.watchingBroadcastChannelId);
     }
-    if (message.activeMinigameId !== undefined && message.activeMinigameId !== 0) {
+    if (message.activeMinigameId !== undefined && message.activeMinigameId !== 0n) {
+      if (BigInt.asUintN(64, message.activeMinigameId) !== message.activeMinigameId) {
+        throw new globalThis.Error("value provided for field message.activeMinigameId of type uint64 too large");
+      }
       writer.uint32(192).uint64(message.activeMinigameId);
     }
     if (message.avatarUgcUrl !== undefined && message.avatarUgcUrl !== "") {
@@ -1563,7 +1603,7 @@ export const CChatRoomGroupHeaderState: MessageFns<CChatRoomGroupHeaderState> = 
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1619,7 +1659,7 @@ export const CChatRoomGroupHeaderState: MessageFns<CChatRoomGroupHeaderState> = 
             break;
           }
 
-          message.defaultRoleId = longToNumber(reader.uint64());
+          message.defaultRoleId = reader.uint64() as bigint;
           continue;
         }
         case 18: {
@@ -1659,7 +1699,7 @@ export const CChatRoomGroupHeaderState: MessageFns<CChatRoomGroupHeaderState> = 
             break;
           }
 
-          message.watchingBroadcastChannelId = longToNumber(reader.uint64());
+          message.watchingBroadcastChannelId = reader.uint64() as bigint;
           continue;
         }
         case 24: {
@@ -1667,7 +1707,7 @@ export const CChatRoomGroupHeaderState: MessageFns<CChatRoomGroupHeaderState> = 
             break;
           }
 
-          message.activeMinigameId = longToNumber(reader.uint64());
+          message.activeMinigameId = reader.uint64() as bigint;
           continue;
         }
         case 25: {
@@ -1715,6 +1755,9 @@ export const CChatRoomMember: MessageFns<CChatRoomMember> = {
       writer.uint32(48).uint32(message.timeKickExpire);
     }
     for (const v of message.roleIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(56).uint64(v!);
     }
     return writer;
@@ -1761,7 +1804,7 @@ export const CChatRoomMember: MessageFns<CChatRoomMember> = {
         }
         case 7: {
           if (tag === 56) {
-            message.roleIds.push(longToNumber(reader.uint64()));
+            message.roleIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -1769,7 +1812,7 @@ export const CChatRoomMember: MessageFns<CChatRoomMember> = {
           if (tag === 58) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.roleIds.push(longToNumber(reader.uint64()));
+              message.roleIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -1789,7 +1832,7 @@ export const CChatRoomMember: MessageFns<CChatRoomMember> = {
 
 function createBaseCChatRoomState(): CChatRoomState {
   return {
-    chatId: 0,
+    chatId: 0n,
     chatName: "",
     voiceAllowed: false,
     membersInVoice: [],
@@ -1802,7 +1845,10 @@ function createBaseCChatRoomState(): CChatRoomState {
 
 export const CChatRoomState: MessageFns<CChatRoomState> = {
   encode(message: CChatRoomState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatId);
     }
     if (message.chatName !== undefined && message.chatName !== "") {
@@ -1841,7 +1887,7 @@ export const CChatRoomState: MessageFns<CChatRoomState> = {
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1921,7 +1967,7 @@ export const CChatRoomState: MessageFns<CChatRoomState> = {
 };
 
 function createBaseCChatRoomGroupState(): CChatRoomGroupState {
-  return { headerState: undefined, members: [], defaultChatId: 0, chatRooms: [], kicked: [] };
+  return { headerState: undefined, members: [], defaultChatId: 0n, chatRooms: [], kicked: [] };
 }
 
 export const CChatRoomGroupState: MessageFns<CChatRoomGroupState> = {
@@ -1932,7 +1978,10 @@ export const CChatRoomGroupState: MessageFns<CChatRoomGroupState> = {
     for (const v of message.members) {
       CChatRoomMember.encode(v!, writer.uint32(18).fork()).join();
     }
-    if (message.defaultChatId !== undefined && message.defaultChatId !== 0) {
+    if (message.defaultChatId !== undefined && message.defaultChatId !== 0n) {
+      if (BigInt.asUintN(64, message.defaultChatId) !== message.defaultChatId) {
+        throw new globalThis.Error("value provided for field message.defaultChatId of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.defaultChatId);
     }
     for (const v of message.chatRooms) {
@@ -1972,7 +2021,7 @@ export const CChatRoomGroupState: MessageFns<CChatRoomGroupState> = {
             break;
           }
 
-          message.defaultChatId = longToNumber(reader.uint64());
+          message.defaultChatId = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -2003,7 +2052,7 @@ export const CChatRoomGroupState: MessageFns<CChatRoomGroupState> = {
 
 function createBaseCUserChatRoomState(): CUserChatRoomState {
   return {
-    chatId: 0,
+    chatId: 0n,
     timeJoined: 0,
     timeLastAck: 0,
     desktopNotificationLevel: 0,
@@ -2016,7 +2065,10 @@ function createBaseCUserChatRoomState(): CUserChatRoomState {
 
 export const CUserChatRoomState: MessageFns<CUserChatRoomState> = {
   encode(message: CUserChatRoomState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatId);
     }
     if (message.timeJoined !== undefined && message.timeJoined !== 0) {
@@ -2055,7 +2107,7 @@ export const CUserChatRoomState: MessageFns<CUserChatRoomState> = {
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2126,7 +2178,7 @@ export const CUserChatRoomState: MessageFns<CUserChatRoomState> = {
 
 function createBaseCUserChatRoomGroupState(): CUserChatRoomGroupState {
   return {
-    chatGroupId: 0,
+    chatGroupId: 0n,
     timeJoined: 0,
     userChatRoomState: [],
     desktopNotificationLevel: 0,
@@ -2139,7 +2191,10 @@ function createBaseCUserChatRoomGroupState(): CUserChatRoomGroupState {
 
 export const CUserChatRoomGroupState: MessageFns<CUserChatRoomGroupState> = {
   encode(message: CUserChatRoomGroupState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.timeJoined !== undefined && message.timeJoined !== 0) {
@@ -2178,7 +2233,7 @@ export const CUserChatRoomGroupState: MessageFns<CUserChatRoomGroupState> = {
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2248,12 +2303,15 @@ export const CUserChatRoomGroupState: MessageFns<CUserChatRoomGroupState> = {
 };
 
 function createBaseCChatRoomCreateChatRoomGroupResponse(): CChatRoomCreateChatRoomGroupResponse {
-  return { chatGroupId: 0, state: undefined, userChatState: undefined };
+  return { chatGroupId: 0n, state: undefined, userChatState: undefined };
 }
 
 export const CChatRoomCreateChatRoomGroupResponse: MessageFns<CChatRoomCreateChatRoomGroupResponse> = {
   encode(message: CChatRoomCreateChatRoomGroupResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.state !== undefined) {
@@ -2277,7 +2335,7 @@ export const CChatRoomCreateChatRoomGroupResponse: MessageFns<CChatRoomCreateCha
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2307,12 +2365,15 @@ export const CChatRoomCreateChatRoomGroupResponse: MessageFns<CChatRoomCreateCha
 };
 
 function createBaseCChatRoomSaveChatRoomGroupRequest(): CChatRoomSaveChatRoomGroupRequest {
-  return { chatGroupId: 0, name: "" };
+  return { chatGroupId: 0n, name: "" };
 }
 
 export const CChatRoomSaveChatRoomGroupRequest: MessageFns<CChatRoomSaveChatRoomGroupRequest> = {
   encode(message: CChatRoomSaveChatRoomGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -2333,7 +2394,7 @@ export const CChatRoomSaveChatRoomGroupRequest: MessageFns<CChatRoomSaveChatRoom
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2381,12 +2442,15 @@ export const CChatRoomSaveChatRoomGroupResponse: MessageFns<CChatRoomSaveChatRoo
 };
 
 function createBaseCChatRoomRenameChatRoomGroupRequest(): CChatRoomRenameChatRoomGroupRequest {
-  return { chatGroupId: 0, name: "" };
+  return { chatGroupId: 0n, name: "" };
 }
 
 export const CChatRoomRenameChatRoomGroupRequest: MessageFns<CChatRoomRenameChatRoomGroupRequest> = {
   encode(message: CChatRoomRenameChatRoomGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -2407,7 +2471,7 @@ export const CChatRoomRenameChatRoomGroupRequest: MessageFns<CChatRoomRenameChat
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2466,12 +2530,15 @@ export const CChatRoomRenameChatRoomGroupResponse: MessageFns<CChatRoomRenameCha
 };
 
 function createBaseCChatRoomSetChatRoomGroupTaglineRequest(): CChatRoomSetChatRoomGroupTaglineRequest {
-  return { chatGroupId: 0, tagline: "" };
+  return { chatGroupId: 0n, tagline: "" };
 }
 
 export const CChatRoomSetChatRoomGroupTaglineRequest: MessageFns<CChatRoomSetChatRoomGroupTaglineRequest> = {
   encode(message: CChatRoomSetChatRoomGroupTaglineRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.tagline !== undefined && message.tagline !== "") {
@@ -2492,7 +2559,7 @@ export const CChatRoomSetChatRoomGroupTaglineRequest: MessageFns<CChatRoomSetCha
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2540,12 +2607,15 @@ export const CChatRoomSetChatRoomGroupTaglineResponse: MessageFns<CChatRoomSetCh
 };
 
 function createBaseCChatRoomSetChatRoomGroupAvatarRequest(): CChatRoomSetChatRoomGroupAvatarRequest {
-  return { chatGroupId: 0, avatarSha: Buffer.alloc(0) };
+  return { chatGroupId: 0n, avatarSha: Buffer.alloc(0) };
 }
 
 export const CChatRoomSetChatRoomGroupAvatarRequest: MessageFns<CChatRoomSetChatRoomGroupAvatarRequest> = {
   encode(message: CChatRoomSetChatRoomGroupAvatarRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.avatarSha !== undefined && message.avatarSha.length !== 0) {
@@ -2566,7 +2636,7 @@ export const CChatRoomSetChatRoomGroupAvatarRequest: MessageFns<CChatRoomSetChat
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2614,7 +2684,7 @@ export const CChatRoomSetChatRoomGroupAvatarResponse: MessageFns<CChatRoomSetCha
 };
 
 function createBaseCChatRoomSetChatRoomGroupWatchingBroadcastRequest(): CChatRoomSetChatRoomGroupWatchingBroadcastRequest {
-  return { chatGroupId: 0, watchingBroadcastAccountid: 0, watchingBroadcastChannelId: 0 };
+  return { chatGroupId: 0n, watchingBroadcastAccountid: 0, watchingBroadcastChannelId: 0n };
 }
 
 export const CChatRoomSetChatRoomGroupWatchingBroadcastRequest: MessageFns<
@@ -2624,13 +2694,21 @@ export const CChatRoomSetChatRoomGroupWatchingBroadcastRequest: MessageFns<
     message: CChatRoomSetChatRoomGroupWatchingBroadcastRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.watchingBroadcastAccountid !== undefined && message.watchingBroadcastAccountid !== 0) {
       writer.uint32(16).uint32(message.watchingBroadcastAccountid);
     }
-    if (message.watchingBroadcastChannelId !== undefined && message.watchingBroadcastChannelId !== 0) {
+    if (message.watchingBroadcastChannelId !== undefined && message.watchingBroadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.watchingBroadcastChannelId) !== message.watchingBroadcastChannelId) {
+        throw new globalThis.Error(
+          "value provided for field message.watchingBroadcastChannelId of type uint64 too large",
+        );
+      }
       writer.uint32(24).uint64(message.watchingBroadcastChannelId);
     }
     return writer;
@@ -2648,7 +2726,7 @@ export const CChatRoomSetChatRoomGroupWatchingBroadcastRequest: MessageFns<
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2664,7 +2742,7 @@ export const CChatRoomSetChatRoomGroupWatchingBroadcastRequest: MessageFns<
             break;
           }
 
-          message.watchingBroadcastChannelId = longToNumber(reader.uint64());
+          message.watchingBroadcastChannelId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2709,7 +2787,7 @@ export const CChatRoomSetChatRoomGroupWatchingBroadcastResponse: MessageFns<
 };
 
 function createBaseCChatRoomJoinMiniGameForChatRoomGroupRequest(): CChatRoomJoinMiniGameForChatRoomGroupRequest {
-  return { chatGroupId: 0, chatId: 0 };
+  return { chatGroupId: 0n, chatId: 0n };
 }
 
 export const CChatRoomJoinMiniGameForChatRoomGroupRequest: MessageFns<CChatRoomJoinMiniGameForChatRoomGroupRequest> = {
@@ -2717,10 +2795,16 @@ export const CChatRoomJoinMiniGameForChatRoomGroupRequest: MessageFns<CChatRoomJ
     message: CChatRoomJoinMiniGameForChatRoomGroupRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     return writer;
@@ -2738,7 +2822,7 @@ export const CChatRoomJoinMiniGameForChatRoomGroupRequest: MessageFns<CChatRoomJ
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2746,7 +2830,7 @@ export const CChatRoomJoinMiniGameForChatRoomGroupRequest: MessageFns<CChatRoomJ
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2760,7 +2844,7 @@ export const CChatRoomJoinMiniGameForChatRoomGroupRequest: MessageFns<CChatRoomJ
 };
 
 function createBaseCChatRoomJoinMiniGameForChatRoomGroupResponse(): CChatRoomJoinMiniGameForChatRoomGroupResponse {
-  return { minigameId: 0 };
+  return { minigameId: 0n };
 }
 
 export const CChatRoomJoinMiniGameForChatRoomGroupResponse: MessageFns<CChatRoomJoinMiniGameForChatRoomGroupResponse> =
@@ -2769,7 +2853,10 @@ export const CChatRoomJoinMiniGameForChatRoomGroupResponse: MessageFns<CChatRoom
       message: CChatRoomJoinMiniGameForChatRoomGroupResponse,
       writer: BinaryWriter = new BinaryWriter(),
     ): BinaryWriter {
-      if (message.minigameId !== undefined && message.minigameId !== 0) {
+      if (message.minigameId !== undefined && message.minigameId !== 0n) {
+        if (BigInt.asUintN(64, message.minigameId) !== message.minigameId) {
+          throw new globalThis.Error("value provided for field message.minigameId of type uint64 too large");
+        }
         writer.uint32(8).uint64(message.minigameId);
       }
       return writer;
@@ -2787,7 +2874,7 @@ export const CChatRoomJoinMiniGameForChatRoomGroupResponse: MessageFns<CChatRoom
               break;
             }
 
-            message.minigameId = longToNumber(reader.uint64());
+            message.minigameId = reader.uint64() as bigint;
             continue;
           }
         }
@@ -2801,7 +2888,7 @@ export const CChatRoomJoinMiniGameForChatRoomGroupResponse: MessageFns<CChatRoom
   };
 
 function createBaseCChatRoomEndMiniGameForChatRoomGroupRequest(): CChatRoomEndMiniGameForChatRoomGroupRequest {
-  return { chatGroupId: 0, chatId: 0, minigameId: 0 };
+  return { chatGroupId: 0n, chatId: 0n, minigameId: 0n };
 }
 
 export const CChatRoomEndMiniGameForChatRoomGroupRequest: MessageFns<CChatRoomEndMiniGameForChatRoomGroupRequest> = {
@@ -2809,13 +2896,22 @@ export const CChatRoomEndMiniGameForChatRoomGroupRequest: MessageFns<CChatRoomEn
     message: CChatRoomEndMiniGameForChatRoomGroupRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
-    if (message.minigameId !== undefined && message.minigameId !== 0) {
+    if (message.minigameId !== undefined && message.minigameId !== 0n) {
+      if (BigInt.asUintN(64, message.minigameId) !== message.minigameId) {
+        throw new globalThis.Error("value provided for field message.minigameId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.minigameId);
     }
     return writer;
@@ -2833,7 +2929,7 @@ export const CChatRoomEndMiniGameForChatRoomGroupRequest: MessageFns<CChatRoomEn
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2841,7 +2937,7 @@ export const CChatRoomEndMiniGameForChatRoomGroupRequest: MessageFns<CChatRoomEn
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -2849,7 +2945,7 @@ export const CChatRoomEndMiniGameForChatRoomGroupRequest: MessageFns<CChatRoomEn
             break;
           }
 
-          message.minigameId = longToNumber(reader.uint64());
+          message.minigameId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2889,15 +2985,21 @@ export const CChatRoomEndMiniGameForChatRoomGroupResponse: MessageFns<CChatRoomE
 };
 
 function createBaseCChatRoomMuteUserRequest(): CChatRoomMuteUserRequest {
-  return { chatGroupId: 0, steamid: 0, expiration: 0 };
+  return { chatGroupId: 0n, steamid: 0n, expiration: 0 };
 }
 
 export const CChatRoomMuteUserRequest: MessageFns<CChatRoomMuteUserRequest> = {
   encode(message: CChatRoomMuteUserRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     if (message.expiration !== undefined && message.expiration !== 0) {
@@ -2918,7 +3020,7 @@ export const CChatRoomMuteUserRequest: MessageFns<CChatRoomMuteUserRequest> = {
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2926,7 +3028,7 @@ export const CChatRoomMuteUserRequest: MessageFns<CChatRoomMuteUserRequest> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2974,15 +3076,21 @@ export const CChatRoomMuteUserResponse: MessageFns<CChatRoomMuteUserResponse> = 
 };
 
 function createBaseCChatRoomKickUserRequest(): CChatRoomKickUserRequest {
-  return { chatGroupId: 0, steamid: 0, expiration: 0 };
+  return { chatGroupId: 0n, steamid: 0n, expiration: 0 };
 }
 
 export const CChatRoomKickUserRequest: MessageFns<CChatRoomKickUserRequest> = {
   encode(message: CChatRoomKickUserRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     if (message.expiration !== undefined && message.expiration !== 0) {
@@ -3003,7 +3111,7 @@ export const CChatRoomKickUserRequest: MessageFns<CChatRoomKickUserRequest> = {
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3011,7 +3119,7 @@ export const CChatRoomKickUserRequest: MessageFns<CChatRoomKickUserRequest> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -3059,15 +3167,21 @@ export const CChatRoomKickUserResponse: MessageFns<CChatRoomKickUserResponse> = 
 };
 
 function createBaseCChatRoomSetUserBanStateRequest(): CChatRoomSetUserBanStateRequest {
-  return { chatGroupId: 0, steamid: 0, banState: false };
+  return { chatGroupId: 0n, steamid: 0n, banState: false };
 }
 
 export const CChatRoomSetUserBanStateRequest: MessageFns<CChatRoomSetUserBanStateRequest> = {
   encode(message: CChatRoomSetUserBanStateRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     if (message.banState !== undefined && message.banState !== false) {
@@ -3088,7 +3202,7 @@ export const CChatRoomSetUserBanStateRequest: MessageFns<CChatRoomSetUserBanStat
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3096,7 +3210,7 @@ export const CChatRoomSetUserBanStateRequest: MessageFns<CChatRoomSetUserBanStat
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -3144,15 +3258,21 @@ export const CChatRoomSetUserBanStateResponse: MessageFns<CChatRoomSetUserBanSta
 };
 
 function createBaseCChatRoomRevokeInviteRequest(): CChatRoomRevokeInviteRequest {
-  return { chatGroupId: 0, steamid: 0 };
+  return { chatGroupId: 0n, steamid: 0n };
 }
 
 export const CChatRoomRevokeInviteRequest: MessageFns<CChatRoomRevokeInviteRequest> = {
   encode(message: CChatRoomRevokeInviteRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     return writer;
@@ -3170,7 +3290,7 @@ export const CChatRoomRevokeInviteRequest: MessageFns<CChatRoomRevokeInviteReque
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3178,7 +3298,7 @@ export const CChatRoomRevokeInviteRequest: MessageFns<CChatRoomRevokeInviteReque
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3218,12 +3338,15 @@ export const CChatRoomRevokeInviteResponse: MessageFns<CChatRoomRevokeInviteResp
 };
 
 function createBaseCChatRoomCreateRoleRequest(): CChatRoomCreateRoleRequest {
-  return { chatGroupId: 0, name: "" };
+  return { chatGroupId: 0n, name: "" };
 }
 
 export const CChatRoomCreateRoleRequest: MessageFns<CChatRoomCreateRoleRequest> = {
   encode(message: CChatRoomCreateRoleRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -3244,7 +3367,7 @@ export const CChatRoomCreateRoleRequest: MessageFns<CChatRoomCreateRoleRequest> 
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3303,12 +3426,15 @@ export const CChatRoomCreateRoleResponse: MessageFns<CChatRoomCreateRoleResponse
 };
 
 function createBaseCChatRoomGetRolesRequest(): CChatRoomGetRolesRequest {
-  return { chatGroupId: 0 };
+  return { chatGroupId: 0n };
 }
 
 export const CChatRoomGetRolesRequest: MessageFns<CChatRoomGetRolesRequest> = {
   encode(message: CChatRoomGetRolesRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     return writer;
@@ -3326,7 +3452,7 @@ export const CChatRoomGetRolesRequest: MessageFns<CChatRoomGetRolesRequest> = {
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -3377,15 +3503,21 @@ export const CChatRoomGetRolesResponse: MessageFns<CChatRoomGetRolesResponse> = 
 };
 
 function createBaseCChatRoomRenameRoleRequest(): CChatRoomRenameRoleRequest {
-  return { chatGroupId: 0, roleId: 0, name: "" };
+  return { chatGroupId: 0n, roleId: 0n, name: "" };
 }
 
 export const CChatRoomRenameRoleRequest: MessageFns<CChatRoomRenameRoleRequest> = {
   encode(message: CChatRoomRenameRoleRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.roleId !== undefined && message.roleId !== 0) {
+    if (message.roleId !== undefined && message.roleId !== 0n) {
+      if (BigInt.asUintN(64, message.roleId) !== message.roleId) {
+        throw new globalThis.Error("value provided for field message.roleId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.roleId);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -3406,7 +3538,7 @@ export const CChatRoomRenameRoleRequest: MessageFns<CChatRoomRenameRoleRequest> 
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3414,7 +3546,7 @@ export const CChatRoomRenameRoleRequest: MessageFns<CChatRoomRenameRoleRequest> 
             break;
           }
 
-          message.roleId = longToNumber(reader.uint64());
+          message.roleId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -3462,15 +3594,21 @@ export const CChatRoomRenameRoleResponse: MessageFns<CChatRoomRenameRoleResponse
 };
 
 function createBaseCChatRoomReorderRoleRequest(): CChatRoomReorderRoleRequest {
-  return { chatGroupId: 0, roleId: 0, ordinal: 0 };
+  return { chatGroupId: 0n, roleId: 0n, ordinal: 0 };
 }
 
 export const CChatRoomReorderRoleRequest: MessageFns<CChatRoomReorderRoleRequest> = {
   encode(message: CChatRoomReorderRoleRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.roleId !== undefined && message.roleId !== 0) {
+    if (message.roleId !== undefined && message.roleId !== 0n) {
+      if (BigInt.asUintN(64, message.roleId) !== message.roleId) {
+        throw new globalThis.Error("value provided for field message.roleId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.roleId);
     }
     if (message.ordinal !== undefined && message.ordinal !== 0) {
@@ -3491,7 +3629,7 @@ export const CChatRoomReorderRoleRequest: MessageFns<CChatRoomReorderRoleRequest
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3499,7 +3637,7 @@ export const CChatRoomReorderRoleRequest: MessageFns<CChatRoomReorderRoleRequest
             break;
           }
 
-          message.roleId = longToNumber(reader.uint64());
+          message.roleId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -3547,15 +3685,21 @@ export const CChatRoomReorderRoleResponse: MessageFns<CChatRoomReorderRoleRespon
 };
 
 function createBaseCChatRoomDeleteRoleRequest(): CChatRoomDeleteRoleRequest {
-  return { chatGroupId: 0, roleId: 0 };
+  return { chatGroupId: 0n, roleId: 0n };
 }
 
 export const CChatRoomDeleteRoleRequest: MessageFns<CChatRoomDeleteRoleRequest> = {
   encode(message: CChatRoomDeleteRoleRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.roleId !== undefined && message.roleId !== 0) {
+    if (message.roleId !== undefined && message.roleId !== 0n) {
+      if (BigInt.asUintN(64, message.roleId) !== message.roleId) {
+        throw new globalThis.Error("value provided for field message.roleId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.roleId);
     }
     return writer;
@@ -3573,7 +3717,7 @@ export const CChatRoomDeleteRoleRequest: MessageFns<CChatRoomDeleteRoleRequest> 
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3581,7 +3725,7 @@ export const CChatRoomDeleteRoleRequest: MessageFns<CChatRoomDeleteRoleRequest> 
             break;
           }
 
-          message.roleId = longToNumber(reader.uint64());
+          message.roleId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -3621,15 +3765,21 @@ export const CChatRoomDeleteRoleResponse: MessageFns<CChatRoomDeleteRoleResponse
 };
 
 function createBaseCChatRoomGetRoleActionsRequest(): CChatRoomGetRoleActionsRequest {
-  return { chatGroupId: 0, roleId: 0 };
+  return { chatGroupId: 0n, roleId: 0n };
 }
 
 export const CChatRoomGetRoleActionsRequest: MessageFns<CChatRoomGetRoleActionsRequest> = {
   encode(message: CChatRoomGetRoleActionsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.roleId !== undefined && message.roleId !== 0) {
+    if (message.roleId !== undefined && message.roleId !== 0n) {
+      if (BigInt.asUintN(64, message.roleId) !== message.roleId) {
+        throw new globalThis.Error("value provided for field message.roleId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.roleId);
     }
     return writer;
@@ -3647,7 +3797,7 @@ export const CChatRoomGetRoleActionsRequest: MessageFns<CChatRoomGetRoleActionsR
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3655,7 +3805,7 @@ export const CChatRoomGetRoleActionsRequest: MessageFns<CChatRoomGetRoleActionsR
             break;
           }
 
-          message.roleId = longToNumber(reader.uint64());
+          message.roleId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -3706,15 +3856,21 @@ export const CChatRoomGetRoleActionsResponse: MessageFns<CChatRoomGetRoleActions
 };
 
 function createBaseCChatRoomReplaceRoleActionsRequest(): CChatRoomReplaceRoleActionsRequest {
-  return { chatGroupId: 0, roleId: 0, actions: undefined };
+  return { chatGroupId: 0n, roleId: 0n, actions: undefined };
 }
 
 export const CChatRoomReplaceRoleActionsRequest: MessageFns<CChatRoomReplaceRoleActionsRequest> = {
   encode(message: CChatRoomReplaceRoleActionsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.roleId !== undefined && message.roleId !== 0) {
+    if (message.roleId !== undefined && message.roleId !== 0n) {
+      if (BigInt.asUintN(64, message.roleId) !== message.roleId) {
+        throw new globalThis.Error("value provided for field message.roleId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.roleId);
     }
     if (message.actions !== undefined) {
@@ -3735,7 +3891,7 @@ export const CChatRoomReplaceRoleActionsRequest: MessageFns<CChatRoomReplaceRole
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3743,7 +3899,7 @@ export const CChatRoomReplaceRoleActionsRequest: MessageFns<CChatRoomReplaceRole
             break;
           }
 
-          message.roleId = longToNumber(reader.uint64());
+          message.roleId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -3791,18 +3947,27 @@ export const CChatRoomReplaceRoleActionsResponse: MessageFns<CChatRoomReplaceRol
 };
 
 function createBaseCChatRoomAddRoleToUserRequest(): CChatRoomAddRoleToUserRequest {
-  return { chatGroupId: 0, roleId: 0, steamid: 0 };
+  return { chatGroupId: 0n, roleId: 0n, steamid: 0n };
 }
 
 export const CChatRoomAddRoleToUserRequest: MessageFns<CChatRoomAddRoleToUserRequest> = {
   encode(message: CChatRoomAddRoleToUserRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.roleId !== undefined && message.roleId !== 0) {
+    if (message.roleId !== undefined && message.roleId !== 0n) {
+      if (BigInt.asUintN(64, message.roleId) !== message.roleId) {
+        throw new globalThis.Error("value provided for field message.roleId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.roleId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.steamid);
     }
     return writer;
@@ -3820,7 +3985,7 @@ export const CChatRoomAddRoleToUserRequest: MessageFns<CChatRoomAddRoleToUserReq
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -3828,7 +3993,7 @@ export const CChatRoomAddRoleToUserRequest: MessageFns<CChatRoomAddRoleToUserReq
             break;
           }
 
-          message.roleId = longToNumber(reader.uint64());
+          message.roleId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -3836,7 +4001,7 @@ export const CChatRoomAddRoleToUserRequest: MessageFns<CChatRoomAddRoleToUserReq
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3876,15 +4041,21 @@ export const CChatRoomAddRoleToUserResponse: MessageFns<CChatRoomAddRoleToUserRe
 };
 
 function createBaseCChatRoomGetRolesForUserRequest(): CChatRoomGetRolesForUserRequest {
-  return { chatGroupId: 0, steamid: 0 };
+  return { chatGroupId: 0n, steamid: 0n };
 }
 
 export const CChatRoomGetRolesForUserRequest: MessageFns<CChatRoomGetRolesForUserRequest> = {
   encode(message: CChatRoomGetRolesForUserRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamid);
     }
     return writer;
@@ -3902,7 +4073,7 @@ export const CChatRoomGetRolesForUserRequest: MessageFns<CChatRoomGetRolesForUse
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -3910,7 +4081,7 @@ export const CChatRoomGetRolesForUserRequest: MessageFns<CChatRoomGetRolesForUse
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3930,6 +4101,9 @@ function createBaseCChatRoomGetRolesForUserResponse(): CChatRoomGetRolesForUserR
 export const CChatRoomGetRolesForUserResponse: MessageFns<CChatRoomGetRolesForUserResponse> = {
   encode(message: CChatRoomGetRolesForUserResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.roleIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(8).uint64(v!);
     }
     return writer;
@@ -3944,7 +4118,7 @@ export const CChatRoomGetRolesForUserResponse: MessageFns<CChatRoomGetRolesForUs
       switch (tag >>> 3) {
         case 1: {
           if (tag === 8) {
-            message.roleIds.push(longToNumber(reader.uint64()));
+            message.roleIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -3952,7 +4126,7 @@ export const CChatRoomGetRolesForUserResponse: MessageFns<CChatRoomGetRolesForUs
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.roleIds.push(longToNumber(reader.uint64()));
+              message.roleIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -3971,18 +4145,27 @@ export const CChatRoomGetRolesForUserResponse: MessageFns<CChatRoomGetRolesForUs
 };
 
 function createBaseCChatRoomDeleteRoleFromUserRequest(): CChatRoomDeleteRoleFromUserRequest {
-  return { chatGroupId: 0, roleId: 0, steamid: 0 };
+  return { chatGroupId: 0n, roleId: 0n, steamid: 0n };
 }
 
 export const CChatRoomDeleteRoleFromUserRequest: MessageFns<CChatRoomDeleteRoleFromUserRequest> = {
   encode(message: CChatRoomDeleteRoleFromUserRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.roleId !== undefined && message.roleId !== 0) {
+    if (message.roleId !== undefined && message.roleId !== 0n) {
+      if (BigInt.asUintN(64, message.roleId) !== message.roleId) {
+        throw new globalThis.Error("value provided for field message.roleId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.roleId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.steamid);
     }
     return writer;
@@ -4000,7 +4183,7 @@ export const CChatRoomDeleteRoleFromUserRequest: MessageFns<CChatRoomDeleteRoleF
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -4008,7 +4191,7 @@ export const CChatRoomDeleteRoleFromUserRequest: MessageFns<CChatRoomDeleteRoleF
             break;
           }
 
-          message.roleId = longToNumber(reader.uint64());
+          message.roleId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -4016,7 +4199,7 @@ export const CChatRoomDeleteRoleFromUserRequest: MessageFns<CChatRoomDeleteRoleF
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -4056,18 +4239,24 @@ export const CChatRoomDeleteRoleFromUserResponse: MessageFns<CChatRoomDeleteRole
 };
 
 function createBaseCChatRoomJoinChatRoomGroupRequest(): CChatRoomJoinChatRoomGroupRequest {
-  return { chatGroupId: 0, inviteCode: "", chatId: 0 };
+  return { chatGroupId: 0n, inviteCode: "", chatId: 0n };
 }
 
 export const CChatRoomJoinChatRoomGroupRequest: MessageFns<CChatRoomJoinChatRoomGroupRequest> = {
   encode(message: CChatRoomJoinChatRoomGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.inviteCode !== undefined && message.inviteCode !== "") {
       writer.uint32(18).string(message.inviteCode);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.chatId);
     }
     return writer;
@@ -4085,7 +4274,7 @@ export const CChatRoomJoinChatRoomGroupRequest: MessageFns<CChatRoomJoinChatRoom
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4101,7 +4290,7 @@ export const CChatRoomJoinChatRoomGroupRequest: MessageFns<CChatRoomJoinChatRoom
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4115,7 +4304,7 @@ export const CChatRoomJoinChatRoomGroupRequest: MessageFns<CChatRoomJoinChatRoom
 };
 
 function createBaseCChatRoomJoinChatRoomGroupResponse(): CChatRoomJoinChatRoomGroupResponse {
-  return { state: undefined, userChatState: undefined, joinChatId: 0, timeExpire: 0 };
+  return { state: undefined, userChatState: undefined, joinChatId: 0n, timeExpire: 0 };
 }
 
 export const CChatRoomJoinChatRoomGroupResponse: MessageFns<CChatRoomJoinChatRoomGroupResponse> = {
@@ -4126,7 +4315,10 @@ export const CChatRoomJoinChatRoomGroupResponse: MessageFns<CChatRoomJoinChatRoo
     if (message.userChatState !== undefined) {
       CUserChatRoomGroupState.encode(message.userChatState, writer.uint32(26).fork()).join();
     }
-    if (message.joinChatId !== undefined && message.joinChatId !== 0) {
+    if (message.joinChatId !== undefined && message.joinChatId !== 0n) {
+      if (BigInt.asUintN(64, message.joinChatId) !== message.joinChatId) {
+        throw new globalThis.Error("value provided for field message.joinChatId of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.joinChatId);
     }
     if (message.timeExpire !== undefined && message.timeExpire !== 0) {
@@ -4163,7 +4355,7 @@ export const CChatRoomJoinChatRoomGroupResponse: MessageFns<CChatRoomJoinChatRoo
             break;
           }
 
-          message.joinChatId = longToNumber(reader.uint64());
+          message.joinChatId = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -4185,7 +4377,7 @@ export const CChatRoomJoinChatRoomGroupResponse: MessageFns<CChatRoomJoinChatRoo
 };
 
 function createBaseCChatRoomInviteFriendToChatRoomGroupRequest(): CChatRoomInviteFriendToChatRoomGroupRequest {
-  return { chatGroupId: 0, steamid: 0, chatId: 0, skipFriendsuiCheck: false };
+  return { chatGroupId: 0n, steamid: 0n, chatId: 0n, skipFriendsuiCheck: false };
 }
 
 export const CChatRoomInviteFriendToChatRoomGroupRequest: MessageFns<CChatRoomInviteFriendToChatRoomGroupRequest> = {
@@ -4193,13 +4385,22 @@ export const CChatRoomInviteFriendToChatRoomGroupRequest: MessageFns<CChatRoomIn
     message: CChatRoomInviteFriendToChatRoomGroupRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.chatId);
     }
     if (message.skipFriendsuiCheck !== undefined && message.skipFriendsuiCheck !== false) {
@@ -4220,7 +4421,7 @@ export const CChatRoomInviteFriendToChatRoomGroupRequest: MessageFns<CChatRoomIn
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4228,7 +4429,7 @@ export const CChatRoomInviteFriendToChatRoomGroupRequest: MessageFns<CChatRoomIn
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -4236,7 +4437,7 @@ export const CChatRoomInviteFriendToChatRoomGroupRequest: MessageFns<CChatRoomIn
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -4284,12 +4485,15 @@ export const CChatRoomInviteFriendToChatRoomGroupResponse: MessageFns<CChatRoomI
 };
 
 function createBaseCChatRoomLeaveChatRoomGroupRequest(): CChatRoomLeaveChatRoomGroupRequest {
-  return { chatGroupId: 0 };
+  return { chatGroupId: 0n };
 }
 
 export const CChatRoomLeaveChatRoomGroupRequest: MessageFns<CChatRoomLeaveChatRoomGroupRequest> = {
   encode(message: CChatRoomLeaveChatRoomGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     return writer;
@@ -4307,7 +4511,7 @@ export const CChatRoomLeaveChatRoomGroupRequest: MessageFns<CChatRoomLeaveChatRo
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4347,12 +4551,15 @@ export const CChatRoomLeaveChatRoomGroupResponse: MessageFns<CChatRoomLeaveChatR
 };
 
 function createBaseCChatRoomCreateChatRoomRequest(): CChatRoomCreateChatRoomRequest {
-  return { chatGroupId: 0, name: "", allowVoice: false };
+  return { chatGroupId: 0n, name: "", allowVoice: false };
 }
 
 export const CChatRoomCreateChatRoomRequest: MessageFns<CChatRoomCreateChatRoomRequest> = {
   encode(message: CChatRoomCreateChatRoomRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -4376,7 +4583,7 @@ export const CChatRoomCreateChatRoomRequest: MessageFns<CChatRoomCreateChatRoomR
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4443,15 +4650,21 @@ export const CChatRoomCreateChatRoomResponse: MessageFns<CChatRoomCreateChatRoom
 };
 
 function createBaseCChatRoomDeleteChatRoomRequest(): CChatRoomDeleteChatRoomRequest {
-  return { chatGroupId: 0, chatId: 0 };
+  return { chatGroupId: 0n, chatId: 0n };
 }
 
 export const CChatRoomDeleteChatRoomRequest: MessageFns<CChatRoomDeleteChatRoomRequest> = {
   encode(message: CChatRoomDeleteChatRoomRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     return writer;
@@ -4469,7 +4682,7 @@ export const CChatRoomDeleteChatRoomRequest: MessageFns<CChatRoomDeleteChatRoomR
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4477,7 +4690,7 @@ export const CChatRoomDeleteChatRoomRequest: MessageFns<CChatRoomDeleteChatRoomR
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4517,15 +4730,21 @@ export const CChatRoomDeleteChatRoomResponse: MessageFns<CChatRoomDeleteChatRoom
 };
 
 function createBaseCChatRoomRenameChatRoomRequest(): CChatRoomRenameChatRoomRequest {
-  return { chatGroupId: 0, chatId: 0, name: "" };
+  return { chatGroupId: 0n, chatId: 0n, name: "" };
 }
 
 export const CChatRoomRenameChatRoomRequest: MessageFns<CChatRoomRenameChatRoomRequest> = {
   encode(message: CChatRoomRenameChatRoomRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -4546,7 +4765,7 @@ export const CChatRoomRenameChatRoomRequest: MessageFns<CChatRoomRenameChatRoomR
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4554,7 +4773,7 @@ export const CChatRoomRenameChatRoomRequest: MessageFns<CChatRoomRenameChatRoomR
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -4602,18 +4821,27 @@ export const CChatRoomRenameChatRoomResponse: MessageFns<CChatRoomRenameChatRoom
 };
 
 function createBaseCChatRoomReorderChatRoomRequest(): CChatRoomReorderChatRoomRequest {
-  return { chatGroupId: 0, chatId: 0, moveAfterChatId: 0 };
+  return { chatGroupId: 0n, chatId: 0n, moveAfterChatId: 0n };
 }
 
 export const CChatRoomReorderChatRoomRequest: MessageFns<CChatRoomReorderChatRoomRequest> = {
   encode(message: CChatRoomReorderChatRoomRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
-    if (message.moveAfterChatId !== undefined && message.moveAfterChatId !== 0) {
+    if (message.moveAfterChatId !== undefined && message.moveAfterChatId !== 0n) {
+      if (BigInt.asUintN(64, message.moveAfterChatId) !== message.moveAfterChatId) {
+        throw new globalThis.Error("value provided for field message.moveAfterChatId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.moveAfterChatId);
     }
     return writer;
@@ -4631,7 +4859,7 @@ export const CChatRoomReorderChatRoomRequest: MessageFns<CChatRoomReorderChatRoo
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4639,7 +4867,7 @@ export const CChatRoomReorderChatRoomRequest: MessageFns<CChatRoomReorderChatRoo
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -4647,7 +4875,7 @@ export const CChatRoomReorderChatRoomRequest: MessageFns<CChatRoomReorderChatRoo
             break;
           }
 
-          message.moveAfterChatId = longToNumber(reader.uint64());
+          message.moveAfterChatId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4687,15 +4915,21 @@ export const CChatRoomReorderChatRoomResponse: MessageFns<CChatRoomReorderChatRo
 };
 
 function createBaseCChatRoomSendChatMessageRequest(): CChatRoomSendChatMessageRequest {
-  return { chatGroupId: 0, chatId: 0, message: "", echoToSender: false };
+  return { chatGroupId: 0n, chatId: 0n, message: "", echoToSender: false };
 }
 
 export const CChatRoomSendChatMessageRequest: MessageFns<CChatRoomSendChatMessageRequest> = {
   encode(message: CChatRoomSendChatMessageRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     if (message.message !== undefined && message.message !== "") {
@@ -4719,7 +4953,7 @@ export const CChatRoomSendChatMessageRequest: MessageFns<CChatRoomSendChatMessag
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4727,7 +4961,7 @@ export const CChatRoomSendChatMessageRequest: MessageFns<CChatRoomSendChatMessag
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -4827,15 +5061,21 @@ export const CChatRoomSendChatMessageResponse: MessageFns<CChatRoomSendChatMessa
 };
 
 function createBaseCChatRoomJoinVoiceChatRequest(): CChatRoomJoinVoiceChatRequest {
-  return { chatGroupId: 0, chatId: 0 };
+  return { chatGroupId: 0n, chatId: 0n };
 }
 
 export const CChatRoomJoinVoiceChatRequest: MessageFns<CChatRoomJoinVoiceChatRequest> = {
   encode(message: CChatRoomJoinVoiceChatRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     return writer;
@@ -4853,7 +5093,7 @@ export const CChatRoomJoinVoiceChatRequest: MessageFns<CChatRoomJoinVoiceChatReq
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4861,7 +5101,7 @@ export const CChatRoomJoinVoiceChatRequest: MessageFns<CChatRoomJoinVoiceChatReq
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4875,12 +5115,15 @@ export const CChatRoomJoinVoiceChatRequest: MessageFns<CChatRoomJoinVoiceChatReq
 };
 
 function createBaseCChatRoomJoinVoiceChatResponse(): CChatRoomJoinVoiceChatResponse {
-  return { voiceChatid: 0 };
+  return { voiceChatid: 0n };
 }
 
 export const CChatRoomJoinVoiceChatResponse: MessageFns<CChatRoomJoinVoiceChatResponse> = {
   encode(message: CChatRoomJoinVoiceChatResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.voiceChatid !== undefined && message.voiceChatid !== 0) {
+    if (message.voiceChatid !== undefined && message.voiceChatid !== 0n) {
+      if (BigInt.asUintN(64, message.voiceChatid) !== message.voiceChatid) {
+        throw new globalThis.Error("value provided for field message.voiceChatid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.voiceChatid);
     }
     return writer;
@@ -4898,7 +5141,7 @@ export const CChatRoomJoinVoiceChatResponse: MessageFns<CChatRoomJoinVoiceChatRe
             break;
           }
 
-          message.voiceChatid = longToNumber(reader.uint64());
+          message.voiceChatid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4912,15 +5155,21 @@ export const CChatRoomJoinVoiceChatResponse: MessageFns<CChatRoomJoinVoiceChatRe
 };
 
 function createBaseCChatRoomLeaveVoiceChatRequest(): CChatRoomLeaveVoiceChatRequest {
-  return { chatGroupId: 0, chatId: 0 };
+  return { chatGroupId: 0n, chatId: 0n };
 }
 
 export const CChatRoomLeaveVoiceChatRequest: MessageFns<CChatRoomLeaveVoiceChatRequest> = {
   encode(message: CChatRoomLeaveVoiceChatRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     return writer;
@@ -4938,7 +5187,7 @@ export const CChatRoomLeaveVoiceChatRequest: MessageFns<CChatRoomLeaveVoiceChatR
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4946,7 +5195,7 @@ export const CChatRoomLeaveVoiceChatRequest: MessageFns<CChatRoomLeaveVoiceChatR
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4986,15 +5235,21 @@ export const CChatRoomLeaveVoiceChatResponse: MessageFns<CChatRoomLeaveVoiceChat
 };
 
 function createBaseCChatRoomGetMessageHistoryRequest(): CChatRoomGetMessageHistoryRequest {
-  return { chatGroupId: 0, chatId: 0, lastTime: 0, lastOrdinal: 0, startTime: 0, startOrdinal: 0, maxCount: 0 };
+  return { chatGroupId: 0n, chatId: 0n, lastTime: 0, lastOrdinal: 0, startTime: 0, startOrdinal: 0, maxCount: 0 };
 }
 
 export const CChatRoomGetMessageHistoryRequest: MessageFns<CChatRoomGetMessageHistoryRequest> = {
   encode(message: CChatRoomGetMessageHistoryRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     if (message.lastTime !== undefined && message.lastTime !== 0) {
@@ -5027,7 +5282,7 @@ export const CChatRoomGetMessageHistoryRequest: MessageFns<CChatRoomGetMessageHi
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -5035,7 +5290,7 @@ export const CChatRoomGetMessageHistoryRequest: MessageFns<CChatRoomGetMessageHi
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -5419,11 +5674,11 @@ export const CChatRoomGetMyChatRoomGroupsRequest: MessageFns<CChatRoomGetMyChatR
 
 function createBaseCChatRoomGetChatRoomGroupSummaryResponse(): CChatRoomGetChatRoomGroupSummaryResponse {
   return {
-    chatGroupId: 0,
+    chatGroupId: 0n,
     chatGroupName: "",
     activeMemberCount: 0,
     activeVoiceMemberCount: 0,
-    defaultChatId: 0,
+    defaultChatId: 0n,
     chatRooms: [],
     clanid: 0,
     chatGroupTagline: "",
@@ -5431,14 +5686,14 @@ function createBaseCChatRoomGetChatRoomGroupSummaryResponse(): CChatRoomGetChatR
     topMembers: [],
     chatGroupAvatarSha: Buffer.alloc(0),
     rank: 0,
-    defaultRoleId: 0,
+    defaultRoleId: 0n,
     roleIds: [],
     roleActions: [],
     watchingBroadcastAccountid: 0,
     appid: 0,
     partyBeacons: [],
-    watchingBroadcastChannelId: 0,
-    activeMinigameId: 0,
+    watchingBroadcastChannelId: 0n,
+    activeMinigameId: 0n,
     avatarUgcUrl: "",
     disabled: false,
   };
@@ -5446,7 +5701,10 @@ function createBaseCChatRoomGetChatRoomGroupSummaryResponse(): CChatRoomGetChatR
 
 export const CChatRoomGetChatRoomGroupSummaryResponse: MessageFns<CChatRoomGetChatRoomGroupSummaryResponse> = {
   encode(message: CChatRoomGetChatRoomGroupSummaryResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.chatGroupName !== undefined && message.chatGroupName !== "") {
@@ -5458,7 +5716,10 @@ export const CChatRoomGetChatRoomGroupSummaryResponse: MessageFns<CChatRoomGetCh
     if (message.activeVoiceMemberCount !== undefined && message.activeVoiceMemberCount !== 0) {
       writer.uint32(32).uint32(message.activeVoiceMemberCount);
     }
-    if (message.defaultChatId !== undefined && message.defaultChatId !== 0) {
+    if (message.defaultChatId !== undefined && message.defaultChatId !== 0n) {
+      if (BigInt.asUintN(64, message.defaultChatId) !== message.defaultChatId) {
+        throw new globalThis.Error("value provided for field message.defaultChatId of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.defaultChatId);
     }
     for (const v of message.chatRooms) {
@@ -5482,10 +5743,16 @@ export const CChatRoomGetChatRoomGroupSummaryResponse: MessageFns<CChatRoomGetCh
     if (message.rank !== undefined && message.rank !== 0) {
       writer.uint32(96).int32(message.rank);
     }
-    if (message.defaultRoleId !== undefined && message.defaultRoleId !== 0) {
+    if (message.defaultRoleId !== undefined && message.defaultRoleId !== 0n) {
+      if (BigInt.asUintN(64, message.defaultRoleId) !== message.defaultRoleId) {
+        throw new globalThis.Error("value provided for field message.defaultRoleId of type uint64 too large");
+      }
       writer.uint32(104).uint64(message.defaultRoleId);
     }
     for (const v of message.roleIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(112).uint64(v!);
     }
     for (const v of message.roleActions) {
@@ -5500,10 +5767,18 @@ export const CChatRoomGetChatRoomGroupSummaryResponse: MessageFns<CChatRoomGetCh
     for (const v of message.partyBeacons) {
       CChatPartyBeacon.encode(v!, writer.uint32(146).fork()).join();
     }
-    if (message.watchingBroadcastChannelId !== undefined && message.watchingBroadcastChannelId !== 0) {
+    if (message.watchingBroadcastChannelId !== undefined && message.watchingBroadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.watchingBroadcastChannelId) !== message.watchingBroadcastChannelId) {
+        throw new globalThis.Error(
+          "value provided for field message.watchingBroadcastChannelId of type uint64 too large",
+        );
+      }
       writer.uint32(152).uint64(message.watchingBroadcastChannelId);
     }
-    if (message.activeMinigameId !== undefined && message.activeMinigameId !== 0) {
+    if (message.activeMinigameId !== undefined && message.activeMinigameId !== 0n) {
+      if (BigInt.asUintN(64, message.activeMinigameId) !== message.activeMinigameId) {
+        throw new globalThis.Error("value provided for field message.activeMinigameId of type uint64 too large");
+      }
       writer.uint32(160).uint64(message.activeMinigameId);
     }
     if (message.avatarUgcUrl !== undefined && message.avatarUgcUrl !== "") {
@@ -5527,7 +5802,7 @@ export const CChatRoomGetChatRoomGroupSummaryResponse: MessageFns<CChatRoomGetCh
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -5559,7 +5834,7 @@ export const CChatRoomGetChatRoomGroupSummaryResponse: MessageFns<CChatRoomGetCh
             break;
           }
 
-          message.defaultChatId = longToNumber(reader.uint64());
+          message.defaultChatId = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -5633,12 +5908,12 @@ export const CChatRoomGetChatRoomGroupSummaryResponse: MessageFns<CChatRoomGetCh
             break;
           }
 
-          message.defaultRoleId = longToNumber(reader.uint64());
+          message.defaultRoleId = reader.uint64() as bigint;
           continue;
         }
         case 14: {
           if (tag === 112) {
-            message.roleIds.push(longToNumber(reader.uint64()));
+            message.roleIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -5646,7 +5921,7 @@ export const CChatRoomGetChatRoomGroupSummaryResponse: MessageFns<CChatRoomGetCh
           if (tag === 114) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.roleIds.push(longToNumber(reader.uint64()));
+              message.roleIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -5691,7 +5966,7 @@ export const CChatRoomGetChatRoomGroupSummaryResponse: MessageFns<CChatRoomGetCh
             break;
           }
 
-          message.watchingBroadcastChannelId = longToNumber(reader.uint64());
+          message.watchingBroadcastChannelId = reader.uint64() as bigint;
           continue;
         }
         case 20: {
@@ -5699,7 +5974,7 @@ export const CChatRoomGetChatRoomGroupSummaryResponse: MessageFns<CChatRoomGetCh
             break;
           }
 
-          message.activeMinigameId = longToNumber(reader.uint64());
+          message.activeMinigameId = reader.uint64() as bigint;
           continue;
         }
         case 21: {
@@ -5814,12 +6089,15 @@ export const CChatRoomGetMyChatRoomGroupsResponse: MessageFns<CChatRoomGetMyChat
 };
 
 function createBaseCChatRoomGetChatRoomGroupStateRequest(): CChatRoomGetChatRoomGroupStateRequest {
-  return { chatGroupId: 0 };
+  return { chatGroupId: 0n };
 }
 
 export const CChatRoomGetChatRoomGroupStateRequest: MessageFns<CChatRoomGetChatRoomGroupStateRequest> = {
   encode(message: CChatRoomGetChatRoomGroupStateRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     return writer;
@@ -5837,7 +6115,7 @@ export const CChatRoomGetChatRoomGroupStateRequest: MessageFns<CChatRoomGetChatR
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -5888,7 +6166,7 @@ export const CChatRoomGetChatRoomGroupStateResponse: MessageFns<CChatRoomGetChat
 };
 
 function createBaseCChatRoomSetAppChatRoomGroupForceActiveRequest(): CChatRoomSetAppChatRoomGroupForceActiveRequest {
-  return { chatGroupId: 0, requestingAppId: 0 };
+  return { chatGroupId: 0n, requestingAppId: 0 };
 }
 
 export const CChatRoomSetAppChatRoomGroupForceActiveRequest: MessageFns<
@@ -5898,7 +6176,10 @@ export const CChatRoomSetAppChatRoomGroupForceActiveRequest: MessageFns<
     message: CChatRoomSetAppChatRoomGroupForceActiveRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.requestingAppId !== undefined && message.requestingAppId !== 0) {
@@ -5919,7 +6200,7 @@ export const CChatRoomSetAppChatRoomGroupForceActiveRequest: MessageFns<
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -6004,7 +6285,7 @@ export const CChatRoomSetAppChatRoomGroupForceActiveResponse: MessageFns<
 };
 
 function createBaseCChatRoomSetAppChatRoomGroupStopForceActiveNotification(): CChatRoomSetAppChatRoomGroupStopForceActiveNotification {
-  return { chatGroupId: 0, requestingAppId: 0 };
+  return { chatGroupId: 0n, requestingAppId: 0 };
 }
 
 export const CChatRoomSetAppChatRoomGroupStopForceActiveNotification: MessageFns<
@@ -6014,7 +6295,10 @@ export const CChatRoomSetAppChatRoomGroupStopForceActiveNotification: MessageFns
     message: CChatRoomSetAppChatRoomGroupStopForceActiveNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.requestingAppId !== undefined && message.requestingAppId !== 0) {
@@ -6035,7 +6319,7 @@ export const CChatRoomSetAppChatRoomGroupStopForceActiveNotification: MessageFns
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -6057,15 +6341,21 @@ export const CChatRoomSetAppChatRoomGroupStopForceActiveNotification: MessageFns
 };
 
 function createBaseCChatRoomAckChatMessageNotification(): CChatRoomAckChatMessageNotification {
-  return { chatGroupId: 0, chatId: 0, timestamp: 0 };
+  return { chatGroupId: 0n, chatId: 0n, timestamp: 0 };
 }
 
 export const CChatRoomAckChatMessageNotification: MessageFns<CChatRoomAckChatMessageNotification> = {
   encode(message: CChatRoomAckChatMessageNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     if (message.timestamp !== undefined && message.timestamp !== 0) {
@@ -6086,7 +6376,7 @@ export const CChatRoomAckChatMessageNotification: MessageFns<CChatRoomAckChatMes
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -6094,7 +6384,7 @@ export const CChatRoomAckChatMessageNotification: MessageFns<CChatRoomAckChatMes
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -6116,18 +6406,24 @@ export const CChatRoomAckChatMessageNotification: MessageFns<CChatRoomAckChatMes
 };
 
 function createBaseCChatRoomCreateInviteLinkRequest(): CChatRoomCreateInviteLinkRequest {
-  return { chatGroupId: 0, secondsValid: 0, chatId: 0 };
+  return { chatGroupId: 0n, secondsValid: 0, chatId: 0n };
 }
 
 export const CChatRoomCreateInviteLinkRequest: MessageFns<CChatRoomCreateInviteLinkRequest> = {
   encode(message: CChatRoomCreateInviteLinkRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.secondsValid !== undefined && message.secondsValid !== 0) {
       writer.uint32(16).uint32(message.secondsValid);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.chatId);
     }
     return writer;
@@ -6145,7 +6441,7 @@ export const CChatRoomCreateInviteLinkRequest: MessageFns<CChatRoomCreateInviteL
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -6161,7 +6457,7 @@ export const CChatRoomCreateInviteLinkRequest: MessageFns<CChatRoomCreateInviteL
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -6261,9 +6557,9 @@ export const CChatRoomGetInviteLinkInfoRequest: MessageFns<CChatRoomGetInviteLin
 
 function createBaseCChatRoomGetInviteLinkInfoResponse(): CChatRoomGetInviteLinkInfoResponse {
   return {
-    steamidSender: 0,
+    steamidSender: 0n,
     timeExpires: 0,
-    chatId: 0,
+    chatId: 0n,
     groupSummary: undefined,
     userChatGroupState: undefined,
     timeKickExpire: 0,
@@ -6273,13 +6569,19 @@ function createBaseCChatRoomGetInviteLinkInfoResponse(): CChatRoomGetInviteLinkI
 
 export const CChatRoomGetInviteLinkInfoResponse: MessageFns<CChatRoomGetInviteLinkInfoResponse> = {
   encode(message: CChatRoomGetInviteLinkInfoResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidSender !== undefined && message.steamidSender !== 0) {
+    if (message.steamidSender !== undefined && message.steamidSender !== 0n) {
+      if (BigInt.asUintN(64, message.steamidSender) !== message.steamidSender) {
+        throw new globalThis.Error("value provided for field message.steamidSender of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamidSender);
     }
     if (message.timeExpires !== undefined && message.timeExpires !== 0) {
       writer.uint32(32).uint32(message.timeExpires);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.chatId);
     }
     if (message.groupSummary !== undefined) {
@@ -6309,7 +6611,7 @@ export const CChatRoomGetInviteLinkInfoResponse: MessageFns<CChatRoomGetInviteLi
             break;
           }
 
-          message.steamidSender = longToNumber(reader.fixed64());
+          message.steamidSender = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -6325,7 +6627,7 @@ export const CChatRoomGetInviteLinkInfoResponse: MessageFns<CChatRoomGetInviteLi
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -6371,18 +6673,27 @@ export const CChatRoomGetInviteLinkInfoResponse: MessageFns<CChatRoomGetInviteLi
 };
 
 function createBaseCChatRoomGetInviteInfoRequest(): CChatRoomGetInviteInfoRequest {
-  return { steamidInvitee: 0, chatGroupId: 0, chatId: 0, inviteCode: "" };
+  return { steamidInvitee: 0n, chatGroupId: 0n, chatId: 0n, inviteCode: "" };
 }
 
 export const CChatRoomGetInviteInfoRequest: MessageFns<CChatRoomGetInviteInfoRequest> = {
   encode(message: CChatRoomGetInviteInfoRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidInvitee !== undefined && message.steamidInvitee !== 0) {
+    if (message.steamidInvitee !== undefined && message.steamidInvitee !== 0n) {
+      if (BigInt.asUintN(64, message.steamidInvitee) !== message.steamidInvitee) {
+        throw new globalThis.Error("value provided for field message.steamidInvitee of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidInvitee);
     }
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.chatId);
     }
     if (message.inviteCode !== undefined && message.inviteCode !== "") {
@@ -6403,7 +6714,7 @@ export const CChatRoomGetInviteInfoRequest: MessageFns<CChatRoomGetInviteInfoReq
             break;
           }
 
-          message.steamidInvitee = longToNumber(reader.fixed64());
+          message.steamidInvitee = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -6411,7 +6722,7 @@ export const CChatRoomGetInviteInfoRequest: MessageFns<CChatRoomGetInviteInfoReq
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -6419,7 +6730,7 @@ export const CChatRoomGetInviteInfoRequest: MessageFns<CChatRoomGetInviteInfoReq
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -6500,12 +6811,15 @@ export const CChatRoomGetInviteInfoResponse: MessageFns<CChatRoomGetInviteInfoRe
 };
 
 function createBaseCChatRoomGetInviteLinksForGroupRequest(): CChatRoomGetInviteLinksForGroupRequest {
-  return { chatGroupId: 0 };
+  return { chatGroupId: 0n };
 }
 
 export const CChatRoomGetInviteLinksForGroupRequest: MessageFns<CChatRoomGetInviteLinksForGroupRequest> = {
   encode(message: CChatRoomGetInviteLinksForGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     return writer;
@@ -6523,7 +6837,7 @@ export const CChatRoomGetInviteLinksForGroupRequest: MessageFns<CChatRoomGetInvi
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -6574,7 +6888,7 @@ export const CChatRoomGetInviteLinksForGroupResponse: MessageFns<CChatRoomGetInv
 };
 
 function createBaseCChatRoomGetInviteLinksForGroupResponse_LinkInfo(): CChatRoomGetInviteLinksForGroupResponse_LinkInfo {
-  return { inviteCode: "", steamidCreator: 0, timeExpires: 0, chatId: 0 };
+  return { inviteCode: "", steamidCreator: 0n, timeExpires: 0, chatId: 0n };
 }
 
 export const CChatRoomGetInviteLinksForGroupResponse_LinkInfo: MessageFns<
@@ -6587,13 +6901,19 @@ export const CChatRoomGetInviteLinksForGroupResponse_LinkInfo: MessageFns<
     if (message.inviteCode !== undefined && message.inviteCode !== "") {
       writer.uint32(10).string(message.inviteCode);
     }
-    if (message.steamidCreator !== undefined && message.steamidCreator !== 0) {
+    if (message.steamidCreator !== undefined && message.steamidCreator !== 0n) {
+      if (BigInt.asUintN(64, message.steamidCreator) !== message.steamidCreator) {
+        throw new globalThis.Error("value provided for field message.steamidCreator of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamidCreator);
     }
     if (message.timeExpires !== undefined && message.timeExpires !== 0) {
       writer.uint32(24).uint32(message.timeExpires);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.chatId);
     }
     return writer;
@@ -6619,7 +6939,7 @@ export const CChatRoomGetInviteLinksForGroupResponse_LinkInfo: MessageFns<
             break;
           }
 
-          message.steamidCreator = longToNumber(reader.fixed64());
+          message.steamidCreator = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -6635,7 +6955,7 @@ export const CChatRoomGetInviteLinksForGroupResponse_LinkInfo: MessageFns<
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -6649,12 +6969,15 @@ export const CChatRoomGetInviteLinksForGroupResponse_LinkInfo: MessageFns<
 };
 
 function createBaseCChatRoomGetBanListRequest(): CChatRoomGetBanListRequest {
-  return { chatGroupId: 0 };
+  return { chatGroupId: 0n };
 }
 
 export const CChatRoomGetBanListRequest: MessageFns<CChatRoomGetBanListRequest> = {
   encode(message: CChatRoomGetBanListRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     return writer;
@@ -6672,7 +6995,7 @@ export const CChatRoomGetBanListRequest: MessageFns<CChatRoomGetBanListRequest> 
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -6793,12 +7116,15 @@ export const CChatRoomGetBanListResponse_BanInfo: MessageFns<CChatRoomGetBanList
 };
 
 function createBaseCChatRoomGetInviteListRequest(): CChatRoomGetInviteListRequest {
-  return { chatGroupId: 0 };
+  return { chatGroupId: 0n };
 }
 
 export const CChatRoomGetInviteListRequest: MessageFns<CChatRoomGetInviteListRequest> = {
   encode(message: CChatRoomGetInviteListRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     return writer;
@@ -6816,7 +7142,7 @@ export const CChatRoomGetInviteListRequest: MessageFns<CChatRoomGetInviteListReq
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -6926,12 +7252,15 @@ export const CChatRoomGetInviteListResponse: MessageFns<CChatRoomGetInviteListRe
 };
 
 function createBaseCChatRoomDeleteInviteLinkRequest(): CChatRoomDeleteInviteLinkRequest {
-  return { chatGroupId: 0, inviteCode: "" };
+  return { chatGroupId: 0n, inviteCode: "" };
 }
 
 export const CChatRoomDeleteInviteLinkRequest: MessageFns<CChatRoomDeleteInviteLinkRequest> = {
   encode(message: CChatRoomDeleteInviteLinkRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.inviteCode !== undefined && message.inviteCode !== "") {
@@ -6952,7 +7281,7 @@ export const CChatRoomDeleteInviteLinkRequest: MessageFns<CChatRoomDeleteInviteL
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -7011,9 +7340,15 @@ export const CChatRoomSetSessionActiveChatRoomGroupsRequest: MessageFns<
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
     for (const v of message.chatGroupIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(8).uint64(v!);
     }
     for (const v of message.chatGroupsDataRequested) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(16).uint64(v!);
     }
     if (message.virtualizeMembersThreshold !== undefined && message.virtualizeMembersThreshold !== 0) {
@@ -7031,7 +7366,7 @@ export const CChatRoomSetSessionActiveChatRoomGroupsRequest: MessageFns<
       switch (tag >>> 3) {
         case 1: {
           if (tag === 8) {
-            message.chatGroupIds.push(longToNumber(reader.uint64()));
+            message.chatGroupIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -7039,7 +7374,7 @@ export const CChatRoomSetSessionActiveChatRoomGroupsRequest: MessageFns<
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.chatGroupIds.push(longToNumber(reader.uint64()));
+              message.chatGroupIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -7049,7 +7384,7 @@ export const CChatRoomSetSessionActiveChatRoomGroupsRequest: MessageFns<
         }
         case 2: {
           if (tag === 16) {
-            message.chatGroupsDataRequested.push(longToNumber(reader.uint64()));
+            message.chatGroupsDataRequested.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -7057,7 +7392,7 @@ export const CChatRoomSetSessionActiveChatRoomGroupsRequest: MessageFns<
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.chatGroupsDataRequested.push(longToNumber(reader.uint64()));
+              message.chatGroupsDataRequested.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -7098,6 +7433,9 @@ export const CChatRoomSetSessionActiveChatRoomGroupsResponse: MessageFns<
       CChatRoomGroupState.encode(v!, writer.uint32(10).fork()).join();
     }
     for (const v of message.virtualizeMembersChatGroupIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(16).uint64(v!);
     }
     return writer;
@@ -7120,7 +7458,7 @@ export const CChatRoomSetSessionActiveChatRoomGroupsResponse: MessageFns<
         }
         case 2: {
           if (tag === 16) {
-            message.virtualizeMembersChatGroupIds.push(longToNumber(reader.uint64()));
+            message.virtualizeMembersChatGroupIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -7128,7 +7466,7 @@ export const CChatRoomSetSessionActiveChatRoomGroupsResponse: MessageFns<
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.virtualizeMembersChatGroupIds.push(longToNumber(reader.uint64()));
+              message.virtualizeMembersChatGroupIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -7147,7 +7485,7 @@ export const CChatRoomSetSessionActiveChatRoomGroupsResponse: MessageFns<
 };
 
 function createBaseCChatRoomSetUserChatGroupPreferencesRequest(): CChatRoomSetUserChatGroupPreferencesRequest {
-  return { chatGroupId: 0, chatGroupPreferences: undefined, chatRoomPreferences: [] };
+  return { chatGroupId: 0n, chatGroupPreferences: undefined, chatRoomPreferences: [] };
 }
 
 export const CChatRoomSetUserChatGroupPreferencesRequest: MessageFns<CChatRoomSetUserChatGroupPreferencesRequest> = {
@@ -7155,7 +7493,10 @@ export const CChatRoomSetUserChatGroupPreferencesRequest: MessageFns<CChatRoomSe
     message: CChatRoomSetUserChatGroupPreferencesRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.chatGroupPreferences !== undefined) {
@@ -7182,7 +7523,7 @@ export const CChatRoomSetUserChatGroupPreferencesRequest: MessageFns<CChatRoomSe
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -7300,7 +7641,7 @@ export const CChatRoomSetUserChatGroupPreferencesRequest_ChatGroupPreferences: M
 };
 
 function createBaseCChatRoomSetUserChatGroupPreferencesRequest_ChatRoomPreferences(): CChatRoomSetUserChatGroupPreferencesRequest_ChatRoomPreferences {
-  return { chatId: 0, desktopNotificationLevel: 0, mobileNotificationLevel: 0, unreadIndicatorMuted: false };
+  return { chatId: 0n, desktopNotificationLevel: 0, mobileNotificationLevel: 0, unreadIndicatorMuted: false };
 }
 
 export const CChatRoomSetUserChatGroupPreferencesRequest_ChatRoomPreferences: MessageFns<
@@ -7310,7 +7651,10 @@ export const CChatRoomSetUserChatGroupPreferencesRequest_ChatRoomPreferences: Me
     message: CChatRoomSetUserChatGroupPreferencesRequest_ChatRoomPreferences,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatId);
     }
     if (message.desktopNotificationLevel !== undefined && message.desktopNotificationLevel !== 0) {
@@ -7340,7 +7684,7 @@ export const CChatRoomSetUserChatGroupPreferencesRequest_ChatRoomPreferences: Me
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -7404,15 +7748,21 @@ export const CChatRoomSetUserChatGroupPreferencesResponse: MessageFns<CChatRoomS
 };
 
 function createBaseCChatRoomDeleteChatMessagesRequest(): CChatRoomDeleteChatMessagesRequest {
-  return { chatGroupId: 0, chatId: 0, messages: [] };
+  return { chatGroupId: 0n, chatId: 0n, messages: [] };
 }
 
 export const CChatRoomDeleteChatMessagesRequest: MessageFns<CChatRoomDeleteChatMessagesRequest> = {
   encode(message: CChatRoomDeleteChatMessagesRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     for (const v of message.messages) {
@@ -7433,7 +7783,7 @@ export const CChatRoomDeleteChatMessagesRequest: MessageFns<CChatRoomDeleteChatM
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -7441,7 +7791,7 @@ export const CChatRoomDeleteChatMessagesRequest: MessageFns<CChatRoomDeleteChatM
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -7538,8 +7888,8 @@ export const CChatRoomDeleteChatMessagesResponse: MessageFns<CChatRoomDeleteChat
 
 function createBaseCChatRoomUpdateMemberListViewNotification(): CChatRoomUpdateMemberListViewNotification {
   return {
-    chatGroupId: 0,
-    viewId: 0,
+    chatGroupId: 0n,
+    viewId: 0n,
     start: 0,
     end: 0,
     clientChangenumber: 0,
@@ -7551,10 +7901,16 @@ function createBaseCChatRoomUpdateMemberListViewNotification(): CChatRoomUpdateM
 
 export const CChatRoomUpdateMemberListViewNotification: MessageFns<CChatRoomUpdateMemberListViewNotification> = {
   encode(message: CChatRoomUpdateMemberListViewNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.viewId !== undefined && message.viewId !== 0) {
+    if (message.viewId !== undefined && message.viewId !== 0n) {
+      if (BigInt.asUintN(64, message.viewId) !== message.viewId) {
+        throw new globalThis.Error("value provided for field message.viewId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.viewId);
     }
     if (message.start !== undefined && message.start !== 0) {
@@ -7590,7 +7946,7 @@ export const CChatRoomUpdateMemberListViewNotification: MessageFns<CChatRoomUpda
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -7598,7 +7954,7 @@ export const CChatRoomUpdateMemberListViewNotification: MessageFns<CChatRoomUpda
             break;
           }
 
-          message.viewId = longToNumber(reader.uint64());
+          message.viewId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -7680,15 +8036,21 @@ export const CChatRoomUpdateMemberListViewNotification: MessageFns<CChatRoomUpda
 };
 
 function createBaseCChatRoomSearchMembersRequest(): CChatRoomSearchMembersRequest {
-  return { chatGroupId: 0, searchId: 0, searchText: "", maxResults: 0 };
+  return { chatGroupId: 0n, searchId: 0n, searchText: "", maxResults: 0 };
 }
 
 export const CChatRoomSearchMembersRequest: MessageFns<CChatRoomSearchMembersRequest> = {
   encode(message: CChatRoomSearchMembersRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.searchId !== undefined && message.searchId !== 0) {
+    if (message.searchId !== undefined && message.searchId !== 0n) {
+      if (BigInt.asUintN(64, message.searchId) !== message.searchId) {
+        throw new globalThis.Error("value provided for field message.searchId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.searchId);
     }
     if (message.searchText !== undefined && message.searchText !== "") {
@@ -7712,7 +8074,7 @@ export const CChatRoomSearchMembersRequest: MessageFns<CChatRoomSearchMembersReq
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -7720,7 +8082,7 @@ export const CChatRoomSearchMembersRequest: MessageFns<CChatRoomSearchMembersReq
             break;
           }
 
-          message.searchId = longToNumber(reader.uint64());
+          message.searchId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -7846,15 +8208,21 @@ export const CChatRoomSearchMembersResponse_MemberMatch: MessageFns<CChatRoomSea
 };
 
 function createBaseCChatRoomUpdateMessageReactionRequest(): CChatRoomUpdateMessageReactionRequest {
-  return { chatGroupId: 0, chatId: 0, serverTimestamp: 0, ordinal: 0, reactionType: 0, reaction: "", isAdd: false };
+  return { chatGroupId: 0n, chatId: 0n, serverTimestamp: 0, ordinal: 0, reactionType: 0, reaction: "", isAdd: false };
 }
 
 export const CChatRoomUpdateMessageReactionRequest: MessageFns<CChatRoomUpdateMessageReactionRequest> = {
   encode(message: CChatRoomUpdateMessageReactionRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     if (message.serverTimestamp !== undefined && message.serverTimestamp !== 0) {
@@ -7887,7 +8255,7 @@ export const CChatRoomUpdateMessageReactionRequest: MessageFns<CChatRoomUpdateMe
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -7895,7 +8263,7 @@ export const CChatRoomUpdateMessageReactionRequest: MessageFns<CChatRoomUpdateMe
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -7986,15 +8354,21 @@ export const CChatRoomUpdateMessageReactionResponse: MessageFns<CChatRoomUpdateM
 };
 
 function createBaseCChatRoomGetMessageReactionReactorsRequest(): CChatRoomGetMessageReactionReactorsRequest {
-  return { chatGroupId: 0, chatId: 0, serverTimestamp: 0, ordinal: 0, reactionType: 0, reaction: "", limit: 0 };
+  return { chatGroupId: 0n, chatId: 0n, serverTimestamp: 0, ordinal: 0, reactionType: 0, reaction: "", limit: 0 };
 }
 
 export const CChatRoomGetMessageReactionReactorsRequest: MessageFns<CChatRoomGetMessageReactionReactorsRequest> = {
   encode(message: CChatRoomGetMessageReactionReactorsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     if (message.serverTimestamp !== undefined && message.serverTimestamp !== 0) {
@@ -8027,7 +8401,7 @@ export const CChatRoomGetMessageReactionReactorsRequest: MessageFns<CChatRoomGet
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -8035,7 +8409,7 @@ export const CChatRoomGetMessageReactionReactorsRequest: MessageFns<CChatRoomGet
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -8140,9 +8514,9 @@ export const CChatRoomGetMessageReactionReactorsResponse: MessageFns<CChatRoomGe
 
 function createBaseCChatRoomReportMessageRequest(): CChatRoomReportMessageRequest {
   return {
-    chatGroupId: 0,
-    chatId: 0,
-    steamidFrom: 0,
+    chatGroupId: 0n,
+    chatId: 0n,
+    steamidFrom: 0n,
     timestamp: 0,
     ordinal: 0,
     reportReason: 0,
@@ -8154,13 +8528,22 @@ function createBaseCChatRoomReportMessageRequest(): CChatRoomReportMessageReques
 
 export const CChatRoomReportMessageRequest: MessageFns<CChatRoomReportMessageRequest> = {
   encode(message: CChatRoomReportMessageRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
-    if (message.steamidFrom !== undefined && message.steamidFrom !== 0) {
+    if (message.steamidFrom !== undefined && message.steamidFrom !== 0n) {
+      if (BigInt.asUintN(64, message.steamidFrom) !== message.steamidFrom) {
+        throw new globalThis.Error("value provided for field message.steamidFrom of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamidFrom);
     }
     if (message.timestamp !== undefined && message.timestamp !== 0) {
@@ -8196,7 +8579,7 @@ export const CChatRoomReportMessageRequest: MessageFns<CChatRoomReportMessageReq
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -8204,7 +8587,7 @@ export const CChatRoomReportMessageRequest: MessageFns<CChatRoomReportMessageReq
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -8212,7 +8595,7 @@ export const CChatRoomReportMessageRequest: MessageFns<CChatRoomReportMessageReq
             break;
           }
 
-          message.steamidFrom = longToNumber(reader.fixed64());
+          message.steamidFrom = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -8300,15 +8683,21 @@ export const CChatRoomReportMessageResponse: MessageFns<CChatRoomReportMessageRe
 };
 
 function createBaseCChatRoomResolveReportRequest(): CChatRoomResolveReportRequest {
-  return { subjectGroupId: 0, subjectId: 0, resolution: 0, reason: 0 };
+  return { subjectGroupId: 0n, subjectId: 0n, resolution: 0, reason: 0 };
 }
 
 export const CChatRoomResolveReportRequest: MessageFns<CChatRoomResolveReportRequest> = {
   encode(message: CChatRoomResolveReportRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.subjectGroupId !== undefined && message.subjectGroupId !== 0) {
+    if (message.subjectGroupId !== undefined && message.subjectGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.subjectGroupId) !== message.subjectGroupId) {
+        throw new globalThis.Error("value provided for field message.subjectGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.subjectGroupId);
     }
-    if (message.subjectId !== undefined && message.subjectId !== 0) {
+    if (message.subjectId !== undefined && message.subjectId !== 0n) {
+      if (BigInt.asUintN(64, message.subjectId) !== message.subjectId) {
+        throw new globalThis.Error("value provided for field message.subjectId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.subjectId);
     }
     if (message.resolution !== undefined && message.resolution !== 0) {
@@ -8332,7 +8721,7 @@ export const CChatRoomResolveReportRequest: MessageFns<CChatRoomResolveReportReq
             break;
           }
 
-          message.subjectGroupId = longToNumber(reader.uint64());
+          message.subjectGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -8340,7 +8729,7 @@ export const CChatRoomResolveReportRequest: MessageFns<CChatRoomResolveReportReq
             break;
           }
 
-          message.subjectId = longToNumber(reader.uint64());
+          message.subjectId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -8396,12 +8785,15 @@ export const CChatRoomResolveReportResponse: MessageFns<CChatRoomResolveReportRe
 };
 
 function createBaseCClanChatRoomsGetClanChatRoomInfoRequest(): CClanChatRoomsGetClanChatRoomInfoRequest {
-  return { steamid: 0, autocreate: true };
+  return { steamid: 0n, autocreate: true };
 }
 
 export const CClanChatRoomsGetClanChatRoomInfoRequest: MessageFns<CClanChatRoomsGetClanChatRoomInfoRequest> = {
   encode(message: CClanChatRoomsGetClanChatRoomInfoRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.autocreate !== undefined && message.autocreate !== true) {
@@ -8422,7 +8814,7 @@ export const CClanChatRoomsGetClanChatRoomInfoRequest: MessageFns<CClanChatRooms
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -8481,7 +8873,7 @@ export const CClanChatRoomsGetClanChatRoomInfoResponse: MessageFns<CClanChatRoom
 };
 
 function createBaseCClanChatRoomsSetClanChatRoomPrivateRequest(): CClanChatRoomsSetClanChatRoomPrivateRequest {
-  return { steamid: 0, chatRoomPrivate: false };
+  return { steamid: 0n, chatRoomPrivate: false };
 }
 
 export const CClanChatRoomsSetClanChatRoomPrivateRequest: MessageFns<CClanChatRoomsSetClanChatRoomPrivateRequest> = {
@@ -8489,7 +8881,10 @@ export const CClanChatRoomsSetClanChatRoomPrivateRequest: MessageFns<CClanChatRo
     message: CClanChatRoomsSetClanChatRoomPrivateRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.chatRoomPrivate !== undefined && message.chatRoomPrivate !== false) {
@@ -8510,7 +8905,7 @@ export const CClanChatRoomsSetClanChatRoomPrivateRequest: MessageFns<CClanChatRo
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -8642,9 +9037,9 @@ export const CChatMentions: MessageFns<CChatMentions> = {
 
 function createBaseCChatRoomIncomingChatMessageNotification(): CChatRoomIncomingChatMessageNotification {
   return {
-    chatGroupId: 0,
-    chatId: 0,
-    steamidSender: 0,
+    chatGroupId: 0n,
+    chatId: 0n,
+    steamidSender: 0n,
     message: "",
     timestamp: 0,
     mentions: undefined,
@@ -8658,13 +9053,22 @@ function createBaseCChatRoomIncomingChatMessageNotification(): CChatRoomIncoming
 
 export const CChatRoomIncomingChatMessageNotification: MessageFns<CChatRoomIncomingChatMessageNotification> = {
   encode(message: CChatRoomIncomingChatMessageNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
-    if (message.steamidSender !== undefined && message.steamidSender !== 0) {
+    if (message.steamidSender !== undefined && message.steamidSender !== 0n) {
+      if (BigInt.asUintN(64, message.steamidSender) !== message.steamidSender) {
+        throw new globalThis.Error("value provided for field message.steamidSender of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamidSender);
     }
     if (message.message !== undefined && message.message !== "") {
@@ -8706,7 +9110,7 @@ export const CChatRoomIncomingChatMessageNotification: MessageFns<CChatRoomIncom
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -8714,7 +9118,7 @@ export const CChatRoomIncomingChatMessageNotification: MessageFns<CChatRoomIncom
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -8722,7 +9126,7 @@ export const CChatRoomIncomingChatMessageNotification: MessageFns<CChatRoomIncom
             break;
           }
 
-          message.steamidSender = longToNumber(reader.fixed64());
+          message.steamidSender = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -8800,15 +9204,21 @@ export const CChatRoomIncomingChatMessageNotification: MessageFns<CChatRoomIncom
 };
 
 function createBaseCChatRoomChatMessageModifiedNotification(): CChatRoomChatMessageModifiedNotification {
-  return { chatGroupId: 0, chatId: 0, messages: [] };
+  return { chatGroupId: 0n, chatId: 0n, messages: [] };
 }
 
 export const CChatRoomChatMessageModifiedNotification: MessageFns<CChatRoomChatMessageModifiedNotification> = {
   encode(message: CChatRoomChatMessageModifiedNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     for (const v of message.messages) {
@@ -8829,7 +9239,7 @@ export const CChatRoomChatMessageModifiedNotification: MessageFns<CChatRoomChatM
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -8837,7 +9247,7 @@ export const CChatRoomChatMessageModifiedNotification: MessageFns<CChatRoomChatM
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -8923,12 +9333,15 @@ export const CChatRoomChatMessageModifiedNotification_ChatMessage: MessageFns<
 };
 
 function createBaseCChatRoomMemberStateChangeNotification(): CChatRoomMemberStateChangeNotification {
-  return { chatGroupId: 0, member: undefined, change: 0 };
+  return { chatGroupId: 0n, member: undefined, change: 0 };
 }
 
 export const CChatRoomMemberStateChangeNotification: MessageFns<CChatRoomMemberStateChangeNotification> = {
   encode(message: CChatRoomMemberStateChangeNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.member !== undefined) {
@@ -8952,7 +9365,7 @@ export const CChatRoomMemberStateChangeNotification: MessageFns<CChatRoomMemberS
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -9019,7 +9432,7 @@ export const CChatRoomChatRoomHeaderStateNotification: MessageFns<CChatRoomChatR
 };
 
 function createBaseCChatRoomChatRoomGroupRoomsChangeNotification(): CChatRoomChatRoomGroupRoomsChangeNotification {
-  return { chatGroupId: 0, defaultChatId: 0, chatRooms: [] };
+  return { chatGroupId: 0n, defaultChatId: 0n, chatRooms: [] };
 }
 
 export const CChatRoomChatRoomGroupRoomsChangeNotification: MessageFns<CChatRoomChatRoomGroupRoomsChangeNotification> =
@@ -9028,10 +9441,16 @@ export const CChatRoomChatRoomGroupRoomsChangeNotification: MessageFns<CChatRoom
       message: CChatRoomChatRoomGroupRoomsChangeNotification,
       writer: BinaryWriter = new BinaryWriter(),
     ): BinaryWriter {
-      if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+      if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+        if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+          throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+        }
         writer.uint32(8).uint64(message.chatGroupId);
       }
-      if (message.defaultChatId !== undefined && message.defaultChatId !== 0) {
+      if (message.defaultChatId !== undefined && message.defaultChatId !== 0n) {
+        if (BigInt.asUintN(64, message.defaultChatId) !== message.defaultChatId) {
+          throw new globalThis.Error("value provided for field message.defaultChatId of type uint64 too large");
+        }
         writer.uint32(16).uint64(message.defaultChatId);
       }
       for (const v of message.chatRooms) {
@@ -9052,7 +9471,7 @@ export const CChatRoomChatRoomGroupRoomsChangeNotification: MessageFns<CChatRoom
               break;
             }
 
-            message.chatGroupId = longToNumber(reader.uint64());
+            message.chatGroupId = reader.uint64() as bigint;
             continue;
           }
           case 2: {
@@ -9060,7 +9479,7 @@ export const CChatRoomChatRoomGroupRoomsChangeNotification: MessageFns<CChatRoom
               break;
             }
 
-            message.defaultChatId = longToNumber(reader.uint64());
+            message.defaultChatId = reader.uint64() as bigint;
             continue;
           }
           case 3: {
@@ -9082,7 +9501,7 @@ export const CChatRoomChatRoomGroupRoomsChangeNotification: MessageFns<CChatRoom
   };
 
 function createBaseCChatRoomNotifyShouldRejoinChatRoomVoiceChatNotification(): CChatRoomNotifyShouldRejoinChatRoomVoiceChatNotification {
-  return { chatId: 0, chatGroupId: 0 };
+  return { chatId: 0n, chatGroupId: 0n };
 }
 
 export const CChatRoomNotifyShouldRejoinChatRoomVoiceChatNotification: MessageFns<
@@ -9092,10 +9511,16 @@ export const CChatRoomNotifyShouldRejoinChatRoomVoiceChatNotification: MessageFn
     message: CChatRoomNotifyShouldRejoinChatRoomVoiceChatNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatId);
     }
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatGroupId);
     }
     return writer;
@@ -9113,7 +9538,7 @@ export const CChatRoomNotifyShouldRejoinChatRoomVoiceChatNotification: MessageFn
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -9121,7 +9546,7 @@ export const CChatRoomNotifyShouldRejoinChatRoomVoiceChatNotification: MessageFn
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -9135,7 +9560,7 @@ export const CChatRoomNotifyShouldRejoinChatRoomVoiceChatNotification: MessageFn
 };
 
 function createBaseChatRoomClientNotifyChatGroupUserStateChangedNotification(): ChatRoomClientNotifyChatGroupUserStateChangedNotification {
-  return { chatGroupId: 0, userChatGroupState: undefined, groupSummary: undefined, userAction: 0 };
+  return { chatGroupId: 0n, userChatGroupState: undefined, groupSummary: undefined, userAction: 0 };
 }
 
 export const ChatRoomClientNotifyChatGroupUserStateChangedNotification: MessageFns<
@@ -9145,7 +9570,10 @@ export const ChatRoomClientNotifyChatGroupUserStateChangedNotification: MessageF
     message: ChatRoomClientNotifyChatGroupUserStateChangedNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
     if (message.userChatGroupState !== undefined) {
@@ -9172,7 +9600,7 @@ export const ChatRoomClientNotifyChatGroupUserStateChangedNotification: MessageF
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -9221,6 +9649,9 @@ export const ChatRoomClientNotifyChatRoomDisconnectNotification: MessageFns<
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
     for (const v of message.chatGroupIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(8).uint64(v!);
     }
     return writer;
@@ -9235,7 +9666,7 @@ export const ChatRoomClientNotifyChatRoomDisconnectNotification: MessageFns<
       switch (tag >>> 3) {
         case 1: {
           if (tag === 8) {
-            message.chatGroupIds.push(longToNumber(reader.uint64()));
+            message.chatGroupIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -9243,7 +9674,7 @@ export const ChatRoomClientNotifyChatRoomDisconnectNotification: MessageFns<
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.chatGroupIds.push(longToNumber(reader.uint64()));
+              message.chatGroupIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -9403,8 +9834,8 @@ export const CChatRoomMemberSummaryCounts: MessageFns<CChatRoomMemberSummaryCoun
 
 function createBaseCChatRoomClientMemberListViewUpdatedNotification(): CChatRoomClientMemberListViewUpdatedNotification {
   return {
-    chatGroupId: 0,
-    viewId: 0,
+    chatGroupId: 0n,
+    viewId: 0n,
     view: undefined,
     members: [],
     statusFlags: 0,
@@ -9420,10 +9851,16 @@ export const CChatRoomClientMemberListViewUpdatedNotification: MessageFns<
     message: CChatRoomClientMemberListViewUpdatedNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.viewId !== undefined && message.viewId !== 0) {
+    if (message.viewId !== undefined && message.viewId !== 0n) {
+      if (BigInt.asUintN(64, message.viewId) !== message.viewId) {
+        throw new globalThis.Error("value provided for field message.viewId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.viewId);
     }
     if (message.view !== undefined) {
@@ -9456,7 +9893,7 @@ export const CChatRoomClientMemberListViewUpdatedNotification: MessageFns<
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -9464,7 +9901,7 @@ export const CChatRoomClientMemberListViewUpdatedNotification: MessageFns<
             break;
           }
 
-          message.viewId = longToNumber(reader.uint64());
+          message.viewId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -9588,11 +10025,11 @@ export const CChatRoomClientMemberListViewUpdatedNotification_MemberListViewEntr
 
 function createBaseCChatRoomMessageReactionNotification(): CChatRoomMessageReactionNotification {
   return {
-    chatGroupId: 0,
-    chatId: 0,
+    chatGroupId: 0n,
+    chatId: 0n,
     serverTimestamp: 0,
     ordinal: 0,
-    reactor: 0,
+    reactor: 0n,
     reactionType: 0,
     reaction: "",
     isAdd: false,
@@ -9601,10 +10038,16 @@ function createBaseCChatRoomMessageReactionNotification(): CChatRoomMessageReact
 
 export const CChatRoomMessageReactionNotification: MessageFns<CChatRoomMessageReactionNotification> = {
   encode(message: CChatRoomMessageReactionNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.chatGroupId);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatId);
     }
     if (message.serverTimestamp !== undefined && message.serverTimestamp !== 0) {
@@ -9613,7 +10056,10 @@ export const CChatRoomMessageReactionNotification: MessageFns<CChatRoomMessageRe
     if (message.ordinal !== undefined && message.ordinal !== 0) {
       writer.uint32(32).uint32(message.ordinal);
     }
-    if (message.reactor !== undefined && message.reactor !== 0) {
+    if (message.reactor !== undefined && message.reactor !== 0n) {
+      if (BigInt.asUintN(64, message.reactor) !== message.reactor) {
+        throw new globalThis.Error("value provided for field message.reactor of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.reactor);
     }
     if (message.reactionType !== undefined && message.reactionType !== 0) {
@@ -9640,7 +10086,7 @@ export const CChatRoomMessageReactionNotification: MessageFns<CChatRoomMessageRe
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -9648,7 +10094,7 @@ export const CChatRoomMessageReactionNotification: MessageFns<CChatRoomMessageRe
             break;
           }
 
-          message.chatId = longToNumber(reader.uint64());
+          message.chatId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -9672,7 +10118,7 @@ export const CChatRoomMessageReactionNotification: MessageFns<CChatRoomMessageRe
             break;
           }
 
-          message.reactor = longToNumber(reader.fixed64());
+          message.reactor = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -11580,17 +12026,6 @@ export class ChatUsabilityClientClientImpl implements ChatUsabilityClient {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

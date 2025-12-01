@@ -21,7 +21,7 @@ export interface ContentManifestPayload {
 
 export interface ContentManifestPayload_FileMapping {
   filename?: string | undefined;
-  size?: number | undefined;
+  size?: bigint | undefined;
   flags?: number | undefined;
   shaFilename?: Buffer | undefined;
   shaContent?: Buffer | undefined;
@@ -32,18 +32,18 @@ export interface ContentManifestPayload_FileMapping {
 export interface ContentManifestPayload_FileMapping_ChunkData {
   sha?: Buffer | undefined;
   crc?: number | undefined;
-  offset?: number | undefined;
+  offset?: bigint | undefined;
   cbOriginal?: number | undefined;
   cbCompressed?: number | undefined;
 }
 
 export interface ContentManifestMetadata {
   depotId?: number | undefined;
-  gidManifest?: number | undefined;
+  gidManifest?: bigint | undefined;
   creationTime?: number | undefined;
   filenamesEncrypted?: boolean | undefined;
-  cbDiskOriginal?: number | undefined;
-  cbDiskCompressed?: number | undefined;
+  cbDiskOriginal?: bigint | undefined;
+  cbDiskCompressed?: bigint | undefined;
   uniqueChunks?: number | undefined;
   crcEncrypted?: number | undefined;
   crcClear?: number | undefined;
@@ -55,8 +55,8 @@ export interface ContentManifestSignature {
 
 export interface ContentDeltaChunks {
   depotId?: number | undefined;
-  manifestIdSource?: number | undefined;
-  manifestIdTarget?: number | undefined;
+  manifestIdSource?: bigint | undefined;
+  manifestIdTarget?: bigint | undefined;
   deltaChunks: ContentDeltaChunks_DeltaChunk[];
   chunkDataLocation?: EContentDeltaChunkDataLocation | undefined;
 }
@@ -110,7 +110,7 @@ export const ContentManifestPayload: MessageFns<ContentManifestPayload> = {
 function createBaseContentManifestPayload_FileMapping(): ContentManifestPayload_FileMapping {
   return {
     filename: "",
-    size: 0,
+    size: 0n,
     flags: 0,
     shaFilename: Buffer.alloc(0),
     shaContent: Buffer.alloc(0),
@@ -124,7 +124,10 @@ export const ContentManifestPayload_FileMapping: MessageFns<ContentManifestPaylo
     if (message.filename !== undefined && message.filename !== "") {
       writer.uint32(10).string(message.filename);
     }
-    if (message.size !== undefined && message.size !== 0) {
+    if (message.size !== undefined && message.size !== 0n) {
+      if (BigInt.asUintN(64, message.size) !== message.size) {
+        throw new globalThis.Error("value provided for field message.size of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.size);
     }
     if (message.flags !== undefined && message.flags !== 0) {
@@ -165,7 +168,7 @@ export const ContentManifestPayload_FileMapping: MessageFns<ContentManifestPaylo
             break;
           }
 
-          message.size = longToNumber(reader.uint64());
+          message.size = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -219,7 +222,7 @@ export const ContentManifestPayload_FileMapping: MessageFns<ContentManifestPaylo
 };
 
 function createBaseContentManifestPayload_FileMapping_ChunkData(): ContentManifestPayload_FileMapping_ChunkData {
-  return { sha: Buffer.alloc(0), crc: 0, offset: 0, cbOriginal: 0, cbCompressed: 0 };
+  return { sha: Buffer.alloc(0), crc: 0, offset: 0n, cbOriginal: 0, cbCompressed: 0 };
 }
 
 export const ContentManifestPayload_FileMapping_ChunkData: MessageFns<ContentManifestPayload_FileMapping_ChunkData> = {
@@ -233,7 +236,10 @@ export const ContentManifestPayload_FileMapping_ChunkData: MessageFns<ContentMan
     if (message.crc !== undefined && message.crc !== 0) {
       writer.uint32(21).fixed32(message.crc);
     }
-    if (message.offset !== undefined && message.offset !== 0) {
+    if (message.offset !== undefined && message.offset !== 0n) {
+      if (BigInt.asUintN(64, message.offset) !== message.offset) {
+        throw new globalThis.Error("value provided for field message.offset of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.offset);
     }
     if (message.cbOriginal !== undefined && message.cbOriginal !== 0) {
@@ -273,7 +279,7 @@ export const ContentManifestPayload_FileMapping_ChunkData: MessageFns<ContentMan
             break;
           }
 
-          message.offset = longToNumber(reader.uint64());
+          message.offset = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -305,11 +311,11 @@ export const ContentManifestPayload_FileMapping_ChunkData: MessageFns<ContentMan
 function createBaseContentManifestMetadata(): ContentManifestMetadata {
   return {
     depotId: 0,
-    gidManifest: 0,
+    gidManifest: 0n,
     creationTime: 0,
     filenamesEncrypted: false,
-    cbDiskOriginal: 0,
-    cbDiskCompressed: 0,
+    cbDiskOriginal: 0n,
+    cbDiskCompressed: 0n,
     uniqueChunks: 0,
     crcEncrypted: 0,
     crcClear: 0,
@@ -321,7 +327,10 @@ export const ContentManifestMetadata: MessageFns<ContentManifestMetadata> = {
     if (message.depotId !== undefined && message.depotId !== 0) {
       writer.uint32(8).uint32(message.depotId);
     }
-    if (message.gidManifest !== undefined && message.gidManifest !== 0) {
+    if (message.gidManifest !== undefined && message.gidManifest !== 0n) {
+      if (BigInt.asUintN(64, message.gidManifest) !== message.gidManifest) {
+        throw new globalThis.Error("value provided for field message.gidManifest of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.gidManifest);
     }
     if (message.creationTime !== undefined && message.creationTime !== 0) {
@@ -330,10 +339,16 @@ export const ContentManifestMetadata: MessageFns<ContentManifestMetadata> = {
     if (message.filenamesEncrypted !== undefined && message.filenamesEncrypted !== false) {
       writer.uint32(32).bool(message.filenamesEncrypted);
     }
-    if (message.cbDiskOriginal !== undefined && message.cbDiskOriginal !== 0) {
+    if (message.cbDiskOriginal !== undefined && message.cbDiskOriginal !== 0n) {
+      if (BigInt.asUintN(64, message.cbDiskOriginal) !== message.cbDiskOriginal) {
+        throw new globalThis.Error("value provided for field message.cbDiskOriginal of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.cbDiskOriginal);
     }
-    if (message.cbDiskCompressed !== undefined && message.cbDiskCompressed !== 0) {
+    if (message.cbDiskCompressed !== undefined && message.cbDiskCompressed !== 0n) {
+      if (BigInt.asUintN(64, message.cbDiskCompressed) !== message.cbDiskCompressed) {
+        throw new globalThis.Error("value provided for field message.cbDiskCompressed of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.cbDiskCompressed);
     }
     if (message.uniqueChunks !== undefined && message.uniqueChunks !== 0) {
@@ -368,7 +383,7 @@ export const ContentManifestMetadata: MessageFns<ContentManifestMetadata> = {
             break;
           }
 
-          message.gidManifest = longToNumber(reader.uint64());
+          message.gidManifest = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -392,7 +407,7 @@ export const ContentManifestMetadata: MessageFns<ContentManifestMetadata> = {
             break;
           }
 
-          message.cbDiskOriginal = longToNumber(reader.uint64());
+          message.cbDiskOriginal = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -400,7 +415,7 @@ export const ContentManifestMetadata: MessageFns<ContentManifestMetadata> = {
             break;
           }
 
-          message.cbDiskCompressed = longToNumber(reader.uint64());
+          message.cbDiskCompressed = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -475,7 +490,7 @@ export const ContentManifestSignature: MessageFns<ContentManifestSignature> = {
 };
 
 function createBaseContentDeltaChunks(): ContentDeltaChunks {
-  return { depotId: 0, manifestIdSource: 0, manifestIdTarget: 0, deltaChunks: [], chunkDataLocation: 0 };
+  return { depotId: 0, manifestIdSource: 0n, manifestIdTarget: 0n, deltaChunks: [], chunkDataLocation: 0 };
 }
 
 export const ContentDeltaChunks: MessageFns<ContentDeltaChunks> = {
@@ -483,10 +498,16 @@ export const ContentDeltaChunks: MessageFns<ContentDeltaChunks> = {
     if (message.depotId !== undefined && message.depotId !== 0) {
       writer.uint32(8).uint32(message.depotId);
     }
-    if (message.manifestIdSource !== undefined && message.manifestIdSource !== 0) {
+    if (message.manifestIdSource !== undefined && message.manifestIdSource !== 0n) {
+      if (BigInt.asUintN(64, message.manifestIdSource) !== message.manifestIdSource) {
+        throw new globalThis.Error("value provided for field message.manifestIdSource of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.manifestIdSource);
     }
-    if (message.manifestIdTarget !== undefined && message.manifestIdTarget !== 0) {
+    if (message.manifestIdTarget !== undefined && message.manifestIdTarget !== 0n) {
+      if (BigInt.asUintN(64, message.manifestIdTarget) !== message.manifestIdTarget) {
+        throw new globalThis.Error("value provided for field message.manifestIdTarget of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.manifestIdTarget);
     }
     for (const v of message.deltaChunks) {
@@ -518,7 +539,7 @@ export const ContentDeltaChunks: MessageFns<ContentDeltaChunks> = {
             break;
           }
 
-          message.manifestIdSource = longToNumber(reader.uint64());
+          message.manifestIdSource = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -526,7 +547,7 @@ export const ContentDeltaChunks: MessageFns<ContentDeltaChunks> = {
             break;
           }
 
-          message.manifestIdTarget = longToNumber(reader.uint64());
+          message.manifestIdTarget = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -653,17 +674,6 @@ export const ContentDeltaChunks_DeltaChunk: MessageFns<ContentDeltaChunks_DeltaC
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

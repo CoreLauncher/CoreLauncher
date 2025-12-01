@@ -25,8 +25,8 @@ export enum EChatSessionNotice {
 }
 
 export interface CFriendMessagesGetRecentMessagesRequest {
-  steamid1?: number | undefined;
-  steamid2?: number | undefined;
+  steamid1?: bigint | undefined;
+  steamid2?: bigint | undefined;
   count?: number | undefined;
   mostRecentConversation?: boolean | undefined;
   rtime32StartTime?: number | undefined;
@@ -74,7 +74,7 @@ export interface CFriendsMessagesGetActiveMessageSessionsResponse_FriendMessageS
 }
 
 export interface CFriendMessagesSendMessageRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   chatEntryType?: number | undefined;
   message?: string | undefined;
   containsBbcode?: boolean | undefined;
@@ -91,12 +91,12 @@ export interface CFriendMessagesSendMessageResponse {
 }
 
 export interface CFriendMessagesAckMessageNotification {
-  steamidPartner?: number | undefined;
+  steamidPartner?: bigint | undefined;
   timestamp?: number | undefined;
 }
 
 export interface CFriendMessagesIsInFriendsUIBetaRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CFriendMessagesIsInFriendsUIBetaResponse {
@@ -105,7 +105,7 @@ export interface CFriendMessagesIsInFriendsUIBetaResponse {
 }
 
 export interface CFriendMessagesUpdateMessageReactionRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   serverTimestamp?: number | undefined;
   ordinal?: number | undefined;
   reactionType?: EMessageReactionType | undefined;
@@ -118,8 +118,8 @@ export interface CFriendMessagesUpdateMessageReactionResponse {
 }
 
 export interface CFriendMessagesReportMessageRequest {
-  steamidFrom?: number | undefined;
-  steamidTo?: number | undefined;
+  steamidFrom?: bigint | undefined;
+  steamidTo?: bigint | undefined;
   timestamp?: number | undefined;
   ordinal?: number | undefined;
   reportReason?: EContentReportReason | undefined;
@@ -131,10 +131,10 @@ export interface CFriendMessagesReportMessageResponse {
 }
 
 export interface CFriendMessagesResolveReportRequest {
-  steamidFrom?: number | undefined;
-  steamidTo?: number | undefined;
-  subjectGroupId?: number | undefined;
-  subjectId?: number | undefined;
+  steamidFrom?: bigint | undefined;
+  steamidTo?: bigint | undefined;
+  subjectGroupId?: bigint | undefined;
+  subjectId?: bigint | undefined;
   resolution?: EContentReportResolution | undefined;
   reason?: EContentReportReason | undefined;
   skipLock?: boolean | undefined;
@@ -144,12 +144,12 @@ export interface CFriendMessagesResolveReportResponse {
 }
 
 export interface CFriendMessagesDismissSessionNoticeNotification {
-  steamidFriend?: number | undefined;
+  steamidFriend?: bigint | undefined;
   noticeType?: EChatSessionNotice | undefined;
 }
 
 export interface CFriendMessagesIncomingMessageNotification {
-  steamidFriend?: number | undefined;
+  steamidFriend?: bigint | undefined;
   chatEntryType?: number | undefined;
   fromLimitedAccount?: boolean | undefined;
   message?: string | undefined;
@@ -161,25 +161,25 @@ export interface CFriendMessagesIncomingMessageNotification {
 }
 
 export interface CFriendMessagesMessageReactionNotification {
-  steamidFriend?: number | undefined;
+  steamidFriend?: bigint | undefined;
   serverTimestamp?: number | undefined;
   ordinal?: number | undefined;
-  reactor?: number | undefined;
+  reactor?: bigint | undefined;
   reactionType?: EMessageReactionType | undefined;
   reaction?: string | undefined;
   isAdd?: boolean | undefined;
 }
 
 export interface CFriendMessagesSessionNoticeNotification {
-  steamidFriend?: number | undefined;
+  steamidFriend?: bigint | undefined;
   noticeType?: EChatSessionNotice | undefined;
   active?: boolean | undefined;
 }
 
 function createBaseCFriendMessagesGetRecentMessagesRequest(): CFriendMessagesGetRecentMessagesRequest {
   return {
-    steamid1: 0,
-    steamid2: 0,
+    steamid1: 0n,
+    steamid2: 0n,
     count: 0,
     mostRecentConversation: false,
     rtime32StartTime: 0,
@@ -192,10 +192,16 @@ function createBaseCFriendMessagesGetRecentMessagesRequest(): CFriendMessagesGet
 
 export const CFriendMessagesGetRecentMessagesRequest: MessageFns<CFriendMessagesGetRecentMessagesRequest> = {
   encode(message: CFriendMessagesGetRecentMessagesRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid1 !== undefined && message.steamid1 !== 0) {
+    if (message.steamid1 !== undefined && message.steamid1 !== 0n) {
+      if (BigInt.asUintN(64, message.steamid1) !== message.steamid1) {
+        throw new globalThis.Error("value provided for field message.steamid1 of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid1);
     }
-    if (message.steamid2 !== undefined && message.steamid2 !== 0) {
+    if (message.steamid2 !== undefined && message.steamid2 !== 0n) {
+      if (BigInt.asUintN(64, message.steamid2) !== message.steamid2) {
+        throw new globalThis.Error("value provided for field message.steamid2 of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid2);
     }
     if (message.count !== undefined && message.count !== 0) {
@@ -234,7 +240,7 @@ export const CFriendMessagesGetRecentMessagesRequest: MessageFns<CFriendMessages
             break;
           }
 
-          message.steamid1 = longToNumber(reader.fixed64());
+          message.steamid1 = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -242,7 +248,7 @@ export const CFriendMessagesGetRecentMessagesRequest: MessageFns<CFriendMessages
             break;
           }
 
-          message.steamid2 = longToNumber(reader.fixed64());
+          message.steamid2 = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -734,7 +740,7 @@ export const CFriendsMessagesGetActiveMessageSessionsResponse_FriendMessageSessi
 
 function createBaseCFriendMessagesSendMessageRequest(): CFriendMessagesSendMessageRequest {
   return {
-    steamid: 0,
+    steamid: 0n,
     chatEntryType: 0,
     message: "",
     containsBbcode: false,
@@ -746,7 +752,10 @@ function createBaseCFriendMessagesSendMessageRequest(): CFriendMessagesSendMessa
 
 export const CFriendMessagesSendMessageRequest: MessageFns<CFriendMessagesSendMessageRequest> = {
   encode(message: CFriendMessagesSendMessageRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.chatEntryType !== undefined && message.chatEntryType !== 0) {
@@ -782,7 +791,7 @@ export const CFriendMessagesSendMessageRequest: MessageFns<CFriendMessagesSendMe
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -914,12 +923,15 @@ export const CFriendMessagesSendMessageResponse: MessageFns<CFriendMessagesSendM
 };
 
 function createBaseCFriendMessagesAckMessageNotification(): CFriendMessagesAckMessageNotification {
-  return { steamidPartner: 0, timestamp: 0 };
+  return { steamidPartner: 0n, timestamp: 0 };
 }
 
 export const CFriendMessagesAckMessageNotification: MessageFns<CFriendMessagesAckMessageNotification> = {
   encode(message: CFriendMessagesAckMessageNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidPartner !== undefined && message.steamidPartner !== 0) {
+    if (message.steamidPartner !== undefined && message.steamidPartner !== 0n) {
+      if (BigInt.asUintN(64, message.steamidPartner) !== message.steamidPartner) {
+        throw new globalThis.Error("value provided for field message.steamidPartner of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidPartner);
     }
     if (message.timestamp !== undefined && message.timestamp !== 0) {
@@ -940,7 +952,7 @@ export const CFriendMessagesAckMessageNotification: MessageFns<CFriendMessagesAc
             break;
           }
 
-          message.steamidPartner = longToNumber(reader.fixed64());
+          message.steamidPartner = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -962,12 +974,15 @@ export const CFriendMessagesAckMessageNotification: MessageFns<CFriendMessagesAc
 };
 
 function createBaseCFriendMessagesIsInFriendsUIBetaRequest(): CFriendMessagesIsInFriendsUIBetaRequest {
-  return { steamid: 0 };
+  return { steamid: 0n };
 }
 
 export const CFriendMessagesIsInFriendsUIBetaRequest: MessageFns<CFriendMessagesIsInFriendsUIBetaRequest> = {
   encode(message: CFriendMessagesIsInFriendsUIBetaRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     return writer;
@@ -985,7 +1000,7 @@ export const CFriendMessagesIsInFriendsUIBetaRequest: MessageFns<CFriendMessages
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1047,7 +1062,7 @@ export const CFriendMessagesIsInFriendsUIBetaResponse: MessageFns<CFriendMessage
 };
 
 function createBaseCFriendMessagesUpdateMessageReactionRequest(): CFriendMessagesUpdateMessageReactionRequest {
-  return { steamid: 0, serverTimestamp: 0, ordinal: 0, reactionType: 0, reaction: "", isAdd: false };
+  return { steamid: 0n, serverTimestamp: 0, ordinal: 0, reactionType: 0, reaction: "", isAdd: false };
 }
 
 export const CFriendMessagesUpdateMessageReactionRequest: MessageFns<CFriendMessagesUpdateMessageReactionRequest> = {
@@ -1055,7 +1070,10 @@ export const CFriendMessagesUpdateMessageReactionRequest: MessageFns<CFriendMess
     message: CFriendMessagesUpdateMessageReactionRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.serverTimestamp !== undefined && message.serverTimestamp !== 0) {
@@ -1088,7 +1106,7 @@ export const CFriendMessagesUpdateMessageReactionRequest: MessageFns<CFriendMess
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1192,15 +1210,21 @@ export const CFriendMessagesUpdateMessageReactionResponse: MessageFns<CFriendMes
 };
 
 function createBaseCFriendMessagesReportMessageRequest(): CFriendMessagesReportMessageRequest {
-  return { steamidFrom: 0, steamidTo: 0, timestamp: 0, ordinal: 0, reportReason: 0, reportText: "", language: "" };
+  return { steamidFrom: 0n, steamidTo: 0n, timestamp: 0, ordinal: 0, reportReason: 0, reportText: "", language: "" };
 }
 
 export const CFriendMessagesReportMessageRequest: MessageFns<CFriendMessagesReportMessageRequest> = {
   encode(message: CFriendMessagesReportMessageRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidFrom !== undefined && message.steamidFrom !== 0) {
+    if (message.steamidFrom !== undefined && message.steamidFrom !== 0n) {
+      if (BigInt.asUintN(64, message.steamidFrom) !== message.steamidFrom) {
+        throw new globalThis.Error("value provided for field message.steamidFrom of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidFrom);
     }
-    if (message.steamidTo !== undefined && message.steamidTo !== 0) {
+    if (message.steamidTo !== undefined && message.steamidTo !== 0n) {
+      if (BigInt.asUintN(64, message.steamidTo) !== message.steamidTo) {
+        throw new globalThis.Error("value provided for field message.steamidTo of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamidTo);
     }
     if (message.timestamp !== undefined && message.timestamp !== 0) {
@@ -1233,7 +1257,7 @@ export const CFriendMessagesReportMessageRequest: MessageFns<CFriendMessagesRepo
             break;
           }
 
-          message.steamidFrom = longToNumber(reader.fixed64());
+          message.steamidFrom = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1241,7 +1265,7 @@ export const CFriendMessagesReportMessageRequest: MessageFns<CFriendMessagesRepo
             break;
           }
 
-          message.steamidTo = longToNumber(reader.fixed64());
+          message.steamidTo = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1321,21 +1345,41 @@ export const CFriendMessagesReportMessageResponse: MessageFns<CFriendMessagesRep
 };
 
 function createBaseCFriendMessagesResolveReportRequest(): CFriendMessagesResolveReportRequest {
-  return { steamidFrom: 0, steamidTo: 0, subjectGroupId: 0, subjectId: 0, resolution: 0, reason: 0, skipLock: false };
+  return {
+    steamidFrom: 0n,
+    steamidTo: 0n,
+    subjectGroupId: 0n,
+    subjectId: 0n,
+    resolution: 0,
+    reason: 0,
+    skipLock: false,
+  };
 }
 
 export const CFriendMessagesResolveReportRequest: MessageFns<CFriendMessagesResolveReportRequest> = {
   encode(message: CFriendMessagesResolveReportRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidFrom !== undefined && message.steamidFrom !== 0) {
+    if (message.steamidFrom !== undefined && message.steamidFrom !== 0n) {
+      if (BigInt.asUintN(64, message.steamidFrom) !== message.steamidFrom) {
+        throw new globalThis.Error("value provided for field message.steamidFrom of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidFrom);
     }
-    if (message.steamidTo !== undefined && message.steamidTo !== 0) {
+    if (message.steamidTo !== undefined && message.steamidTo !== 0n) {
+      if (BigInt.asUintN(64, message.steamidTo) !== message.steamidTo) {
+        throw new globalThis.Error("value provided for field message.steamidTo of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamidTo);
     }
-    if (message.subjectGroupId !== undefined && message.subjectGroupId !== 0) {
+    if (message.subjectGroupId !== undefined && message.subjectGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.subjectGroupId) !== message.subjectGroupId) {
+        throw new globalThis.Error("value provided for field message.subjectGroupId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.subjectGroupId);
     }
-    if (message.subjectId !== undefined && message.subjectId !== 0) {
+    if (message.subjectId !== undefined && message.subjectId !== 0n) {
+      if (BigInt.asUintN(64, message.subjectId) !== message.subjectId) {
+        throw new globalThis.Error("value provided for field message.subjectId of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.subjectId);
     }
     if (message.resolution !== undefined && message.resolution !== 0) {
@@ -1362,7 +1406,7 @@ export const CFriendMessagesResolveReportRequest: MessageFns<CFriendMessagesReso
             break;
           }
 
-          message.steamidFrom = longToNumber(reader.fixed64());
+          message.steamidFrom = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1370,7 +1414,7 @@ export const CFriendMessagesResolveReportRequest: MessageFns<CFriendMessagesReso
             break;
           }
 
-          message.steamidTo = longToNumber(reader.fixed64());
+          message.steamidTo = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1378,7 +1422,7 @@ export const CFriendMessagesResolveReportRequest: MessageFns<CFriendMessagesReso
             break;
           }
 
-          message.subjectGroupId = longToNumber(reader.uint64());
+          message.subjectGroupId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -1386,7 +1430,7 @@ export const CFriendMessagesResolveReportRequest: MessageFns<CFriendMessagesReso
             break;
           }
 
-          message.subjectId = longToNumber(reader.uint64());
+          message.subjectId = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -1450,7 +1494,7 @@ export const CFriendMessagesResolveReportResponse: MessageFns<CFriendMessagesRes
 };
 
 function createBaseCFriendMessagesDismissSessionNoticeNotification(): CFriendMessagesDismissSessionNoticeNotification {
-  return { steamidFriend: 0, noticeType: 0 };
+  return { steamidFriend: 0n, noticeType: 0 };
 }
 
 export const CFriendMessagesDismissSessionNoticeNotification: MessageFns<
@@ -1460,7 +1504,10 @@ export const CFriendMessagesDismissSessionNoticeNotification: MessageFns<
     message: CFriendMessagesDismissSessionNoticeNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamidFriend !== undefined && message.steamidFriend !== 0) {
+    if (message.steamidFriend !== undefined && message.steamidFriend !== 0n) {
+      if (BigInt.asUintN(64, message.steamidFriend) !== message.steamidFriend) {
+        throw new globalThis.Error("value provided for field message.steamidFriend of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidFriend);
     }
     if (message.noticeType !== undefined && message.noticeType !== 0) {
@@ -1481,7 +1528,7 @@ export const CFriendMessagesDismissSessionNoticeNotification: MessageFns<
             break;
           }
 
-          message.steamidFriend = longToNumber(reader.fixed64());
+          message.steamidFriend = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1504,7 +1551,7 @@ export const CFriendMessagesDismissSessionNoticeNotification: MessageFns<
 
 function createBaseCFriendMessagesIncomingMessageNotification(): CFriendMessagesIncomingMessageNotification {
   return {
-    steamidFriend: 0,
+    steamidFriend: 0n,
     chatEntryType: 0,
     fromLimitedAccount: false,
     message: "",
@@ -1518,7 +1565,10 @@ function createBaseCFriendMessagesIncomingMessageNotification(): CFriendMessages
 
 export const CFriendMessagesIncomingMessageNotification: MessageFns<CFriendMessagesIncomingMessageNotification> = {
   encode(message: CFriendMessagesIncomingMessageNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidFriend !== undefined && message.steamidFriend !== 0) {
+    if (message.steamidFriend !== undefined && message.steamidFriend !== 0n) {
+      if (BigInt.asUintN(64, message.steamidFriend) !== message.steamidFriend) {
+        throw new globalThis.Error("value provided for field message.steamidFriend of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidFriend);
     }
     if (message.chatEntryType !== undefined && message.chatEntryType !== 0) {
@@ -1560,7 +1610,7 @@ export const CFriendMessagesIncomingMessageNotification: MessageFns<CFriendMessa
             break;
           }
 
-          message.steamidFriend = longToNumber(reader.fixed64());
+          message.steamidFriend = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1638,12 +1688,23 @@ export const CFriendMessagesIncomingMessageNotification: MessageFns<CFriendMessa
 };
 
 function createBaseCFriendMessagesMessageReactionNotification(): CFriendMessagesMessageReactionNotification {
-  return { steamidFriend: 0, serverTimestamp: 0, ordinal: 0, reactor: 0, reactionType: 0, reaction: "", isAdd: false };
+  return {
+    steamidFriend: 0n,
+    serverTimestamp: 0,
+    ordinal: 0,
+    reactor: 0n,
+    reactionType: 0,
+    reaction: "",
+    isAdd: false,
+  };
 }
 
 export const CFriendMessagesMessageReactionNotification: MessageFns<CFriendMessagesMessageReactionNotification> = {
   encode(message: CFriendMessagesMessageReactionNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidFriend !== undefined && message.steamidFriend !== 0) {
+    if (message.steamidFriend !== undefined && message.steamidFriend !== 0n) {
+      if (BigInt.asUintN(64, message.steamidFriend) !== message.steamidFriend) {
+        throw new globalThis.Error("value provided for field message.steamidFriend of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidFriend);
     }
     if (message.serverTimestamp !== undefined && message.serverTimestamp !== 0) {
@@ -1652,7 +1713,10 @@ export const CFriendMessagesMessageReactionNotification: MessageFns<CFriendMessa
     if (message.ordinal !== undefined && message.ordinal !== 0) {
       writer.uint32(24).uint32(message.ordinal);
     }
-    if (message.reactor !== undefined && message.reactor !== 0) {
+    if (message.reactor !== undefined && message.reactor !== 0n) {
+      if (BigInt.asUintN(64, message.reactor) !== message.reactor) {
+        throw new globalThis.Error("value provided for field message.reactor of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.reactor);
     }
     if (message.reactionType !== undefined && message.reactionType !== 0) {
@@ -1679,7 +1743,7 @@ export const CFriendMessagesMessageReactionNotification: MessageFns<CFriendMessa
             break;
           }
 
-          message.steamidFriend = longToNumber(reader.fixed64());
+          message.steamidFriend = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1703,7 +1767,7 @@ export const CFriendMessagesMessageReactionNotification: MessageFns<CFriendMessa
             break;
           }
 
-          message.reactor = longToNumber(reader.fixed64());
+          message.reactor = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -1741,12 +1805,15 @@ export const CFriendMessagesMessageReactionNotification: MessageFns<CFriendMessa
 };
 
 function createBaseCFriendMessagesSessionNoticeNotification(): CFriendMessagesSessionNoticeNotification {
-  return { steamidFriend: 0, noticeType: 0, active: false };
+  return { steamidFriend: 0n, noticeType: 0, active: false };
 }
 
 export const CFriendMessagesSessionNoticeNotification: MessageFns<CFriendMessagesSessionNoticeNotification> = {
   encode(message: CFriendMessagesSessionNoticeNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidFriend !== undefined && message.steamidFriend !== 0) {
+    if (message.steamidFriend !== undefined && message.steamidFriend !== 0n) {
+      if (BigInt.asUintN(64, message.steamidFriend) !== message.steamidFriend) {
+        throw new globalThis.Error("value provided for field message.steamidFriend of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidFriend);
     }
     if (message.noticeType !== undefined && message.noticeType !== 0) {
@@ -1770,7 +1837,7 @@ export const CFriendMessagesSessionNoticeNotification: MessageFns<CFriendMessage
             break;
           }
 
-          message.steamidFriend = longToNumber(reader.fixed64());
+          message.steamidFriend = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1945,17 +2012,6 @@ export class FriendMessagesClientClientImpl implements FriendMessagesClient {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

@@ -20,7 +20,7 @@ export enum ESteamNetworkingSocketsCipher {
 export interface CMsgSteamDatagramSessionCryptInfo {
   keyType?: CMsgSteamDatagramSessionCryptInfo_EKeyType | undefined;
   keyData?: Buffer | undefined;
-  nonce?: number | undefined;
+  nonce?: bigint | undefined;
   protocolVersion?: number | undefined;
   ciphers: ESteamNetworkingSocketsCipher[];
 }
@@ -54,18 +54,18 @@ export interface CMsgSteamDatagramLinkInstantaneousStats {
 
 export interface CMsgSteamDatagramLinkLifetimeStats {
   connectedSeconds?: number | undefined;
-  packetsSent?: number | undefined;
-  kbSent?: number | undefined;
-  packetsRecv?: number | undefined;
-  kbRecv?: number | undefined;
-  packetsRecvSequenced?: number | undefined;
-  packetsRecvDropped?: number | undefined;
-  packetsRecvOutOfOrder?: number | undefined;
-  packetsRecvOutOfOrderCorrected?: number | undefined;
-  packetsRecvDuplicate?: number | undefined;
-  packetsRecvLurch?: number | undefined;
-  multipathPacketsRecvSequenced: number[];
-  multipathPacketsRecvLater: number[];
+  packetsSent?: bigint | undefined;
+  kbSent?: bigint | undefined;
+  packetsRecv?: bigint | undefined;
+  kbRecv?: bigint | undefined;
+  packetsRecvSequenced?: bigint | undefined;
+  packetsRecvDropped?: bigint | undefined;
+  packetsRecvOutOfOrder?: bigint | undefined;
+  packetsRecvOutOfOrderCorrected?: bigint | undefined;
+  packetsRecvDuplicate?: bigint | undefined;
+  packetsRecvLurch?: bigint | undefined;
+  multipathPacketsRecvSequenced: bigint[];
+  multipathPacketsRecvLater: bigint[];
   multipathSendEnabled?: number | undefined;
   qualityHistogram100?: number | undefined;
   qualityHistogram99?: number | undefined;
@@ -162,7 +162,7 @@ export interface CMsgSteamNetworkingP2PRendezvous_ReliableMessage {
 
 export interface CMsgSteamNetworkingP2PRendezvous_ApplicationMessage {
   data?: Buffer | undefined;
-  msgNum?: number | undefined;
+  msgNum?: bigint | undefined;
   flags?: number | undefined;
   laneIdx?: number | undefined;
 }
@@ -186,7 +186,7 @@ export interface CMsgSteamNetworkingICESessionSummary {
 }
 
 function createBaseCMsgSteamDatagramSessionCryptInfo(): CMsgSteamDatagramSessionCryptInfo {
-  return { keyType: 0, keyData: Buffer.alloc(0), nonce: 0, protocolVersion: 0, ciphers: [] };
+  return { keyType: 0, keyData: Buffer.alloc(0), nonce: 0n, protocolVersion: 0, ciphers: [] };
 }
 
 export const CMsgSteamDatagramSessionCryptInfo: MessageFns<CMsgSteamDatagramSessionCryptInfo> = {
@@ -197,7 +197,10 @@ export const CMsgSteamDatagramSessionCryptInfo: MessageFns<CMsgSteamDatagramSess
     if (message.keyData !== undefined && message.keyData.length !== 0) {
       writer.uint32(18).bytes(message.keyData);
     }
-    if (message.nonce !== undefined && message.nonce !== 0) {
+    if (message.nonce !== undefined && message.nonce !== 0n) {
+      if (BigInt.asUintN(64, message.nonce) !== message.nonce) {
+        throw new globalThis.Error("value provided for field message.nonce of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.nonce);
     }
     if (message.protocolVersion !== undefined && message.protocolVersion !== 0) {
@@ -237,7 +240,7 @@ export const CMsgSteamDatagramSessionCryptInfo: MessageFns<CMsgSteamDatagramSess
             break;
           }
 
-          message.nonce = longToNumber(reader.fixed64());
+          message.nonce = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -498,16 +501,16 @@ export const CMsgSteamDatagramLinkInstantaneousStats: MessageFns<CMsgSteamDatagr
 function createBaseCMsgSteamDatagramLinkLifetimeStats(): CMsgSteamDatagramLinkLifetimeStats {
   return {
     connectedSeconds: 0,
-    packetsSent: 0,
-    kbSent: 0,
-    packetsRecv: 0,
-    kbRecv: 0,
-    packetsRecvSequenced: 0,
-    packetsRecvDropped: 0,
-    packetsRecvOutOfOrder: 0,
-    packetsRecvOutOfOrderCorrected: 0,
-    packetsRecvDuplicate: 0,
-    packetsRecvLurch: 0,
+    packetsSent: 0n,
+    kbSent: 0n,
+    packetsRecv: 0n,
+    kbRecv: 0n,
+    packetsRecvSequenced: 0n,
+    packetsRecvDropped: 0n,
+    packetsRecvOutOfOrder: 0n,
+    packetsRecvOutOfOrderCorrected: 0n,
+    packetsRecvDuplicate: 0n,
+    packetsRecvLurch: 0n,
     multipathPacketsRecvSequenced: [],
     multipathPacketsRecvLater: [],
     multipathSendEnabled: 0,
@@ -552,40 +555,78 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
     if (message.connectedSeconds !== undefined && message.connectedSeconds !== 0) {
       writer.uint32(16).uint32(message.connectedSeconds);
     }
-    if (message.packetsSent !== undefined && message.packetsSent !== 0) {
+    if (message.packetsSent !== undefined && message.packetsSent !== 0n) {
+      if (BigInt.asUintN(64, message.packetsSent) !== message.packetsSent) {
+        throw new globalThis.Error("value provided for field message.packetsSent of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.packetsSent);
     }
-    if (message.kbSent !== undefined && message.kbSent !== 0) {
+    if (message.kbSent !== undefined && message.kbSent !== 0n) {
+      if (BigInt.asUintN(64, message.kbSent) !== message.kbSent) {
+        throw new globalThis.Error("value provided for field message.kbSent of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.kbSent);
     }
-    if (message.packetsRecv !== undefined && message.packetsRecv !== 0) {
+    if (message.packetsRecv !== undefined && message.packetsRecv !== 0n) {
+      if (BigInt.asUintN(64, message.packetsRecv) !== message.packetsRecv) {
+        throw new globalThis.Error("value provided for field message.packetsRecv of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.packetsRecv);
     }
-    if (message.kbRecv !== undefined && message.kbRecv !== 0) {
+    if (message.kbRecv !== undefined && message.kbRecv !== 0n) {
+      if (BigInt.asUintN(64, message.kbRecv) !== message.kbRecv) {
+        throw new globalThis.Error("value provided for field message.kbRecv of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.kbRecv);
     }
-    if (message.packetsRecvSequenced !== undefined && message.packetsRecvSequenced !== 0) {
+    if (message.packetsRecvSequenced !== undefined && message.packetsRecvSequenced !== 0n) {
+      if (BigInt.asUintN(64, message.packetsRecvSequenced) !== message.packetsRecvSequenced) {
+        throw new globalThis.Error("value provided for field message.packetsRecvSequenced of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.packetsRecvSequenced);
     }
-    if (message.packetsRecvDropped !== undefined && message.packetsRecvDropped !== 0) {
+    if (message.packetsRecvDropped !== undefined && message.packetsRecvDropped !== 0n) {
+      if (BigInt.asUintN(64, message.packetsRecvDropped) !== message.packetsRecvDropped) {
+        throw new globalThis.Error("value provided for field message.packetsRecvDropped of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.packetsRecvDropped);
     }
-    if (message.packetsRecvOutOfOrder !== undefined && message.packetsRecvOutOfOrder !== 0) {
+    if (message.packetsRecvOutOfOrder !== undefined && message.packetsRecvOutOfOrder !== 0n) {
+      if (BigInt.asUintN(64, message.packetsRecvOutOfOrder) !== message.packetsRecvOutOfOrder) {
+        throw new globalThis.Error("value provided for field message.packetsRecvOutOfOrder of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.packetsRecvOutOfOrder);
     }
-    if (message.packetsRecvOutOfOrderCorrected !== undefined && message.packetsRecvOutOfOrderCorrected !== 0) {
+    if (message.packetsRecvOutOfOrderCorrected !== undefined && message.packetsRecvOutOfOrderCorrected !== 0n) {
+      if (BigInt.asUintN(64, message.packetsRecvOutOfOrderCorrected) !== message.packetsRecvOutOfOrderCorrected) {
+        throw new globalThis.Error(
+          "value provided for field message.packetsRecvOutOfOrderCorrected of type uint64 too large",
+        );
+      }
       writer.uint32(120).uint64(message.packetsRecvOutOfOrderCorrected);
     }
-    if (message.packetsRecvDuplicate !== undefined && message.packetsRecvDuplicate !== 0) {
+    if (message.packetsRecvDuplicate !== undefined && message.packetsRecvDuplicate !== 0n) {
+      if (BigInt.asUintN(64, message.packetsRecvDuplicate) !== message.packetsRecvDuplicate) {
+        throw new globalThis.Error("value provided for field message.packetsRecvDuplicate of type uint64 too large");
+      }
       writer.uint32(80).uint64(message.packetsRecvDuplicate);
     }
-    if (message.packetsRecvLurch !== undefined && message.packetsRecvLurch !== 0) {
+    if (message.packetsRecvLurch !== undefined && message.packetsRecvLurch !== 0n) {
+      if (BigInt.asUintN(64, message.packetsRecvLurch) !== message.packetsRecvLurch) {
+        throw new globalThis.Error("value provided for field message.packetsRecvLurch of type uint64 too large");
+      }
       writer.uint32(88).uint64(message.packetsRecvLurch);
     }
     for (const v of message.multipathPacketsRecvSequenced) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(96).uint64(v!);
     }
     for (const v of message.multipathPacketsRecvLater) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(104).uint64(v!);
     }
     if (message.multipathSendEnabled !== undefined && message.multipathSendEnabled !== 0) {
@@ -713,7 +754,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
             break;
           }
 
-          message.packetsSent = longToNumber(reader.uint64());
+          message.packetsSent = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -721,7 +762,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
             break;
           }
 
-          message.kbSent = longToNumber(reader.uint64());
+          message.kbSent = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -729,7 +770,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
             break;
           }
 
-          message.packetsRecv = longToNumber(reader.uint64());
+          message.packetsRecv = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -737,7 +778,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
             break;
           }
 
-          message.kbRecv = longToNumber(reader.uint64());
+          message.kbRecv = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -745,7 +786,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
             break;
           }
 
-          message.packetsRecvSequenced = longToNumber(reader.uint64());
+          message.packetsRecvSequenced = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -753,7 +794,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
             break;
           }
 
-          message.packetsRecvDropped = longToNumber(reader.uint64());
+          message.packetsRecvDropped = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -761,7 +802,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
             break;
           }
 
-          message.packetsRecvOutOfOrder = longToNumber(reader.uint64());
+          message.packetsRecvOutOfOrder = reader.uint64() as bigint;
           continue;
         }
         case 15: {
@@ -769,7 +810,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
             break;
           }
 
-          message.packetsRecvOutOfOrderCorrected = longToNumber(reader.uint64());
+          message.packetsRecvOutOfOrderCorrected = reader.uint64() as bigint;
           continue;
         }
         case 10: {
@@ -777,7 +818,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
             break;
           }
 
-          message.packetsRecvDuplicate = longToNumber(reader.uint64());
+          message.packetsRecvDuplicate = reader.uint64() as bigint;
           continue;
         }
         case 11: {
@@ -785,12 +826,12 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
             break;
           }
 
-          message.packetsRecvLurch = longToNumber(reader.uint64());
+          message.packetsRecvLurch = reader.uint64() as bigint;
           continue;
         }
         case 12: {
           if (tag === 96) {
-            message.multipathPacketsRecvSequenced.push(longToNumber(reader.uint64()));
+            message.multipathPacketsRecvSequenced.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -798,7 +839,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
           if (tag === 98) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.multipathPacketsRecvSequenced.push(longToNumber(reader.uint64()));
+              message.multipathPacketsRecvSequenced.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -808,7 +849,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
         }
         case 13: {
           if (tag === 104) {
-            message.multipathPacketsRecvLater.push(longToNumber(reader.uint64()));
+            message.multipathPacketsRecvLater.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -816,7 +857,7 @@ export const CMsgSteamDatagramLinkLifetimeStats: MessageFns<CMsgSteamDatagramLin
           if (tag === 106) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.multipathPacketsRecvLater.push(longToNumber(reader.uint64()));
+              message.multipathPacketsRecvLater.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -1718,7 +1759,7 @@ export const CMsgSteamNetworkingP2PRendezvous_ReliableMessage: MessageFns<
 };
 
 function createBaseCMsgSteamNetworkingP2PRendezvous_ApplicationMessage(): CMsgSteamNetworkingP2PRendezvous_ApplicationMessage {
-  return { data: Buffer.alloc(0), msgNum: 0, flags: 0, laneIdx: 0 };
+  return { data: Buffer.alloc(0), msgNum: 0n, flags: 0, laneIdx: 0 };
 }
 
 export const CMsgSteamNetworkingP2PRendezvous_ApplicationMessage: MessageFns<
@@ -1731,7 +1772,10 @@ export const CMsgSteamNetworkingP2PRendezvous_ApplicationMessage: MessageFns<
     if (message.data !== undefined && message.data.length !== 0) {
       writer.uint32(10).bytes(message.data);
     }
-    if (message.msgNum !== undefined && message.msgNum !== 0) {
+    if (message.msgNum !== undefined && message.msgNum !== 0n) {
+      if (BigInt.asUintN(64, message.msgNum) !== message.msgNum) {
+        throw new globalThis.Error("value provided for field message.msgNum of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.msgNum);
     }
     if (message.flags !== undefined && message.flags !== 0) {
@@ -1763,7 +1807,7 @@ export const CMsgSteamNetworkingP2PRendezvous_ApplicationMessage: MessageFns<
             break;
           }
 
-          message.msgNum = longToNumber(reader.uint64());
+          message.msgNum = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1998,17 +2042,6 @@ export const CMsgSteamNetworkingICESessionSummary: MessageFns<CMsgSteamNetworkin
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

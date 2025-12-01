@@ -13,12 +13,12 @@ import { NoResponse } from "./steammessages_unified_base.steamclient";
 export const protobufPackage = "";
 
 export interface CCloudClientLogUploadCheckNotification {
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
 }
 
 export interface CCloudClientLogUploadCompleteNotification {
-  clientId?: number | undefined;
-  requestId?: number | undefined;
+  clientId?: bigint | undefined;
+  requestId?: bigint | undefined;
 }
 
 export interface CCloudBeginHTTPUploadRequest {
@@ -30,11 +30,11 @@ export interface CCloudBeginHTTPUploadRequest {
   platformsToSync: string[];
   requestHeadersNames: string[];
   requestHeadersValues: string[];
-  uploadBatchId?: number | undefined;
+  uploadBatchId?: bigint | undefined;
 }
 
 export interface CCloudBeginHTTPUploadResponse {
-  ugcid?: number | undefined;
+  ugcid?: bigint | undefined;
   timestamp?: number | undefined;
   urlHost?: string | undefined;
   urlPath?: string | undefined;
@@ -68,7 +68,7 @@ export interface CCloudBeginUGCUploadRequest {
 
 export interface CCloudBeginUGCUploadResponse {
   storageSystem?: EPublishedFileStorageSystem | undefined;
-  ugcid?: number | undefined;
+  ugcid?: bigint | undefined;
   timestamp?: number | undefined;
   urlHost?: string | undefined;
   urlPath?: string | undefined;
@@ -84,7 +84,7 @@ export interface CCloudBeginUGCUploadResponse_HTTPHeaders {
 export interface CCloudCommitUGCUploadRequest {
   transferSucceeded?: boolean | undefined;
   appid?: number | undefined;
-  ugcid?: number | undefined;
+  ugcid?: bigint | undefined;
 }
 
 export interface CCloudCommitUGCUploadResponse {
@@ -92,18 +92,18 @@ export interface CCloudCommitUGCUploadResponse {
 }
 
 export interface CCloudGetFileDetailsRequest {
-  ugcid?: number | undefined;
+  ugcid?: bigint | undefined;
   appid?: number | undefined;
 }
 
 export interface CCloudUserFile {
   appid?: number | undefined;
-  ugcid?: number | undefined;
+  ugcid?: bigint | undefined;
   filename?: string | undefined;
-  timestamp?: number | undefined;
+  timestamp?: bigint | undefined;
   fileSize?: number | undefined;
   url?: string | undefined;
-  steamidCreator?: number | undefined;
+  steamidCreator?: bigint | undefined;
   flags?: number | undefined;
   platformsToSync: string[];
   fileSha?: string | undefined;
@@ -124,7 +124,7 @@ export interface CCloudGetSingleFileInfoResponse {
   appId?: number | undefined;
   fileName?: string | undefined;
   shaFile?: Buffer | undefined;
-  timeStamp?: number | undefined;
+  timeStamp?: bigint | undefined;
   rawFileSize?: number | undefined;
   isExplicitDelete?: boolean | undefined;
 }
@@ -135,7 +135,7 @@ export interface CCloudShareFileRequest {
 }
 
 export interface CCloudShareFileResponse {
-  hcontent?: number | undefined;
+  hcontent?: bigint | undefined;
 }
 
 export interface CCloudEnumerateUserFilesRequest {
@@ -153,7 +153,7 @@ export interface CCloudEnumerateUserFilesResponse {
 export interface CCloudDeleteRequest {
   filename?: string | undefined;
   appid?: number | undefined;
-  uploadBatchId?: number | undefined;
+  uploadBatchId?: bigint | undefined;
 }
 
 export interface CCloudDeleteResponse {
@@ -168,12 +168,12 @@ export interface CCloudGetClientEncryptionKeyResponse {
 }
 
 export interface CCloudCDNReportNotification {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   url?: string | undefined;
   success?: boolean | undefined;
   httpStatusCode?: number | undefined;
-  expectedBytes?: number | undefined;
-  receivedBytes?: number | undefined;
+  expectedBytes?: bigint | undefined;
+  receivedBytes?: bigint | undefined;
   duration?: number | undefined;
 }
 
@@ -183,8 +183,8 @@ export interface CCloudExternalStorageTransferReportNotification {
   isUpload?: boolean | undefined;
   success?: boolean | undefined;
   httpStatusCode?: number | undefined;
-  bytesExpected?: number | undefined;
-  bytesActual?: number | undefined;
+  bytesExpected?: bigint | undefined;
+  bytesActual?: bigint | undefined;
   durationMs?: number | undefined;
   cellid?: number | undefined;
   proxied?: boolean | undefined;
@@ -201,24 +201,24 @@ export interface CCloudBeginAppUploadBatchRequest {
   machineName?: string | undefined;
   filesToUpload: string[];
   filesToDelete: string[];
-  clientId?: number | undefined;
-  appBuildId?: number | undefined;
+  clientId?: bigint | undefined;
+  appBuildId?: bigint | undefined;
 }
 
 export interface CCloudBeginAppUploadBatchResponse {
-  batchId?: number | undefined;
-  appChangeNumber?: number | undefined;
+  batchId?: bigint | undefined;
+  appChangeNumber?: bigint | undefined;
 }
 
 export interface CCloudCompleteAppUploadBatchNotification {
   appid?: number | undefined;
-  batchId?: number | undefined;
+  batchId?: bigint | undefined;
   batchEresult?: number | undefined;
 }
 
 export interface CCloudCompleteAppUploadBatchRequest {
   appid?: number | undefined;
-  batchId?: number | undefined;
+  batchId?: bigint | undefined;
   batchEresult?: number | undefined;
 }
 
@@ -230,14 +230,14 @@ export interface CCloudClientBeginFileUploadRequest {
   fileSize?: number | undefined;
   rawFileSize?: number | undefined;
   fileSha?: Buffer | undefined;
-  timeStamp?: number | undefined;
+  timeStamp?: bigint | undefined;
   filename?: string | undefined;
   platformsToSync?: number | undefined;
   cellId?: number | undefined;
   canEncrypt?: boolean | undefined;
   isSharedFile?: boolean | undefined;
   deprecatedRealm?: number | undefined;
-  uploadBatchId?: number | undefined;
+  uploadBatchId?: bigint | undefined;
 }
 
 export interface ClientCloudFileUploadBlockDetails {
@@ -246,7 +246,7 @@ export interface ClientCloudFileUploadBlockDetails {
   useHttps?: boolean | undefined;
   httpMethod?: number | undefined;
   requestHeaders: ClientCloudFileUploadBlockDetails_HTTPHeaders[];
-  blockOffset?: number | undefined;
+  blockOffset?: bigint | undefined;
   blockLength?: number | undefined;
   explicitBodyData?: Buffer | undefined;
   mayParallelize?: boolean | undefined;
@@ -285,7 +285,7 @@ export interface CCloudClientFileDownloadResponse {
   fileSize?: number | undefined;
   rawFileSize?: number | undefined;
   shaFile?: Buffer | undefined;
-  timeStamp?: number | undefined;
+  timeStamp?: bigint | undefined;
   isExplicitDelete?: boolean | undefined;
   urlHost?: string | undefined;
   urlPath?: string | undefined;
@@ -303,7 +303,7 @@ export interface CCloudClientDeleteFileRequest {
   appid?: number | undefined;
   filename?: string | undefined;
   isExplicitDelete?: boolean | undefined;
-  uploadBatchId?: number | undefined;
+  uploadBatchId?: bigint | undefined;
 }
 
 export interface CCloudClientDeleteFileResponse {
@@ -316,13 +316,13 @@ export interface CCloudClientConflictResolutionNotification {
 
 export interface CCloudGetAppFileChangelistRequest {
   appid?: number | undefined;
-  syncedChangeNumber?: number | undefined;
+  syncedChangeNumber?: bigint | undefined;
 }
 
 export interface CCloudAppFileInfo {
   fileName?: string | undefined;
   shaFile?: Buffer | undefined;
-  timeStamp?: number | undefined;
+  timeStamp?: bigint | undefined;
   rawFileSize?: number | undefined;
   persistState?: ECloudStoragePersistState | undefined;
   platformsToSync?: number | undefined;
@@ -331,17 +331,17 @@ export interface CCloudAppFileInfo {
 }
 
 export interface CCloudGetAppFileChangelistResponse {
-  currentChangeNumber?: number | undefined;
+  currentChangeNumber?: bigint | undefined;
   files: CCloudAppFileInfo[];
   isOnlyDelta?: boolean | undefined;
   pathPrefixes: string[];
   machineNames: string[];
-  appBuildidHwm?: number | undefined;
+  appBuildidHwm?: bigint | undefined;
 }
 
 export interface CCloudAppSessionSuspendRequest {
   appid?: number | undefined;
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   machineName?: string | undefined;
   cloudSyncCompleted?: boolean | undefined;
 }
@@ -351,7 +351,7 @@ export interface CCloudAppSessionSuspendResponse {
 
 export interface CCloudAppSessionResumeRequest {
   appid?: number | undefined;
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
 }
 
 export interface CCloudAppSessionResumeResponse {
@@ -359,7 +359,7 @@ export interface CCloudAppSessionResumeResponse {
 
 export interface CCloudAppLaunchIntentRequest {
   appid?: number | undefined;
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   machineName?: string | undefined;
   ignorePendingOperations?: boolean | undefined;
   osType?: number | undefined;
@@ -372,7 +372,7 @@ export interface CCloudAppLaunchIntentResponse {
 
 export interface CCloudAppExitSyncDoneNotification {
   appid?: number | undefined;
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   uploadsCompleted?: boolean | undefined;
   uploadsRequired?: boolean | undefined;
 }
@@ -383,27 +383,30 @@ export interface CCloudClientGetAppQuotaUsageRequest {
 
 export interface CCloudClientGetAppQuotaUsageResponse {
   existingFiles?: number | undefined;
-  existingBytes?: number | undefined;
+  existingBytes?: bigint | undefined;
   maxNumFiles?: number | undefined;
-  maxNumBytes?: number | undefined;
+  maxNumBytes?: bigint | undefined;
 }
 
 export interface CCloudAppCloudStateChangeNotification {
   appid?: number | undefined;
-  appChangeNumber?: number | undefined;
+  appChangeNumber?: bigint | undefined;
 }
 
 export interface CCloudClientLogUploadRequestNotification {
-  requestId?: number | undefined;
+  requestId?: bigint | undefined;
 }
 
 function createBaseCCloudClientLogUploadCheckNotification(): CCloudClientLogUploadCheckNotification {
-  return { clientId: 0 };
+  return { clientId: 0n };
 }
 
 export const CCloudClientLogUploadCheckNotification: MessageFns<CCloudClientLogUploadCheckNotification> = {
   encode(message: CCloudClientLogUploadCheckNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientId);
     }
     return writer;
@@ -421,7 +424,7 @@ export const CCloudClientLogUploadCheckNotification: MessageFns<CCloudClientLogU
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -435,15 +438,21 @@ export const CCloudClientLogUploadCheckNotification: MessageFns<CCloudClientLogU
 };
 
 function createBaseCCloudClientLogUploadCompleteNotification(): CCloudClientLogUploadCompleteNotification {
-  return { clientId: 0, requestId: 0 };
+  return { clientId: 0n, requestId: 0n };
 }
 
 export const CCloudClientLogUploadCompleteNotification: MessageFns<CCloudClientLogUploadCompleteNotification> = {
   encode(message: CCloudClientLogUploadCompleteNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientId);
     }
-    if (message.requestId !== undefined && message.requestId !== 0) {
+    if (message.requestId !== undefined && message.requestId !== 0n) {
+      if (BigInt.asUintN(64, message.requestId) !== message.requestId) {
+        throw new globalThis.Error("value provided for field message.requestId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.requestId);
     }
     return writer;
@@ -461,7 +470,7 @@ export const CCloudClientLogUploadCompleteNotification: MessageFns<CCloudClientL
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -469,7 +478,7 @@ export const CCloudClientLogUploadCompleteNotification: MessageFns<CCloudClientL
             break;
           }
 
-          message.requestId = longToNumber(reader.uint64());
+          message.requestId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -492,7 +501,7 @@ function createBaseCCloudBeginHTTPUploadRequest(): CCloudBeginHTTPUploadRequest 
     platformsToSync: [],
     requestHeadersNames: [],
     requestHeadersValues: [],
-    uploadBatchId: 0,
+    uploadBatchId: 0n,
   };
 }
 
@@ -522,7 +531,10 @@ export const CCloudBeginHTTPUploadRequest: MessageFns<CCloudBeginHTTPUploadReque
     for (const v of message.requestHeadersValues) {
       writer.uint32(66).string(v!);
     }
-    if (message.uploadBatchId !== undefined && message.uploadBatchId !== 0) {
+    if (message.uploadBatchId !== undefined && message.uploadBatchId !== 0n) {
+      if (BigInt.asUintN(64, message.uploadBatchId) !== message.uploadBatchId) {
+        throw new globalThis.Error("value provided for field message.uploadBatchId of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.uploadBatchId);
     }
     return writer;
@@ -604,7 +616,7 @@ export const CCloudBeginHTTPUploadRequest: MessageFns<CCloudBeginHTTPUploadReque
             break;
           }
 
-          message.uploadBatchId = longToNumber(reader.uint64());
+          message.uploadBatchId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -618,12 +630,15 @@ export const CCloudBeginHTTPUploadRequest: MessageFns<CCloudBeginHTTPUploadReque
 };
 
 function createBaseCCloudBeginHTTPUploadResponse(): CCloudBeginHTTPUploadResponse {
-  return { ugcid: 0, timestamp: 0, urlHost: "", urlPath: "", useHttps: false, requestHeaders: [] };
+  return { ugcid: 0n, timestamp: 0, urlHost: "", urlPath: "", useHttps: false, requestHeaders: [] };
 }
 
 export const CCloudBeginHTTPUploadResponse: MessageFns<CCloudBeginHTTPUploadResponse> = {
   encode(message: CCloudBeginHTTPUploadResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.ugcid !== undefined && message.ugcid !== 0) {
+    if (message.ugcid !== undefined && message.ugcid !== 0n) {
+      if (BigInt.asUintN(64, message.ugcid) !== message.ugcid) {
+        throw new globalThis.Error("value provided for field message.ugcid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.ugcid);
     }
     if (message.timestamp !== undefined && message.timestamp !== 0) {
@@ -656,7 +671,7 @@ export const CCloudBeginHTTPUploadResponse: MessageFns<CCloudBeginHTTPUploadResp
             break;
           }
 
-          message.ugcid = longToNumber(reader.fixed64());
+          message.ugcid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -946,7 +961,7 @@ export const CCloudBeginUGCUploadRequest: MessageFns<CCloudBeginUGCUploadRequest
 };
 
 function createBaseCCloudBeginUGCUploadResponse(): CCloudBeginUGCUploadResponse {
-  return { storageSystem: 0, ugcid: 0, timestamp: 0, urlHost: "", urlPath: "", useHttps: false, requestHeaders: [] };
+  return { storageSystem: 0, ugcid: 0n, timestamp: 0, urlHost: "", urlPath: "", useHttps: false, requestHeaders: [] };
 }
 
 export const CCloudBeginUGCUploadResponse: MessageFns<CCloudBeginUGCUploadResponse> = {
@@ -954,7 +969,10 @@ export const CCloudBeginUGCUploadResponse: MessageFns<CCloudBeginUGCUploadRespon
     if (message.storageSystem !== undefined && message.storageSystem !== 0) {
       writer.uint32(8).int32(message.storageSystem);
     }
-    if (message.ugcid !== undefined && message.ugcid !== 0) {
+    if (message.ugcid !== undefined && message.ugcid !== 0n) {
+      if (BigInt.asUintN(64, message.ugcid) !== message.ugcid) {
+        throw new globalThis.Error("value provided for field message.ugcid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.ugcid);
     }
     if (message.timestamp !== undefined && message.timestamp !== 0) {
@@ -995,7 +1013,7 @@ export const CCloudBeginUGCUploadResponse: MessageFns<CCloudBeginUGCUploadRespon
             break;
           }
 
-          message.ugcid = longToNumber(reader.fixed64());
+          message.ugcid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1097,7 +1115,7 @@ export const CCloudBeginUGCUploadResponse_HTTPHeaders: MessageFns<CCloudBeginUGC
 };
 
 function createBaseCCloudCommitUGCUploadRequest(): CCloudCommitUGCUploadRequest {
-  return { transferSucceeded: false, appid: 0, ugcid: 0 };
+  return { transferSucceeded: false, appid: 0, ugcid: 0n };
 }
 
 export const CCloudCommitUGCUploadRequest: MessageFns<CCloudCommitUGCUploadRequest> = {
@@ -1108,7 +1126,10 @@ export const CCloudCommitUGCUploadRequest: MessageFns<CCloudCommitUGCUploadReque
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(16).uint32(message.appid);
     }
-    if (message.ugcid !== undefined && message.ugcid !== 0) {
+    if (message.ugcid !== undefined && message.ugcid !== 0n) {
+      if (BigInt.asUintN(64, message.ugcid) !== message.ugcid) {
+        throw new globalThis.Error("value provided for field message.ugcid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.ugcid);
     }
     return writer;
@@ -1142,7 +1163,7 @@ export const CCloudCommitUGCUploadRequest: MessageFns<CCloudCommitUGCUploadReque
             break;
           }
 
-          message.ugcid = longToNumber(reader.fixed64());
+          message.ugcid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1193,12 +1214,15 @@ export const CCloudCommitUGCUploadResponse: MessageFns<CCloudCommitUGCUploadResp
 };
 
 function createBaseCCloudGetFileDetailsRequest(): CCloudGetFileDetailsRequest {
-  return { ugcid: 0, appid: 0 };
+  return { ugcid: 0n, appid: 0 };
 }
 
 export const CCloudGetFileDetailsRequest: MessageFns<CCloudGetFileDetailsRequest> = {
   encode(message: CCloudGetFileDetailsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.ugcid !== undefined && message.ugcid !== 0) {
+    if (message.ugcid !== undefined && message.ugcid !== 0n) {
+      if (BigInt.asUintN(64, message.ugcid) !== message.ugcid) {
+        throw new globalThis.Error("value provided for field message.ugcid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.ugcid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
@@ -1219,7 +1243,7 @@ export const CCloudGetFileDetailsRequest: MessageFns<CCloudGetFileDetailsRequest
             break;
           }
 
-          message.ugcid = longToNumber(reader.uint64());
+          message.ugcid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1243,12 +1267,12 @@ export const CCloudGetFileDetailsRequest: MessageFns<CCloudGetFileDetailsRequest
 function createBaseCCloudUserFile(): CCloudUserFile {
   return {
     appid: 0,
-    ugcid: 0,
+    ugcid: 0n,
     filename: "",
-    timestamp: 0,
+    timestamp: 0n,
     fileSize: 0,
     url: "",
-    steamidCreator: 0,
+    steamidCreator: 0n,
     flags: 0,
     platformsToSync: [],
     fileSha: "",
@@ -1261,13 +1285,19 @@ export const CCloudUserFile: MessageFns<CCloudUserFile> = {
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.ugcid !== undefined && message.ugcid !== 0) {
+    if (message.ugcid !== undefined && message.ugcid !== 0n) {
+      if (BigInt.asUintN(64, message.ugcid) !== message.ugcid) {
+        throw new globalThis.Error("value provided for field message.ugcid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.ugcid);
     }
     if (message.filename !== undefined && message.filename !== "") {
       writer.uint32(26).string(message.filename);
     }
-    if (message.timestamp !== undefined && message.timestamp !== 0) {
+    if (message.timestamp !== undefined && message.timestamp !== 0n) {
+      if (BigInt.asUintN(64, message.timestamp) !== message.timestamp) {
+        throw new globalThis.Error("value provided for field message.timestamp of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.timestamp);
     }
     if (message.fileSize !== undefined && message.fileSize !== 0) {
@@ -1276,7 +1306,10 @@ export const CCloudUserFile: MessageFns<CCloudUserFile> = {
     if (message.url !== undefined && message.url !== "") {
       writer.uint32(50).string(message.url);
     }
-    if (message.steamidCreator !== undefined && message.steamidCreator !== 0) {
+    if (message.steamidCreator !== undefined && message.steamidCreator !== 0n) {
+      if (BigInt.asUintN(64, message.steamidCreator) !== message.steamidCreator) {
+        throw new globalThis.Error("value provided for field message.steamidCreator of type fixed64 too large");
+      }
       writer.uint32(57).fixed64(message.steamidCreator);
     }
     if (message.flags !== undefined && message.flags !== 0) {
@@ -1314,7 +1347,7 @@ export const CCloudUserFile: MessageFns<CCloudUserFile> = {
             break;
           }
 
-          message.ugcid = longToNumber(reader.uint64());
+          message.ugcid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1330,7 +1363,7 @@ export const CCloudUserFile: MessageFns<CCloudUserFile> = {
             break;
           }
 
-          message.timestamp = longToNumber(reader.uint64());
+          message.timestamp = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -1354,7 +1387,7 @@ export const CCloudUserFile: MessageFns<CCloudUserFile> = {
             break;
           }
 
-          message.steamidCreator = longToNumber(reader.fixed64());
+          message.steamidCreator = reader.fixed64() as bigint;
           continue;
         }
         case 8: {
@@ -1496,7 +1529,7 @@ export const CCloudGetSingleFileInfoRequest: MessageFns<CCloudGetSingleFileInfoR
 };
 
 function createBaseCCloudGetSingleFileInfoResponse(): CCloudGetSingleFileInfoResponse {
-  return { appId: 0, fileName: "", shaFile: Buffer.alloc(0), timeStamp: 0, rawFileSize: 0, isExplicitDelete: false };
+  return { appId: 0, fileName: "", shaFile: Buffer.alloc(0), timeStamp: 0n, rawFileSize: 0, isExplicitDelete: false };
 }
 
 export const CCloudGetSingleFileInfoResponse: MessageFns<CCloudGetSingleFileInfoResponse> = {
@@ -1510,7 +1543,10 @@ export const CCloudGetSingleFileInfoResponse: MessageFns<CCloudGetSingleFileInfo
     if (message.shaFile !== undefined && message.shaFile.length !== 0) {
       writer.uint32(34).bytes(message.shaFile);
     }
-    if (message.timeStamp !== undefined && message.timeStamp !== 0) {
+    if (message.timeStamp !== undefined && message.timeStamp !== 0n) {
+      if (BigInt.asUintN(64, message.timeStamp) !== message.timeStamp) {
+        throw new globalThis.Error("value provided for field message.timeStamp of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.timeStamp);
     }
     if (message.rawFileSize !== undefined && message.rawFileSize !== 0) {
@@ -1558,7 +1594,7 @@ export const CCloudGetSingleFileInfoResponse: MessageFns<CCloudGetSingleFileInfo
             break;
           }
 
-          message.timeStamp = longToNumber(reader.uint64());
+          message.timeStamp = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -1636,12 +1672,15 @@ export const CCloudShareFileRequest: MessageFns<CCloudShareFileRequest> = {
 };
 
 function createBaseCCloudShareFileResponse(): CCloudShareFileResponse {
-  return { hcontent: 18446744073709551615 };
+  return { hcontent: 18446744073709551615n };
 }
 
 export const CCloudShareFileResponse: MessageFns<CCloudShareFileResponse> = {
   encode(message: CCloudShareFileResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.hcontent !== undefined && message.hcontent !== 18446744073709551615) {
+    if (message.hcontent !== undefined && message.hcontent !== 18446744073709551615n) {
+      if (BigInt.asUintN(64, message.hcontent) !== message.hcontent) {
+        throw new globalThis.Error("value provided for field message.hcontent of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.hcontent);
     }
     return writer;
@@ -1659,7 +1698,7 @@ export const CCloudShareFileResponse: MessageFns<CCloudShareFileResponse> = {
             break;
           }
 
-          message.hcontent = longToNumber(reader.fixed64());
+          message.hcontent = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1791,7 +1830,7 @@ export const CCloudEnumerateUserFilesResponse: MessageFns<CCloudEnumerateUserFil
 };
 
 function createBaseCCloudDeleteRequest(): CCloudDeleteRequest {
-  return { filename: "", appid: 0, uploadBatchId: 0 };
+  return { filename: "", appid: 0, uploadBatchId: 0n };
 }
 
 export const CCloudDeleteRequest: MessageFns<CCloudDeleteRequest> = {
@@ -1802,7 +1841,10 @@ export const CCloudDeleteRequest: MessageFns<CCloudDeleteRequest> = {
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(16).uint32(message.appid);
     }
-    if (message.uploadBatchId !== undefined && message.uploadBatchId !== 0) {
+    if (message.uploadBatchId !== undefined && message.uploadBatchId !== 0n) {
+      if (BigInt.asUintN(64, message.uploadBatchId) !== message.uploadBatchId) {
+        throw new globalThis.Error("value provided for field message.uploadBatchId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.uploadBatchId);
     }
     return writer;
@@ -1836,7 +1878,7 @@ export const CCloudDeleteRequest: MessageFns<CCloudDeleteRequest> = {
             break;
           }
 
-          message.uploadBatchId = longToNumber(reader.uint64());
+          message.uploadBatchId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1950,12 +1992,15 @@ export const CCloudGetClientEncryptionKeyResponse: MessageFns<CCloudGetClientEnc
 };
 
 function createBaseCCloudCDNReportNotification(): CCloudCDNReportNotification {
-  return { steamid: 0, url: "", success: false, httpStatusCode: 0, expectedBytes: 0, receivedBytes: 0, duration: 0 };
+  return { steamid: 0n, url: "", success: false, httpStatusCode: 0, expectedBytes: 0n, receivedBytes: 0n, duration: 0 };
 }
 
 export const CCloudCDNReportNotification: MessageFns<CCloudCDNReportNotification> = {
   encode(message: CCloudCDNReportNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.url !== undefined && message.url !== "") {
@@ -1967,10 +2012,16 @@ export const CCloudCDNReportNotification: MessageFns<CCloudCDNReportNotification
     if (message.httpStatusCode !== undefined && message.httpStatusCode !== 0) {
       writer.uint32(32).uint32(message.httpStatusCode);
     }
-    if (message.expectedBytes !== undefined && message.expectedBytes !== 0) {
+    if (message.expectedBytes !== undefined && message.expectedBytes !== 0n) {
+      if (BigInt.asUintN(64, message.expectedBytes) !== message.expectedBytes) {
+        throw new globalThis.Error("value provided for field message.expectedBytes of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.expectedBytes);
     }
-    if (message.receivedBytes !== undefined && message.receivedBytes !== 0) {
+    if (message.receivedBytes !== undefined && message.receivedBytes !== 0n) {
+      if (BigInt.asUintN(64, message.receivedBytes) !== message.receivedBytes) {
+        throw new globalThis.Error("value provided for field message.receivedBytes of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.receivedBytes);
     }
     if (message.duration !== undefined && message.duration !== 0) {
@@ -1991,7 +2042,7 @@ export const CCloudCDNReportNotification: MessageFns<CCloudCDNReportNotification
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2023,7 +2074,7 @@ export const CCloudCDNReportNotification: MessageFns<CCloudCDNReportNotification
             break;
           }
 
-          message.expectedBytes = longToNumber(reader.uint64());
+          message.expectedBytes = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -2031,7 +2082,7 @@ export const CCloudCDNReportNotification: MessageFns<CCloudCDNReportNotification
             break;
           }
 
-          message.receivedBytes = longToNumber(reader.uint64());
+          message.receivedBytes = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -2059,8 +2110,8 @@ function createBaseCCloudExternalStorageTransferReportNotification(): CCloudExte
     isUpload: false,
     success: false,
     httpStatusCode: 0,
-    bytesExpected: 0,
-    bytesActual: 0,
+    bytesExpected: 0n,
+    bytesActual: 0n,
     durationMs: 0,
     cellid: 0,
     proxied: false,
@@ -2095,10 +2146,16 @@ export const CCloudExternalStorageTransferReportNotification: MessageFns<
     if (message.httpStatusCode !== undefined && message.httpStatusCode !== 0) {
       writer.uint32(40).uint32(message.httpStatusCode);
     }
-    if (message.bytesExpected !== undefined && message.bytesExpected !== 0) {
+    if (message.bytesExpected !== undefined && message.bytesExpected !== 0n) {
+      if (BigInt.asUintN(64, message.bytesExpected) !== message.bytesExpected) {
+        throw new globalThis.Error("value provided for field message.bytesExpected of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.bytesExpected);
     }
-    if (message.bytesActual !== undefined && message.bytesActual !== 0) {
+    if (message.bytesActual !== undefined && message.bytesActual !== 0n) {
+      if (BigInt.asUintN(64, message.bytesActual) !== message.bytesActual) {
+        throw new globalThis.Error("value provided for field message.bytesActual of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.bytesActual);
     }
     if (message.durationMs !== undefined && message.durationMs !== 0) {
@@ -2183,7 +2240,7 @@ export const CCloudExternalStorageTransferReportNotification: MessageFns<
             break;
           }
 
-          message.bytesExpected = longToNumber(reader.uint64());
+          message.bytesExpected = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -2191,7 +2248,7 @@ export const CCloudExternalStorageTransferReportNotification: MessageFns<
             break;
           }
 
-          message.bytesActual = longToNumber(reader.uint64());
+          message.bytesActual = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -2277,7 +2334,7 @@ export const CCloudExternalStorageTransferReportNotification: MessageFns<
 };
 
 function createBaseCCloudBeginAppUploadBatchRequest(): CCloudBeginAppUploadBatchRequest {
-  return { appid: 0, machineName: "", filesToUpload: [], filesToDelete: [], clientId: 0, appBuildId: 0 };
+  return { appid: 0, machineName: "", filesToUpload: [], filesToDelete: [], clientId: 0n, appBuildId: 0n };
 }
 
 export const CCloudBeginAppUploadBatchRequest: MessageFns<CCloudBeginAppUploadBatchRequest> = {
@@ -2294,10 +2351,16 @@ export const CCloudBeginAppUploadBatchRequest: MessageFns<CCloudBeginAppUploadBa
     for (const v of message.filesToDelete) {
       writer.uint32(34).string(v!);
     }
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.clientId);
     }
-    if (message.appBuildId !== undefined && message.appBuildId !== 0) {
+    if (message.appBuildId !== undefined && message.appBuildId !== 0n) {
+      if (BigInt.asUintN(64, message.appBuildId) !== message.appBuildId) {
+        throw new globalThis.Error("value provided for field message.appBuildId of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.appBuildId);
     }
     return writer;
@@ -2347,7 +2410,7 @@ export const CCloudBeginAppUploadBatchRequest: MessageFns<CCloudBeginAppUploadBa
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -2355,7 +2418,7 @@ export const CCloudBeginAppUploadBatchRequest: MessageFns<CCloudBeginAppUploadBa
             break;
           }
 
-          message.appBuildId = longToNumber(reader.uint64());
+          message.appBuildId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2369,15 +2432,21 @@ export const CCloudBeginAppUploadBatchRequest: MessageFns<CCloudBeginAppUploadBa
 };
 
 function createBaseCCloudBeginAppUploadBatchResponse(): CCloudBeginAppUploadBatchResponse {
-  return { batchId: 0, appChangeNumber: 0 };
+  return { batchId: 0n, appChangeNumber: 0n };
 }
 
 export const CCloudBeginAppUploadBatchResponse: MessageFns<CCloudBeginAppUploadBatchResponse> = {
   encode(message: CCloudBeginAppUploadBatchResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.batchId !== undefined && message.batchId !== 0) {
+    if (message.batchId !== undefined && message.batchId !== 0n) {
+      if (BigInt.asUintN(64, message.batchId) !== message.batchId) {
+        throw new globalThis.Error("value provided for field message.batchId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.batchId);
     }
-    if (message.appChangeNumber !== undefined && message.appChangeNumber !== 0) {
+    if (message.appChangeNumber !== undefined && message.appChangeNumber !== 0n) {
+      if (BigInt.asUintN(64, message.appChangeNumber) !== message.appChangeNumber) {
+        throw new globalThis.Error("value provided for field message.appChangeNumber of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.appChangeNumber);
     }
     return writer;
@@ -2395,7 +2464,7 @@ export const CCloudBeginAppUploadBatchResponse: MessageFns<CCloudBeginAppUploadB
             break;
           }
 
-          message.batchId = longToNumber(reader.uint64());
+          message.batchId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -2403,7 +2472,7 @@ export const CCloudBeginAppUploadBatchResponse: MessageFns<CCloudBeginAppUploadB
             break;
           }
 
-          message.appChangeNumber = longToNumber(reader.uint64());
+          message.appChangeNumber = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2417,7 +2486,7 @@ export const CCloudBeginAppUploadBatchResponse: MessageFns<CCloudBeginAppUploadB
 };
 
 function createBaseCCloudCompleteAppUploadBatchNotification(): CCloudCompleteAppUploadBatchNotification {
-  return { appid: 0, batchId: 0, batchEresult: 0 };
+  return { appid: 0, batchId: 0n, batchEresult: 0 };
 }
 
 export const CCloudCompleteAppUploadBatchNotification: MessageFns<CCloudCompleteAppUploadBatchNotification> = {
@@ -2425,7 +2494,10 @@ export const CCloudCompleteAppUploadBatchNotification: MessageFns<CCloudComplete
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.batchId !== undefined && message.batchId !== 0) {
+    if (message.batchId !== undefined && message.batchId !== 0n) {
+      if (BigInt.asUintN(64, message.batchId) !== message.batchId) {
+        throw new globalThis.Error("value provided for field message.batchId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.batchId);
     }
     if (message.batchEresult !== undefined && message.batchEresult !== 0) {
@@ -2454,7 +2526,7 @@ export const CCloudCompleteAppUploadBatchNotification: MessageFns<CCloudComplete
             break;
           }
 
-          message.batchId = longToNumber(reader.uint64());
+          message.batchId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -2476,7 +2548,7 @@ export const CCloudCompleteAppUploadBatchNotification: MessageFns<CCloudComplete
 };
 
 function createBaseCCloudCompleteAppUploadBatchRequest(): CCloudCompleteAppUploadBatchRequest {
-  return { appid: 0, batchId: 0, batchEresult: 0 };
+  return { appid: 0, batchId: 0n, batchEresult: 0 };
 }
 
 export const CCloudCompleteAppUploadBatchRequest: MessageFns<CCloudCompleteAppUploadBatchRequest> = {
@@ -2484,7 +2556,10 @@ export const CCloudCompleteAppUploadBatchRequest: MessageFns<CCloudCompleteAppUp
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.batchId !== undefined && message.batchId !== 0) {
+    if (message.batchId !== undefined && message.batchId !== 0n) {
+      if (BigInt.asUintN(64, message.batchId) !== message.batchId) {
+        throw new globalThis.Error("value provided for field message.batchId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.batchId);
     }
     if (message.batchEresult !== undefined && message.batchEresult !== 0) {
@@ -2513,7 +2588,7 @@ export const CCloudCompleteAppUploadBatchRequest: MessageFns<CCloudCompleteAppUp
             break;
           }
 
-          message.batchId = longToNumber(reader.uint64());
+          message.batchId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -2566,14 +2641,14 @@ function createBaseCCloudClientBeginFileUploadRequest(): CCloudClientBeginFileUp
     fileSize: 0,
     rawFileSize: 0,
     fileSha: Buffer.alloc(0),
-    timeStamp: 0,
+    timeStamp: 0n,
     filename: "",
     platformsToSync: 4294967295,
     cellId: 0,
     canEncrypt: false,
     isSharedFile: false,
     deprecatedRealm: 0,
-    uploadBatchId: 0,
+    uploadBatchId: 0n,
   };
 }
 
@@ -2591,7 +2666,10 @@ export const CCloudClientBeginFileUploadRequest: MessageFns<CCloudClientBeginFil
     if (message.fileSha !== undefined && message.fileSha.length !== 0) {
       writer.uint32(34).bytes(message.fileSha);
     }
-    if (message.timeStamp !== undefined && message.timeStamp !== 0) {
+    if (message.timeStamp !== undefined && message.timeStamp !== 0n) {
+      if (BigInt.asUintN(64, message.timeStamp) !== message.timeStamp) {
+        throw new globalThis.Error("value provided for field message.timeStamp of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.timeStamp);
     }
     if (message.filename !== undefined && message.filename !== "") {
@@ -2612,7 +2690,10 @@ export const CCloudClientBeginFileUploadRequest: MessageFns<CCloudClientBeginFil
     if (message.deprecatedRealm !== undefined && message.deprecatedRealm !== 0) {
       writer.uint32(96).uint32(message.deprecatedRealm);
     }
-    if (message.uploadBatchId !== undefined && message.uploadBatchId !== 0) {
+    if (message.uploadBatchId !== undefined && message.uploadBatchId !== 0n) {
+      if (BigInt.asUintN(64, message.uploadBatchId) !== message.uploadBatchId) {
+        throw new globalThis.Error("value provided for field message.uploadBatchId of type uint64 too large");
+      }
       writer.uint32(104).uint64(message.uploadBatchId);
     }
     return writer;
@@ -2662,7 +2743,7 @@ export const CCloudClientBeginFileUploadRequest: MessageFns<CCloudClientBeginFil
             break;
           }
 
-          message.timeStamp = longToNumber(reader.uint64());
+          message.timeStamp = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -2718,7 +2799,7 @@ export const CCloudClientBeginFileUploadRequest: MessageFns<CCloudClientBeginFil
             break;
           }
 
-          message.uploadBatchId = longToNumber(reader.uint64());
+          message.uploadBatchId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2738,7 +2819,7 @@ function createBaseClientCloudFileUploadBlockDetails(): ClientCloudFileUploadBlo
     useHttps: false,
     httpMethod: 0,
     requestHeaders: [],
-    blockOffset: 0,
+    blockOffset: 0n,
     blockLength: 0,
     explicitBodyData: Buffer.alloc(0),
     mayParallelize: false,
@@ -2762,7 +2843,10 @@ export const ClientCloudFileUploadBlockDetails: MessageFns<ClientCloudFileUpload
     for (const v of message.requestHeaders) {
       ClientCloudFileUploadBlockDetails_HTTPHeaders.encode(v!, writer.uint32(42).fork()).join();
     }
-    if (message.blockOffset !== undefined && message.blockOffset !== 0) {
+    if (message.blockOffset !== undefined && message.blockOffset !== 0n) {
+      if (BigInt.asUintN(64, message.blockOffset) !== message.blockOffset) {
+        throw new globalThis.Error("value provided for field message.blockOffset of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.blockOffset);
     }
     if (message.blockLength !== undefined && message.blockLength !== 0) {
@@ -2829,7 +2913,7 @@ export const ClientCloudFileUploadBlockDetails: MessageFns<ClientCloudFileUpload
             break;
           }
 
-          message.blockOffset = longToNumber(reader.uint64());
+          message.blockOffset = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -3149,7 +3233,7 @@ function createBaseCCloudClientFileDownloadResponse(): CCloudClientFileDownloadR
     fileSize: 0,
     rawFileSize: 0,
     shaFile: Buffer.alloc(0),
-    timeStamp: 0,
+    timeStamp: 0n,
     isExplicitDelete: false,
     urlHost: "",
     urlPath: "",
@@ -3173,7 +3257,10 @@ export const CCloudClientFileDownloadResponse: MessageFns<CCloudClientFileDownlo
     if (message.shaFile !== undefined && message.shaFile.length !== 0) {
       writer.uint32(34).bytes(message.shaFile);
     }
-    if (message.timeStamp !== undefined && message.timeStamp !== 0) {
+    if (message.timeStamp !== undefined && message.timeStamp !== 0n) {
+      if (BigInt.asUintN(64, message.timeStamp) !== message.timeStamp) {
+        throw new globalThis.Error("value provided for field message.timeStamp of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.timeStamp);
     }
     if (message.isExplicitDelete !== undefined && message.isExplicitDelete !== false) {
@@ -3241,7 +3328,7 @@ export const CCloudClientFileDownloadResponse: MessageFns<CCloudClientFileDownlo
             break;
           }
 
-          message.timeStamp = longToNumber(reader.uint64());
+          message.timeStamp = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -3354,7 +3441,7 @@ export const CCloudClientFileDownloadResponse_HTTPHeaders: MessageFns<CCloudClie
 };
 
 function createBaseCCloudClientDeleteFileRequest(): CCloudClientDeleteFileRequest {
-  return { appid: 0, filename: "", isExplicitDelete: false, uploadBatchId: 0 };
+  return { appid: 0, filename: "", isExplicitDelete: false, uploadBatchId: 0n };
 }
 
 export const CCloudClientDeleteFileRequest: MessageFns<CCloudClientDeleteFileRequest> = {
@@ -3368,7 +3455,10 @@ export const CCloudClientDeleteFileRequest: MessageFns<CCloudClientDeleteFileReq
     if (message.isExplicitDelete !== undefined && message.isExplicitDelete !== false) {
       writer.uint32(24).bool(message.isExplicitDelete);
     }
-    if (message.uploadBatchId !== undefined && message.uploadBatchId !== 0) {
+    if (message.uploadBatchId !== undefined && message.uploadBatchId !== 0n) {
+      if (BigInt.asUintN(64, message.uploadBatchId) !== message.uploadBatchId) {
+        throw new globalThis.Error("value provided for field message.uploadBatchId of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.uploadBatchId);
     }
     return writer;
@@ -3410,7 +3500,7 @@ export const CCloudClientDeleteFileRequest: MessageFns<CCloudClientDeleteFileReq
             break;
           }
 
-          message.uploadBatchId = longToNumber(reader.uint64());
+          message.uploadBatchId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -3498,7 +3588,7 @@ export const CCloudClientConflictResolutionNotification: MessageFns<CCloudClient
 };
 
 function createBaseCCloudGetAppFileChangelistRequest(): CCloudGetAppFileChangelistRequest {
-  return { appid: 0, syncedChangeNumber: 0 };
+  return { appid: 0, syncedChangeNumber: 0n };
 }
 
 export const CCloudGetAppFileChangelistRequest: MessageFns<CCloudGetAppFileChangelistRequest> = {
@@ -3506,7 +3596,10 @@ export const CCloudGetAppFileChangelistRequest: MessageFns<CCloudGetAppFileChang
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.syncedChangeNumber !== undefined && message.syncedChangeNumber !== 0) {
+    if (message.syncedChangeNumber !== undefined && message.syncedChangeNumber !== 0n) {
+      if (BigInt.asUintN(64, message.syncedChangeNumber) !== message.syncedChangeNumber) {
+        throw new globalThis.Error("value provided for field message.syncedChangeNumber of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.syncedChangeNumber);
     }
     return writer;
@@ -3532,7 +3625,7 @@ export const CCloudGetAppFileChangelistRequest: MessageFns<CCloudGetAppFileChang
             break;
           }
 
-          message.syncedChangeNumber = longToNumber(reader.uint64());
+          message.syncedChangeNumber = reader.uint64() as bigint;
           continue;
         }
       }
@@ -3549,7 +3642,7 @@ function createBaseCCloudAppFileInfo(): CCloudAppFileInfo {
   return {
     fileName: "",
     shaFile: Buffer.alloc(0),
-    timeStamp: 0,
+    timeStamp: 0n,
     rawFileSize: 0,
     persistState: 0,
     platformsToSync: 0,
@@ -3566,7 +3659,10 @@ export const CCloudAppFileInfo: MessageFns<CCloudAppFileInfo> = {
     if (message.shaFile !== undefined && message.shaFile.length !== 0) {
       writer.uint32(18).bytes(message.shaFile);
     }
-    if (message.timeStamp !== undefined && message.timeStamp !== 0) {
+    if (message.timeStamp !== undefined && message.timeStamp !== 0n) {
+      if (BigInt.asUintN(64, message.timeStamp) !== message.timeStamp) {
+        throw new globalThis.Error("value provided for field message.timeStamp of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.timeStamp);
     }
     if (message.rawFileSize !== undefined && message.rawFileSize !== 0) {
@@ -3615,7 +3711,7 @@ export const CCloudAppFileInfo: MessageFns<CCloudAppFileInfo> = {
             break;
           }
 
-          message.timeStamp = longToNumber(reader.uint64());
+          message.timeStamp = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -3670,18 +3766,21 @@ export const CCloudAppFileInfo: MessageFns<CCloudAppFileInfo> = {
 
 function createBaseCCloudGetAppFileChangelistResponse(): CCloudGetAppFileChangelistResponse {
   return {
-    currentChangeNumber: 0,
+    currentChangeNumber: 0n,
     files: [],
     isOnlyDelta: false,
     pathPrefixes: [],
     machineNames: [],
-    appBuildidHwm: 0,
+    appBuildidHwm: 0n,
   };
 }
 
 export const CCloudGetAppFileChangelistResponse: MessageFns<CCloudGetAppFileChangelistResponse> = {
   encode(message: CCloudGetAppFileChangelistResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.currentChangeNumber !== undefined && message.currentChangeNumber !== 0) {
+    if (message.currentChangeNumber !== undefined && message.currentChangeNumber !== 0n) {
+      if (BigInt.asUintN(64, message.currentChangeNumber) !== message.currentChangeNumber) {
+        throw new globalThis.Error("value provided for field message.currentChangeNumber of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.currentChangeNumber);
     }
     for (const v of message.files) {
@@ -3696,7 +3795,10 @@ export const CCloudGetAppFileChangelistResponse: MessageFns<CCloudGetAppFileChan
     for (const v of message.machineNames) {
       writer.uint32(42).string(v!);
     }
-    if (message.appBuildidHwm !== undefined && message.appBuildidHwm !== 0) {
+    if (message.appBuildidHwm !== undefined && message.appBuildidHwm !== 0n) {
+      if (BigInt.asUintN(64, message.appBuildidHwm) !== message.appBuildidHwm) {
+        throw new globalThis.Error("value provided for field message.appBuildidHwm of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.appBuildidHwm);
     }
     return writer;
@@ -3714,7 +3816,7 @@ export const CCloudGetAppFileChangelistResponse: MessageFns<CCloudGetAppFileChan
             break;
           }
 
-          message.currentChangeNumber = longToNumber(reader.uint64());
+          message.currentChangeNumber = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3754,7 +3856,7 @@ export const CCloudGetAppFileChangelistResponse: MessageFns<CCloudGetAppFileChan
             break;
           }
 
-          message.appBuildidHwm = longToNumber(reader.uint64());
+          message.appBuildidHwm = reader.uint64() as bigint;
           continue;
         }
       }
@@ -3768,7 +3870,7 @@ export const CCloudGetAppFileChangelistResponse: MessageFns<CCloudGetAppFileChan
 };
 
 function createBaseCCloudAppSessionSuspendRequest(): CCloudAppSessionSuspendRequest {
-  return { appid: 0, clientId: 0, machineName: "", cloudSyncCompleted: false };
+  return { appid: 0, clientId: 0n, machineName: "", cloudSyncCompleted: false };
 }
 
 export const CCloudAppSessionSuspendRequest: MessageFns<CCloudAppSessionSuspendRequest> = {
@@ -3776,7 +3878,10 @@ export const CCloudAppSessionSuspendRequest: MessageFns<CCloudAppSessionSuspendR
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.clientId);
     }
     if (message.machineName !== undefined && message.machineName !== "") {
@@ -3808,7 +3913,7 @@ export const CCloudAppSessionSuspendRequest: MessageFns<CCloudAppSessionSuspendR
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -3864,7 +3969,7 @@ export const CCloudAppSessionSuspendResponse: MessageFns<CCloudAppSessionSuspend
 };
 
 function createBaseCCloudAppSessionResumeRequest(): CCloudAppSessionResumeRequest {
-  return { appid: 0, clientId: 0 };
+  return { appid: 0, clientId: 0n };
 }
 
 export const CCloudAppSessionResumeRequest: MessageFns<CCloudAppSessionResumeRequest> = {
@@ -3872,7 +3977,10 @@ export const CCloudAppSessionResumeRequest: MessageFns<CCloudAppSessionResumeReq
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.clientId);
     }
     return writer;
@@ -3898,7 +4006,7 @@ export const CCloudAppSessionResumeRequest: MessageFns<CCloudAppSessionResumeReq
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -3938,7 +4046,7 @@ export const CCloudAppSessionResumeResponse: MessageFns<CCloudAppSessionResumeRe
 };
 
 function createBaseCCloudAppLaunchIntentRequest(): CCloudAppLaunchIntentRequest {
-  return { appid: 0, clientId: 0, machineName: "", ignorePendingOperations: false, osType: 0, deviceType: 0 };
+  return { appid: 0, clientId: 0n, machineName: "", ignorePendingOperations: false, osType: 0, deviceType: 0 };
 }
 
 export const CCloudAppLaunchIntentRequest: MessageFns<CCloudAppLaunchIntentRequest> = {
@@ -3946,7 +4054,10 @@ export const CCloudAppLaunchIntentRequest: MessageFns<CCloudAppLaunchIntentReque
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.clientId);
     }
     if (message.machineName !== undefined && message.machineName !== "") {
@@ -3984,7 +4095,7 @@ export const CCloudAppLaunchIntentRequest: MessageFns<CCloudAppLaunchIntentReque
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -4067,7 +4178,7 @@ export const CCloudAppLaunchIntentResponse: MessageFns<CCloudAppLaunchIntentResp
 };
 
 function createBaseCCloudAppExitSyncDoneNotification(): CCloudAppExitSyncDoneNotification {
-  return { appid: 0, clientId: 0, uploadsCompleted: false, uploadsRequired: false };
+  return { appid: 0, clientId: 0n, uploadsCompleted: false, uploadsRequired: false };
 }
 
 export const CCloudAppExitSyncDoneNotification: MessageFns<CCloudAppExitSyncDoneNotification> = {
@@ -4075,7 +4186,10 @@ export const CCloudAppExitSyncDoneNotification: MessageFns<CCloudAppExitSyncDone
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.clientId);
     }
     if (message.uploadsCompleted !== undefined && message.uploadsCompleted !== false) {
@@ -4107,7 +4221,7 @@ export const CCloudAppExitSyncDoneNotification: MessageFns<CCloudAppExitSyncDone
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -4174,7 +4288,7 @@ export const CCloudClientGetAppQuotaUsageRequest: MessageFns<CCloudClientGetAppQ
 };
 
 function createBaseCCloudClientGetAppQuotaUsageResponse(): CCloudClientGetAppQuotaUsageResponse {
-  return { existingFiles: 0, existingBytes: 0, maxNumFiles: 0, maxNumBytes: 0 };
+  return { existingFiles: 0, existingBytes: 0n, maxNumFiles: 0, maxNumBytes: 0n };
 }
 
 export const CCloudClientGetAppQuotaUsageResponse: MessageFns<CCloudClientGetAppQuotaUsageResponse> = {
@@ -4182,13 +4296,19 @@ export const CCloudClientGetAppQuotaUsageResponse: MessageFns<CCloudClientGetApp
     if (message.existingFiles !== undefined && message.existingFiles !== 0) {
       writer.uint32(8).uint32(message.existingFiles);
     }
-    if (message.existingBytes !== undefined && message.existingBytes !== 0) {
+    if (message.existingBytes !== undefined && message.existingBytes !== 0n) {
+      if (BigInt.asUintN(64, message.existingBytes) !== message.existingBytes) {
+        throw new globalThis.Error("value provided for field message.existingBytes of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.existingBytes);
     }
     if (message.maxNumFiles !== undefined && message.maxNumFiles !== 0) {
       writer.uint32(24).uint32(message.maxNumFiles);
     }
-    if (message.maxNumBytes !== undefined && message.maxNumBytes !== 0) {
+    if (message.maxNumBytes !== undefined && message.maxNumBytes !== 0n) {
+      if (BigInt.asUintN(64, message.maxNumBytes) !== message.maxNumBytes) {
+        throw new globalThis.Error("value provided for field message.maxNumBytes of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.maxNumBytes);
     }
     return writer;
@@ -4214,7 +4334,7 @@ export const CCloudClientGetAppQuotaUsageResponse: MessageFns<CCloudClientGetApp
             break;
           }
 
-          message.existingBytes = longToNumber(reader.uint64());
+          message.existingBytes = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -4230,7 +4350,7 @@ export const CCloudClientGetAppQuotaUsageResponse: MessageFns<CCloudClientGetApp
             break;
           }
 
-          message.maxNumBytes = longToNumber(reader.uint64());
+          message.maxNumBytes = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4244,7 +4364,7 @@ export const CCloudClientGetAppQuotaUsageResponse: MessageFns<CCloudClientGetApp
 };
 
 function createBaseCCloudAppCloudStateChangeNotification(): CCloudAppCloudStateChangeNotification {
-  return { appid: 0, appChangeNumber: 0 };
+  return { appid: 0, appChangeNumber: 0n };
 }
 
 export const CCloudAppCloudStateChangeNotification: MessageFns<CCloudAppCloudStateChangeNotification> = {
@@ -4252,7 +4372,10 @@ export const CCloudAppCloudStateChangeNotification: MessageFns<CCloudAppCloudSta
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.appChangeNumber !== undefined && message.appChangeNumber !== 0) {
+    if (message.appChangeNumber !== undefined && message.appChangeNumber !== 0n) {
+      if (BigInt.asUintN(64, message.appChangeNumber) !== message.appChangeNumber) {
+        throw new globalThis.Error("value provided for field message.appChangeNumber of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.appChangeNumber);
     }
     return writer;
@@ -4278,7 +4401,7 @@ export const CCloudAppCloudStateChangeNotification: MessageFns<CCloudAppCloudSta
             break;
           }
 
-          message.appChangeNumber = longToNumber(reader.uint64());
+          message.appChangeNumber = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4292,12 +4415,15 @@ export const CCloudAppCloudStateChangeNotification: MessageFns<CCloudAppCloudSta
 };
 
 function createBaseCCloudClientLogUploadRequestNotification(): CCloudClientLogUploadRequestNotification {
-  return { requestId: 0 };
+  return { requestId: 0n };
 }
 
 export const CCloudClientLogUploadRequestNotification: MessageFns<CCloudClientLogUploadRequestNotification> = {
   encode(message: CCloudClientLogUploadRequestNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.requestId !== undefined && message.requestId !== 0) {
+    if (message.requestId !== undefined && message.requestId !== 0n) {
+      if (BigInt.asUintN(64, message.requestId) !== message.requestId) {
+        throw new globalThis.Error("value provided for field message.requestId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.requestId);
     }
     return writer;
@@ -4315,7 +4441,7 @@ export const CCloudClientLogUploadRequestNotification: MessageFns<CCloudClientLo
             break;
           }
 
-          message.requestId = longToNumber(reader.uint64());
+          message.requestId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4598,17 +4724,6 @@ export class CloudClientClientImpl implements CloudClient {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

@@ -89,23 +89,23 @@ export interface CCommunityGetAppRichPresenceLocalizationResponse_TokenList {
 }
 
 export interface CCommunityGetCommentThreadRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   commentThreadType?: ECommentThreadType | undefined;
-  gidfeature?: number | undefined;
-  gidfeature2?: number | undefined;
-  commentthreadid?: number | undefined;
+  gidfeature?: bigint | undefined;
+  gidfeature2?: bigint | undefined;
+  commentthreadid?: bigint | undefined;
   start?: number | undefined;
   count?: number | undefined;
   upvoters?: number | undefined;
   includeDeleted?: boolean | undefined;
-  gidcomment?: number | undefined;
+  gidcomment?: bigint | undefined;
   timeOldest?: number | undefined;
   oldestFirst?: boolean | undefined;
 }
 
 export interface CCommunityComment {
-  gidcomment?: number | undefined;
-  steamid?: number | undefined;
+  gidcomment?: bigint | undefined;
+  steamid?: bigint | undefined;
   timestamp?: number | undefined;
   text?: string | undefined;
   upvotes?: number | undefined;
@@ -116,7 +116,7 @@ export interface CCommunityComment {
   totalHidden?: number | undefined;
   upvotedByUser?: boolean | undefined;
   reactions: CCommunityComment_Reaction[];
-  gidparentcomment?: number | undefined;
+  gidparentcomment?: bigint | undefined;
   deleteReason?: ECommentDeleteReason | undefined;
 }
 
@@ -128,8 +128,8 @@ export interface CCommunityComment_Reaction {
 export interface CCommunityGetCommentThreadResponse {
   comments: CCommunityComment[];
   deletedComments: CCommunityComment[];
-  steamid?: number | undefined;
-  commentthreadid?: number | undefined;
+  steamid?: bigint | undefined;
+  commentthreadid?: bigint | undefined;
   start?: number | undefined;
   count?: number | undefined;
   totalCount?: number | undefined;
@@ -137,40 +137,40 @@ export interface CCommunityGetCommentThreadResponse {
   upvoters: number[];
   userSubscribed?: boolean | undefined;
   userUpvoted?: boolean | undefined;
-  answerCommentid?: number | undefined;
+  answerCommentid?: bigint | undefined;
   answerActor?: number | undefined;
   answerActorRank?: number | undefined;
   canPost?: boolean | undefined;
   commentThreadType?: number | undefined;
-  gidfeature?: number | undefined;
-  gidfeature2?: number | undefined;
+  gidfeature?: bigint | undefined;
+  gidfeature2?: bigint | undefined;
 }
 
 export interface CCommunityPostCommentToThreadRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   commentThreadType?: ECommentThreadType | undefined;
-  gidfeature?: number | undefined;
-  gidfeature2?: number | undefined;
+  gidfeature?: bigint | undefined;
+  gidfeature2?: bigint | undefined;
   text?: string | undefined;
-  gidparentcomment?: number | undefined;
+  gidparentcomment?: bigint | undefined;
   suppressNotifications?: boolean | undefined;
   isReport?: boolean | undefined;
   startHidden?: boolean | undefined;
 }
 
 export interface CCommunityPostCommentToThreadResponse {
-  gidcomment?: number | undefined;
-  commentthreadid?: number | undefined;
+  gidcomment?: bigint | undefined;
+  commentthreadid?: bigint | undefined;
   count?: number | undefined;
   upvotes?: number | undefined;
 }
 
 export interface CCommunityDeleteCommentFromThreadRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   commentThreadType?: ECommentThreadType | undefined;
-  gidfeature?: number | undefined;
-  gidfeature2?: number | undefined;
-  gidcomment?: number | undefined;
+  gidfeature?: bigint | undefined;
+  gidfeature2?: bigint | undefined;
+  gidcomment?: bigint | undefined;
   undelete?: boolean | undefined;
 }
 
@@ -179,17 +179,17 @@ export interface CCommunityDeleteCommentFromThreadResponse {
 
 export interface CCommunityRateCommentThreadRequest {
   commentthreadtype?: string | undefined;
-  steamid?: number | undefined;
-  gidfeature?: number | undefined;
-  gidfeature2?: number | undefined;
-  gidcomment?: number | undefined;
+  steamid?: bigint | undefined;
+  gidfeature?: bigint | undefined;
+  gidfeature2?: bigint | undefined;
+  gidcomment?: bigint | undefined;
   rateUp?: boolean | undefined;
   suppressNotifications?: boolean | undefined;
 }
 
 export interface CCommunityRateCommentThreadResponse {
-  gidcomment?: number | undefined;
-  commentthreadid?: number | undefined;
+  gidcomment?: bigint | undefined;
+  commentthreadid?: bigint | undefined;
   count?: number | undefined;
   upvotes?: number | undefined;
   hasUpvoted?: boolean | undefined;
@@ -197,32 +197,32 @@ export interface CCommunityRateCommentThreadResponse {
 
 export interface CCommunityGetCommentThreadRatingsRequest {
   commentthreadtype?: string | undefined;
-  steamid?: number | undefined;
-  gidfeature?: number | undefined;
-  gidfeature2?: number | undefined;
-  gidcomment?: number | undefined;
+  steamid?: bigint | undefined;
+  gidfeature?: bigint | undefined;
+  gidfeature2?: bigint | undefined;
+  gidcomment?: bigint | undefined;
   maxResults?: number | undefined;
 }
 
 export interface CCommunityGetCommentThreadRatingsResponse {
-  commentthreadid?: number | undefined;
-  gidcomment?: number | undefined;
+  commentthreadid?: bigint | undefined;
+  gidcomment?: bigint | undefined;
   upvotes?: number | undefined;
   hasUpvoted?: boolean | undefined;
   upvoterAccountids: number[];
 }
 
 export interface CCommunityVerifyClanMembershipRequest {
-  steamid?: number | undefined;
-  steamidsVerifymembership: number[];
+  steamid?: bigint | undefined;
+  steamidsVerifymembership: bigint[];
 }
 
 export interface CCommunityVerifyClanMembershipResponse {
-  steamidsNonmembers: number[];
+  steamidsNonmembers: bigint[];
 }
 
 export interface CCommunityRateClanAnnouncementRequest {
-  announcementid?: number | undefined;
+  announcementid?: bigint | undefined;
   voteUp?: boolean | undefined;
   clanAccountid?: number | undefined;
 }
@@ -231,7 +231,7 @@ export interface CCommunityRateClanAnnouncementResponse {
 }
 
 export interface CCommunityGetClanAnnouncementVoteForUserRequest {
-  announcementid?: number | undefined;
+  announcementid?: bigint | undefined;
 }
 
 export interface CCommunityGetClanAnnouncementVoteForUserResponse {
@@ -240,14 +240,14 @@ export interface CCommunityGetClanAnnouncementVoteForUserResponse {
 }
 
 export interface CCommunityGetClanLocGroupImagesRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   group?: EClanImageGroup | undefined;
   language?: number | undefined;
-  locGroupIds: number[];
+  locGroupIds: bigint[];
 }
 
 export interface CCommunityClanLocGroupImage {
-  locGroupId?: number | undefined;
+  locGroupId?: bigint | undefined;
   imageHash?: string | undefined;
   thumbnailHash?: string | undefined;
   fileType?: EClanImageFileType | undefined;
@@ -262,7 +262,7 @@ export interface CCommunityGetClanLocGroupImagesResponse {
 }
 
 export interface CCommunityGetAvatarHistoryRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   filterUserUploadedOnly?: boolean | undefined;
 }
 
@@ -277,28 +277,28 @@ export interface CCommunityGetAvatarHistoryResponse_AvatarData {
 }
 
 export interface CCommunityGetClanEventCrowdInMetadataRequest {
-  steamid?: number | undefined;
-  itemid?: number | undefined;
+  steamid?: bigint | undefined;
+  itemid?: bigint | undefined;
 }
 
 export interface CCommunityGetClanEventCrowdInMetadataResponse {
-  crowdinProjectId?: number | undefined;
-  crowdinFileId?: number | undefined;
+  crowdinProjectId?: bigint | undefined;
+  crowdinFileId?: bigint | undefined;
 }
 
 export interface CCommunityGetClanCrowdInMetadataRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CCommunityGetClanCrowdInMetadataResponse {
-  crowdinProjectId?: number | undefined;
-  crowdinDirectoryId?: number | undefined;
+  crowdinProjectId?: bigint | undefined;
+  crowdinDirectoryId?: bigint | undefined;
   pushByDefault?: boolean | undefined;
 }
 
 export interface CCommunityFetchTranslationFromCrowdInRequest {
-  steamid?: number | undefined;
-  itemid?: number | undefined;
+  steamid?: bigint | undefined;
+  itemid?: bigint | undefined;
   language?: number | undefined;
 }
 
@@ -306,10 +306,10 @@ export interface CCommunityFetchTranslationFromCrowdInResponse {
 }
 
 export interface CCommunityHideAndReportCommentRequest {
-  gidfeature?: number | undefined;
-  gidfeature2?: number | undefined;
-  gidcomment?: number | undefined;
-  steamid?: number | undefined;
+  gidfeature?: bigint | undefined;
+  gidfeature2?: bigint | undefined;
+  gidcomment?: bigint | undefined;
+  steamid?: bigint | undefined;
   commentthreadtype?: string | undefined;
   hide?: boolean | undefined;
   reportReason?: EContentReportReason | undefined;
@@ -349,8 +349,8 @@ export interface CCommunityGetBestEventsForUserRequest {
 
 export interface CCommunityPartnerEventResult {
   clanid?: number | undefined;
-  eventGid?: number | undefined;
-  announcementGid?: number | undefined;
+  eventGid?: bigint | undefined;
+  announcementGid?: bigint | undefined;
   appid?: number | undefined;
   possibleTakeover?: boolean | undefined;
   rtime32LastModified?: number | undefined;
@@ -367,7 +367,7 @@ export interface CCommunityMarkPartnerEventsForUserRequest {
 
 export interface CCommunityMarkPartnerEventsForUserRequest_PartnerEventMarking {
   clanid?: number | undefined;
-  eventGid?: number | undefined;
+  eventGid?: bigint | undefined;
   displayLocation?: EPartnerEventDisplayLocation | undefined;
   markShown?: boolean | undefined;
   markRead?: boolean | undefined;
@@ -377,7 +377,7 @@ export interface CCommunityMarkPartnerEventsForUserResponse {
 }
 
 export interface CCommunityGetUserPartnerEventViewStatusRequest {
-  eventGids: number[];
+  eventGids: bigint[];
   includeReadEventsOnly?: boolean | undefined;
 }
 
@@ -386,7 +386,7 @@ export interface CCommunityGetUserPartnerEventViewStatusResponse {
 }
 
 export interface CCommunityGetUserPartnerEventViewStatusResponse_PartnerEvent {
-  eventGid?: number | undefined;
+  eventGid?: bigint | undefined;
   lastShownTime?: number | undefined;
   lastReadTime?: number | undefined;
   clanAccountId?: number | undefined;
@@ -437,7 +437,7 @@ export interface CCommunitySetRecommendationBotReviewStatusRequest {
 
 export interface CCommunitySetRecommendationBotReviewStatusRequest_ReviewLabel {
   appid?: number | undefined;
-  recommendationid?: number | undefined;
+  recommendationid?: bigint | undefined;
   isBotReview?: boolean | undefined;
 }
 
@@ -758,16 +758,16 @@ export const CCommunityGetAppRichPresenceLocalizationResponse_TokenList: Message
 
 function createBaseCCommunityGetCommentThreadRequest(): CCommunityGetCommentThreadRequest {
   return {
-    steamid: 0,
+    steamid: 0n,
     commentThreadType: 0,
-    gidfeature: 0,
-    gidfeature2: 0,
-    commentthreadid: 0,
+    gidfeature: 0n,
+    gidfeature2: 0n,
+    commentthreadid: 0n,
     start: 0,
     count: 0,
     upvoters: 0,
     includeDeleted: false,
-    gidcomment: 0,
+    gidcomment: 0n,
     timeOldest: 0,
     oldestFirst: false,
   };
@@ -775,19 +775,31 @@ function createBaseCCommunityGetCommentThreadRequest(): CCommunityGetCommentThre
 
 export const CCommunityGetCommentThreadRequest: MessageFns<CCommunityGetCommentThreadRequest> = {
   encode(message: CCommunityGetCommentThreadRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.commentThreadType !== undefined && message.commentThreadType !== 0) {
       writer.uint32(16).int32(message.commentThreadType);
     }
-    if (message.gidfeature !== undefined && message.gidfeature !== 0) {
+    if (message.gidfeature !== undefined && message.gidfeature !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature) !== message.gidfeature) {
+        throw new globalThis.Error("value provided for field message.gidfeature of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.gidfeature);
     }
-    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0) {
+    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature2) !== message.gidfeature2) {
+        throw new globalThis.Error("value provided for field message.gidfeature2 of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.gidfeature2);
     }
-    if (message.commentthreadid !== undefined && message.commentthreadid !== 0) {
+    if (message.commentthreadid !== undefined && message.commentthreadid !== 0n) {
+      if (BigInt.asUintN(64, message.commentthreadid) !== message.commentthreadid) {
+        throw new globalThis.Error("value provided for field message.commentthreadid of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.commentthreadid);
     }
     if (message.start !== undefined && message.start !== 0) {
@@ -802,7 +814,10 @@ export const CCommunityGetCommentThreadRequest: MessageFns<CCommunityGetCommentT
     if (message.includeDeleted !== undefined && message.includeDeleted !== false) {
       writer.uint32(72).bool(message.includeDeleted);
     }
-    if (message.gidcomment !== undefined && message.gidcomment !== 0) {
+    if (message.gidcomment !== undefined && message.gidcomment !== 0n) {
+      if (BigInt.asUintN(64, message.gidcomment) !== message.gidcomment) {
+        throw new globalThis.Error("value provided for field message.gidcomment of type fixed64 too large");
+      }
       writer.uint32(81).fixed64(message.gidcomment);
     }
     if (message.timeOldest !== undefined && message.timeOldest !== 0) {
@@ -826,7 +841,7 @@ export const CCommunityGetCommentThreadRequest: MessageFns<CCommunityGetCommentT
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -842,7 +857,7 @@ export const CCommunityGetCommentThreadRequest: MessageFns<CCommunityGetCommentT
             break;
           }
 
-          message.gidfeature = longToNumber(reader.fixed64());
+          message.gidfeature = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -850,7 +865,7 @@ export const CCommunityGetCommentThreadRequest: MessageFns<CCommunityGetCommentT
             break;
           }
 
-          message.gidfeature2 = longToNumber(reader.fixed64());
+          message.gidfeature2 = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -858,7 +873,7 @@ export const CCommunityGetCommentThreadRequest: MessageFns<CCommunityGetCommentT
             break;
           }
 
-          message.commentthreadid = longToNumber(reader.fixed64());
+          message.commentthreadid = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -898,7 +913,7 @@ export const CCommunityGetCommentThreadRequest: MessageFns<CCommunityGetCommentT
             break;
           }
 
-          message.gidcomment = longToNumber(reader.fixed64());
+          message.gidcomment = reader.fixed64() as bigint;
           continue;
         }
         case 11: {
@@ -929,8 +944,8 @@ export const CCommunityGetCommentThreadRequest: MessageFns<CCommunityGetCommentT
 
 function createBaseCCommunityComment(): CCommunityComment {
   return {
-    gidcomment: 0,
-    steamid: 0,
+    gidcomment: 0n,
+    steamid: 0n,
     timestamp: 0,
     text: "",
     upvotes: 0,
@@ -941,17 +956,23 @@ function createBaseCCommunityComment(): CCommunityComment {
     totalHidden: 0,
     upvotedByUser: false,
     reactions: [],
-    gidparentcomment: 0,
+    gidparentcomment: 0n,
     deleteReason: 0,
   };
 }
 
 export const CCommunityComment: MessageFns<CCommunityComment> = {
   encode(message: CCommunityComment, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gidcomment !== undefined && message.gidcomment !== 0) {
+    if (message.gidcomment !== undefined && message.gidcomment !== 0n) {
+      if (BigInt.asUintN(64, message.gidcomment) !== message.gidcomment) {
+        throw new globalThis.Error("value provided for field message.gidcomment of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gidcomment);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     if (message.timestamp !== undefined && message.timestamp !== 0) {
@@ -984,7 +1005,10 @@ export const CCommunityComment: MessageFns<CCommunityComment> = {
     for (const v of message.reactions) {
       CCommunityComment_Reaction.encode(v!, writer.uint32(98).fork()).join();
     }
-    if (message.gidparentcomment !== undefined && message.gidparentcomment !== 0) {
+    if (message.gidparentcomment !== undefined && message.gidparentcomment !== 0n) {
+      if (BigInt.asUintN(64, message.gidparentcomment) !== message.gidparentcomment) {
+        throw new globalThis.Error("value provided for field message.gidparentcomment of type fixed64 too large");
+      }
       writer.uint32(105).fixed64(message.gidparentcomment);
     }
     if (message.deleteReason !== undefined && message.deleteReason !== 0) {
@@ -1005,7 +1029,7 @@ export const CCommunityComment: MessageFns<CCommunityComment> = {
             break;
           }
 
-          message.gidcomment = longToNumber(reader.fixed64());
+          message.gidcomment = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1013,7 +1037,7 @@ export const CCommunityComment: MessageFns<CCommunityComment> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1101,7 +1125,7 @@ export const CCommunityComment: MessageFns<CCommunityComment> = {
             break;
           }
 
-          message.gidparentcomment = longToNumber(reader.fixed64());
+          message.gidparentcomment = reader.fixed64() as bigint;
           continue;
         }
         case 14: {
@@ -1174,8 +1198,8 @@ function createBaseCCommunityGetCommentThreadResponse(): CCommunityGetCommentThr
   return {
     comments: [],
     deletedComments: [],
-    steamid: 0,
-    commentthreadid: 0,
+    steamid: 0n,
+    commentthreadid: 0n,
     start: 0,
     count: 0,
     totalCount: 0,
@@ -1183,13 +1207,13 @@ function createBaseCCommunityGetCommentThreadResponse(): CCommunityGetCommentThr
     upvoters: [],
     userSubscribed: false,
     userUpvoted: false,
-    answerCommentid: 0,
+    answerCommentid: 0n,
     answerActor: 0,
     answerActorRank: 0,
     canPost: false,
     commentThreadType: 0,
-    gidfeature: 0,
-    gidfeature2: 0,
+    gidfeature: 0n,
+    gidfeature2: 0n,
   };
 }
 
@@ -1201,10 +1225,16 @@ export const CCommunityGetCommentThreadResponse: MessageFns<CCommunityGetComment
     for (const v of message.deletedComments) {
       CCommunityComment.encode(v!, writer.uint32(18).fork()).join();
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamid);
     }
-    if (message.commentthreadid !== undefined && message.commentthreadid !== 0) {
+    if (message.commentthreadid !== undefined && message.commentthreadid !== 0n) {
+      if (BigInt.asUintN(64, message.commentthreadid) !== message.commentthreadid) {
+        throw new globalThis.Error("value provided for field message.commentthreadid of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.commentthreadid);
     }
     if (message.start !== undefined && message.start !== 0) {
@@ -1228,7 +1258,10 @@ export const CCommunityGetCommentThreadResponse: MessageFns<CCommunityGetComment
     if (message.userUpvoted !== undefined && message.userUpvoted !== false) {
       writer.uint32(88).bool(message.userUpvoted);
     }
-    if (message.answerCommentid !== undefined && message.answerCommentid !== 0) {
+    if (message.answerCommentid !== undefined && message.answerCommentid !== 0n) {
+      if (BigInt.asUintN(64, message.answerCommentid) !== message.answerCommentid) {
+        throw new globalThis.Error("value provided for field message.answerCommentid of type fixed64 too large");
+      }
       writer.uint32(97).fixed64(message.answerCommentid);
     }
     if (message.answerActor !== undefined && message.answerActor !== 0) {
@@ -1243,10 +1276,16 @@ export const CCommunityGetCommentThreadResponse: MessageFns<CCommunityGetComment
     if (message.commentThreadType !== undefined && message.commentThreadType !== 0) {
       writer.uint32(128).uint32(message.commentThreadType);
     }
-    if (message.gidfeature !== undefined && message.gidfeature !== 0) {
+    if (message.gidfeature !== undefined && message.gidfeature !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature) !== message.gidfeature) {
+        throw new globalThis.Error("value provided for field message.gidfeature of type fixed64 too large");
+      }
       writer.uint32(137).fixed64(message.gidfeature);
     }
-    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0) {
+    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature2) !== message.gidfeature2) {
+        throw new globalThis.Error("value provided for field message.gidfeature2 of type fixed64 too large");
+      }
       writer.uint32(145).fixed64(message.gidfeature2);
     }
     return writer;
@@ -1280,7 +1319,7 @@ export const CCommunityGetCommentThreadResponse: MessageFns<CCommunityGetComment
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1288,7 +1327,7 @@ export const CCommunityGetCommentThreadResponse: MessageFns<CCommunityGetComment
             break;
           }
 
-          message.commentthreadid = longToNumber(reader.fixed64());
+          message.commentthreadid = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -1362,7 +1401,7 @@ export const CCommunityGetCommentThreadResponse: MessageFns<CCommunityGetComment
             break;
           }
 
-          message.answerCommentid = longToNumber(reader.fixed64());
+          message.answerCommentid = reader.fixed64() as bigint;
           continue;
         }
         case 13: {
@@ -1402,7 +1441,7 @@ export const CCommunityGetCommentThreadResponse: MessageFns<CCommunityGetComment
             break;
           }
 
-          message.gidfeature = longToNumber(reader.fixed64());
+          message.gidfeature = reader.fixed64() as bigint;
           continue;
         }
         case 18: {
@@ -1410,7 +1449,7 @@ export const CCommunityGetCommentThreadResponse: MessageFns<CCommunityGetComment
             break;
           }
 
-          message.gidfeature2 = longToNumber(reader.fixed64());
+          message.gidfeature2 = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1425,12 +1464,12 @@ export const CCommunityGetCommentThreadResponse: MessageFns<CCommunityGetComment
 
 function createBaseCCommunityPostCommentToThreadRequest(): CCommunityPostCommentToThreadRequest {
   return {
-    steamid: 0,
+    steamid: 0n,
     commentThreadType: 0,
-    gidfeature: 0,
-    gidfeature2: 0,
+    gidfeature: 0n,
+    gidfeature2: 0n,
     text: "",
-    gidparentcomment: 0,
+    gidparentcomment: 0n,
     suppressNotifications: false,
     isReport: false,
     startHidden: false,
@@ -1439,22 +1478,34 @@ function createBaseCCommunityPostCommentToThreadRequest(): CCommunityPostComment
 
 export const CCommunityPostCommentToThreadRequest: MessageFns<CCommunityPostCommentToThreadRequest> = {
   encode(message: CCommunityPostCommentToThreadRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.commentThreadType !== undefined && message.commentThreadType !== 0) {
       writer.uint32(16).int32(message.commentThreadType);
     }
-    if (message.gidfeature !== undefined && message.gidfeature !== 0) {
+    if (message.gidfeature !== undefined && message.gidfeature !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature) !== message.gidfeature) {
+        throw new globalThis.Error("value provided for field message.gidfeature of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.gidfeature);
     }
-    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0) {
+    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature2) !== message.gidfeature2) {
+        throw new globalThis.Error("value provided for field message.gidfeature2 of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.gidfeature2);
     }
     if (message.text !== undefined && message.text !== "") {
       writer.uint32(50).string(message.text);
     }
-    if (message.gidparentcomment !== undefined && message.gidparentcomment !== 0) {
+    if (message.gidparentcomment !== undefined && message.gidparentcomment !== 0n) {
+      if (BigInt.asUintN(64, message.gidparentcomment) !== message.gidparentcomment) {
+        throw new globalThis.Error("value provided for field message.gidparentcomment of type fixed64 too large");
+      }
       writer.uint32(57).fixed64(message.gidparentcomment);
     }
     if (message.suppressNotifications !== undefined && message.suppressNotifications !== false) {
@@ -1481,7 +1532,7 @@ export const CCommunityPostCommentToThreadRequest: MessageFns<CCommunityPostComm
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1497,7 +1548,7 @@ export const CCommunityPostCommentToThreadRequest: MessageFns<CCommunityPostComm
             break;
           }
 
-          message.gidfeature = longToNumber(reader.fixed64());
+          message.gidfeature = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1505,7 +1556,7 @@ export const CCommunityPostCommentToThreadRequest: MessageFns<CCommunityPostComm
             break;
           }
 
-          message.gidfeature2 = longToNumber(reader.fixed64());
+          message.gidfeature2 = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -1521,7 +1572,7 @@ export const CCommunityPostCommentToThreadRequest: MessageFns<CCommunityPostComm
             break;
           }
 
-          message.gidparentcomment = longToNumber(reader.fixed64());
+          message.gidparentcomment = reader.fixed64() as bigint;
           continue;
         }
         case 8: {
@@ -1559,15 +1610,21 @@ export const CCommunityPostCommentToThreadRequest: MessageFns<CCommunityPostComm
 };
 
 function createBaseCCommunityPostCommentToThreadResponse(): CCommunityPostCommentToThreadResponse {
-  return { gidcomment: 0, commentthreadid: 0, count: 0, upvotes: 0 };
+  return { gidcomment: 0n, commentthreadid: 0n, count: 0, upvotes: 0 };
 }
 
 export const CCommunityPostCommentToThreadResponse: MessageFns<CCommunityPostCommentToThreadResponse> = {
   encode(message: CCommunityPostCommentToThreadResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gidcomment !== undefined && message.gidcomment !== 0) {
+    if (message.gidcomment !== undefined && message.gidcomment !== 0n) {
+      if (BigInt.asUintN(64, message.gidcomment) !== message.gidcomment) {
+        throw new globalThis.Error("value provided for field message.gidcomment of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gidcomment);
     }
-    if (message.commentthreadid !== undefined && message.commentthreadid !== 0) {
+    if (message.commentthreadid !== undefined && message.commentthreadid !== 0n) {
+      if (BigInt.asUintN(64, message.commentthreadid) !== message.commentthreadid) {
+        throw new globalThis.Error("value provided for field message.commentthreadid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.commentthreadid);
     }
     if (message.count !== undefined && message.count !== 0) {
@@ -1591,7 +1648,7 @@ export const CCommunityPostCommentToThreadResponse: MessageFns<CCommunityPostCom
             break;
           }
 
-          message.gidcomment = longToNumber(reader.fixed64());
+          message.gidcomment = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1599,7 +1656,7 @@ export const CCommunityPostCommentToThreadResponse: MessageFns<CCommunityPostCom
             break;
           }
 
-          message.commentthreadid = longToNumber(reader.fixed64());
+          message.commentthreadid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1629,24 +1686,36 @@ export const CCommunityPostCommentToThreadResponse: MessageFns<CCommunityPostCom
 };
 
 function createBaseCCommunityDeleteCommentFromThreadRequest(): CCommunityDeleteCommentFromThreadRequest {
-  return { steamid: 0, commentThreadType: 0, gidfeature: 0, gidfeature2: 0, gidcomment: 0, undelete: false };
+  return { steamid: 0n, commentThreadType: 0, gidfeature: 0n, gidfeature2: 0n, gidcomment: 0n, undelete: false };
 }
 
 export const CCommunityDeleteCommentFromThreadRequest: MessageFns<CCommunityDeleteCommentFromThreadRequest> = {
   encode(message: CCommunityDeleteCommentFromThreadRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.commentThreadType !== undefined && message.commentThreadType !== 0) {
       writer.uint32(16).int32(message.commentThreadType);
     }
-    if (message.gidfeature !== undefined && message.gidfeature !== 0) {
+    if (message.gidfeature !== undefined && message.gidfeature !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature) !== message.gidfeature) {
+        throw new globalThis.Error("value provided for field message.gidfeature of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.gidfeature);
     }
-    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0) {
+    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature2) !== message.gidfeature2) {
+        throw new globalThis.Error("value provided for field message.gidfeature2 of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.gidfeature2);
     }
-    if (message.gidcomment !== undefined && message.gidcomment !== 0) {
+    if (message.gidcomment !== undefined && message.gidcomment !== 0n) {
+      if (BigInt.asUintN(64, message.gidcomment) !== message.gidcomment) {
+        throw new globalThis.Error("value provided for field message.gidcomment of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.gidcomment);
     }
     if (message.undelete !== undefined && message.undelete !== false) {
@@ -1667,7 +1736,7 @@ export const CCommunityDeleteCommentFromThreadRequest: MessageFns<CCommunityDele
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1683,7 +1752,7 @@ export const CCommunityDeleteCommentFromThreadRequest: MessageFns<CCommunityDele
             break;
           }
 
-          message.gidfeature = longToNumber(reader.fixed64());
+          message.gidfeature = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1691,7 +1760,7 @@ export const CCommunityDeleteCommentFromThreadRequest: MessageFns<CCommunityDele
             break;
           }
 
-          message.gidfeature2 = longToNumber(reader.fixed64());
+          message.gidfeature2 = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -1699,7 +1768,7 @@ export const CCommunityDeleteCommentFromThreadRequest: MessageFns<CCommunityDele
             break;
           }
 
-          message.gidcomment = longToNumber(reader.fixed64());
+          message.gidcomment = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -1749,10 +1818,10 @@ export const CCommunityDeleteCommentFromThreadResponse: MessageFns<CCommunityDel
 function createBaseCCommunityRateCommentThreadRequest(): CCommunityRateCommentThreadRequest {
   return {
     commentthreadtype: "",
-    steamid: 0,
-    gidfeature: 0,
-    gidfeature2: 0,
-    gidcomment: 0,
+    steamid: 0n,
+    gidfeature: 0n,
+    gidfeature2: 0n,
+    gidcomment: 0n,
     rateUp: false,
     suppressNotifications: false,
   };
@@ -1763,16 +1832,28 @@ export const CCommunityRateCommentThreadRequest: MessageFns<CCommunityRateCommen
     if (message.commentthreadtype !== undefined && message.commentthreadtype !== "") {
       writer.uint32(10).string(message.commentthreadtype);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
-    if (message.gidfeature !== undefined && message.gidfeature !== 0) {
+    if (message.gidfeature !== undefined && message.gidfeature !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature) !== message.gidfeature) {
+        throw new globalThis.Error("value provided for field message.gidfeature of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.gidfeature);
     }
-    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0) {
+    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature2) !== message.gidfeature2) {
+        throw new globalThis.Error("value provided for field message.gidfeature2 of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.gidfeature2);
     }
-    if (message.gidcomment !== undefined && message.gidcomment !== 0) {
+    if (message.gidcomment !== undefined && message.gidcomment !== 0n) {
+      if (BigInt.asUintN(64, message.gidcomment) !== message.gidcomment) {
+        throw new globalThis.Error("value provided for field message.gidcomment of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.gidcomment);
     }
     if (message.rateUp !== undefined && message.rateUp !== false) {
@@ -1804,7 +1885,7 @@ export const CCommunityRateCommentThreadRequest: MessageFns<CCommunityRateCommen
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1812,7 +1893,7 @@ export const CCommunityRateCommentThreadRequest: MessageFns<CCommunityRateCommen
             break;
           }
 
-          message.gidfeature = longToNumber(reader.uint64());
+          message.gidfeature = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -1820,7 +1901,7 @@ export const CCommunityRateCommentThreadRequest: MessageFns<CCommunityRateCommen
             break;
           }
 
-          message.gidfeature2 = longToNumber(reader.uint64());
+          message.gidfeature2 = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -1828,7 +1909,7 @@ export const CCommunityRateCommentThreadRequest: MessageFns<CCommunityRateCommen
             break;
           }
 
-          message.gidcomment = longToNumber(reader.uint64());
+          message.gidcomment = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -1858,15 +1939,21 @@ export const CCommunityRateCommentThreadRequest: MessageFns<CCommunityRateCommen
 };
 
 function createBaseCCommunityRateCommentThreadResponse(): CCommunityRateCommentThreadResponse {
-  return { gidcomment: 0, commentthreadid: 0, count: 0, upvotes: 0, hasUpvoted: false };
+  return { gidcomment: 0n, commentthreadid: 0n, count: 0, upvotes: 0, hasUpvoted: false };
 }
 
 export const CCommunityRateCommentThreadResponse: MessageFns<CCommunityRateCommentThreadResponse> = {
   encode(message: CCommunityRateCommentThreadResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gidcomment !== undefined && message.gidcomment !== 0) {
+    if (message.gidcomment !== undefined && message.gidcomment !== 0n) {
+      if (BigInt.asUintN(64, message.gidcomment) !== message.gidcomment) {
+        throw new globalThis.Error("value provided for field message.gidcomment of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gidcomment);
     }
-    if (message.commentthreadid !== undefined && message.commentthreadid !== 0) {
+    if (message.commentthreadid !== undefined && message.commentthreadid !== 0n) {
+      if (BigInt.asUintN(64, message.commentthreadid) !== message.commentthreadid) {
+        throw new globalThis.Error("value provided for field message.commentthreadid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.commentthreadid);
     }
     if (message.count !== undefined && message.count !== 0) {
@@ -1893,7 +1980,7 @@ export const CCommunityRateCommentThreadResponse: MessageFns<CCommunityRateComme
             break;
           }
 
-          message.gidcomment = longToNumber(reader.uint64());
+          message.gidcomment = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1901,7 +1988,7 @@ export const CCommunityRateCommentThreadResponse: MessageFns<CCommunityRateComme
             break;
           }
 
-          message.commentthreadid = longToNumber(reader.uint64());
+          message.commentthreadid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1939,7 +2026,7 @@ export const CCommunityRateCommentThreadResponse: MessageFns<CCommunityRateComme
 };
 
 function createBaseCCommunityGetCommentThreadRatingsRequest(): CCommunityGetCommentThreadRatingsRequest {
-  return { commentthreadtype: "", steamid: 0, gidfeature: 0, gidfeature2: 0, gidcomment: 0, maxResults: 0 };
+  return { commentthreadtype: "", steamid: 0n, gidfeature: 0n, gidfeature2: 0n, gidcomment: 0n, maxResults: 0 };
 }
 
 export const CCommunityGetCommentThreadRatingsRequest: MessageFns<CCommunityGetCommentThreadRatingsRequest> = {
@@ -1947,16 +2034,28 @@ export const CCommunityGetCommentThreadRatingsRequest: MessageFns<CCommunityGetC
     if (message.commentthreadtype !== undefined && message.commentthreadtype !== "") {
       writer.uint32(10).string(message.commentthreadtype);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
-    if (message.gidfeature !== undefined && message.gidfeature !== 0) {
+    if (message.gidfeature !== undefined && message.gidfeature !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature) !== message.gidfeature) {
+        throw new globalThis.Error("value provided for field message.gidfeature of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.gidfeature);
     }
-    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0) {
+    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature2) !== message.gidfeature2) {
+        throw new globalThis.Error("value provided for field message.gidfeature2 of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.gidfeature2);
     }
-    if (message.gidcomment !== undefined && message.gidcomment !== 0) {
+    if (message.gidcomment !== undefined && message.gidcomment !== 0n) {
+      if (BigInt.asUintN(64, message.gidcomment) !== message.gidcomment) {
+        throw new globalThis.Error("value provided for field message.gidcomment of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.gidcomment);
     }
     if (message.maxResults !== undefined && message.maxResults !== 0) {
@@ -1985,7 +2084,7 @@ export const CCommunityGetCommentThreadRatingsRequest: MessageFns<CCommunityGetC
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1993,7 +2092,7 @@ export const CCommunityGetCommentThreadRatingsRequest: MessageFns<CCommunityGetC
             break;
           }
 
-          message.gidfeature = longToNumber(reader.uint64());
+          message.gidfeature = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -2001,7 +2100,7 @@ export const CCommunityGetCommentThreadRatingsRequest: MessageFns<CCommunityGetC
             break;
           }
 
-          message.gidfeature2 = longToNumber(reader.uint64());
+          message.gidfeature2 = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -2009,7 +2108,7 @@ export const CCommunityGetCommentThreadRatingsRequest: MessageFns<CCommunityGetC
             break;
           }
 
-          message.gidcomment = longToNumber(reader.uint64());
+          message.gidcomment = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -2031,15 +2130,21 @@ export const CCommunityGetCommentThreadRatingsRequest: MessageFns<CCommunityGetC
 };
 
 function createBaseCCommunityGetCommentThreadRatingsResponse(): CCommunityGetCommentThreadRatingsResponse {
-  return { commentthreadid: 0, gidcomment: 0, upvotes: 0, hasUpvoted: false, upvoterAccountids: [] };
+  return { commentthreadid: 0n, gidcomment: 0n, upvotes: 0, hasUpvoted: false, upvoterAccountids: [] };
 }
 
 export const CCommunityGetCommentThreadRatingsResponse: MessageFns<CCommunityGetCommentThreadRatingsResponse> = {
   encode(message: CCommunityGetCommentThreadRatingsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.commentthreadid !== undefined && message.commentthreadid !== 0) {
+    if (message.commentthreadid !== undefined && message.commentthreadid !== 0n) {
+      if (BigInt.asUintN(64, message.commentthreadid) !== message.commentthreadid) {
+        throw new globalThis.Error("value provided for field message.commentthreadid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.commentthreadid);
     }
-    if (message.gidcomment !== undefined && message.gidcomment !== 0) {
+    if (message.gidcomment !== undefined && message.gidcomment !== 0n) {
+      if (BigInt.asUintN(64, message.gidcomment) !== message.gidcomment) {
+        throw new globalThis.Error("value provided for field message.gidcomment of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.gidcomment);
     }
     if (message.upvotes !== undefined && message.upvotes !== 0) {
@@ -2066,7 +2171,7 @@ export const CCommunityGetCommentThreadRatingsResponse: MessageFns<CCommunityGet
             break;
           }
 
-          message.commentthreadid = longToNumber(reader.uint64());
+          message.commentthreadid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2074,7 +2179,7 @@ export const CCommunityGetCommentThreadRatingsResponse: MessageFns<CCommunityGet
             break;
           }
 
-          message.gidcomment = longToNumber(reader.uint64());
+          message.gidcomment = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -2122,15 +2227,21 @@ export const CCommunityGetCommentThreadRatingsResponse: MessageFns<CCommunityGet
 };
 
 function createBaseCCommunityVerifyClanMembershipRequest(): CCommunityVerifyClanMembershipRequest {
-  return { steamid: 0, steamidsVerifymembership: [] };
+  return { steamid: 0n, steamidsVerifymembership: [] };
 }
 
 export const CCommunityVerifyClanMembershipRequest: MessageFns<CCommunityVerifyClanMembershipRequest> = {
   encode(message: CCommunityVerifyClanMembershipRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.steamid);
     }
     for (const v of message.steamidsVerifymembership) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(16).uint64(v!);
     }
     return writer;
@@ -2148,12 +2259,12 @@ export const CCommunityVerifyClanMembershipRequest: MessageFns<CCommunityVerifyC
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
           if (tag === 16) {
-            message.steamidsVerifymembership.push(longToNumber(reader.uint64()));
+            message.steamidsVerifymembership.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -2161,7 +2272,7 @@ export const CCommunityVerifyClanMembershipRequest: MessageFns<CCommunityVerifyC
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.steamidsVerifymembership.push(longToNumber(reader.uint64()));
+              message.steamidsVerifymembership.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -2186,6 +2297,9 @@ function createBaseCCommunityVerifyClanMembershipResponse(): CCommunityVerifyCla
 export const CCommunityVerifyClanMembershipResponse: MessageFns<CCommunityVerifyClanMembershipResponse> = {
   encode(message: CCommunityVerifyClanMembershipResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.steamidsNonmembers) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(8).uint64(v!);
     }
     return writer;
@@ -2200,7 +2314,7 @@ export const CCommunityVerifyClanMembershipResponse: MessageFns<CCommunityVerify
       switch (tag >>> 3) {
         case 1: {
           if (tag === 8) {
-            message.steamidsNonmembers.push(longToNumber(reader.uint64()));
+            message.steamidsNonmembers.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -2208,7 +2322,7 @@ export const CCommunityVerifyClanMembershipResponse: MessageFns<CCommunityVerify
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.steamidsNonmembers.push(longToNumber(reader.uint64()));
+              message.steamidsNonmembers.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -2227,12 +2341,15 @@ export const CCommunityVerifyClanMembershipResponse: MessageFns<CCommunityVerify
 };
 
 function createBaseCCommunityRateClanAnnouncementRequest(): CCommunityRateClanAnnouncementRequest {
-  return { announcementid: 0, voteUp: false, clanAccountid: 0 };
+  return { announcementid: 0n, voteUp: false, clanAccountid: 0 };
 }
 
 export const CCommunityRateClanAnnouncementRequest: MessageFns<CCommunityRateClanAnnouncementRequest> = {
   encode(message: CCommunityRateClanAnnouncementRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.announcementid !== undefined && message.announcementid !== 0) {
+    if (message.announcementid !== undefined && message.announcementid !== 0n) {
+      if (BigInt.asUintN(64, message.announcementid) !== message.announcementid) {
+        throw new globalThis.Error("value provided for field message.announcementid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.announcementid);
     }
     if (message.voteUp !== undefined && message.voteUp !== false) {
@@ -2256,7 +2373,7 @@ export const CCommunityRateClanAnnouncementRequest: MessageFns<CCommunityRateCla
             break;
           }
 
-          message.announcementid = longToNumber(reader.uint64());
+          message.announcementid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2312,7 +2429,7 @@ export const CCommunityRateClanAnnouncementResponse: MessageFns<CCommunityRateCl
 };
 
 function createBaseCCommunityGetClanAnnouncementVoteForUserRequest(): CCommunityGetClanAnnouncementVoteForUserRequest {
-  return { announcementid: 0 };
+  return { announcementid: 0n };
 }
 
 export const CCommunityGetClanAnnouncementVoteForUserRequest: MessageFns<
@@ -2322,7 +2439,10 @@ export const CCommunityGetClanAnnouncementVoteForUserRequest: MessageFns<
     message: CCommunityGetClanAnnouncementVoteForUserRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.announcementid !== undefined && message.announcementid !== 0) {
+    if (message.announcementid !== undefined && message.announcementid !== 0n) {
+      if (BigInt.asUintN(64, message.announcementid) !== message.announcementid) {
+        throw new globalThis.Error("value provided for field message.announcementid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.announcementid);
     }
     return writer;
@@ -2340,7 +2460,7 @@ export const CCommunityGetClanAnnouncementVoteForUserRequest: MessageFns<
             break;
           }
 
-          message.announcementid = longToNumber(reader.uint64());
+          message.announcementid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2407,12 +2527,15 @@ export const CCommunityGetClanAnnouncementVoteForUserResponse: MessageFns<
 };
 
 function createBaseCCommunityGetClanLocGroupImagesRequest(): CCommunityGetClanLocGroupImagesRequest {
-  return { steamid: 0, group: 0, language: 0, locGroupIds: [] };
+  return { steamid: 0n, group: 0, language: 0, locGroupIds: [] };
 }
 
 export const CCommunityGetClanLocGroupImagesRequest: MessageFns<CCommunityGetClanLocGroupImagesRequest> = {
   encode(message: CCommunityGetClanLocGroupImagesRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.steamid);
     }
     if (message.group !== undefined && message.group !== 0) {
@@ -2422,6 +2545,9 @@ export const CCommunityGetClanLocGroupImagesRequest: MessageFns<CCommunityGetCla
       writer.uint32(24).uint32(message.language);
     }
     for (const v of message.locGroupIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(32).uint64(v!);
     }
     return writer;
@@ -2439,7 +2565,7 @@ export const CCommunityGetClanLocGroupImagesRequest: MessageFns<CCommunityGetCla
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2460,7 +2586,7 @@ export const CCommunityGetClanLocGroupImagesRequest: MessageFns<CCommunityGetCla
         }
         case 4: {
           if (tag === 32) {
-            message.locGroupIds.push(longToNumber(reader.uint64()));
+            message.locGroupIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -2468,7 +2594,7 @@ export const CCommunityGetClanLocGroupImagesRequest: MessageFns<CCommunityGetCla
           if (tag === 34) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.locGroupIds.push(longToNumber(reader.uint64()));
+              message.locGroupIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -2488,7 +2614,7 @@ export const CCommunityGetClanLocGroupImagesRequest: MessageFns<CCommunityGetCla
 
 function createBaseCCommunityClanLocGroupImage(): CCommunityClanLocGroupImage {
   return {
-    locGroupId: 0,
+    locGroupId: 0n,
     imageHash: "",
     thumbnailHash: "",
     fileType: 0,
@@ -2501,7 +2627,10 @@ function createBaseCCommunityClanLocGroupImage(): CCommunityClanLocGroupImage {
 
 export const CCommunityClanLocGroupImage: MessageFns<CCommunityClanLocGroupImage> = {
   encode(message: CCommunityClanLocGroupImage, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.locGroupId !== undefined && message.locGroupId !== 0) {
+    if (message.locGroupId !== undefined && message.locGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.locGroupId) !== message.locGroupId) {
+        throw new globalThis.Error("value provided for field message.locGroupId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.locGroupId);
     }
     if (message.imageHash !== undefined && message.imageHash !== "") {
@@ -2540,7 +2669,7 @@ export const CCommunityClanLocGroupImage: MessageFns<CCommunityClanLocGroupImage
             break;
           }
 
-          message.locGroupId = longToNumber(reader.uint64());
+          message.locGroupId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2647,12 +2776,15 @@ export const CCommunityGetClanLocGroupImagesResponse: MessageFns<CCommunityGetCl
 };
 
 function createBaseCCommunityGetAvatarHistoryRequest(): CCommunityGetAvatarHistoryRequest {
-  return { steamid: 0, filterUserUploadedOnly: false };
+  return { steamid: 0n, filterUserUploadedOnly: false };
 }
 
 export const CCommunityGetAvatarHistoryRequest: MessageFns<CCommunityGetAvatarHistoryRequest> = {
   encode(message: CCommunityGetAvatarHistoryRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.filterUserUploadedOnly !== undefined && message.filterUserUploadedOnly !== false) {
@@ -2673,7 +2805,7 @@ export const CCommunityGetAvatarHistoryRequest: MessageFns<CCommunityGetAvatarHi
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2795,7 +2927,7 @@ export const CCommunityGetAvatarHistoryResponse_AvatarData: MessageFns<CCommunit
   };
 
 function createBaseCCommunityGetClanEventCrowdInMetadataRequest(): CCommunityGetClanEventCrowdInMetadataRequest {
-  return { steamid: 0, itemid: 0 };
+  return { steamid: 0n, itemid: 0n };
 }
 
 export const CCommunityGetClanEventCrowdInMetadataRequest: MessageFns<CCommunityGetClanEventCrowdInMetadataRequest> = {
@@ -2803,10 +2935,16 @@ export const CCommunityGetClanEventCrowdInMetadataRequest: MessageFns<CCommunity
     message: CCommunityGetClanEventCrowdInMetadataRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.itemid !== undefined && message.itemid !== 0) {
+    if (message.itemid !== undefined && message.itemid !== 0n) {
+      if (BigInt.asUintN(64, message.itemid) !== message.itemid) {
+        throw new globalThis.Error("value provided for field message.itemid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.itemid);
     }
     return writer;
@@ -2824,7 +2962,7 @@ export const CCommunityGetClanEventCrowdInMetadataRequest: MessageFns<CCommunity
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2832,7 +2970,7 @@ export const CCommunityGetClanEventCrowdInMetadataRequest: MessageFns<CCommunity
             break;
           }
 
-          message.itemid = longToNumber(reader.uint64());
+          message.itemid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2846,7 +2984,7 @@ export const CCommunityGetClanEventCrowdInMetadataRequest: MessageFns<CCommunity
 };
 
 function createBaseCCommunityGetClanEventCrowdInMetadataResponse(): CCommunityGetClanEventCrowdInMetadataResponse {
-  return { crowdinProjectId: 0, crowdinFileId: 0 };
+  return { crowdinProjectId: 0n, crowdinFileId: 0n };
 }
 
 export const CCommunityGetClanEventCrowdInMetadataResponse: MessageFns<CCommunityGetClanEventCrowdInMetadataResponse> =
@@ -2855,10 +2993,16 @@ export const CCommunityGetClanEventCrowdInMetadataResponse: MessageFns<CCommunit
       message: CCommunityGetClanEventCrowdInMetadataResponse,
       writer: BinaryWriter = new BinaryWriter(),
     ): BinaryWriter {
-      if (message.crowdinProjectId !== undefined && message.crowdinProjectId !== 0) {
+      if (message.crowdinProjectId !== undefined && message.crowdinProjectId !== 0n) {
+        if (BigInt.asUintN(64, message.crowdinProjectId) !== message.crowdinProjectId) {
+          throw new globalThis.Error("value provided for field message.crowdinProjectId of type uint64 too large");
+        }
         writer.uint32(8).uint64(message.crowdinProjectId);
       }
-      if (message.crowdinFileId !== undefined && message.crowdinFileId !== 0) {
+      if (message.crowdinFileId !== undefined && message.crowdinFileId !== 0n) {
+        if (BigInt.asUintN(64, message.crowdinFileId) !== message.crowdinFileId) {
+          throw new globalThis.Error("value provided for field message.crowdinFileId of type uint64 too large");
+        }
         writer.uint32(16).uint64(message.crowdinFileId);
       }
       return writer;
@@ -2876,7 +3020,7 @@ export const CCommunityGetClanEventCrowdInMetadataResponse: MessageFns<CCommunit
               break;
             }
 
-            message.crowdinProjectId = longToNumber(reader.uint64());
+            message.crowdinProjectId = reader.uint64() as bigint;
             continue;
           }
           case 2: {
@@ -2884,7 +3028,7 @@ export const CCommunityGetClanEventCrowdInMetadataResponse: MessageFns<CCommunit
               break;
             }
 
-            message.crowdinFileId = longToNumber(reader.uint64());
+            message.crowdinFileId = reader.uint64() as bigint;
             continue;
           }
         }
@@ -2898,12 +3042,15 @@ export const CCommunityGetClanEventCrowdInMetadataResponse: MessageFns<CCommunit
   };
 
 function createBaseCCommunityGetClanCrowdInMetadataRequest(): CCommunityGetClanCrowdInMetadataRequest {
-  return { steamid: 0 };
+  return { steamid: 0n };
 }
 
 export const CCommunityGetClanCrowdInMetadataRequest: MessageFns<CCommunityGetClanCrowdInMetadataRequest> = {
   encode(message: CCommunityGetClanCrowdInMetadataRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     return writer;
@@ -2921,7 +3068,7 @@ export const CCommunityGetClanCrowdInMetadataRequest: MessageFns<CCommunityGetCl
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2935,15 +3082,21 @@ export const CCommunityGetClanCrowdInMetadataRequest: MessageFns<CCommunityGetCl
 };
 
 function createBaseCCommunityGetClanCrowdInMetadataResponse(): CCommunityGetClanCrowdInMetadataResponse {
-  return { crowdinProjectId: 0, crowdinDirectoryId: 0, pushByDefault: false };
+  return { crowdinProjectId: 0n, crowdinDirectoryId: 0n, pushByDefault: false };
 }
 
 export const CCommunityGetClanCrowdInMetadataResponse: MessageFns<CCommunityGetClanCrowdInMetadataResponse> = {
   encode(message: CCommunityGetClanCrowdInMetadataResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.crowdinProjectId !== undefined && message.crowdinProjectId !== 0) {
+    if (message.crowdinProjectId !== undefined && message.crowdinProjectId !== 0n) {
+      if (BigInt.asUintN(64, message.crowdinProjectId) !== message.crowdinProjectId) {
+        throw new globalThis.Error("value provided for field message.crowdinProjectId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.crowdinProjectId);
     }
-    if (message.crowdinDirectoryId !== undefined && message.crowdinDirectoryId !== 0) {
+    if (message.crowdinDirectoryId !== undefined && message.crowdinDirectoryId !== 0n) {
+      if (BigInt.asUintN(64, message.crowdinDirectoryId) !== message.crowdinDirectoryId) {
+        throw new globalThis.Error("value provided for field message.crowdinDirectoryId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.crowdinDirectoryId);
     }
     if (message.pushByDefault !== undefined && message.pushByDefault !== false) {
@@ -2964,7 +3117,7 @@ export const CCommunityGetClanCrowdInMetadataResponse: MessageFns<CCommunityGetC
             break;
           }
 
-          message.crowdinProjectId = longToNumber(reader.uint64());
+          message.crowdinProjectId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2972,7 +3125,7 @@ export const CCommunityGetClanCrowdInMetadataResponse: MessageFns<CCommunityGetC
             break;
           }
 
-          message.crowdinDirectoryId = longToNumber(reader.uint64());
+          message.crowdinDirectoryId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -2994,7 +3147,7 @@ export const CCommunityGetClanCrowdInMetadataResponse: MessageFns<CCommunityGetC
 };
 
 function createBaseCCommunityFetchTranslationFromCrowdInRequest(): CCommunityFetchTranslationFromCrowdInRequest {
-  return { steamid: 0, itemid: 0, language: 0 };
+  return { steamid: 0n, itemid: 0n, language: 0 };
 }
 
 export const CCommunityFetchTranslationFromCrowdInRequest: MessageFns<CCommunityFetchTranslationFromCrowdInRequest> = {
@@ -3002,10 +3155,16 @@ export const CCommunityFetchTranslationFromCrowdInRequest: MessageFns<CCommunity
     message: CCommunityFetchTranslationFromCrowdInRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.itemid !== undefined && message.itemid !== 0) {
+    if (message.itemid !== undefined && message.itemid !== 0n) {
+      if (BigInt.asUintN(64, message.itemid) !== message.itemid) {
+        throw new globalThis.Error("value provided for field message.itemid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.itemid);
     }
     if (message.language !== undefined && message.language !== 0) {
@@ -3026,7 +3185,7 @@ export const CCommunityFetchTranslationFromCrowdInRequest: MessageFns<CCommunity
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3034,7 +3193,7 @@ export const CCommunityFetchTranslationFromCrowdInRequest: MessageFns<CCommunity
             break;
           }
 
-          message.itemid = longToNumber(reader.uint64());
+          message.itemid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -3084,10 +3243,10 @@ export const CCommunityFetchTranslationFromCrowdInResponse: MessageFns<CCommunit
 
 function createBaseCCommunityHideAndReportCommentRequest(): CCommunityHideAndReportCommentRequest {
   return {
-    gidfeature: 0,
-    gidfeature2: 0,
-    gidcomment: 0,
-    steamid: 0,
+    gidfeature: 0n,
+    gidfeature2: 0n,
+    gidcomment: 0n,
+    steamid: 0n,
     commentthreadtype: "",
     hide: false,
     reportReason: 0,
@@ -3097,16 +3256,28 @@ function createBaseCCommunityHideAndReportCommentRequest(): CCommunityHideAndRep
 
 export const CCommunityHideAndReportCommentRequest: MessageFns<CCommunityHideAndReportCommentRequest> = {
   encode(message: CCommunityHideAndReportCommentRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gidfeature !== undefined && message.gidfeature !== 0) {
+    if (message.gidfeature !== undefined && message.gidfeature !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature) !== message.gidfeature) {
+        throw new globalThis.Error("value provided for field message.gidfeature of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gidfeature);
     }
-    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0) {
+    if (message.gidfeature2 !== undefined && message.gidfeature2 !== 0n) {
+      if (BigInt.asUintN(64, message.gidfeature2) !== message.gidfeature2) {
+        throw new globalThis.Error("value provided for field message.gidfeature2 of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.gidfeature2);
     }
-    if (message.gidcomment !== undefined && message.gidcomment !== 0) {
+    if (message.gidcomment !== undefined && message.gidcomment !== 0n) {
+      if (BigInt.asUintN(64, message.gidcomment) !== message.gidcomment) {
+        throw new globalThis.Error("value provided for field message.gidcomment of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.gidcomment);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.steamid);
     }
     if (message.commentthreadtype !== undefined && message.commentthreadtype !== "") {
@@ -3136,7 +3307,7 @@ export const CCommunityHideAndReportCommentRequest: MessageFns<CCommunityHideAnd
             break;
           }
 
-          message.gidfeature = longToNumber(reader.uint64());
+          message.gidfeature = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3144,7 +3315,7 @@ export const CCommunityHideAndReportCommentRequest: MessageFns<CCommunityHideAnd
             break;
           }
 
-          message.gidfeature2 = longToNumber(reader.uint64());
+          message.gidfeature2 = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -3152,7 +3323,7 @@ export const CCommunityHideAndReportCommentRequest: MessageFns<CCommunityHideAnd
             break;
           }
 
-          message.gidcomment = longToNumber(reader.uint64());
+          message.gidcomment = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -3160,7 +3331,7 @@ export const CCommunityHideAndReportCommentRequest: MessageFns<CCommunityHideAnd
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -3555,8 +3726,8 @@ export const CCommunityGetBestEventsForUserRequest: MessageFns<CCommunityGetBest
 function createBaseCCommunityPartnerEventResult(): CCommunityPartnerEventResult {
   return {
     clanid: 0,
-    eventGid: 0,
-    announcementGid: 0,
+    eventGid: 0n,
+    announcementGid: 0n,
     appid: 0,
     possibleTakeover: false,
     rtime32LastModified: 0,
@@ -3569,10 +3740,16 @@ export const CCommunityPartnerEventResult: MessageFns<CCommunityPartnerEventResu
     if (message.clanid !== undefined && message.clanid !== 0) {
       writer.uint32(8).uint32(message.clanid);
     }
-    if (message.eventGid !== undefined && message.eventGid !== 0) {
+    if (message.eventGid !== undefined && message.eventGid !== 0n) {
+      if (BigInt.asUintN(64, message.eventGid) !== message.eventGid) {
+        throw new globalThis.Error("value provided for field message.eventGid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.eventGid);
     }
-    if (message.announcementGid !== undefined && message.announcementGid !== 0) {
+    if (message.announcementGid !== undefined && message.announcementGid !== 0n) {
+      if (BigInt.asUintN(64, message.announcementGid) !== message.announcementGid) {
+        throw new globalThis.Error("value provided for field message.announcementGid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.announcementGid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
@@ -3610,7 +3787,7 @@ export const CCommunityPartnerEventResult: MessageFns<CCommunityPartnerEventResu
             break;
           }
 
-          message.eventGid = longToNumber(reader.fixed64());
+          message.eventGid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -3618,7 +3795,7 @@ export const CCommunityPartnerEventResult: MessageFns<CCommunityPartnerEventResu
             break;
           }
 
-          message.announcementGid = longToNumber(reader.fixed64());
+          message.announcementGid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -3740,7 +3917,7 @@ export const CCommunityMarkPartnerEventsForUserRequest: MessageFns<CCommunityMar
 };
 
 function createBaseCCommunityMarkPartnerEventsForUserRequest_PartnerEventMarking(): CCommunityMarkPartnerEventsForUserRequest_PartnerEventMarking {
-  return { clanid: 0, eventGid: 0, displayLocation: 0, markShown: false, markRead: false };
+  return { clanid: 0, eventGid: 0n, displayLocation: 0, markShown: false, markRead: false };
 }
 
 export const CCommunityMarkPartnerEventsForUserRequest_PartnerEventMarking: MessageFns<
@@ -3753,7 +3930,10 @@ export const CCommunityMarkPartnerEventsForUserRequest_PartnerEventMarking: Mess
     if (message.clanid !== undefined && message.clanid !== 0) {
       writer.uint32(8).uint32(message.clanid);
     }
-    if (message.eventGid !== undefined && message.eventGid !== 0) {
+    if (message.eventGid !== undefined && message.eventGid !== 0n) {
+      if (BigInt.asUintN(64, message.eventGid) !== message.eventGid) {
+        throw new globalThis.Error("value provided for field message.eventGid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.eventGid);
     }
     if (message.displayLocation !== undefined && message.displayLocation !== 0) {
@@ -3791,7 +3971,7 @@ export const CCommunityMarkPartnerEventsForUserRequest_PartnerEventMarking: Mess
             break;
           }
 
-          message.eventGid = longToNumber(reader.fixed64());
+          message.eventGid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -3866,6 +4046,9 @@ export const CCommunityGetUserPartnerEventViewStatusRequest: MessageFns<
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
     for (const v of message.eventGids) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(v!);
     }
     if (message.includeReadEventsOnly !== undefined && message.includeReadEventsOnly !== false) {
@@ -3883,7 +4066,7 @@ export const CCommunityGetUserPartnerEventViewStatusRequest: MessageFns<
       switch (tag >>> 3) {
         case 1: {
           if (tag === 9) {
-            message.eventGids.push(longToNumber(reader.fixed64()));
+            message.eventGids.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -3891,7 +4074,7 @@ export const CCommunityGetUserPartnerEventViewStatusRequest: MessageFns<
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.eventGids.push(longToNumber(reader.fixed64()));
+              message.eventGids.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -3962,7 +4145,7 @@ export const CCommunityGetUserPartnerEventViewStatusResponse: MessageFns<
 };
 
 function createBaseCCommunityGetUserPartnerEventViewStatusResponse_PartnerEvent(): CCommunityGetUserPartnerEventViewStatusResponse_PartnerEvent {
-  return { eventGid: 0, lastShownTime: 0, lastReadTime: 0, clanAccountId: 0 };
+  return { eventGid: 0n, lastShownTime: 0, lastReadTime: 0, clanAccountId: 0 };
 }
 
 export const CCommunityGetUserPartnerEventViewStatusResponse_PartnerEvent: MessageFns<
@@ -3972,7 +4155,10 @@ export const CCommunityGetUserPartnerEventViewStatusResponse_PartnerEvent: Messa
     message: CCommunityGetUserPartnerEventViewStatusResponse_PartnerEvent,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.eventGid !== undefined && message.eventGid !== 0) {
+    if (message.eventGid !== undefined && message.eventGid !== 0n) {
+      if (BigInt.asUintN(64, message.eventGid) !== message.eventGid) {
+        throw new globalThis.Error("value provided for field message.eventGid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.eventGid);
     }
     if (message.lastShownTime !== undefined && message.lastShownTime !== 0) {
@@ -4002,7 +4188,7 @@ export const CCommunityGetUserPartnerEventViewStatusResponse_PartnerEvent: Messa
             break;
           }
 
-          message.eventGid = longToNumber(reader.fixed64());
+          message.eventGid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -4474,7 +4660,7 @@ export const CCommunitySetRecommendationBotReviewStatusRequest: MessageFns<
 };
 
 function createBaseCCommunitySetRecommendationBotReviewStatusRequest_ReviewLabel(): CCommunitySetRecommendationBotReviewStatusRequest_ReviewLabel {
-  return { appid: 0, recommendationid: 0, isBotReview: false };
+  return { appid: 0, recommendationid: 0n, isBotReview: false };
 }
 
 export const CCommunitySetRecommendationBotReviewStatusRequest_ReviewLabel: MessageFns<
@@ -4487,7 +4673,10 @@ export const CCommunitySetRecommendationBotReviewStatusRequest_ReviewLabel: Mess
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.recommendationid !== undefined && message.recommendationid !== 0) {
+    if (message.recommendationid !== undefined && message.recommendationid !== 0n) {
+      if (BigInt.asUintN(64, message.recommendationid) !== message.recommendationid) {
+        throw new globalThis.Error("value provided for field message.recommendationid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.recommendationid);
     }
     if (message.isBotReview !== undefined && message.isBotReview !== false) {
@@ -4519,7 +4708,7 @@ export const CCommunitySetRecommendationBotReviewStatusRequest_ReviewLabel: Mess
             break;
           }
 
-          message.recommendationid = longToNumber(reader.uint64());
+          message.recommendationid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -4869,17 +5058,6 @@ export class CommunityClientImpl implements Community {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

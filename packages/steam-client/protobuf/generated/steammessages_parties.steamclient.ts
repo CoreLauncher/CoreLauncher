@@ -10,18 +10,18 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 export const protobufPackage = "";
 
 export interface CPartiesJoinPartyRequest {
-  steamid?: number | undefined;
-  beaconId?: number | undefined;
+  steamid?: bigint | undefined;
+  beaconId?: bigint | undefined;
 }
 
 export interface CPartiesJoinPartyResponse {
-  beaconId?: number | undefined;
+  beaconId?: bigint | undefined;
   connectString?: string | undefined;
 }
 
 export interface CPartiesBeaconLocation {
   locationType?: number | undefined;
-  locationId?: number | undefined;
+  locationId?: bigint | undefined;
 }
 
 export interface CPartiesCreateBeaconRequest {
@@ -33,54 +33,60 @@ export interface CPartiesCreateBeaconRequest {
 }
 
 export interface CPartiesCreateBeaconResponse {
-  beaconId?: number | undefined;
+  beaconId?: bigint | undefined;
 }
 
 export interface CPartiesOnReservationCompletedRequest {
-  beaconId?: number | undefined;
-  userSteamid?: number | undefined;
+  beaconId?: bigint | undefined;
+  userSteamid?: bigint | undefined;
 }
 
 export interface CPartiesOnReservationCompletedResponse {
-  beaconId?: number | undefined;
+  beaconId?: bigint | undefined;
 }
 
 export interface CPartiesCancelReservationRequest {
-  beaconId?: number | undefined;
-  userSteamid?: number | undefined;
+  beaconId?: bigint | undefined;
+  userSteamid?: bigint | undefined;
 }
 
 export interface CPartiesCancelReservationResponse {
-  beaconId?: number | undefined;
+  beaconId?: bigint | undefined;
 }
 
 export interface CPartiesChangeNumOpenSlotsRequest {
-  beaconId?: number | undefined;
+  beaconId?: bigint | undefined;
   numOpenSlots?: number | undefined;
 }
 
 export interface CPartiesChangeNumOpenSlotsResponse {
-  beaconId?: number | undefined;
+  beaconId?: bigint | undefined;
 }
 
 export interface CPartiesDestroyBeaconRequest {
-  beaconId?: number | undefined;
+  beaconId?: bigint | undefined;
 }
 
 export interface CPartiesDestroyBeaconResponse {
-  beaconId?: number | undefined;
+  beaconId?: bigint | undefined;
 }
 
 function createBaseCPartiesJoinPartyRequest(): CPartiesJoinPartyRequest {
-  return { steamid: 0, beaconId: 0 };
+  return { steamid: 0n, beaconId: 0n };
 }
 
 export const CPartiesJoinPartyRequest: MessageFns<CPartiesJoinPartyRequest> = {
   encode(message: CPartiesJoinPartyRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.beaconId);
     }
     return writer;
@@ -98,7 +104,7 @@ export const CPartiesJoinPartyRequest: MessageFns<CPartiesJoinPartyRequest> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -106,7 +112,7 @@ export const CPartiesJoinPartyRequest: MessageFns<CPartiesJoinPartyRequest> = {
             break;
           }
 
-          message.beaconId = longToNumber(reader.uint64());
+          message.beaconId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -120,12 +126,15 @@ export const CPartiesJoinPartyRequest: MessageFns<CPartiesJoinPartyRequest> = {
 };
 
 function createBaseCPartiesJoinPartyResponse(): CPartiesJoinPartyResponse {
-  return { beaconId: 0, connectString: "" };
+  return { beaconId: 0n, connectString: "" };
 }
 
 export const CPartiesJoinPartyResponse: MessageFns<CPartiesJoinPartyResponse> = {
   encode(message: CPartiesJoinPartyResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.beaconId);
     }
     if (message.connectString !== undefined && message.connectString !== "") {
@@ -146,7 +155,7 @@ export const CPartiesJoinPartyResponse: MessageFns<CPartiesJoinPartyResponse> = 
             break;
           }
 
-          message.beaconId = longToNumber(reader.uint64());
+          message.beaconId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -168,7 +177,7 @@ export const CPartiesJoinPartyResponse: MessageFns<CPartiesJoinPartyResponse> = 
 };
 
 function createBaseCPartiesBeaconLocation(): CPartiesBeaconLocation {
-  return { locationType: 0, locationId: 0 };
+  return { locationType: 0, locationId: 0n };
 }
 
 export const CPartiesBeaconLocation: MessageFns<CPartiesBeaconLocation> = {
@@ -176,7 +185,10 @@ export const CPartiesBeaconLocation: MessageFns<CPartiesBeaconLocation> = {
     if (message.locationType !== undefined && message.locationType !== 0) {
       writer.uint32(8).uint32(message.locationType);
     }
-    if (message.locationId !== undefined && message.locationId !== 0) {
+    if (message.locationId !== undefined && message.locationId !== 0n) {
+      if (BigInt.asUintN(64, message.locationId) !== message.locationId) {
+        throw new globalThis.Error("value provided for field message.locationId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.locationId);
     }
     return writer;
@@ -202,7 +214,7 @@ export const CPartiesBeaconLocation: MessageFns<CPartiesBeaconLocation> = {
             break;
           }
 
-          message.locationId = longToNumber(reader.uint64());
+          message.locationId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -297,12 +309,15 @@ export const CPartiesCreateBeaconRequest: MessageFns<CPartiesCreateBeaconRequest
 };
 
 function createBaseCPartiesCreateBeaconResponse(): CPartiesCreateBeaconResponse {
-  return { beaconId: 0 };
+  return { beaconId: 0n };
 }
 
 export const CPartiesCreateBeaconResponse: MessageFns<CPartiesCreateBeaconResponse> = {
   encode(message: CPartiesCreateBeaconResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.beaconId);
     }
     return writer;
@@ -320,7 +335,7 @@ export const CPartiesCreateBeaconResponse: MessageFns<CPartiesCreateBeaconRespon
             break;
           }
 
-          message.beaconId = longToNumber(reader.uint64());
+          message.beaconId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -334,15 +349,21 @@ export const CPartiesCreateBeaconResponse: MessageFns<CPartiesCreateBeaconRespon
 };
 
 function createBaseCPartiesOnReservationCompletedRequest(): CPartiesOnReservationCompletedRequest {
-  return { beaconId: 0, userSteamid: 0 };
+  return { beaconId: 0n, userSteamid: 0n };
 }
 
 export const CPartiesOnReservationCompletedRequest: MessageFns<CPartiesOnReservationCompletedRequest> = {
   encode(message: CPartiesOnReservationCompletedRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.beaconId);
     }
-    if (message.userSteamid !== undefined && message.userSteamid !== 0) {
+    if (message.userSteamid !== undefined && message.userSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.userSteamid) !== message.userSteamid) {
+        throw new globalThis.Error("value provided for field message.userSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.userSteamid);
     }
     return writer;
@@ -360,7 +381,7 @@ export const CPartiesOnReservationCompletedRequest: MessageFns<CPartiesOnReserva
             break;
           }
 
-          message.beaconId = longToNumber(reader.uint64());
+          message.beaconId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -368,7 +389,7 @@ export const CPartiesOnReservationCompletedRequest: MessageFns<CPartiesOnReserva
             break;
           }
 
-          message.userSteamid = longToNumber(reader.fixed64());
+          message.userSteamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -382,12 +403,15 @@ export const CPartiesOnReservationCompletedRequest: MessageFns<CPartiesOnReserva
 };
 
 function createBaseCPartiesOnReservationCompletedResponse(): CPartiesOnReservationCompletedResponse {
-  return { beaconId: 0 };
+  return { beaconId: 0n };
 }
 
 export const CPartiesOnReservationCompletedResponse: MessageFns<CPartiesOnReservationCompletedResponse> = {
   encode(message: CPartiesOnReservationCompletedResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.beaconId);
     }
     return writer;
@@ -405,7 +429,7 @@ export const CPartiesOnReservationCompletedResponse: MessageFns<CPartiesOnReserv
             break;
           }
 
-          message.beaconId = longToNumber(reader.uint64());
+          message.beaconId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -419,15 +443,21 @@ export const CPartiesOnReservationCompletedResponse: MessageFns<CPartiesOnReserv
 };
 
 function createBaseCPartiesCancelReservationRequest(): CPartiesCancelReservationRequest {
-  return { beaconId: 0, userSteamid: 0 };
+  return { beaconId: 0n, userSteamid: 0n };
 }
 
 export const CPartiesCancelReservationRequest: MessageFns<CPartiesCancelReservationRequest> = {
   encode(message: CPartiesCancelReservationRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.beaconId);
     }
-    if (message.userSteamid !== undefined && message.userSteamid !== 0) {
+    if (message.userSteamid !== undefined && message.userSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.userSteamid) !== message.userSteamid) {
+        throw new globalThis.Error("value provided for field message.userSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.userSteamid);
     }
     return writer;
@@ -445,7 +475,7 @@ export const CPartiesCancelReservationRequest: MessageFns<CPartiesCancelReservat
             break;
           }
 
-          message.beaconId = longToNumber(reader.uint64());
+          message.beaconId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -453,7 +483,7 @@ export const CPartiesCancelReservationRequest: MessageFns<CPartiesCancelReservat
             break;
           }
 
-          message.userSteamid = longToNumber(reader.fixed64());
+          message.userSteamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -467,12 +497,15 @@ export const CPartiesCancelReservationRequest: MessageFns<CPartiesCancelReservat
 };
 
 function createBaseCPartiesCancelReservationResponse(): CPartiesCancelReservationResponse {
-  return { beaconId: 0 };
+  return { beaconId: 0n };
 }
 
 export const CPartiesCancelReservationResponse: MessageFns<CPartiesCancelReservationResponse> = {
   encode(message: CPartiesCancelReservationResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.beaconId);
     }
     return writer;
@@ -490,7 +523,7 @@ export const CPartiesCancelReservationResponse: MessageFns<CPartiesCancelReserva
             break;
           }
 
-          message.beaconId = longToNumber(reader.uint64());
+          message.beaconId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -504,12 +537,15 @@ export const CPartiesCancelReservationResponse: MessageFns<CPartiesCancelReserva
 };
 
 function createBaseCPartiesChangeNumOpenSlotsRequest(): CPartiesChangeNumOpenSlotsRequest {
-  return { beaconId: 0, numOpenSlots: 0 };
+  return { beaconId: 0n, numOpenSlots: 0 };
 }
 
 export const CPartiesChangeNumOpenSlotsRequest: MessageFns<CPartiesChangeNumOpenSlotsRequest> = {
   encode(message: CPartiesChangeNumOpenSlotsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.beaconId);
     }
     if (message.numOpenSlots !== undefined && message.numOpenSlots !== 0) {
@@ -530,7 +566,7 @@ export const CPartiesChangeNumOpenSlotsRequest: MessageFns<CPartiesChangeNumOpen
             break;
           }
 
-          message.beaconId = longToNumber(reader.uint64());
+          message.beaconId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -552,12 +588,15 @@ export const CPartiesChangeNumOpenSlotsRequest: MessageFns<CPartiesChangeNumOpen
 };
 
 function createBaseCPartiesChangeNumOpenSlotsResponse(): CPartiesChangeNumOpenSlotsResponse {
-  return { beaconId: 0 };
+  return { beaconId: 0n };
 }
 
 export const CPartiesChangeNumOpenSlotsResponse: MessageFns<CPartiesChangeNumOpenSlotsResponse> = {
   encode(message: CPartiesChangeNumOpenSlotsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.beaconId);
     }
     return writer;
@@ -575,7 +614,7 @@ export const CPartiesChangeNumOpenSlotsResponse: MessageFns<CPartiesChangeNumOpe
             break;
           }
 
-          message.beaconId = longToNumber(reader.uint64());
+          message.beaconId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -589,12 +628,15 @@ export const CPartiesChangeNumOpenSlotsResponse: MessageFns<CPartiesChangeNumOpe
 };
 
 function createBaseCPartiesDestroyBeaconRequest(): CPartiesDestroyBeaconRequest {
-  return { beaconId: 0 };
+  return { beaconId: 0n };
 }
 
 export const CPartiesDestroyBeaconRequest: MessageFns<CPartiesDestroyBeaconRequest> = {
   encode(message: CPartiesDestroyBeaconRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.beaconId);
     }
     return writer;
@@ -612,7 +654,7 @@ export const CPartiesDestroyBeaconRequest: MessageFns<CPartiesDestroyBeaconReque
             break;
           }
 
-          message.beaconId = longToNumber(reader.uint64());
+          message.beaconId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -626,12 +668,15 @@ export const CPartiesDestroyBeaconRequest: MessageFns<CPartiesDestroyBeaconReque
 };
 
 function createBaseCPartiesDestroyBeaconResponse(): CPartiesDestroyBeaconResponse {
-  return { beaconId: 0 };
+  return { beaconId: 0n };
 }
 
 export const CPartiesDestroyBeaconResponse: MessageFns<CPartiesDestroyBeaconResponse> = {
   encode(message: CPartiesDestroyBeaconResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.beaconId !== undefined && message.beaconId !== 0) {
+    if (message.beaconId !== undefined && message.beaconId !== 0n) {
+      if (BigInt.asUintN(64, message.beaconId) !== message.beaconId) {
+        throw new globalThis.Error("value provided for field message.beaconId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.beaconId);
     }
     return writer;
@@ -649,7 +694,7 @@ export const CPartiesDestroyBeaconResponse: MessageFns<CPartiesDestroyBeaconResp
             break;
           }
 
-          message.beaconId = longToNumber(reader.uint64());
+          message.beaconId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -728,17 +773,6 @@ export class PartiesClientImpl implements Parties {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

@@ -13,7 +13,7 @@ export interface CShaderGetShaderReportingCadenceRequest {
 }
 
 export interface CShaderGetShaderReportingCadenceResponse {
-  rereportTimeThreshold?: number | undefined;
+  rereportTimeThreshold?: bigint | undefined;
   percentToRereport?: number | undefined;
 }
 
@@ -53,9 +53,9 @@ export interface CShaderGetBucketManifestRequest {
 }
 
 export interface CShaderGetBucketManifestResponse {
-  manifestid?: number | undefined;
-  depotsize?: number | undefined;
-  bucketid?: number | undefined;
+  manifestid?: bigint | undefined;
+  depotsize?: bigint | undefined;
+  bucketid?: bigint | undefined;
 }
 
 export interface CShaderGetStaleBucketRequest {
@@ -64,9 +64,9 @@ export interface CShaderGetStaleBucketRequest {
 }
 
 export interface CShaderGetStaleBucketResponse {
-  bucketid?: number | undefined;
+  bucketid?: bigint | undefined;
   appid?: number | undefined;
-  manifestid?: number | undefined;
+  manifestid?: bigint | undefined;
   gpuDesc?: string | undefined;
   driverDesc?: string | undefined;
   depotEncryptionKey?: Buffer | undefined;
@@ -76,10 +76,10 @@ export interface CShaderReportExternalBuildRequest {
   appid?: number | undefined;
   gpuDesc?: string | undefined;
   driverDesc?: string | undefined;
-  manifestid?: number | undefined;
+  manifestid?: bigint | undefined;
   sourceGpuDesc?: string | undefined;
   sourceDriverDesc?: string | undefined;
-  depotsize?: number | undefined;
+  depotsize?: bigint | undefined;
 }
 
 export interface CShaderReportExternalBuildResponse {
@@ -112,12 +112,15 @@ export const CShaderGetShaderReportingCadenceRequest: MessageFns<CShaderGetShade
 };
 
 function createBaseCShaderGetShaderReportingCadenceResponse(): CShaderGetShaderReportingCadenceResponse {
-  return { rereportTimeThreshold: 0, percentToRereport: 0 };
+  return { rereportTimeThreshold: 0n, percentToRereport: 0 };
 }
 
 export const CShaderGetShaderReportingCadenceResponse: MessageFns<CShaderGetShaderReportingCadenceResponse> = {
   encode(message: CShaderGetShaderReportingCadenceResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.rereportTimeThreshold !== undefined && message.rereportTimeThreshold !== 0) {
+    if (message.rereportTimeThreshold !== undefined && message.rereportTimeThreshold !== 0n) {
+      if (BigInt.asUintN(64, message.rereportTimeThreshold) !== message.rereportTimeThreshold) {
+        throw new globalThis.Error("value provided for field message.rereportTimeThreshold of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.rereportTimeThreshold);
     }
     if (message.percentToRereport !== undefined && message.percentToRereport !== 0) {
@@ -138,7 +141,7 @@ export const CShaderGetShaderReportingCadenceResponse: MessageFns<CShaderGetShad
             break;
           }
 
-          message.rereportTimeThreshold = longToNumber(reader.uint64());
+          message.rereportTimeThreshold = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -506,18 +509,27 @@ export const CShaderGetBucketManifestRequest: MessageFns<CShaderGetBucketManifes
 };
 
 function createBaseCShaderGetBucketManifestResponse(): CShaderGetBucketManifestResponse {
-  return { manifestid: 0, depotsize: 0, bucketid: 0 };
+  return { manifestid: 0n, depotsize: 0n, bucketid: 0n };
 }
 
 export const CShaderGetBucketManifestResponse: MessageFns<CShaderGetBucketManifestResponse> = {
   encode(message: CShaderGetBucketManifestResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.manifestid !== undefined && message.manifestid !== 0) {
+    if (message.manifestid !== undefined && message.manifestid !== 0n) {
+      if (BigInt.asUintN(64, message.manifestid) !== message.manifestid) {
+        throw new globalThis.Error("value provided for field message.manifestid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.manifestid);
     }
-    if (message.depotsize !== undefined && message.depotsize !== 0) {
+    if (message.depotsize !== undefined && message.depotsize !== 0n) {
+      if (BigInt.asUintN(64, message.depotsize) !== message.depotsize) {
+        throw new globalThis.Error("value provided for field message.depotsize of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.depotsize);
     }
-    if (message.bucketid !== undefined && message.bucketid !== 0) {
+    if (message.bucketid !== undefined && message.bucketid !== 0n) {
+      if (BigInt.asUintN(64, message.bucketid) !== message.bucketid) {
+        throw new globalThis.Error("value provided for field message.bucketid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.bucketid);
     }
     return writer;
@@ -535,7 +547,7 @@ export const CShaderGetBucketManifestResponse: MessageFns<CShaderGetBucketManife
             break;
           }
 
-          message.manifestid = longToNumber(reader.uint64());
+          message.manifestid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -543,7 +555,7 @@ export const CShaderGetBucketManifestResponse: MessageFns<CShaderGetBucketManife
             break;
           }
 
-          message.depotsize = longToNumber(reader.uint64());
+          message.depotsize = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -551,7 +563,7 @@ export const CShaderGetBucketManifestResponse: MessageFns<CShaderGetBucketManife
             break;
           }
 
-          message.bucketid = longToNumber(reader.uint64());
+          message.bucketid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -613,18 +625,24 @@ export const CShaderGetStaleBucketRequest: MessageFns<CShaderGetStaleBucketReque
 };
 
 function createBaseCShaderGetStaleBucketResponse(): CShaderGetStaleBucketResponse {
-  return { bucketid: 0, appid: 0, manifestid: 0, gpuDesc: "", driverDesc: "", depotEncryptionKey: Buffer.alloc(0) };
+  return { bucketid: 0n, appid: 0, manifestid: 0n, gpuDesc: "", driverDesc: "", depotEncryptionKey: Buffer.alloc(0) };
 }
 
 export const CShaderGetStaleBucketResponse: MessageFns<CShaderGetStaleBucketResponse> = {
   encode(message: CShaderGetStaleBucketResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.bucketid !== undefined && message.bucketid !== 0) {
+    if (message.bucketid !== undefined && message.bucketid !== 0n) {
+      if (BigInt.asUintN(64, message.bucketid) !== message.bucketid) {
+        throw new globalThis.Error("value provided for field message.bucketid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.bucketid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(16).uint32(message.appid);
     }
-    if (message.manifestid !== undefined && message.manifestid !== 0) {
+    if (message.manifestid !== undefined && message.manifestid !== 0n) {
+      if (BigInt.asUintN(64, message.manifestid) !== message.manifestid) {
+        throw new globalThis.Error("value provided for field message.manifestid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.manifestid);
     }
     if (message.gpuDesc !== undefined && message.gpuDesc !== "") {
@@ -651,7 +669,7 @@ export const CShaderGetStaleBucketResponse: MessageFns<CShaderGetStaleBucketResp
             break;
           }
 
-          message.bucketid = longToNumber(reader.uint64());
+          message.bucketid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -667,7 +685,7 @@ export const CShaderGetStaleBucketResponse: MessageFns<CShaderGetStaleBucketResp
             break;
           }
 
-          message.manifestid = longToNumber(reader.uint64());
+          message.manifestid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -709,10 +727,10 @@ function createBaseCShaderReportExternalBuildRequest(): CShaderReportExternalBui
     appid: 0,
     gpuDesc: "",
     driverDesc: "",
-    manifestid: 0,
+    manifestid: 0n,
     sourceGpuDesc: "",
     sourceDriverDesc: "",
-    depotsize: 0,
+    depotsize: 0n,
   };
 }
 
@@ -727,7 +745,10 @@ export const CShaderReportExternalBuildRequest: MessageFns<CShaderReportExternal
     if (message.driverDesc !== undefined && message.driverDesc !== "") {
       writer.uint32(26).string(message.driverDesc);
     }
-    if (message.manifestid !== undefined && message.manifestid !== 0) {
+    if (message.manifestid !== undefined && message.manifestid !== 0n) {
+      if (BigInt.asUintN(64, message.manifestid) !== message.manifestid) {
+        throw new globalThis.Error("value provided for field message.manifestid of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.manifestid);
     }
     if (message.sourceGpuDesc !== undefined && message.sourceGpuDesc !== "") {
@@ -736,7 +757,10 @@ export const CShaderReportExternalBuildRequest: MessageFns<CShaderReportExternal
     if (message.sourceDriverDesc !== undefined && message.sourceDriverDesc !== "") {
       writer.uint32(50).string(message.sourceDriverDesc);
     }
-    if (message.depotsize !== undefined && message.depotsize !== 0) {
+    if (message.depotsize !== undefined && message.depotsize !== 0n) {
+      if (BigInt.asUintN(64, message.depotsize) !== message.depotsize) {
+        throw new globalThis.Error("value provided for field message.depotsize of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.depotsize);
     }
     return writer;
@@ -778,7 +802,7 @@ export const CShaderReportExternalBuildRequest: MessageFns<CShaderReportExternal
             break;
           }
 
-          message.manifestid = longToNumber(reader.uint64());
+          message.manifestid = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -802,7 +826,7 @@ export const CShaderReportExternalBuildRequest: MessageFns<CShaderReportExternal
             break;
           }
 
-          message.depotsize = longToNumber(reader.uint64());
+          message.depotsize = reader.uint64() as bigint;
           continue;
         }
       }
@@ -907,17 +931,6 @@ export class ShaderClientImpl implements Shader {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

@@ -10,12 +10,12 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 export const protobufPackage = "";
 
 export interface CMsgClientUDSP2PSessionStarted {
-  steamidRemote?: number | undefined;
+  steamidRemote?: bigint | undefined;
   appid?: number | undefined;
 }
 
 export interface CMsgClientUDSP2PSessionEnded {
-  steamidRemote?: number | undefined;
+  steamidRemote?: bigint | undefined;
   appid?: number | undefined;
   sessionLengthSec?: number | undefined;
   sessionError?: number | undefined;
@@ -37,7 +37,7 @@ export interface CMsgClientGetClientDetailsResponse {
   ipPublic?: string | undefined;
   ipPrivate?: string | undefined;
   gamesRunning: CMsgClientGetClientDetailsResponse_Game[];
-  bytesAvailable?: number | undefined;
+  bytesAvailable?: bigint | undefined;
   protocolVersion?: number | undefined;
   clientcommVersion?: number | undefined;
   localUsers: number[];
@@ -62,7 +62,7 @@ export interface CMsgClientGetClientAppList {
 
 export interface CMsgClientGetClientAppListResponse {
   apps: CMsgClientGetClientAppListResponse_App[];
-  bytesAvailable?: number | undefined;
+  bytesAvailable?: bigint | undefined;
   clientInfo?: CMsgClientGetClientDetailsResponse | undefined;
 }
 
@@ -73,17 +73,17 @@ export interface CMsgClientGetClientAppListResponse_App {
   favorite?: boolean | undefined;
   installed?: boolean | undefined;
   autoUpdate?: boolean | undefined;
-  bytesDownloaded?: number | undefined;
-  bytesToDownload?: number | undefined;
+  bytesDownloaded?: bigint | undefined;
+  bytesToDownload?: bigint | undefined;
   bytesDownloadRate?: number | undefined;
   dlcs: CMsgClientGetClientAppListResponse_App_DLC[];
   downloadPaused?: boolean | undefined;
   numDownloading?: number | undefined;
   changing?: boolean | undefined;
   availableOnPlatform?: boolean | undefined;
-  bytesStaged?: number | undefined;
-  bytesToStage?: number | undefined;
-  bytesRequired?: number | undefined;
+  bytesStaged?: bigint | undefined;
+  bytesToStage?: bigint | undefined;
+  bytesRequired?: bigint | undefined;
   sourceBuildid?: number | undefined;
   targetBuildid?: number | undefined;
   estimatedSecondsRemaining?: number | undefined;
@@ -147,12 +147,15 @@ export interface CMsgClientEnableOrDisableDownloadsResponse {
 }
 
 function createBaseCMsgClientUDSP2PSessionStarted(): CMsgClientUDSP2PSessionStarted {
-  return { steamidRemote: 0, appid: 0 };
+  return { steamidRemote: 0n, appid: 0 };
 }
 
 export const CMsgClientUDSP2PSessionStarted: MessageFns<CMsgClientUDSP2PSessionStarted> = {
   encode(message: CMsgClientUDSP2PSessionStarted, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidRemote !== undefined && message.steamidRemote !== 0) {
+    if (message.steamidRemote !== undefined && message.steamidRemote !== 0n) {
+      if (BigInt.asUintN(64, message.steamidRemote) !== message.steamidRemote) {
+        throw new globalThis.Error("value provided for field message.steamidRemote of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidRemote);
     }
     if (message.appid !== undefined && message.appid !== 0) {
@@ -173,7 +176,7 @@ export const CMsgClientUDSP2PSessionStarted: MessageFns<CMsgClientUDSP2PSessionS
             break;
           }
 
-          message.steamidRemote = longToNumber(reader.fixed64());
+          message.steamidRemote = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -196,7 +199,7 @@ export const CMsgClientUDSP2PSessionStarted: MessageFns<CMsgClientUDSP2PSessionS
 
 function createBaseCMsgClientUDSP2PSessionEnded(): CMsgClientUDSP2PSessionEnded {
   return {
-    steamidRemote: 0,
+    steamidRemote: 0n,
     appid: 0,
     sessionLengthSec: 0,
     sessionError: 0,
@@ -211,7 +214,10 @@ function createBaseCMsgClientUDSP2PSessionEnded(): CMsgClientUDSP2PSessionEnded 
 
 export const CMsgClientUDSP2PSessionEnded: MessageFns<CMsgClientUDSP2PSessionEnded> = {
   encode(message: CMsgClientUDSP2PSessionEnded, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidRemote !== undefined && message.steamidRemote !== 0) {
+    if (message.steamidRemote !== undefined && message.steamidRemote !== 0n) {
+      if (BigInt.asUintN(64, message.steamidRemote) !== message.steamidRemote) {
+        throw new globalThis.Error("value provided for field message.steamidRemote of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidRemote);
     }
     if (message.appid !== undefined && message.appid !== 0) {
@@ -256,7 +262,7 @@ export const CMsgClientUDSP2PSessionEnded: MessageFns<CMsgClientUDSP2PSessionEnd
             break;
           }
 
-          message.steamidRemote = longToNumber(reader.fixed64());
+          message.steamidRemote = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -375,7 +381,7 @@ function createBaseCMsgClientGetClientDetailsResponse(): CMsgClientGetClientDeta
     ipPublic: "",
     ipPrivate: "",
     gamesRunning: [],
-    bytesAvailable: 0,
+    bytesAvailable: 0n,
     protocolVersion: 0,
     clientcommVersion: 0,
     localUsers: [],
@@ -402,7 +408,10 @@ export const CMsgClientGetClientDetailsResponse: MessageFns<CMsgClientGetClientD
     for (const v of message.gamesRunning) {
       CMsgClientGetClientDetailsResponse_Game.encode(v!, writer.uint32(50).fork()).join();
     }
-    if (message.bytesAvailable !== undefined && message.bytesAvailable !== 0) {
+    if (message.bytesAvailable !== undefined && message.bytesAvailable !== 0n) {
+      if (BigInt.asUintN(64, message.bytesAvailable) !== message.bytesAvailable) {
+        throw new globalThis.Error("value provided for field message.bytesAvailable of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.bytesAvailable);
     }
     if (message.protocolVersion !== undefined && message.protocolVersion !== 0) {
@@ -477,7 +486,7 @@ export const CMsgClientGetClientDetailsResponse: MessageFns<CMsgClientGetClientD
             break;
           }
 
-          message.bytesAvailable = longToNumber(reader.uint64());
+          message.bytesAvailable = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -717,7 +726,7 @@ export const CMsgClientGetClientAppList: MessageFns<CMsgClientGetClientAppList> 
 };
 
 function createBaseCMsgClientGetClientAppListResponse(): CMsgClientGetClientAppListResponse {
-  return { apps: [], bytesAvailable: 0, clientInfo: undefined };
+  return { apps: [], bytesAvailable: 0n, clientInfo: undefined };
 }
 
 export const CMsgClientGetClientAppListResponse: MessageFns<CMsgClientGetClientAppListResponse> = {
@@ -725,7 +734,10 @@ export const CMsgClientGetClientAppListResponse: MessageFns<CMsgClientGetClientA
     for (const v of message.apps) {
       CMsgClientGetClientAppListResponse_App.encode(v!, writer.uint32(10).fork()).join();
     }
-    if (message.bytesAvailable !== undefined && message.bytesAvailable !== 0) {
+    if (message.bytesAvailable !== undefined && message.bytesAvailable !== 0n) {
+      if (BigInt.asUintN(64, message.bytesAvailable) !== message.bytesAvailable) {
+        throw new globalThis.Error("value provided for field message.bytesAvailable of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.bytesAvailable);
     }
     if (message.clientInfo !== undefined) {
@@ -754,7 +766,7 @@ export const CMsgClientGetClientAppListResponse: MessageFns<CMsgClientGetClientA
             break;
           }
 
-          message.bytesAvailable = longToNumber(reader.uint64());
+          message.bytesAvailable = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -783,17 +795,17 @@ function createBaseCMsgClientGetClientAppListResponse_App(): CMsgClientGetClient
     favorite: false,
     installed: false,
     autoUpdate: false,
-    bytesDownloaded: 0,
-    bytesToDownload: 0,
+    bytesDownloaded: 0n,
+    bytesToDownload: 0n,
     bytesDownloadRate: 0,
     dlcs: [],
     downloadPaused: false,
     numDownloading: 0,
     changing: false,
     availableOnPlatform: false,
-    bytesStaged: 0,
-    bytesToStage: 0,
-    bytesRequired: 0,
+    bytesStaged: 0n,
+    bytesToStage: 0n,
+    bytesRequired: 0n,
     sourceBuildid: 0,
     targetBuildid: 0,
     estimatedSecondsRemaining: 0,
@@ -825,10 +837,16 @@ export const CMsgClientGetClientAppListResponse_App: MessageFns<CMsgClientGetCli
     if (message.autoUpdate !== undefined && message.autoUpdate !== false) {
       writer.uint32(40).bool(message.autoUpdate);
     }
-    if (message.bytesDownloaded !== undefined && message.bytesDownloaded !== 0) {
+    if (message.bytesDownloaded !== undefined && message.bytesDownloaded !== 0n) {
+      if (BigInt.asUintN(64, message.bytesDownloaded) !== message.bytesDownloaded) {
+        throw new globalThis.Error("value provided for field message.bytesDownloaded of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.bytesDownloaded);
     }
-    if (message.bytesToDownload !== undefined && message.bytesToDownload !== 0) {
+    if (message.bytesToDownload !== undefined && message.bytesToDownload !== 0n) {
+      if (BigInt.asUintN(64, message.bytesToDownload) !== message.bytesToDownload) {
+        throw new globalThis.Error("value provided for field message.bytesToDownload of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.bytesToDownload);
     }
     if (message.bytesDownloadRate !== undefined && message.bytesDownloadRate !== 0) {
@@ -849,13 +867,22 @@ export const CMsgClientGetClientAppListResponse_App: MessageFns<CMsgClientGetCli
     if (message.availableOnPlatform !== undefined && message.availableOnPlatform !== false) {
       writer.uint32(120).bool(message.availableOnPlatform);
     }
-    if (message.bytesStaged !== undefined && message.bytesStaged !== 0) {
+    if (message.bytesStaged !== undefined && message.bytesStaged !== 0n) {
+      if (BigInt.asUintN(64, message.bytesStaged) !== message.bytesStaged) {
+        throw new globalThis.Error("value provided for field message.bytesStaged of type uint64 too large");
+      }
       writer.uint32(128).uint64(message.bytesStaged);
     }
-    if (message.bytesToStage !== undefined && message.bytesToStage !== 0) {
+    if (message.bytesToStage !== undefined && message.bytesToStage !== 0n) {
+      if (BigInt.asUintN(64, message.bytesToStage) !== message.bytesToStage) {
+        throw new globalThis.Error("value provided for field message.bytesToStage of type uint64 too large");
+      }
       writer.uint32(136).uint64(message.bytesToStage);
     }
-    if (message.bytesRequired !== undefined && message.bytesRequired !== 0) {
+    if (message.bytesRequired !== undefined && message.bytesRequired !== 0n) {
+      if (BigInt.asUintN(64, message.bytesRequired) !== message.bytesRequired) {
+        throw new globalThis.Error("value provided for field message.bytesRequired of type uint64 too large");
+      }
       writer.uint32(144).uint64(message.bytesRequired);
     }
     if (message.sourceBuildid !== undefined && message.sourceBuildid !== 0) {
@@ -945,7 +972,7 @@ export const CMsgClientGetClientAppListResponse_App: MessageFns<CMsgClientGetCli
             break;
           }
 
-          message.bytesDownloaded = longToNumber(reader.uint64());
+          message.bytesDownloaded = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -953,7 +980,7 @@ export const CMsgClientGetClientAppListResponse_App: MessageFns<CMsgClientGetCli
             break;
           }
 
-          message.bytesToDownload = longToNumber(reader.uint64());
+          message.bytesToDownload = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -1009,7 +1036,7 @@ export const CMsgClientGetClientAppListResponse_App: MessageFns<CMsgClientGetCli
             break;
           }
 
-          message.bytesStaged = longToNumber(reader.uint64());
+          message.bytesStaged = reader.uint64() as bigint;
           continue;
         }
         case 17: {
@@ -1017,7 +1044,7 @@ export const CMsgClientGetClientAppListResponse_App: MessageFns<CMsgClientGetCli
             break;
           }
 
-          message.bytesToStage = longToNumber(reader.uint64());
+          message.bytesToStage = reader.uint64() as bigint;
           continue;
         }
         case 18: {
@@ -1025,7 +1052,7 @@ export const CMsgClientGetClientAppListResponse_App: MessageFns<CMsgClientGetCli
             break;
           }
 
-          message.bytesRequired = longToNumber(reader.uint64());
+          message.bytesRequired = reader.uint64() as bigint;
           continue;
         }
         case 19: {
@@ -1596,17 +1623,6 @@ export const CMsgClientEnableOrDisableDownloadsResponse: MessageFns<CMsgClientEn
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

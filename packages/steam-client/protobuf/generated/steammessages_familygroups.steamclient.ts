@@ -101,33 +101,33 @@ export enum ESharedLibraryExcludeReason {
 
 export interface CFamilyGroupsCreateFamilyGroupRequest {
   name?: string | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsCreateFamilyGroupResponse {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   cooldownSkipGranted?: boolean | undefined;
 }
 
 export interface CFamilyGroupsGetFamilyGroupRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   sendRunningApps?: boolean | undefined;
 }
 
 export interface FamilyGroupMember {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   role?: EFamilyGroupRole | undefined;
   timeJoined?: number | undefined;
   cooldownSecondsRemaining?: number | undefined;
 }
 
 export interface FamilyGroupPendingInvite {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   role?: EFamilyGroupRole | undefined;
 }
 
 export interface FamilyGroupFormerMember {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsGetFamilyGroupResponse {
@@ -142,20 +142,20 @@ export interface CFamilyGroupsGetFamilyGroupResponse {
 }
 
 export interface CFamilyGroupsGetFamilyGroupForUserRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   includeFamilyGroupResponse?: boolean | undefined;
 }
 
 export interface FamilyGroupPendingInviteForUser {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   role?: EFamilyGroupRole | undefined;
-  inviterSteamid?: number | undefined;
+  inviterSteamid?: bigint | undefined;
   awaiting2fa?: boolean | undefined;
-  inviteId?: number | undefined;
+  inviteId?: bigint | undefined;
 }
 
 export interface FamilyGroupMembership {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   rtimeJoined?: number | undefined;
   rtimeLeft?: number | undefined;
   role?: number | undefined;
@@ -163,10 +163,10 @@ export interface FamilyGroupMembership {
 }
 
 export interface CFamilyGroupsGetFamilyGroupForUserResponse {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   isNotMemberOfAnyGroup?: boolean | undefined;
   latestTimeJoined?: number | undefined;
-  latestJoinedFamilyGroupid?: number | undefined;
+  latestJoinedFamilyGroupid?: bigint | undefined;
   pendingGroupInvites: FamilyGroupPendingInviteForUser[];
   role?: number | undefined;
   cooldownSecondsRemaining?: number | undefined;
@@ -176,7 +176,7 @@ export interface CFamilyGroupsGetFamilyGroupForUserResponse {
 }
 
 export interface CFamilyGroupsModifyFamilyGroupDetailsRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   name?: string | undefined;
 }
 
@@ -184,36 +184,36 @@ export interface CFamilyGroupsModifyFamilyGroupDetailsResponse {
 }
 
 export interface CFamilyGroupsInviteToFamilyGroupRequest {
-  familyGroupid?: number | undefined;
-  receiverSteamid?: number | undefined;
+  familyGroupid?: bigint | undefined;
+  receiverSteamid?: bigint | undefined;
   receiverRole?: EFamilyGroupRole | undefined;
 }
 
 export interface CFamilyGroupsInviteToFamilyGroupResponse {
-  inviteId?: number | undefined;
+  inviteId?: bigint | undefined;
   twoFactorMethod?: EFamilyGroupsTwoFactorMethod | undefined;
 }
 
 export interface CFamilyGroupsConfirmInviteToFamilyGroupRequest {
-  familyGroupid?: number | undefined;
-  inviteId?: number | undefined;
-  nonce?: number | undefined;
+  familyGroupid?: bigint | undefined;
+  inviteId?: bigint | undefined;
+  nonce?: bigint | undefined;
 }
 
 export interface CFamilyGroupsConfirmInviteToFamilyGroupResponse {
 }
 
 export interface CFamilyGroupsResendInvitationToFamilyGroupRequest {
-  familyGroupid?: number | undefined;
-  steamid?: number | undefined;
+  familyGroupid?: bigint | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsResendInvitationToFamilyGroupResponse {
 }
 
 export interface CFamilyGroupsJoinFamilyGroupRequest {
-  familyGroupid?: number | undefined;
-  nonce?: number | undefined;
+  familyGroupid?: bigint | undefined;
+  nonce?: bigint | undefined;
 }
 
 export interface CFamilyGroupsJoinFamilyGroupResponse {
@@ -224,59 +224,59 @@ export interface CFamilyGroupsJoinFamilyGroupResponse {
 }
 
 export interface CFamilyGroupsConfirmJoinFamilyGroupRequest {
-  familyGroupid?: number | undefined;
-  inviteId?: number | undefined;
-  nonce?: number | undefined;
+  familyGroupid?: bigint | undefined;
+  inviteId?: bigint | undefined;
+  nonce?: bigint | undefined;
 }
 
 export interface CFamilyGroupsConfirmJoinFamilyGroupResponse {
 }
 
 export interface CFamilyGroupsRemoveFromFamilyGroupRequest {
-  familyGroupid?: number | undefined;
-  steamidToRemove?: number | undefined;
+  familyGroupid?: bigint | undefined;
+  steamidToRemove?: bigint | undefined;
 }
 
 export interface CFamilyGroupsRemoveFromFamilyGroupResponse {
 }
 
 export interface CFamilyGroupsCancelFamilyGroupInviteRequest {
-  familyGroupid?: number | undefined;
-  steamidToCancel?: number | undefined;
+  familyGroupid?: bigint | undefined;
+  steamidToCancel?: bigint | undefined;
 }
 
 export interface CFamilyGroupsCancelFamilyGroupInviteResponse {
 }
 
 export interface CFamilyGroupsGetUsersSharingDeviceRequest {
-  familyGroupid?: number | undefined;
-  clientInstanceId?: number | undefined;
+  familyGroupid?: bigint | undefined;
+  clientInstanceId?: bigint | undefined;
 }
 
 export interface CFamilyGroupsGetUsersSharingDeviceResponse {
-  users: number[];
+  users: bigint[];
 }
 
 export interface CFamilyGroupsDeleteFamilyGroupRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsDeleteFamilyGroupResponse {
 }
 
 export interface CFamilyGroupsUndeleteFamilyGroupRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsUndeleteFamilyGroupResponse {
 }
 
 export interface CFamilyGroupsGetPlaytimeSummaryRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsPlaytimeEntry {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   appid?: number | undefined;
   firstPlayed?: number | undefined;
   latestPlayed?: number | undefined;
@@ -289,32 +289,32 @@ export interface CFamilyGroupsGetPlaytimeSummaryResponse {
 }
 
 export interface CFamilyGroupsRequestPurchaseRequest {
-  familyGroupid?: number | undefined;
-  gidshoppingcart?: number | undefined;
+  familyGroupid?: bigint | undefined;
+  gidshoppingcart?: bigint | undefined;
   storeCountryCode?: string | undefined;
   useAccountCart?: boolean | undefined;
 }
 
 export interface CFamilyGroupsRequestPurchaseResponse {
-  gidshoppingcart?: number | undefined;
-  requestId?: number | undefined;
+  gidshoppingcart?: bigint | undefined;
+  requestId?: bigint | undefined;
 }
 
 export interface CFamilyGroupsGetPurchaseRequestsRequest {
-  familyGroupid?: number | undefined;
-  requestIds: number[];
+  familyGroupid?: bigint | undefined;
+  requestIds: bigint[];
   rtIncludeCompletedSince?: number | undefined;
 }
 
 export interface PurchaseRequest {
-  requesterSteamid?: number | undefined;
-  gidshoppingcart?: number | undefined;
+  requesterSteamid?: bigint | undefined;
+  gidshoppingcart?: bigint | undefined;
   timeRequested?: number | undefined;
   timeResponded?: number | undefined;
-  responderSteamid?: number | undefined;
+  responderSteamid?: bigint | undefined;
   responseAction?: EPurchaseRequestAction | undefined;
   isCompleted?: boolean | undefined;
-  requestId?: number | undefined;
+  requestId?: bigint | undefined;
   requestedPackageids: number[];
   purchasedPackageids: number[];
   requestedBundleids: number[];
@@ -326,16 +326,16 @@ export interface CFamilyGroupsGetPurchaseRequestsResponse {
 }
 
 export interface CFamilyGroupsRespondToRequestedPurchaseRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   action?: EPurchaseRequestAction | undefined;
-  requestId?: number | undefined;
+  requestId?: bigint | undefined;
 }
 
 export interface CFamilyGroupsRespondToRequestedPurchaseResponse {
 }
 
 export interface CFamilyGroupsGetChangeLogRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsGetChangeLogResponse {
@@ -343,15 +343,15 @@ export interface CFamilyGroupsGetChangeLogResponse {
 }
 
 export interface CFamilyGroupsGetChangeLogResponse_Change {
-  timestamp?: number | undefined;
-  actorSteamid?: number | undefined;
+  timestamp?: bigint | undefined;
+  actorSteamid?: bigint | undefined;
   type?: EFamilyGroupChangeLogType | undefined;
   body?: string | undefined;
   bySupport?: boolean | undefined;
 }
 
 export interface CFamilyGroupsSetFamilyCooldownOverridesRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   cooldownCount?: number | undefined;
 }
 
@@ -359,23 +359,23 @@ export interface CFamilyGroupsSetFamilyCooldownOverridesResponse {
 }
 
 export interface CFamilyGroupsGetSharedLibraryAppsRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   includeOwn?: boolean | undefined;
   includeExcluded?: boolean | undefined;
   language?: string | undefined;
   maxApps?: number | undefined;
   includeNonGames?: boolean | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsGetSharedLibraryAppsResponse {
   apps: CFamilyGroupsGetSharedLibraryAppsResponse_SharedApp[];
-  ownerSteamid?: number | undefined;
+  ownerSteamid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsGetSharedLibraryAppsResponse_SharedApp {
   appid?: number | undefined;
-  ownerSteamids: number[];
+  ownerSteamids: bigint[];
   name?: string | undefined;
   sortAs?: string | undefined;
   capsuleFilename?: string | undefined;
@@ -389,16 +389,16 @@ export interface CFamilyGroupsGetSharedLibraryAppsResponse_SharedApp {
 }
 
 export interface CFamilyGroupsSetPreferredLenderRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   appid?: number | undefined;
-  lenderSteamid?: number | undefined;
+  lenderSteamid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsSetPreferredLenderResponse {
 }
 
 export interface CFamilyGroupsGetPreferredLendersRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsGetPreferredLendersResponse {
@@ -406,21 +406,21 @@ export interface CFamilyGroupsGetPreferredLendersResponse {
 }
 
 export interface CFamilyGroupsGetPreferredLendersResponse_FamilyMember {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   preferredAppids: number[];
 }
 
 export interface CFamilyGroupsForceAcceptInviteRequest {
-  familyGroupid?: number | undefined;
-  steamid?: number | undefined;
+  familyGroupid?: bigint | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsForceAcceptInviteResponse {
 }
 
 export interface CFamilyGroupsGetInviteCheckResultsRequest {
-  familyGroupid?: number | undefined;
-  steamid?: number | undefined;
+  familyGroupid?: bigint | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsGetInviteCheckResultsResponse {
@@ -430,15 +430,15 @@ export interface CFamilyGroupsGetInviteCheckResultsResponse {
 }
 
 export interface CFamilyGroupsClearCooldownSkipRequest {
-  steamid?: number | undefined;
-  inviteId?: number | undefined;
+  steamid?: bigint | undefined;
+  inviteId?: bigint | undefined;
 }
 
 export interface CFamilyGroupsClearCooldownSkipResponse {
 }
 
 export interface CFamilyGroupsRollbackFamilyGroupRequest {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   rtime32Target?: number | undefined;
 }
 
@@ -446,13 +446,13 @@ export interface CFamilyGroupsRollbackFamilyGroupResponse {
 }
 
 export interface CFamilyGroupsClientNotifyRunningAppsNotification {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
   runningApps: CFamilyGroupsClientNotifyRunningAppsNotification_RunningApp[];
 }
 
 export interface CFamilyGroupsClientNotifyRunningAppsNotification_PlayingMember {
-  memberSteamid?: number | undefined;
-  ownerSteamid?: number | undefined;
+  memberSteamid?: bigint | undefined;
+  ownerSteamid?: bigint | undefined;
 }
 
 export interface CFamilyGroupsClientNotifyRunningAppsNotification_RunningApp {
@@ -464,11 +464,11 @@ export interface CFamilyGroupsClientInviteStatusNotification {
 }
 
 export interface CFamilyGroupsClientGroupChangedNotification {
-  familyGroupid?: number | undefined;
+  familyGroupid?: bigint | undefined;
 }
 
 function createBaseCFamilyGroupsCreateFamilyGroupRequest(): CFamilyGroupsCreateFamilyGroupRequest {
-  return { name: "", steamid: 0 };
+  return { name: "", steamid: 0n };
 }
 
 export const CFamilyGroupsCreateFamilyGroupRequest: MessageFns<CFamilyGroupsCreateFamilyGroupRequest> = {
@@ -476,7 +476,10 @@ export const CFamilyGroupsCreateFamilyGroupRequest: MessageFns<CFamilyGroupsCrea
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(10).string(message.name);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     return writer;
@@ -502,7 +505,7 @@ export const CFamilyGroupsCreateFamilyGroupRequest: MessageFns<CFamilyGroupsCrea
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -516,12 +519,15 @@ export const CFamilyGroupsCreateFamilyGroupRequest: MessageFns<CFamilyGroupsCrea
 };
 
 function createBaseCFamilyGroupsCreateFamilyGroupResponse(): CFamilyGroupsCreateFamilyGroupResponse {
-  return { familyGroupid: 0, cooldownSkipGranted: false };
+  return { familyGroupid: 0n, cooldownSkipGranted: false };
 }
 
 export const CFamilyGroupsCreateFamilyGroupResponse: MessageFns<CFamilyGroupsCreateFamilyGroupResponse> = {
   encode(message: CFamilyGroupsCreateFamilyGroupResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     if (message.cooldownSkipGranted !== undefined && message.cooldownSkipGranted !== false) {
@@ -542,7 +548,7 @@ export const CFamilyGroupsCreateFamilyGroupResponse: MessageFns<CFamilyGroupsCre
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -564,12 +570,15 @@ export const CFamilyGroupsCreateFamilyGroupResponse: MessageFns<CFamilyGroupsCre
 };
 
 function createBaseCFamilyGroupsGetFamilyGroupRequest(): CFamilyGroupsGetFamilyGroupRequest {
-  return { familyGroupid: 0, sendRunningApps: false };
+  return { familyGroupid: 0n, sendRunningApps: false };
 }
 
 export const CFamilyGroupsGetFamilyGroupRequest: MessageFns<CFamilyGroupsGetFamilyGroupRequest> = {
   encode(message: CFamilyGroupsGetFamilyGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     if (message.sendRunningApps !== undefined && message.sendRunningApps !== false) {
@@ -590,7 +599,7 @@ export const CFamilyGroupsGetFamilyGroupRequest: MessageFns<CFamilyGroupsGetFami
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -612,12 +621,15 @@ export const CFamilyGroupsGetFamilyGroupRequest: MessageFns<CFamilyGroupsGetFami
 };
 
 function createBaseFamilyGroupMember(): FamilyGroupMember {
-  return { steamid: 0, role: 0, timeJoined: 0, cooldownSecondsRemaining: 0 };
+  return { steamid: 0n, role: 0, timeJoined: 0, cooldownSecondsRemaining: 0 };
 }
 
 export const FamilyGroupMember: MessageFns<FamilyGroupMember> = {
   encode(message: FamilyGroupMember, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.role !== undefined && message.role !== 0) {
@@ -644,7 +656,7 @@ export const FamilyGroupMember: MessageFns<FamilyGroupMember> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -682,12 +694,15 @@ export const FamilyGroupMember: MessageFns<FamilyGroupMember> = {
 };
 
 function createBaseFamilyGroupPendingInvite(): FamilyGroupPendingInvite {
-  return { steamid: 0, role: 0 };
+  return { steamid: 0n, role: 0 };
 }
 
 export const FamilyGroupPendingInvite: MessageFns<FamilyGroupPendingInvite> = {
   encode(message: FamilyGroupPendingInvite, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.role !== undefined && message.role !== 0) {
@@ -708,7 +723,7 @@ export const FamilyGroupPendingInvite: MessageFns<FamilyGroupPendingInvite> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -730,12 +745,15 @@ export const FamilyGroupPendingInvite: MessageFns<FamilyGroupPendingInvite> = {
 };
 
 function createBaseFamilyGroupFormerMember(): FamilyGroupFormerMember {
-  return { steamid: 0 };
+  return { steamid: 0n };
 }
 
 export const FamilyGroupFormerMember: MessageFns<FamilyGroupFormerMember> = {
   encode(message: FamilyGroupFormerMember, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     return writer;
@@ -753,7 +771,7 @@ export const FamilyGroupFormerMember: MessageFns<FamilyGroupFormerMember> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -890,12 +908,15 @@ export const CFamilyGroupsGetFamilyGroupResponse: MessageFns<CFamilyGroupsGetFam
 };
 
 function createBaseCFamilyGroupsGetFamilyGroupForUserRequest(): CFamilyGroupsGetFamilyGroupForUserRequest {
-  return { steamid: 0, includeFamilyGroupResponse: false };
+  return { steamid: 0n, includeFamilyGroupResponse: false };
 }
 
 export const CFamilyGroupsGetFamilyGroupForUserRequest: MessageFns<CFamilyGroupsGetFamilyGroupForUserRequest> = {
   encode(message: CFamilyGroupsGetFamilyGroupForUserRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.steamid);
     }
     if (message.includeFamilyGroupResponse !== undefined && message.includeFamilyGroupResponse !== false) {
@@ -916,7 +937,7 @@ export const CFamilyGroupsGetFamilyGroupForUserRequest: MessageFns<CFamilyGroups
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -938,24 +959,33 @@ export const CFamilyGroupsGetFamilyGroupForUserRequest: MessageFns<CFamilyGroups
 };
 
 function createBaseFamilyGroupPendingInviteForUser(): FamilyGroupPendingInviteForUser {
-  return { familyGroupid: 0, role: 0, inviterSteamid: 0, awaiting2fa: false, inviteId: 0 };
+  return { familyGroupid: 0n, role: 0, inviterSteamid: 0n, awaiting2fa: false, inviteId: 0n };
 }
 
 export const FamilyGroupPendingInviteForUser: MessageFns<FamilyGroupPendingInviteForUser> = {
   encode(message: FamilyGroupPendingInviteForUser, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     if (message.role !== undefined && message.role !== 0) {
       writer.uint32(16).int32(message.role);
     }
-    if (message.inviterSteamid !== undefined && message.inviterSteamid !== 0) {
+    if (message.inviterSteamid !== undefined && message.inviterSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.inviterSteamid) !== message.inviterSteamid) {
+        throw new globalThis.Error("value provided for field message.inviterSteamid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.inviterSteamid);
     }
     if (message.awaiting2fa !== undefined && message.awaiting2fa !== false) {
       writer.uint32(32).bool(message.awaiting2fa);
     }
-    if (message.inviteId !== undefined && message.inviteId !== 0) {
+    if (message.inviteId !== undefined && message.inviteId !== 0n) {
+      if (BigInt.asUintN(64, message.inviteId) !== message.inviteId) {
+        throw new globalThis.Error("value provided for field message.inviteId of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.inviteId);
     }
     return writer;
@@ -973,7 +1003,7 @@ export const FamilyGroupPendingInviteForUser: MessageFns<FamilyGroupPendingInvit
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -989,7 +1019,7 @@ export const FamilyGroupPendingInviteForUser: MessageFns<FamilyGroupPendingInvit
             break;
           }
 
-          message.inviterSteamid = longToNumber(reader.fixed64());
+          message.inviterSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1005,7 +1035,7 @@ export const FamilyGroupPendingInviteForUser: MessageFns<FamilyGroupPendingInvit
             break;
           }
 
-          message.inviteId = longToNumber(reader.uint64());
+          message.inviteId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1019,12 +1049,15 @@ export const FamilyGroupPendingInviteForUser: MessageFns<FamilyGroupPendingInvit
 };
 
 function createBaseFamilyGroupMembership(): FamilyGroupMembership {
-  return { familyGroupid: 0, rtimeJoined: 0, rtimeLeft: 0, role: 0, participated: false };
+  return { familyGroupid: 0n, rtimeJoined: 0, rtimeLeft: 0, role: 0, participated: false };
 }
 
 export const FamilyGroupMembership: MessageFns<FamilyGroupMembership> = {
   encode(message: FamilyGroupMembership, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     if (message.rtimeJoined !== undefined && message.rtimeJoined !== 0) {
@@ -1054,7 +1087,7 @@ export const FamilyGroupMembership: MessageFns<FamilyGroupMembership> = {
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1101,10 +1134,10 @@ export const FamilyGroupMembership: MessageFns<FamilyGroupMembership> = {
 
 function createBaseCFamilyGroupsGetFamilyGroupForUserResponse(): CFamilyGroupsGetFamilyGroupForUserResponse {
   return {
-    familyGroupid: 0,
+    familyGroupid: 0n,
     isNotMemberOfAnyGroup: false,
     latestTimeJoined: 0,
-    latestJoinedFamilyGroupid: 0,
+    latestJoinedFamilyGroupid: 0n,
     pendingGroupInvites: [],
     role: 0,
     cooldownSecondsRemaining: 0,
@@ -1116,7 +1149,10 @@ function createBaseCFamilyGroupsGetFamilyGroupForUserResponse(): CFamilyGroupsGe
 
 export const CFamilyGroupsGetFamilyGroupForUserResponse: MessageFns<CFamilyGroupsGetFamilyGroupForUserResponse> = {
   encode(message: CFamilyGroupsGetFamilyGroupForUserResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     if (message.isNotMemberOfAnyGroup !== undefined && message.isNotMemberOfAnyGroup !== false) {
@@ -1125,7 +1161,12 @@ export const CFamilyGroupsGetFamilyGroupForUserResponse: MessageFns<CFamilyGroup
     if (message.latestTimeJoined !== undefined && message.latestTimeJoined !== 0) {
       writer.uint32(24).uint32(message.latestTimeJoined);
     }
-    if (message.latestJoinedFamilyGroupid !== undefined && message.latestJoinedFamilyGroupid !== 0) {
+    if (message.latestJoinedFamilyGroupid !== undefined && message.latestJoinedFamilyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.latestJoinedFamilyGroupid) !== message.latestJoinedFamilyGroupid) {
+        throw new globalThis.Error(
+          "value provided for field message.latestJoinedFamilyGroupid of type uint64 too large",
+        );
+      }
       writer.uint32(32).uint64(message.latestJoinedFamilyGroupid);
     }
     for (const v of message.pendingGroupInvites) {
@@ -1161,7 +1202,7 @@ export const CFamilyGroupsGetFamilyGroupForUserResponse: MessageFns<CFamilyGroup
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1185,7 +1226,7 @@ export const CFamilyGroupsGetFamilyGroupForUserResponse: MessageFns<CFamilyGroup
             break;
           }
 
-          message.latestJoinedFamilyGroupid = longToNumber(reader.uint64());
+          message.latestJoinedFamilyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -1247,7 +1288,7 @@ export const CFamilyGroupsGetFamilyGroupForUserResponse: MessageFns<CFamilyGroup
 };
 
 function createBaseCFamilyGroupsModifyFamilyGroupDetailsRequest(): CFamilyGroupsModifyFamilyGroupDetailsRequest {
-  return { familyGroupid: 0, name: "" };
+  return { familyGroupid: 0n, name: "" };
 }
 
 export const CFamilyGroupsModifyFamilyGroupDetailsRequest: MessageFns<CFamilyGroupsModifyFamilyGroupDetailsRequest> = {
@@ -1255,7 +1296,10 @@ export const CFamilyGroupsModifyFamilyGroupDetailsRequest: MessageFns<CFamilyGro
     message: CFamilyGroupsModifyFamilyGroupDetailsRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -1276,7 +1320,7 @@ export const CFamilyGroupsModifyFamilyGroupDetailsRequest: MessageFns<CFamilyGro
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1325,15 +1369,21 @@ export const CFamilyGroupsModifyFamilyGroupDetailsResponse: MessageFns<CFamilyGr
   };
 
 function createBaseCFamilyGroupsInviteToFamilyGroupRequest(): CFamilyGroupsInviteToFamilyGroupRequest {
-  return { familyGroupid: 0, receiverSteamid: 0, receiverRole: 0 };
+  return { familyGroupid: 0n, receiverSteamid: 0n, receiverRole: 0 };
 }
 
 export const CFamilyGroupsInviteToFamilyGroupRequest: MessageFns<CFamilyGroupsInviteToFamilyGroupRequest> = {
   encode(message: CFamilyGroupsInviteToFamilyGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
-    if (message.receiverSteamid !== undefined && message.receiverSteamid !== 0) {
+    if (message.receiverSteamid !== undefined && message.receiverSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.receiverSteamid) !== message.receiverSteamid) {
+        throw new globalThis.Error("value provided for field message.receiverSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.receiverSteamid);
     }
     if (message.receiverRole !== undefined && message.receiverRole !== 0) {
@@ -1354,7 +1404,7 @@ export const CFamilyGroupsInviteToFamilyGroupRequest: MessageFns<CFamilyGroupsIn
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1362,7 +1412,7 @@ export const CFamilyGroupsInviteToFamilyGroupRequest: MessageFns<CFamilyGroupsIn
             break;
           }
 
-          message.receiverSteamid = longToNumber(reader.fixed64());
+          message.receiverSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1384,12 +1434,15 @@ export const CFamilyGroupsInviteToFamilyGroupRequest: MessageFns<CFamilyGroupsIn
 };
 
 function createBaseCFamilyGroupsInviteToFamilyGroupResponse(): CFamilyGroupsInviteToFamilyGroupResponse {
-  return { inviteId: 0, twoFactorMethod: 0 };
+  return { inviteId: 0n, twoFactorMethod: 0 };
 }
 
 export const CFamilyGroupsInviteToFamilyGroupResponse: MessageFns<CFamilyGroupsInviteToFamilyGroupResponse> = {
   encode(message: CFamilyGroupsInviteToFamilyGroupResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.inviteId !== undefined && message.inviteId !== 0) {
+    if (message.inviteId !== undefined && message.inviteId !== 0n) {
+      if (BigInt.asUintN(64, message.inviteId) !== message.inviteId) {
+        throw new globalThis.Error("value provided for field message.inviteId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.inviteId);
     }
     if (message.twoFactorMethod !== undefined && message.twoFactorMethod !== 0) {
@@ -1410,7 +1463,7 @@ export const CFamilyGroupsInviteToFamilyGroupResponse: MessageFns<CFamilyGroupsI
             break;
           }
 
-          message.inviteId = longToNumber(reader.uint64());
+          message.inviteId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1432,7 +1485,7 @@ export const CFamilyGroupsInviteToFamilyGroupResponse: MessageFns<CFamilyGroupsI
 };
 
 function createBaseCFamilyGroupsConfirmInviteToFamilyGroupRequest(): CFamilyGroupsConfirmInviteToFamilyGroupRequest {
-  return { familyGroupid: 0, inviteId: 0, nonce: 0 };
+  return { familyGroupid: 0n, inviteId: 0n, nonce: 0n };
 }
 
 export const CFamilyGroupsConfirmInviteToFamilyGroupRequest: MessageFns<
@@ -1442,13 +1495,22 @@ export const CFamilyGroupsConfirmInviteToFamilyGroupRequest: MessageFns<
     message: CFamilyGroupsConfirmInviteToFamilyGroupRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
-    if (message.inviteId !== undefined && message.inviteId !== 0) {
+    if (message.inviteId !== undefined && message.inviteId !== 0n) {
+      if (BigInt.asUintN(64, message.inviteId) !== message.inviteId) {
+        throw new globalThis.Error("value provided for field message.inviteId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.inviteId);
     }
-    if (message.nonce !== undefined && message.nonce !== 0) {
+    if (message.nonce !== undefined && message.nonce !== 0n) {
+      if (BigInt.asUintN(64, message.nonce) !== message.nonce) {
+        throw new globalThis.Error("value provided for field message.nonce of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.nonce);
     }
     return writer;
@@ -1466,7 +1528,7 @@ export const CFamilyGroupsConfirmInviteToFamilyGroupRequest: MessageFns<
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1474,7 +1536,7 @@ export const CFamilyGroupsConfirmInviteToFamilyGroupRequest: MessageFns<
             break;
           }
 
-          message.inviteId = longToNumber(reader.uint64());
+          message.inviteId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1482,7 +1544,7 @@ export const CFamilyGroupsConfirmInviteToFamilyGroupRequest: MessageFns<
             break;
           }
 
-          message.nonce = longToNumber(reader.uint64());
+          message.nonce = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1524,7 +1586,7 @@ export const CFamilyGroupsConfirmInviteToFamilyGroupResponse: MessageFns<
 };
 
 function createBaseCFamilyGroupsResendInvitationToFamilyGroupRequest(): CFamilyGroupsResendInvitationToFamilyGroupRequest {
-  return { familyGroupid: 0, steamid: 0 };
+  return { familyGroupid: 0n, steamid: 0n };
 }
 
 export const CFamilyGroupsResendInvitationToFamilyGroupRequest: MessageFns<
@@ -1534,10 +1596,16 @@ export const CFamilyGroupsResendInvitationToFamilyGroupRequest: MessageFns<
     message: CFamilyGroupsResendInvitationToFamilyGroupRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
     return writer;
@@ -1555,7 +1623,7 @@ export const CFamilyGroupsResendInvitationToFamilyGroupRequest: MessageFns<
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1563,7 +1631,7 @@ export const CFamilyGroupsResendInvitationToFamilyGroupRequest: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1608,15 +1676,21 @@ export const CFamilyGroupsResendInvitationToFamilyGroupResponse: MessageFns<
 };
 
 function createBaseCFamilyGroupsJoinFamilyGroupRequest(): CFamilyGroupsJoinFamilyGroupRequest {
-  return { familyGroupid: 0, nonce: 0 };
+  return { familyGroupid: 0n, nonce: 0n };
 }
 
 export const CFamilyGroupsJoinFamilyGroupRequest: MessageFns<CFamilyGroupsJoinFamilyGroupRequest> = {
   encode(message: CFamilyGroupsJoinFamilyGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
-    if (message.nonce !== undefined && message.nonce !== 0) {
+    if (message.nonce !== undefined && message.nonce !== 0n) {
+      if (BigInt.asUintN(64, message.nonce) !== message.nonce) {
+        throw new globalThis.Error("value provided for field message.nonce of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.nonce);
     }
     return writer;
@@ -1634,7 +1708,7 @@ export const CFamilyGroupsJoinFamilyGroupRequest: MessageFns<CFamilyGroupsJoinFa
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1642,7 +1716,7 @@ export const CFamilyGroupsJoinFamilyGroupRequest: MessageFns<CFamilyGroupsJoinFa
             break;
           }
 
-          message.nonce = longToNumber(reader.uint64());
+          message.nonce = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1726,18 +1800,27 @@ export const CFamilyGroupsJoinFamilyGroupResponse: MessageFns<CFamilyGroupsJoinF
 };
 
 function createBaseCFamilyGroupsConfirmJoinFamilyGroupRequest(): CFamilyGroupsConfirmJoinFamilyGroupRequest {
-  return { familyGroupid: 0, inviteId: 0, nonce: 0 };
+  return { familyGroupid: 0n, inviteId: 0n, nonce: 0n };
 }
 
 export const CFamilyGroupsConfirmJoinFamilyGroupRequest: MessageFns<CFamilyGroupsConfirmJoinFamilyGroupRequest> = {
   encode(message: CFamilyGroupsConfirmJoinFamilyGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
-    if (message.inviteId !== undefined && message.inviteId !== 0) {
+    if (message.inviteId !== undefined && message.inviteId !== 0n) {
+      if (BigInt.asUintN(64, message.inviteId) !== message.inviteId) {
+        throw new globalThis.Error("value provided for field message.inviteId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.inviteId);
     }
-    if (message.nonce !== undefined && message.nonce !== 0) {
+    if (message.nonce !== undefined && message.nonce !== 0n) {
+      if (BigInt.asUintN(64, message.nonce) !== message.nonce) {
+        throw new globalThis.Error("value provided for field message.nonce of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.nonce);
     }
     return writer;
@@ -1755,7 +1838,7 @@ export const CFamilyGroupsConfirmJoinFamilyGroupRequest: MessageFns<CFamilyGroup
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1763,7 +1846,7 @@ export const CFamilyGroupsConfirmJoinFamilyGroupRequest: MessageFns<CFamilyGroup
             break;
           }
 
-          message.inviteId = longToNumber(reader.uint64());
+          message.inviteId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1771,7 +1854,7 @@ export const CFamilyGroupsConfirmJoinFamilyGroupRequest: MessageFns<CFamilyGroup
             break;
           }
 
-          message.nonce = longToNumber(reader.uint64());
+          message.nonce = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1811,15 +1894,21 @@ export const CFamilyGroupsConfirmJoinFamilyGroupResponse: MessageFns<CFamilyGrou
 };
 
 function createBaseCFamilyGroupsRemoveFromFamilyGroupRequest(): CFamilyGroupsRemoveFromFamilyGroupRequest {
-  return { familyGroupid: 0, steamidToRemove: 0 };
+  return { familyGroupid: 0n, steamidToRemove: 0n };
 }
 
 export const CFamilyGroupsRemoveFromFamilyGroupRequest: MessageFns<CFamilyGroupsRemoveFromFamilyGroupRequest> = {
   encode(message: CFamilyGroupsRemoveFromFamilyGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
-    if (message.steamidToRemove !== undefined && message.steamidToRemove !== 0) {
+    if (message.steamidToRemove !== undefined && message.steamidToRemove !== 0n) {
+      if (BigInt.asUintN(64, message.steamidToRemove) !== message.steamidToRemove) {
+        throw new globalThis.Error("value provided for field message.steamidToRemove of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamidToRemove);
     }
     return writer;
@@ -1837,7 +1926,7 @@ export const CFamilyGroupsRemoveFromFamilyGroupRequest: MessageFns<CFamilyGroups
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1845,7 +1934,7 @@ export const CFamilyGroupsRemoveFromFamilyGroupRequest: MessageFns<CFamilyGroups
             break;
           }
 
-          message.steamidToRemove = longToNumber(reader.fixed64());
+          message.steamidToRemove = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1885,7 +1974,7 @@ export const CFamilyGroupsRemoveFromFamilyGroupResponse: MessageFns<CFamilyGroup
 };
 
 function createBaseCFamilyGroupsCancelFamilyGroupInviteRequest(): CFamilyGroupsCancelFamilyGroupInviteRequest {
-  return { familyGroupid: 0, steamidToCancel: 0 };
+  return { familyGroupid: 0n, steamidToCancel: 0n };
 }
 
 export const CFamilyGroupsCancelFamilyGroupInviteRequest: MessageFns<CFamilyGroupsCancelFamilyGroupInviteRequest> = {
@@ -1893,10 +1982,16 @@ export const CFamilyGroupsCancelFamilyGroupInviteRequest: MessageFns<CFamilyGrou
     message: CFamilyGroupsCancelFamilyGroupInviteRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
-    if (message.steamidToCancel !== undefined && message.steamidToCancel !== 0) {
+    if (message.steamidToCancel !== undefined && message.steamidToCancel !== 0n) {
+      if (BigInt.asUintN(64, message.steamidToCancel) !== message.steamidToCancel) {
+        throw new globalThis.Error("value provided for field message.steamidToCancel of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamidToCancel);
     }
     return writer;
@@ -1914,7 +2009,7 @@ export const CFamilyGroupsCancelFamilyGroupInviteRequest: MessageFns<CFamilyGrou
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1922,7 +2017,7 @@ export const CFamilyGroupsCancelFamilyGroupInviteRequest: MessageFns<CFamilyGrou
             break;
           }
 
-          message.steamidToCancel = longToNumber(reader.fixed64());
+          message.steamidToCancel = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1962,15 +2057,21 @@ export const CFamilyGroupsCancelFamilyGroupInviteResponse: MessageFns<CFamilyGro
 };
 
 function createBaseCFamilyGroupsGetUsersSharingDeviceRequest(): CFamilyGroupsGetUsersSharingDeviceRequest {
-  return { familyGroupid: 0, clientInstanceId: 0 };
+  return { familyGroupid: 0n, clientInstanceId: 0n };
 }
 
 export const CFamilyGroupsGetUsersSharingDeviceRequest: MessageFns<CFamilyGroupsGetUsersSharingDeviceRequest> = {
   encode(message: CFamilyGroupsGetUsersSharingDeviceRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
-    if (message.clientInstanceId !== undefined && message.clientInstanceId !== 0) {
+    if (message.clientInstanceId !== undefined && message.clientInstanceId !== 0n) {
+      if (BigInt.asUintN(64, message.clientInstanceId) !== message.clientInstanceId) {
+        throw new globalThis.Error("value provided for field message.clientInstanceId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.clientInstanceId);
     }
     return writer;
@@ -1988,7 +2089,7 @@ export const CFamilyGroupsGetUsersSharingDeviceRequest: MessageFns<CFamilyGroups
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1996,7 +2097,7 @@ export const CFamilyGroupsGetUsersSharingDeviceRequest: MessageFns<CFamilyGroups
             break;
           }
 
-          message.clientInstanceId = longToNumber(reader.uint64());
+          message.clientInstanceId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2016,6 +2117,9 @@ function createBaseCFamilyGroupsGetUsersSharingDeviceResponse(): CFamilyGroupsGe
 export const CFamilyGroupsGetUsersSharingDeviceResponse: MessageFns<CFamilyGroupsGetUsersSharingDeviceResponse> = {
   encode(message: CFamilyGroupsGetUsersSharingDeviceResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.users) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(v!);
     }
     return writer;
@@ -2030,7 +2134,7 @@ export const CFamilyGroupsGetUsersSharingDeviceResponse: MessageFns<CFamilyGroup
       switch (tag >>> 3) {
         case 1: {
           if (tag === 9) {
-            message.users.push(longToNumber(reader.fixed64()));
+            message.users.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -2038,7 +2142,7 @@ export const CFamilyGroupsGetUsersSharingDeviceResponse: MessageFns<CFamilyGroup
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.users.push(longToNumber(reader.fixed64()));
+              message.users.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -2057,12 +2161,15 @@ export const CFamilyGroupsGetUsersSharingDeviceResponse: MessageFns<CFamilyGroup
 };
 
 function createBaseCFamilyGroupsDeleteFamilyGroupRequest(): CFamilyGroupsDeleteFamilyGroupRequest {
-  return { familyGroupid: 0 };
+  return { familyGroupid: 0n };
 }
 
 export const CFamilyGroupsDeleteFamilyGroupRequest: MessageFns<CFamilyGroupsDeleteFamilyGroupRequest> = {
   encode(message: CFamilyGroupsDeleteFamilyGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     return writer;
@@ -2080,7 +2187,7 @@ export const CFamilyGroupsDeleteFamilyGroupRequest: MessageFns<CFamilyGroupsDele
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2120,12 +2227,15 @@ export const CFamilyGroupsDeleteFamilyGroupResponse: MessageFns<CFamilyGroupsDel
 };
 
 function createBaseCFamilyGroupsUndeleteFamilyGroupRequest(): CFamilyGroupsUndeleteFamilyGroupRequest {
-  return { familyGroupid: 0 };
+  return { familyGroupid: 0n };
 }
 
 export const CFamilyGroupsUndeleteFamilyGroupRequest: MessageFns<CFamilyGroupsUndeleteFamilyGroupRequest> = {
   encode(message: CFamilyGroupsUndeleteFamilyGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     return writer;
@@ -2143,7 +2253,7 @@ export const CFamilyGroupsUndeleteFamilyGroupRequest: MessageFns<CFamilyGroupsUn
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2183,12 +2293,15 @@ export const CFamilyGroupsUndeleteFamilyGroupResponse: MessageFns<CFamilyGroupsU
 };
 
 function createBaseCFamilyGroupsGetPlaytimeSummaryRequest(): CFamilyGroupsGetPlaytimeSummaryRequest {
-  return { familyGroupid: 0 };
+  return { familyGroupid: 0n };
 }
 
 export const CFamilyGroupsGetPlaytimeSummaryRequest: MessageFns<CFamilyGroupsGetPlaytimeSummaryRequest> = {
   encode(message: CFamilyGroupsGetPlaytimeSummaryRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.familyGroupid);
     }
     return writer;
@@ -2206,7 +2319,7 @@ export const CFamilyGroupsGetPlaytimeSummaryRequest: MessageFns<CFamilyGroupsGet
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.fixed64());
+          message.familyGroupid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2220,12 +2333,15 @@ export const CFamilyGroupsGetPlaytimeSummaryRequest: MessageFns<CFamilyGroupsGet
 };
 
 function createBaseCFamilyGroupsPlaytimeEntry(): CFamilyGroupsPlaytimeEntry {
-  return { steamid: 0, appid: 0, firstPlayed: 0, latestPlayed: 0, secondsPlayed: 0 };
+  return { steamid: 0n, appid: 0, firstPlayed: 0, latestPlayed: 0, secondsPlayed: 0 };
 }
 
 export const CFamilyGroupsPlaytimeEntry: MessageFns<CFamilyGroupsPlaytimeEntry> = {
   encode(message: CFamilyGroupsPlaytimeEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
@@ -2255,7 +2371,7 @@ export const CFamilyGroupsPlaytimeEntry: MessageFns<CFamilyGroupsPlaytimeEntry> 
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2349,15 +2465,21 @@ export const CFamilyGroupsGetPlaytimeSummaryResponse: MessageFns<CFamilyGroupsGe
 };
 
 function createBaseCFamilyGroupsRequestPurchaseRequest(): CFamilyGroupsRequestPurchaseRequest {
-  return { familyGroupid: 0, gidshoppingcart: 0, storeCountryCode: "", useAccountCart: false };
+  return { familyGroupid: 0n, gidshoppingcart: 0n, storeCountryCode: "", useAccountCart: false };
 }
 
 export const CFamilyGroupsRequestPurchaseRequest: MessageFns<CFamilyGroupsRequestPurchaseRequest> = {
   encode(message: CFamilyGroupsRequestPurchaseRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
-    if (message.gidshoppingcart !== undefined && message.gidshoppingcart !== 0) {
+    if (message.gidshoppingcart !== undefined && message.gidshoppingcart !== 0n) {
+      if (BigInt.asUintN(64, message.gidshoppingcart) !== message.gidshoppingcart) {
+        throw new globalThis.Error("value provided for field message.gidshoppingcart of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.gidshoppingcart);
     }
     if (message.storeCountryCode !== undefined && message.storeCountryCode !== "") {
@@ -2381,7 +2503,7 @@ export const CFamilyGroupsRequestPurchaseRequest: MessageFns<CFamilyGroupsReques
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2389,7 +2511,7 @@ export const CFamilyGroupsRequestPurchaseRequest: MessageFns<CFamilyGroupsReques
             break;
           }
 
-          message.gidshoppingcart = longToNumber(reader.uint64());
+          message.gidshoppingcart = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -2419,15 +2541,21 @@ export const CFamilyGroupsRequestPurchaseRequest: MessageFns<CFamilyGroupsReques
 };
 
 function createBaseCFamilyGroupsRequestPurchaseResponse(): CFamilyGroupsRequestPurchaseResponse {
-  return { gidshoppingcart: 0, requestId: 0 };
+  return { gidshoppingcart: 0n, requestId: 0n };
 }
 
 export const CFamilyGroupsRequestPurchaseResponse: MessageFns<CFamilyGroupsRequestPurchaseResponse> = {
   encode(message: CFamilyGroupsRequestPurchaseResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gidshoppingcart !== undefined && message.gidshoppingcart !== 0) {
+    if (message.gidshoppingcart !== undefined && message.gidshoppingcart !== 0n) {
+      if (BigInt.asUintN(64, message.gidshoppingcart) !== message.gidshoppingcart) {
+        throw new globalThis.Error("value provided for field message.gidshoppingcart of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gidshoppingcart);
     }
-    if (message.requestId !== undefined && message.requestId !== 0) {
+    if (message.requestId !== undefined && message.requestId !== 0n) {
+      if (BigInt.asUintN(64, message.requestId) !== message.requestId) {
+        throw new globalThis.Error("value provided for field message.requestId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.requestId);
     }
     return writer;
@@ -2445,7 +2573,7 @@ export const CFamilyGroupsRequestPurchaseResponse: MessageFns<CFamilyGroupsReque
             break;
           }
 
-          message.gidshoppingcart = longToNumber(reader.uint64());
+          message.gidshoppingcart = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2453,7 +2581,7 @@ export const CFamilyGroupsRequestPurchaseResponse: MessageFns<CFamilyGroupsReque
             break;
           }
 
-          message.requestId = longToNumber(reader.uint64());
+          message.requestId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2467,15 +2595,21 @@ export const CFamilyGroupsRequestPurchaseResponse: MessageFns<CFamilyGroupsReque
 };
 
 function createBaseCFamilyGroupsGetPurchaseRequestsRequest(): CFamilyGroupsGetPurchaseRequestsRequest {
-  return { familyGroupid: 0, requestIds: [], rtIncludeCompletedSince: 0 };
+  return { familyGroupid: 0n, requestIds: [], rtIncludeCompletedSince: 0 };
 }
 
 export const CFamilyGroupsGetPurchaseRequestsRequest: MessageFns<CFamilyGroupsGetPurchaseRequestsRequest> = {
   encode(message: CFamilyGroupsGetPurchaseRequestsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     for (const v of message.requestIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(24).uint64(v!);
     }
     if (message.rtIncludeCompletedSince !== undefined && message.rtIncludeCompletedSince !== 0) {
@@ -2496,12 +2630,12 @@ export const CFamilyGroupsGetPurchaseRequestsRequest: MessageFns<CFamilyGroupsGe
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
           if (tag === 24) {
-            message.requestIds.push(longToNumber(reader.uint64()));
+            message.requestIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -2509,7 +2643,7 @@ export const CFamilyGroupsGetPurchaseRequestsRequest: MessageFns<CFamilyGroupsGe
           if (tag === 26) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.requestIds.push(longToNumber(reader.uint64()));
+              message.requestIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -2537,14 +2671,14 @@ export const CFamilyGroupsGetPurchaseRequestsRequest: MessageFns<CFamilyGroupsGe
 
 function createBasePurchaseRequest(): PurchaseRequest {
   return {
-    requesterSteamid: 0,
-    gidshoppingcart: 0,
+    requesterSteamid: 0n,
+    gidshoppingcart: 0n,
     timeRequested: 0,
     timeResponded: 0,
-    responderSteamid: 0,
+    responderSteamid: 0n,
     responseAction: 0,
     isCompleted: false,
-    requestId: 0,
+    requestId: 0n,
     requestedPackageids: [],
     purchasedPackageids: [],
     requestedBundleids: [],
@@ -2554,10 +2688,16 @@ function createBasePurchaseRequest(): PurchaseRequest {
 
 export const PurchaseRequest: MessageFns<PurchaseRequest> = {
   encode(message: PurchaseRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.requesterSteamid !== undefined && message.requesterSteamid !== 0) {
+    if (message.requesterSteamid !== undefined && message.requesterSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.requesterSteamid) !== message.requesterSteamid) {
+        throw new globalThis.Error("value provided for field message.requesterSteamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.requesterSteamid);
     }
-    if (message.gidshoppingcart !== undefined && message.gidshoppingcart !== 0) {
+    if (message.gidshoppingcart !== undefined && message.gidshoppingcart !== 0n) {
+      if (BigInt.asUintN(64, message.gidshoppingcart) !== message.gidshoppingcart) {
+        throw new globalThis.Error("value provided for field message.gidshoppingcart of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.gidshoppingcart);
     }
     if (message.timeRequested !== undefined && message.timeRequested !== 0) {
@@ -2566,7 +2706,10 @@ export const PurchaseRequest: MessageFns<PurchaseRequest> = {
     if (message.timeResponded !== undefined && message.timeResponded !== 0) {
       writer.uint32(32).uint32(message.timeResponded);
     }
-    if (message.responderSteamid !== undefined && message.responderSteamid !== 0) {
+    if (message.responderSteamid !== undefined && message.responderSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.responderSteamid) !== message.responderSteamid) {
+        throw new globalThis.Error("value provided for field message.responderSteamid of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.responderSteamid);
     }
     if (message.responseAction !== undefined && message.responseAction !== 0) {
@@ -2575,7 +2718,10 @@ export const PurchaseRequest: MessageFns<PurchaseRequest> = {
     if (message.isCompleted !== undefined && message.isCompleted !== false) {
       writer.uint32(56).bool(message.isCompleted);
     }
-    if (message.requestId !== undefined && message.requestId !== 0) {
+    if (message.requestId !== undefined && message.requestId !== 0n) {
+      if (BigInt.asUintN(64, message.requestId) !== message.requestId) {
+        throw new globalThis.Error("value provided for field message.requestId of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.requestId);
     }
     for (const v of message.requestedPackageids) {
@@ -2605,7 +2751,7 @@ export const PurchaseRequest: MessageFns<PurchaseRequest> = {
             break;
           }
 
-          message.requesterSteamid = longToNumber(reader.fixed64());
+          message.requesterSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2613,7 +2759,7 @@ export const PurchaseRequest: MessageFns<PurchaseRequest> = {
             break;
           }
 
-          message.gidshoppingcart = longToNumber(reader.uint64());
+          message.gidshoppingcart = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -2637,7 +2783,7 @@ export const PurchaseRequest: MessageFns<PurchaseRequest> = {
             break;
           }
 
-          message.responderSteamid = longToNumber(reader.fixed64());
+          message.responderSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -2661,7 +2807,7 @@ export const PurchaseRequest: MessageFns<PurchaseRequest> = {
             break;
           }
 
-          message.requestId = longToNumber(reader.uint64());
+          message.requestId = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -2784,7 +2930,7 @@ export const CFamilyGroupsGetPurchaseRequestsResponse: MessageFns<CFamilyGroupsG
 };
 
 function createBaseCFamilyGroupsRespondToRequestedPurchaseRequest(): CFamilyGroupsRespondToRequestedPurchaseRequest {
-  return { familyGroupid: 0, action: 0, requestId: 0 };
+  return { familyGroupid: 0n, action: 0, requestId: 0n };
 }
 
 export const CFamilyGroupsRespondToRequestedPurchaseRequest: MessageFns<
@@ -2794,13 +2940,19 @@ export const CFamilyGroupsRespondToRequestedPurchaseRequest: MessageFns<
     message: CFamilyGroupsRespondToRequestedPurchaseRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     if (message.action !== undefined && message.action !== 0) {
       writer.uint32(24).int32(message.action);
     }
-    if (message.requestId !== undefined && message.requestId !== 0) {
+    if (message.requestId !== undefined && message.requestId !== 0n) {
+      if (BigInt.asUintN(64, message.requestId) !== message.requestId) {
+        throw new globalThis.Error("value provided for field message.requestId of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.requestId);
     }
     return writer;
@@ -2818,7 +2970,7 @@ export const CFamilyGroupsRespondToRequestedPurchaseRequest: MessageFns<
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -2834,7 +2986,7 @@ export const CFamilyGroupsRespondToRequestedPurchaseRequest: MessageFns<
             break;
           }
 
-          message.requestId = longToNumber(reader.uint64());
+          message.requestId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2876,12 +3028,15 @@ export const CFamilyGroupsRespondToRequestedPurchaseResponse: MessageFns<
 };
 
 function createBaseCFamilyGroupsGetChangeLogRequest(): CFamilyGroupsGetChangeLogRequest {
-  return { familyGroupid: 0 };
+  return { familyGroupid: 0n };
 }
 
 export const CFamilyGroupsGetChangeLogRequest: MessageFns<CFamilyGroupsGetChangeLogRequest> = {
   encode(message: CFamilyGroupsGetChangeLogRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     return writer;
@@ -2899,7 +3054,7 @@ export const CFamilyGroupsGetChangeLogRequest: MessageFns<CFamilyGroupsGetChange
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2950,15 +3105,21 @@ export const CFamilyGroupsGetChangeLogResponse: MessageFns<CFamilyGroupsGetChang
 };
 
 function createBaseCFamilyGroupsGetChangeLogResponse_Change(): CFamilyGroupsGetChangeLogResponse_Change {
-  return { timestamp: 0, actorSteamid: 0, type: 0, body: "", bySupport: false };
+  return { timestamp: 0n, actorSteamid: 0n, type: 0, body: "", bySupport: false };
 }
 
 export const CFamilyGroupsGetChangeLogResponse_Change: MessageFns<CFamilyGroupsGetChangeLogResponse_Change> = {
   encode(message: CFamilyGroupsGetChangeLogResponse_Change, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.timestamp !== undefined && message.timestamp !== 0) {
+    if (message.timestamp !== undefined && message.timestamp !== 0n) {
+      if (BigInt.asUintN(64, message.timestamp) !== message.timestamp) {
+        throw new globalThis.Error("value provided for field message.timestamp of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.timestamp);
     }
-    if (message.actorSteamid !== undefined && message.actorSteamid !== 0) {
+    if (message.actorSteamid !== undefined && message.actorSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.actorSteamid) !== message.actorSteamid) {
+        throw new globalThis.Error("value provided for field message.actorSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.actorSteamid);
     }
     if (message.type !== undefined && message.type !== 0) {
@@ -2985,7 +3146,7 @@ export const CFamilyGroupsGetChangeLogResponse_Change: MessageFns<CFamilyGroupsG
             break;
           }
 
-          message.timestamp = longToNumber(reader.fixed64());
+          message.timestamp = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2993,7 +3154,7 @@ export const CFamilyGroupsGetChangeLogResponse_Change: MessageFns<CFamilyGroupsG
             break;
           }
 
-          message.actorSteamid = longToNumber(reader.fixed64());
+          message.actorSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -3031,7 +3192,7 @@ export const CFamilyGroupsGetChangeLogResponse_Change: MessageFns<CFamilyGroupsG
 };
 
 function createBaseCFamilyGroupsSetFamilyCooldownOverridesRequest(): CFamilyGroupsSetFamilyCooldownOverridesRequest {
-  return { familyGroupid: 0, cooldownCount: 0 };
+  return { familyGroupid: 0n, cooldownCount: 0 };
 }
 
 export const CFamilyGroupsSetFamilyCooldownOverridesRequest: MessageFns<
@@ -3041,7 +3202,10 @@ export const CFamilyGroupsSetFamilyCooldownOverridesRequest: MessageFns<
     message: CFamilyGroupsSetFamilyCooldownOverridesRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     if (message.cooldownCount !== undefined && message.cooldownCount !== 0) {
@@ -3062,7 +3226,7 @@ export const CFamilyGroupsSetFamilyCooldownOverridesRequest: MessageFns<
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3113,19 +3277,22 @@ export const CFamilyGroupsSetFamilyCooldownOverridesResponse: MessageFns<
 
 function createBaseCFamilyGroupsGetSharedLibraryAppsRequest(): CFamilyGroupsGetSharedLibraryAppsRequest {
   return {
-    familyGroupid: 0,
+    familyGroupid: 0n,
     includeOwn: false,
     includeExcluded: false,
     language: "",
     maxApps: 0,
     includeNonGames: false,
-    steamid: 0,
+    steamid: 0n,
   };
 }
 
 export const CFamilyGroupsGetSharedLibraryAppsRequest: MessageFns<CFamilyGroupsGetSharedLibraryAppsRequest> = {
   encode(message: CFamilyGroupsGetSharedLibraryAppsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.familyGroupid);
     }
     if (message.includeOwn !== undefined && message.includeOwn !== false) {
@@ -3143,7 +3310,10 @@ export const CFamilyGroupsGetSharedLibraryAppsRequest: MessageFns<CFamilyGroupsG
     if (message.includeNonGames !== undefined && message.includeNonGames !== false) {
       writer.uint32(56).bool(message.includeNonGames);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(65).fixed64(message.steamid);
     }
     return writer;
@@ -3161,7 +3331,7 @@ export const CFamilyGroupsGetSharedLibraryAppsRequest: MessageFns<CFamilyGroupsG
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.fixed64());
+          message.familyGroupid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3209,7 +3379,7 @@ export const CFamilyGroupsGetSharedLibraryAppsRequest: MessageFns<CFamilyGroupsG
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3223,7 +3393,7 @@ export const CFamilyGroupsGetSharedLibraryAppsRequest: MessageFns<CFamilyGroupsG
 };
 
 function createBaseCFamilyGroupsGetSharedLibraryAppsResponse(): CFamilyGroupsGetSharedLibraryAppsResponse {
-  return { apps: [], ownerSteamid: 0 };
+  return { apps: [], ownerSteamid: 0n };
 }
 
 export const CFamilyGroupsGetSharedLibraryAppsResponse: MessageFns<CFamilyGroupsGetSharedLibraryAppsResponse> = {
@@ -3231,7 +3401,10 @@ export const CFamilyGroupsGetSharedLibraryAppsResponse: MessageFns<CFamilyGroups
     for (const v of message.apps) {
       CFamilyGroupsGetSharedLibraryAppsResponse_SharedApp.encode(v!, writer.uint32(10).fork()).join();
     }
-    if (message.ownerSteamid !== undefined && message.ownerSteamid !== 0) {
+    if (message.ownerSteamid !== undefined && message.ownerSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.ownerSteamid) !== message.ownerSteamid) {
+        throw new globalThis.Error("value provided for field message.ownerSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.ownerSteamid);
     }
     return writer;
@@ -3257,7 +3430,7 @@ export const CFamilyGroupsGetSharedLibraryAppsResponse: MessageFns<CFamilyGroups
             break;
           }
 
-          message.ownerSteamid = longToNumber(reader.fixed64());
+          message.ownerSteamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3298,6 +3471,9 @@ export const CFamilyGroupsGetSharedLibraryAppsResponse_SharedApp: MessageFns<
       writer.uint32(8).uint32(message.appid);
     }
     for (const v of message.ownerSteamids) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(v!);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -3350,7 +3526,7 @@ export const CFamilyGroupsGetSharedLibraryAppsResponse_SharedApp: MessageFns<
         }
         case 2: {
           if (tag === 17) {
-            message.ownerSteamids.push(longToNumber(reader.fixed64()));
+            message.ownerSteamids.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -3358,7 +3534,7 @@ export const CFamilyGroupsGetSharedLibraryAppsResponse_SharedApp: MessageFns<
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.ownerSteamids.push(longToNumber(reader.fixed64()));
+              message.ownerSteamids.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -3467,18 +3643,24 @@ export const CFamilyGroupsGetSharedLibraryAppsResponse_SharedApp: MessageFns<
 };
 
 function createBaseCFamilyGroupsSetPreferredLenderRequest(): CFamilyGroupsSetPreferredLenderRequest {
-  return { familyGroupid: 0, appid: 0, lenderSteamid: 0 };
+  return { familyGroupid: 0n, appid: 0, lenderSteamid: 0n };
 }
 
 export const CFamilyGroupsSetPreferredLenderRequest: MessageFns<CFamilyGroupsSetPreferredLenderRequest> = {
   encode(message: CFamilyGroupsSetPreferredLenderRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(16).uint32(message.appid);
     }
-    if (message.lenderSteamid !== undefined && message.lenderSteamid !== 0) {
+    if (message.lenderSteamid !== undefined && message.lenderSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.lenderSteamid) !== message.lenderSteamid) {
+        throw new globalThis.Error("value provided for field message.lenderSteamid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.lenderSteamid);
     }
     return writer;
@@ -3496,7 +3678,7 @@ export const CFamilyGroupsSetPreferredLenderRequest: MessageFns<CFamilyGroupsSet
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3512,7 +3694,7 @@ export const CFamilyGroupsSetPreferredLenderRequest: MessageFns<CFamilyGroupsSet
             break;
           }
 
-          message.lenderSteamid = longToNumber(reader.fixed64());
+          message.lenderSteamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3552,12 +3734,15 @@ export const CFamilyGroupsSetPreferredLenderResponse: MessageFns<CFamilyGroupsSe
 };
 
 function createBaseCFamilyGroupsGetPreferredLendersRequest(): CFamilyGroupsGetPreferredLendersRequest {
-  return { familyGroupid: 0 };
+  return { familyGroupid: 0n };
 }
 
 export const CFamilyGroupsGetPreferredLendersRequest: MessageFns<CFamilyGroupsGetPreferredLendersRequest> = {
   encode(message: CFamilyGroupsGetPreferredLendersRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     return writer;
@@ -3575,7 +3760,7 @@ export const CFamilyGroupsGetPreferredLendersRequest: MessageFns<CFamilyGroupsGe
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -3626,7 +3811,7 @@ export const CFamilyGroupsGetPreferredLendersResponse: MessageFns<CFamilyGroupsG
 };
 
 function createBaseCFamilyGroupsGetPreferredLendersResponse_FamilyMember(): CFamilyGroupsGetPreferredLendersResponse_FamilyMember {
-  return { steamid: 0, preferredAppids: [] };
+  return { steamid: 0n, preferredAppids: [] };
 }
 
 export const CFamilyGroupsGetPreferredLendersResponse_FamilyMember: MessageFns<
@@ -3636,7 +3821,10 @@ export const CFamilyGroupsGetPreferredLendersResponse_FamilyMember: MessageFns<
     message: CFamilyGroupsGetPreferredLendersResponse_FamilyMember,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     for (const v of message.preferredAppids) {
@@ -3657,7 +3845,7 @@ export const CFamilyGroupsGetPreferredLendersResponse_FamilyMember: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3689,15 +3877,21 @@ export const CFamilyGroupsGetPreferredLendersResponse_FamilyMember: MessageFns<
 };
 
 function createBaseCFamilyGroupsForceAcceptInviteRequest(): CFamilyGroupsForceAcceptInviteRequest {
-  return { familyGroupid: 0, steamid: 0 };
+  return { familyGroupid: 0n, steamid: 0n };
 }
 
 export const CFamilyGroupsForceAcceptInviteRequest: MessageFns<CFamilyGroupsForceAcceptInviteRequest> = {
   encode(message: CFamilyGroupsForceAcceptInviteRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     return writer;
@@ -3715,7 +3909,7 @@ export const CFamilyGroupsForceAcceptInviteRequest: MessageFns<CFamilyGroupsForc
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3723,7 +3917,7 @@ export const CFamilyGroupsForceAcceptInviteRequest: MessageFns<CFamilyGroupsForc
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3763,15 +3957,21 @@ export const CFamilyGroupsForceAcceptInviteResponse: MessageFns<CFamilyGroupsFor
 };
 
 function createBaseCFamilyGroupsGetInviteCheckResultsRequest(): CFamilyGroupsGetInviteCheckResultsRequest {
-  return { familyGroupid: 0, steamid: 0 };
+  return { familyGroupid: 0n, steamid: 0n };
 }
 
 export const CFamilyGroupsGetInviteCheckResultsRequest: MessageFns<CFamilyGroupsGetInviteCheckResultsRequest> = {
   encode(message: CFamilyGroupsGetInviteCheckResultsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     return writer;
@@ -3789,7 +3989,7 @@ export const CFamilyGroupsGetInviteCheckResultsRequest: MessageFns<CFamilyGroups
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3797,7 +3997,7 @@ export const CFamilyGroupsGetInviteCheckResultsRequest: MessageFns<CFamilyGroups
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3870,15 +4070,21 @@ export const CFamilyGroupsGetInviteCheckResultsResponse: MessageFns<CFamilyGroup
 };
 
 function createBaseCFamilyGroupsClearCooldownSkipRequest(): CFamilyGroupsClearCooldownSkipRequest {
-  return { steamid: 0, inviteId: 0 };
+  return { steamid: 0n, inviteId: 0n };
 }
 
 export const CFamilyGroupsClearCooldownSkipRequest: MessageFns<CFamilyGroupsClearCooldownSkipRequest> = {
   encode(message: CFamilyGroupsClearCooldownSkipRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.inviteId !== undefined && message.inviteId !== 0) {
+    if (message.inviteId !== undefined && message.inviteId !== 0n) {
+      if (BigInt.asUintN(64, message.inviteId) !== message.inviteId) {
+        throw new globalThis.Error("value provided for field message.inviteId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.inviteId);
     }
     return writer;
@@ -3896,7 +4102,7 @@ export const CFamilyGroupsClearCooldownSkipRequest: MessageFns<CFamilyGroupsClea
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3904,7 +4110,7 @@ export const CFamilyGroupsClearCooldownSkipRequest: MessageFns<CFamilyGroupsClea
             break;
           }
 
-          message.inviteId = longToNumber(reader.uint64());
+          message.inviteId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -3944,12 +4150,15 @@ export const CFamilyGroupsClearCooldownSkipResponse: MessageFns<CFamilyGroupsCle
 };
 
 function createBaseCFamilyGroupsRollbackFamilyGroupRequest(): CFamilyGroupsRollbackFamilyGroupRequest {
-  return { familyGroupid: 0, rtime32Target: 0 };
+  return { familyGroupid: 0n, rtime32Target: 0 };
 }
 
 export const CFamilyGroupsRollbackFamilyGroupRequest: MessageFns<CFamilyGroupsRollbackFamilyGroupRequest> = {
   encode(message: CFamilyGroupsRollbackFamilyGroupRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     if (message.rtime32Target !== undefined && message.rtime32Target !== 0) {
@@ -3970,7 +4179,7 @@ export const CFamilyGroupsRollbackFamilyGroupRequest: MessageFns<CFamilyGroupsRo
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4018,7 +4227,7 @@ export const CFamilyGroupsRollbackFamilyGroupResponse: MessageFns<CFamilyGroupsR
 };
 
 function createBaseCFamilyGroupsClientNotifyRunningAppsNotification(): CFamilyGroupsClientNotifyRunningAppsNotification {
-  return { familyGroupid: 0, runningApps: [] };
+  return { familyGroupid: 0n, runningApps: [] };
 }
 
 export const CFamilyGroupsClientNotifyRunningAppsNotification: MessageFns<
@@ -4028,7 +4237,10 @@ export const CFamilyGroupsClientNotifyRunningAppsNotification: MessageFns<
     message: CFamilyGroupsClientNotifyRunningAppsNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     for (const v of message.runningApps) {
@@ -4049,7 +4261,7 @@ export const CFamilyGroupsClientNotifyRunningAppsNotification: MessageFns<
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4073,7 +4285,7 @@ export const CFamilyGroupsClientNotifyRunningAppsNotification: MessageFns<
 };
 
 function createBaseCFamilyGroupsClientNotifyRunningAppsNotification_PlayingMember(): CFamilyGroupsClientNotifyRunningAppsNotification_PlayingMember {
-  return { memberSteamid: 0, ownerSteamid: 0 };
+  return { memberSteamid: 0n, ownerSteamid: 0n };
 }
 
 export const CFamilyGroupsClientNotifyRunningAppsNotification_PlayingMember: MessageFns<
@@ -4083,10 +4295,16 @@ export const CFamilyGroupsClientNotifyRunningAppsNotification_PlayingMember: Mes
     message: CFamilyGroupsClientNotifyRunningAppsNotification_PlayingMember,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.memberSteamid !== undefined && message.memberSteamid !== 0) {
+    if (message.memberSteamid !== undefined && message.memberSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.memberSteamid) !== message.memberSteamid) {
+        throw new globalThis.Error("value provided for field message.memberSteamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.memberSteamid);
     }
-    if (message.ownerSteamid !== undefined && message.ownerSteamid !== 0) {
+    if (message.ownerSteamid !== undefined && message.ownerSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.ownerSteamid) !== message.ownerSteamid) {
+        throw new globalThis.Error("value provided for field message.ownerSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.ownerSteamid);
     }
     return writer;
@@ -4107,7 +4325,7 @@ export const CFamilyGroupsClientNotifyRunningAppsNotification_PlayingMember: Mes
             break;
           }
 
-          message.memberSteamid = longToNumber(reader.fixed64());
+          message.memberSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -4115,7 +4333,7 @@ export const CFamilyGroupsClientNotifyRunningAppsNotification_PlayingMember: Mes
             break;
           }
 
-          message.ownerSteamid = longToNumber(reader.fixed64());
+          message.ownerSteamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -4213,7 +4431,7 @@ export const CFamilyGroupsClientInviteStatusNotification: MessageFns<CFamilyGrou
 };
 
 function createBaseCFamilyGroupsClientGroupChangedNotification(): CFamilyGroupsClientGroupChangedNotification {
-  return { familyGroupid: 0 };
+  return { familyGroupid: 0n };
 }
 
 export const CFamilyGroupsClientGroupChangedNotification: MessageFns<CFamilyGroupsClientGroupChangedNotification> = {
@@ -4221,7 +4439,10 @@ export const CFamilyGroupsClientGroupChangedNotification: MessageFns<CFamilyGrou
     message: CFamilyGroupsClientGroupChangedNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.familyGroupid);
     }
     return writer;
@@ -4239,7 +4460,7 @@ export const CFamilyGroupsClientGroupChangedNotification: MessageFns<CFamilyGrou
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.uint64());
+          message.familyGroupid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4590,17 +4811,6 @@ export class FamilyGroupsClientClientImpl implements FamilyGroupsClient {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

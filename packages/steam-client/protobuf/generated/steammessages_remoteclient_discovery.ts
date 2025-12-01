@@ -110,10 +110,10 @@ export enum ERemoteDeviceStreamingResult {
 }
 
 export interface CMsgRemoteClientBroadcastHeader {
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   msgType?: ERemoteClientBroadcastMsg | undefined;
-  instanceId?: number | undefined;
-  deviceIdOBSOLETE?: number | undefined;
+  instanceId?: bigint | undefined;
+  deviceIdOBSOLETE?: bigint | undefined;
   deviceToken?: Buffer | undefined;
 }
 
@@ -140,25 +140,25 @@ export interface CMsgRemoteClientBroadcastStatus {
   remoteplayActive?: boolean | undefined;
   supportedServices?: number | undefined;
   steamDeck?: boolean | undefined;
-  steamVersion?: number | undefined;
+  steamVersion?: bigint | undefined;
   vrLinkCaps?: EVRLinkCaps | undefined;
-  vrLinkInviteClientId?: number | undefined;
-  connectedPairedNetworkHash?: number | undefined;
+  vrLinkInviteClientId?: bigint | undefined;
+  connectedPairedNetworkHash?: bigint | undefined;
   wifiDonglePresent?: boolean | undefined;
 }
 
 export interface CMsgRemoteClientBroadcastStatus_User {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   authKeyId?: number | undefined;
 }
 
 export interface CMsgRemoteClientBroadcastDiscovery {
   seqNum?: number | undefined;
-  clientIds: number[];
+  clientIds: bigint[];
 }
 
 export interface CMsgRemoteClientBroadcastClientIDDeconflict {
-  clientIds: number[];
+  clientIds: bigint[];
 }
 
 export interface CMsgRemoteDeviceAuthorizationRequest {
@@ -176,7 +176,7 @@ export enum CMsgRemoteDeviceAuthorizationRequest_EKeyEscrowUsage {
 
 export interface CMsgRemoteDeviceAuthorizationRequest_CKeyEscrowTicket {
   password?: Buffer | undefined;
-  identifier?: number | undefined;
+  identifier?: bigint | undefined;
   payload?: Buffer | undefined;
   timestamp?: number | undefined;
   usage?: CMsgRemoteDeviceAuthorizationRequest_EKeyEscrowUsage | undefined;
@@ -191,7 +191,7 @@ export interface CMsgRemoteDeviceAuthorizationCancelRequest {
 
 export interface CMsgRemoteDeviceAuthorizationResponse {
   result: ERemoteDeviceAuthorizationResult;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   authKey?: Buffer | undefined;
   deviceToken?: Buffer | undefined;
 }
@@ -213,13 +213,13 @@ export interface CMsgRemoteDeviceStreamingRequest {
   enableAudioStreaming?: boolean | undefined;
   enableInputStreaming?: boolean | undefined;
   networkTest?: boolean | undefined;
-  clientId?: number | undefined;
+  clientId?: bigint | undefined;
   supportedTransport: EStreamTransport[];
   restricted?: boolean | undefined;
   formFactor?: EStreamDeviceFormFactor | undefined;
   gamepadCount?: number | undefined;
   gamepads: CMsgRemoteDeviceStreamingRequest_ReservedGamepad[];
-  gameid?: number | undefined;
+  gameid?: bigint | undefined;
   streamInterface?: EStreamInterface | undefined;
 }
 
@@ -265,21 +265,30 @@ export interface CMsgRemoteDeviceStreamTransportSignal {
 }
 
 function createBaseCMsgRemoteClientBroadcastHeader(): CMsgRemoteClientBroadcastHeader {
-  return { clientId: 0, msgType: 0, instanceId: 0, deviceIdOBSOLETE: 0, deviceToken: Buffer.alloc(0) };
+  return { clientId: 0n, msgType: 0, instanceId: 0n, deviceIdOBSOLETE: 0n, deviceToken: Buffer.alloc(0) };
 }
 
 export const CMsgRemoteClientBroadcastHeader: MessageFns<CMsgRemoteClientBroadcastHeader> = {
   encode(message: CMsgRemoteClientBroadcastHeader, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientId);
     }
     if (message.msgType !== undefined && message.msgType !== 0) {
       writer.uint32(16).int32(message.msgType);
     }
-    if (message.instanceId !== undefined && message.instanceId !== 0) {
+    if (message.instanceId !== undefined && message.instanceId !== 0n) {
+      if (BigInt.asUintN(64, message.instanceId) !== message.instanceId) {
+        throw new globalThis.Error("value provided for field message.instanceId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.instanceId);
     }
-    if (message.deviceIdOBSOLETE !== undefined && message.deviceIdOBSOLETE !== 0) {
+    if (message.deviceIdOBSOLETE !== undefined && message.deviceIdOBSOLETE !== 0n) {
+      if (BigInt.asUintN(64, message.deviceIdOBSOLETE) !== message.deviceIdOBSOLETE) {
+        throw new globalThis.Error("value provided for field message.deviceIdOBSOLETE of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.deviceIdOBSOLETE);
     }
     if (message.deviceToken !== undefined && message.deviceToken.length !== 0) {
@@ -300,7 +309,7 @@ export const CMsgRemoteClientBroadcastHeader: MessageFns<CMsgRemoteClientBroadca
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -316,7 +325,7 @@ export const CMsgRemoteClientBroadcastHeader: MessageFns<CMsgRemoteClientBroadca
             break;
           }
 
-          message.instanceId = longToNumber(reader.uint64());
+          message.instanceId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -324,7 +333,7 @@ export const CMsgRemoteClientBroadcastHeader: MessageFns<CMsgRemoteClientBroadca
             break;
           }
 
-          message.deviceIdOBSOLETE = longToNumber(reader.uint64());
+          message.deviceIdOBSOLETE = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -369,10 +378,10 @@ function createBaseCMsgRemoteClientBroadcastStatus(): CMsgRemoteClientBroadcastS
     remoteplayActive: false,
     supportedServices: 0,
     steamDeck: false,
-    steamVersion: 0,
+    steamVersion: 0n,
     vrLinkCaps: 0,
-    vrLinkInviteClientId: 0,
-    connectedPairedNetworkHash: 0,
+    vrLinkInviteClientId: 0n,
+    connectedPairedNetworkHash: 0n,
     wifiDonglePresent: false,
   };
 }
@@ -445,16 +454,27 @@ export const CMsgRemoteClientBroadcastStatus: MessageFns<CMsgRemoteClientBroadca
     if (message.steamDeck !== undefined && message.steamDeck !== false) {
       writer.uint32(192).bool(message.steamDeck);
     }
-    if (message.steamVersion !== undefined && message.steamVersion !== 0) {
+    if (message.steamVersion !== undefined && message.steamVersion !== 0n) {
+      if (BigInt.asUintN(64, message.steamVersion) !== message.steamVersion) {
+        throw new globalThis.Error("value provided for field message.steamVersion of type uint64 too large");
+      }
       writer.uint32(200).uint64(message.steamVersion);
     }
     if (message.vrLinkCaps !== undefined && message.vrLinkCaps !== 0) {
       writer.uint32(208).int32(message.vrLinkCaps);
     }
-    if (message.vrLinkInviteClientId !== undefined && message.vrLinkInviteClientId !== 0) {
+    if (message.vrLinkInviteClientId !== undefined && message.vrLinkInviteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.vrLinkInviteClientId) !== message.vrLinkInviteClientId) {
+        throw new globalThis.Error("value provided for field message.vrLinkInviteClientId of type fixed64 too large");
+      }
       writer.uint32(217).fixed64(message.vrLinkInviteClientId);
     }
-    if (message.connectedPairedNetworkHash !== undefined && message.connectedPairedNetworkHash !== 0) {
+    if (message.connectedPairedNetworkHash !== undefined && message.connectedPairedNetworkHash !== 0n) {
+      if (BigInt.asUintN(64, message.connectedPairedNetworkHash) !== message.connectedPairedNetworkHash) {
+        throw new globalThis.Error(
+          "value provided for field message.connectedPairedNetworkHash of type fixed64 too large",
+        );
+      }
       writer.uint32(225).fixed64(message.connectedPairedNetworkHash);
     }
     if (message.wifiDonglePresent !== undefined && message.wifiDonglePresent !== false) {
@@ -651,7 +671,7 @@ export const CMsgRemoteClientBroadcastStatus: MessageFns<CMsgRemoteClientBroadca
             break;
           }
 
-          message.steamVersion = longToNumber(reader.uint64());
+          message.steamVersion = reader.uint64() as bigint;
           continue;
         }
         case 26: {
@@ -667,7 +687,7 @@ export const CMsgRemoteClientBroadcastStatus: MessageFns<CMsgRemoteClientBroadca
             break;
           }
 
-          message.vrLinkInviteClientId = longToNumber(reader.fixed64());
+          message.vrLinkInviteClientId = reader.fixed64() as bigint;
           continue;
         }
         case 28: {
@@ -675,7 +695,7 @@ export const CMsgRemoteClientBroadcastStatus: MessageFns<CMsgRemoteClientBroadca
             break;
           }
 
-          message.connectedPairedNetworkHash = longToNumber(reader.fixed64());
+          message.connectedPairedNetworkHash = reader.fixed64() as bigint;
           continue;
         }
         case 29: {
@@ -697,12 +717,15 @@ export const CMsgRemoteClientBroadcastStatus: MessageFns<CMsgRemoteClientBroadca
 };
 
 function createBaseCMsgRemoteClientBroadcastStatus_User(): CMsgRemoteClientBroadcastStatus_User {
-  return { steamid: 0, authKeyId: 0 };
+  return { steamid: 0n, authKeyId: 0 };
 }
 
 export const CMsgRemoteClientBroadcastStatus_User: MessageFns<CMsgRemoteClientBroadcastStatus_User> = {
   encode(message: CMsgRemoteClientBroadcastStatus_User, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.authKeyId !== undefined && message.authKeyId !== 0) {
@@ -723,7 +746,7 @@ export const CMsgRemoteClientBroadcastStatus_User: MessageFns<CMsgRemoteClientBr
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -754,6 +777,9 @@ export const CMsgRemoteClientBroadcastDiscovery: MessageFns<CMsgRemoteClientBroa
       writer.uint32(8).uint32(message.seqNum);
     }
     for (const v of message.clientIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(16).uint64(v!);
     }
     return writer;
@@ -776,7 +802,7 @@ export const CMsgRemoteClientBroadcastDiscovery: MessageFns<CMsgRemoteClientBroa
         }
         case 2: {
           if (tag === 16) {
-            message.clientIds.push(longToNumber(reader.uint64()));
+            message.clientIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -784,7 +810,7 @@ export const CMsgRemoteClientBroadcastDiscovery: MessageFns<CMsgRemoteClientBroa
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.clientIds.push(longToNumber(reader.uint64()));
+              message.clientIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -812,6 +838,9 @@ export const CMsgRemoteClientBroadcastClientIDDeconflict: MessageFns<CMsgRemoteC
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
     for (const v of message.clientIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(16).uint64(v!);
     }
     return writer;
@@ -826,7 +855,7 @@ export const CMsgRemoteClientBroadcastClientIDDeconflict: MessageFns<CMsgRemoteC
       switch (tag >>> 3) {
         case 2: {
           if (tag === 16) {
-            message.clientIds.push(longToNumber(reader.uint64()));
+            message.clientIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -834,7 +863,7 @@ export const CMsgRemoteClientBroadcastClientIDDeconflict: MessageFns<CMsgRemoteC
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.clientIds.push(longToNumber(reader.uint64()));
+              message.clientIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -942,7 +971,7 @@ export const CMsgRemoteDeviceAuthorizationRequest: MessageFns<CMsgRemoteDeviceAu
 function createBaseCMsgRemoteDeviceAuthorizationRequest_CKeyEscrowTicket(): CMsgRemoteDeviceAuthorizationRequest_CKeyEscrowTicket {
   return {
     password: Buffer.alloc(0),
-    identifier: 0,
+    identifier: 0n,
     payload: Buffer.alloc(0),
     timestamp: 0,
     usage: 0,
@@ -963,7 +992,10 @@ export const CMsgRemoteDeviceAuthorizationRequest_CKeyEscrowTicket: MessageFns<
     if (message.password !== undefined && message.password.length !== 0) {
       writer.uint32(10).bytes(message.password);
     }
-    if (message.identifier !== undefined && message.identifier !== 0) {
+    if (message.identifier !== undefined && message.identifier !== 0n) {
+      if (BigInt.asUintN(64, message.identifier) !== message.identifier) {
+        throw new globalThis.Error("value provided for field message.identifier of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.identifier);
     }
     if (message.payload !== undefined && message.payload.length !== 0) {
@@ -1010,7 +1042,7 @@ export const CMsgRemoteDeviceAuthorizationRequest_CKeyEscrowTicket: MessageFns<
             break;
           }
 
-          message.identifier = longToNumber(reader.uint64());
+          message.identifier = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1106,7 +1138,7 @@ export const CMsgRemoteDeviceAuthorizationCancelRequest: MessageFns<CMsgRemoteDe
 };
 
 function createBaseCMsgRemoteDeviceAuthorizationResponse(): CMsgRemoteDeviceAuthorizationResponse {
-  return { result: 0, steamid: 0, authKey: Buffer.alloc(0), deviceToken: Buffer.alloc(0) };
+  return { result: 0, steamid: 0n, authKey: Buffer.alloc(0), deviceToken: Buffer.alloc(0) };
 }
 
 export const CMsgRemoteDeviceAuthorizationResponse: MessageFns<CMsgRemoteDeviceAuthorizationResponse> = {
@@ -1114,7 +1146,10 @@ export const CMsgRemoteDeviceAuthorizationResponse: MessageFns<CMsgRemoteDeviceA
     if (message.result !== 0) {
       writer.uint32(8).int32(message.result);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     if (message.authKey !== undefined && message.authKey.length !== 0) {
@@ -1146,7 +1181,7 @@ export const CMsgRemoteDeviceAuthorizationResponse: MessageFns<CMsgRemoteDeviceA
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1226,13 +1261,13 @@ function createBaseCMsgRemoteDeviceStreamingRequest(): CMsgRemoteDeviceStreaming
     enableAudioStreaming: true,
     enableInputStreaming: true,
     networkTest: false,
-    clientId: 0,
+    clientId: 0n,
     supportedTransport: [],
     restricted: false,
     formFactor: 0,
     gamepadCount: 0,
     gamepads: [],
-    gameid: 0,
+    gameid: 0n,
     streamInterface: 0,
   };
 }
@@ -1275,7 +1310,10 @@ export const CMsgRemoteDeviceStreamingRequest: MessageFns<CMsgRemoteDeviceStream
     if (message.networkTest !== undefined && message.networkTest !== false) {
       writer.uint32(96).bool(message.networkTest);
     }
-    if (message.clientId !== undefined && message.clientId !== 0) {
+    if (message.clientId !== undefined && message.clientId !== 0n) {
+      if (BigInt.asUintN(64, message.clientId) !== message.clientId) {
+        throw new globalThis.Error("value provided for field message.clientId of type uint64 too large");
+      }
       writer.uint32(104).uint64(message.clientId);
     }
     for (const v of message.supportedTransport) {
@@ -1293,7 +1331,10 @@ export const CMsgRemoteDeviceStreamingRequest: MessageFns<CMsgRemoteDeviceStream
     for (const v of message.gamepads) {
       CMsgRemoteDeviceStreamingRequest_ReservedGamepad.encode(v!, writer.uint32(146).fork()).join();
     }
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(152).uint64(message.gameid);
     }
     if (message.streamInterface !== undefined && message.streamInterface !== 0) {
@@ -1410,7 +1451,7 @@ export const CMsgRemoteDeviceStreamingRequest: MessageFns<CMsgRemoteDeviceStream
             break;
           }
 
-          message.clientId = longToNumber(reader.uint64());
+          message.clientId = reader.uint64() as bigint;
           continue;
         }
         case 14: {
@@ -1468,7 +1509,7 @@ export const CMsgRemoteDeviceStreamingRequest: MessageFns<CMsgRemoteDeviceStream
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
         case 20: {
@@ -1903,17 +1944,6 @@ export const CMsgRemoteDeviceStreamTransportSignal: MessageFns<CMsgRemoteDeviceS
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

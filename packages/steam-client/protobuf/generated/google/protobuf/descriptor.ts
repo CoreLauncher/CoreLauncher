@@ -1115,8 +1115,8 @@ export interface UninterpretedOption {
    * identified it as during parsing. Exactly one of these should be set.
    */
   identifierValue?: string | undefined;
-  positiveIntValue?: number | undefined;
-  negativeIntValue?: number | undefined;
+  positiveIntValue?: bigint | undefined;
+  negativeIntValue?: bigint | undefined;
   doubleValue?: number | undefined;
   stringValue?: Buffer | undefined;
   aggregateValue?: string | undefined;
@@ -3763,8 +3763,8 @@ function createBaseUninterpretedOption(): UninterpretedOption {
   return {
     name: [],
     identifierValue: "",
-    positiveIntValue: 0,
-    negativeIntValue: 0,
+    positiveIntValue: 0n,
+    negativeIntValue: 0n,
     doubleValue: 0,
     stringValue: Buffer.alloc(0),
     aggregateValue: "",
@@ -3779,10 +3779,16 @@ export const UninterpretedOption: MessageFns<UninterpretedOption> = {
     if (message.identifierValue !== undefined && message.identifierValue !== "") {
       writer.uint32(26).string(message.identifierValue);
     }
-    if (message.positiveIntValue !== undefined && message.positiveIntValue !== 0) {
+    if (message.positiveIntValue !== undefined && message.positiveIntValue !== 0n) {
+      if (BigInt.asUintN(64, message.positiveIntValue) !== message.positiveIntValue) {
+        throw new globalThis.Error("value provided for field message.positiveIntValue of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.positiveIntValue);
     }
-    if (message.negativeIntValue !== undefined && message.negativeIntValue !== 0) {
+    if (message.negativeIntValue !== undefined && message.negativeIntValue !== 0n) {
+      if (BigInt.asIntN(64, message.negativeIntValue) !== message.negativeIntValue) {
+        throw new globalThis.Error("value provided for field message.negativeIntValue of type int64 too large");
+      }
       writer.uint32(40).int64(message.negativeIntValue);
     }
     if (message.doubleValue !== undefined && message.doubleValue !== 0) {
@@ -3825,7 +3831,7 @@ export const UninterpretedOption: MessageFns<UninterpretedOption> = {
             break;
           }
 
-          message.positiveIntValue = longToNumber(reader.uint64());
+          message.positiveIntValue = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -3833,7 +3839,7 @@ export const UninterpretedOption: MessageFns<UninterpretedOption> = {
             break;
           }
 
-          message.negativeIntValue = longToNumber(reader.int64());
+          message.negativeIntValue = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -4459,17 +4465,6 @@ export const GeneratedCodeInfo_Annotation: MessageFns<GeneratedCodeInfo_Annotati
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

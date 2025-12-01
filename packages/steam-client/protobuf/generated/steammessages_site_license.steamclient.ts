@@ -11,8 +11,8 @@ import { NoResponse } from "./steammessages_unified_base.steamclient";
 export const protobufPackage = "";
 
 export interface CSiteManagerClientIncomingClientRequest {
-  siteInstanceid?: number | undefined;
-  clientSteamid?: number | undefined;
+  siteInstanceid?: bigint | undefined;
+  clientSteamid?: bigint | undefined;
   clientLocalIp?: number | undefined;
   connectionKey?: Buffer | undefined;
 }
@@ -26,14 +26,14 @@ export interface CSiteLicenseClientSeatCheckoutNotification {
 }
 
 export interface CSiteManagerClientTrackedPaymentsNotification {
-  siteId?: number | undefined;
+  siteId?: bigint | undefined;
   payments: CSiteManagerClientTrackedPaymentsNotification_Payment[];
 }
 
 export interface CSiteManagerClientTrackedPaymentsNotification_Payment {
-  transid?: number | undefined;
-  steamid?: number | undefined;
-  amount?: number | undefined;
+  transid?: bigint | undefined;
+  steamid?: bigint | undefined;
+  amount?: bigint | undefined;
   ecurrency?: number | undefined;
   timeCreated?: number | undefined;
   purchaseStatus?: number | undefined;
@@ -44,8 +44,8 @@ export interface CSiteManagerClientTrackedPaymentsNotification_Payment {
 }
 
 export interface CSiteLicenseInitiateAssociationRequest {
-  siteSteamid?: number | undefined;
-  siteInstanceid?: number | undefined;
+  siteSteamid?: bigint | undefined;
+  siteInstanceid?: bigint | undefined;
   clientLocalIp?: number | undefined;
 }
 
@@ -54,20 +54,20 @@ export interface CSiteLicenseInitiateAssociationResponse {
 }
 
 export interface CSiteLicenseLCSAuthenticateRequest {
-  instanceid?: number | undefined;
+  instanceid?: bigint | undefined;
 }
 
 export interface CSiteLicenseLCSAuthenticateResponse {
-  siteId?: number | undefined;
+  siteId?: bigint | undefined;
   siteName?: string | undefined;
   newSession?: boolean | undefined;
   noSiteLicenses?: boolean | undefined;
 }
 
 export interface CSiteLicenseLCSAssociateUserRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   localIp?: number | undefined;
-  instanceid?: number | undefined;
+  instanceid?: bigint | undefined;
   machineName?: string | undefined;
 }
 
@@ -75,8 +75,8 @@ export interface CSiteLicenseLCSAssociateUserResponse {
 }
 
 export interface CSiteLicenseClientSeatCheckoutRequest {
-  steamid?: number | undefined;
-  instanceid?: number | undefined;
+  steamid?: bigint | undefined;
+  instanceid?: bigint | undefined;
   appid?: number | undefined;
 }
 
@@ -84,8 +84,8 @@ export interface CSiteLicenseClientSeatCheckoutResponse {
 }
 
 export interface CSiteLicenseClientGetAvailableSeatsRequest {
-  steamid?: number | undefined;
-  instanceid?: number | undefined;
+  steamid?: bigint | undefined;
+  instanceid?: bigint | undefined;
   appid?: number | undefined;
 }
 
@@ -94,15 +94,21 @@ export interface CSiteLicenseClientGetAvailableSeatsResponse {
 }
 
 function createBaseCSiteManagerClientIncomingClientRequest(): CSiteManagerClientIncomingClientRequest {
-  return { siteInstanceid: 0, clientSteamid: 0, clientLocalIp: 0, connectionKey: Buffer.alloc(0) };
+  return { siteInstanceid: 0n, clientSteamid: 0n, clientLocalIp: 0, connectionKey: Buffer.alloc(0) };
 }
 
 export const CSiteManagerClientIncomingClientRequest: MessageFns<CSiteManagerClientIncomingClientRequest> = {
   encode(message: CSiteManagerClientIncomingClientRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.siteInstanceid !== undefined && message.siteInstanceid !== 0) {
+    if (message.siteInstanceid !== undefined && message.siteInstanceid !== 0n) {
+      if (BigInt.asUintN(64, message.siteInstanceid) !== message.siteInstanceid) {
+        throw new globalThis.Error("value provided for field message.siteInstanceid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.siteInstanceid);
     }
-    if (message.clientSteamid !== undefined && message.clientSteamid !== 0) {
+    if (message.clientSteamid !== undefined && message.clientSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.clientSteamid) !== message.clientSteamid) {
+        throw new globalThis.Error("value provided for field message.clientSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.clientSteamid);
     }
     if (message.clientLocalIp !== undefined && message.clientLocalIp !== 0) {
@@ -126,7 +132,7 @@ export const CSiteManagerClientIncomingClientRequest: MessageFns<CSiteManagerCli
             break;
           }
 
-          message.siteInstanceid = longToNumber(reader.fixed64());
+          message.siteInstanceid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -134,7 +140,7 @@ export const CSiteManagerClientIncomingClientRequest: MessageFns<CSiteManagerCli
             break;
           }
 
-          message.clientSteamid = longToNumber(reader.fixed64());
+          message.clientSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -238,7 +244,7 @@ export const CSiteLicenseClientSeatCheckoutNotification: MessageFns<CSiteLicense
 };
 
 function createBaseCSiteManagerClientTrackedPaymentsNotification(): CSiteManagerClientTrackedPaymentsNotification {
-  return { siteId: 0, payments: [] };
+  return { siteId: 0n, payments: [] };
 }
 
 export const CSiteManagerClientTrackedPaymentsNotification: MessageFns<CSiteManagerClientTrackedPaymentsNotification> =
@@ -247,7 +253,10 @@ export const CSiteManagerClientTrackedPaymentsNotification: MessageFns<CSiteMana
       message: CSiteManagerClientTrackedPaymentsNotification,
       writer: BinaryWriter = new BinaryWriter(),
     ): BinaryWriter {
-      if (message.siteId !== undefined && message.siteId !== 0) {
+      if (message.siteId !== undefined && message.siteId !== 0n) {
+        if (BigInt.asUintN(64, message.siteId) !== message.siteId) {
+          throw new globalThis.Error("value provided for field message.siteId of type fixed64 too large");
+        }
         writer.uint32(9).fixed64(message.siteId);
       }
       for (const v of message.payments) {
@@ -268,7 +277,7 @@ export const CSiteManagerClientTrackedPaymentsNotification: MessageFns<CSiteMana
               break;
             }
 
-            message.siteId = longToNumber(reader.fixed64());
+            message.siteId = reader.fixed64() as bigint;
             continue;
           }
           case 2: {
@@ -293,9 +302,9 @@ export const CSiteManagerClientTrackedPaymentsNotification: MessageFns<CSiteMana
 
 function createBaseCSiteManagerClientTrackedPaymentsNotification_Payment(): CSiteManagerClientTrackedPaymentsNotification_Payment {
   return {
-    transid: 0,
-    steamid: 0,
-    amount: 0,
+    transid: 0n,
+    steamid: 0n,
+    amount: 0n,
     ecurrency: 0,
     timeCreated: 0,
     purchaseStatus: 0,
@@ -313,13 +322,22 @@ export const CSiteManagerClientTrackedPaymentsNotification_Payment: MessageFns<
     message: CSiteManagerClientTrackedPaymentsNotification_Payment,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.transid !== undefined && message.transid !== 0) {
+    if (message.transid !== undefined && message.transid !== 0n) {
+      if (BigInt.asUintN(64, message.transid) !== message.transid) {
+        throw new globalThis.Error("value provided for field message.transid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.transid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
-    if (message.amount !== undefined && message.amount !== 0) {
+    if (message.amount !== undefined && message.amount !== 0n) {
+      if (BigInt.asIntN(64, message.amount) !== message.amount) {
+        throw new globalThis.Error("value provided for field message.amount of type int64 too large");
+      }
       writer.uint32(24).int64(message.amount);
     }
     if (message.ecurrency !== undefined && message.ecurrency !== 0) {
@@ -358,7 +376,7 @@ export const CSiteManagerClientTrackedPaymentsNotification_Payment: MessageFns<
             break;
           }
 
-          message.transid = longToNumber(reader.uint64());
+          message.transid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -366,7 +384,7 @@ export const CSiteManagerClientTrackedPaymentsNotification_Payment: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -374,7 +392,7 @@ export const CSiteManagerClientTrackedPaymentsNotification_Payment: MessageFns<
             break;
           }
 
-          message.amount = longToNumber(reader.int64());
+          message.amount = reader.int64() as bigint;
           continue;
         }
         case 4: {
@@ -444,15 +462,21 @@ export const CSiteManagerClientTrackedPaymentsNotification_Payment: MessageFns<
 };
 
 function createBaseCSiteLicenseInitiateAssociationRequest(): CSiteLicenseInitiateAssociationRequest {
-  return { siteSteamid: 0, siteInstanceid: 0, clientLocalIp: 0 };
+  return { siteSteamid: 0n, siteInstanceid: 0n, clientLocalIp: 0 };
 }
 
 export const CSiteLicenseInitiateAssociationRequest: MessageFns<CSiteLicenseInitiateAssociationRequest> = {
   encode(message: CSiteLicenseInitiateAssociationRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.siteSteamid !== undefined && message.siteSteamid !== 0) {
+    if (message.siteSteamid !== undefined && message.siteSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.siteSteamid) !== message.siteSteamid) {
+        throw new globalThis.Error("value provided for field message.siteSteamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.siteSteamid);
     }
-    if (message.siteInstanceid !== undefined && message.siteInstanceid !== 0) {
+    if (message.siteInstanceid !== undefined && message.siteInstanceid !== 0n) {
+      if (BigInt.asUintN(64, message.siteInstanceid) !== message.siteInstanceid) {
+        throw new globalThis.Error("value provided for field message.siteInstanceid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.siteInstanceid);
     }
     if (message.clientLocalIp !== undefined && message.clientLocalIp !== 0) {
@@ -473,7 +497,7 @@ export const CSiteLicenseInitiateAssociationRequest: MessageFns<CSiteLicenseInit
             break;
           }
 
-          message.siteSteamid = longToNumber(reader.fixed64());
+          message.siteSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -481,7 +505,7 @@ export const CSiteLicenseInitiateAssociationRequest: MessageFns<CSiteLicenseInit
             break;
           }
 
-          message.siteInstanceid = longToNumber(reader.fixed64());
+          message.siteInstanceid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -540,12 +564,15 @@ export const CSiteLicenseInitiateAssociationResponse: MessageFns<CSiteLicenseIni
 };
 
 function createBaseCSiteLicenseLCSAuthenticateRequest(): CSiteLicenseLCSAuthenticateRequest {
-  return { instanceid: 0 };
+  return { instanceid: 0n };
 }
 
 export const CSiteLicenseLCSAuthenticateRequest: MessageFns<CSiteLicenseLCSAuthenticateRequest> = {
   encode(message: CSiteLicenseLCSAuthenticateRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.instanceid !== undefined && message.instanceid !== 0) {
+    if (message.instanceid !== undefined && message.instanceid !== 0n) {
+      if (BigInt.asUintN(64, message.instanceid) !== message.instanceid) {
+        throw new globalThis.Error("value provided for field message.instanceid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.instanceid);
     }
     return writer;
@@ -563,7 +590,7 @@ export const CSiteLicenseLCSAuthenticateRequest: MessageFns<CSiteLicenseLCSAuthe
             break;
           }
 
-          message.instanceid = longToNumber(reader.fixed64());
+          message.instanceid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -577,12 +604,15 @@ export const CSiteLicenseLCSAuthenticateRequest: MessageFns<CSiteLicenseLCSAuthe
 };
 
 function createBaseCSiteLicenseLCSAuthenticateResponse(): CSiteLicenseLCSAuthenticateResponse {
-  return { siteId: 0, siteName: "", newSession: false, noSiteLicenses: false };
+  return { siteId: 0n, siteName: "", newSession: false, noSiteLicenses: false };
 }
 
 export const CSiteLicenseLCSAuthenticateResponse: MessageFns<CSiteLicenseLCSAuthenticateResponse> = {
   encode(message: CSiteLicenseLCSAuthenticateResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.siteId !== undefined && message.siteId !== 0) {
+    if (message.siteId !== undefined && message.siteId !== 0n) {
+      if (BigInt.asUintN(64, message.siteId) !== message.siteId) {
+        throw new globalThis.Error("value provided for field message.siteId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.siteId);
     }
     if (message.siteName !== undefined && message.siteName !== "") {
@@ -609,7 +639,7 @@ export const CSiteLicenseLCSAuthenticateResponse: MessageFns<CSiteLicenseLCSAuth
             break;
           }
 
-          message.siteId = longToNumber(reader.uint64());
+          message.siteId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -647,18 +677,24 @@ export const CSiteLicenseLCSAuthenticateResponse: MessageFns<CSiteLicenseLCSAuth
 };
 
 function createBaseCSiteLicenseLCSAssociateUserRequest(): CSiteLicenseLCSAssociateUserRequest {
-  return { steamid: 0, localIp: 0, instanceid: 0, machineName: "" };
+  return { steamid: 0n, localIp: 0, instanceid: 0n, machineName: "" };
 }
 
 export const CSiteLicenseLCSAssociateUserRequest: MessageFns<CSiteLicenseLCSAssociateUserRequest> = {
   encode(message: CSiteLicenseLCSAssociateUserRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.localIp !== undefined && message.localIp !== 0) {
       writer.uint32(21).fixed32(message.localIp);
     }
-    if (message.instanceid !== undefined && message.instanceid !== 0) {
+    if (message.instanceid !== undefined && message.instanceid !== 0n) {
+      if (BigInt.asUintN(64, message.instanceid) !== message.instanceid) {
+        throw new globalThis.Error("value provided for field message.instanceid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.instanceid);
     }
     if (message.machineName !== undefined && message.machineName !== "") {
@@ -679,7 +715,7 @@ export const CSiteLicenseLCSAssociateUserRequest: MessageFns<CSiteLicenseLCSAsso
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -695,7 +731,7 @@ export const CSiteLicenseLCSAssociateUserRequest: MessageFns<CSiteLicenseLCSAsso
             break;
           }
 
-          message.instanceid = longToNumber(reader.fixed64());
+          message.instanceid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -743,15 +779,21 @@ export const CSiteLicenseLCSAssociateUserResponse: MessageFns<CSiteLicenseLCSAss
 };
 
 function createBaseCSiteLicenseClientSeatCheckoutRequest(): CSiteLicenseClientSeatCheckoutRequest {
-  return { steamid: 0, instanceid: 0, appid: 0 };
+  return { steamid: 0n, instanceid: 0n, appid: 0 };
 }
 
 export const CSiteLicenseClientSeatCheckoutRequest: MessageFns<CSiteLicenseClientSeatCheckoutRequest> = {
   encode(message: CSiteLicenseClientSeatCheckoutRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.instanceid !== undefined && message.instanceid !== 0) {
+    if (message.instanceid !== undefined && message.instanceid !== 0n) {
+      if (BigInt.asUintN(64, message.instanceid) !== message.instanceid) {
+        throw new globalThis.Error("value provided for field message.instanceid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.instanceid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
@@ -772,7 +814,7 @@ export const CSiteLicenseClientSeatCheckoutRequest: MessageFns<CSiteLicenseClien
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -780,7 +822,7 @@ export const CSiteLicenseClientSeatCheckoutRequest: MessageFns<CSiteLicenseClien
             break;
           }
 
-          message.instanceid = longToNumber(reader.fixed64());
+          message.instanceid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -828,15 +870,21 @@ export const CSiteLicenseClientSeatCheckoutResponse: MessageFns<CSiteLicenseClie
 };
 
 function createBaseCSiteLicenseClientGetAvailableSeatsRequest(): CSiteLicenseClientGetAvailableSeatsRequest {
-  return { steamid: 0, instanceid: 0, appid: 0 };
+  return { steamid: 0n, instanceid: 0n, appid: 0 };
 }
 
 export const CSiteLicenseClientGetAvailableSeatsRequest: MessageFns<CSiteLicenseClientGetAvailableSeatsRequest> = {
   encode(message: CSiteLicenseClientGetAvailableSeatsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.instanceid !== undefined && message.instanceid !== 0) {
+    if (message.instanceid !== undefined && message.instanceid !== 0n) {
+      if (BigInt.asUintN(64, message.instanceid) !== message.instanceid) {
+        throw new globalThis.Error("value provided for field message.instanceid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.instanceid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
@@ -857,7 +905,7 @@ export const CSiteLicenseClientGetAvailableSeatsRequest: MessageFns<CSiteLicense
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -865,7 +913,7 @@ export const CSiteLicenseClientGetAvailableSeatsRequest: MessageFns<CSiteLicense
             break;
           }
 
-          message.instanceid = longToNumber(reader.fixed64());
+          message.instanceid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1024,17 +1072,6 @@ export class SiteLicenseClientImpl implements SiteLicense {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

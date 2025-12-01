@@ -36,12 +36,12 @@ export interface CGameNetworkingUIConnectionState {
   pingDefaultInternetRoute?: number | undefined;
   e2eQualityLocal?: CMsgSteamDatagramConnectionQuality | undefined;
   e2eQualityRemote?: CMsgSteamDatagramConnectionQuality | undefined;
-  e2eQualityRemoteInstantaneousTime?: number | undefined;
-  e2eQualityRemoteLifetimeTime?: number | undefined;
+  e2eQualityRemoteInstantaneousTime?: bigint | undefined;
+  e2eQualityRemoteLifetimeTime?: bigint | undefined;
   frontQualityLocal?: CMsgSteamDatagramConnectionQuality | undefined;
   frontQualityRemote?: CMsgSteamDatagramConnectionQuality | undefined;
-  frontQualityRemoteInstantaneousTime?: number | undefined;
-  frontQualityRemoteLifetimeTime?: number | undefined;
+  frontQualityRemoteInstantaneousTime?: bigint | undefined;
+  frontQualityRemoteLifetimeTime?: bigint | undefined;
 }
 
 export interface CGameNetworkingUIMessage {
@@ -116,12 +116,12 @@ function createBaseCGameNetworkingUIConnectionState(): CGameNetworkingUIConnecti
     pingDefaultInternetRoute: 0,
     e2eQualityLocal: undefined,
     e2eQualityRemote: undefined,
-    e2eQualityRemoteInstantaneousTime: 0,
-    e2eQualityRemoteLifetimeTime: 0,
+    e2eQualityRemoteInstantaneousTime: 0n,
+    e2eQualityRemoteLifetimeTime: 0n,
     frontQualityLocal: undefined,
     frontQualityRemote: undefined,
-    frontQualityRemoteInstantaneousTime: 0,
-    frontQualityRemoteLifetimeTime: 0,
+    frontQualityRemoteInstantaneousTime: 0n,
+    frontQualityRemoteLifetimeTime: 0n,
   };
 }
 
@@ -190,10 +190,20 @@ export const CGameNetworkingUIConnectionState: MessageFns<CGameNetworkingUIConne
     if (message.e2eQualityRemote !== undefined) {
       CMsgSteamDatagramConnectionQuality.encode(message.e2eQualityRemote, writer.uint32(250).fork()).join();
     }
-    if (message.e2eQualityRemoteInstantaneousTime !== undefined && message.e2eQualityRemoteInstantaneousTime !== 0) {
+    if (message.e2eQualityRemoteInstantaneousTime !== undefined && message.e2eQualityRemoteInstantaneousTime !== 0n) {
+      if (BigInt.asUintN(64, message.e2eQualityRemoteInstantaneousTime) !== message.e2eQualityRemoteInstantaneousTime) {
+        throw new globalThis.Error(
+          "value provided for field message.e2eQualityRemoteInstantaneousTime of type uint64 too large",
+        );
+      }
       writer.uint32(256).uint64(message.e2eQualityRemoteInstantaneousTime);
     }
-    if (message.e2eQualityRemoteLifetimeTime !== undefined && message.e2eQualityRemoteLifetimeTime !== 0) {
+    if (message.e2eQualityRemoteLifetimeTime !== undefined && message.e2eQualityRemoteLifetimeTime !== 0n) {
+      if (BigInt.asUintN(64, message.e2eQualityRemoteLifetimeTime) !== message.e2eQualityRemoteLifetimeTime) {
+        throw new globalThis.Error(
+          "value provided for field message.e2eQualityRemoteLifetimeTime of type uint64 too large",
+        );
+      }
       writer.uint32(264).uint64(message.e2eQualityRemoteLifetimeTime);
     }
     if (message.frontQualityLocal !== undefined) {
@@ -203,11 +213,23 @@ export const CGameNetworkingUIConnectionState: MessageFns<CGameNetworkingUIConne
       CMsgSteamDatagramConnectionQuality.encode(message.frontQualityRemote, writer.uint32(330).fork()).join();
     }
     if (
-      message.frontQualityRemoteInstantaneousTime !== undefined && message.frontQualityRemoteInstantaneousTime !== 0
+      message.frontQualityRemoteInstantaneousTime !== undefined && message.frontQualityRemoteInstantaneousTime !== 0n
     ) {
+      if (
+        BigInt.asUintN(64, message.frontQualityRemoteInstantaneousTime) !== message.frontQualityRemoteInstantaneousTime
+      ) {
+        throw new globalThis.Error(
+          "value provided for field message.frontQualityRemoteInstantaneousTime of type uint64 too large",
+        );
+      }
       writer.uint32(336).uint64(message.frontQualityRemoteInstantaneousTime);
     }
-    if (message.frontQualityRemoteLifetimeTime !== undefined && message.frontQualityRemoteLifetimeTime !== 0) {
+    if (message.frontQualityRemoteLifetimeTime !== undefined && message.frontQualityRemoteLifetimeTime !== 0n) {
+      if (BigInt.asUintN(64, message.frontQualityRemoteLifetimeTime) !== message.frontQualityRemoteLifetimeTime) {
+        throw new globalThis.Error(
+          "value provided for field message.frontQualityRemoteLifetimeTime of type uint64 too large",
+        );
+      }
       writer.uint32(344).uint64(message.frontQualityRemoteLifetimeTime);
     }
     return writer;
@@ -393,7 +415,7 @@ export const CGameNetworkingUIConnectionState: MessageFns<CGameNetworkingUIConne
             break;
           }
 
-          message.e2eQualityRemoteInstantaneousTime = longToNumber(reader.uint64());
+          message.e2eQualityRemoteInstantaneousTime = reader.uint64() as bigint;
           continue;
         }
         case 33: {
@@ -401,7 +423,7 @@ export const CGameNetworkingUIConnectionState: MessageFns<CGameNetworkingUIConne
             break;
           }
 
-          message.e2eQualityRemoteLifetimeTime = longToNumber(reader.uint64());
+          message.e2eQualityRemoteLifetimeTime = reader.uint64() as bigint;
           continue;
         }
         case 40: {
@@ -425,7 +447,7 @@ export const CGameNetworkingUIConnectionState: MessageFns<CGameNetworkingUIConne
             break;
           }
 
-          message.frontQualityRemoteInstantaneousTime = longToNumber(reader.uint64());
+          message.frontQualityRemoteInstantaneousTime = reader.uint64() as bigint;
           continue;
         }
         case 43: {
@@ -433,7 +455,7 @@ export const CGameNetworkingUIConnectionState: MessageFns<CGameNetworkingUIConne
             break;
           }
 
-          message.frontQualityRemoteLifetimeTime = longToNumber(reader.uint64());
+          message.frontQualityRemoteLifetimeTime = reader.uint64() as bigint;
           continue;
         }
       }
@@ -692,17 +714,6 @@ export const CGameNetworkingUIAppSummary: MessageFns<CGameNetworkingUIAppSummary
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

@@ -15,21 +15,21 @@ import {
 export const protobufPackage = "";
 
 export interface CVideoManagerClipID {
-  videoManagerClipId?: number | undefined;
-  videoManagerVideoId?: number | undefined;
-  serverTimelineId?: number | undefined;
+  videoManagerClipId?: bigint | undefined;
+  videoManagerVideoId?: bigint | undefined;
+  serverTimelineId?: bigint | undefined;
   manifestUrl?: string | undefined;
   durationMs?: number | undefined;
   startOffsetMs?: number | undefined;
 }
 
 export interface CGameRecordingClip {
-  clipId?: number | undefined;
-  gameid?: number | undefined;
+  clipId?: bigint | undefined;
+  gameid?: bigint | undefined;
   dateRecorded?: number | undefined;
-  totalFileSizeBytes?: number | undefined;
+  totalFileSizeBytes?: bigint | undefined;
   videoIds: CVideoManagerClipID[];
-  ownerSteamid?: number | undefined;
+  ownerSteamid?: bigint | undefined;
   uploadComplete?: boolean | undefined;
   durationMs?: number | undefined;
 }
@@ -44,14 +44,14 @@ export interface CGameRecordingCreateShareClipResponse {
 }
 
 export interface CGameRecordingDeleteSharedClipRequest {
-  clipId?: number | undefined;
+  clipId?: bigint | undefined;
 }
 
 export interface CGameRecordingDeleteSharedClipResponse {
 }
 
 export interface CGameRecordingGetSingleSharedClipRequest {
-  clipId?: number | undefined;
+  clipId?: bigint | undefined;
 }
 
 export interface CGameRecordingGetSingleSharedClipResponse {
@@ -59,7 +59,7 @@ export interface CGameRecordingGetSingleSharedClipResponse {
 }
 
 export interface CVideoBeginGameRecordingSegmentsUploadRequest {
-  recordingId?: number | undefined;
+  recordingId?: bigint | undefined;
   componentName?: string | undefined;
   representationName?: string | undefined;
   segmentsToStore: CVideoGameRecordingSegmentInfo[];
@@ -71,7 +71,7 @@ export interface CVideoBeginGameRecordingSegmentsUploadResponse {
 }
 
 export interface CVideoCommitGameRecordingSegmentsUploadRequest {
-  recordingId?: number | undefined;
+  recordingId?: bigint | undefined;
   componentName?: string | undefined;
   representationName?: string | undefined;
   firstSegmentNumber?: number | undefined;
@@ -83,7 +83,7 @@ export interface CVideoCommitGameRecordingSegmentsUploadResponse {
 }
 
 export interface CVideoGameRecordingGetNextBatchOfSegmentsToUploadRequest {
-  recordingId?: number | undefined;
+  recordingId?: bigint | undefined;
 }
 
 export interface CVideoGameRecordingGetNextBatchOfSegmentsToUploadResponse {
@@ -91,7 +91,7 @@ export interface CVideoGameRecordingGetNextBatchOfSegmentsToUploadResponse {
 }
 
 export interface CVideoGameRecordingCommitSegmentUploadsRequest {
-  recordingId?: number | undefined;
+  recordingId?: bigint | undefined;
   segmentsUploaded: CVideoGameRecordingSegmentInfo[];
 }
 
@@ -100,9 +100,9 @@ export interface CVideoGameRecordingCommitSegmentUploadsResponse {
 
 function createBaseCVideoManagerClipID(): CVideoManagerClipID {
   return {
-    videoManagerClipId: 0,
-    videoManagerVideoId: 0,
-    serverTimelineId: 0,
+    videoManagerClipId: 0n,
+    videoManagerVideoId: 0n,
+    serverTimelineId: 0n,
     manifestUrl: "",
     durationMs: 0,
     startOffsetMs: 0,
@@ -111,13 +111,22 @@ function createBaseCVideoManagerClipID(): CVideoManagerClipID {
 
 export const CVideoManagerClipID: MessageFns<CVideoManagerClipID> = {
   encode(message: CVideoManagerClipID, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.videoManagerClipId !== undefined && message.videoManagerClipId !== 0) {
+    if (message.videoManagerClipId !== undefined && message.videoManagerClipId !== 0n) {
+      if (BigInt.asUintN(64, message.videoManagerClipId) !== message.videoManagerClipId) {
+        throw new globalThis.Error("value provided for field message.videoManagerClipId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.videoManagerClipId);
     }
-    if (message.videoManagerVideoId !== undefined && message.videoManagerVideoId !== 0) {
+    if (message.videoManagerVideoId !== undefined && message.videoManagerVideoId !== 0n) {
+      if (BigInt.asUintN(64, message.videoManagerVideoId) !== message.videoManagerVideoId) {
+        throw new globalThis.Error("value provided for field message.videoManagerVideoId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.videoManagerVideoId);
     }
-    if (message.serverTimelineId !== undefined && message.serverTimelineId !== 0) {
+    if (message.serverTimelineId !== undefined && message.serverTimelineId !== 0n) {
+      if (BigInt.asUintN(64, message.serverTimelineId) !== message.serverTimelineId) {
+        throw new globalThis.Error("value provided for field message.serverTimelineId of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.serverTimelineId);
     }
     if (message.manifestUrl !== undefined && message.manifestUrl !== "") {
@@ -144,7 +153,7 @@ export const CVideoManagerClipID: MessageFns<CVideoManagerClipID> = {
             break;
           }
 
-          message.videoManagerClipId = longToNumber(reader.fixed64());
+          message.videoManagerClipId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -152,7 +161,7 @@ export const CVideoManagerClipID: MessageFns<CVideoManagerClipID> = {
             break;
           }
 
-          message.videoManagerVideoId = longToNumber(reader.fixed64());
+          message.videoManagerVideoId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -160,7 +169,7 @@ export const CVideoManagerClipID: MessageFns<CVideoManagerClipID> = {
             break;
           }
 
-          message.serverTimelineId = longToNumber(reader.fixed64());
+          message.serverTimelineId = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -199,12 +208,12 @@ export const CVideoManagerClipID: MessageFns<CVideoManagerClipID> = {
 
 function createBaseCGameRecordingClip(): CGameRecordingClip {
   return {
-    clipId: 0,
-    gameid: 0,
+    clipId: 0n,
+    gameid: 0n,
     dateRecorded: 0,
-    totalFileSizeBytes: 0,
+    totalFileSizeBytes: 0n,
     videoIds: [],
-    ownerSteamid: 0,
+    ownerSteamid: 0n,
     uploadComplete: false,
     durationMs: 0,
   };
@@ -212,22 +221,34 @@ function createBaseCGameRecordingClip(): CGameRecordingClip {
 
 export const CGameRecordingClip: MessageFns<CGameRecordingClip> = {
   encode(message: CGameRecordingClip, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.clipId !== undefined && message.clipId !== 0) {
+    if (message.clipId !== undefined && message.clipId !== 0n) {
+      if (BigInt.asUintN(64, message.clipId) !== message.clipId) {
+        throw new globalThis.Error("value provided for field message.clipId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.clipId);
     }
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.gameid);
     }
     if (message.dateRecorded !== undefined && message.dateRecorded !== 0) {
       writer.uint32(32).uint32(message.dateRecorded);
     }
-    if (message.totalFileSizeBytes !== undefined && message.totalFileSizeBytes !== 0) {
+    if (message.totalFileSizeBytes !== undefined && message.totalFileSizeBytes !== 0n) {
+      if (BigInt.asUintN(64, message.totalFileSizeBytes) !== message.totalFileSizeBytes) {
+        throw new globalThis.Error("value provided for field message.totalFileSizeBytes of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.totalFileSizeBytes);
     }
     for (const v of message.videoIds) {
       CVideoManagerClipID.encode(v!, writer.uint32(74).fork()).join();
     }
-    if (message.ownerSteamid !== undefined && message.ownerSteamid !== 0) {
+    if (message.ownerSteamid !== undefined && message.ownerSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.ownerSteamid) !== message.ownerSteamid) {
+        throw new globalThis.Error("value provided for field message.ownerSteamid of type fixed64 too large");
+      }
       writer.uint32(81).fixed64(message.ownerSteamid);
     }
     if (message.uploadComplete !== undefined && message.uploadComplete !== false) {
@@ -251,7 +272,7 @@ export const CGameRecordingClip: MessageFns<CGameRecordingClip> = {
             break;
           }
 
-          message.clipId = longToNumber(reader.fixed64());
+          message.clipId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -259,7 +280,7 @@ export const CGameRecordingClip: MessageFns<CGameRecordingClip> = {
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -275,7 +296,7 @@ export const CGameRecordingClip: MessageFns<CGameRecordingClip> = {
             break;
           }
 
-          message.totalFileSizeBytes = longToNumber(reader.uint64());
+          message.totalFileSizeBytes = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -291,7 +312,7 @@ export const CGameRecordingClip: MessageFns<CGameRecordingClip> = {
             break;
           }
 
-          message.ownerSteamid = longToNumber(reader.fixed64());
+          message.ownerSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 11: {
@@ -406,12 +427,15 @@ export const CGameRecordingCreateShareClipResponse: MessageFns<CGameRecordingCre
 };
 
 function createBaseCGameRecordingDeleteSharedClipRequest(): CGameRecordingDeleteSharedClipRequest {
-  return { clipId: 0 };
+  return { clipId: 0n };
 }
 
 export const CGameRecordingDeleteSharedClipRequest: MessageFns<CGameRecordingDeleteSharedClipRequest> = {
   encode(message: CGameRecordingDeleteSharedClipRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.clipId !== undefined && message.clipId !== 0) {
+    if (message.clipId !== undefined && message.clipId !== 0n) {
+      if (BigInt.asUintN(64, message.clipId) !== message.clipId) {
+        throw new globalThis.Error("value provided for field message.clipId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.clipId);
     }
     return writer;
@@ -429,7 +453,7 @@ export const CGameRecordingDeleteSharedClipRequest: MessageFns<CGameRecordingDel
             break;
           }
 
-          message.clipId = longToNumber(reader.fixed64());
+          message.clipId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -469,12 +493,15 @@ export const CGameRecordingDeleteSharedClipResponse: MessageFns<CGameRecordingDe
 };
 
 function createBaseCGameRecordingGetSingleSharedClipRequest(): CGameRecordingGetSingleSharedClipRequest {
-  return { clipId: 0 };
+  return { clipId: 0n };
 }
 
 export const CGameRecordingGetSingleSharedClipRequest: MessageFns<CGameRecordingGetSingleSharedClipRequest> = {
   encode(message: CGameRecordingGetSingleSharedClipRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.clipId !== undefined && message.clipId !== 0) {
+    if (message.clipId !== undefined && message.clipId !== 0n) {
+      if (BigInt.asUintN(64, message.clipId) !== message.clipId) {
+        throw new globalThis.Error("value provided for field message.clipId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.clipId);
     }
     return writer;
@@ -492,7 +519,7 @@ export const CGameRecordingGetSingleSharedClipRequest: MessageFns<CGameRecording
             break;
           }
 
-          message.clipId = longToNumber(reader.fixed64());
+          message.clipId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -543,7 +570,7 @@ export const CGameRecordingGetSingleSharedClipResponse: MessageFns<CGameRecordin
 };
 
 function createBaseCVideoBeginGameRecordingSegmentsUploadRequest(): CVideoBeginGameRecordingSegmentsUploadRequest {
-  return { recordingId: 0, componentName: "", representationName: "", segmentsToStore: [] };
+  return { recordingId: 0n, componentName: "", representationName: "", segmentsToStore: [] };
 }
 
 export const CVideoBeginGameRecordingSegmentsUploadRequest: MessageFns<CVideoBeginGameRecordingSegmentsUploadRequest> =
@@ -552,7 +579,10 @@ export const CVideoBeginGameRecordingSegmentsUploadRequest: MessageFns<CVideoBeg
       message: CVideoBeginGameRecordingSegmentsUploadRequest,
       writer: BinaryWriter = new BinaryWriter(),
     ): BinaryWriter {
-      if (message.recordingId !== undefined && message.recordingId !== 0) {
+      if (message.recordingId !== undefined && message.recordingId !== 0n) {
+        if (BigInt.asUintN(64, message.recordingId) !== message.recordingId) {
+          throw new globalThis.Error("value provided for field message.recordingId of type uint64 too large");
+        }
         writer.uint32(8).uint64(message.recordingId);
       }
       if (message.componentName !== undefined && message.componentName !== "") {
@@ -579,7 +609,7 @@ export const CVideoBeginGameRecordingSegmentsUploadRequest: MessageFns<CVideoBeg
               break;
             }
 
-            message.recordingId = longToNumber(reader.uint64());
+            message.recordingId = reader.uint64() as bigint;
             continue;
           }
           case 2: {
@@ -671,7 +701,7 @@ export const CVideoBeginGameRecordingSegmentsUploadResponse: MessageFns<
 
 function createBaseCVideoCommitGameRecordingSegmentsUploadRequest(): CVideoCommitGameRecordingSegmentsUploadRequest {
   return {
-    recordingId: 0,
+    recordingId: 0n,
     componentName: "",
     representationName: "",
     firstSegmentNumber: 0,
@@ -687,7 +717,10 @@ export const CVideoCommitGameRecordingSegmentsUploadRequest: MessageFns<
     message: CVideoCommitGameRecordingSegmentsUploadRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.recordingId !== undefined && message.recordingId !== 0) {
+    if (message.recordingId !== undefined && message.recordingId !== 0n) {
+      if (BigInt.asUintN(64, message.recordingId) !== message.recordingId) {
+        throw new globalThis.Error("value provided for field message.recordingId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.recordingId);
     }
     if (message.componentName !== undefined && message.componentName !== "") {
@@ -720,7 +753,7 @@ export const CVideoCommitGameRecordingSegmentsUploadRequest: MessageFns<
             break;
           }
 
-          message.recordingId = longToNumber(reader.uint64());
+          message.recordingId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -802,7 +835,7 @@ export const CVideoCommitGameRecordingSegmentsUploadResponse: MessageFns<
 };
 
 function createBaseCVideoGameRecordingGetNextBatchOfSegmentsToUploadRequest(): CVideoGameRecordingGetNextBatchOfSegmentsToUploadRequest {
-  return { recordingId: 0 };
+  return { recordingId: 0n };
 }
 
 export const CVideoGameRecordingGetNextBatchOfSegmentsToUploadRequest: MessageFns<
@@ -812,7 +845,10 @@ export const CVideoGameRecordingGetNextBatchOfSegmentsToUploadRequest: MessageFn
     message: CVideoGameRecordingGetNextBatchOfSegmentsToUploadRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.recordingId !== undefined && message.recordingId !== 0) {
+    if (message.recordingId !== undefined && message.recordingId !== 0n) {
+      if (BigInt.asUintN(64, message.recordingId) !== message.recordingId) {
+        throw new globalThis.Error("value provided for field message.recordingId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.recordingId);
     }
     return writer;
@@ -830,7 +866,7 @@ export const CVideoGameRecordingGetNextBatchOfSegmentsToUploadRequest: MessageFn
             break;
           }
 
-          message.recordingId = longToNumber(reader.uint64());
+          message.recordingId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -886,7 +922,7 @@ export const CVideoGameRecordingGetNextBatchOfSegmentsToUploadResponse: MessageF
 };
 
 function createBaseCVideoGameRecordingCommitSegmentUploadsRequest(): CVideoGameRecordingCommitSegmentUploadsRequest {
-  return { recordingId: 0, segmentsUploaded: [] };
+  return { recordingId: 0n, segmentsUploaded: [] };
 }
 
 export const CVideoGameRecordingCommitSegmentUploadsRequest: MessageFns<
@@ -896,7 +932,10 @@ export const CVideoGameRecordingCommitSegmentUploadsRequest: MessageFns<
     message: CVideoGameRecordingCommitSegmentUploadsRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.recordingId !== undefined && message.recordingId !== 0) {
+    if (message.recordingId !== undefined && message.recordingId !== 0n) {
+      if (BigInt.asUintN(64, message.recordingId) !== message.recordingId) {
+        throw new globalThis.Error("value provided for field message.recordingId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.recordingId);
     }
     for (const v of message.segmentsUploaded) {
@@ -917,7 +956,7 @@ export const CVideoGameRecordingCommitSegmentUploadsRequest: MessageFns<
             break;
           }
 
-          message.recordingId = longToNumber(reader.uint64());
+          message.recordingId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1070,17 +1109,6 @@ export class VideoClipClientImpl implements VideoClip {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

@@ -18,7 +18,7 @@ export interface CClientMetricsClientBootstrapRequestInfo {
   statusCode?: number | undefined;
   addressOfRequestUrl?: string | undefined;
   responseTimeMs?: number | undefined;
-  bytesReceived?: number | undefined;
+  bytesReceived?: bigint | undefined;
   numRetries?: number | undefined;
 }
 
@@ -62,7 +62,7 @@ function createBaseCClientMetricsClientBootstrapRequestInfo(): CClientMetricsCli
     statusCode: 0,
     addressOfRequestUrl: "",
     responseTimeMs: 0,
-    bytesReceived: 0,
+    bytesReceived: 0n,
     numRetries: 0,
   };
 }
@@ -93,7 +93,10 @@ export const CClientMetricsClientBootstrapRequestInfo: MessageFns<CClientMetrics
     if (message.responseTimeMs !== undefined && message.responseTimeMs !== 0) {
       writer.uint32(64).uint32(message.responseTimeMs);
     }
-    if (message.bytesReceived !== undefined && message.bytesReceived !== 0) {
+    if (message.bytesReceived !== undefined && message.bytesReceived !== 0n) {
+      if (BigInt.asUintN(64, message.bytesReceived) !== message.bytesReceived) {
+        throw new globalThis.Error("value provided for field message.bytesReceived of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.bytesReceived);
     }
     if (message.numRetries !== undefined && message.numRetries !== 0) {
@@ -178,7 +181,7 @@ export const CClientMetricsClientBootstrapRequestInfo: MessageFns<CClientMetrics
             break;
           }
 
-          message.bytesReceived = longToNumber(reader.uint64());
+          message.bytesReceived = reader.uint64() as bigint;
           continue;
         }
         case 10: {
@@ -516,17 +519,6 @@ export const CClientMetricsContentDownloadResponseHosts: MessageFns<CClientMetri
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

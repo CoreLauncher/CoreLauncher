@@ -59,7 +59,7 @@ export interface CClientMetricsAppInterfaceMethodCounts {
 }
 
 export interface CClientMetricsAppInterfaceStatsNotification {
-  gameId?: number | undefined;
+  gameId?: bigint | undefined;
   interfacesCreated: CClientMetricsAppInterfaceCreation[];
   methodsCalled: CClientMetricsAppInterfaceMethodCounts[];
   sessionLengthSeconds?: number | undefined;
@@ -79,11 +79,11 @@ export interface CClientMetricsIPv6ConnectivityNotification {
 export interface CClientMetricsSteamPipeWorkStatsOperation {
   type?: ESteamPipeOperationType | undefined;
   numOps?: number | undefined;
-  numBytes?: number | undefined;
-  busyTimeMs?: number | undefined;
-  idleTimeMs?: number | undefined;
-  sumRunTimeMs?: number | undefined;
-  sumWaitTimeMs?: number | undefined;
+  numBytes?: bigint | undefined;
+  busyTimeMs?: bigint | undefined;
+  idleTimeMs?: bigint | undefined;
+  sumRunTimeMs?: bigint | undefined;
+  sumWaitTimeMs?: bigint | undefined;
 }
 
 export interface CClientMetricsSteamPipeWorkStatsNotification {
@@ -146,16 +146,16 @@ export interface CClientMetricsDownloadRatesNotification {
 export interface CClientMetricsDownloadRatesNotification_StatsInfo {
   sourceType?: number | undefined;
   sourceId?: number | undefined;
-  bytes?: number | undefined;
+  bytes?: bigint | undefined;
   hostName?: string | undefined;
-  microseconds?: number | undefined;
+  microseconds?: bigint | undefined;
   usedIpv6?: boolean | undefined;
   proxied?: boolean | undefined;
   usedHttp2?: boolean | undefined;
   cacheHits?: number | undefined;
   cacheMisses?: number | undefined;
-  hitBytes?: number | undefined;
-  missBytes?: number | undefined;
+  hitBytes?: bigint | undefined;
+  missBytes?: bigint | undefined;
 }
 
 export interface CClientMetricsContentValidationNotification {
@@ -166,9 +166,9 @@ export interface CClientMetricsContentValidationNotification {
   earlyOut?: boolean | undefined;
   chunksScanned?: number | undefined;
   chunksCorrupt?: number | undefined;
-  bytesScanned?: number | undefined;
-  chunkBytesCorrupt?: number | undefined;
-  totalFileSizeCorrupt?: number | undefined;
+  bytesScanned?: bigint | undefined;
+  chunkBytesCorrupt?: bigint | undefined;
+  totalFileSizeCorrupt?: bigint | undefined;
 }
 
 export interface CClientMetricsCloudAppSyncStatsNotification {
@@ -179,18 +179,18 @@ export interface CClientMetricsCloudAppSyncStatsNotification {
   filesUploaded?: number | undefined;
   filesDownloaded?: number | undefined;
   filesDeleted?: number | undefined;
-  bytesUploaded?: number | undefined;
-  bytesDownloaded?: number | undefined;
-  microsecTotal?: number | undefined;
-  microsecInitCaches?: number | undefined;
-  microsecValidateState?: number | undefined;
-  microsecAcLaunch?: number | undefined;
-  microsecAcPrepUserFiles?: number | undefined;
-  microsecAcExit?: number | undefined;
-  microsecBuildSyncList?: number | undefined;
-  microsecDeleteFiles?: number | undefined;
-  microsecDownloadFiles?: number | undefined;
-  microsecUploadFiles?: number | undefined;
+  bytesUploaded?: bigint | undefined;
+  bytesDownloaded?: bigint | undefined;
+  microsecTotal?: bigint | undefined;
+  microsecInitCaches?: bigint | undefined;
+  microsecValidateState?: bigint | undefined;
+  microsecAcLaunch?: bigint | undefined;
+  microsecAcPrepUserFiles?: bigint | undefined;
+  microsecAcExit?: bigint | undefined;
+  microsecBuildSyncList?: bigint | undefined;
+  microsecDeleteFiles?: bigint | undefined;
+  microsecDownloadFiles?: bigint | undefined;
+  microsecUploadFiles?: bigint | undefined;
   hardwareType?: number | undefined;
   filesManaged?: number | undefined;
 }
@@ -234,8 +234,8 @@ export interface CClientMetricsClipShareNotification {
   eresult?: number | undefined;
   shareMethod?: EClipShareMethod | undefined;
   seconds?: number | undefined;
-  bytes?: number | undefined;
-  gameid?: number | undefined;
+  bytes?: bigint | undefined;
+  gameid?: bigint | undefined;
 }
 
 export interface CClientMetricsClipRangeNotification {
@@ -243,7 +243,7 @@ export interface CClientMetricsClipRangeNotification {
   start?: CClientMetricsClipRangeNotification_RelativeRangeEdge | undefined;
   end?: CClientMetricsClipRangeNotification_RelativeRangeEdge | undefined;
   seconds?: number | undefined;
-  gameid?: number | undefined;
+  gameid?: bigint | undefined;
 }
 
 export interface CClientMetricsClipRangeNotification_RelativeRangeEdge {
@@ -255,8 +255,8 @@ export interface CClientMetricsClipRangeNotification_RelativeRangeEdge {
 export interface CClientMetricsEndGameRecordingNotification {
   recordingType?: EGameRecordingType | undefined;
   seconds?: number | undefined;
-  bytes?: number | undefined;
-  gameid?: number | undefined;
+  bytes?: bigint | undefined;
+  gameid?: bigint | undefined;
   instantClip?: boolean | undefined;
 }
 
@@ -265,7 +265,7 @@ export interface CClientMetricsGamePerformanceNotification {
 }
 
 export interface CClientMetricsGamePerformanceNotification_FrameRateReport {
-  gameid?: number | undefined;
+  gameid?: bigint | undefined;
   frameRate?: number | undefined;
   manufacturer?: string | undefined;
   model?: string | undefined;
@@ -273,7 +273,7 @@ export interface CClientMetricsGamePerformanceNotification_FrameRateReport {
   dxVendorid?: number | undefined;
   dxDeviceid?: number | undefined;
   numGpu?: number | undefined;
-  systemRam?: number | undefined;
+  systemRam?: bigint | undefined;
   sessionSeconds?: number | undefined;
 }
 
@@ -385,7 +385,7 @@ export const CClientMetricsAppInterfaceMethodCounts: MessageFns<CClientMetricsAp
 };
 
 function createBaseCClientMetricsAppInterfaceStatsNotification(): CClientMetricsAppInterfaceStatsNotification {
-  return { gameId: 0, interfacesCreated: [], methodsCalled: [], sessionLengthSeconds: 0 };
+  return { gameId: 0n, interfacesCreated: [], methodsCalled: [], sessionLengthSeconds: 0 };
 }
 
 export const CClientMetricsAppInterfaceStatsNotification: MessageFns<CClientMetricsAppInterfaceStatsNotification> = {
@@ -393,7 +393,10 @@ export const CClientMetricsAppInterfaceStatsNotification: MessageFns<CClientMetr
     message: CClientMetricsAppInterfaceStatsNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gameId !== undefined && message.gameId !== 0) {
+    if (message.gameId !== undefined && message.gameId !== 0n) {
+      if (BigInt.asUintN(64, message.gameId) !== message.gameId) {
+        throw new globalThis.Error("value provided for field message.gameId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gameId);
     }
     for (const v of message.interfacesCreated) {
@@ -420,7 +423,7 @@ export const CClientMetricsAppInterfaceStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.gameId = longToNumber(reader.uint64());
+          message.gameId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -565,7 +568,7 @@ export const CClientMetricsIPv6ConnectivityNotification: MessageFns<CClientMetri
 };
 
 function createBaseCClientMetricsSteamPipeWorkStatsOperation(): CClientMetricsSteamPipeWorkStatsOperation {
-  return { type: 0, numOps: 0, numBytes: 0, busyTimeMs: 0, idleTimeMs: 0, sumRunTimeMs: 0, sumWaitTimeMs: 0 };
+  return { type: 0, numOps: 0, numBytes: 0n, busyTimeMs: 0n, idleTimeMs: 0n, sumRunTimeMs: 0n, sumWaitTimeMs: 0n };
 }
 
 export const CClientMetricsSteamPipeWorkStatsOperation: MessageFns<CClientMetricsSteamPipeWorkStatsOperation> = {
@@ -576,19 +579,34 @@ export const CClientMetricsSteamPipeWorkStatsOperation: MessageFns<CClientMetric
     if (message.numOps !== undefined && message.numOps !== 0) {
       writer.uint32(16).uint32(message.numOps);
     }
-    if (message.numBytes !== undefined && message.numBytes !== 0) {
+    if (message.numBytes !== undefined && message.numBytes !== 0n) {
+      if (BigInt.asUintN(64, message.numBytes) !== message.numBytes) {
+        throw new globalThis.Error("value provided for field message.numBytes of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.numBytes);
     }
-    if (message.busyTimeMs !== undefined && message.busyTimeMs !== 0) {
+    if (message.busyTimeMs !== undefined && message.busyTimeMs !== 0n) {
+      if (BigInt.asUintN(64, message.busyTimeMs) !== message.busyTimeMs) {
+        throw new globalThis.Error("value provided for field message.busyTimeMs of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.busyTimeMs);
     }
-    if (message.idleTimeMs !== undefined && message.idleTimeMs !== 0) {
+    if (message.idleTimeMs !== undefined && message.idleTimeMs !== 0n) {
+      if (BigInt.asUintN(64, message.idleTimeMs) !== message.idleTimeMs) {
+        throw new globalThis.Error("value provided for field message.idleTimeMs of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.idleTimeMs);
     }
-    if (message.sumRunTimeMs !== undefined && message.sumRunTimeMs !== 0) {
+    if (message.sumRunTimeMs !== undefined && message.sumRunTimeMs !== 0n) {
+      if (BigInt.asUintN(64, message.sumRunTimeMs) !== message.sumRunTimeMs) {
+        throw new globalThis.Error("value provided for field message.sumRunTimeMs of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.sumRunTimeMs);
     }
-    if (message.sumWaitTimeMs !== undefined && message.sumWaitTimeMs !== 0) {
+    if (message.sumWaitTimeMs !== undefined && message.sumWaitTimeMs !== 0n) {
+      if (BigInt.asUintN(64, message.sumWaitTimeMs) !== message.sumWaitTimeMs) {
+        throw new globalThis.Error("value provided for field message.sumWaitTimeMs of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.sumWaitTimeMs);
     }
     return writer;
@@ -622,7 +640,7 @@ export const CClientMetricsSteamPipeWorkStatsOperation: MessageFns<CClientMetric
             break;
           }
 
-          message.numBytes = longToNumber(reader.uint64());
+          message.numBytes = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -630,7 +648,7 @@ export const CClientMetricsSteamPipeWorkStatsOperation: MessageFns<CClientMetric
             break;
           }
 
-          message.busyTimeMs = longToNumber(reader.uint64());
+          message.busyTimeMs = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -638,7 +656,7 @@ export const CClientMetricsSteamPipeWorkStatsOperation: MessageFns<CClientMetric
             break;
           }
 
-          message.idleTimeMs = longToNumber(reader.uint64());
+          message.idleTimeMs = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -646,7 +664,7 @@ export const CClientMetricsSteamPipeWorkStatsOperation: MessageFns<CClientMetric
             break;
           }
 
-          message.sumRunTimeMs = longToNumber(reader.uint64());
+          message.sumRunTimeMs = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -654,7 +672,7 @@ export const CClientMetricsSteamPipeWorkStatsOperation: MessageFns<CClientMetric
             break;
           }
 
-          message.sumWaitTimeMs = longToNumber(reader.uint64());
+          message.sumWaitTimeMs = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1263,16 +1281,16 @@ function createBaseCClientMetricsDownloadRatesNotification_StatsInfo(): CClientM
   return {
     sourceType: 0,
     sourceId: 0,
-    bytes: 0,
+    bytes: 0n,
     hostName: "",
-    microseconds: 0,
+    microseconds: 0n,
     usedIpv6: false,
     proxied: false,
     usedHttp2: false,
     cacheHits: 0,
     cacheMisses: 0,
-    hitBytes: 0,
-    missBytes: 0,
+    hitBytes: 0n,
+    missBytes: 0n,
   };
 }
 
@@ -1289,13 +1307,19 @@ export const CClientMetricsDownloadRatesNotification_StatsInfo: MessageFns<
     if (message.sourceId !== undefined && message.sourceId !== 0) {
       writer.uint32(16).uint32(message.sourceId);
     }
-    if (message.bytes !== undefined && message.bytes !== 0) {
+    if (message.bytes !== undefined && message.bytes !== 0n) {
+      if (BigInt.asUintN(64, message.bytes) !== message.bytes) {
+        throw new globalThis.Error("value provided for field message.bytes of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.bytes);
     }
     if (message.hostName !== undefined && message.hostName !== "") {
       writer.uint32(34).string(message.hostName);
     }
-    if (message.microseconds !== undefined && message.microseconds !== 0) {
+    if (message.microseconds !== undefined && message.microseconds !== 0n) {
+      if (BigInt.asUintN(64, message.microseconds) !== message.microseconds) {
+        throw new globalThis.Error("value provided for field message.microseconds of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.microseconds);
     }
     if (message.usedIpv6 !== undefined && message.usedIpv6 !== false) {
@@ -1313,10 +1337,16 @@ export const CClientMetricsDownloadRatesNotification_StatsInfo: MessageFns<
     if (message.cacheMisses !== undefined && message.cacheMisses !== 0) {
       writer.uint32(80).uint32(message.cacheMisses);
     }
-    if (message.hitBytes !== undefined && message.hitBytes !== 0) {
+    if (message.hitBytes !== undefined && message.hitBytes !== 0n) {
+      if (BigInt.asUintN(64, message.hitBytes) !== message.hitBytes) {
+        throw new globalThis.Error("value provided for field message.hitBytes of type uint64 too large");
+      }
       writer.uint32(88).uint64(message.hitBytes);
     }
-    if (message.missBytes !== undefined && message.missBytes !== 0) {
+    if (message.missBytes !== undefined && message.missBytes !== 0n) {
+      if (BigInt.asUintN(64, message.missBytes) !== message.missBytes) {
+        throw new globalThis.Error("value provided for field message.missBytes of type uint64 too large");
+      }
       writer.uint32(96).uint64(message.missBytes);
     }
     return writer;
@@ -1350,7 +1380,7 @@ export const CClientMetricsDownloadRatesNotification_StatsInfo: MessageFns<
             break;
           }
 
-          message.bytes = longToNumber(reader.uint64());
+          message.bytes = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -1366,7 +1396,7 @@ export const CClientMetricsDownloadRatesNotification_StatsInfo: MessageFns<
             break;
           }
 
-          message.microseconds = longToNumber(reader.uint64());
+          message.microseconds = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -1414,7 +1444,7 @@ export const CClientMetricsDownloadRatesNotification_StatsInfo: MessageFns<
             break;
           }
 
-          message.hitBytes = longToNumber(reader.uint64());
+          message.hitBytes = reader.uint64() as bigint;
           continue;
         }
         case 12: {
@@ -1422,7 +1452,7 @@ export const CClientMetricsDownloadRatesNotification_StatsInfo: MessageFns<
             break;
           }
 
-          message.missBytes = longToNumber(reader.uint64());
+          message.missBytes = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1444,9 +1474,9 @@ function createBaseCClientMetricsContentValidationNotification(): CClientMetrics
     earlyOut: false,
     chunksScanned: 0,
     chunksCorrupt: 0,
-    bytesScanned: 0,
-    chunkBytesCorrupt: 0,
-    totalFileSizeCorrupt: 0,
+    bytesScanned: 0n,
+    chunkBytesCorrupt: 0n,
+    totalFileSizeCorrupt: 0n,
   };
 }
 
@@ -1476,13 +1506,22 @@ export const CClientMetricsContentValidationNotification: MessageFns<CClientMetr
     if (message.chunksCorrupt !== undefined && message.chunksCorrupt !== 0) {
       writer.uint32(56).uint32(message.chunksCorrupt);
     }
-    if (message.bytesScanned !== undefined && message.bytesScanned !== 0) {
+    if (message.bytesScanned !== undefined && message.bytesScanned !== 0n) {
+      if (BigInt.asUintN(64, message.bytesScanned) !== message.bytesScanned) {
+        throw new globalThis.Error("value provided for field message.bytesScanned of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.bytesScanned);
     }
-    if (message.chunkBytesCorrupt !== undefined && message.chunkBytesCorrupt !== 0) {
+    if (message.chunkBytesCorrupt !== undefined && message.chunkBytesCorrupt !== 0n) {
+      if (BigInt.asUintN(64, message.chunkBytesCorrupt) !== message.chunkBytesCorrupt) {
+        throw new globalThis.Error("value provided for field message.chunkBytesCorrupt of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.chunkBytesCorrupt);
     }
-    if (message.totalFileSizeCorrupt !== undefined && message.totalFileSizeCorrupt !== 0) {
+    if (message.totalFileSizeCorrupt !== undefined && message.totalFileSizeCorrupt !== 0n) {
+      if (BigInt.asUintN(64, message.totalFileSizeCorrupt) !== message.totalFileSizeCorrupt) {
+        throw new globalThis.Error("value provided for field message.totalFileSizeCorrupt of type uint64 too large");
+      }
       writer.uint32(80).uint64(message.totalFileSizeCorrupt);
     }
     return writer;
@@ -1556,7 +1595,7 @@ export const CClientMetricsContentValidationNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.bytesScanned = longToNumber(reader.uint64());
+          message.bytesScanned = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -1564,7 +1603,7 @@ export const CClientMetricsContentValidationNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.chunkBytesCorrupt = longToNumber(reader.uint64());
+          message.chunkBytesCorrupt = reader.uint64() as bigint;
           continue;
         }
         case 10: {
@@ -1572,7 +1611,7 @@ export const CClientMetricsContentValidationNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.totalFileSizeCorrupt = longToNumber(reader.uint64());
+          message.totalFileSizeCorrupt = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1594,18 +1633,18 @@ function createBaseCClientMetricsCloudAppSyncStatsNotification(): CClientMetrics
     filesUploaded: 0,
     filesDownloaded: 0,
     filesDeleted: 0,
-    bytesUploaded: 0,
-    bytesDownloaded: 0,
-    microsecTotal: 0,
-    microsecInitCaches: 0,
-    microsecValidateState: 0,
-    microsecAcLaunch: 0,
-    microsecAcPrepUserFiles: 0,
-    microsecAcExit: 0,
-    microsecBuildSyncList: 0,
-    microsecDeleteFiles: 0,
-    microsecDownloadFiles: 0,
-    microsecUploadFiles: 0,
+    bytesUploaded: 0n,
+    bytesDownloaded: 0n,
+    microsecTotal: 0n,
+    microsecInitCaches: 0n,
+    microsecValidateState: 0n,
+    microsecAcLaunch: 0n,
+    microsecAcPrepUserFiles: 0n,
+    microsecAcExit: 0n,
+    microsecBuildSyncList: 0n,
+    microsecDeleteFiles: 0n,
+    microsecDownloadFiles: 0n,
+    microsecUploadFiles: 0n,
     hardwareType: 0,
     filesManaged: 0,
   };
@@ -1637,40 +1676,76 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
     if (message.filesDeleted !== undefined && message.filesDeleted !== 0) {
       writer.uint32(56).uint32(message.filesDeleted);
     }
-    if (message.bytesUploaded !== undefined && message.bytesUploaded !== 0) {
+    if (message.bytesUploaded !== undefined && message.bytesUploaded !== 0n) {
+      if (BigInt.asUintN(64, message.bytesUploaded) !== message.bytesUploaded) {
+        throw new globalThis.Error("value provided for field message.bytesUploaded of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.bytesUploaded);
     }
-    if (message.bytesDownloaded !== undefined && message.bytesDownloaded !== 0) {
+    if (message.bytesDownloaded !== undefined && message.bytesDownloaded !== 0n) {
+      if (BigInt.asUintN(64, message.bytesDownloaded) !== message.bytesDownloaded) {
+        throw new globalThis.Error("value provided for field message.bytesDownloaded of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.bytesDownloaded);
     }
-    if (message.microsecTotal !== undefined && message.microsecTotal !== 0) {
+    if (message.microsecTotal !== undefined && message.microsecTotal !== 0n) {
+      if (BigInt.asUintN(64, message.microsecTotal) !== message.microsecTotal) {
+        throw new globalThis.Error("value provided for field message.microsecTotal of type uint64 too large");
+      }
       writer.uint32(80).uint64(message.microsecTotal);
     }
-    if (message.microsecInitCaches !== undefined && message.microsecInitCaches !== 0) {
+    if (message.microsecInitCaches !== undefined && message.microsecInitCaches !== 0n) {
+      if (BigInt.asUintN(64, message.microsecInitCaches) !== message.microsecInitCaches) {
+        throw new globalThis.Error("value provided for field message.microsecInitCaches of type uint64 too large");
+      }
       writer.uint32(88).uint64(message.microsecInitCaches);
     }
-    if (message.microsecValidateState !== undefined && message.microsecValidateState !== 0) {
+    if (message.microsecValidateState !== undefined && message.microsecValidateState !== 0n) {
+      if (BigInt.asUintN(64, message.microsecValidateState) !== message.microsecValidateState) {
+        throw new globalThis.Error("value provided for field message.microsecValidateState of type uint64 too large");
+      }
       writer.uint32(96).uint64(message.microsecValidateState);
     }
-    if (message.microsecAcLaunch !== undefined && message.microsecAcLaunch !== 0) {
+    if (message.microsecAcLaunch !== undefined && message.microsecAcLaunch !== 0n) {
+      if (BigInt.asUintN(64, message.microsecAcLaunch) !== message.microsecAcLaunch) {
+        throw new globalThis.Error("value provided for field message.microsecAcLaunch of type uint64 too large");
+      }
       writer.uint32(104).uint64(message.microsecAcLaunch);
     }
-    if (message.microsecAcPrepUserFiles !== undefined && message.microsecAcPrepUserFiles !== 0) {
+    if (message.microsecAcPrepUserFiles !== undefined && message.microsecAcPrepUserFiles !== 0n) {
+      if (BigInt.asUintN(64, message.microsecAcPrepUserFiles) !== message.microsecAcPrepUserFiles) {
+        throw new globalThis.Error("value provided for field message.microsecAcPrepUserFiles of type uint64 too large");
+      }
       writer.uint32(112).uint64(message.microsecAcPrepUserFiles);
     }
-    if (message.microsecAcExit !== undefined && message.microsecAcExit !== 0) {
+    if (message.microsecAcExit !== undefined && message.microsecAcExit !== 0n) {
+      if (BigInt.asUintN(64, message.microsecAcExit) !== message.microsecAcExit) {
+        throw new globalThis.Error("value provided for field message.microsecAcExit of type uint64 too large");
+      }
       writer.uint32(120).uint64(message.microsecAcExit);
     }
-    if (message.microsecBuildSyncList !== undefined && message.microsecBuildSyncList !== 0) {
+    if (message.microsecBuildSyncList !== undefined && message.microsecBuildSyncList !== 0n) {
+      if (BigInt.asUintN(64, message.microsecBuildSyncList) !== message.microsecBuildSyncList) {
+        throw new globalThis.Error("value provided for field message.microsecBuildSyncList of type uint64 too large");
+      }
       writer.uint32(128).uint64(message.microsecBuildSyncList);
     }
-    if (message.microsecDeleteFiles !== undefined && message.microsecDeleteFiles !== 0) {
+    if (message.microsecDeleteFiles !== undefined && message.microsecDeleteFiles !== 0n) {
+      if (BigInt.asUintN(64, message.microsecDeleteFiles) !== message.microsecDeleteFiles) {
+        throw new globalThis.Error("value provided for field message.microsecDeleteFiles of type uint64 too large");
+      }
       writer.uint32(136).uint64(message.microsecDeleteFiles);
     }
-    if (message.microsecDownloadFiles !== undefined && message.microsecDownloadFiles !== 0) {
+    if (message.microsecDownloadFiles !== undefined && message.microsecDownloadFiles !== 0n) {
+      if (BigInt.asUintN(64, message.microsecDownloadFiles) !== message.microsecDownloadFiles) {
+        throw new globalThis.Error("value provided for field message.microsecDownloadFiles of type uint64 too large");
+      }
       writer.uint32(144).uint64(message.microsecDownloadFiles);
     }
-    if (message.microsecUploadFiles !== undefined && message.microsecUploadFiles !== 0) {
+    if (message.microsecUploadFiles !== undefined && message.microsecUploadFiles !== 0n) {
+      if (BigInt.asUintN(64, message.microsecUploadFiles) !== message.microsecUploadFiles) {
+        throw new globalThis.Error("value provided for field message.microsecUploadFiles of type uint64 too large");
+      }
       writer.uint32(152).uint64(message.microsecUploadFiles);
     }
     if (message.hardwareType !== undefined && message.hardwareType !== 0) {
@@ -1750,7 +1825,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.bytesUploaded = longToNumber(reader.uint64());
+          message.bytesUploaded = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -1758,7 +1833,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.bytesDownloaded = longToNumber(reader.uint64());
+          message.bytesDownloaded = reader.uint64() as bigint;
           continue;
         }
         case 10: {
@@ -1766,7 +1841,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.microsecTotal = longToNumber(reader.uint64());
+          message.microsecTotal = reader.uint64() as bigint;
           continue;
         }
         case 11: {
@@ -1774,7 +1849,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.microsecInitCaches = longToNumber(reader.uint64());
+          message.microsecInitCaches = reader.uint64() as bigint;
           continue;
         }
         case 12: {
@@ -1782,7 +1857,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.microsecValidateState = longToNumber(reader.uint64());
+          message.microsecValidateState = reader.uint64() as bigint;
           continue;
         }
         case 13: {
@@ -1790,7 +1865,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.microsecAcLaunch = longToNumber(reader.uint64());
+          message.microsecAcLaunch = reader.uint64() as bigint;
           continue;
         }
         case 14: {
@@ -1798,7 +1873,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.microsecAcPrepUserFiles = longToNumber(reader.uint64());
+          message.microsecAcPrepUserFiles = reader.uint64() as bigint;
           continue;
         }
         case 15: {
@@ -1806,7 +1881,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.microsecAcExit = longToNumber(reader.uint64());
+          message.microsecAcExit = reader.uint64() as bigint;
           continue;
         }
         case 16: {
@@ -1814,7 +1889,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.microsecBuildSyncList = longToNumber(reader.uint64());
+          message.microsecBuildSyncList = reader.uint64() as bigint;
           continue;
         }
         case 17: {
@@ -1822,7 +1897,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.microsecDeleteFiles = longToNumber(reader.uint64());
+          message.microsecDeleteFiles = reader.uint64() as bigint;
           continue;
         }
         case 18: {
@@ -1830,7 +1905,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.microsecDownloadFiles = longToNumber(reader.uint64());
+          message.microsecDownloadFiles = reader.uint64() as bigint;
           continue;
         }
         case 19: {
@@ -1838,7 +1913,7 @@ export const CClientMetricsCloudAppSyncStatsNotification: MessageFns<CClientMetr
             break;
           }
 
-          message.microsecUploadFiles = longToNumber(reader.uint64());
+          message.microsecUploadFiles = reader.uint64() as bigint;
           continue;
         }
         case 20: {
@@ -2259,7 +2334,7 @@ export const CClientMetricsReportAccessibilitySettingsNotification: MessageFns<
 };
 
 function createBaseCClientMetricsClipShareNotification(): CClientMetricsClipShareNotification {
-  return { eresult: 2, shareMethod: 1, seconds: 0, bytes: 0, gameid: 0 };
+  return { eresult: 2, shareMethod: 1, seconds: 0, bytes: 0n, gameid: 0n };
 }
 
 export const CClientMetricsClipShareNotification: MessageFns<CClientMetricsClipShareNotification> = {
@@ -2273,10 +2348,16 @@ export const CClientMetricsClipShareNotification: MessageFns<CClientMetricsClipS
     if (message.seconds !== undefined && message.seconds !== 0) {
       writer.uint32(29).float(message.seconds);
     }
-    if (message.bytes !== undefined && message.bytes !== 0) {
+    if (message.bytes !== undefined && message.bytes !== 0n) {
+      if (BigInt.asUintN(64, message.bytes) !== message.bytes) {
+        throw new globalThis.Error("value provided for field message.bytes of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.bytes);
     }
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.gameid);
     }
     return writer;
@@ -2318,7 +2399,7 @@ export const CClientMetricsClipShareNotification: MessageFns<CClientMetricsClipS
             break;
           }
 
-          message.bytes = longToNumber(reader.uint64());
+          message.bytes = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -2326,7 +2407,7 @@ export const CClientMetricsClipShareNotification: MessageFns<CClientMetricsClipS
             break;
           }
 
-          message.gameid = longToNumber(reader.fixed64());
+          message.gameid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2340,7 +2421,7 @@ export const CClientMetricsClipShareNotification: MessageFns<CClientMetricsClipS
 };
 
 function createBaseCClientMetricsClipRangeNotification(): CClientMetricsClipRangeNotification {
-  return { originalRangeMethod: 1, start: undefined, end: undefined, seconds: 0, gameid: 0 };
+  return { originalRangeMethod: 1, start: undefined, end: undefined, seconds: 0, gameid: 0n };
 }
 
 export const CClientMetricsClipRangeNotification: MessageFns<CClientMetricsClipRangeNotification> = {
@@ -2357,7 +2438,10 @@ export const CClientMetricsClipRangeNotification: MessageFns<CClientMetricsClipR
     if (message.seconds !== undefined && message.seconds !== 0) {
       writer.uint32(37).float(message.seconds);
     }
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.gameid);
     }
     return writer;
@@ -2407,7 +2491,7 @@ export const CClientMetricsClipRangeNotification: MessageFns<CClientMetricsClipR
             break;
           }
 
-          message.gameid = longToNumber(reader.fixed64());
+          message.gameid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2485,7 +2569,7 @@ export const CClientMetricsClipRangeNotification_RelativeRangeEdge: MessageFns<
 };
 
 function createBaseCClientMetricsEndGameRecordingNotification(): CClientMetricsEndGameRecordingNotification {
-  return { recordingType: 0, seconds: 0, bytes: 0, gameid: 0, instantClip: false };
+  return { recordingType: 0, seconds: 0, bytes: 0n, gameid: 0n, instantClip: false };
 }
 
 export const CClientMetricsEndGameRecordingNotification: MessageFns<CClientMetricsEndGameRecordingNotification> = {
@@ -2496,10 +2580,16 @@ export const CClientMetricsEndGameRecordingNotification: MessageFns<CClientMetri
     if (message.seconds !== undefined && message.seconds !== 0) {
       writer.uint32(21).float(message.seconds);
     }
-    if (message.bytes !== undefined && message.bytes !== 0) {
+    if (message.bytes !== undefined && message.bytes !== 0n) {
+      if (BigInt.asUintN(64, message.bytes) !== message.bytes) {
+        throw new globalThis.Error("value provided for field message.bytes of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.bytes);
     }
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.gameid);
     }
     if (message.instantClip !== undefined && message.instantClip !== false) {
@@ -2536,7 +2626,7 @@ export const CClientMetricsEndGameRecordingNotification: MessageFns<CClientMetri
             break;
           }
 
-          message.bytes = longToNumber(reader.uint64());
+          message.bytes = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -2544,7 +2634,7 @@ export const CClientMetricsEndGameRecordingNotification: MessageFns<CClientMetri
             break;
           }
 
-          message.gameid = longToNumber(reader.fixed64());
+          message.gameid = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -2606,7 +2696,7 @@ export const CClientMetricsGamePerformanceNotification: MessageFns<CClientMetric
 
 function createBaseCClientMetricsGamePerformanceNotification_FrameRateReport(): CClientMetricsGamePerformanceNotification_FrameRateReport {
   return {
-    gameid: 0,
+    gameid: 0n,
     frameRate: 0,
     manufacturer: "",
     model: "",
@@ -2614,7 +2704,7 @@ function createBaseCClientMetricsGamePerformanceNotification_FrameRateReport(): 
     dxVendorid: 0,
     dxDeviceid: 0,
     numGpu: 0,
-    systemRam: 0,
+    systemRam: 0n,
     sessionSeconds: 0,
   };
 }
@@ -2626,7 +2716,10 @@ export const CClientMetricsGamePerformanceNotification_FrameRateReport: MessageF
     message: CClientMetricsGamePerformanceNotification_FrameRateReport,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gameid);
     }
     if (message.frameRate !== undefined && message.frameRate !== 0) {
@@ -2650,7 +2743,10 @@ export const CClientMetricsGamePerformanceNotification_FrameRateReport: MessageF
     if (message.numGpu !== undefined && message.numGpu !== 0) {
       writer.uint32(64).uint32(message.numGpu);
     }
-    if (message.systemRam !== undefined && message.systemRam !== 0) {
+    if (message.systemRam !== undefined && message.systemRam !== 0n) {
+      if (BigInt.asUintN(64, message.systemRam) !== message.systemRam) {
+        throw new globalThis.Error("value provided for field message.systemRam of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.systemRam);
     }
     if (message.sessionSeconds !== undefined && message.sessionSeconds !== 0) {
@@ -2671,7 +2767,7 @@ export const CClientMetricsGamePerformanceNotification_FrameRateReport: MessageF
             break;
           }
 
-          message.gameid = longToNumber(reader.fixed64());
+          message.gameid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2735,7 +2831,7 @@ export const CClientMetricsGamePerformanceNotification_FrameRateReport: MessageF
             break;
           }
 
-          message.systemRam = longToNumber(reader.uint64());
+          message.systemRam = reader.uint64() as bigint;
           continue;
         }
         case 10: {
@@ -2910,17 +3006,6 @@ export class ClientMetricsClientImpl implements ClientMetrics {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

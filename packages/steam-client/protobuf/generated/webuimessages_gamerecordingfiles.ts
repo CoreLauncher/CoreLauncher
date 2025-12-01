@@ -19,11 +19,11 @@ export interface CGameRecordingFile {
 
 export interface CGameRecordingClipFile {
   timelines: CGameRecordingTimelineMetadata[];
-  firstTimelineStartOffsetMs?: number | undefined;
+  firstTimelineStartOffsetMs?: bigint | undefined;
   dateRecorded?: number | undefined;
-  gameId?: number | undefined;
-  publishedFileId?: number | undefined;
-  sizeInBytes?: number | undefined;
+  gameId?: bigint | undefined;
+  publishedFileId?: bigint | undefined;
+  sizeInBytes?: bigint | undefined;
   name?: string | undefined;
   temporary?: boolean | undefined;
   originalDevice?: string | undefined;
@@ -37,9 +37,9 @@ export interface CGameRecordingClipFile {
 
 export interface CGameRecordingTimelineMetadata {
   timelineId?: string | undefined;
-  gameId?: number | undefined;
+  gameId?: bigint | undefined;
   dateRecorded?: number | undefined;
-  durationMs?: number | undefined;
+  durationMs?: bigint | undefined;
   recordings: CGameRecordingTimelineMetadata_Recording[];
   phases: CGameRecordingPhase[];
   significantEvents: CGameRecordingTimelineEvent[];
@@ -47,37 +47,37 @@ export interface CGameRecordingTimelineMetadata {
 
 export interface CGameRecordingTimelineMetadata_Recording {
   recordingId?: string | undefined;
-  startOffsetMs?: number | undefined;
-  durationMs?: number | undefined;
+  startOffsetMs?: bigint | undefined;
+  durationMs?: bigint | undefined;
   recordingType?: EGameRecordingType | undefined;
   deleteOnCleanup?: boolean | undefined;
-  videoManagerClipId?: number | undefined;
-  videoManagerVideoId?: number | undefined;
+  videoManagerClipId?: bigint | undefined;
+  videoManagerVideoId?: bigint | undefined;
   cdnManifestUrl?: string | undefined;
-  fileSize?: number | undefined;
-  recordingZeroTimelineOffsetMs?: number | undefined;
+  fileSize?: bigint | undefined;
+  recordingZeroTimelineOffsetMs?: bigint | undefined;
 }
 
 export interface CGameRecordingPostGameSummary {
-  gameId?: number | undefined;
+  gameId?: bigint | undefined;
   events: CGameRecordingTimelineEvent[];
 }
 
 export interface CGameRecordingTimelineEvent {
-  gameId?: number | undefined;
+  gameId?: bigint | undefined;
   rtCreated?: number | undefined;
   possibleClip?: number | undefined;
   timelineId?: string | undefined;
-  entryId?: number | undefined;
-  timelineOffsetMs?: number | undefined;
-  durationMs?: number | undefined;
+  entryId?: bigint | undefined;
+  timelineOffsetMs?: bigint | undefined;
+  durationMs?: bigint | undefined;
   markerIcon?: string | undefined;
   markerTitle?: string | undefined;
   userMarker?: boolean | undefined;
 }
 
 export interface CGameRecordingTag {
-  gameId?: number | undefined;
+  gameId?: bigint | undefined;
   tag?: CTimelineTag | undefined;
   references: CGameRecordingTag_Timeline[];
 }
@@ -85,22 +85,22 @@ export interface CGameRecordingTag {
 export interface CGameRecordingTag_Timeline {
   clipId?: string | undefined;
   timelineId?: string | undefined;
-  offsetMs?: number | undefined;
+  offsetMs?: bigint | undefined;
 }
 
 export interface CGameRecordingTagInstance {
   timelineId?: string | undefined;
-  entryId?: number | undefined;
-  timelineOffsetMs?: number | undefined;
-  durationMs?: number | undefined;
+  entryId?: bigint | undefined;
+  timelineOffsetMs?: bigint | undefined;
+  durationMs?: bigint | undefined;
 }
 
 export interface CGameRecordingPhase {
   phaseId?: string | undefined;
-  durationMs?: number | undefined;
+  durationMs?: bigint | undefined;
   tags: CGameRecordingPhase_Tag[];
   containedTags: CGameRecordingPhase_Tag[];
-  backgroundTimelineOffset?: number | undefined;
+  backgroundTimelineOffset?: bigint | undefined;
   attributes: CPhaseAttribute[];
 }
 
@@ -195,11 +195,11 @@ export const CGameRecordingFile: MessageFns<CGameRecordingFile> = {
 function createBaseCGameRecordingClipFile(): CGameRecordingClipFile {
   return {
     timelines: [],
-    firstTimelineStartOffsetMs: 0,
+    firstTimelineStartOffsetMs: 0n,
     dateRecorded: 0,
-    gameId: 0,
-    publishedFileId: 0,
-    sizeInBytes: 0,
+    gameId: 0n,
+    publishedFileId: 0n,
+    sizeInBytes: 0n,
     name: "",
     temporary: false,
     originalDevice: "",
@@ -217,19 +217,33 @@ export const CGameRecordingClipFile: MessageFns<CGameRecordingClipFile> = {
     for (const v of message.timelines) {
       CGameRecordingTimelineMetadata.encode(v!, writer.uint32(10).fork()).join();
     }
-    if (message.firstTimelineStartOffsetMs !== undefined && message.firstTimelineStartOffsetMs !== 0) {
+    if (message.firstTimelineStartOffsetMs !== undefined && message.firstTimelineStartOffsetMs !== 0n) {
+      if (BigInt.asUintN(64, message.firstTimelineStartOffsetMs) !== message.firstTimelineStartOffsetMs) {
+        throw new globalThis.Error(
+          "value provided for field message.firstTimelineStartOffsetMs of type uint64 too large",
+        );
+      }
       writer.uint32(16).uint64(message.firstTimelineStartOffsetMs);
     }
     if (message.dateRecorded !== undefined && message.dateRecorded !== 0) {
       writer.uint32(24).uint32(message.dateRecorded);
     }
-    if (message.gameId !== undefined && message.gameId !== 0) {
+    if (message.gameId !== undefined && message.gameId !== 0n) {
+      if (BigInt.asUintN(64, message.gameId) !== message.gameId) {
+        throw new globalThis.Error("value provided for field message.gameId of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.gameId);
     }
-    if (message.publishedFileId !== undefined && message.publishedFileId !== 0) {
+    if (message.publishedFileId !== undefined && message.publishedFileId !== 0n) {
+      if (BigInt.asUintN(64, message.publishedFileId) !== message.publishedFileId) {
+        throw new globalThis.Error("value provided for field message.publishedFileId of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.publishedFileId);
     }
-    if (message.sizeInBytes !== undefined && message.sizeInBytes !== 0) {
+    if (message.sizeInBytes !== undefined && message.sizeInBytes !== 0n) {
+      if (BigInt.asUintN(64, message.sizeInBytes) !== message.sizeInBytes) {
+        throw new globalThis.Error("value provided for field message.sizeInBytes of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.sizeInBytes);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -282,7 +296,7 @@ export const CGameRecordingClipFile: MessageFns<CGameRecordingClipFile> = {
             break;
           }
 
-          message.firstTimelineStartOffsetMs = longToNumber(reader.uint64());
+          message.firstTimelineStartOffsetMs = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -298,7 +312,7 @@ export const CGameRecordingClipFile: MessageFns<CGameRecordingClipFile> = {
             break;
           }
 
-          message.gameId = longToNumber(reader.uint64());
+          message.gameId = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -306,7 +320,7 @@ export const CGameRecordingClipFile: MessageFns<CGameRecordingClipFile> = {
             break;
           }
 
-          message.publishedFileId = longToNumber(reader.fixed64());
+          message.publishedFileId = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -314,7 +328,7 @@ export const CGameRecordingClipFile: MessageFns<CGameRecordingClipFile> = {
             break;
           }
 
-          message.sizeInBytes = longToNumber(reader.uint64());
+          message.sizeInBytes = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -402,9 +416,9 @@ export const CGameRecordingClipFile: MessageFns<CGameRecordingClipFile> = {
 function createBaseCGameRecordingTimelineMetadata(): CGameRecordingTimelineMetadata {
   return {
     timelineId: "",
-    gameId: 0,
+    gameId: 0n,
     dateRecorded: 0,
-    durationMs: 0,
+    durationMs: 0n,
     recordings: [],
     phases: [],
     significantEvents: [],
@@ -416,13 +430,19 @@ export const CGameRecordingTimelineMetadata: MessageFns<CGameRecordingTimelineMe
     if (message.timelineId !== undefined && message.timelineId !== "") {
       writer.uint32(10).string(message.timelineId);
     }
-    if (message.gameId !== undefined && message.gameId !== 0) {
+    if (message.gameId !== undefined && message.gameId !== 0n) {
+      if (BigInt.asUintN(64, message.gameId) !== message.gameId) {
+        throw new globalThis.Error("value provided for field message.gameId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.gameId);
     }
     if (message.dateRecorded !== undefined && message.dateRecorded !== 0) {
       writer.uint32(24).uint32(message.dateRecorded);
     }
-    if (message.durationMs !== undefined && message.durationMs !== 0) {
+    if (message.durationMs !== undefined && message.durationMs !== 0n) {
+      if (BigInt.asUintN(64, message.durationMs) !== message.durationMs) {
+        throw new globalThis.Error("value provided for field message.durationMs of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.durationMs);
     }
     for (const v of message.recordings) {
@@ -457,7 +477,7 @@ export const CGameRecordingTimelineMetadata: MessageFns<CGameRecordingTimelineMe
             break;
           }
 
-          message.gameId = longToNumber(reader.uint64());
+          message.gameId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -473,7 +493,7 @@ export const CGameRecordingTimelineMetadata: MessageFns<CGameRecordingTimelineMe
             break;
           }
 
-          message.durationMs = longToNumber(reader.uint64());
+          message.durationMs = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -513,15 +533,15 @@ export const CGameRecordingTimelineMetadata: MessageFns<CGameRecordingTimelineMe
 function createBaseCGameRecordingTimelineMetadata_Recording(): CGameRecordingTimelineMetadata_Recording {
   return {
     recordingId: "",
-    startOffsetMs: 0,
-    durationMs: 0,
+    startOffsetMs: 0n,
+    durationMs: 0n,
     recordingType: 0,
     deleteOnCleanup: false,
-    videoManagerClipId: 0,
-    videoManagerVideoId: 0,
+    videoManagerClipId: 0n,
+    videoManagerVideoId: 0n,
     cdnManifestUrl: "",
-    fileSize: 0,
-    recordingZeroTimelineOffsetMs: 0,
+    fileSize: 0n,
+    recordingZeroTimelineOffsetMs: 0n,
   };
 }
 
@@ -530,10 +550,16 @@ export const CGameRecordingTimelineMetadata_Recording: MessageFns<CGameRecording
     if (message.recordingId !== undefined && message.recordingId !== "") {
       writer.uint32(10).string(message.recordingId);
     }
-    if (message.startOffsetMs !== undefined && message.startOffsetMs !== 0) {
+    if (message.startOffsetMs !== undefined && message.startOffsetMs !== 0n) {
+      if (BigInt.asUintN(64, message.startOffsetMs) !== message.startOffsetMs) {
+        throw new globalThis.Error("value provided for field message.startOffsetMs of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.startOffsetMs);
     }
-    if (message.durationMs !== undefined && message.durationMs !== 0) {
+    if (message.durationMs !== undefined && message.durationMs !== 0n) {
+      if (BigInt.asUintN(64, message.durationMs) !== message.durationMs) {
+        throw new globalThis.Error("value provided for field message.durationMs of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.durationMs);
     }
     if (message.recordingType !== undefined && message.recordingType !== 0) {
@@ -542,19 +568,33 @@ export const CGameRecordingTimelineMetadata_Recording: MessageFns<CGameRecording
     if (message.deleteOnCleanup !== undefined && message.deleteOnCleanup !== false) {
       writer.uint32(40).bool(message.deleteOnCleanup);
     }
-    if (message.videoManagerClipId !== undefined && message.videoManagerClipId !== 0) {
+    if (message.videoManagerClipId !== undefined && message.videoManagerClipId !== 0n) {
+      if (BigInt.asUintN(64, message.videoManagerClipId) !== message.videoManagerClipId) {
+        throw new globalThis.Error("value provided for field message.videoManagerClipId of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.videoManagerClipId);
     }
-    if (message.videoManagerVideoId !== undefined && message.videoManagerVideoId !== 0) {
+    if (message.videoManagerVideoId !== undefined && message.videoManagerVideoId !== 0n) {
+      if (BigInt.asUintN(64, message.videoManagerVideoId) !== message.videoManagerVideoId) {
+        throw new globalThis.Error("value provided for field message.videoManagerVideoId of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.videoManagerVideoId);
     }
     if (message.cdnManifestUrl !== undefined && message.cdnManifestUrl !== "") {
       writer.uint32(66).string(message.cdnManifestUrl);
     }
-    if (message.fileSize !== undefined && message.fileSize !== 0) {
+    if (message.fileSize !== undefined && message.fileSize !== 0n) {
+      if (BigInt.asUintN(64, message.fileSize) !== message.fileSize) {
+        throw new globalThis.Error("value provided for field message.fileSize of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.fileSize);
     }
-    if (message.recordingZeroTimelineOffsetMs !== undefined && message.recordingZeroTimelineOffsetMs !== 0) {
+    if (message.recordingZeroTimelineOffsetMs !== undefined && message.recordingZeroTimelineOffsetMs !== 0n) {
+      if (BigInt.asUintN(64, message.recordingZeroTimelineOffsetMs) !== message.recordingZeroTimelineOffsetMs) {
+        throw new globalThis.Error(
+          "value provided for field message.recordingZeroTimelineOffsetMs of type uint64 too large",
+        );
+      }
       writer.uint32(80).uint64(message.recordingZeroTimelineOffsetMs);
     }
     return writer;
@@ -580,7 +620,7 @@ export const CGameRecordingTimelineMetadata_Recording: MessageFns<CGameRecording
             break;
           }
 
-          message.startOffsetMs = longToNumber(reader.uint64());
+          message.startOffsetMs = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -588,7 +628,7 @@ export const CGameRecordingTimelineMetadata_Recording: MessageFns<CGameRecording
             break;
           }
 
-          message.durationMs = longToNumber(reader.uint64());
+          message.durationMs = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -612,7 +652,7 @@ export const CGameRecordingTimelineMetadata_Recording: MessageFns<CGameRecording
             break;
           }
 
-          message.videoManagerClipId = longToNumber(reader.uint64());
+          message.videoManagerClipId = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -620,7 +660,7 @@ export const CGameRecordingTimelineMetadata_Recording: MessageFns<CGameRecording
             break;
           }
 
-          message.videoManagerVideoId = longToNumber(reader.uint64());
+          message.videoManagerVideoId = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -636,7 +676,7 @@ export const CGameRecordingTimelineMetadata_Recording: MessageFns<CGameRecording
             break;
           }
 
-          message.fileSize = longToNumber(reader.uint64());
+          message.fileSize = reader.uint64() as bigint;
           continue;
         }
         case 10: {
@@ -644,7 +684,7 @@ export const CGameRecordingTimelineMetadata_Recording: MessageFns<CGameRecording
             break;
           }
 
-          message.recordingZeroTimelineOffsetMs = longToNumber(reader.uint64());
+          message.recordingZeroTimelineOffsetMs = reader.uint64() as bigint;
           continue;
         }
       }
@@ -658,12 +698,15 @@ export const CGameRecordingTimelineMetadata_Recording: MessageFns<CGameRecording
 };
 
 function createBaseCGameRecordingPostGameSummary(): CGameRecordingPostGameSummary {
-  return { gameId: 0, events: [] };
+  return { gameId: 0n, events: [] };
 }
 
 export const CGameRecordingPostGameSummary: MessageFns<CGameRecordingPostGameSummary> = {
   encode(message: CGameRecordingPostGameSummary, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gameId !== undefined && message.gameId !== 0) {
+    if (message.gameId !== undefined && message.gameId !== 0n) {
+      if (BigInt.asUintN(64, message.gameId) !== message.gameId) {
+        throw new globalThis.Error("value provided for field message.gameId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gameId);
     }
     for (const v of message.events) {
@@ -684,7 +727,7 @@ export const CGameRecordingPostGameSummary: MessageFns<CGameRecordingPostGameSum
             break;
           }
 
-          message.gameId = longToNumber(reader.uint64());
+          message.gameId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -707,13 +750,13 @@ export const CGameRecordingPostGameSummary: MessageFns<CGameRecordingPostGameSum
 
 function createBaseCGameRecordingTimelineEvent(): CGameRecordingTimelineEvent {
   return {
-    gameId: 0,
+    gameId: 0n,
     rtCreated: 0,
     possibleClip: 0,
     timelineId: "",
-    entryId: 0,
-    timelineOffsetMs: 0,
-    durationMs: 0,
+    entryId: 0n,
+    timelineOffsetMs: 0n,
+    durationMs: 0n,
     markerIcon: "",
     markerTitle: "",
     userMarker: false,
@@ -722,7 +765,10 @@ function createBaseCGameRecordingTimelineEvent(): CGameRecordingTimelineEvent {
 
 export const CGameRecordingTimelineEvent: MessageFns<CGameRecordingTimelineEvent> = {
   encode(message: CGameRecordingTimelineEvent, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gameId !== undefined && message.gameId !== 0) {
+    if (message.gameId !== undefined && message.gameId !== 0n) {
+      if (BigInt.asUintN(64, message.gameId) !== message.gameId) {
+        throw new globalThis.Error("value provided for field message.gameId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gameId);
     }
     if (message.rtCreated !== undefined && message.rtCreated !== 0) {
@@ -734,13 +780,22 @@ export const CGameRecordingTimelineEvent: MessageFns<CGameRecordingTimelineEvent
     if (message.timelineId !== undefined && message.timelineId !== "") {
       writer.uint32(34).string(message.timelineId);
     }
-    if (message.entryId !== undefined && message.entryId !== 0) {
+    if (message.entryId !== undefined && message.entryId !== 0n) {
+      if (BigInt.asUintN(64, message.entryId) !== message.entryId) {
+        throw new globalThis.Error("value provided for field message.entryId of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.entryId);
     }
-    if (message.timelineOffsetMs !== undefined && message.timelineOffsetMs !== 0) {
+    if (message.timelineOffsetMs !== undefined && message.timelineOffsetMs !== 0n) {
+      if (BigInt.asUintN(64, message.timelineOffsetMs) !== message.timelineOffsetMs) {
+        throw new globalThis.Error("value provided for field message.timelineOffsetMs of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.timelineOffsetMs);
     }
-    if (message.durationMs !== undefined && message.durationMs !== 0) {
+    if (message.durationMs !== undefined && message.durationMs !== 0n) {
+      if (BigInt.asUintN(64, message.durationMs) !== message.durationMs) {
+        throw new globalThis.Error("value provided for field message.durationMs of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.durationMs);
     }
     if (message.markerIcon !== undefined && message.markerIcon !== "") {
@@ -767,7 +822,7 @@ export const CGameRecordingTimelineEvent: MessageFns<CGameRecordingTimelineEvent
             break;
           }
 
-          message.gameId = longToNumber(reader.uint64());
+          message.gameId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -799,7 +854,7 @@ export const CGameRecordingTimelineEvent: MessageFns<CGameRecordingTimelineEvent
             break;
           }
 
-          message.entryId = longToNumber(reader.uint64());
+          message.entryId = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -807,7 +862,7 @@ export const CGameRecordingTimelineEvent: MessageFns<CGameRecordingTimelineEvent
             break;
           }
 
-          message.timelineOffsetMs = longToNumber(reader.uint64());
+          message.timelineOffsetMs = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -815,7 +870,7 @@ export const CGameRecordingTimelineEvent: MessageFns<CGameRecordingTimelineEvent
             break;
           }
 
-          message.durationMs = longToNumber(reader.uint64());
+          message.durationMs = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -853,12 +908,15 @@ export const CGameRecordingTimelineEvent: MessageFns<CGameRecordingTimelineEvent
 };
 
 function createBaseCGameRecordingTag(): CGameRecordingTag {
-  return { gameId: 0, tag: undefined, references: [] };
+  return { gameId: 0n, tag: undefined, references: [] };
 }
 
 export const CGameRecordingTag: MessageFns<CGameRecordingTag> = {
   encode(message: CGameRecordingTag, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gameId !== undefined && message.gameId !== 0) {
+    if (message.gameId !== undefined && message.gameId !== 0n) {
+      if (BigInt.asUintN(64, message.gameId) !== message.gameId) {
+        throw new globalThis.Error("value provided for field message.gameId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gameId);
     }
     if (message.tag !== undefined) {
@@ -882,7 +940,7 @@ export const CGameRecordingTag: MessageFns<CGameRecordingTag> = {
             break;
           }
 
-          message.gameId = longToNumber(reader.uint64());
+          message.gameId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -912,7 +970,7 @@ export const CGameRecordingTag: MessageFns<CGameRecordingTag> = {
 };
 
 function createBaseCGameRecordingTag_Timeline(): CGameRecordingTag_Timeline {
-  return { clipId: "", timelineId: "", offsetMs: 0 };
+  return { clipId: "", timelineId: "", offsetMs: 0n };
 }
 
 export const CGameRecordingTag_Timeline: MessageFns<CGameRecordingTag_Timeline> = {
@@ -923,7 +981,10 @@ export const CGameRecordingTag_Timeline: MessageFns<CGameRecordingTag_Timeline> 
     if (message.timelineId !== undefined && message.timelineId !== "") {
       writer.uint32(18).string(message.timelineId);
     }
-    if (message.offsetMs !== undefined && message.offsetMs !== 0) {
+    if (message.offsetMs !== undefined && message.offsetMs !== 0n) {
+      if (BigInt.asUintN(64, message.offsetMs) !== message.offsetMs) {
+        throw new globalThis.Error("value provided for field message.offsetMs of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.offsetMs);
     }
     return writer;
@@ -957,7 +1018,7 @@ export const CGameRecordingTag_Timeline: MessageFns<CGameRecordingTag_Timeline> 
             break;
           }
 
-          message.offsetMs = longToNumber(reader.uint64());
+          message.offsetMs = reader.uint64() as bigint;
           continue;
         }
       }
@@ -971,7 +1032,7 @@ export const CGameRecordingTag_Timeline: MessageFns<CGameRecordingTag_Timeline> 
 };
 
 function createBaseCGameRecordingTagInstance(): CGameRecordingTagInstance {
-  return { timelineId: "", entryId: 0, timelineOffsetMs: 0, durationMs: 0 };
+  return { timelineId: "", entryId: 0n, timelineOffsetMs: 0n, durationMs: 0n };
 }
 
 export const CGameRecordingTagInstance: MessageFns<CGameRecordingTagInstance> = {
@@ -979,13 +1040,22 @@ export const CGameRecordingTagInstance: MessageFns<CGameRecordingTagInstance> = 
     if (message.timelineId !== undefined && message.timelineId !== "") {
       writer.uint32(10).string(message.timelineId);
     }
-    if (message.entryId !== undefined && message.entryId !== 0) {
+    if (message.entryId !== undefined && message.entryId !== 0n) {
+      if (BigInt.asUintN(64, message.entryId) !== message.entryId) {
+        throw new globalThis.Error("value provided for field message.entryId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.entryId);
     }
-    if (message.timelineOffsetMs !== undefined && message.timelineOffsetMs !== 0) {
+    if (message.timelineOffsetMs !== undefined && message.timelineOffsetMs !== 0n) {
+      if (BigInt.asUintN(64, message.timelineOffsetMs) !== message.timelineOffsetMs) {
+        throw new globalThis.Error("value provided for field message.timelineOffsetMs of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.timelineOffsetMs);
     }
-    if (message.durationMs !== undefined && message.durationMs !== 0) {
+    if (message.durationMs !== undefined && message.durationMs !== 0n) {
+      if (BigInt.asUintN(64, message.durationMs) !== message.durationMs) {
+        throw new globalThis.Error("value provided for field message.durationMs of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.durationMs);
     }
     return writer;
@@ -1011,7 +1081,7 @@ export const CGameRecordingTagInstance: MessageFns<CGameRecordingTagInstance> = 
             break;
           }
 
-          message.entryId = longToNumber(reader.uint64());
+          message.entryId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1019,7 +1089,7 @@ export const CGameRecordingTagInstance: MessageFns<CGameRecordingTagInstance> = 
             break;
           }
 
-          message.timelineOffsetMs = longToNumber(reader.uint64());
+          message.timelineOffsetMs = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -1027,7 +1097,7 @@ export const CGameRecordingTagInstance: MessageFns<CGameRecordingTagInstance> = 
             break;
           }
 
-          message.durationMs = longToNumber(reader.uint64());
+          message.durationMs = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1041,7 +1111,7 @@ export const CGameRecordingTagInstance: MessageFns<CGameRecordingTagInstance> = 
 };
 
 function createBaseCGameRecordingPhase(): CGameRecordingPhase {
-  return { phaseId: "", durationMs: 0, tags: [], containedTags: [], backgroundTimelineOffset: 0, attributes: [] };
+  return { phaseId: "", durationMs: 0n, tags: [], containedTags: [], backgroundTimelineOffset: 0n, attributes: [] };
 }
 
 export const CGameRecordingPhase: MessageFns<CGameRecordingPhase> = {
@@ -1049,7 +1119,10 @@ export const CGameRecordingPhase: MessageFns<CGameRecordingPhase> = {
     if (message.phaseId !== undefined && message.phaseId !== "") {
       writer.uint32(34).string(message.phaseId);
     }
-    if (message.durationMs !== undefined && message.durationMs !== 0) {
+    if (message.durationMs !== undefined && message.durationMs !== 0n) {
+      if (BigInt.asUintN(64, message.durationMs) !== message.durationMs) {
+        throw new globalThis.Error("value provided for field message.durationMs of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.durationMs);
     }
     for (const v of message.tags) {
@@ -1058,7 +1131,12 @@ export const CGameRecordingPhase: MessageFns<CGameRecordingPhase> = {
     for (const v of message.containedTags) {
       CGameRecordingPhase_Tag.encode(v!, writer.uint32(58).fork()).join();
     }
-    if (message.backgroundTimelineOffset !== undefined && message.backgroundTimelineOffset !== 0) {
+    if (message.backgroundTimelineOffset !== undefined && message.backgroundTimelineOffset !== 0n) {
+      if (BigInt.asUintN(64, message.backgroundTimelineOffset) !== message.backgroundTimelineOffset) {
+        throw new globalThis.Error(
+          "value provided for field message.backgroundTimelineOffset of type uint64 too large",
+        );
+      }
       writer.uint32(64).uint64(message.backgroundTimelineOffset);
     }
     for (const v of message.attributes) {
@@ -1087,7 +1165,7 @@ export const CGameRecordingPhase: MessageFns<CGameRecordingPhase> = {
             break;
           }
 
-          message.durationMs = longToNumber(reader.uint64());
+          message.durationMs = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -1111,7 +1189,7 @@ export const CGameRecordingPhase: MessageFns<CGameRecordingPhase> = {
             break;
           }
 
-          message.backgroundTimelineOffset = longToNumber(reader.uint64());
+          message.backgroundTimelineOffset = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -1308,17 +1386,6 @@ export const CPhaseAttribute: MessageFns<CPhaseAttribute> = {
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

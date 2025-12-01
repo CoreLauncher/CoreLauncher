@@ -64,7 +64,7 @@ export interface CAccountHardwareUpdateControllerUsageReportResponse {
 
 export interface CAccountHardwareSteamControllerSetConfigControllerConfig {
   appidorname?: string | undefined;
-  publishedfileid?: number | undefined;
+  publishedfileid?: bigint | undefined;
   templatename?: string | undefined;
 }
 
@@ -91,7 +91,7 @@ export interface CAccountHardwareSteamControllerGetConfigRequest {
 
 export interface CAccountHardwareSteamControllerGetConfigControllerConfig {
   appidorname?: string | undefined;
-  publishedfileid?: number | undefined;
+  publishedfileid?: bigint | undefined;
   templatename?: string | undefined;
   serialNumber?: string | undefined;
   autosave?: boolean | undefined;
@@ -112,7 +112,7 @@ export interface CAccountHardwareDeRegisterSteamControllerResponse {
 
 export interface CAccountHardwareSetPersonalizationFileRequest {
   serialNumber?: string | undefined;
-  publishedfileid?: number | undefined;
+  publishedfileid?: bigint | undefined;
   accountid?: number | undefined;
 }
 
@@ -125,7 +125,7 @@ export interface CAccountHardwareGetPersonalizationFileRequest {
 }
 
 export interface CAccountHardwareGetPersonalizationFileResponse {
-  publishedfileid?: number | undefined;
+  publishedfileid?: bigint | undefined;
 }
 
 export interface CAccountHardwareVRCompatibilityCheckRequest {
@@ -627,7 +627,7 @@ export const CAccountHardwareUpdateControllerUsageReportResponse: MessageFns<
 };
 
 function createBaseCAccountHardwareSteamControllerSetConfigControllerConfig(): CAccountHardwareSteamControllerSetConfigControllerConfig {
-  return { appidorname: "", publishedfileid: 0, templatename: "" };
+  return { appidorname: "", publishedfileid: 0n, templatename: "" };
 }
 
 export const CAccountHardwareSteamControllerSetConfigControllerConfig: MessageFns<
@@ -640,7 +640,10 @@ export const CAccountHardwareSteamControllerSetConfigControllerConfig: MessageFn
     if (message.appidorname !== undefined && message.appidorname !== "") {
       writer.uint32(10).string(message.appidorname);
     }
-    if (message.publishedfileid !== undefined && message.publishedfileid !== 0) {
+    if (message.publishedfileid !== undefined && message.publishedfileid !== 0n) {
+      if (BigInt.asUintN(64, message.publishedfileid) !== message.publishedfileid) {
+        throw new globalThis.Error("value provided for field message.publishedfileid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.publishedfileid);
     }
     if (message.templatename !== undefined && message.templatename !== "") {
@@ -669,7 +672,7 @@ export const CAccountHardwareSteamControllerSetConfigControllerConfig: MessageFn
             break;
           }
 
-          message.publishedfileid = longToNumber(reader.uint64());
+          message.publishedfileid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -929,7 +932,7 @@ export const CAccountHardwareSteamControllerGetConfigRequest: MessageFns<
 };
 
 function createBaseCAccountHardwareSteamControllerGetConfigControllerConfig(): CAccountHardwareSteamControllerGetConfigControllerConfig {
-  return { appidorname: "", publishedfileid: 0, templatename: "", serialNumber: "", autosave: false };
+  return { appidorname: "", publishedfileid: 0n, templatename: "", serialNumber: "", autosave: false };
 }
 
 export const CAccountHardwareSteamControllerGetConfigControllerConfig: MessageFns<
@@ -942,7 +945,10 @@ export const CAccountHardwareSteamControllerGetConfigControllerConfig: MessageFn
     if (message.appidorname !== undefined && message.appidorname !== "") {
       writer.uint32(10).string(message.appidorname);
     }
-    if (message.publishedfileid !== undefined && message.publishedfileid !== 0) {
+    if (message.publishedfileid !== undefined && message.publishedfileid !== 0n) {
+      if (BigInt.asUintN(64, message.publishedfileid) !== message.publishedfileid) {
+        throw new globalThis.Error("value provided for field message.publishedfileid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.publishedfileid);
     }
     if (message.templatename !== undefined && message.templatename !== "") {
@@ -977,7 +983,7 @@ export const CAccountHardwareSteamControllerGetConfigControllerConfig: MessageFn
             break;
           }
 
-          message.publishedfileid = longToNumber(reader.uint64());
+          message.publishedfileid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1154,7 +1160,7 @@ export const CAccountHardwareDeRegisterSteamControllerResponse: MessageFns<
 };
 
 function createBaseCAccountHardwareSetPersonalizationFileRequest(): CAccountHardwareSetPersonalizationFileRequest {
-  return { serialNumber: "", publishedfileid: 0, accountid: 0 };
+  return { serialNumber: "", publishedfileid: 0n, accountid: 0 };
 }
 
 export const CAccountHardwareSetPersonalizationFileRequest: MessageFns<CAccountHardwareSetPersonalizationFileRequest> =
@@ -1166,7 +1172,10 @@ export const CAccountHardwareSetPersonalizationFileRequest: MessageFns<CAccountH
       if (message.serialNumber !== undefined && message.serialNumber !== "") {
         writer.uint32(10).string(message.serialNumber);
       }
-      if (message.publishedfileid !== undefined && message.publishedfileid !== 0) {
+      if (message.publishedfileid !== undefined && message.publishedfileid !== 0n) {
+        if (BigInt.asUintN(64, message.publishedfileid) !== message.publishedfileid) {
+          throw new globalThis.Error("value provided for field message.publishedfileid of type uint64 too large");
+        }
         writer.uint32(16).uint64(message.publishedfileid);
       }
       if (message.accountid !== undefined && message.accountid !== 0) {
@@ -1195,7 +1204,7 @@ export const CAccountHardwareSetPersonalizationFileRequest: MessageFns<CAccountH
               break;
             }
 
-            message.publishedfileid = longToNumber(reader.uint64());
+            message.publishedfileid = reader.uint64() as bigint;
             continue;
           }
           case 3: {
@@ -1297,7 +1306,7 @@ export const CAccountHardwareGetPersonalizationFileRequest: MessageFns<CAccountH
   };
 
 function createBaseCAccountHardwareGetPersonalizationFileResponse(): CAccountHardwareGetPersonalizationFileResponse {
-  return { publishedfileid: 0 };
+  return { publishedfileid: 0n };
 }
 
 export const CAccountHardwareGetPersonalizationFileResponse: MessageFns<
@@ -1307,7 +1316,10 @@ export const CAccountHardwareGetPersonalizationFileResponse: MessageFns<
     message: CAccountHardwareGetPersonalizationFileResponse,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.publishedfileid !== undefined && message.publishedfileid !== 0) {
+    if (message.publishedfileid !== undefined && message.publishedfileid !== 0n) {
+      if (BigInt.asUintN(64, message.publishedfileid) !== message.publishedfileid) {
+        throw new globalThis.Error("value provided for field message.publishedfileid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.publishedfileid);
     }
     return writer;
@@ -1325,7 +1337,7 @@ export const CAccountHardwareGetPersonalizationFileResponse: MessageFns<
             break;
           }
 
-          message.publishedfileid = longToNumber(reader.uint64());
+          message.publishedfileid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1994,17 +2006,6 @@ export class AccountHardwareClientImpl implements AccountHardware {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

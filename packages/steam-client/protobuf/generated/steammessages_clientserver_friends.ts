@@ -10,7 +10,7 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 export const protobufPackage = "";
 
 export interface CMsgClientFriendMsg {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   chatEntryType?: number | undefined;
   message?: Buffer | undefined;
   rtime32ServerTimestamp?: number | undefined;
@@ -18,7 +18,7 @@ export interface CMsgClientFriendMsg {
 }
 
 export interface CMsgClientFriendMsgIncoming {
-  steamidFrom?: number | undefined;
+  steamidFrom?: bigint | undefined;
   chatEntryType?: number | undefined;
   fromLimitedAccount?: boolean | undefined;
   message?: Buffer | undefined;
@@ -26,22 +26,22 @@ export interface CMsgClientFriendMsgIncoming {
 }
 
 export interface CMsgClientAddFriend {
-  steamidToAdd?: number | undefined;
+  steamidToAdd?: bigint | undefined;
   accountnameOrEmailToAdd?: string | undefined;
 }
 
 export interface CMsgClientAddFriendResponse {
   eresult?: number | undefined;
-  steamIdAdded?: number | undefined;
+  steamIdAdded?: bigint | undefined;
   personaNameAdded?: string | undefined;
 }
 
 export interface CMsgClientRemoveFriend {
-  friendid?: number | undefined;
+  friendid?: bigint | undefined;
 }
 
 export interface CMsgClientHideFriend {
-  friendid?: number | undefined;
+  friendid?: bigint | undefined;
   hide?: boolean | undefined;
 }
 
@@ -54,7 +54,7 @@ export interface CMsgClientFriendsList {
 }
 
 export interface CMsgClientFriendsList_Friend {
-  ulfriendid?: number | undefined;
+  ulfriendid?: bigint | undefined;
   efriendrelationship?: number | undefined;
 }
 
@@ -71,7 +71,7 @@ export interface CMsgClientFriendsGroupsList_FriendGroup {
 }
 
 export interface CMsgClientFriendsGroupsList_FriendGroupsMembership {
-  ulSteamID?: number | undefined;
+  ulSteamID?: bigint | undefined;
   nGroupID?: number | undefined;
 }
 
@@ -82,12 +82,12 @@ export interface CMsgClientPlayerNicknameList {
 }
 
 export interface CMsgClientPlayerNicknameList_PlayerNickname {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   nickname?: string | undefined;
 }
 
 export interface CMsgClientSetPlayerNickname {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   nickname?: string | undefined;
 }
 
@@ -97,7 +97,7 @@ export interface CMsgClientSetPlayerNicknameResponse {
 
 export interface CMsgClientRequestFriendData {
   personaStateRequested?: number | undefined;
-  friends: number[];
+  friends: bigint[];
 }
 
 export interface CMsgClientChangeStatus {
@@ -122,7 +122,7 @@ export interface CMsgClientPersonaState {
 }
 
 export interface CMsgClientPersonaState_Friend {
-  friendid?: number | undefined;
+  friendid?: bigint | undefined;
   personaState?: number | undefined;
   gamePlayedAppId?: number | undefined;
   gameServerIp?: number | undefined;
@@ -132,20 +132,20 @@ export interface CMsgClientPersonaState_Friend {
   personaSetByUser?: boolean | undefined;
   playerName?: string | undefined;
   queryPort?: number | undefined;
-  steamidSource?: number | undefined;
+  steamidSource?: bigint | undefined;
   avatarHash?: Buffer | undefined;
   lastLogoff?: number | undefined;
   lastLogon?: number | undefined;
   lastSeenOnline?: number | undefined;
   clanRank?: number | undefined;
   gameName?: string | undefined;
-  gameid?: number | undefined;
+  gameid?: bigint | undefined;
   gameDataBlob?: Buffer | undefined;
   clanData?: CMsgClientPersonaState_Friend_ClanData | undefined;
   clanTag?: string | undefined;
   richPresence: CMsgClientPersonaState_Friend_KV[];
-  broadcastId?: number | undefined;
-  gameLobbyId?: number | undefined;
+  broadcastId?: bigint | undefined;
+  gameLobbyId?: bigint | undefined;
   watchingBroadcastAccountid?: number | undefined;
   watchingBroadcastAppid?: number | undefined;
   watchingBroadcastViewers?: number | undefined;
@@ -160,7 +160,7 @@ export interface CMsgClientPersonaState_Friend {
 
 export interface CMsgClientPersonaState_Friend_ClanData {
   oggAppId?: number | undefined;
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
 }
 
 export interface CMsgClientPersonaState_Friend_KV {
@@ -169,17 +169,17 @@ export interface CMsgClientPersonaState_Friend_KV {
 }
 
 export interface CMsgClientPersonaState_Friend_OtherGameData {
-  gameid?: number | undefined;
+  gameid?: bigint | undefined;
   richPresence: CMsgClientPersonaState_Friend_KV[];
 }
 
 export interface CMsgClientFriendProfileInfo {
-  steamidFriend?: number | undefined;
+  steamidFriend?: bigint | undefined;
 }
 
 export interface CMsgClientFriendProfileInfoResponse {
   eresult?: number | undefined;
-  steamidFriend?: number | undefined;
+  steamidFriend?: bigint | undefined;
   timeCreated?: number | undefined;
   realName?: string | undefined;
   cityName?: string | undefined;
@@ -190,9 +190,9 @@ export interface CMsgClientFriendProfileInfoResponse {
 }
 
 export interface CMsgClientCreateFriendsGroup {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   groupname?: string | undefined;
-  steamidFriends: number[];
+  steamidFriends: bigint[];
 }
 
 export interface CMsgClientCreateFriendsGroupResponse {
@@ -201,7 +201,7 @@ export interface CMsgClientCreateFriendsGroupResponse {
 }
 
 export interface CMsgClientDeleteFriendsGroup {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   groupid?: number | undefined;
 }
 
@@ -212,8 +212,8 @@ export interface CMsgClientDeleteFriendsGroupResponse {
 export interface CMsgClientManageFriendsGroup {
   groupid?: number | undefined;
   groupname?: string | undefined;
-  steamidFriendsAdded: number[];
-  steamidFriendsRemoved: number[];
+  steamidFriendsAdded: bigint[];
+  steamidFriendsRemoved: bigint[];
 }
 
 export interface CMsgClientManageFriendsGroupResponse {
@@ -222,7 +222,7 @@ export interface CMsgClientManageFriendsGroupResponse {
 
 export interface CMsgClientAddFriendToGroup {
   groupid?: number | undefined;
-  steamiduser?: number | undefined;
+  steamiduser?: bigint | undefined;
 }
 
 export interface CMsgClientAddFriendToGroupResponse {
@@ -231,7 +231,7 @@ export interface CMsgClientAddFriendToGroupResponse {
 
 export interface CMsgClientRemoveFriendFromGroup {
   groupid?: number | undefined;
-  steamiduser?: number | undefined;
+  steamiduser?: bigint | undefined;
 }
 
 export interface CMsgClientRemoveFriendFromGroupResponse {
@@ -274,12 +274,15 @@ export interface CMsgClientEmoticonList_Effect {
 }
 
 function createBaseCMsgClientFriendMsg(): CMsgClientFriendMsg {
-  return { steamid: 0, chatEntryType: 0, message: Buffer.alloc(0), rtime32ServerTimestamp: 0, echoToSender: false };
+  return { steamid: 0n, chatEntryType: 0, message: Buffer.alloc(0), rtime32ServerTimestamp: 0, echoToSender: false };
 }
 
 export const CMsgClientFriendMsg: MessageFns<CMsgClientFriendMsg> = {
   encode(message: CMsgClientFriendMsg, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.chatEntryType !== undefined && message.chatEntryType !== 0) {
@@ -309,7 +312,7 @@ export const CMsgClientFriendMsg: MessageFns<CMsgClientFriendMsg> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -356,7 +359,7 @@ export const CMsgClientFriendMsg: MessageFns<CMsgClientFriendMsg> = {
 
 function createBaseCMsgClientFriendMsgIncoming(): CMsgClientFriendMsgIncoming {
   return {
-    steamidFrom: 0,
+    steamidFrom: 0n,
     chatEntryType: 0,
     fromLimitedAccount: false,
     message: Buffer.alloc(0),
@@ -366,7 +369,10 @@ function createBaseCMsgClientFriendMsgIncoming(): CMsgClientFriendMsgIncoming {
 
 export const CMsgClientFriendMsgIncoming: MessageFns<CMsgClientFriendMsgIncoming> = {
   encode(message: CMsgClientFriendMsgIncoming, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidFrom !== undefined && message.steamidFrom !== 0) {
+    if (message.steamidFrom !== undefined && message.steamidFrom !== 0n) {
+      if (BigInt.asUintN(64, message.steamidFrom) !== message.steamidFrom) {
+        throw new globalThis.Error("value provided for field message.steamidFrom of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidFrom);
     }
     if (message.chatEntryType !== undefined && message.chatEntryType !== 0) {
@@ -396,7 +402,7 @@ export const CMsgClientFriendMsgIncoming: MessageFns<CMsgClientFriendMsgIncoming
             break;
           }
 
-          message.steamidFrom = longToNumber(reader.fixed64());
+          message.steamidFrom = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -442,12 +448,15 @@ export const CMsgClientFriendMsgIncoming: MessageFns<CMsgClientFriendMsgIncoming
 };
 
 function createBaseCMsgClientAddFriend(): CMsgClientAddFriend {
-  return { steamidToAdd: 0, accountnameOrEmailToAdd: "" };
+  return { steamidToAdd: 0n, accountnameOrEmailToAdd: "" };
 }
 
 export const CMsgClientAddFriend: MessageFns<CMsgClientAddFriend> = {
   encode(message: CMsgClientAddFriend, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidToAdd !== undefined && message.steamidToAdd !== 0) {
+    if (message.steamidToAdd !== undefined && message.steamidToAdd !== 0n) {
+      if (BigInt.asUintN(64, message.steamidToAdd) !== message.steamidToAdd) {
+        throw new globalThis.Error("value provided for field message.steamidToAdd of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidToAdd);
     }
     if (message.accountnameOrEmailToAdd !== undefined && message.accountnameOrEmailToAdd !== "") {
@@ -468,7 +477,7 @@ export const CMsgClientAddFriend: MessageFns<CMsgClientAddFriend> = {
             break;
           }
 
-          message.steamidToAdd = longToNumber(reader.fixed64());
+          message.steamidToAdd = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -490,7 +499,7 @@ export const CMsgClientAddFriend: MessageFns<CMsgClientAddFriend> = {
 };
 
 function createBaseCMsgClientAddFriendResponse(): CMsgClientAddFriendResponse {
-  return { eresult: 2, steamIdAdded: 0, personaNameAdded: "" };
+  return { eresult: 2, steamIdAdded: 0n, personaNameAdded: "" };
 }
 
 export const CMsgClientAddFriendResponse: MessageFns<CMsgClientAddFriendResponse> = {
@@ -498,7 +507,10 @@ export const CMsgClientAddFriendResponse: MessageFns<CMsgClientAddFriendResponse
     if (message.eresult !== undefined && message.eresult !== 2) {
       writer.uint32(8).int32(message.eresult);
     }
-    if (message.steamIdAdded !== undefined && message.steamIdAdded !== 0) {
+    if (message.steamIdAdded !== undefined && message.steamIdAdded !== 0n) {
+      if (BigInt.asUintN(64, message.steamIdAdded) !== message.steamIdAdded) {
+        throw new globalThis.Error("value provided for field message.steamIdAdded of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamIdAdded);
     }
     if (message.personaNameAdded !== undefined && message.personaNameAdded !== "") {
@@ -527,7 +539,7 @@ export const CMsgClientAddFriendResponse: MessageFns<CMsgClientAddFriendResponse
             break;
           }
 
-          message.steamIdAdded = longToNumber(reader.fixed64());
+          message.steamIdAdded = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -549,12 +561,15 @@ export const CMsgClientAddFriendResponse: MessageFns<CMsgClientAddFriendResponse
 };
 
 function createBaseCMsgClientRemoveFriend(): CMsgClientRemoveFriend {
-  return { friendid: 0 };
+  return { friendid: 0n };
 }
 
 export const CMsgClientRemoveFriend: MessageFns<CMsgClientRemoveFriend> = {
   encode(message: CMsgClientRemoveFriend, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.friendid !== undefined && message.friendid !== 0) {
+    if (message.friendid !== undefined && message.friendid !== 0n) {
+      if (BigInt.asUintN(64, message.friendid) !== message.friendid) {
+        throw new globalThis.Error("value provided for field message.friendid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.friendid);
     }
     return writer;
@@ -572,7 +587,7 @@ export const CMsgClientRemoveFriend: MessageFns<CMsgClientRemoveFriend> = {
             break;
           }
 
-          message.friendid = longToNumber(reader.fixed64());
+          message.friendid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -586,12 +601,15 @@ export const CMsgClientRemoveFriend: MessageFns<CMsgClientRemoveFriend> = {
 };
 
 function createBaseCMsgClientHideFriend(): CMsgClientHideFriend {
-  return { friendid: 0, hide: false };
+  return { friendid: 0n, hide: false };
 }
 
 export const CMsgClientHideFriend: MessageFns<CMsgClientHideFriend> = {
   encode(message: CMsgClientHideFriend, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.friendid !== undefined && message.friendid !== 0) {
+    if (message.friendid !== undefined && message.friendid !== 0n) {
+      if (BigInt.asUintN(64, message.friendid) !== message.friendid) {
+        throw new globalThis.Error("value provided for field message.friendid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.friendid);
     }
     if (message.hide !== undefined && message.hide !== false) {
@@ -612,7 +630,7 @@ export const CMsgClientHideFriend: MessageFns<CMsgClientHideFriend> = {
             break;
           }
 
-          message.friendid = longToNumber(reader.fixed64());
+          message.friendid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -715,12 +733,15 @@ export const CMsgClientFriendsList: MessageFns<CMsgClientFriendsList> = {
 };
 
 function createBaseCMsgClientFriendsList_Friend(): CMsgClientFriendsList_Friend {
-  return { ulfriendid: 0, efriendrelationship: 0 };
+  return { ulfriendid: 0n, efriendrelationship: 0 };
 }
 
 export const CMsgClientFriendsList_Friend: MessageFns<CMsgClientFriendsList_Friend> = {
   encode(message: CMsgClientFriendsList_Friend, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.ulfriendid !== undefined && message.ulfriendid !== 0) {
+    if (message.ulfriendid !== undefined && message.ulfriendid !== 0n) {
+      if (BigInt.asUintN(64, message.ulfriendid) !== message.ulfriendid) {
+        throw new globalThis.Error("value provided for field message.ulfriendid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.ulfriendid);
     }
     if (message.efriendrelationship !== undefined && message.efriendrelationship !== 0) {
@@ -741,7 +762,7 @@ export const CMsgClientFriendsList_Friend: MessageFns<CMsgClientFriendsList_Frie
             break;
           }
 
-          message.ulfriendid = longToNumber(reader.fixed64());
+          message.ulfriendid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -881,7 +902,7 @@ export const CMsgClientFriendsGroupsList_FriendGroup: MessageFns<CMsgClientFrien
 };
 
 function createBaseCMsgClientFriendsGroupsList_FriendGroupsMembership(): CMsgClientFriendsGroupsList_FriendGroupsMembership {
-  return { ulSteamID: 0, nGroupID: 0 };
+  return { ulSteamID: 0n, nGroupID: 0 };
 }
 
 export const CMsgClientFriendsGroupsList_FriendGroupsMembership: MessageFns<
@@ -891,7 +912,10 @@ export const CMsgClientFriendsGroupsList_FriendGroupsMembership: MessageFns<
     message: CMsgClientFriendsGroupsList_FriendGroupsMembership,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.ulSteamID !== undefined && message.ulSteamID !== 0) {
+    if (message.ulSteamID !== undefined && message.ulSteamID !== 0n) {
+      if (BigInt.asUintN(64, message.ulSteamID) !== message.ulSteamID) {
+        throw new globalThis.Error("value provided for field message.ulSteamID of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.ulSteamID);
     }
     if (message.nGroupID !== undefined && message.nGroupID !== 0) {
@@ -912,7 +936,7 @@ export const CMsgClientFriendsGroupsList_FriendGroupsMembership: MessageFns<
             break;
           }
 
-          message.ulSteamID = longToNumber(reader.fixed64());
+          message.ulSteamID = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -993,7 +1017,7 @@ export const CMsgClientPlayerNicknameList: MessageFns<CMsgClientPlayerNicknameLi
 };
 
 function createBaseCMsgClientPlayerNicknameList_PlayerNickname(): CMsgClientPlayerNicknameList_PlayerNickname {
-  return { steamid: 0, nickname: "" };
+  return { steamid: 0n, nickname: "" };
 }
 
 export const CMsgClientPlayerNicknameList_PlayerNickname: MessageFns<CMsgClientPlayerNicknameList_PlayerNickname> = {
@@ -1001,7 +1025,10 @@ export const CMsgClientPlayerNicknameList_PlayerNickname: MessageFns<CMsgClientP
     message: CMsgClientPlayerNicknameList_PlayerNickname,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.nickname !== undefined && message.nickname !== "") {
@@ -1022,7 +1049,7 @@ export const CMsgClientPlayerNicknameList_PlayerNickname: MessageFns<CMsgClientP
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1044,12 +1071,15 @@ export const CMsgClientPlayerNicknameList_PlayerNickname: MessageFns<CMsgClientP
 };
 
 function createBaseCMsgClientSetPlayerNickname(): CMsgClientSetPlayerNickname {
-  return { steamid: 0, nickname: "" };
+  return { steamid: 0n, nickname: "" };
 }
 
 export const CMsgClientSetPlayerNickname: MessageFns<CMsgClientSetPlayerNickname> = {
   encode(message: CMsgClientSetPlayerNickname, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.nickname !== undefined && message.nickname !== "") {
@@ -1070,7 +1100,7 @@ export const CMsgClientSetPlayerNickname: MessageFns<CMsgClientSetPlayerNickname
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1138,6 +1168,9 @@ export const CMsgClientRequestFriendData: MessageFns<CMsgClientRequestFriendData
       writer.uint32(8).uint32(message.personaStateRequested);
     }
     for (const v of message.friends) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(v!);
     }
     return writer;
@@ -1160,7 +1193,7 @@ export const CMsgClientRequestFriendData: MessageFns<CMsgClientRequestFriendData
         }
         case 2: {
           if (tag === 17) {
-            message.friends.push(longToNumber(reader.fixed64()));
+            message.friends.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -1168,7 +1201,7 @@ export const CMsgClientRequestFriendData: MessageFns<CMsgClientRequestFriendData
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.friends.push(longToNumber(reader.fixed64()));
+              message.friends.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -1407,7 +1440,7 @@ export const CMsgClientPersonaState: MessageFns<CMsgClientPersonaState> = {
 
 function createBaseCMsgClientPersonaState_Friend(): CMsgClientPersonaState_Friend {
   return {
-    friendid: 0,
+    friendid: 0n,
     personaState: 0,
     gamePlayedAppId: 0,
     gameServerIp: 0,
@@ -1417,20 +1450,20 @@ function createBaseCMsgClientPersonaState_Friend(): CMsgClientPersonaState_Frien
     personaSetByUser: false,
     playerName: "",
     queryPort: 0,
-    steamidSource: 0,
+    steamidSource: 0n,
     avatarHash: Buffer.alloc(0),
     lastLogoff: 0,
     lastLogon: 0,
     lastSeenOnline: 0,
     clanRank: 0,
     gameName: "",
-    gameid: 0,
+    gameid: 0n,
     gameDataBlob: Buffer.alloc(0),
     clanData: undefined,
     clanTag: "",
     richPresence: [],
-    broadcastId: 0,
-    gameLobbyId: 0,
+    broadcastId: 0n,
+    gameLobbyId: 0n,
     watchingBroadcastAccountid: 0,
     watchingBroadcastAppid: 0,
     watchingBroadcastViewers: 0,
@@ -1446,7 +1479,10 @@ function createBaseCMsgClientPersonaState_Friend(): CMsgClientPersonaState_Frien
 
 export const CMsgClientPersonaState_Friend: MessageFns<CMsgClientPersonaState_Friend> = {
   encode(message: CMsgClientPersonaState_Friend, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.friendid !== undefined && message.friendid !== 0) {
+    if (message.friendid !== undefined && message.friendid !== 0n) {
+      if (BigInt.asUintN(64, message.friendid) !== message.friendid) {
+        throw new globalThis.Error("value provided for field message.friendid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.friendid);
     }
     if (message.personaState !== undefined && message.personaState !== 0) {
@@ -1476,7 +1512,10 @@ export const CMsgClientPersonaState_Friend: MessageFns<CMsgClientPersonaState_Fr
     if (message.queryPort !== undefined && message.queryPort !== 0) {
       writer.uint32(160).uint32(message.queryPort);
     }
-    if (message.steamidSource !== undefined && message.steamidSource !== 0) {
+    if (message.steamidSource !== undefined && message.steamidSource !== 0n) {
+      if (BigInt.asUintN(64, message.steamidSource) !== message.steamidSource) {
+        throw new globalThis.Error("value provided for field message.steamidSource of type fixed64 too large");
+      }
       writer.uint32(201).fixed64(message.steamidSource);
     }
     if (message.avatarHash !== undefined && message.avatarHash.length !== 0) {
@@ -1497,7 +1536,10 @@ export const CMsgClientPersonaState_Friend: MessageFns<CMsgClientPersonaState_Fr
     if (message.gameName !== undefined && message.gameName !== "") {
       writer.uint32(442).string(message.gameName);
     }
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type fixed64 too large");
+      }
       writer.uint32(449).fixed64(message.gameid);
     }
     if (message.gameDataBlob !== undefined && message.gameDataBlob.length !== 0) {
@@ -1512,10 +1554,16 @@ export const CMsgClientPersonaState_Friend: MessageFns<CMsgClientPersonaState_Fr
     for (const v of message.richPresence) {
       CMsgClientPersonaState_Friend_KV.encode(v!, writer.uint32(570).fork()).join();
     }
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(577).fixed64(message.broadcastId);
     }
-    if (message.gameLobbyId !== undefined && message.gameLobbyId !== 0) {
+    if (message.gameLobbyId !== undefined && message.gameLobbyId !== 0n) {
+      if (BigInt.asUintN(64, message.gameLobbyId) !== message.gameLobbyId) {
+        throw new globalThis.Error("value provided for field message.gameLobbyId of type fixed64 too large");
+      }
       writer.uint32(585).fixed64(message.gameLobbyId);
     }
     if (message.watchingBroadcastAccountid !== undefined && message.watchingBroadcastAccountid !== 0) {
@@ -1563,7 +1611,7 @@ export const CMsgClientPersonaState_Friend: MessageFns<CMsgClientPersonaState_Fr
             break;
           }
 
-          message.friendid = longToNumber(reader.fixed64());
+          message.friendid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1643,7 +1691,7 @@ export const CMsgClientPersonaState_Friend: MessageFns<CMsgClientPersonaState_Fr
             break;
           }
 
-          message.steamidSource = longToNumber(reader.fixed64());
+          message.steamidSource = reader.fixed64() as bigint;
           continue;
         }
         case 31: {
@@ -1699,7 +1747,7 @@ export const CMsgClientPersonaState_Friend: MessageFns<CMsgClientPersonaState_Fr
             break;
           }
 
-          message.gameid = longToNumber(reader.fixed64());
+          message.gameid = reader.fixed64() as bigint;
           continue;
         }
         case 60: {
@@ -1739,7 +1787,7 @@ export const CMsgClientPersonaState_Friend: MessageFns<CMsgClientPersonaState_Fr
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
         case 73: {
@@ -1747,7 +1795,7 @@ export const CMsgClientPersonaState_Friend: MessageFns<CMsgClientPersonaState_Fr
             break;
           }
 
-          message.gameLobbyId = longToNumber(reader.fixed64());
+          message.gameLobbyId = reader.fixed64() as bigint;
           continue;
         }
         case 74: {
@@ -1841,7 +1889,7 @@ export const CMsgClientPersonaState_Friend: MessageFns<CMsgClientPersonaState_Fr
 };
 
 function createBaseCMsgClientPersonaState_Friend_ClanData(): CMsgClientPersonaState_Friend_ClanData {
-  return { oggAppId: 0, chatGroupId: 0 };
+  return { oggAppId: 0, chatGroupId: 0n };
 }
 
 export const CMsgClientPersonaState_Friend_ClanData: MessageFns<CMsgClientPersonaState_Friend_ClanData> = {
@@ -1849,7 +1897,10 @@ export const CMsgClientPersonaState_Friend_ClanData: MessageFns<CMsgClientPerson
     if (message.oggAppId !== undefined && message.oggAppId !== 0) {
       writer.uint32(8).uint32(message.oggAppId);
     }
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chatGroupId);
     }
     return writer;
@@ -1875,7 +1926,7 @@ export const CMsgClientPersonaState_Friend_ClanData: MessageFns<CMsgClientPerson
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1937,7 +1988,7 @@ export const CMsgClientPersonaState_Friend_KV: MessageFns<CMsgClientPersonaState
 };
 
 function createBaseCMsgClientPersonaState_Friend_OtherGameData(): CMsgClientPersonaState_Friend_OtherGameData {
-  return { gameid: 0, richPresence: [] };
+  return { gameid: 0n, richPresence: [] };
 }
 
 export const CMsgClientPersonaState_Friend_OtherGameData: MessageFns<CMsgClientPersonaState_Friend_OtherGameData> = {
@@ -1945,7 +1996,10 @@ export const CMsgClientPersonaState_Friend_OtherGameData: MessageFns<CMsgClientP
     message: CMsgClientPersonaState_Friend_OtherGameData,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gameid);
     }
     for (const v of message.richPresence) {
@@ -1966,7 +2020,7 @@ export const CMsgClientPersonaState_Friend_OtherGameData: MessageFns<CMsgClientP
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1988,12 +2042,15 @@ export const CMsgClientPersonaState_Friend_OtherGameData: MessageFns<CMsgClientP
 };
 
 function createBaseCMsgClientFriendProfileInfo(): CMsgClientFriendProfileInfo {
-  return { steamidFriend: 0 };
+  return { steamidFriend: 0n };
 }
 
 export const CMsgClientFriendProfileInfo: MessageFns<CMsgClientFriendProfileInfo> = {
   encode(message: CMsgClientFriendProfileInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamidFriend !== undefined && message.steamidFriend !== 0) {
+    if (message.steamidFriend !== undefined && message.steamidFriend !== 0n) {
+      if (BigInt.asUintN(64, message.steamidFriend) !== message.steamidFriend) {
+        throw new globalThis.Error("value provided for field message.steamidFriend of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamidFriend);
     }
     return writer;
@@ -2011,7 +2068,7 @@ export const CMsgClientFriendProfileInfo: MessageFns<CMsgClientFriendProfileInfo
             break;
           }
 
-          message.steamidFriend = longToNumber(reader.fixed64());
+          message.steamidFriend = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2027,7 +2084,7 @@ export const CMsgClientFriendProfileInfo: MessageFns<CMsgClientFriendProfileInfo
 function createBaseCMsgClientFriendProfileInfoResponse(): CMsgClientFriendProfileInfoResponse {
   return {
     eresult: 2,
-    steamidFriend: 0,
+    steamidFriend: 0n,
     timeCreated: 0,
     realName: "",
     cityName: "",
@@ -2043,7 +2100,10 @@ export const CMsgClientFriendProfileInfoResponse: MessageFns<CMsgClientFriendPro
     if (message.eresult !== undefined && message.eresult !== 2) {
       writer.uint32(8).int32(message.eresult);
     }
-    if (message.steamidFriend !== undefined && message.steamidFriend !== 0) {
+    if (message.steamidFriend !== undefined && message.steamidFriend !== 0n) {
+      if (BigInt.asUintN(64, message.steamidFriend) !== message.steamidFriend) {
+        throw new globalThis.Error("value provided for field message.steamidFriend of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamidFriend);
     }
     if (message.timeCreated !== undefined && message.timeCreated !== 0) {
@@ -2090,7 +2150,7 @@ export const CMsgClientFriendProfileInfoResponse: MessageFns<CMsgClientFriendPro
             break;
           }
 
-          message.steamidFriend = longToNumber(reader.fixed64());
+          message.steamidFriend = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2160,18 +2220,24 @@ export const CMsgClientFriendProfileInfoResponse: MessageFns<CMsgClientFriendPro
 };
 
 function createBaseCMsgClientCreateFriendsGroup(): CMsgClientCreateFriendsGroup {
-  return { steamid: 0, groupname: "", steamidFriends: [] };
+  return { steamid: 0n, groupname: "", steamidFriends: [] };
 }
 
 export const CMsgClientCreateFriendsGroup: MessageFns<CMsgClientCreateFriendsGroup> = {
   encode(message: CMsgClientCreateFriendsGroup, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.groupname !== undefined && message.groupname !== "") {
       writer.uint32(18).string(message.groupname);
     }
     for (const v of message.steamidFriends) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(v!);
     }
     return writer;
@@ -2189,7 +2255,7 @@ export const CMsgClientCreateFriendsGroup: MessageFns<CMsgClientCreateFriendsGro
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2202,7 +2268,7 @@ export const CMsgClientCreateFriendsGroup: MessageFns<CMsgClientCreateFriendsGro
         }
         case 3: {
           if (tag === 25) {
-            message.steamidFriends.push(longToNumber(reader.fixed64()));
+            message.steamidFriends.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -2210,7 +2276,7 @@ export const CMsgClientCreateFriendsGroup: MessageFns<CMsgClientCreateFriendsGro
           if (tag === 26) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.steamidFriends.push(longToNumber(reader.fixed64()));
+              message.steamidFriends.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -2277,12 +2343,15 @@ export const CMsgClientCreateFriendsGroupResponse: MessageFns<CMsgClientCreateFr
 };
 
 function createBaseCMsgClientDeleteFriendsGroup(): CMsgClientDeleteFriendsGroup {
-  return { steamid: 0, groupid: 0 };
+  return { steamid: 0n, groupid: 0 };
 }
 
 export const CMsgClientDeleteFriendsGroup: MessageFns<CMsgClientDeleteFriendsGroup> = {
   encode(message: CMsgClientDeleteFriendsGroup, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.groupid !== undefined && message.groupid !== 0) {
@@ -2303,7 +2372,7 @@ export const CMsgClientDeleteFriendsGroup: MessageFns<CMsgClientDeleteFriendsGro
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2374,9 +2443,15 @@ export const CMsgClientManageFriendsGroup: MessageFns<CMsgClientManageFriendsGro
       writer.uint32(18).string(message.groupname);
     }
     for (const v of message.steamidFriendsAdded) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(v!);
     }
     for (const v of message.steamidFriendsRemoved) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(v!);
     }
     return writer;
@@ -2407,7 +2482,7 @@ export const CMsgClientManageFriendsGroup: MessageFns<CMsgClientManageFriendsGro
         }
         case 3: {
           if (tag === 25) {
-            message.steamidFriendsAdded.push(longToNumber(reader.fixed64()));
+            message.steamidFriendsAdded.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -2415,7 +2490,7 @@ export const CMsgClientManageFriendsGroup: MessageFns<CMsgClientManageFriendsGro
           if (tag === 26) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.steamidFriendsAdded.push(longToNumber(reader.fixed64()));
+              message.steamidFriendsAdded.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -2425,7 +2500,7 @@ export const CMsgClientManageFriendsGroup: MessageFns<CMsgClientManageFriendsGro
         }
         case 4: {
           if (tag === 33) {
-            message.steamidFriendsRemoved.push(longToNumber(reader.fixed64()));
+            message.steamidFriendsRemoved.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -2433,7 +2508,7 @@ export const CMsgClientManageFriendsGroup: MessageFns<CMsgClientManageFriendsGro
           if (tag === 34) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.steamidFriendsRemoved.push(longToNumber(reader.fixed64()));
+              message.steamidFriendsRemoved.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -2489,7 +2564,7 @@ export const CMsgClientManageFriendsGroupResponse: MessageFns<CMsgClientManageFr
 };
 
 function createBaseCMsgClientAddFriendToGroup(): CMsgClientAddFriendToGroup {
-  return { groupid: 0, steamiduser: 0 };
+  return { groupid: 0, steamiduser: 0n };
 }
 
 export const CMsgClientAddFriendToGroup: MessageFns<CMsgClientAddFriendToGroup> = {
@@ -2497,7 +2572,10 @@ export const CMsgClientAddFriendToGroup: MessageFns<CMsgClientAddFriendToGroup> 
     if (message.groupid !== undefined && message.groupid !== 0) {
       writer.uint32(8).int32(message.groupid);
     }
-    if (message.steamiduser !== undefined && message.steamiduser !== 0) {
+    if (message.steamiduser !== undefined && message.steamiduser !== 0n) {
+      if (BigInt.asUintN(64, message.steamiduser) !== message.steamiduser) {
+        throw new globalThis.Error("value provided for field message.steamiduser of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamiduser);
     }
     return writer;
@@ -2523,7 +2601,7 @@ export const CMsgClientAddFriendToGroup: MessageFns<CMsgClientAddFriendToGroup> 
             break;
           }
 
-          message.steamiduser = longToNumber(reader.fixed64());
+          message.steamiduser = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2574,7 +2652,7 @@ export const CMsgClientAddFriendToGroupResponse: MessageFns<CMsgClientAddFriendT
 };
 
 function createBaseCMsgClientRemoveFriendFromGroup(): CMsgClientRemoveFriendFromGroup {
-  return { groupid: 0, steamiduser: 0 };
+  return { groupid: 0, steamiduser: 0n };
 }
 
 export const CMsgClientRemoveFriendFromGroup: MessageFns<CMsgClientRemoveFriendFromGroup> = {
@@ -2582,7 +2660,10 @@ export const CMsgClientRemoveFriendFromGroup: MessageFns<CMsgClientRemoveFriendF
     if (message.groupid !== undefined && message.groupid !== 0) {
       writer.uint32(8).int32(message.groupid);
     }
-    if (message.steamiduser !== undefined && message.steamiduser !== 0) {
+    if (message.steamiduser !== undefined && message.steamiduser !== 0n) {
+      if (BigInt.asUintN(64, message.steamiduser) !== message.steamiduser) {
+        throw new globalThis.Error("value provided for field message.steamiduser of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamiduser);
     }
     return writer;
@@ -2608,7 +2689,7 @@ export const CMsgClientRemoveFriendFromGroup: MessageFns<CMsgClientRemoveFriendF
             break;
           }
 
-          message.steamiduser = longToNumber(reader.fixed64());
+          message.steamiduser = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3007,17 +3088,6 @@ export const CMsgClientEmoticonList_Effect: MessageFns<CMsgClientEmoticonList_Ef
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

@@ -12,15 +12,15 @@ export const protobufPackage = "";
 export interface CContentBuilderInitDepotBuildRequest {
   appid?: number | undefined;
   depotid?: number | undefined;
-  workshopItemid?: number | undefined;
+  workshopItemid?: bigint | undefined;
   forLocalCs?: boolean | undefined;
   targetBranch?: string | undefined;
   shaderDepot?: boolean | undefined;
-  baselineManifestId?: number | undefined;
+  baselineManifestId?: bigint | undefined;
 }
 
 export interface CContentBuilderInitDepotBuildResponse {
-  baselineManifestid?: number | undefined;
+  baselineManifestid?: bigint | undefined;
   chunkSize?: number | undefined;
   aesKey?: Buffer | undefined;
   rsaKey?: Buffer | undefined;
@@ -33,7 +33,7 @@ export interface CContentBuilderInitDepotBuildResponse {
   offsetDetectionMaxDistancePost?: number | undefined;
   compressionMethod?: number | undefined;
   downloadHost?: string | undefined;
-  manifestRequestCode?: number | undefined;
+  manifestRequestCode?: bigint | undefined;
   chunkUploadHost?: string | undefined;
   manifestUploadHost?: string | undefined;
 }
@@ -41,25 +41,25 @@ export interface CContentBuilderInitDepotBuildResponse {
 export interface CContentBuilderStartDepotUploadRequest {
   appid?: number | undefined;
   depotid?: number | undefined;
-  workshopItemid?: number | undefined;
+  workshopItemid?: bigint | undefined;
   forLocalCs?: boolean | undefined;
-  baselineManifestid?: number | undefined;
+  baselineManifestid?: bigint | undefined;
   manifestSize?: number | undefined;
 }
 
 export interface CContentBuilderStartDepotUploadResponse {
-  depotBuildHandle?: number | undefined;
+  depotBuildHandle?: bigint | undefined;
 }
 
 export interface CContentBuilderGetMissingDepotChunksRequest {
   appid?: number | undefined;
-  depotBuildHandle?: number | undefined;
+  depotBuildHandle?: bigint | undefined;
 }
 
 export interface CContentBuilderGetMissingDepotChunksResponse {
   missingChunks: CContentBuilderGetMissingDepotChunksResponse_Chunks[];
   totalMissingChunks?: number | undefined;
-  totalMissingBytes?: number | undefined;
+  totalMissingBytes?: bigint | undefined;
 }
 
 export interface CContentBuilderGetMissingDepotChunksResponse_Chunks {
@@ -68,13 +68,13 @@ export interface CContentBuilderGetMissingDepotChunksResponse_Chunks {
 
 export interface CContentBuilderFinishDepotUploadRequest {
   appid?: number | undefined;
-  depotBuildHandle?: number | undefined;
+  depotBuildHandle?: bigint | undefined;
 }
 
 export interface CContentBuilderFinishDepotUploadResponse {
-  manifestid?: number | undefined;
+  manifestid?: bigint | undefined;
   prevReused?: boolean | undefined;
-  manifestRequestCode?: number | undefined;
+  manifestRequestCode?: bigint | undefined;
 }
 
 export interface CContentBuilderCommitAppBuildRequest {
@@ -88,7 +88,7 @@ export interface CContentBuilderCommitAppBuildRequest {
 
 export interface CContentBuilderCommitAppBuildRequest_Depots {
   depotid?: number | undefined;
-  manifestid?: number | undefined;
+  manifestid?: bigint | undefined;
 }
 
 export interface CContentBuilderCommitAppBuildResponse {
@@ -109,11 +109,11 @@ function createBaseCContentBuilderInitDepotBuildRequest(): CContentBuilderInitDe
   return {
     appid: 0,
     depotid: 0,
-    workshopItemid: 0,
+    workshopItemid: 0n,
     forLocalCs: false,
     targetBranch: "",
     shaderDepot: false,
-    baselineManifestId: 0,
+    baselineManifestId: 0n,
   };
 }
 
@@ -125,7 +125,10 @@ export const CContentBuilderInitDepotBuildRequest: MessageFns<CContentBuilderIni
     if (message.depotid !== undefined && message.depotid !== 0) {
       writer.uint32(16).uint32(message.depotid);
     }
-    if (message.workshopItemid !== undefined && message.workshopItemid !== 0) {
+    if (message.workshopItemid !== undefined && message.workshopItemid !== 0n) {
+      if (BigInt.asUintN(64, message.workshopItemid) !== message.workshopItemid) {
+        throw new globalThis.Error("value provided for field message.workshopItemid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.workshopItemid);
     }
     if (message.forLocalCs !== undefined && message.forLocalCs !== false) {
@@ -137,7 +140,10 @@ export const CContentBuilderInitDepotBuildRequest: MessageFns<CContentBuilderIni
     if (message.shaderDepot !== undefined && message.shaderDepot !== false) {
       writer.uint32(48).bool(message.shaderDepot);
     }
-    if (message.baselineManifestId !== undefined && message.baselineManifestId !== 0) {
+    if (message.baselineManifestId !== undefined && message.baselineManifestId !== 0n) {
+      if (BigInt.asUintN(64, message.baselineManifestId) !== message.baselineManifestId) {
+        throw new globalThis.Error("value provided for field message.baselineManifestId of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.baselineManifestId);
     }
     return writer;
@@ -171,7 +177,7 @@ export const CContentBuilderInitDepotBuildRequest: MessageFns<CContentBuilderIni
             break;
           }
 
-          message.workshopItemid = longToNumber(reader.uint64());
+          message.workshopItemid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -203,7 +209,7 @@ export const CContentBuilderInitDepotBuildRequest: MessageFns<CContentBuilderIni
             break;
           }
 
-          message.baselineManifestId = longToNumber(reader.uint64());
+          message.baselineManifestId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -218,7 +224,7 @@ export const CContentBuilderInitDepotBuildRequest: MessageFns<CContentBuilderIni
 
 function createBaseCContentBuilderInitDepotBuildResponse(): CContentBuilderInitDepotBuildResponse {
   return {
-    baselineManifestid: 0,
+    baselineManifestid: 0n,
     chunkSize: 0,
     aesKey: Buffer.alloc(0),
     rsaKey: Buffer.alloc(0),
@@ -231,7 +237,7 @@ function createBaseCContentBuilderInitDepotBuildResponse(): CContentBuilderInitD
     offsetDetectionMaxDistancePost: 0,
     compressionMethod: 0,
     downloadHost: "",
-    manifestRequestCode: 0,
+    manifestRequestCode: 0n,
     chunkUploadHost: "",
     manifestUploadHost: "",
   };
@@ -239,7 +245,10 @@ function createBaseCContentBuilderInitDepotBuildResponse(): CContentBuilderInitD
 
 export const CContentBuilderInitDepotBuildResponse: MessageFns<CContentBuilderInitDepotBuildResponse> = {
   encode(message: CContentBuilderInitDepotBuildResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.baselineManifestid !== undefined && message.baselineManifestid !== 0) {
+    if (message.baselineManifestid !== undefined && message.baselineManifestid !== 0n) {
+      if (BigInt.asUintN(64, message.baselineManifestid) !== message.baselineManifestid) {
+        throw new globalThis.Error("value provided for field message.baselineManifestid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.baselineManifestid);
     }
     if (message.chunkSize !== undefined && message.chunkSize !== 0) {
@@ -278,7 +287,10 @@ export const CContentBuilderInitDepotBuildResponse: MessageFns<CContentBuilderIn
     if (message.downloadHost !== undefined && message.downloadHost !== "") {
       writer.uint32(106).string(message.downloadHost);
     }
-    if (message.manifestRequestCode !== undefined && message.manifestRequestCode !== 0) {
+    if (message.manifestRequestCode !== undefined && message.manifestRequestCode !== 0n) {
+      if (BigInt.asUintN(64, message.manifestRequestCode) !== message.manifestRequestCode) {
+        throw new globalThis.Error("value provided for field message.manifestRequestCode of type uint64 too large");
+      }
       writer.uint32(112).uint64(message.manifestRequestCode);
     }
     if (message.chunkUploadHost !== undefined && message.chunkUploadHost !== "") {
@@ -302,7 +314,7 @@ export const CContentBuilderInitDepotBuildResponse: MessageFns<CContentBuilderIn
             break;
           }
 
-          message.baselineManifestid = longToNumber(reader.uint64());
+          message.baselineManifestid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -406,7 +418,7 @@ export const CContentBuilderInitDepotBuildResponse: MessageFns<CContentBuilderIn
             break;
           }
 
-          message.manifestRequestCode = longToNumber(reader.uint64());
+          message.manifestRequestCode = reader.uint64() as bigint;
           continue;
         }
         case 15: {
@@ -436,7 +448,7 @@ export const CContentBuilderInitDepotBuildResponse: MessageFns<CContentBuilderIn
 };
 
 function createBaseCContentBuilderStartDepotUploadRequest(): CContentBuilderStartDepotUploadRequest {
-  return { appid: 0, depotid: 0, workshopItemid: 0, forLocalCs: false, baselineManifestid: 0, manifestSize: 0 };
+  return { appid: 0, depotid: 0, workshopItemid: 0n, forLocalCs: false, baselineManifestid: 0n, manifestSize: 0 };
 }
 
 export const CContentBuilderStartDepotUploadRequest: MessageFns<CContentBuilderStartDepotUploadRequest> = {
@@ -447,13 +459,19 @@ export const CContentBuilderStartDepotUploadRequest: MessageFns<CContentBuilderS
     if (message.depotid !== undefined && message.depotid !== 0) {
       writer.uint32(16).uint32(message.depotid);
     }
-    if (message.workshopItemid !== undefined && message.workshopItemid !== 0) {
+    if (message.workshopItemid !== undefined && message.workshopItemid !== 0n) {
+      if (BigInt.asUintN(64, message.workshopItemid) !== message.workshopItemid) {
+        throw new globalThis.Error("value provided for field message.workshopItemid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.workshopItemid);
     }
     if (message.forLocalCs !== undefined && message.forLocalCs !== false) {
       writer.uint32(32).bool(message.forLocalCs);
     }
-    if (message.baselineManifestid !== undefined && message.baselineManifestid !== 0) {
+    if (message.baselineManifestid !== undefined && message.baselineManifestid !== 0n) {
+      if (BigInt.asUintN(64, message.baselineManifestid) !== message.baselineManifestid) {
+        throw new globalThis.Error("value provided for field message.baselineManifestid of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.baselineManifestid);
     }
     if (message.manifestSize !== undefined && message.manifestSize !== 0) {
@@ -490,7 +508,7 @@ export const CContentBuilderStartDepotUploadRequest: MessageFns<CContentBuilderS
             break;
           }
 
-          message.workshopItemid = longToNumber(reader.uint64());
+          message.workshopItemid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -506,7 +524,7 @@ export const CContentBuilderStartDepotUploadRequest: MessageFns<CContentBuilderS
             break;
           }
 
-          message.baselineManifestid = longToNumber(reader.uint64());
+          message.baselineManifestid = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -528,12 +546,15 @@ export const CContentBuilderStartDepotUploadRequest: MessageFns<CContentBuilderS
 };
 
 function createBaseCContentBuilderStartDepotUploadResponse(): CContentBuilderStartDepotUploadResponse {
-  return { depotBuildHandle: 0 };
+  return { depotBuildHandle: 0n };
 }
 
 export const CContentBuilderStartDepotUploadResponse: MessageFns<CContentBuilderStartDepotUploadResponse> = {
   encode(message: CContentBuilderStartDepotUploadResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.depotBuildHandle !== undefined && message.depotBuildHandle !== 0) {
+    if (message.depotBuildHandle !== undefined && message.depotBuildHandle !== 0n) {
+      if (BigInt.asUintN(64, message.depotBuildHandle) !== message.depotBuildHandle) {
+        throw new globalThis.Error("value provided for field message.depotBuildHandle of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.depotBuildHandle);
     }
     return writer;
@@ -551,7 +572,7 @@ export const CContentBuilderStartDepotUploadResponse: MessageFns<CContentBuilder
             break;
           }
 
-          message.depotBuildHandle = longToNumber(reader.uint64());
+          message.depotBuildHandle = reader.uint64() as bigint;
           continue;
         }
       }
@@ -565,7 +586,7 @@ export const CContentBuilderStartDepotUploadResponse: MessageFns<CContentBuilder
 };
 
 function createBaseCContentBuilderGetMissingDepotChunksRequest(): CContentBuilderGetMissingDepotChunksRequest {
-  return { appid: 0, depotBuildHandle: 0 };
+  return { appid: 0, depotBuildHandle: 0n };
 }
 
 export const CContentBuilderGetMissingDepotChunksRequest: MessageFns<CContentBuilderGetMissingDepotChunksRequest> = {
@@ -576,7 +597,10 @@ export const CContentBuilderGetMissingDepotChunksRequest: MessageFns<CContentBui
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.depotBuildHandle !== undefined && message.depotBuildHandle !== 0) {
+    if (message.depotBuildHandle !== undefined && message.depotBuildHandle !== 0n) {
+      if (BigInt.asUintN(64, message.depotBuildHandle) !== message.depotBuildHandle) {
+        throw new globalThis.Error("value provided for field message.depotBuildHandle of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.depotBuildHandle);
     }
     return writer;
@@ -602,7 +626,7 @@ export const CContentBuilderGetMissingDepotChunksRequest: MessageFns<CContentBui
             break;
           }
 
-          message.depotBuildHandle = longToNumber(reader.uint64());
+          message.depotBuildHandle = reader.uint64() as bigint;
           continue;
         }
       }
@@ -616,7 +640,7 @@ export const CContentBuilderGetMissingDepotChunksRequest: MessageFns<CContentBui
 };
 
 function createBaseCContentBuilderGetMissingDepotChunksResponse(): CContentBuilderGetMissingDepotChunksResponse {
-  return { missingChunks: [], totalMissingChunks: 0, totalMissingBytes: 0 };
+  return { missingChunks: [], totalMissingChunks: 0, totalMissingBytes: 0n };
 }
 
 export const CContentBuilderGetMissingDepotChunksResponse: MessageFns<CContentBuilderGetMissingDepotChunksResponse> = {
@@ -630,7 +654,10 @@ export const CContentBuilderGetMissingDepotChunksResponse: MessageFns<CContentBu
     if (message.totalMissingChunks !== undefined && message.totalMissingChunks !== 0) {
       writer.uint32(16).uint32(message.totalMissingChunks);
     }
-    if (message.totalMissingBytes !== undefined && message.totalMissingBytes !== 0) {
+    if (message.totalMissingBytes !== undefined && message.totalMissingBytes !== 0n) {
+      if (BigInt.asUintN(64, message.totalMissingBytes) !== message.totalMissingBytes) {
+        throw new globalThis.Error("value provided for field message.totalMissingBytes of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.totalMissingBytes);
     }
     return writer;
@@ -666,7 +693,7 @@ export const CContentBuilderGetMissingDepotChunksResponse: MessageFns<CContentBu
             break;
           }
 
-          message.totalMissingBytes = longToNumber(reader.uint64());
+          message.totalMissingBytes = reader.uint64() as bigint;
           continue;
         }
       }
@@ -722,7 +749,7 @@ export const CContentBuilderGetMissingDepotChunksResponse_Chunks: MessageFns<
 };
 
 function createBaseCContentBuilderFinishDepotUploadRequest(): CContentBuilderFinishDepotUploadRequest {
-  return { appid: 0, depotBuildHandle: 0 };
+  return { appid: 0, depotBuildHandle: 0n };
 }
 
 export const CContentBuilderFinishDepotUploadRequest: MessageFns<CContentBuilderFinishDepotUploadRequest> = {
@@ -730,7 +757,10 @@ export const CContentBuilderFinishDepotUploadRequest: MessageFns<CContentBuilder
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.depotBuildHandle !== undefined && message.depotBuildHandle !== 0) {
+    if (message.depotBuildHandle !== undefined && message.depotBuildHandle !== 0n) {
+      if (BigInt.asUintN(64, message.depotBuildHandle) !== message.depotBuildHandle) {
+        throw new globalThis.Error("value provided for field message.depotBuildHandle of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.depotBuildHandle);
     }
     return writer;
@@ -756,7 +786,7 @@ export const CContentBuilderFinishDepotUploadRequest: MessageFns<CContentBuilder
             break;
           }
 
-          message.depotBuildHandle = longToNumber(reader.uint64());
+          message.depotBuildHandle = reader.uint64() as bigint;
           continue;
         }
       }
@@ -770,18 +800,24 @@ export const CContentBuilderFinishDepotUploadRequest: MessageFns<CContentBuilder
 };
 
 function createBaseCContentBuilderFinishDepotUploadResponse(): CContentBuilderFinishDepotUploadResponse {
-  return { manifestid: 0, prevReused: false, manifestRequestCode: 0 };
+  return { manifestid: 0n, prevReused: false, manifestRequestCode: 0n };
 }
 
 export const CContentBuilderFinishDepotUploadResponse: MessageFns<CContentBuilderFinishDepotUploadResponse> = {
   encode(message: CContentBuilderFinishDepotUploadResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.manifestid !== undefined && message.manifestid !== 0) {
+    if (message.manifestid !== undefined && message.manifestid !== 0n) {
+      if (BigInt.asUintN(64, message.manifestid) !== message.manifestid) {
+        throw new globalThis.Error("value provided for field message.manifestid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.manifestid);
     }
     if (message.prevReused !== undefined && message.prevReused !== false) {
       writer.uint32(16).bool(message.prevReused);
     }
-    if (message.manifestRequestCode !== undefined && message.manifestRequestCode !== 0) {
+    if (message.manifestRequestCode !== undefined && message.manifestRequestCode !== 0n) {
+      if (BigInt.asUintN(64, message.manifestRequestCode) !== message.manifestRequestCode) {
+        throw new globalThis.Error("value provided for field message.manifestRequestCode of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.manifestRequestCode);
     }
     return writer;
@@ -799,7 +835,7 @@ export const CContentBuilderFinishDepotUploadResponse: MessageFns<CContentBuilde
             break;
           }
 
-          message.manifestid = longToNumber(reader.uint64());
+          message.manifestid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -815,7 +851,7 @@ export const CContentBuilderFinishDepotUploadResponse: MessageFns<CContentBuilde
             break;
           }
 
-          message.manifestRequestCode = longToNumber(reader.uint64());
+          message.manifestRequestCode = reader.uint64() as bigint;
           continue;
         }
       }
@@ -921,7 +957,7 @@ export const CContentBuilderCommitAppBuildRequest: MessageFns<CContentBuilderCom
 };
 
 function createBaseCContentBuilderCommitAppBuildRequest_Depots(): CContentBuilderCommitAppBuildRequest_Depots {
-  return { depotid: 0, manifestid: 0 };
+  return { depotid: 0, manifestid: 0n };
 }
 
 export const CContentBuilderCommitAppBuildRequest_Depots: MessageFns<CContentBuilderCommitAppBuildRequest_Depots> = {
@@ -932,7 +968,10 @@ export const CContentBuilderCommitAppBuildRequest_Depots: MessageFns<CContentBui
     if (message.depotid !== undefined && message.depotid !== 0) {
       writer.uint32(8).uint32(message.depotid);
     }
-    if (message.manifestid !== undefined && message.manifestid !== 0) {
+    if (message.manifestid !== undefined && message.manifestid !== 0n) {
+      if (BigInt.asUintN(64, message.manifestid) !== message.manifestid) {
+        throw new globalThis.Error("value provided for field message.manifestid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.manifestid);
     }
     return writer;
@@ -958,7 +997,7 @@ export const CContentBuilderCommitAppBuildRequest_Depots: MessageFns<CContentBui
             break;
           }
 
-          message.manifestid = longToNumber(reader.uint64());
+          message.manifestid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1178,17 +1217,6 @@ export class ContentBuilderClientImpl implements ContentBuilder {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

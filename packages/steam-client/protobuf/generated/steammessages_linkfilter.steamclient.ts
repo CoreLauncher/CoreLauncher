@@ -12,7 +12,7 @@ export const protobufPackage = "";
 export interface CCommunityGetLinkFilterHashPrefixesRequest {
   hitType?: number | undefined;
   count?: number | undefined;
-  start?: number | undefined;
+  start?: bigint | undefined;
 }
 
 export interface CCommunityGetLinkFilterHashPrefixesResponse {
@@ -22,7 +22,7 @@ export interface CCommunityGetLinkFilterHashPrefixesResponse {
 export interface CCommunityGetLinkFilterHashesRequest {
   hitType?: number | undefined;
   count?: number | undefined;
-  start?: number | undefined;
+  start?: bigint | undefined;
 }
 
 export interface CCommunityGetLinkFilterHashesResponse {
@@ -35,11 +35,11 @@ export interface CCommunityGetLinkFilterListVersionRequest {
 
 export interface CCommunityGetLinkFilterListVersionResponse {
   version?: string | undefined;
-  count?: number | undefined;
+  count?: bigint | undefined;
 }
 
 function createBaseCCommunityGetLinkFilterHashPrefixesRequest(): CCommunityGetLinkFilterHashPrefixesRequest {
-  return { hitType: 0, count: 0, start: 0 };
+  return { hitType: 0, count: 0, start: 0n };
 }
 
 export const CCommunityGetLinkFilterHashPrefixesRequest: MessageFns<CCommunityGetLinkFilterHashPrefixesRequest> = {
@@ -50,7 +50,10 @@ export const CCommunityGetLinkFilterHashPrefixesRequest: MessageFns<CCommunityGe
     if (message.count !== undefined && message.count !== 0) {
       writer.uint32(16).uint32(message.count);
     }
-    if (message.start !== undefined && message.start !== 0) {
+    if (message.start !== undefined && message.start !== 0n) {
+      if (BigInt.asUintN(64, message.start) !== message.start) {
+        throw new globalThis.Error("value provided for field message.start of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.start);
     }
     return writer;
@@ -84,7 +87,7 @@ export const CCommunityGetLinkFilterHashPrefixesRequest: MessageFns<CCommunityGe
             break;
           }
 
-          message.start = longToNumber(reader.uint64());
+          message.start = reader.uint64() as bigint;
           continue;
         }
       }
@@ -148,7 +151,7 @@ export const CCommunityGetLinkFilterHashPrefixesResponse: MessageFns<CCommunityG
 };
 
 function createBaseCCommunityGetLinkFilterHashesRequest(): CCommunityGetLinkFilterHashesRequest {
-  return { hitType: 0, count: 0, start: 0 };
+  return { hitType: 0, count: 0, start: 0n };
 }
 
 export const CCommunityGetLinkFilterHashesRequest: MessageFns<CCommunityGetLinkFilterHashesRequest> = {
@@ -159,7 +162,10 @@ export const CCommunityGetLinkFilterHashesRequest: MessageFns<CCommunityGetLinkF
     if (message.count !== undefined && message.count !== 0) {
       writer.uint32(16).uint32(message.count);
     }
-    if (message.start !== undefined && message.start !== 0) {
+    if (message.start !== undefined && message.start !== 0n) {
+      if (BigInt.asUintN(64, message.start) !== message.start) {
+        throw new globalThis.Error("value provided for field message.start of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.start);
     }
     return writer;
@@ -193,7 +199,7 @@ export const CCommunityGetLinkFilterHashesRequest: MessageFns<CCommunityGetLinkF
             break;
           }
 
-          message.start = longToNumber(reader.uint64());
+          message.start = reader.uint64() as bigint;
           continue;
         }
       }
@@ -281,7 +287,7 @@ export const CCommunityGetLinkFilterListVersionRequest: MessageFns<CCommunityGet
 };
 
 function createBaseCCommunityGetLinkFilterListVersionResponse(): CCommunityGetLinkFilterListVersionResponse {
-  return { version: "", count: 0 };
+  return { version: "", count: 0n };
 }
 
 export const CCommunityGetLinkFilterListVersionResponse: MessageFns<CCommunityGetLinkFilterListVersionResponse> = {
@@ -289,7 +295,10 @@ export const CCommunityGetLinkFilterListVersionResponse: MessageFns<CCommunityGe
     if (message.version !== undefined && message.version !== "") {
       writer.uint32(10).string(message.version);
     }
-    if (message.count !== undefined && message.count !== 0) {
+    if (message.count !== undefined && message.count !== 0n) {
+      if (BigInt.asUintN(64, message.count) !== message.count) {
+        throw new globalThis.Error("value provided for field message.count of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.count);
     }
     return writer;
@@ -315,7 +324,7 @@ export const CCommunityGetLinkFilterListVersionResponse: MessageFns<CCommunityGe
             break;
           }
 
-          message.count = longToNumber(reader.uint64());
+          message.count = reader.uint64() as bigint;
           continue;
         }
       }
@@ -374,17 +383,6 @@ export class CommunityLinkFilterClientImpl implements CommunityLinkFilter {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

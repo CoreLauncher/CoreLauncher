@@ -22,12 +22,12 @@ export interface CMsgChildProcessQueryGpuTopology {
 export interface CMsgChildProcessQueryGpuTopology_GpuInfo {
   id?: number | undefined;
   name?: string | undefined;
-  vramSizeBytes?: number | undefined;
+  vramSizeBytes?: bigint | undefined;
   driverId?: EGpuDriverId | undefined;
   driverVersionMajor?: number | undefined;
   driverVersionMinor?: number | undefined;
   driverVersionPatch?: number | undefined;
-  luid?: number | undefined;
+  luid?: bigint | undefined;
 }
 
 function createBaseCMsgChildProcessQueryResponse(): CMsgChildProcessQueryResponse {
@@ -119,12 +119,12 @@ function createBaseCMsgChildProcessQueryGpuTopology_GpuInfo(): CMsgChildProcessQ
   return {
     id: 0,
     name: "",
-    vramSizeBytes: 0,
+    vramSizeBytes: 0n,
     driverId: 0,
     driverVersionMajor: 0,
     driverVersionMinor: 0,
     driverVersionPatch: 0,
-    luid: 0,
+    luid: 0n,
   };
 }
 
@@ -136,7 +136,10 @@ export const CMsgChildProcessQueryGpuTopology_GpuInfo: MessageFns<CMsgChildProce
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(18).string(message.name);
     }
-    if (message.vramSizeBytes !== undefined && message.vramSizeBytes !== 0) {
+    if (message.vramSizeBytes !== undefined && message.vramSizeBytes !== 0n) {
+      if (BigInt.asUintN(64, message.vramSizeBytes) !== message.vramSizeBytes) {
+        throw new globalThis.Error("value provided for field message.vramSizeBytes of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.vramSizeBytes);
     }
     if (message.driverId !== undefined && message.driverId !== 0) {
@@ -151,7 +154,10 @@ export const CMsgChildProcessQueryGpuTopology_GpuInfo: MessageFns<CMsgChildProce
     if (message.driverVersionPatch !== undefined && message.driverVersionPatch !== 0) {
       writer.uint32(56).int32(message.driverVersionPatch);
     }
-    if (message.luid !== undefined && message.luid !== 0) {
+    if (message.luid !== undefined && message.luid !== 0n) {
+      if (BigInt.asUintN(64, message.luid) !== message.luid) {
+        throw new globalThis.Error("value provided for field message.luid of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.luid);
     }
     return writer;
@@ -185,7 +191,7 @@ export const CMsgChildProcessQueryGpuTopology_GpuInfo: MessageFns<CMsgChildProce
             break;
           }
 
-          message.vramSizeBytes = longToNumber(reader.uint64());
+          message.vramSizeBytes = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -225,7 +231,7 @@ export const CMsgChildProcessQueryGpuTopology_GpuInfo: MessageFns<CMsgChildProce
             break;
           }
 
-          message.luid = longToNumber(reader.uint64());
+          message.luid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -237,17 +243,6 @@ export const CMsgChildProcessQueryGpuTopology_GpuInfo: MessageFns<CMsgChildProce
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

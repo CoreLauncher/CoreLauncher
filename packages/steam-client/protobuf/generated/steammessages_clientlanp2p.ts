@@ -35,7 +35,7 @@ export interface CMsgClientPeerChunkRequest {
   appId?: number | undefined;
   depotId?: number | undefined;
   sha?: Buffer | undefined;
-  accessToken?: number | undefined;
+  accessToken?: bigint | undefined;
 }
 
 export interface CMsgClientPeerChunkResponse {
@@ -275,7 +275,7 @@ export const CMsgClientLANP2PRequestChunksResponse_ChunkData: MessageFns<
 };
 
 function createBaseCMsgClientPeerChunkRequest(): CMsgClientPeerChunkRequest {
-  return { appId: 0, depotId: 0, sha: Buffer.alloc(0), accessToken: 0 };
+  return { appId: 0, depotId: 0, sha: Buffer.alloc(0), accessToken: 0n };
 }
 
 export const CMsgClientPeerChunkRequest: MessageFns<CMsgClientPeerChunkRequest> = {
@@ -289,7 +289,10 @@ export const CMsgClientPeerChunkRequest: MessageFns<CMsgClientPeerChunkRequest> 
     if (message.sha !== undefined && message.sha.length !== 0) {
       writer.uint32(26).bytes(message.sha);
     }
-    if (message.accessToken !== undefined && message.accessToken !== 0) {
+    if (message.accessToken !== undefined && message.accessToken !== 0n) {
+      if (BigInt.asUintN(64, message.accessToken) !== message.accessToken) {
+        throw new globalThis.Error("value provided for field message.accessToken of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.accessToken);
     }
     return writer;
@@ -331,7 +334,7 @@ export const CMsgClientPeerChunkRequest: MessageFns<CMsgClientPeerChunkRequest> 
             break;
           }
 
-          message.accessToken = longToNumber(reader.uint64());
+          message.accessToken = reader.uint64() as bigint;
           continue;
         }
       }
@@ -454,17 +457,6 @@ export const CMsgClientPeerChunkResponse: MessageFns<CMsgClientPeerChunkResponse
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

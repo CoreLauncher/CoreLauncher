@@ -19,8 +19,8 @@ export interface CMsgSteamUIBrowserWindow {
   windowType?: number | undefined;
   x?: number | undefined;
   y?: number | undefined;
-  appid?: number | undefined;
-  parentWindowHandle?: number | undefined;
+  appid?: bigint | undefined;
+  parentWindowHandle?: bigint | undefined;
   appName?: string | undefined;
   gamepaduiViaGamescope?: boolean | undefined;
 }
@@ -65,8 +65,8 @@ function createBaseCMsgSteamUIBrowserWindow(): CMsgSteamUIBrowserWindow {
     windowType: 0,
     x: 0,
     y: 0,
-    appid: 0,
-    parentWindowHandle: 0,
+    appid: 0n,
+    parentWindowHandle: 0n,
     appName: "",
     gamepaduiViaGamescope: false,
   };
@@ -92,10 +92,16 @@ export const CMsgSteamUIBrowserWindow: MessageFns<CMsgSteamUIBrowserWindow> = {
     if (message.y !== undefined && message.y !== 0) {
       writer.uint32(48).int32(message.y);
     }
-    if (message.appid !== undefined && message.appid !== 0) {
+    if (message.appid !== undefined && message.appid !== 0n) {
+      if (BigInt.asUintN(64, message.appid) !== message.appid) {
+        throw new globalThis.Error("value provided for field message.appid of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.appid);
     }
-    if (message.parentWindowHandle !== undefined && message.parentWindowHandle !== 0) {
+    if (message.parentWindowHandle !== undefined && message.parentWindowHandle !== 0n) {
+      if (BigInt.asUintN(64, message.parentWindowHandle) !== message.parentWindowHandle) {
+        throw new globalThis.Error("value provided for field message.parentWindowHandle of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.parentWindowHandle);
     }
     if (message.appName !== undefined && message.appName !== "") {
@@ -167,7 +173,7 @@ export const CMsgSteamUIBrowserWindow: MessageFns<CMsgSteamUIBrowserWindow> = {
             break;
           }
 
-          message.appid = longToNumber(reader.uint64());
+          message.appid = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -175,7 +181,7 @@ export const CMsgSteamUIBrowserWindow: MessageFns<CMsgSteamUIBrowserWindow> = {
             break;
           }
 
-          message.parentWindowHandle = longToNumber(reader.uint64());
+          message.parentWindowHandle = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -272,17 +278,6 @@ export class SharedJSContextClientImpl implements SharedJSContext {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

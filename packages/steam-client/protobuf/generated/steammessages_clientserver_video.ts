@@ -31,7 +31,7 @@ export interface CMsgVideoGameRecordingComponent {
 }
 
 export interface CMsgVideoGameRecordingDef {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   appId?: number | undefined;
   numSegments?: number | undefined;
   lengthMilliseconds?: number | undefined;
@@ -44,7 +44,7 @@ export interface CMsgVideoGameRecordingDef {
 
 export interface CVideoGameRecordingSegmentInfo {
   segmentNumber?: number | undefined;
-  segmentSizeBytes?: number | undefined;
+  segmentSizeBytes?: bigint | undefined;
   componentName?: string | undefined;
   representationName?: string | undefined;
 }
@@ -292,7 +292,7 @@ export const CMsgVideoGameRecordingComponent: MessageFns<CMsgVideoGameRecordingC
 
 function createBaseCMsgVideoGameRecordingDef(): CMsgVideoGameRecordingDef {
   return {
-    steamid: 0,
+    steamid: 0n,
     appId: 0,
     numSegments: 0,
     lengthMilliseconds: 0,
@@ -306,7 +306,10 @@ function createBaseCMsgVideoGameRecordingDef(): CMsgVideoGameRecordingDef {
 
 export const CMsgVideoGameRecordingDef: MessageFns<CMsgVideoGameRecordingDef> = {
   encode(message: CMsgVideoGameRecordingDef, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.steamid);
     }
     if (message.appId !== undefined && message.appId !== 0) {
@@ -348,7 +351,7 @@ export const CMsgVideoGameRecordingDef: MessageFns<CMsgVideoGameRecordingDef> = 
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -426,7 +429,7 @@ export const CMsgVideoGameRecordingDef: MessageFns<CMsgVideoGameRecordingDef> = 
 };
 
 function createBaseCVideoGameRecordingSegmentInfo(): CVideoGameRecordingSegmentInfo {
-  return { segmentNumber: 0, segmentSizeBytes: 0, componentName: "", representationName: "" };
+  return { segmentNumber: 0, segmentSizeBytes: 0n, componentName: "", representationName: "" };
 }
 
 export const CVideoGameRecordingSegmentInfo: MessageFns<CVideoGameRecordingSegmentInfo> = {
@@ -434,7 +437,10 @@ export const CVideoGameRecordingSegmentInfo: MessageFns<CVideoGameRecordingSegme
     if (message.segmentNumber !== undefined && message.segmentNumber !== 0) {
       writer.uint32(8).uint32(message.segmentNumber);
     }
-    if (message.segmentSizeBytes !== undefined && message.segmentSizeBytes !== 0) {
+    if (message.segmentSizeBytes !== undefined && message.segmentSizeBytes !== 0n) {
+      if (BigInt.asUintN(64, message.segmentSizeBytes) !== message.segmentSizeBytes) {
+        throw new globalThis.Error("value provided for field message.segmentSizeBytes of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.segmentSizeBytes);
     }
     if (message.componentName !== undefined && message.componentName !== "") {
@@ -466,7 +472,7 @@ export const CVideoGameRecordingSegmentInfo: MessageFns<CVideoGameRecordingSegme
             break;
           }
 
-          message.segmentSizeBytes = longToNumber(reader.uint64());
+          message.segmentSizeBytes = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -628,17 +634,6 @@ export const CVideoGameRecordingSegmentUploadInfo_HTTPHeaders: MessageFns<
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

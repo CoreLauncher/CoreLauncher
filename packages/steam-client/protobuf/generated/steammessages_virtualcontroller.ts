@@ -135,7 +135,7 @@ export interface CVirtualControllerConfig_ActionSet {
 
 export interface CVirtualControllerLayoutPackage {
   appid?: number | undefined;
-  creator?: number | undefined;
+  creator?: bigint | undefined;
   initialRevision?: number | undefined;
   savedRevision?: number | undefined;
   config?: CVirtualControllerConfig | undefined;
@@ -866,7 +866,7 @@ export const CVirtualControllerConfig_ActionSet: MessageFns<CVirtualControllerCo
 };
 
 function createBaseCVirtualControllerLayoutPackage(): CVirtualControllerLayoutPackage {
-  return { appid: 0, creator: 0, initialRevision: 0, savedRevision: 0, config: undefined, layouts: undefined };
+  return { appid: 0, creator: 0n, initialRevision: 0, savedRevision: 0, config: undefined, layouts: undefined };
 }
 
 export const CVirtualControllerLayoutPackage: MessageFns<CVirtualControllerLayoutPackage> = {
@@ -874,7 +874,10 @@ export const CVirtualControllerLayoutPackage: MessageFns<CVirtualControllerLayou
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.creator !== undefined && message.creator !== 0) {
+    if (message.creator !== undefined && message.creator !== 0n) {
+      if (BigInt.asUintN(64, message.creator) !== message.creator) {
+        throw new globalThis.Error("value provided for field message.creator of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.creator);
     }
     if (message.initialRevision !== undefined && message.initialRevision !== 0) {
@@ -912,7 +915,7 @@ export const CVirtualControllerLayoutPackage: MessageFns<CVirtualControllerLayou
             break;
           }
 
-          message.creator = longToNumber(reader.uint64());
+          message.creator = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1043,17 +1046,6 @@ export const CVirtualControllerGlobalConfig: MessageFns<CVirtualControllerGlobal
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

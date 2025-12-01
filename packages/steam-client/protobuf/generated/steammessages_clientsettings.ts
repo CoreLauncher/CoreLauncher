@@ -70,7 +70,7 @@ export interface CMsgSettingVariant {
   valueBool?: boolean | undefined;
   valueInt32?: number | undefined;
   valueUint32?: number | undefined;
-  valueUint64?: number | undefined;
+  valueUint64?: bigint | undefined;
   valueFloat?: number | undefined;
   valueString?: string | undefined;
   valueHotkey?: CMsgHotkey | undefined;
@@ -155,7 +155,7 @@ export interface CMsgClientSettings {
   showSteamDeckInfo?: boolean | undefined;
   enableShaderPrecache?: boolean | undefined;
   enableShaderBackgroundProcessing?: boolean | undefined;
-  shaderPrecachedSize?: number | undefined;
+  shaderPrecachedSize?: bigint | undefined;
   needsSteamServiceRepair?: boolean | undefined;
   downloadPeerContent?: number | undefined;
   downloadRateBitsPerS?: boolean | undefined;
@@ -199,7 +199,7 @@ export interface CMsgClientSettings {
   controllerEnableChord?: boolean | undefined;
   controllerPollRate?: boolean | undefined;
   controllerSiapiConfigAuthorMode?: boolean | undefined;
-  startupMovieId?: number | undefined;
+  startupMovieId?: bigint | undefined;
   startupMovieLocalPath?: string | undefined;
   startupMovieShuffle?: boolean | undefined;
   startupMovieUsedForResume?: boolean | undefined;
@@ -275,7 +275,7 @@ export interface CMsgClientSettings {
   settingValidationEnum?: EHDRVisualization | undefined;
   settingValidationInt32?: number | undefined;
   settingValidationUint32?: number | undefined;
-  settingValidationUint64?: number | undefined;
+  settingValidationUint64?: bigint | undefined;
   settingValidationFloat?: number | undefined;
   settingValidationString?: string | undefined;
   settingValidationHotkey?: CMsgHotkey | undefined;
@@ -425,6 +425,9 @@ export const CMsgSettingVariant: MessageFns<CMsgSettingVariant> = {
       writer.uint32(24).uint32(message.valueUint32);
     }
     if (message.valueUint64 !== undefined) {
+      if (BigInt.asIntN(64, message.valueUint64) !== message.valueUint64) {
+        throw new globalThis.Error("value provided for field message.valueUint64 of type int64 too large");
+      }
       writer.uint32(40).int64(message.valueUint64);
     }
     if (message.valueFloat !== undefined) {
@@ -475,7 +478,7 @@ export const CMsgSettingVariant: MessageFns<CMsgSettingVariant> = {
             break;
           }
 
-          message.valueUint64 = longToNumber(reader.int64());
+          message.valueUint64 = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -592,7 +595,7 @@ function createBaseCMsgClientSettings(): CMsgClientSettings {
     showSteamDeckInfo: false,
     enableShaderPrecache: false,
     enableShaderBackgroundProcessing: false,
-    shaderPrecachedSize: 0,
+    shaderPrecachedSize: 0n,
     needsSteamServiceRepair: false,
     downloadPeerContent: 0,
     downloadRateBitsPerS: false,
@@ -636,7 +639,7 @@ function createBaseCMsgClientSettings(): CMsgClientSettings {
     controllerEnableChord: false,
     controllerPollRate: false,
     controllerSiapiConfigAuthorMode: false,
-    startupMovieId: 0,
+    startupMovieId: 0n,
     startupMovieLocalPath: "",
     startupMovieShuffle: false,
     startupMovieUsedForResume: false,
@@ -712,7 +715,7 @@ function createBaseCMsgClientSettings(): CMsgClientSettings {
     settingValidationEnum: 0,
     settingValidationInt32: 0,
     settingValidationUint32: 0,
-    settingValidationUint64: 0,
+    settingValidationUint64: 0n,
     settingValidationFloat: 0,
     settingValidationString: "",
     settingValidationHotkey: undefined,
@@ -986,7 +989,10 @@ export const CMsgClientSettings: MessageFns<CMsgClientSettings> = {
     if (message.enableShaderBackgroundProcessing !== undefined && message.enableShaderBackgroundProcessing !== false) {
       writer.uint32(64008).bool(message.enableShaderBackgroundProcessing);
     }
-    if (message.shaderPrecachedSize !== undefined && message.shaderPrecachedSize !== 0) {
+    if (message.shaderPrecachedSize !== undefined && message.shaderPrecachedSize !== 0n) {
+      if (BigInt.asUintN(64, message.shaderPrecachedSize) !== message.shaderPrecachedSize) {
+        throw new globalThis.Error("value provided for field message.shaderPrecachedSize of type uint64 too large");
+      }
       writer.uint32(64016).uint64(message.shaderPrecachedSize);
     }
     if (message.needsSteamServiceRepair !== undefined && message.needsSteamServiceRepair !== false) {
@@ -1121,7 +1127,10 @@ export const CMsgClientSettings: MessageFns<CMsgClientSettings> = {
     if (message.controllerSiapiConfigAuthorMode !== undefined && message.controllerSiapiConfigAuthorMode !== false) {
       writer.uint32(1120104).bool(message.controllerSiapiConfigAuthorMode);
     }
-    if (message.startupMovieId !== undefined && message.startupMovieId !== 0) {
+    if (message.startupMovieId !== undefined && message.startupMovieId !== 0n) {
+      if (BigInt.asUintN(64, message.startupMovieId) !== message.startupMovieId) {
+        throw new globalThis.Error("value provided for field message.startupMovieId of type uint64 too large");
+      }
       writer.uint32(128000).uint64(message.startupMovieId);
     }
     if (message.startupMovieLocalPath !== undefined && message.startupMovieLocalPath !== "") {
@@ -1364,7 +1373,10 @@ export const CMsgClientSettings: MessageFns<CMsgClientSettings> = {
     if (message.settingValidationUint32 !== undefined && message.settingValidationUint32 !== 0) {
       writer.uint32(184032).uint32(message.settingValidationUint32);
     }
-    if (message.settingValidationUint64 !== undefined && message.settingValidationUint64 !== 0) {
+    if (message.settingValidationUint64 !== undefined && message.settingValidationUint64 !== 0n) {
+      if (BigInt.asUintN(64, message.settingValidationUint64) !== message.settingValidationUint64) {
+        throw new globalThis.Error("value provided for field message.settingValidationUint64 of type uint64 too large");
+      }
       writer.uint32(184040).uint64(message.settingValidationUint64);
     }
     if (message.settingValidationFloat !== undefined && message.settingValidationFloat !== 0) {
@@ -2101,7 +2113,7 @@ export const CMsgClientSettings: MessageFns<CMsgClientSettings> = {
             break;
           }
 
-          message.shaderPrecachedSize = longToNumber(reader.uint64());
+          message.shaderPrecachedSize = reader.uint64() as bigint;
           continue;
         }
         case 8003: {
@@ -2453,7 +2465,7 @@ export const CMsgClientSettings: MessageFns<CMsgClientSettings> = {
             break;
           }
 
-          message.startupMovieId = longToNumber(reader.uint64());
+          message.startupMovieId = reader.uint64() as bigint;
           continue;
         }
         case 16001: {
@@ -3061,7 +3073,7 @@ export const CMsgClientSettings: MessageFns<CMsgClientSettings> = {
             break;
           }
 
-          message.settingValidationUint64 = longToNumber(reader.uint64());
+          message.settingValidationUint64 = reader.uint64() as bigint;
           continue;
         }
         case 23006: {
@@ -3321,17 +3333,6 @@ export const CMsgClientSettings: MessageFns<CMsgClientSettings> = {
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

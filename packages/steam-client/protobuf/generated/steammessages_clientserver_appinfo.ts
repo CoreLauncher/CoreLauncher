@@ -73,13 +73,13 @@ export interface CMsgClientPICSProductInfoRequest {
 
 export interface CMsgClientPICSProductInfoRequest_AppInfo {
   appid?: number | undefined;
-  accessToken?: number | undefined;
+  accessToken?: bigint | undefined;
   onlyPublicObsolete?: boolean | undefined;
 }
 
 export interface CMsgClientPICSProductInfoRequest_PackageInfo {
   packageid?: number | undefined;
-  accessToken?: number | undefined;
+  accessToken?: bigint | undefined;
 }
 
 export interface CMsgClientPICSProductInfoResponse {
@@ -126,17 +126,17 @@ export interface CMsgClientPICSAccessTokenResponse {
 
 export interface CMsgClientPICSAccessTokenResponse_PackageToken {
   packageid?: number | undefined;
-  accessToken?: number | undefined;
+  accessToken?: bigint | undefined;
 }
 
 export interface CMsgClientPICSAccessTokenResponse_AppToken {
   appid?: number | undefined;
-  accessToken?: number | undefined;
+  accessToken?: bigint | undefined;
 }
 
 export interface CMsgClientPICSPrivateBetaRequest {
   appid?: number | undefined;
-  accessToken?: number | undefined;
+  accessToken?: bigint | undefined;
   betaName?: string | undefined;
   passwordHash?: Buffer | undefined;
 }
@@ -816,7 +816,7 @@ export const CMsgClientPICSProductInfoRequest: MessageFns<CMsgClientPICSProductI
 };
 
 function createBaseCMsgClientPICSProductInfoRequest_AppInfo(): CMsgClientPICSProductInfoRequest_AppInfo {
-  return { appid: 0, accessToken: 0, onlyPublicObsolete: false };
+  return { appid: 0, accessToken: 0n, onlyPublicObsolete: false };
 }
 
 export const CMsgClientPICSProductInfoRequest_AppInfo: MessageFns<CMsgClientPICSProductInfoRequest_AppInfo> = {
@@ -824,7 +824,10 @@ export const CMsgClientPICSProductInfoRequest_AppInfo: MessageFns<CMsgClientPICS
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.accessToken !== undefined && message.accessToken !== 0) {
+    if (message.accessToken !== undefined && message.accessToken !== 0n) {
+      if (BigInt.asUintN(64, message.accessToken) !== message.accessToken) {
+        throw new globalThis.Error("value provided for field message.accessToken of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.accessToken);
     }
     if (message.onlyPublicObsolete !== undefined && message.onlyPublicObsolete !== false) {
@@ -853,7 +856,7 @@ export const CMsgClientPICSProductInfoRequest_AppInfo: MessageFns<CMsgClientPICS
             break;
           }
 
-          message.accessToken = longToNumber(reader.uint64());
+          message.accessToken = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -875,7 +878,7 @@ export const CMsgClientPICSProductInfoRequest_AppInfo: MessageFns<CMsgClientPICS
 };
 
 function createBaseCMsgClientPICSProductInfoRequest_PackageInfo(): CMsgClientPICSProductInfoRequest_PackageInfo {
-  return { packageid: 0, accessToken: 0 };
+  return { packageid: 0, accessToken: 0n };
 }
 
 export const CMsgClientPICSProductInfoRequest_PackageInfo: MessageFns<CMsgClientPICSProductInfoRequest_PackageInfo> = {
@@ -886,7 +889,10 @@ export const CMsgClientPICSProductInfoRequest_PackageInfo: MessageFns<CMsgClient
     if (message.packageid !== undefined && message.packageid !== 0) {
       writer.uint32(8).uint32(message.packageid);
     }
-    if (message.accessToken !== undefined && message.accessToken !== 0) {
+    if (message.accessToken !== undefined && message.accessToken !== 0n) {
+      if (BigInt.asUintN(64, message.accessToken) !== message.accessToken) {
+        throw new globalThis.Error("value provided for field message.accessToken of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.accessToken);
     }
     return writer;
@@ -912,7 +918,7 @@ export const CMsgClientPICSProductInfoRequest_PackageInfo: MessageFns<CMsgClient
             break;
           }
 
-          message.accessToken = longToNumber(reader.uint64());
+          message.accessToken = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1436,7 +1442,7 @@ export const CMsgClientPICSAccessTokenResponse: MessageFns<CMsgClientPICSAccessT
 };
 
 function createBaseCMsgClientPICSAccessTokenResponse_PackageToken(): CMsgClientPICSAccessTokenResponse_PackageToken {
-  return { packageid: 0, accessToken: 0 };
+  return { packageid: 0, accessToken: 0n };
 }
 
 export const CMsgClientPICSAccessTokenResponse_PackageToken: MessageFns<
@@ -1449,7 +1455,10 @@ export const CMsgClientPICSAccessTokenResponse_PackageToken: MessageFns<
     if (message.packageid !== undefined && message.packageid !== 0) {
       writer.uint32(8).uint32(message.packageid);
     }
-    if (message.accessToken !== undefined && message.accessToken !== 0) {
+    if (message.accessToken !== undefined && message.accessToken !== 0n) {
+      if (BigInt.asUintN(64, message.accessToken) !== message.accessToken) {
+        throw new globalThis.Error("value provided for field message.accessToken of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.accessToken);
     }
     return writer;
@@ -1475,7 +1484,7 @@ export const CMsgClientPICSAccessTokenResponse_PackageToken: MessageFns<
             break;
           }
 
-          message.accessToken = longToNumber(reader.uint64());
+          message.accessToken = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1489,7 +1498,7 @@ export const CMsgClientPICSAccessTokenResponse_PackageToken: MessageFns<
 };
 
 function createBaseCMsgClientPICSAccessTokenResponse_AppToken(): CMsgClientPICSAccessTokenResponse_AppToken {
-  return { appid: 0, accessToken: 0 };
+  return { appid: 0, accessToken: 0n };
 }
 
 export const CMsgClientPICSAccessTokenResponse_AppToken: MessageFns<CMsgClientPICSAccessTokenResponse_AppToken> = {
@@ -1497,7 +1506,10 @@ export const CMsgClientPICSAccessTokenResponse_AppToken: MessageFns<CMsgClientPI
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.accessToken !== undefined && message.accessToken !== 0) {
+    if (message.accessToken !== undefined && message.accessToken !== 0n) {
+      if (BigInt.asUintN(64, message.accessToken) !== message.accessToken) {
+        throw new globalThis.Error("value provided for field message.accessToken of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.accessToken);
     }
     return writer;
@@ -1523,7 +1535,7 @@ export const CMsgClientPICSAccessTokenResponse_AppToken: MessageFns<CMsgClientPI
             break;
           }
 
-          message.accessToken = longToNumber(reader.uint64());
+          message.accessToken = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1537,7 +1549,7 @@ export const CMsgClientPICSAccessTokenResponse_AppToken: MessageFns<CMsgClientPI
 };
 
 function createBaseCMsgClientPICSPrivateBetaRequest(): CMsgClientPICSPrivateBetaRequest {
-  return { appid: 0, accessToken: 0, betaName: "", passwordHash: Buffer.alloc(0) };
+  return { appid: 0, accessToken: 0n, betaName: "", passwordHash: Buffer.alloc(0) };
 }
 
 export const CMsgClientPICSPrivateBetaRequest: MessageFns<CMsgClientPICSPrivateBetaRequest> = {
@@ -1545,7 +1557,10 @@ export const CMsgClientPICSPrivateBetaRequest: MessageFns<CMsgClientPICSPrivateB
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.accessToken !== undefined && message.accessToken !== 0) {
+    if (message.accessToken !== undefined && message.accessToken !== 0n) {
+      if (BigInt.asUintN(64, message.accessToken) !== message.accessToken) {
+        throw new globalThis.Error("value provided for field message.accessToken of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.accessToken);
     }
     if (message.betaName !== undefined && message.betaName !== "") {
@@ -1577,7 +1592,7 @@ export const CMsgClientPICSPrivateBetaRequest: MessageFns<CMsgClientPICSPrivateB
             break;
           }
 
-          message.accessToken = longToNumber(reader.uint64());
+          message.accessToken = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1653,17 +1668,6 @@ export const CMsgClientPICSPrivateBetaResponse: MessageFns<CMsgClientPICSPrivate
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

@@ -371,7 +371,7 @@ export interface CServerHandshakeMsg {
 export interface CAuthenticationRequestMsg {
   token?: Buffer | undefined;
   version?: EStreamVersion | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CAuthenticationResponseMsg {
@@ -546,21 +546,21 @@ export interface CInputLatencyTestMsg {
 
 export interface CInputTouchFingerDownMsg {
   inputMark?: number | undefined;
-  fingerid?: number | undefined;
+  fingerid?: bigint | undefined;
   xNormalized?: number | undefined;
   yNormalized?: number | undefined;
 }
 
 export interface CInputTouchFingerMotionMsg {
   inputMark?: number | undefined;
-  fingerid?: number | undefined;
+  fingerid?: bigint | undefined;
   xNormalized?: number | undefined;
   yNormalized?: number | undefined;
 }
 
 export interface CInputTouchFingerUpMsg {
   inputMark?: number | undefined;
-  fingerid?: number | undefined;
+  fingerid?: bigint | undefined;
   xNormalized?: number | undefined;
   yNormalized?: number | undefined;
   canceled?: boolean | undefined;
@@ -640,15 +640,15 @@ export interface CHideCursorMsg {
 }
 
 export interface CSetCursorMsg {
-  cursorId: number;
+  cursorId: bigint;
 }
 
 export interface CGetCursorImageMsg {
-  cursorId: number;
+  cursorId: bigint;
 }
 
 export interface CSetCursorImageMsg {
-  cursorId: number;
+  cursorId: bigint;
   width?: number | undefined;
   height?: number | undefined;
   hotX?: number | undefined;
@@ -721,7 +721,7 @@ export interface CQuitRequest {
 }
 
 export interface CDeleteCursorMsg {
-  cursorId: number;
+  cursorId: bigint;
 }
 
 export interface CSetStreamingClientConfig {
@@ -754,7 +754,7 @@ export interface CSetGammaRampMsg {
 export interface CSetActivityMsg {
   activity?: EStreamActivity | undefined;
   appid?: number | undefined;
-  gameid?: number | undefined;
+  gameid?: bigint | undefined;
   gameName?: string | undefined;
 }
 
@@ -785,7 +785,7 @@ export interface CRemoteHIDMsg {
 export interface CTouchConfigActiveMsg {
   appid?: number | undefined;
   revision?: number | undefined;
-  creator?: number | undefined;
+  creator?: bigint | undefined;
 }
 
 export interface CGetTouchConfigDataMsg {
@@ -797,7 +797,7 @@ export interface CSetTouchConfigDataMsg {
   revision?: number | undefined;
   data?: Buffer | undefined;
   layout?: Buffer | undefined;
-  creator?: number | undefined;
+  creator?: bigint | undefined;
 }
 
 export interface CSaveTouchConfigLayoutMsg {
@@ -1245,7 +1245,7 @@ export const CServerHandshakeMsg: MessageFns<CServerHandshakeMsg> = {
 };
 
 function createBaseCAuthenticationRequestMsg(): CAuthenticationRequestMsg {
-  return { token: Buffer.alloc(0), version: 0, steamid: 0 };
+  return { token: Buffer.alloc(0), version: 0, steamid: 0n };
 }
 
 export const CAuthenticationRequestMsg: MessageFns<CAuthenticationRequestMsg> = {
@@ -1256,7 +1256,10 @@ export const CAuthenticationRequestMsg: MessageFns<CAuthenticationRequestMsg> = 
     if (message.version !== undefined && message.version !== 0) {
       writer.uint32(16).int32(message.version);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.steamid);
     }
     return writer;
@@ -1290,7 +1293,7 @@ export const CAuthenticationRequestMsg: MessageFns<CAuthenticationRequestMsg> = 
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -3115,7 +3118,7 @@ export const CInputLatencyTestMsg: MessageFns<CInputLatencyTestMsg> = {
 };
 
 function createBaseCInputTouchFingerDownMsg(): CInputTouchFingerDownMsg {
-  return { inputMark: 0, fingerid: 0, xNormalized: 0, yNormalized: 0 };
+  return { inputMark: 0, fingerid: 0n, xNormalized: 0, yNormalized: 0 };
 }
 
 export const CInputTouchFingerDownMsg: MessageFns<CInputTouchFingerDownMsg> = {
@@ -3123,7 +3126,10 @@ export const CInputTouchFingerDownMsg: MessageFns<CInputTouchFingerDownMsg> = {
     if (message.inputMark !== undefined && message.inputMark !== 0) {
       writer.uint32(8).uint32(message.inputMark);
     }
-    if (message.fingerid !== undefined && message.fingerid !== 0) {
+    if (message.fingerid !== undefined && message.fingerid !== 0n) {
+      if (BigInt.asUintN(64, message.fingerid) !== message.fingerid) {
+        throw new globalThis.Error("value provided for field message.fingerid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.fingerid);
     }
     if (message.xNormalized !== undefined && message.xNormalized !== 0) {
@@ -3155,7 +3161,7 @@ export const CInputTouchFingerDownMsg: MessageFns<CInputTouchFingerDownMsg> = {
             break;
           }
 
-          message.fingerid = longToNumber(reader.uint64());
+          message.fingerid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -3185,7 +3191,7 @@ export const CInputTouchFingerDownMsg: MessageFns<CInputTouchFingerDownMsg> = {
 };
 
 function createBaseCInputTouchFingerMotionMsg(): CInputTouchFingerMotionMsg {
-  return { inputMark: 0, fingerid: 0, xNormalized: 0, yNormalized: 0 };
+  return { inputMark: 0, fingerid: 0n, xNormalized: 0, yNormalized: 0 };
 }
 
 export const CInputTouchFingerMotionMsg: MessageFns<CInputTouchFingerMotionMsg> = {
@@ -3193,7 +3199,10 @@ export const CInputTouchFingerMotionMsg: MessageFns<CInputTouchFingerMotionMsg> 
     if (message.inputMark !== undefined && message.inputMark !== 0) {
       writer.uint32(8).uint32(message.inputMark);
     }
-    if (message.fingerid !== undefined && message.fingerid !== 0) {
+    if (message.fingerid !== undefined && message.fingerid !== 0n) {
+      if (BigInt.asUintN(64, message.fingerid) !== message.fingerid) {
+        throw new globalThis.Error("value provided for field message.fingerid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.fingerid);
     }
     if (message.xNormalized !== undefined && message.xNormalized !== 0) {
@@ -3225,7 +3234,7 @@ export const CInputTouchFingerMotionMsg: MessageFns<CInputTouchFingerMotionMsg> 
             break;
           }
 
-          message.fingerid = longToNumber(reader.uint64());
+          message.fingerid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -3255,7 +3264,7 @@ export const CInputTouchFingerMotionMsg: MessageFns<CInputTouchFingerMotionMsg> 
 };
 
 function createBaseCInputTouchFingerUpMsg(): CInputTouchFingerUpMsg {
-  return { inputMark: 0, fingerid: 0, xNormalized: 0, yNormalized: 0, canceled: false };
+  return { inputMark: 0, fingerid: 0n, xNormalized: 0, yNormalized: 0, canceled: false };
 }
 
 export const CInputTouchFingerUpMsg: MessageFns<CInputTouchFingerUpMsg> = {
@@ -3263,7 +3272,10 @@ export const CInputTouchFingerUpMsg: MessageFns<CInputTouchFingerUpMsg> = {
     if (message.inputMark !== undefined && message.inputMark !== 0) {
       writer.uint32(8).uint32(message.inputMark);
     }
-    if (message.fingerid !== undefined && message.fingerid !== 0) {
+    if (message.fingerid !== undefined && message.fingerid !== 0n) {
+      if (BigInt.asUintN(64, message.fingerid) !== message.fingerid) {
+        throw new globalThis.Error("value provided for field message.fingerid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.fingerid);
     }
     if (message.xNormalized !== undefined && message.xNormalized !== 0) {
@@ -3298,7 +3310,7 @@ export const CInputTouchFingerUpMsg: MessageFns<CInputTouchFingerUpMsg> = {
             break;
           }
 
-          message.fingerid = longToNumber(reader.uint64());
+          message.fingerid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -4048,12 +4060,15 @@ export const CHideCursorMsg: MessageFns<CHideCursorMsg> = {
 };
 
 function createBaseCSetCursorMsg(): CSetCursorMsg {
-  return { cursorId: 0 };
+  return { cursorId: 0n };
 }
 
 export const CSetCursorMsg: MessageFns<CSetCursorMsg> = {
   encode(message: CSetCursorMsg, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.cursorId !== 0) {
+    if (message.cursorId !== 0n) {
+      if (BigInt.asUintN(64, message.cursorId) !== message.cursorId) {
+        throw new globalThis.Error("value provided for field message.cursorId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.cursorId);
     }
     return writer;
@@ -4071,7 +4086,7 @@ export const CSetCursorMsg: MessageFns<CSetCursorMsg> = {
             break;
           }
 
-          message.cursorId = longToNumber(reader.uint64());
+          message.cursorId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4085,12 +4100,15 @@ export const CSetCursorMsg: MessageFns<CSetCursorMsg> = {
 };
 
 function createBaseCGetCursorImageMsg(): CGetCursorImageMsg {
-  return { cursorId: 0 };
+  return { cursorId: 0n };
 }
 
 export const CGetCursorImageMsg: MessageFns<CGetCursorImageMsg> = {
   encode(message: CGetCursorImageMsg, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.cursorId !== 0) {
+    if (message.cursorId !== 0n) {
+      if (BigInt.asUintN(64, message.cursorId) !== message.cursorId) {
+        throw new globalThis.Error("value provided for field message.cursorId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.cursorId);
     }
     return writer;
@@ -4108,7 +4126,7 @@ export const CGetCursorImageMsg: MessageFns<CGetCursorImageMsg> = {
             break;
           }
 
-          message.cursorId = longToNumber(reader.uint64());
+          message.cursorId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4122,12 +4140,15 @@ export const CGetCursorImageMsg: MessageFns<CGetCursorImageMsg> = {
 };
 
 function createBaseCSetCursorImageMsg(): CSetCursorImageMsg {
-  return { cursorId: 0, width: 0, height: 0, hotX: 0, hotY: 0, image: Buffer.alloc(0) };
+  return { cursorId: 0n, width: 0, height: 0, hotX: 0, hotY: 0, image: Buffer.alloc(0) };
 }
 
 export const CSetCursorImageMsg: MessageFns<CSetCursorImageMsg> = {
   encode(message: CSetCursorImageMsg, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.cursorId !== 0) {
+    if (message.cursorId !== 0n) {
+      if (BigInt.asUintN(64, message.cursorId) !== message.cursorId) {
+        throw new globalThis.Error("value provided for field message.cursorId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.cursorId);
     }
     if (message.width !== undefined && message.width !== 0) {
@@ -4160,7 +4181,7 @@ export const CSetCursorImageMsg: MessageFns<CSetCursorImageMsg> = {
             break;
           }
 
-          message.cursorId = longToNumber(reader.uint64());
+          message.cursorId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4816,12 +4837,15 @@ export const CQuitRequest: MessageFns<CQuitRequest> = {
 };
 
 function createBaseCDeleteCursorMsg(): CDeleteCursorMsg {
-  return { cursorId: 0 };
+  return { cursorId: 0n };
 }
 
 export const CDeleteCursorMsg: MessageFns<CDeleteCursorMsg> = {
   encode(message: CDeleteCursorMsg, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.cursorId !== 0) {
+    if (message.cursorId !== 0n) {
+      if (BigInt.asUintN(64, message.cursorId) !== message.cursorId) {
+        throw new globalThis.Error("value provided for field message.cursorId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.cursorId);
     }
     return writer;
@@ -4839,7 +4863,7 @@ export const CDeleteCursorMsg: MessageFns<CDeleteCursorMsg> = {
             break;
           }
 
-          message.cursorId = longToNumber(reader.uint64());
+          message.cursorId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -5108,7 +5132,7 @@ export const CSetGammaRampMsg: MessageFns<CSetGammaRampMsg> = {
 };
 
 function createBaseCSetActivityMsg(): CSetActivityMsg {
-  return { activity: 1, appid: 0, gameid: 0, gameName: "" };
+  return { activity: 1, appid: 0, gameid: 0n, gameName: "" };
 }
 
 export const CSetActivityMsg: MessageFns<CSetActivityMsg> = {
@@ -5119,7 +5143,10 @@ export const CSetActivityMsg: MessageFns<CSetActivityMsg> = {
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(16).uint32(message.appid);
     }
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.gameid);
     }
     if (message.gameName !== undefined && message.gameName !== "") {
@@ -5156,7 +5183,7 @@ export const CSetActivityMsg: MessageFns<CSetActivityMsg> = {
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -5400,7 +5427,7 @@ export const CRemoteHIDMsg: MessageFns<CRemoteHIDMsg> = {
 };
 
 function createBaseCTouchConfigActiveMsg(): CTouchConfigActiveMsg {
-  return { appid: 0, revision: 0, creator: 0 };
+  return { appid: 0, revision: 0, creator: 0n };
 }
 
 export const CTouchConfigActiveMsg: MessageFns<CTouchConfigActiveMsg> = {
@@ -5411,7 +5438,10 @@ export const CTouchConfigActiveMsg: MessageFns<CTouchConfigActiveMsg> = {
     if (message.revision !== undefined && message.revision !== 0) {
       writer.uint32(16).uint32(message.revision);
     }
-    if (message.creator !== undefined && message.creator !== 0) {
+    if (message.creator !== undefined && message.creator !== 0n) {
+      if (BigInt.asUintN(64, message.creator) !== message.creator) {
+        throw new globalThis.Error("value provided for field message.creator of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.creator);
     }
     return writer;
@@ -5445,7 +5475,7 @@ export const CTouchConfigActiveMsg: MessageFns<CTouchConfigActiveMsg> = {
             break;
           }
 
-          message.creator = longToNumber(reader.uint64());
+          message.creator = reader.uint64() as bigint;
           continue;
         }
       }
@@ -5496,7 +5526,7 @@ export const CGetTouchConfigDataMsg: MessageFns<CGetTouchConfigDataMsg> = {
 };
 
 function createBaseCSetTouchConfigDataMsg(): CSetTouchConfigDataMsg {
-  return { appid: 0, revision: 0, data: Buffer.alloc(0), layout: Buffer.alloc(0), creator: 0 };
+  return { appid: 0, revision: 0, data: Buffer.alloc(0), layout: Buffer.alloc(0), creator: 0n };
 }
 
 export const CSetTouchConfigDataMsg: MessageFns<CSetTouchConfigDataMsg> = {
@@ -5513,7 +5543,10 @@ export const CSetTouchConfigDataMsg: MessageFns<CSetTouchConfigDataMsg> = {
     if (message.layout !== undefined && message.layout.length !== 0) {
       writer.uint32(34).bytes(message.layout);
     }
-    if (message.creator !== undefined && message.creator !== 0) {
+    if (message.creator !== undefined && message.creator !== 0n) {
+      if (BigInt.asUintN(64, message.creator) !== message.creator) {
+        throw new globalThis.Error("value provided for field message.creator of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.creator);
     }
     return writer;
@@ -5563,7 +5596,7 @@ export const CSetTouchConfigDataMsg: MessageFns<CSetTouchConfigDataMsg> = {
             break;
           }
 
-          message.creator = longToNumber(reader.uint64());
+          message.creator = reader.uint64() as bigint;
           continue;
         }
       }
@@ -7624,17 +7657,6 @@ export const CControllerConfigMsg_ControllerActiveConfigMsg: MessageFns<
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

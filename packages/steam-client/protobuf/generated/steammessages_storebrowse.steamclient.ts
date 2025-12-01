@@ -310,14 +310,14 @@ export interface StoreItem_PurchaseOption {
   packageid?: number | undefined;
   bundleid?: number | undefined;
   purchaseOptionName?: string | undefined;
-  finalPriceInCents?: number | undefined;
-  originalPriceInCents?: number | undefined;
+  finalPriceInCents?: bigint | undefined;
+  originalPriceInCents?: bigint | undefined;
   formattedFinalPrice?: string | undefined;
   formattedOriginalPrice?: string | undefined;
   discountPct?: number | undefined;
   bundleDiscountPct?: number | undefined;
   isFreeToKeep?: boolean | undefined;
-  priceBeforeBundleDiscount?: number | undefined;
+  priceBeforeBundleDiscount?: bigint | undefined;
   formattedPriceBeforeBundleDiscount?: string | undefined;
   activeDiscounts: StoreItem_PurchaseOption_Discount[];
   userCanPurchaseAsGift?: boolean | undefined;
@@ -325,7 +325,7 @@ export interface StoreItem_PurchaseOption {
   shouldSuppressDiscountPct?: boolean | undefined;
   hideDiscountPctForCompliance?: boolean | undefined;
   includedGameCount?: number | undefined;
-  lowestRecentPriceInCents?: number | undefined;
+  lowestRecentPriceInCents?: bigint | undefined;
   requiresShipping?: boolean | undefined;
   recurrenceInfo?: StoreItem_PurchaseOption_RecurrenceInfo | undefined;
   freeToKeepEnds?: number | undefined;
@@ -333,7 +333,7 @@ export interface StoreItem_PurchaseOption {
 }
 
 export interface StoreItem_PurchaseOption_Discount {
-  discountAmount?: number | undefined;
+  discountAmount?: bigint | undefined;
   discountDescription?: string | undefined;
   discountEndDate?: number | undefined;
 }
@@ -343,7 +343,7 @@ export interface StoreItem_PurchaseOption_RecurrenceInfo {
   billingAgreementType?: number | undefined;
   renewalTimeUnit?: number | undefined;
   renewalTimePeriod?: number | undefined;
-  renewalPriceInCents?: number | undefined;
+  renewalPriceInCents?: bigint | undefined;
   formattedRenewalPrice?: string | undefined;
 }
 
@@ -489,14 +489,14 @@ export interface CStoreBrowseGetPriceStopsResponse {
 
 export interface CStoreBrowseGetPriceStopsResponse_PriceStop {
   formattedAmount?: string | undefined;
-  amountInCents?: number | undefined;
+  amountInCents?: bigint | undefined;
 }
 
 export interface CStoreBrowseGetDLCForAppsRequest {
   context?: StoreBrowseContext | undefined;
   storePageFilter?: CStorePageFilter | undefined;
   appids: StoreItemID[];
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CStoreBrowseGetDLCForAppsResponse {
@@ -509,7 +509,7 @@ export interface CStoreBrowseGetDLCForAppsResponse_DLCData {
   parentappid?: number | undefined;
   releaseDate?: number | undefined;
   comingSoon?: boolean | undefined;
-  price?: number | undefined;
+  price?: bigint | undefined;
   discount?: number | undefined;
   free?: boolean | undefined;
 }
@@ -2720,14 +2720,14 @@ function createBaseStoreItem_PurchaseOption(): StoreItem_PurchaseOption {
     packageid: 0,
     bundleid: 0,
     purchaseOptionName: "",
-    finalPriceInCents: 0,
-    originalPriceInCents: 0,
+    finalPriceInCents: 0n,
+    originalPriceInCents: 0n,
     formattedFinalPrice: "",
     formattedOriginalPrice: "",
     discountPct: 0,
     bundleDiscountPct: 0,
     isFreeToKeep: false,
-    priceBeforeBundleDiscount: 0,
+    priceBeforeBundleDiscount: 0n,
     formattedPriceBeforeBundleDiscount: "",
     activeDiscounts: [],
     userCanPurchaseAsGift: false,
@@ -2735,7 +2735,7 @@ function createBaseStoreItem_PurchaseOption(): StoreItem_PurchaseOption {
     shouldSuppressDiscountPct: false,
     hideDiscountPctForCompliance: false,
     includedGameCount: 1,
-    lowestRecentPriceInCents: 0,
+    lowestRecentPriceInCents: 0n,
     requiresShipping: false,
     recurrenceInfo: undefined,
     freeToKeepEnds: 0,
@@ -2754,10 +2754,16 @@ export const StoreItem_PurchaseOption: MessageFns<StoreItem_PurchaseOption> = {
     if (message.purchaseOptionName !== undefined && message.purchaseOptionName !== "") {
       writer.uint32(26).string(message.purchaseOptionName);
     }
-    if (message.finalPriceInCents !== undefined && message.finalPriceInCents !== 0) {
+    if (message.finalPriceInCents !== undefined && message.finalPriceInCents !== 0n) {
+      if (BigInt.asIntN(64, message.finalPriceInCents) !== message.finalPriceInCents) {
+        throw new globalThis.Error("value provided for field message.finalPriceInCents of type int64 too large");
+      }
       writer.uint32(40).int64(message.finalPriceInCents);
     }
-    if (message.originalPriceInCents !== undefined && message.originalPriceInCents !== 0) {
+    if (message.originalPriceInCents !== undefined && message.originalPriceInCents !== 0n) {
+      if (BigInt.asIntN(64, message.originalPriceInCents) !== message.originalPriceInCents) {
+        throw new globalThis.Error("value provided for field message.originalPriceInCents of type int64 too large");
+      }
       writer.uint32(48).int64(message.originalPriceInCents);
     }
     if (message.formattedFinalPrice !== undefined && message.formattedFinalPrice !== "") {
@@ -2775,7 +2781,12 @@ export const StoreItem_PurchaseOption: MessageFns<StoreItem_PurchaseOption> = {
     if (message.isFreeToKeep !== undefined && message.isFreeToKeep !== false) {
       writer.uint32(104).bool(message.isFreeToKeep);
     }
-    if (message.priceBeforeBundleDiscount !== undefined && message.priceBeforeBundleDiscount !== 0) {
+    if (message.priceBeforeBundleDiscount !== undefined && message.priceBeforeBundleDiscount !== 0n) {
+      if (BigInt.asIntN(64, message.priceBeforeBundleDiscount) !== message.priceBeforeBundleDiscount) {
+        throw new globalThis.Error(
+          "value provided for field message.priceBeforeBundleDiscount of type int64 too large",
+        );
+      }
       writer.uint32(112).int64(message.priceBeforeBundleDiscount);
     }
     if (message.formattedPriceBeforeBundleDiscount !== undefined && message.formattedPriceBeforeBundleDiscount !== "") {
@@ -2799,7 +2810,10 @@ export const StoreItem_PurchaseOption: MessageFns<StoreItem_PurchaseOption> = {
     if (message.includedGameCount !== undefined && message.includedGameCount !== 1) {
       writer.uint32(344).int32(message.includedGameCount);
     }
-    if (message.lowestRecentPriceInCents !== undefined && message.lowestRecentPriceInCents !== 0) {
+    if (message.lowestRecentPriceInCents !== undefined && message.lowestRecentPriceInCents !== 0n) {
+      if (BigInt.asIntN(64, message.lowestRecentPriceInCents) !== message.lowestRecentPriceInCents) {
+        throw new globalThis.Error("value provided for field message.lowestRecentPriceInCents of type int64 too large");
+      }
       writer.uint32(352).int64(message.lowestRecentPriceInCents);
     }
     if (message.requiresShipping !== undefined && message.requiresShipping !== false) {
@@ -2853,7 +2867,7 @@ export const StoreItem_PurchaseOption: MessageFns<StoreItem_PurchaseOption> = {
             break;
           }
 
-          message.finalPriceInCents = longToNumber(reader.int64());
+          message.finalPriceInCents = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -2861,7 +2875,7 @@ export const StoreItem_PurchaseOption: MessageFns<StoreItem_PurchaseOption> = {
             break;
           }
 
-          message.originalPriceInCents = longToNumber(reader.int64());
+          message.originalPriceInCents = reader.int64() as bigint;
           continue;
         }
         case 8: {
@@ -2909,7 +2923,7 @@ export const StoreItem_PurchaseOption: MessageFns<StoreItem_PurchaseOption> = {
             break;
           }
 
-          message.priceBeforeBundleDiscount = longToNumber(reader.int64());
+          message.priceBeforeBundleDiscount = reader.int64() as bigint;
           continue;
         }
         case 15: {
@@ -2973,7 +2987,7 @@ export const StoreItem_PurchaseOption: MessageFns<StoreItem_PurchaseOption> = {
             break;
           }
 
-          message.lowestRecentPriceInCents = longToNumber(reader.int64());
+          message.lowestRecentPriceInCents = reader.int64() as bigint;
           continue;
         }
         case 45: {
@@ -3019,12 +3033,15 @@ export const StoreItem_PurchaseOption: MessageFns<StoreItem_PurchaseOption> = {
 };
 
 function createBaseStoreItem_PurchaseOption_Discount(): StoreItem_PurchaseOption_Discount {
-  return { discountAmount: 0, discountDescription: "", discountEndDate: 0 };
+  return { discountAmount: 0n, discountDescription: "", discountEndDate: 0 };
 }
 
 export const StoreItem_PurchaseOption_Discount: MessageFns<StoreItem_PurchaseOption_Discount> = {
   encode(message: StoreItem_PurchaseOption_Discount, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.discountAmount !== undefined && message.discountAmount !== 0) {
+    if (message.discountAmount !== undefined && message.discountAmount !== 0n) {
+      if (BigInt.asIntN(64, message.discountAmount) !== message.discountAmount) {
+        throw new globalThis.Error("value provided for field message.discountAmount of type int64 too large");
+      }
       writer.uint32(8).int64(message.discountAmount);
     }
     if (message.discountDescription !== undefined && message.discountDescription !== "") {
@@ -3048,7 +3065,7 @@ export const StoreItem_PurchaseOption_Discount: MessageFns<StoreItem_PurchaseOpt
             break;
           }
 
-          message.discountAmount = longToNumber(reader.int64());
+          message.discountAmount = reader.int64() as bigint;
           continue;
         }
         case 2: {
@@ -3083,7 +3100,7 @@ function createBaseStoreItem_PurchaseOption_RecurrenceInfo(): StoreItem_Purchase
     billingAgreementType: 0,
     renewalTimeUnit: 0,
     renewalTimePeriod: 0,
-    renewalPriceInCents: 0,
+    renewalPriceInCents: 0n,
     formattedRenewalPrice: "",
   };
 }
@@ -3102,7 +3119,10 @@ export const StoreItem_PurchaseOption_RecurrenceInfo: MessageFns<StoreItem_Purch
     if (message.renewalTimePeriod !== undefined && message.renewalTimePeriod !== 0) {
       writer.uint32(32).int32(message.renewalTimePeriod);
     }
-    if (message.renewalPriceInCents !== undefined && message.renewalPriceInCents !== 0) {
+    if (message.renewalPriceInCents !== undefined && message.renewalPriceInCents !== 0n) {
+      if (BigInt.asIntN(64, message.renewalPriceInCents) !== message.renewalPriceInCents) {
+        throw new globalThis.Error("value provided for field message.renewalPriceInCents of type int64 too large");
+      }
       writer.uint32(40).int64(message.renewalPriceInCents);
     }
     if (message.formattedRenewalPrice !== undefined && message.formattedRenewalPrice !== "") {
@@ -3155,7 +3175,7 @@ export const StoreItem_PurchaseOption_RecurrenceInfo: MessageFns<StoreItem_Purch
             break;
           }
 
-          message.renewalPriceInCents = longToNumber(reader.int64());
+          message.renewalPriceInCents = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -4712,7 +4732,7 @@ export const CStoreBrowseGetPriceStopsResponse: MessageFns<CStoreBrowseGetPriceS
 };
 
 function createBaseCStoreBrowseGetPriceStopsResponse_PriceStop(): CStoreBrowseGetPriceStopsResponse_PriceStop {
-  return { formattedAmount: "", amountInCents: 0 };
+  return { formattedAmount: "", amountInCents: 0n };
 }
 
 export const CStoreBrowseGetPriceStopsResponse_PriceStop: MessageFns<CStoreBrowseGetPriceStopsResponse_PriceStop> = {
@@ -4723,7 +4743,10 @@ export const CStoreBrowseGetPriceStopsResponse_PriceStop: MessageFns<CStoreBrows
     if (message.formattedAmount !== undefined && message.formattedAmount !== "") {
       writer.uint32(10).string(message.formattedAmount);
     }
-    if (message.amountInCents !== undefined && message.amountInCents !== 0) {
+    if (message.amountInCents !== undefined && message.amountInCents !== 0n) {
+      if (BigInt.asIntN(64, message.amountInCents) !== message.amountInCents) {
+        throw new globalThis.Error("value provided for field message.amountInCents of type int64 too large");
+      }
       writer.uint32(16).int64(message.amountInCents);
     }
     return writer;
@@ -4749,7 +4772,7 @@ export const CStoreBrowseGetPriceStopsResponse_PriceStop: MessageFns<CStoreBrows
             break;
           }
 
-          message.amountInCents = longToNumber(reader.int64());
+          message.amountInCents = reader.int64() as bigint;
           continue;
         }
       }
@@ -4763,7 +4786,7 @@ export const CStoreBrowseGetPriceStopsResponse_PriceStop: MessageFns<CStoreBrows
 };
 
 function createBaseCStoreBrowseGetDLCForAppsRequest(): CStoreBrowseGetDLCForAppsRequest {
-  return { context: undefined, storePageFilter: undefined, appids: [], steamid: 0 };
+  return { context: undefined, storePageFilter: undefined, appids: [], steamid: 0n };
 }
 
 export const CStoreBrowseGetDLCForAppsRequest: MessageFns<CStoreBrowseGetDLCForAppsRequest> = {
@@ -4777,7 +4800,10 @@ export const CStoreBrowseGetDLCForAppsRequest: MessageFns<CStoreBrowseGetDLCForA
     for (const v of message.appids) {
       StoreItemID.encode(v!, writer.uint32(26).fork()).join();
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.steamid);
     }
     return writer;
@@ -4819,7 +4845,7 @@ export const CStoreBrowseGetDLCForAppsRequest: MessageFns<CStoreBrowseGetDLCForA
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4881,7 +4907,7 @@ export const CStoreBrowseGetDLCForAppsResponse: MessageFns<CStoreBrowseGetDLCFor
 };
 
 function createBaseCStoreBrowseGetDLCForAppsResponse_DLCData(): CStoreBrowseGetDLCForAppsResponse_DLCData {
-  return { appid: 0, parentappid: 0, releaseDate: 0, comingSoon: false, price: 0, discount: 0, free: false };
+  return { appid: 0, parentappid: 0, releaseDate: 0, comingSoon: false, price: 0n, discount: 0, free: false };
 }
 
 export const CStoreBrowseGetDLCForAppsResponse_DLCData: MessageFns<CStoreBrowseGetDLCForAppsResponse_DLCData> = {
@@ -4898,7 +4924,10 @@ export const CStoreBrowseGetDLCForAppsResponse_DLCData: MessageFns<CStoreBrowseG
     if (message.comingSoon !== undefined && message.comingSoon !== false) {
       writer.uint32(32).bool(message.comingSoon);
     }
-    if (message.price !== undefined && message.price !== 0) {
+    if (message.price !== undefined && message.price !== 0n) {
+      if (BigInt.asIntN(64, message.price) !== message.price) {
+        throw new globalThis.Error("value provided for field message.price of type int64 too large");
+      }
       writer.uint32(40).int64(message.price);
     }
     if (message.discount !== undefined && message.discount !== 0) {
@@ -4954,7 +4983,7 @@ export const CStoreBrowseGetDLCForAppsResponse_DLCData: MessageFns<CStoreBrowseG
             break;
           }
 
-          message.price = longToNumber(reader.int64());
+          message.price = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -5629,17 +5658,6 @@ export class StoreBrowseClientImpl implements StoreBrowse {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

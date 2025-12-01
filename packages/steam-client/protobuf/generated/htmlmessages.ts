@@ -104,7 +104,7 @@ export interface CMsgBrowserCreate {
   initialLeft?: number | undefined;
   onlyAllowTrustedPopups?: boolean | undefined;
   initialUrl?: string | undefined;
-  hwndParent?: number | undefined;
+  hwndParent?: bigint | undefined;
   creationFlags?: number | undefined;
 }
 
@@ -308,7 +308,7 @@ export interface CMsgViewSource {
 export interface CMsgBrowserReady {
   browserHandle?: number | undefined;
   vrOverlayKey?: string | undefined;
-  hwndBrowser?: number | undefined;
+  hwndBrowser?: bigint | undefined;
 }
 
 export interface CMsgURLChanged {
@@ -425,7 +425,7 @@ export interface CMsgPopupHTMLWindow {
   popupIndex?: number | undefined;
   trustedCreator?: boolean | undefined;
   name?: string | undefined;
-  hwnd?: number | undefined;
+  hwnd?: bigint | undefined;
   parentPopupIndex?: number | undefined;
   creationFlags?: number | undefined;
 }
@@ -485,11 +485,11 @@ export interface CMsgFileLoadDialogResponse {
 }
 
 export interface CMsgRequestProcessInfo {
-  requestid?: number | undefined;
+  requestid?: bigint | undefined;
 }
 
 export interface CMsgProcessInfoNotification {
-  requestid?: number | undefined;
+  requestid?: bigint | undefined;
   gpuStatus?: EBrowserGPUStatus | undefined;
   canvas2d?: EBrowserFeatureStatus | undefined;
   canvasOopRasterization?: EBrowserFeatureStatus | undefined;
@@ -537,9 +537,9 @@ export interface CMsgSetSharedPaintBuffers {
   browserHandle?: number | undefined;
   wide?: number | undefined;
   tall?: number | undefined;
-  sourcePid?: number | undefined;
-  sourceHandle?: number | undefined;
-  handle?: number | undefined;
+  sourcePid?: bigint | undefined;
+  sourceHandle?: bigint | undefined;
+  handle?: bigint | undefined;
 }
 
 export interface CMsgAckSharedPaintBuffers {
@@ -559,11 +559,11 @@ export interface CMsgNeedsPaint {
 
 export interface CMsgComboNeedsPaint {
   browserHandle?: number | undefined;
-  rgba?: number | undefined;
+  rgba?: bigint | undefined;
   comboboxWide?: number | undefined;
   comboboxTall?: number | undefined;
-  sharedMemoryHandle?: number | undefined;
-  sharedMemorySize?: number | undefined;
+  sharedMemoryHandle?: bigint | undefined;
+  sharedMemorySize?: bigint | undefined;
 }
 
 export interface CMsgNeedsSharedTexturePaint {
@@ -762,7 +762,7 @@ export interface CMsgFocusedNodeTextResponse {
 }
 
 export interface CMsgBuildID {
-  buildId?: number | undefined;
+  buildId?: bigint | undefined;
 }
 
 export interface CMsgOpenDevTools {
@@ -821,7 +821,7 @@ export interface CMsgJSValue {
   uintValue?: number | undefined;
   doubleValue?: number | undefined;
   stringValue?: string | undefined;
-  functionHandle?: number | undefined;
+  functionHandle?: bigint | undefined;
   bytesValue?: Buffer | undefined;
   isArray?: boolean | undefined;
   arrayValues: CMsgJSValue[];
@@ -844,14 +844,14 @@ export interface CMsgJSMethodCall {
 export interface CMsgJSExecuteCallback {
   browserHandle?: number | undefined;
   owningBrowserHandle?: number | undefined;
-  functionHandle?: number | undefined;
+  functionHandle?: bigint | undefined;
   arguments: CMsgJSValue[];
 }
 
 export interface CMsgJSExecutePromise {
   browserHandle?: number | undefined;
   owningBrowserHandle?: number | undefined;
-  promiseHandle?: number | undefined;
+  promiseHandle?: bigint | undefined;
   rejectReason?: string | undefined;
   argument?: CMsgJSValue | undefined;
 }
@@ -859,7 +859,7 @@ export interface CMsgJSExecutePromise {
 export interface CMsgJSReleaseCallback {
   browserHandle?: number | undefined;
   owningBrowserHandle?: number | undefined;
-  functionHandle?: number | undefined;
+  functionHandle?: bigint | undefined;
 }
 
 export interface CMsgJSRaiseException {
@@ -1060,7 +1060,7 @@ export interface CMsgSetSteamBetaName {
 }
 
 export interface CMsgSetSteamID {
-  steamId?: number | undefined;
+  steamId?: bigint | undefined;
 }
 
 export interface CMsgPopupCreated {
@@ -1718,7 +1718,7 @@ function createBaseCMsgBrowserCreate(): CMsgBrowserCreate {
     initialLeft: -2147483648,
     onlyAllowTrustedPopups: false,
     initialUrl: "",
-    hwndParent: 0,
+    hwndParent: 0n,
     creationFlags: 0,
   };
 }
@@ -1773,7 +1773,10 @@ export const CMsgBrowserCreate: MessageFns<CMsgBrowserCreate> = {
     if (message.initialUrl !== undefined && message.initialUrl !== "") {
       writer.uint32(146).string(message.initialUrl);
     }
-    if (message.hwndParent !== undefined && message.hwndParent !== 0) {
+    if (message.hwndParent !== undefined && message.hwndParent !== 0n) {
+      if (BigInt.asUintN(64, message.hwndParent) !== message.hwndParent) {
+        throw new globalThis.Error("value provided for field message.hwndParent of type fixed64 too large");
+      }
       writer.uint32(153).fixed64(message.hwndParent);
     }
     if (message.creationFlags !== undefined && message.creationFlags !== 0) {
@@ -1922,7 +1925,7 @@ export const CMsgBrowserCreate: MessageFns<CMsgBrowserCreate> = {
             break;
           }
 
-          message.hwndParent = longToNumber(reader.fixed64());
+          message.hwndParent = reader.fixed64() as bigint;
           continue;
         }
         case 20: {
@@ -3899,7 +3902,7 @@ export const CMsgViewSource: MessageFns<CMsgViewSource> = {
 };
 
 function createBaseCMsgBrowserReady(): CMsgBrowserReady {
-  return { browserHandle: 0, vrOverlayKey: "", hwndBrowser: 0 };
+  return { browserHandle: 0, vrOverlayKey: "", hwndBrowser: 0n };
 }
 
 export const CMsgBrowserReady: MessageFns<CMsgBrowserReady> = {
@@ -3910,7 +3913,10 @@ export const CMsgBrowserReady: MessageFns<CMsgBrowserReady> = {
     if (message.vrOverlayKey !== undefined && message.vrOverlayKey !== "") {
       writer.uint32(18).string(message.vrOverlayKey);
     }
-    if (message.hwndBrowser !== undefined && message.hwndBrowser !== 0) {
+    if (message.hwndBrowser !== undefined && message.hwndBrowser !== 0n) {
+      if (BigInt.asUintN(64, message.hwndBrowser) !== message.hwndBrowser) {
+        throw new globalThis.Error("value provided for field message.hwndBrowser of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.hwndBrowser);
     }
     return writer;
@@ -3944,7 +3950,7 @@ export const CMsgBrowserReady: MessageFns<CMsgBrowserReady> = {
             break;
           }
 
-          message.hwndBrowser = longToNumber(reader.fixed64());
+          message.hwndBrowser = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -5001,7 +5007,7 @@ function createBaseCMsgPopupHTMLWindow(): CMsgPopupHTMLWindow {
     popupIndex: 0,
     trustedCreator: false,
     name: "",
-    hwnd: 0,
+    hwnd: 0n,
     parentPopupIndex: 0,
     creationFlags: 0,
   };
@@ -5036,7 +5042,10 @@ export const CMsgPopupHTMLWindow: MessageFns<CMsgPopupHTMLWindow> = {
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(74).string(message.name);
     }
-    if (message.hwnd !== undefined && message.hwnd !== 0) {
+    if (message.hwnd !== undefined && message.hwnd !== 0n) {
+      if (BigInt.asUintN(64, message.hwnd) !== message.hwnd) {
+        throw new globalThis.Error("value provided for field message.hwnd of type uint64 too large");
+      }
       writer.uint32(80).uint64(message.hwnd);
     }
     if (message.parentPopupIndex !== undefined && message.parentPopupIndex !== 0) {
@@ -5132,7 +5141,7 @@ export const CMsgPopupHTMLWindow: MessageFns<CMsgPopupHTMLWindow> = {
             break;
           }
 
-          message.hwnd = longToNumber(reader.uint64());
+          message.hwnd = reader.uint64() as bigint;
           continue;
         }
         case 11: {
@@ -5709,12 +5718,15 @@ export const CMsgFileLoadDialogResponse: MessageFns<CMsgFileLoadDialogResponse> 
 };
 
 function createBaseCMsgRequestProcessInfo(): CMsgRequestProcessInfo {
-  return { requestid: 0 };
+  return { requestid: 0n };
 }
 
 export const CMsgRequestProcessInfo: MessageFns<CMsgRequestProcessInfo> = {
   encode(message: CMsgRequestProcessInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.requestid !== undefined && message.requestid !== 0) {
+    if (message.requestid !== undefined && message.requestid !== 0n) {
+      if (BigInt.asUintN(64, message.requestid) !== message.requestid) {
+        throw new globalThis.Error("value provided for field message.requestid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.requestid);
     }
     return writer;
@@ -5732,7 +5744,7 @@ export const CMsgRequestProcessInfo: MessageFns<CMsgRequestProcessInfo> = {
             break;
           }
 
-          message.requestid = longToNumber(reader.uint64());
+          message.requestid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -5747,7 +5759,7 @@ export const CMsgRequestProcessInfo: MessageFns<CMsgRequestProcessInfo> = {
 
 function createBaseCMsgProcessInfoNotification(): CMsgProcessInfoNotification {
   return {
-    requestid: 0,
+    requestid: 0n,
     gpuStatus: 0,
     canvas2d: 0,
     canvasOopRasterization: 0,
@@ -5770,7 +5782,10 @@ function createBaseCMsgProcessInfoNotification(): CMsgProcessInfoNotification {
 
 export const CMsgProcessInfoNotification: MessageFns<CMsgProcessInfoNotification> = {
   encode(message: CMsgProcessInfoNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.requestid !== undefined && message.requestid !== 0) {
+    if (message.requestid !== undefined && message.requestid !== 0n) {
+      if (BigInt.asUintN(64, message.requestid) !== message.requestid) {
+        throw new globalThis.Error("value provided for field message.requestid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.requestid);
     }
     if (message.gpuStatus !== undefined && message.gpuStatus !== 0) {
@@ -5839,7 +5854,7 @@ export const CMsgProcessInfoNotification: MessageFns<CMsgProcessInfoNotification
             break;
           }
 
-          message.requestid = longToNumber(reader.uint64());
+          message.requestid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -6218,7 +6233,7 @@ export const CMsgClose: MessageFns<CMsgClose> = {
 };
 
 function createBaseCMsgSetSharedPaintBuffers(): CMsgSetSharedPaintBuffers {
-  return { browserHandle: 0, wide: 0, tall: 0, sourcePid: 0, sourceHandle: 0, handle: 0 };
+  return { browserHandle: 0, wide: 0, tall: 0, sourcePid: 0n, sourceHandle: 0n, handle: 0n };
 }
 
 export const CMsgSetSharedPaintBuffers: MessageFns<CMsgSetSharedPaintBuffers> = {
@@ -6232,13 +6247,22 @@ export const CMsgSetSharedPaintBuffers: MessageFns<CMsgSetSharedPaintBuffers> = 
     if (message.tall !== undefined && message.tall !== 0) {
       writer.uint32(24).uint32(message.tall);
     }
-    if (message.sourcePid !== undefined && message.sourcePid !== 0) {
+    if (message.sourcePid !== undefined && message.sourcePid !== 0n) {
+      if (BigInt.asUintN(64, message.sourcePid) !== message.sourcePid) {
+        throw new globalThis.Error("value provided for field message.sourcePid of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.sourcePid);
     }
-    if (message.sourceHandle !== undefined && message.sourceHandle !== 0) {
+    if (message.sourceHandle !== undefined && message.sourceHandle !== 0n) {
+      if (BigInt.asUintN(64, message.sourceHandle) !== message.sourceHandle) {
+        throw new globalThis.Error("value provided for field message.sourceHandle of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.sourceHandle);
     }
-    if (message.handle !== undefined && message.handle !== 0) {
+    if (message.handle !== undefined && message.handle !== 0n) {
+      if (BigInt.asUintN(64, message.handle) !== message.handle) {
+        throw new globalThis.Error("value provided for field message.handle of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.handle);
     }
     return writer;
@@ -6280,7 +6304,7 @@ export const CMsgSetSharedPaintBuffers: MessageFns<CMsgSetSharedPaintBuffers> = 
             break;
           }
 
-          message.sourcePid = longToNumber(reader.uint64());
+          message.sourcePid = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -6288,7 +6312,7 @@ export const CMsgSetSharedPaintBuffers: MessageFns<CMsgSetSharedPaintBuffers> = 
             break;
           }
 
-          message.sourceHandle = longToNumber(reader.uint64());
+          message.sourceHandle = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -6296,7 +6320,7 @@ export const CMsgSetSharedPaintBuffers: MessageFns<CMsgSetSharedPaintBuffers> = 
             break;
           }
 
-          message.handle = longToNumber(reader.uint64());
+          message.handle = reader.uint64() as bigint;
           continue;
         }
       }
@@ -6470,7 +6494,7 @@ export const CMsgNeedsPaint: MessageFns<CMsgNeedsPaint> = {
 };
 
 function createBaseCMsgComboNeedsPaint(): CMsgComboNeedsPaint {
-  return { browserHandle: 0, rgba: 0, comboboxWide: 0, comboboxTall: 0, sharedMemoryHandle: 0, sharedMemorySize: 0 };
+  return { browserHandle: 0, rgba: 0n, comboboxWide: 0, comboboxTall: 0, sharedMemoryHandle: 0n, sharedMemorySize: 0n };
 }
 
 export const CMsgComboNeedsPaint: MessageFns<CMsgComboNeedsPaint> = {
@@ -6478,7 +6502,10 @@ export const CMsgComboNeedsPaint: MessageFns<CMsgComboNeedsPaint> = {
     if (message.browserHandle !== undefined && message.browserHandle !== 0) {
       writer.uint32(8).uint32(message.browserHandle);
     }
-    if (message.rgba !== undefined && message.rgba !== 0) {
+    if (message.rgba !== undefined && message.rgba !== 0n) {
+      if (BigInt.asUintN(64, message.rgba) !== message.rgba) {
+        throw new globalThis.Error("value provided for field message.rgba of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.rgba);
     }
     if (message.comboboxWide !== undefined && message.comboboxWide !== 0) {
@@ -6487,10 +6514,16 @@ export const CMsgComboNeedsPaint: MessageFns<CMsgComboNeedsPaint> = {
     if (message.comboboxTall !== undefined && message.comboboxTall !== 0) {
       writer.uint32(32).uint32(message.comboboxTall);
     }
-    if (message.sharedMemoryHandle !== undefined && message.sharedMemoryHandle !== 0) {
+    if (message.sharedMemoryHandle !== undefined && message.sharedMemoryHandle !== 0n) {
+      if (BigInt.asUintN(64, message.sharedMemoryHandle) !== message.sharedMemoryHandle) {
+        throw new globalThis.Error("value provided for field message.sharedMemoryHandle of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.sharedMemoryHandle);
     }
-    if (message.sharedMemorySize !== undefined && message.sharedMemorySize !== 0) {
+    if (message.sharedMemorySize !== undefined && message.sharedMemorySize !== 0n) {
+      if (BigInt.asUintN(64, message.sharedMemorySize) !== message.sharedMemorySize) {
+        throw new globalThis.Error("value provided for field message.sharedMemorySize of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.sharedMemorySize);
     }
     return writer;
@@ -6516,7 +6549,7 @@ export const CMsgComboNeedsPaint: MessageFns<CMsgComboNeedsPaint> = {
             break;
           }
 
-          message.rgba = longToNumber(reader.uint64());
+          message.rgba = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -6540,7 +6573,7 @@ export const CMsgComboNeedsPaint: MessageFns<CMsgComboNeedsPaint> = {
             break;
           }
 
-          message.sharedMemoryHandle = longToNumber(reader.uint64());
+          message.sharedMemoryHandle = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -6548,7 +6581,7 @@ export const CMsgComboNeedsPaint: MessageFns<CMsgComboNeedsPaint> = {
             break;
           }
 
-          message.sharedMemorySize = longToNumber(reader.uint64());
+          message.sharedMemorySize = reader.uint64() as bigint;
           continue;
         }
       }
@@ -8478,12 +8511,15 @@ export const CMsgFocusedNodeTextResponse: MessageFns<CMsgFocusedNodeTextResponse
 };
 
 function createBaseCMsgBuildID(): CMsgBuildID {
-  return { buildId: 0 };
+  return { buildId: 0n };
 }
 
 export const CMsgBuildID: MessageFns<CMsgBuildID> = {
   encode(message: CMsgBuildID, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.buildId !== undefined && message.buildId !== 0) {
+    if (message.buildId !== undefined && message.buildId !== 0n) {
+      if (BigInt.asUintN(64, message.buildId) !== message.buildId) {
+        throw new globalThis.Error("value provided for field message.buildId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.buildId);
     }
     return writer;
@@ -8501,7 +8537,7 @@ export const CMsgBuildID: MessageFns<CMsgBuildID> = {
             break;
           }
 
-          message.buildId = longToNumber(reader.uint64());
+          message.buildId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -8994,7 +9030,7 @@ function createBaseCMsgJSValue(): CMsgJSValue {
     uintValue: 0,
     doubleValue: 0,
     stringValue: "",
-    functionHandle: 0,
+    functionHandle: 0n,
     bytesValue: Buffer.alloc(0),
     isArray: false,
     arrayValues: [],
@@ -9020,7 +9056,10 @@ export const CMsgJSValue: MessageFns<CMsgJSValue> = {
     if (message.stringValue !== undefined && message.stringValue !== "") {
       writer.uint32(42).string(message.stringValue);
     }
-    if (message.functionHandle !== undefined && message.functionHandle !== 0) {
+    if (message.functionHandle !== undefined && message.functionHandle !== 0n) {
+      if (BigInt.asUintN(64, message.functionHandle) !== message.functionHandle) {
+        throw new globalThis.Error("value provided for field message.functionHandle of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.functionHandle);
     }
     if (message.bytesValue !== undefined && message.bytesValue.length !== 0) {
@@ -9093,7 +9132,7 @@ export const CMsgJSValue: MessageFns<CMsgJSValue> = {
             break;
           }
 
-          message.functionHandle = longToNumber(reader.uint64());
+          message.functionHandle = reader.uint64() as bigint;
           continue;
         }
         case 12: {
@@ -9265,7 +9304,7 @@ export const CMsgJSMethodCall: MessageFns<CMsgJSMethodCall> = {
 };
 
 function createBaseCMsgJSExecuteCallback(): CMsgJSExecuteCallback {
-  return { browserHandle: 0, owningBrowserHandle: 0, functionHandle: 0, arguments: [] };
+  return { browserHandle: 0, owningBrowserHandle: 0, functionHandle: 0n, arguments: [] };
 }
 
 export const CMsgJSExecuteCallback: MessageFns<CMsgJSExecuteCallback> = {
@@ -9276,7 +9315,10 @@ export const CMsgJSExecuteCallback: MessageFns<CMsgJSExecuteCallback> = {
     if (message.owningBrowserHandle !== undefined && message.owningBrowserHandle !== 0) {
       writer.uint32(16).uint32(message.owningBrowserHandle);
     }
-    if (message.functionHandle !== undefined && message.functionHandle !== 0) {
+    if (message.functionHandle !== undefined && message.functionHandle !== 0n) {
+      if (BigInt.asUintN(64, message.functionHandle) !== message.functionHandle) {
+        throw new globalThis.Error("value provided for field message.functionHandle of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.functionHandle);
     }
     for (const v of message.arguments) {
@@ -9313,7 +9355,7 @@ export const CMsgJSExecuteCallback: MessageFns<CMsgJSExecuteCallback> = {
             break;
           }
 
-          message.functionHandle = longToNumber(reader.uint64());
+          message.functionHandle = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -9335,7 +9377,7 @@ export const CMsgJSExecuteCallback: MessageFns<CMsgJSExecuteCallback> = {
 };
 
 function createBaseCMsgJSExecutePromise(): CMsgJSExecutePromise {
-  return { browserHandle: 0, owningBrowserHandle: 0, promiseHandle: 0, rejectReason: "", argument: undefined };
+  return { browserHandle: 0, owningBrowserHandle: 0, promiseHandle: 0n, rejectReason: "", argument: undefined };
 }
 
 export const CMsgJSExecutePromise: MessageFns<CMsgJSExecutePromise> = {
@@ -9346,7 +9388,10 @@ export const CMsgJSExecutePromise: MessageFns<CMsgJSExecutePromise> = {
     if (message.owningBrowserHandle !== undefined && message.owningBrowserHandle !== 0) {
       writer.uint32(16).uint32(message.owningBrowserHandle);
     }
-    if (message.promiseHandle !== undefined && message.promiseHandle !== 0) {
+    if (message.promiseHandle !== undefined && message.promiseHandle !== 0n) {
+      if (BigInt.asUintN(64, message.promiseHandle) !== message.promiseHandle) {
+        throw new globalThis.Error("value provided for field message.promiseHandle of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.promiseHandle);
     }
     if (message.rejectReason !== undefined && message.rejectReason !== "") {
@@ -9386,7 +9431,7 @@ export const CMsgJSExecutePromise: MessageFns<CMsgJSExecutePromise> = {
             break;
           }
 
-          message.promiseHandle = longToNumber(reader.uint64());
+          message.promiseHandle = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -9416,7 +9461,7 @@ export const CMsgJSExecutePromise: MessageFns<CMsgJSExecutePromise> = {
 };
 
 function createBaseCMsgJSReleaseCallback(): CMsgJSReleaseCallback {
-  return { browserHandle: 0, owningBrowserHandle: 0, functionHandle: 0 };
+  return { browserHandle: 0, owningBrowserHandle: 0, functionHandle: 0n };
 }
 
 export const CMsgJSReleaseCallback: MessageFns<CMsgJSReleaseCallback> = {
@@ -9427,7 +9472,10 @@ export const CMsgJSReleaseCallback: MessageFns<CMsgJSReleaseCallback> = {
     if (message.owningBrowserHandle !== undefined && message.owningBrowserHandle !== 0) {
       writer.uint32(16).uint32(message.owningBrowserHandle);
     }
-    if (message.functionHandle !== undefined && message.functionHandle !== 0) {
+    if (message.functionHandle !== undefined && message.functionHandle !== 0n) {
+      if (BigInt.asUintN(64, message.functionHandle) !== message.functionHandle) {
+        throw new globalThis.Error("value provided for field message.functionHandle of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.functionHandle);
     }
     return writer;
@@ -9461,7 +9509,7 @@ export const CMsgJSReleaseCallback: MessageFns<CMsgJSReleaseCallback> = {
             break;
           }
 
-          message.functionHandle = longToNumber(reader.uint64());
+          message.functionHandle = reader.uint64() as bigint;
           continue;
         }
       }
@@ -11419,12 +11467,15 @@ export const CMsgSetSteamBetaName: MessageFns<CMsgSetSteamBetaName> = {
 };
 
 function createBaseCMsgSetSteamID(): CMsgSetSteamID {
-  return { steamId: 0 };
+  return { steamId: 0n };
 }
 
 export const CMsgSetSteamID: MessageFns<CMsgSetSteamID> = {
   encode(message: CMsgSetSteamID, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamId !== undefined && message.steamId !== 0) {
+    if (message.steamId !== undefined && message.steamId !== 0n) {
+      if (BigInt.asUintN(64, message.steamId) !== message.steamId) {
+        throw new globalThis.Error("value provided for field message.steamId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.steamId);
     }
     return writer;
@@ -11442,7 +11493,7 @@ export const CMsgSetSteamID: MessageFns<CMsgSetSteamID> = {
             break;
           }
 
-          message.steamId = longToNumber(reader.uint64());
+          message.steamId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -11624,17 +11675,6 @@ export const CMsgSetAccessibilitySettings: MessageFns<CMsgSetAccessibilitySettin
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

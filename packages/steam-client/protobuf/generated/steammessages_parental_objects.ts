@@ -15,7 +15,7 @@ export interface ParentalApp {
 }
 
 export interface ParentalPlaytimeDay {
-  allowedTimeWindows?: number | undefined;
+  allowedTimeWindows?: bigint | undefined;
   allowedDailyMinutes?: number | undefined;
 }
 
@@ -30,7 +30,7 @@ export interface ParentalTemporaryPlaytimeRestrictions {
 }
 
 export interface ParentalSettings {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   applistBaseId?: number | undefined;
   applistBaseDescription?: string | undefined;
   applistBase: ParentalApp[];
@@ -52,25 +52,25 @@ export interface ParentalSettings {
 }
 
 export interface ParentalFeatureRequest {
-  requestid?: number | undefined;
-  familyGroupid?: number | undefined;
-  steamid?: number | undefined;
+  requestid?: bigint | undefined;
+  familyGroupid?: bigint | undefined;
+  steamid?: bigint | undefined;
   features?: number | undefined;
   timeRequested?: number | undefined;
   approved?: boolean | undefined;
-  steamidResponder?: number | undefined;
+  steamidResponder?: bigint | undefined;
   timeResponded?: number | undefined;
 }
 
 export interface ParentalPlaytimeRequest {
-  requestid?: number | undefined;
-  familyGroupid?: number | undefined;
-  steamid?: number | undefined;
+  requestid?: bigint | undefined;
+  familyGroupid?: bigint | undefined;
+  steamid?: bigint | undefined;
   currentPlaytimeRestrictions?: ParentalPlaytimeDay | undefined;
   timeExpires?: number | undefined;
   timeRequested?: number | undefined;
   approved?: boolean | undefined;
-  steamidResponder?: number | undefined;
+  steamidResponder?: bigint | undefined;
   timeResponded?: number | undefined;
   restrictionsApproved?: ParentalTemporaryPlaytimeRestrictions | undefined;
 }
@@ -124,12 +124,15 @@ export const ParentalApp: MessageFns<ParentalApp> = {
 };
 
 function createBaseParentalPlaytimeDay(): ParentalPlaytimeDay {
-  return { allowedTimeWindows: 0, allowedDailyMinutes: 0 };
+  return { allowedTimeWindows: 0n, allowedDailyMinutes: 0 };
 }
 
 export const ParentalPlaytimeDay: MessageFns<ParentalPlaytimeDay> = {
   encode(message: ParentalPlaytimeDay, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.allowedTimeWindows !== undefined && message.allowedTimeWindows !== 0) {
+    if (message.allowedTimeWindows !== undefined && message.allowedTimeWindows !== 0n) {
+      if (BigInt.asUintN(64, message.allowedTimeWindows) !== message.allowedTimeWindows) {
+        throw new globalThis.Error("value provided for field message.allowedTimeWindows of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.allowedTimeWindows);
     }
     if (message.allowedDailyMinutes !== undefined && message.allowedDailyMinutes !== 0) {
@@ -150,7 +153,7 @@ export const ParentalPlaytimeDay: MessageFns<ParentalPlaytimeDay> = {
             break;
           }
 
-          message.allowedTimeWindows = longToNumber(reader.uint64());
+          message.allowedTimeWindows = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -269,7 +272,7 @@ export const ParentalTemporaryPlaytimeRestrictions: MessageFns<ParentalTemporary
 
 function createBaseParentalSettings(): ParentalSettings {
   return {
-    steamid: 0,
+    steamid: 0n,
     applistBaseId: 0,
     applistBaseDescription: "",
     applistBase: [],
@@ -293,7 +296,10 @@ function createBaseParentalSettings(): ParentalSettings {
 
 export const ParentalSettings: MessageFns<ParentalSettings> = {
   encode(message: ParentalSettings, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.applistBaseId !== undefined && message.applistBaseId !== 0) {
@@ -366,7 +372,7 @@ export const ParentalSettings: MessageFns<ParentalSettings> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -555,26 +561,35 @@ export const ParentalSettings: MessageFns<ParentalSettings> = {
 
 function createBaseParentalFeatureRequest(): ParentalFeatureRequest {
   return {
-    requestid: 0,
-    familyGroupid: 0,
-    steamid: 0,
+    requestid: 0n,
+    familyGroupid: 0n,
+    steamid: 0n,
     features: 0,
     timeRequested: 0,
     approved: false,
-    steamidResponder: 0,
+    steamidResponder: 0n,
     timeResponded: 0,
   };
 }
 
 export const ParentalFeatureRequest: MessageFns<ParentalFeatureRequest> = {
   encode(message: ParentalFeatureRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.requestid !== undefined && message.requestid !== 0) {
+    if (message.requestid !== undefined && message.requestid !== 0n) {
+      if (BigInt.asUintN(64, message.requestid) !== message.requestid) {
+        throw new globalThis.Error("value provided for field message.requestid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.requestid);
     }
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.familyGroupid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamid);
     }
     if (message.features !== undefined && message.features !== 0) {
@@ -586,7 +601,10 @@ export const ParentalFeatureRequest: MessageFns<ParentalFeatureRequest> = {
     if (message.approved !== undefined && message.approved !== false) {
       writer.uint32(48).bool(message.approved);
     }
-    if (message.steamidResponder !== undefined && message.steamidResponder !== 0) {
+    if (message.steamidResponder !== undefined && message.steamidResponder !== 0n) {
+      if (BigInt.asUintN(64, message.steamidResponder) !== message.steamidResponder) {
+        throw new globalThis.Error("value provided for field message.steamidResponder of type fixed64 too large");
+      }
       writer.uint32(57).fixed64(message.steamidResponder);
     }
     if (message.timeResponded !== undefined && message.timeResponded !== 0) {
@@ -607,7 +625,7 @@ export const ParentalFeatureRequest: MessageFns<ParentalFeatureRequest> = {
             break;
           }
 
-          message.requestid = longToNumber(reader.fixed64());
+          message.requestid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -615,7 +633,7 @@ export const ParentalFeatureRequest: MessageFns<ParentalFeatureRequest> = {
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.fixed64());
+          message.familyGroupid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -623,7 +641,7 @@ export const ParentalFeatureRequest: MessageFns<ParentalFeatureRequest> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -655,7 +673,7 @@ export const ParentalFeatureRequest: MessageFns<ParentalFeatureRequest> = {
             break;
           }
 
-          message.steamidResponder = longToNumber(reader.fixed64());
+          message.steamidResponder = reader.fixed64() as bigint;
           continue;
         }
         case 8: {
@@ -678,14 +696,14 @@ export const ParentalFeatureRequest: MessageFns<ParentalFeatureRequest> = {
 
 function createBaseParentalPlaytimeRequest(): ParentalPlaytimeRequest {
   return {
-    requestid: 0,
-    familyGroupid: 0,
-    steamid: 0,
+    requestid: 0n,
+    familyGroupid: 0n,
+    steamid: 0n,
     currentPlaytimeRestrictions: undefined,
     timeExpires: 0,
     timeRequested: 0,
     approved: false,
-    steamidResponder: 0,
+    steamidResponder: 0n,
     timeResponded: 0,
     restrictionsApproved: undefined,
   };
@@ -693,13 +711,22 @@ function createBaseParentalPlaytimeRequest(): ParentalPlaytimeRequest {
 
 export const ParentalPlaytimeRequest: MessageFns<ParentalPlaytimeRequest> = {
   encode(message: ParentalPlaytimeRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.requestid !== undefined && message.requestid !== 0) {
+    if (message.requestid !== undefined && message.requestid !== 0n) {
+      if (BigInt.asUintN(64, message.requestid) !== message.requestid) {
+        throw new globalThis.Error("value provided for field message.requestid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.requestid);
     }
-    if (message.familyGroupid !== undefined && message.familyGroupid !== 0) {
+    if (message.familyGroupid !== undefined && message.familyGroupid !== 0n) {
+      if (BigInt.asUintN(64, message.familyGroupid) !== message.familyGroupid) {
+        throw new globalThis.Error("value provided for field message.familyGroupid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.familyGroupid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamid);
     }
     if (message.currentPlaytimeRestrictions !== undefined) {
@@ -714,7 +741,10 @@ export const ParentalPlaytimeRequest: MessageFns<ParentalPlaytimeRequest> = {
     if (message.approved !== undefined && message.approved !== false) {
       writer.uint32(56).bool(message.approved);
     }
-    if (message.steamidResponder !== undefined && message.steamidResponder !== 0) {
+    if (message.steamidResponder !== undefined && message.steamidResponder !== 0n) {
+      if (BigInt.asUintN(64, message.steamidResponder) !== message.steamidResponder) {
+        throw new globalThis.Error("value provided for field message.steamidResponder of type fixed64 too large");
+      }
       writer.uint32(65).fixed64(message.steamidResponder);
     }
     if (message.timeResponded !== undefined && message.timeResponded !== 0) {
@@ -738,7 +768,7 @@ export const ParentalPlaytimeRequest: MessageFns<ParentalPlaytimeRequest> = {
             break;
           }
 
-          message.requestid = longToNumber(reader.fixed64());
+          message.requestid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -746,7 +776,7 @@ export const ParentalPlaytimeRequest: MessageFns<ParentalPlaytimeRequest> = {
             break;
           }
 
-          message.familyGroupid = longToNumber(reader.fixed64());
+          message.familyGroupid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -754,7 +784,7 @@ export const ParentalPlaytimeRequest: MessageFns<ParentalPlaytimeRequest> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -794,7 +824,7 @@ export const ParentalPlaytimeRequest: MessageFns<ParentalPlaytimeRequest> = {
             break;
           }
 
-          message.steamidResponder = longToNumber(reader.fixed64());
+          message.steamidResponder = reader.fixed64() as bigint;
           continue;
         }
         case 9: {
@@ -822,17 +852,6 @@ export const ParentalPlaytimeRequest: MessageFns<ParentalPlaytimeRequest> = {
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

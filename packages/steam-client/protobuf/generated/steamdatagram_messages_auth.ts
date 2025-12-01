@@ -19,8 +19,8 @@ export interface CMsgSteamDatagramRelayAuthTicket {
   appId?: number | undefined;
   virtualPort?: number | undefined;
   extraFields: CMsgSteamDatagramRelayAuthTicket_ExtraField[];
-  legacyAuthorizedSteamId?: number | undefined;
-  legacyGameserverSteamId?: number | undefined;
+  legacyAuthorizedSteamId?: bigint | undefined;
+  legacyGameserverSteamId?: bigint | undefined;
   legacyGameserverPopId?: number | undefined;
   legacyAuthorizedClientIdentityBinary?: Buffer | undefined;
   legacyGameserverIdentityBinary?: Buffer | undefined;
@@ -29,15 +29,15 @@ export interface CMsgSteamDatagramRelayAuthTicket {
 export interface CMsgSteamDatagramRelayAuthTicket_ExtraField {
   name?: string | undefined;
   stringValue?: string | undefined;
-  int64Value?: number | undefined;
-  fixed64Value?: number | undefined;
+  int64Value?: bigint | undefined;
+  fixed64Value?: bigint | undefined;
 }
 
 export interface CMsgSteamDatagramSignedRelayAuthTicket {
-  reservedDoNotUse?: number | undefined;
+  reservedDoNotUse?: bigint | undefined;
   ticket?: Buffer | undefined;
   signature?: Buffer | undefined;
-  keyId?: number | undefined;
+  keyId?: bigint | undefined;
   certs: CMsgSteamDatagramCertificateSigned[];
 }
 
@@ -54,7 +54,7 @@ export interface CMsgSteamDatagramGameCoordinatorServerLogin {
   appdata?: Buffer | undefined;
   legacyIdentityBinary?: Buffer | undefined;
   identityString?: string | undefined;
-  dummySteamId?: number | undefined;
+  dummySteamId?: bigint | undefined;
 }
 
 export interface CMsgSteamDatagramSignedGameCoordinatorServerLogin {
@@ -67,7 +67,7 @@ export interface CMsgSteamDatagramHostedServerAddressPlaintext {
   ipv4?: number | undefined;
   ipv6?: Buffer | undefined;
   port?: number | undefined;
-  routingSecret?: number | undefined;
+  routingSecret?: bigint | undefined;
   protocolVersion?: number | undefined;
 }
 
@@ -81,8 +81,8 @@ function createBaseCMsgSteamDatagramRelayAuthTicket(): CMsgSteamDatagramRelayAut
     appId: 0,
     virtualPort: 0,
     extraFields: [],
-    legacyAuthorizedSteamId: 0,
-    legacyGameserverSteamId: 0,
+    legacyAuthorizedSteamId: 0n,
+    legacyGameserverSteamId: 0n,
     legacyGameserverPopId: 0,
     legacyAuthorizedClientIdentityBinary: Buffer.alloc(0),
     legacyGameserverIdentityBinary: Buffer.alloc(0),
@@ -115,10 +115,20 @@ export const CMsgSteamDatagramRelayAuthTicket: MessageFns<CMsgSteamDatagramRelay
     for (const v of message.extraFields) {
       CMsgSteamDatagramRelayAuthTicket_ExtraField.encode(v!, writer.uint32(66).fork()).join();
     }
-    if (message.legacyAuthorizedSteamId !== undefined && message.legacyAuthorizedSteamId !== 0) {
+    if (message.legacyAuthorizedSteamId !== undefined && message.legacyAuthorizedSteamId !== 0n) {
+      if (BigInt.asUintN(64, message.legacyAuthorizedSteamId) !== message.legacyAuthorizedSteamId) {
+        throw new globalThis.Error(
+          "value provided for field message.legacyAuthorizedSteamId of type fixed64 too large",
+        );
+      }
       writer.uint32(17).fixed64(message.legacyAuthorizedSteamId);
     }
-    if (message.legacyGameserverSteamId !== undefined && message.legacyGameserverSteamId !== 0) {
+    if (message.legacyGameserverSteamId !== undefined && message.legacyGameserverSteamId !== 0n) {
+      if (BigInt.asUintN(64, message.legacyGameserverSteamId) !== message.legacyGameserverSteamId) {
+        throw new globalThis.Error(
+          "value provided for field message.legacyGameserverSteamId of type fixed64 too large",
+        );
+      }
       writer.uint32(33).fixed64(message.legacyGameserverSteamId);
     }
     if (message.legacyGameserverPopId !== undefined && message.legacyGameserverPopId !== 0) {
@@ -212,7 +222,7 @@ export const CMsgSteamDatagramRelayAuthTicket: MessageFns<CMsgSteamDatagramRelay
             break;
           }
 
-          message.legacyAuthorizedSteamId = longToNumber(reader.fixed64());
+          message.legacyAuthorizedSteamId = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -220,7 +230,7 @@ export const CMsgSteamDatagramRelayAuthTicket: MessageFns<CMsgSteamDatagramRelay
             break;
           }
 
-          message.legacyGameserverSteamId = longToNumber(reader.fixed64());
+          message.legacyGameserverSteamId = reader.fixed64() as bigint;
           continue;
         }
         case 9: {
@@ -258,7 +268,7 @@ export const CMsgSteamDatagramRelayAuthTicket: MessageFns<CMsgSteamDatagramRelay
 };
 
 function createBaseCMsgSteamDatagramRelayAuthTicket_ExtraField(): CMsgSteamDatagramRelayAuthTicket_ExtraField {
-  return { name: "", stringValue: "", int64Value: 0, fixed64Value: 0 };
+  return { name: "", stringValue: "", int64Value: 0n, fixed64Value: 0n };
 }
 
 export const CMsgSteamDatagramRelayAuthTicket_ExtraField: MessageFns<CMsgSteamDatagramRelayAuthTicket_ExtraField> = {
@@ -272,10 +282,16 @@ export const CMsgSteamDatagramRelayAuthTicket_ExtraField: MessageFns<CMsgSteamDa
     if (message.stringValue !== undefined && message.stringValue !== "") {
       writer.uint32(18).string(message.stringValue);
     }
-    if (message.int64Value !== undefined && message.int64Value !== 0) {
+    if (message.int64Value !== undefined && message.int64Value !== 0n) {
+      if (BigInt.asIntN(64, message.int64Value) !== message.int64Value) {
+        throw new globalThis.Error("value provided for field message.int64Value of type sint64 too large");
+      }
       writer.uint32(24).sint64(message.int64Value);
     }
-    if (message.fixed64Value !== undefined && message.fixed64Value !== 0) {
+    if (message.fixed64Value !== undefined && message.fixed64Value !== 0n) {
+      if (BigInt.asUintN(64, message.fixed64Value) !== message.fixed64Value) {
+        throw new globalThis.Error("value provided for field message.fixed64Value of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.fixed64Value);
     }
     return writer;
@@ -309,7 +325,7 @@ export const CMsgSteamDatagramRelayAuthTicket_ExtraField: MessageFns<CMsgSteamDa
             break;
           }
 
-          message.int64Value = longToNumber(reader.sint64());
+          message.int64Value = reader.sint64() as bigint;
           continue;
         }
         case 5: {
@@ -317,7 +333,7 @@ export const CMsgSteamDatagramRelayAuthTicket_ExtraField: MessageFns<CMsgSteamDa
             break;
           }
 
-          message.fixed64Value = longToNumber(reader.fixed64());
+          message.fixed64Value = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -331,12 +347,15 @@ export const CMsgSteamDatagramRelayAuthTicket_ExtraField: MessageFns<CMsgSteamDa
 };
 
 function createBaseCMsgSteamDatagramSignedRelayAuthTicket(): CMsgSteamDatagramSignedRelayAuthTicket {
-  return { reservedDoNotUse: 0, ticket: Buffer.alloc(0), signature: Buffer.alloc(0), keyId: 0, certs: [] };
+  return { reservedDoNotUse: 0n, ticket: Buffer.alloc(0), signature: Buffer.alloc(0), keyId: 0n, certs: [] };
 }
 
 export const CMsgSteamDatagramSignedRelayAuthTicket: MessageFns<CMsgSteamDatagramSignedRelayAuthTicket> = {
   encode(message: CMsgSteamDatagramSignedRelayAuthTicket, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.reservedDoNotUse !== undefined && message.reservedDoNotUse !== 0) {
+    if (message.reservedDoNotUse !== undefined && message.reservedDoNotUse !== 0n) {
+      if (BigInt.asUintN(64, message.reservedDoNotUse) !== message.reservedDoNotUse) {
+        throw new globalThis.Error("value provided for field message.reservedDoNotUse of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.reservedDoNotUse);
     }
     if (message.ticket !== undefined && message.ticket.length !== 0) {
@@ -345,7 +364,10 @@ export const CMsgSteamDatagramSignedRelayAuthTicket: MessageFns<CMsgSteamDatagra
     if (message.signature !== undefined && message.signature.length !== 0) {
       writer.uint32(34).bytes(message.signature);
     }
-    if (message.keyId !== undefined && message.keyId !== 0) {
+    if (message.keyId !== undefined && message.keyId !== 0n) {
+      if (BigInt.asUintN(64, message.keyId) !== message.keyId) {
+        throw new globalThis.Error("value provided for field message.keyId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.keyId);
     }
     for (const v of message.certs) {
@@ -366,7 +388,7 @@ export const CMsgSteamDatagramSignedRelayAuthTicket: MessageFns<CMsgSteamDatagra
             break;
           }
 
-          message.reservedDoNotUse = longToNumber(reader.fixed64());
+          message.reservedDoNotUse = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -390,7 +412,7 @@ export const CMsgSteamDatagramSignedRelayAuthTicket: MessageFns<CMsgSteamDatagra
             break;
           }
 
-          message.keyId = longToNumber(reader.fixed64());
+          message.keyId = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -478,7 +500,7 @@ function createBaseCMsgSteamDatagramGameCoordinatorServerLogin(): CMsgSteamDatag
     appdata: Buffer.alloc(0),
     legacyIdentityBinary: Buffer.alloc(0),
     identityString: "",
-    dummySteamId: 0,
+    dummySteamId: 0n,
   };
 }
 
@@ -505,7 +527,10 @@ export const CMsgSteamDatagramGameCoordinatorServerLogin: MessageFns<CMsgSteamDa
     if (message.identityString !== undefined && message.identityString !== "") {
       writer.uint32(50).string(message.identityString);
     }
-    if (message.dummySteamId !== undefined && message.dummySteamId !== 0) {
+    if (message.dummySteamId !== undefined && message.dummySteamId !== 0n) {
+      if (BigInt.asUintN(64, message.dummySteamId) !== message.dummySteamId) {
+        throw new globalThis.Error("value provided for field message.dummySteamId of type fixed64 too large");
+      }
       writer.uint32(793).fixed64(message.dummySteamId);
     }
     return writer;
@@ -571,7 +596,7 @@ export const CMsgSteamDatagramGameCoordinatorServerLogin: MessageFns<CMsgSteamDa
             break;
           }
 
-          message.dummySteamId = longToNumber(reader.fixed64());
+          message.dummySteamId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -649,7 +674,7 @@ export const CMsgSteamDatagramSignedGameCoordinatorServerLogin: MessageFns<
 };
 
 function createBaseCMsgSteamDatagramHostedServerAddressPlaintext(): CMsgSteamDatagramHostedServerAddressPlaintext {
-  return { ipv4: 0, ipv6: Buffer.alloc(0), port: 0, routingSecret: 0, protocolVersion: 0 };
+  return { ipv4: 0, ipv6: Buffer.alloc(0), port: 0, routingSecret: 0n, protocolVersion: 0 };
 }
 
 export const CMsgSteamDatagramHostedServerAddressPlaintext: MessageFns<CMsgSteamDatagramHostedServerAddressPlaintext> =
@@ -667,7 +692,10 @@ export const CMsgSteamDatagramHostedServerAddressPlaintext: MessageFns<CMsgSteam
       if (message.port !== undefined && message.port !== 0) {
         writer.uint32(24).uint32(message.port);
       }
-      if (message.routingSecret !== undefined && message.routingSecret !== 0) {
+      if (message.routingSecret !== undefined && message.routingSecret !== 0n) {
+        if (BigInt.asUintN(64, message.routingSecret) !== message.routingSecret) {
+          throw new globalThis.Error("value provided for field message.routingSecret of type fixed64 too large");
+        }
         writer.uint32(33).fixed64(message.routingSecret);
       }
       if (message.protocolVersion !== undefined && message.protocolVersion !== 0) {
@@ -712,7 +740,7 @@ export const CMsgSteamDatagramHostedServerAddressPlaintext: MessageFns<CMsgSteam
               break;
             }
 
-            message.routingSecret = longToNumber(reader.fixed64());
+            message.routingSecret = reader.fixed64() as bigint;
             continue;
           }
           case 5: {
@@ -732,17 +760,6 @@ export const CMsgSteamDatagramHostedServerAddressPlaintext: MessageFns<CMsgSteam
       return message;
     },
   };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

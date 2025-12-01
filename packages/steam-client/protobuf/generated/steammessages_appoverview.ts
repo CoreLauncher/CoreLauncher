@@ -92,7 +92,7 @@ export enum EAppHDRSupport {
 }
 
 export interface CAppOverviewPerClientData {
-  clientid?: number | undefined;
+  clientid?: bigint | undefined;
   clientName?: string | undefined;
   displayStatus?: EDisplayStatus | undefined;
   statusPercentage?: number | undefined;
@@ -125,15 +125,15 @@ export interface CAppOverview {
   xboxControllerSupport?: EAppControllerSupportLevel | undefined;
   vrSupported?: boolean | undefined;
   metacriticScore?: number | undefined;
-  sizeOnDisk?: number | undefined;
+  sizeOnDisk?: bigint | undefined;
   thirdPartyMod?: boolean | undefined;
   iconData?: string | undefined;
   iconDataFormat?: string | undefined;
   gameid?: string | undefined;
   libraryCapsuleFilename?: string | undefined;
   perClientData: CAppOverviewPerClientData[];
-  mostAvailableClientid?: number | undefined;
-  selectedClientid?: number | undefined;
+  mostAvailableClientid?: bigint | undefined;
+  selectedClientid?: bigint | undefined;
   rtStoreAssetMtime?: number | undefined;
   rtCustomImageMtime?: number | undefined;
   optionalParentAppId?: number | undefined;
@@ -168,7 +168,7 @@ export interface CAppOverviewChange {
 
 function createBaseCAppOverviewPerClientData(): CAppOverviewPerClientData {
   return {
-    clientid: 0,
+    clientid: 0n,
     clientName: "",
     displayStatus: 0,
     statusPercentage: 0,
@@ -184,7 +184,10 @@ function createBaseCAppOverviewPerClientData(): CAppOverviewPerClientData {
 
 export const CAppOverviewPerClientData: MessageFns<CAppOverviewPerClientData> = {
   encode(message: CAppOverviewPerClientData, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.clientid !== undefined && message.clientid !== 0) {
+    if (message.clientid !== undefined && message.clientid !== 0n) {
+      if (BigInt.asUintN(64, message.clientid) !== message.clientid) {
+        throw new globalThis.Error("value provided for field message.clientid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.clientid);
     }
     if (message.clientName !== undefined && message.clientName !== "") {
@@ -232,7 +235,7 @@ export const CAppOverviewPerClientData: MessageFns<CAppOverviewPerClientData> = 
             break;
           }
 
-          message.clientid = longToNumber(reader.uint64());
+          message.clientid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -346,15 +349,15 @@ function createBaseCAppOverview(): CAppOverview {
     xboxControllerSupport: 0,
     vrSupported: false,
     metacriticScore: 0,
-    sizeOnDisk: 0,
+    sizeOnDisk: 0n,
     thirdPartyMod: false,
     iconData: "",
     iconDataFormat: "",
     gameid: "",
     libraryCapsuleFilename: "",
     perClientData: [],
-    mostAvailableClientid: 0,
-    selectedClientid: 0,
+    mostAvailableClientid: 0n,
+    selectedClientid: 0n,
     rtStoreAssetMtime: 0,
     rtCustomImageMtime: 0,
     optionalParentAppId: 0,
@@ -440,7 +443,10 @@ export const CAppOverview: MessageFns<CAppOverview> = {
     if (message.metacriticScore !== undefined && message.metacriticScore !== 0) {
       writer.uint32(288).uint32(message.metacriticScore);
     }
-    if (message.sizeOnDisk !== undefined && message.sizeOnDisk !== 0) {
+    if (message.sizeOnDisk !== undefined && message.sizeOnDisk !== 0n) {
+      if (BigInt.asUintN(64, message.sizeOnDisk) !== message.sizeOnDisk) {
+        throw new globalThis.Error("value provided for field message.sizeOnDisk of type uint64 too large");
+      }
       writer.uint32(296).uint64(message.sizeOnDisk);
     }
     if (message.thirdPartyMod !== undefined && message.thirdPartyMod !== false) {
@@ -461,10 +467,16 @@ export const CAppOverview: MessageFns<CAppOverview> = {
     for (const v of message.perClientData) {
       CAppOverviewPerClientData.encode(v!, writer.uint32(346).fork()).join();
     }
-    if (message.mostAvailableClientid !== undefined && message.mostAvailableClientid !== 0) {
+    if (message.mostAvailableClientid !== undefined && message.mostAvailableClientid !== 0n) {
+      if (BigInt.asUintN(64, message.mostAvailableClientid) !== message.mostAvailableClientid) {
+        throw new globalThis.Error("value provided for field message.mostAvailableClientid of type uint64 too large");
+      }
       writer.uint32(352).uint64(message.mostAvailableClientid);
     }
-    if (message.selectedClientid !== undefined && message.selectedClientid !== 0) {
+    if (message.selectedClientid !== undefined && message.selectedClientid !== 0n) {
+      if (BigInt.asUintN(64, message.selectedClientid) !== message.selectedClientid) {
+        throw new globalThis.Error("value provided for field message.selectedClientid of type uint64 too large");
+      }
       writer.uint32(360).uint64(message.selectedClientid);
     }
     if (message.rtStoreAssetMtime !== undefined && message.rtStoreAssetMtime !== 0) {
@@ -723,7 +735,7 @@ export const CAppOverview: MessageFns<CAppOverview> = {
             break;
           }
 
-          message.sizeOnDisk = longToNumber(reader.uint64());
+          message.sizeOnDisk = reader.uint64() as bigint;
           continue;
         }
         case 38: {
@@ -779,7 +791,7 @@ export const CAppOverview: MessageFns<CAppOverview> = {
             break;
           }
 
-          message.mostAvailableClientid = longToNumber(reader.uint64());
+          message.mostAvailableClientid = reader.uint64() as bigint;
           continue;
         }
         case 45: {
@@ -787,7 +799,7 @@ export const CAppOverview: MessageFns<CAppOverview> = {
             break;
           }
 
-          message.selectedClientid = longToNumber(reader.uint64());
+          message.selectedClientid = reader.uint64() as bigint;
           continue;
         }
         case 46: {
@@ -1063,17 +1075,6 @@ export const CAppOverviewChange: MessageFns<CAppOverviewChange> = {
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

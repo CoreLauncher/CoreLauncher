@@ -20,9 +20,9 @@ export interface CUserAccountGetAvailableValveDiscountPromotionsResponse {
 export interface CUserAccountGetAvailableValveDiscountPromotionsResponse_ValveDiscountPromotionDetails {
   promotionid?: number | undefined;
   promotionDescription?: string | undefined;
-  minimumCartAmount?: number | undefined;
-  minimumCartAmountForDisplay?: number | undefined;
-  discountAmount?: number | undefined;
+  minimumCartAmount?: bigint | undefined;
+  minimumCartAmountForDisplay?: bigint | undefined;
+  discountAmount?: bigint | undefined;
   currencyCode?: number | undefined;
   availableUseCount?: number | undefined;
   promotionalDiscountType?: number | undefined;
@@ -42,13 +42,13 @@ export interface CUserAccountGetWalletDetailsResponse {
   userCountryCode?: string | undefined;
   walletCountryCode?: string | undefined;
   walletState?: string | undefined;
-  balance?: number | undefined;
-  delayedBalance?: number | undefined;
+  balance?: bigint | undefined;
+  delayedBalance?: bigint | undefined;
   currencyCode?: number | undefined;
   timeMostRecentTxn?: number | undefined;
-  mostRecentTxnid?: number | undefined;
-  balanceInUsd?: number | undefined;
-  delayedBalanceInUsd?: number | undefined;
+  mostRecentTxnid?: bigint | undefined;
+  balanceInUsd?: bigint | undefined;
+  delayedBalanceInUsd?: bigint | undefined;
   hasWalletInOtherRegions?: boolean | undefined;
   otherRegions: number[];
   formattedBalance?: string | undefined;
@@ -75,7 +75,7 @@ export interface CUserAccountCancelLicenseForAppResponse {
 }
 
 export interface CUserAccountGetUserCountryRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CUserAccountGetUserCountryResponse {
@@ -90,8 +90,8 @@ export interface CUserAccountCreateFriendInviteTokenRequest {
 
 export interface CUserAccountCreateFriendInviteTokenResponse {
   inviteToken?: string | undefined;
-  inviteLimit?: number | undefined;
-  inviteDuration?: number | undefined;
+  inviteLimit?: bigint | undefined;
+  inviteDuration?: bigint | undefined;
   timeCreated?: number | undefined;
   valid?: boolean | undefined;
 }
@@ -104,18 +104,18 @@ export interface CUserAccountGetFriendInviteTokensResponse {
 }
 
 export interface CUserAccountViewFriendInviteTokenRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   inviteToken?: string | undefined;
 }
 
 export interface CUserAccountViewFriendInviteTokenResponse {
   valid?: boolean | undefined;
-  steamid?: number | undefined;
-  inviteDuration?: number | undefined;
+  steamid?: bigint | undefined;
+  inviteDuration?: bigint | undefined;
 }
 
 export interface CUserAccountRedeemFriendInviteTokenRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   inviteToken?: string | undefined;
 }
 
@@ -137,14 +137,14 @@ export interface CUserAccountRegisterCompatToolResponse {
 }
 
 export interface CEmbeddedClientAuthorizeCurrentDeviceRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   appid?: number | undefined;
   deviceInfo?: string | undefined;
   deviceid?: number | undefined;
 }
 
 export interface CEmbeddedClientToken {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   clientToken?: Buffer | undefined;
   expiry?: number | undefined;
   deviceid?: number | undefined;
@@ -251,9 +251,9 @@ function createBaseCUserAccountGetAvailableValveDiscountPromotionsResponse_Valve
   return {
     promotionid: 0,
     promotionDescription: "",
-    minimumCartAmount: 0,
-    minimumCartAmountForDisplay: 0,
-    discountAmount: 0,
+    minimumCartAmount: 0n,
+    minimumCartAmountForDisplay: 0n,
+    discountAmount: 0n,
     currencyCode: 0,
     availableUseCount: 0,
     promotionalDiscountType: 0,
@@ -276,13 +276,24 @@ export const CUserAccountGetAvailableValveDiscountPromotionsResponse_ValveDiscou
     if (message.promotionDescription !== undefined && message.promotionDescription !== "") {
       writer.uint32(18).string(message.promotionDescription);
     }
-    if (message.minimumCartAmount !== undefined && message.minimumCartAmount !== 0) {
+    if (message.minimumCartAmount !== undefined && message.minimumCartAmount !== 0n) {
+      if (BigInt.asIntN(64, message.minimumCartAmount) !== message.minimumCartAmount) {
+        throw new globalThis.Error("value provided for field message.minimumCartAmount of type int64 too large");
+      }
       writer.uint32(24).int64(message.minimumCartAmount);
     }
-    if (message.minimumCartAmountForDisplay !== undefined && message.minimumCartAmountForDisplay !== 0) {
+    if (message.minimumCartAmountForDisplay !== undefined && message.minimumCartAmountForDisplay !== 0n) {
+      if (BigInt.asIntN(64, message.minimumCartAmountForDisplay) !== message.minimumCartAmountForDisplay) {
+        throw new globalThis.Error(
+          "value provided for field message.minimumCartAmountForDisplay of type int64 too large",
+        );
+      }
       writer.uint32(32).int64(message.minimumCartAmountForDisplay);
     }
-    if (message.discountAmount !== undefined && message.discountAmount !== 0) {
+    if (message.discountAmount !== undefined && message.discountAmount !== 0n) {
+      if (BigInt.asIntN(64, message.discountAmount) !== message.discountAmount) {
+        throw new globalThis.Error("value provided for field message.discountAmount of type int64 too large");
+      }
       writer.uint32(40).int64(message.discountAmount);
     }
     if (message.currencyCode !== undefined && message.currencyCode !== 0) {
@@ -337,7 +348,7 @@ export const CUserAccountGetAvailableValveDiscountPromotionsResponse_ValveDiscou
             break;
           }
 
-          message.minimumCartAmount = longToNumber(reader.int64());
+          message.minimumCartAmount = reader.int64() as bigint;
           continue;
         }
         case 4: {
@@ -345,7 +356,7 @@ export const CUserAccountGetAvailableValveDiscountPromotionsResponse_ValveDiscou
             break;
           }
 
-          message.minimumCartAmountForDisplay = longToNumber(reader.int64());
+          message.minimumCartAmountForDisplay = reader.int64() as bigint;
           continue;
         }
         case 5: {
@@ -353,7 +364,7 @@ export const CUserAccountGetAvailableValveDiscountPromotionsResponse_ValveDiscou
             break;
           }
 
-          message.discountAmount = longToNumber(reader.int64());
+          message.discountAmount = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -479,13 +490,13 @@ function createBaseCUserAccountGetWalletDetailsResponse(): CUserAccountGetWallet
     userCountryCode: "",
     walletCountryCode: "",
     walletState: "",
-    balance: 0,
-    delayedBalance: 0,
+    balance: 0n,
+    delayedBalance: 0n,
     currencyCode: 0,
     timeMostRecentTxn: 0,
-    mostRecentTxnid: 0,
-    balanceInUsd: 0,
-    delayedBalanceInUsd: 0,
+    mostRecentTxnid: 0n,
+    balanceInUsd: 0n,
+    delayedBalanceInUsd: 0n,
     hasWalletInOtherRegions: false,
     otherRegions: [],
     formattedBalance: "",
@@ -510,10 +521,16 @@ export const CUserAccountGetWalletDetailsResponse: MessageFns<CUserAccountGetWal
     if (message.walletState !== undefined && message.walletState !== "") {
       writer.uint32(34).string(message.walletState);
     }
-    if (message.balance !== undefined && message.balance !== 0) {
+    if (message.balance !== undefined && message.balance !== 0n) {
+      if (BigInt.asIntN(64, message.balance) !== message.balance) {
+        throw new globalThis.Error("value provided for field message.balance of type int64 too large");
+      }
       writer.uint32(40).int64(message.balance);
     }
-    if (message.delayedBalance !== undefined && message.delayedBalance !== 0) {
+    if (message.delayedBalance !== undefined && message.delayedBalance !== 0n) {
+      if (BigInt.asIntN(64, message.delayedBalance) !== message.delayedBalance) {
+        throw new globalThis.Error("value provided for field message.delayedBalance of type int64 too large");
+      }
       writer.uint32(48).int64(message.delayedBalance);
     }
     if (message.currencyCode !== undefined && message.currencyCode !== 0) {
@@ -522,13 +539,22 @@ export const CUserAccountGetWalletDetailsResponse: MessageFns<CUserAccountGetWal
     if (message.timeMostRecentTxn !== undefined && message.timeMostRecentTxn !== 0) {
       writer.uint32(64).uint32(message.timeMostRecentTxn);
     }
-    if (message.mostRecentTxnid !== undefined && message.mostRecentTxnid !== 0) {
+    if (message.mostRecentTxnid !== undefined && message.mostRecentTxnid !== 0n) {
+      if (BigInt.asUintN(64, message.mostRecentTxnid) !== message.mostRecentTxnid) {
+        throw new globalThis.Error("value provided for field message.mostRecentTxnid of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.mostRecentTxnid);
     }
-    if (message.balanceInUsd !== undefined && message.balanceInUsd !== 0) {
+    if (message.balanceInUsd !== undefined && message.balanceInUsd !== 0n) {
+      if (BigInt.asIntN(64, message.balanceInUsd) !== message.balanceInUsd) {
+        throw new globalThis.Error("value provided for field message.balanceInUsd of type int64 too large");
+      }
       writer.uint32(80).int64(message.balanceInUsd);
     }
-    if (message.delayedBalanceInUsd !== undefined && message.delayedBalanceInUsd !== 0) {
+    if (message.delayedBalanceInUsd !== undefined && message.delayedBalanceInUsd !== 0n) {
+      if (BigInt.asIntN(64, message.delayedBalanceInUsd) !== message.delayedBalanceInUsd) {
+        throw new globalThis.Error("value provided for field message.delayedBalanceInUsd of type int64 too large");
+      }
       writer.uint32(88).int64(message.delayedBalanceInUsd);
     }
     if (message.hasWalletInOtherRegions !== undefined && message.hasWalletInOtherRegions !== false) {
@@ -599,7 +625,7 @@ export const CUserAccountGetWalletDetailsResponse: MessageFns<CUserAccountGetWal
             break;
           }
 
-          message.balance = longToNumber(reader.int64());
+          message.balance = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -607,7 +633,7 @@ export const CUserAccountGetWalletDetailsResponse: MessageFns<CUserAccountGetWal
             break;
           }
 
-          message.delayedBalance = longToNumber(reader.int64());
+          message.delayedBalance = reader.int64() as bigint;
           continue;
         }
         case 7: {
@@ -631,7 +657,7 @@ export const CUserAccountGetWalletDetailsResponse: MessageFns<CUserAccountGetWal
             break;
           }
 
-          message.mostRecentTxnid = longToNumber(reader.uint64());
+          message.mostRecentTxnid = reader.uint64() as bigint;
           continue;
         }
         case 10: {
@@ -639,7 +665,7 @@ export const CUserAccountGetWalletDetailsResponse: MessageFns<CUserAccountGetWal
             break;
           }
 
-          message.balanceInUsd = longToNumber(reader.int64());
+          message.balanceInUsd = reader.int64() as bigint;
           continue;
         }
         case 11: {
@@ -647,7 +673,7 @@ export const CUserAccountGetWalletDetailsResponse: MessageFns<CUserAccountGetWal
             break;
           }
 
-          message.delayedBalanceInUsd = longToNumber(reader.int64());
+          message.delayedBalanceInUsd = reader.int64() as bigint;
           continue;
         }
         case 12: {
@@ -875,12 +901,15 @@ export const CUserAccountCancelLicenseForAppResponse: MessageFns<CUserAccountCan
 };
 
 function createBaseCUserAccountGetUserCountryRequest(): CUserAccountGetUserCountryRequest {
-  return { steamid: 0 };
+  return { steamid: 0n };
 }
 
 export const CUserAccountGetUserCountryRequest: MessageFns<CUserAccountGetUserCountryRequest> = {
   encode(message: CUserAccountGetUserCountryRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     return writer;
@@ -898,7 +927,7 @@ export const CUserAccountGetUserCountryRequest: MessageFns<CUserAccountGetUserCo
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1008,7 +1037,7 @@ export const CUserAccountCreateFriendInviteTokenRequest: MessageFns<CUserAccount
 };
 
 function createBaseCUserAccountCreateFriendInviteTokenResponse(): CUserAccountCreateFriendInviteTokenResponse {
-  return { inviteToken: "", inviteLimit: 0, inviteDuration: 0, timeCreated: 0, valid: false };
+  return { inviteToken: "", inviteLimit: 0n, inviteDuration: 0n, timeCreated: 0, valid: false };
 }
 
 export const CUserAccountCreateFriendInviteTokenResponse: MessageFns<CUserAccountCreateFriendInviteTokenResponse> = {
@@ -1019,10 +1048,16 @@ export const CUserAccountCreateFriendInviteTokenResponse: MessageFns<CUserAccoun
     if (message.inviteToken !== undefined && message.inviteToken !== "") {
       writer.uint32(10).string(message.inviteToken);
     }
-    if (message.inviteLimit !== undefined && message.inviteLimit !== 0) {
+    if (message.inviteLimit !== undefined && message.inviteLimit !== 0n) {
+      if (BigInt.asUintN(64, message.inviteLimit) !== message.inviteLimit) {
+        throw new globalThis.Error("value provided for field message.inviteLimit of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.inviteLimit);
     }
-    if (message.inviteDuration !== undefined && message.inviteDuration !== 0) {
+    if (message.inviteDuration !== undefined && message.inviteDuration !== 0n) {
+      if (BigInt.asUintN(64, message.inviteDuration) !== message.inviteDuration) {
+        throw new globalThis.Error("value provided for field message.inviteDuration of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.inviteDuration);
     }
     if (message.timeCreated !== undefined && message.timeCreated !== 0) {
@@ -1054,7 +1089,7 @@ export const CUserAccountCreateFriendInviteTokenResponse: MessageFns<CUserAccoun
             break;
           }
 
-          message.inviteLimit = longToNumber(reader.uint64());
+          message.inviteLimit = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1062,7 +1097,7 @@ export const CUserAccountCreateFriendInviteTokenResponse: MessageFns<CUserAccoun
             break;
           }
 
-          message.inviteDuration = longToNumber(reader.uint64());
+          message.inviteDuration = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -1155,12 +1190,15 @@ export const CUserAccountGetFriendInviteTokensResponse: MessageFns<CUserAccountG
 };
 
 function createBaseCUserAccountViewFriendInviteTokenRequest(): CUserAccountViewFriendInviteTokenRequest {
-  return { steamid: 0, inviteToken: "" };
+  return { steamid: 0n, inviteToken: "" };
 }
 
 export const CUserAccountViewFriendInviteTokenRequest: MessageFns<CUserAccountViewFriendInviteTokenRequest> = {
   encode(message: CUserAccountViewFriendInviteTokenRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.inviteToken !== undefined && message.inviteToken !== "") {
@@ -1181,7 +1219,7 @@ export const CUserAccountViewFriendInviteTokenRequest: MessageFns<CUserAccountVi
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1203,7 +1241,7 @@ export const CUserAccountViewFriendInviteTokenRequest: MessageFns<CUserAccountVi
 };
 
 function createBaseCUserAccountViewFriendInviteTokenResponse(): CUserAccountViewFriendInviteTokenResponse {
-  return { valid: false, steamid: 0, inviteDuration: 0 };
+  return { valid: false, steamid: 0n, inviteDuration: 0n };
 }
 
 export const CUserAccountViewFriendInviteTokenResponse: MessageFns<CUserAccountViewFriendInviteTokenResponse> = {
@@ -1211,10 +1249,16 @@ export const CUserAccountViewFriendInviteTokenResponse: MessageFns<CUserAccountV
     if (message.valid !== undefined && message.valid !== false) {
       writer.uint32(8).bool(message.valid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
-    if (message.inviteDuration !== undefined && message.inviteDuration !== 0) {
+    if (message.inviteDuration !== undefined && message.inviteDuration !== 0n) {
+      if (BigInt.asUintN(64, message.inviteDuration) !== message.inviteDuration) {
+        throw new globalThis.Error("value provided for field message.inviteDuration of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.inviteDuration);
     }
     return writer;
@@ -1240,7 +1284,7 @@ export const CUserAccountViewFriendInviteTokenResponse: MessageFns<CUserAccountV
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1248,7 +1292,7 @@ export const CUserAccountViewFriendInviteTokenResponse: MessageFns<CUserAccountV
             break;
           }
 
-          message.inviteDuration = longToNumber(reader.uint64());
+          message.inviteDuration = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1262,12 +1306,15 @@ export const CUserAccountViewFriendInviteTokenResponse: MessageFns<CUserAccountV
 };
 
 function createBaseCUserAccountRedeemFriendInviteTokenRequest(): CUserAccountRedeemFriendInviteTokenRequest {
-  return { steamid: 0, inviteToken: "" };
+  return { steamid: 0n, inviteToken: "" };
 }
 
 export const CUserAccountRedeemFriendInviteTokenRequest: MessageFns<CUserAccountRedeemFriendInviteTokenRequest> = {
   encode(message: CUserAccountRedeemFriendInviteTokenRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.inviteToken !== undefined && message.inviteToken !== "") {
@@ -1288,7 +1335,7 @@ export const CUserAccountRedeemFriendInviteTokenRequest: MessageFns<CUserAccount
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1462,7 +1509,7 @@ export const CUserAccountRegisterCompatToolResponse: MessageFns<CUserAccountRegi
 };
 
 function createBaseCEmbeddedClientAuthorizeCurrentDeviceRequest(): CEmbeddedClientAuthorizeCurrentDeviceRequest {
-  return { steamid: 0, appid: 0, deviceInfo: "", deviceid: 0 };
+  return { steamid: 0n, appid: 0, deviceInfo: "", deviceid: 0 };
 }
 
 export const CEmbeddedClientAuthorizeCurrentDeviceRequest: MessageFns<CEmbeddedClientAuthorizeCurrentDeviceRequest> = {
@@ -1470,7 +1517,10 @@ export const CEmbeddedClientAuthorizeCurrentDeviceRequest: MessageFns<CEmbeddedC
     message: CEmbeddedClientAuthorizeCurrentDeviceRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
@@ -1497,7 +1547,7 @@ export const CEmbeddedClientAuthorizeCurrentDeviceRequest: MessageFns<CEmbeddedC
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1535,12 +1585,15 @@ export const CEmbeddedClientAuthorizeCurrentDeviceRequest: MessageFns<CEmbeddedC
 };
 
 function createBaseCEmbeddedClientToken(): CEmbeddedClientToken {
-  return { steamid: 0, clientToken: Buffer.alloc(0), expiry: 0, deviceid: 0 };
+  return { steamid: 0n, clientToken: Buffer.alloc(0), expiry: 0, deviceid: 0 };
 }
 
 export const CEmbeddedClientToken: MessageFns<CEmbeddedClientToken> = {
   encode(message: CEmbeddedClientToken, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.clientToken !== undefined && message.clientToken.length !== 0) {
@@ -1567,7 +1620,7 @@ export const CEmbeddedClientToken: MessageFns<CEmbeddedClientToken> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1816,17 +1869,6 @@ export class EmbeddedClientClientImpl implements EmbeddedClient {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

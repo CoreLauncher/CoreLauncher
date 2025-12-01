@@ -29,7 +29,7 @@ export interface CStorageDeviceManagerDrive {
   vendor?: string | undefined;
   serial?: string | undefined;
   isEjectable?: boolean | undefined;
-  sizeBytes?: number | undefined;
+  sizeBytes?: bigint | undefined;
   mediaType?: EStorageDriveMediaType | undefined;
   isUnformatted?: boolean | undefined;
   adoptStage?: EStorageFormatStage | undefined;
@@ -43,7 +43,7 @@ export interface CStorageDeviceManagerBlockDevice {
   path?: string | undefined;
   friendlyPath?: string | undefined;
   label?: string | undefined;
-  sizeBytes?: number | undefined;
+  sizeBytes?: bigint | undefined;
   isFormattable?: boolean | undefined;
   isReadOnly?: boolean | undefined;
   isRootDevice?: boolean | undefined;
@@ -186,7 +186,7 @@ function createBaseCStorageDeviceManagerDrive(): CStorageDeviceManagerDrive {
     vendor: "",
     serial: "",
     isEjectable: false,
-    sizeBytes: 0,
+    sizeBytes: 0n,
     mediaType: 0,
     isUnformatted: false,
     adoptStage: 0,
@@ -212,7 +212,10 @@ export const CStorageDeviceManagerDrive: MessageFns<CStorageDeviceManagerDrive> 
     if (message.isEjectable !== undefined && message.isEjectable !== false) {
       writer.uint32(40).bool(message.isEjectable);
     }
-    if (message.sizeBytes !== undefined && message.sizeBytes !== 0) {
+    if (message.sizeBytes !== undefined && message.sizeBytes !== 0n) {
+      if (BigInt.asUintN(64, message.sizeBytes) !== message.sizeBytes) {
+        throw new globalThis.Error("value provided for field message.sizeBytes of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.sizeBytes);
     }
     if (message.mediaType !== undefined && message.mediaType !== 0) {
@@ -285,7 +288,7 @@ export const CStorageDeviceManagerDrive: MessageFns<CStorageDeviceManagerDrive> 
             break;
           }
 
-          message.sizeBytes = longToNumber(reader.uint64());
+          message.sizeBytes = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -345,7 +348,7 @@ function createBaseCStorageDeviceManagerBlockDevice(): CStorageDeviceManagerBloc
     path: "",
     friendlyPath: "",
     label: "",
-    sizeBytes: 0,
+    sizeBytes: 0n,
     isFormattable: false,
     isReadOnly: false,
     isRootDevice: false,
@@ -374,7 +377,10 @@ export const CStorageDeviceManagerBlockDevice: MessageFns<CStorageDeviceManagerB
     if (message.label !== undefined && message.label !== "") {
       writer.uint32(42).string(message.label);
     }
-    if (message.sizeBytes !== undefined && message.sizeBytes !== 0) {
+    if (message.sizeBytes !== undefined && message.sizeBytes !== 0n) {
+      if (BigInt.asUintN(64, message.sizeBytes) !== message.sizeBytes) {
+        throw new globalThis.Error("value provided for field message.sizeBytes of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.sizeBytes);
     }
     if (message.isFormattable !== undefined && message.isFormattable !== false) {
@@ -456,7 +462,7 @@ export const CStorageDeviceManagerBlockDevice: MessageFns<CStorageDeviceManagerB
             break;
           }
 
-          message.sizeBytes = longToNumber(reader.uint64());
+          message.sizeBytes = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -1130,17 +1136,6 @@ export class StorageDeviceManagerClientImpl implements StorageDeviceManager {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

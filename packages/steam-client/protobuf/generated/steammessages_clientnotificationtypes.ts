@@ -106,7 +106,7 @@ export interface CClientNotificationDownloadCompleted {
 }
 
 export interface CClientNotificationFriendInvite {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CClientNotificationFriendInviteRollup {
@@ -114,12 +114,12 @@ export interface CClientNotificationFriendInviteRollup {
 }
 
 export interface CClientNotificationFriendInGame {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   gameName?: string | undefined;
 }
 
 export interface CClientNotificationFriendOnline {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CClientNotificationAchievement {
@@ -182,7 +182,7 @@ export interface CClientNotificationFamilySharingLibraryAvailable {
 }
 
 export interface CClientNotificationIncomingVoiceChat {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CClientNotificationClaimSteamDeckRewards {
@@ -270,26 +270,26 @@ export interface CClientNotificationPlaytimeWarning {
 }
 
 export interface CClientNotificationGameRecordingError {
-  gameId?: number | undefined;
+  gameId?: bigint | undefined;
   errorType?: EGameRecordingErrorType | undefined;
 }
 
 export interface CClientNotificationGameRecordingStart {
-  gameId?: number | undefined;
+  gameId?: bigint | undefined;
 }
 
 export interface CClientNotificationGameRecordingStop {
-  gameId?: number | undefined;
+  gameId?: bigint | undefined;
   clipId?: string | undefined;
   durationSecs?: number | undefined;
 }
 
 export interface CClientNotificationGameRecordingUserMarkerAdded {
-  gameId?: number | undefined;
+  gameId?: bigint | undefined;
 }
 
 export interface CClientNotificationGameRecordingInstantClip {
-  gameId?: number | undefined;
+  gameId?: bigint | undefined;
   clipId?: string | undefined;
   durationSecs?: number | undefined;
 }
@@ -480,12 +480,15 @@ export const CClientNotificationDownloadCompleted: MessageFns<CClientNotificatio
 };
 
 function createBaseCClientNotificationFriendInvite(): CClientNotificationFriendInvite {
-  return { steamid: 0 };
+  return { steamid: 0n };
 }
 
 export const CClientNotificationFriendInvite: MessageFns<CClientNotificationFriendInvite> = {
   encode(message: CClientNotificationFriendInvite, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     return writer;
@@ -503,7 +506,7 @@ export const CClientNotificationFriendInvite: MessageFns<CClientNotificationFrie
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -554,12 +557,15 @@ export const CClientNotificationFriendInviteRollup: MessageFns<CClientNotificati
 };
 
 function createBaseCClientNotificationFriendInGame(): CClientNotificationFriendInGame {
-  return { steamid: 0, gameName: "" };
+  return { steamid: 0n, gameName: "" };
 }
 
 export const CClientNotificationFriendInGame: MessageFns<CClientNotificationFriendInGame> = {
   encode(message: CClientNotificationFriendInGame, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.gameName !== undefined && message.gameName !== "") {
@@ -580,7 +586,7 @@ export const CClientNotificationFriendInGame: MessageFns<CClientNotificationFrie
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -602,12 +608,15 @@ export const CClientNotificationFriendInGame: MessageFns<CClientNotificationFrie
 };
 
 function createBaseCClientNotificationFriendOnline(): CClientNotificationFriendOnline {
-  return { steamid: 0 };
+  return { steamid: 0n };
 }
 
 export const CClientNotificationFriendOnline: MessageFns<CClientNotificationFriendOnline> = {
   encode(message: CClientNotificationFriendOnline, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     return writer;
@@ -625,7 +634,7 @@ export const CClientNotificationFriendOnline: MessageFns<CClientNotificationFrie
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1270,12 +1279,15 @@ export const CClientNotificationFamilySharingLibraryAvailable: MessageFns<
 };
 
 function createBaseCClientNotificationIncomingVoiceChat(): CClientNotificationIncomingVoiceChat {
-  return { steamid: 0 };
+  return { steamid: 0n };
 }
 
 export const CClientNotificationIncomingVoiceChat: MessageFns<CClientNotificationIncomingVoiceChat> = {
   encode(message: CClientNotificationIncomingVoiceChat, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     return writer;
@@ -1293,7 +1305,7 @@ export const CClientNotificationIncomingVoiceChat: MessageFns<CClientNotificatio
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2113,12 +2125,15 @@ export const CClientNotificationPlaytimeWarning: MessageFns<CClientNotificationP
 };
 
 function createBaseCClientNotificationGameRecordingError(): CClientNotificationGameRecordingError {
-  return { gameId: 0, errorType: 1 };
+  return { gameId: 0n, errorType: 1 };
 }
 
 export const CClientNotificationGameRecordingError: MessageFns<CClientNotificationGameRecordingError> = {
   encode(message: CClientNotificationGameRecordingError, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gameId !== undefined && message.gameId !== 0) {
+    if (message.gameId !== undefined && message.gameId !== 0n) {
+      if (BigInt.asUintN(64, message.gameId) !== message.gameId) {
+        throw new globalThis.Error("value provided for field message.gameId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gameId);
     }
     if (message.errorType !== undefined && message.errorType !== 1) {
@@ -2139,7 +2154,7 @@ export const CClientNotificationGameRecordingError: MessageFns<CClientNotificati
             break;
           }
 
-          message.gameId = longToNumber(reader.fixed64());
+          message.gameId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2161,12 +2176,15 @@ export const CClientNotificationGameRecordingError: MessageFns<CClientNotificati
 };
 
 function createBaseCClientNotificationGameRecordingStart(): CClientNotificationGameRecordingStart {
-  return { gameId: 0 };
+  return { gameId: 0n };
 }
 
 export const CClientNotificationGameRecordingStart: MessageFns<CClientNotificationGameRecordingStart> = {
   encode(message: CClientNotificationGameRecordingStart, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gameId !== undefined && message.gameId !== 0) {
+    if (message.gameId !== undefined && message.gameId !== 0n) {
+      if (BigInt.asUintN(64, message.gameId) !== message.gameId) {
+        throw new globalThis.Error("value provided for field message.gameId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gameId);
     }
     return writer;
@@ -2184,7 +2202,7 @@ export const CClientNotificationGameRecordingStart: MessageFns<CClientNotificati
             break;
           }
 
-          message.gameId = longToNumber(reader.fixed64());
+          message.gameId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2198,12 +2216,15 @@ export const CClientNotificationGameRecordingStart: MessageFns<CClientNotificati
 };
 
 function createBaseCClientNotificationGameRecordingStop(): CClientNotificationGameRecordingStop {
-  return { gameId: 0, clipId: "", durationSecs: 0 };
+  return { gameId: 0n, clipId: "", durationSecs: 0 };
 }
 
 export const CClientNotificationGameRecordingStop: MessageFns<CClientNotificationGameRecordingStop> = {
   encode(message: CClientNotificationGameRecordingStop, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gameId !== undefined && message.gameId !== 0) {
+    if (message.gameId !== undefined && message.gameId !== 0n) {
+      if (BigInt.asUintN(64, message.gameId) !== message.gameId) {
+        throw new globalThis.Error("value provided for field message.gameId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gameId);
     }
     if (message.clipId !== undefined && message.clipId !== "") {
@@ -2227,7 +2248,7 @@ export const CClientNotificationGameRecordingStop: MessageFns<CClientNotificatio
             break;
           }
 
-          message.gameId = longToNumber(reader.fixed64());
+          message.gameId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2257,7 +2278,7 @@ export const CClientNotificationGameRecordingStop: MessageFns<CClientNotificatio
 };
 
 function createBaseCClientNotificationGameRecordingUserMarkerAdded(): CClientNotificationGameRecordingUserMarkerAdded {
-  return { gameId: 0 };
+  return { gameId: 0n };
 }
 
 export const CClientNotificationGameRecordingUserMarkerAdded: MessageFns<
@@ -2267,7 +2288,10 @@ export const CClientNotificationGameRecordingUserMarkerAdded: MessageFns<
     message: CClientNotificationGameRecordingUserMarkerAdded,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gameId !== undefined && message.gameId !== 0) {
+    if (message.gameId !== undefined && message.gameId !== 0n) {
+      if (BigInt.asUintN(64, message.gameId) !== message.gameId) {
+        throw new globalThis.Error("value provided for field message.gameId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gameId);
     }
     return writer;
@@ -2285,7 +2309,7 @@ export const CClientNotificationGameRecordingUserMarkerAdded: MessageFns<
             break;
           }
 
-          message.gameId = longToNumber(reader.fixed64());
+          message.gameId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2299,7 +2323,7 @@ export const CClientNotificationGameRecordingUserMarkerAdded: MessageFns<
 };
 
 function createBaseCClientNotificationGameRecordingInstantClip(): CClientNotificationGameRecordingInstantClip {
-  return { gameId: 0, clipId: "", durationSecs: 0 };
+  return { gameId: 0n, clipId: "", durationSecs: 0 };
 }
 
 export const CClientNotificationGameRecordingInstantClip: MessageFns<CClientNotificationGameRecordingInstantClip> = {
@@ -2307,7 +2331,10 @@ export const CClientNotificationGameRecordingInstantClip: MessageFns<CClientNoti
     message: CClientNotificationGameRecordingInstantClip,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.gameId !== undefined && message.gameId !== 0) {
+    if (message.gameId !== undefined && message.gameId !== 0n) {
+      if (BigInt.asUintN(64, message.gameId) !== message.gameId) {
+        throw new globalThis.Error("value provided for field message.gameId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.gameId);
     }
     if (message.clipId !== undefined && message.clipId !== "") {
@@ -2331,7 +2358,7 @@ export const CClientNotificationGameRecordingInstantClip: MessageFns<CClientNoti
             break;
           }
 
-          message.gameId = longToNumber(reader.fixed64());
+          message.gameId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2406,17 +2433,6 @@ export const CClientNotificationHardwareUpdateAvailable: MessageFns<CClientNotif
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

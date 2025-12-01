@@ -21,9 +21,9 @@ export interface CMsgClientUCMAddScreenshot {
   caption?: string | undefined;
   shortcutName?: string | undefined;
   tag: CMsgClientUCMAddScreenshot_Tag[];
-  taggedSteamid: number[];
+  taggedSteamid: bigint[];
   spoilerTag?: boolean | undefined;
-  taggedPublishedfileid: number[];
+  taggedPublishedfileid: bigint[];
 }
 
 export interface CMsgClientUCMAddScreenshot_Tag {
@@ -33,12 +33,12 @@ export interface CMsgClientUCMAddScreenshot_Tag {
 
 export interface CMsgClientUCMAddScreenshotResponse {
   eresult?: number | undefined;
-  screenshotid?: number | undefined;
-  publishedfileid?: number | undefined;
+  screenshotid?: bigint | undefined;
+  publishedfileid?: bigint | undefined;
 }
 
 export interface CMsgClientUCMDeleteScreenshot {
-  screenshotid?: number | undefined;
+  screenshotid?: bigint | undefined;
 }
 
 export interface CMsgClientUCMDeleteScreenshotResponse {
@@ -65,13 +65,13 @@ export interface CMsgClientUCMPublishFile {
 
 export interface CMsgClientUCMPublishFileResponse {
   eresult?: number | undefined;
-  publishedFileId?: number | undefined;
+  publishedFileId?: bigint | undefined;
   needsWorkshopLegalAgreementAcceptance?: boolean | undefined;
 }
 
 export interface CMsgClientUCMUpdatePublishedFile {
   appId?: number | undefined;
-  publishedFileId?: number | undefined;
+  publishedFileId?: bigint | undefined;
   fileName?: string | undefined;
   previewFileName?: string | undefined;
   title?: string | undefined;
@@ -88,7 +88,7 @@ export interface CMsgClientUCMUpdatePublishedFile {
   updateUrl?: boolean | undefined;
   url?: string | undefined;
   updateContentManifest?: boolean | undefined;
-  contentManifest?: number | undefined;
+  contentManifest?: bigint | undefined;
   metadata?: string | undefined;
   updateMetadata?: boolean | undefined;
   language?: number | undefined;
@@ -101,7 +101,7 @@ export interface CMsgClientUCMUpdatePublishedFile {
   contentDescriptorsToAdd: number[];
   contentDescriptorsToRemove: number[];
   allowAdminTags?: boolean | undefined;
-  externalAssetId?: number | undefined;
+  externalAssetId?: bigint | undefined;
   gameBranchMin?: string | undefined;
   gameBranchMax?: string | undefined;
 }
@@ -125,7 +125,7 @@ export interface CMsgClientUCMUpdatePublishedFileResponse {
 }
 
 export interface CMsgClientUCMDeletePublishedFile {
-  publishedFileId?: number | undefined;
+  publishedFileId?: bigint | undefined;
   appId?: number | undefined;
 }
 
@@ -150,14 +150,14 @@ export interface CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_Au
   timestamp?: number | undefined;
   gameBranchMin?: string | undefined;
   gameBranchMax?: string | undefined;
-  manifestid?: number | undefined;
+  manifestid?: bigint | undefined;
 }
 
 export interface CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_PublishedFileId {
-  publishedFileId?: number | undefined;
+  publishedFileId?: bigint | undefined;
   rtime32Subscribed?: number | undefined;
   appid?: number | undefined;
-  fileHcontent?: number | undefined;
+  fileHcontent?: bigint | undefined;
   fileSize?: number | undefined;
   rtime32LastUpdated?: number | undefined;
   isDepotContent?: boolean | undefined;
@@ -165,10 +165,10 @@ export interface CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_Pu
 }
 
 export interface CMsgClientUCMPublishedFileUpdated {
-  publishedFileId?: number | undefined;
+  publishedFileId?: bigint | undefined;
   appId?: number | undefined;
   timeUpdated?: number | undefined;
-  hcontent?: number | undefined;
+  hcontent?: bigint | undefined;
   fileSize?: number | undefined;
   isDepotContent?: boolean | undefined;
   revision?: number | undefined;
@@ -187,13 +187,13 @@ export interface CMsgClientWorkshopItemChangesResponse {
 }
 
 export interface CMsgClientWorkshopItemChangesResponse_WorkshopItemInfo {
-  publishedFileId?: number | undefined;
+  publishedFileId?: bigint | undefined;
   timeUpdated?: number | undefined;
-  manifestId?: number | undefined;
+  manifestId?: bigint | undefined;
 }
 
 export interface CMsgClientUCMSetUserPublishedFileAction {
-  publishedFileId?: number | undefined;
+  publishedFileId?: bigint | undefined;
   appId?: number | undefined;
   action?: number | undefined;
 }
@@ -215,7 +215,7 @@ export interface CMsgClientUCMEnumeratePublishedFilesByUserActionResponse {
 }
 
 export interface CMsgClientUCMEnumeratePublishedFilesByUserActionResponse_PublishedFileId {
-  publishedFileId?: number | undefined;
+  publishedFileId?: bigint | undefined;
   rtimeTimeStamp?: number | undefined;
 }
 
@@ -277,12 +277,18 @@ export const CMsgClientUCMAddScreenshot: MessageFns<CMsgClientUCMAddScreenshot> 
       CMsgClientUCMAddScreenshot_Tag.encode(v!, writer.uint32(82).fork()).join();
     }
     for (const v of message.taggedSteamid) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(89).fixed64(v!);
     }
     if (message.spoilerTag !== undefined && message.spoilerTag !== false) {
       writer.uint32(96).bool(message.spoilerTag);
     }
     for (const v of message.taggedPublishedfileid) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(104).uint64(v!);
     }
     return writer;
@@ -385,7 +391,7 @@ export const CMsgClientUCMAddScreenshot: MessageFns<CMsgClientUCMAddScreenshot> 
         }
         case 11: {
           if (tag === 89) {
-            message.taggedSteamid.push(longToNumber(reader.fixed64()));
+            message.taggedSteamid.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -393,7 +399,7 @@ export const CMsgClientUCMAddScreenshot: MessageFns<CMsgClientUCMAddScreenshot> 
           if (tag === 90) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.taggedSteamid.push(longToNumber(reader.fixed64()));
+              message.taggedSteamid.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -411,7 +417,7 @@ export const CMsgClientUCMAddScreenshot: MessageFns<CMsgClientUCMAddScreenshot> 
         }
         case 13: {
           if (tag === 104) {
-            message.taggedPublishedfileid.push(longToNumber(reader.uint64()));
+            message.taggedPublishedfileid.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -419,7 +425,7 @@ export const CMsgClientUCMAddScreenshot: MessageFns<CMsgClientUCMAddScreenshot> 
           if (tag === 106) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.taggedPublishedfileid.push(longToNumber(reader.uint64()));
+              message.taggedPublishedfileid.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -486,7 +492,7 @@ export const CMsgClientUCMAddScreenshot_Tag: MessageFns<CMsgClientUCMAddScreensh
 };
 
 function createBaseCMsgClientUCMAddScreenshotResponse(): CMsgClientUCMAddScreenshotResponse {
-  return { eresult: 2, screenshotid: 18446744073709551615, publishedfileid: 0 };
+  return { eresult: 2, screenshotid: 18446744073709551615n, publishedfileid: 0n };
 }
 
 export const CMsgClientUCMAddScreenshotResponse: MessageFns<CMsgClientUCMAddScreenshotResponse> = {
@@ -494,10 +500,16 @@ export const CMsgClientUCMAddScreenshotResponse: MessageFns<CMsgClientUCMAddScre
     if (message.eresult !== undefined && message.eresult !== 2) {
       writer.uint32(8).int32(message.eresult);
     }
-    if (message.screenshotid !== undefined && message.screenshotid !== 18446744073709551615) {
+    if (message.screenshotid !== undefined && message.screenshotid !== 18446744073709551615n) {
+      if (BigInt.asUintN(64, message.screenshotid) !== message.screenshotid) {
+        throw new globalThis.Error("value provided for field message.screenshotid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.screenshotid);
     }
-    if (message.publishedfileid !== undefined && message.publishedfileid !== 0) {
+    if (message.publishedfileid !== undefined && message.publishedfileid !== 0n) {
+      if (BigInt.asUintN(64, message.publishedfileid) !== message.publishedfileid) {
+        throw new globalThis.Error("value provided for field message.publishedfileid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.publishedfileid);
     }
     return writer;
@@ -523,7 +535,7 @@ export const CMsgClientUCMAddScreenshotResponse: MessageFns<CMsgClientUCMAddScre
             break;
           }
 
-          message.screenshotid = longToNumber(reader.fixed64());
+          message.screenshotid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -531,7 +543,7 @@ export const CMsgClientUCMAddScreenshotResponse: MessageFns<CMsgClientUCMAddScre
             break;
           }
 
-          message.publishedfileid = longToNumber(reader.uint64());
+          message.publishedfileid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -545,12 +557,15 @@ export const CMsgClientUCMAddScreenshotResponse: MessageFns<CMsgClientUCMAddScre
 };
 
 function createBaseCMsgClientUCMDeleteScreenshot(): CMsgClientUCMDeleteScreenshot {
-  return { screenshotid: 18446744073709551615 };
+  return { screenshotid: 18446744073709551615n };
 }
 
 export const CMsgClientUCMDeleteScreenshot: MessageFns<CMsgClientUCMDeleteScreenshot> = {
   encode(message: CMsgClientUCMDeleteScreenshot, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.screenshotid !== undefined && message.screenshotid !== 18446744073709551615) {
+    if (message.screenshotid !== undefined && message.screenshotid !== 18446744073709551615n) {
+      if (BigInt.asUintN(64, message.screenshotid) !== message.screenshotid) {
+        throw new globalThis.Error("value provided for field message.screenshotid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.screenshotid);
     }
     return writer;
@@ -568,7 +583,7 @@ export const CMsgClientUCMDeleteScreenshot: MessageFns<CMsgClientUCMDeleteScreen
             break;
           }
 
-          message.screenshotid = longToNumber(reader.fixed64());
+          message.screenshotid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -826,7 +841,7 @@ export const CMsgClientUCMPublishFile: MessageFns<CMsgClientUCMPublishFile> = {
 };
 
 function createBaseCMsgClientUCMPublishFileResponse(): CMsgClientUCMPublishFileResponse {
-  return { eresult: 2, publishedFileId: 18446744073709551615, needsWorkshopLegalAgreementAcceptance: false };
+  return { eresult: 2, publishedFileId: 18446744073709551615n, needsWorkshopLegalAgreementAcceptance: false };
 }
 
 export const CMsgClientUCMPublishFileResponse: MessageFns<CMsgClientUCMPublishFileResponse> = {
@@ -834,7 +849,10 @@ export const CMsgClientUCMPublishFileResponse: MessageFns<CMsgClientUCMPublishFi
     if (message.eresult !== undefined && message.eresult !== 2) {
       writer.uint32(8).int32(message.eresult);
     }
-    if (message.publishedFileId !== undefined && message.publishedFileId !== 18446744073709551615) {
+    if (message.publishedFileId !== undefined && message.publishedFileId !== 18446744073709551615n) {
+      if (BigInt.asUintN(64, message.publishedFileId) !== message.publishedFileId) {
+        throw new globalThis.Error("value provided for field message.publishedFileId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.publishedFileId);
     }
     if (
@@ -866,7 +884,7 @@ export const CMsgClientUCMPublishFileResponse: MessageFns<CMsgClientUCMPublishFi
             break;
           }
 
-          message.publishedFileId = longToNumber(reader.fixed64());
+          message.publishedFileId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -890,7 +908,7 @@ export const CMsgClientUCMPublishFileResponse: MessageFns<CMsgClientUCMPublishFi
 function createBaseCMsgClientUCMUpdatePublishedFile(): CMsgClientUCMUpdatePublishedFile {
   return {
     appId: 0,
-    publishedFileId: 0,
+    publishedFileId: 0n,
     fileName: "",
     previewFileName: "",
     title: "",
@@ -907,7 +925,7 @@ function createBaseCMsgClientUCMUpdatePublishedFile(): CMsgClientUCMUpdatePublis
     updateUrl: false,
     url: "",
     updateContentManifest: false,
-    contentManifest: 0,
+    contentManifest: 0n,
     metadata: "",
     updateMetadata: false,
     language: 0,
@@ -920,7 +938,7 @@ function createBaseCMsgClientUCMUpdatePublishedFile(): CMsgClientUCMUpdatePublis
     contentDescriptorsToAdd: [],
     contentDescriptorsToRemove: [],
     allowAdminTags: false,
-    externalAssetId: 0,
+    externalAssetId: 0n,
     gameBranchMin: "",
     gameBranchMax: "",
   };
@@ -931,7 +949,10 @@ export const CMsgClientUCMUpdatePublishedFile: MessageFns<CMsgClientUCMUpdatePub
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.publishedFileId !== undefined && message.publishedFileId !== 0) {
+    if (message.publishedFileId !== undefined && message.publishedFileId !== 0n) {
+      if (BigInt.asUintN(64, message.publishedFileId) !== message.publishedFileId) {
+        throw new globalThis.Error("value provided for field message.publishedFileId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.publishedFileId);
     }
     if (message.fileName !== undefined && message.fileName !== "") {
@@ -982,7 +1003,10 @@ export const CMsgClientUCMUpdatePublishedFile: MessageFns<CMsgClientUCMUpdatePub
     if (message.updateContentManifest !== undefined && message.updateContentManifest !== false) {
       writer.uint32(144).bool(message.updateContentManifest);
     }
-    if (message.contentManifest !== undefined && message.contentManifest !== 0) {
+    if (message.contentManifest !== undefined && message.contentManifest !== 0n) {
+      if (BigInt.asUintN(64, message.contentManifest) !== message.contentManifest) {
+        throw new globalThis.Error("value provided for field message.contentManifest of type fixed64 too large");
+      }
       writer.uint32(153).fixed64(message.contentManifest);
     }
     if (message.metadata !== undefined && message.metadata !== "") {
@@ -1021,7 +1045,10 @@ export const CMsgClientUCMUpdatePublishedFile: MessageFns<CMsgClientUCMUpdatePub
     if (message.allowAdminTags !== undefined && message.allowAdminTags !== false) {
       writer.uint32(248).bool(message.allowAdminTags);
     }
-    if (message.externalAssetId !== undefined && message.externalAssetId !== 0) {
+    if (message.externalAssetId !== undefined && message.externalAssetId !== 0n) {
+      if (BigInt.asUintN(64, message.externalAssetId) !== message.externalAssetId) {
+        throw new globalThis.Error("value provided for field message.externalAssetId of type uint64 too large");
+      }
       writer.uint32(256).uint64(message.externalAssetId);
     }
     if (message.gameBranchMin !== undefined && message.gameBranchMin !== "") {
@@ -1053,7 +1080,7 @@ export const CMsgClientUCMUpdatePublishedFile: MessageFns<CMsgClientUCMUpdatePub
             break;
           }
 
-          message.publishedFileId = longToNumber(reader.fixed64());
+          message.publishedFileId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1189,7 +1216,7 @@ export const CMsgClientUCMUpdatePublishedFile: MessageFns<CMsgClientUCMUpdatePub
             break;
           }
 
-          message.contentManifest = longToNumber(reader.fixed64());
+          message.contentManifest = reader.fixed64() as bigint;
           continue;
         }
         case 20: {
@@ -1323,7 +1350,7 @@ export const CMsgClientUCMUpdatePublishedFile: MessageFns<CMsgClientUCMUpdatePub
             break;
           }
 
-          message.externalAssetId = longToNumber(reader.uint64());
+          message.externalAssetId = reader.uint64() as bigint;
           continue;
         }
         case 33: {
@@ -1541,12 +1568,15 @@ export const CMsgClientUCMUpdatePublishedFileResponse: MessageFns<CMsgClientUCMU
 };
 
 function createBaseCMsgClientUCMDeletePublishedFile(): CMsgClientUCMDeletePublishedFile {
-  return { publishedFileId: 0, appId: 0 };
+  return { publishedFileId: 0n, appId: 0 };
 }
 
 export const CMsgClientUCMDeletePublishedFile: MessageFns<CMsgClientUCMDeletePublishedFile> = {
   encode(message: CMsgClientUCMDeletePublishedFile, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.publishedFileId !== undefined && message.publishedFileId !== 0) {
+    if (message.publishedFileId !== undefined && message.publishedFileId !== 0n) {
+      if (BigInt.asUintN(64, message.publishedFileId) !== message.publishedFileId) {
+        throw new globalThis.Error("value provided for field message.publishedFileId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.publishedFileId);
     }
     if (message.appId !== undefined && message.appId !== 0) {
@@ -1567,7 +1597,7 @@ export const CMsgClientUCMDeletePublishedFile: MessageFns<CMsgClientUCMDeletePub
             break;
           }
 
-          message.publishedFileId = longToNumber(reader.fixed64());
+          message.publishedFileId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1774,7 +1804,7 @@ export const CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse: Messa
 };
 
 function createBaseCMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_AuthorSnapshot(): CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_AuthorSnapshot {
-  return { timestamp: 0, gameBranchMin: "", gameBranchMax: "", manifestid: 0 };
+  return { timestamp: 0, gameBranchMin: "", gameBranchMax: "", manifestid: 0n };
 }
 
 export const CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_AuthorSnapshot: MessageFns<
@@ -1793,7 +1823,10 @@ export const CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_Author
     if (message.gameBranchMax !== undefined && message.gameBranchMax !== "") {
       writer.uint32(26).string(message.gameBranchMax);
     }
-    if (message.manifestid !== undefined && message.manifestid !== 0) {
+    if (message.manifestid !== undefined && message.manifestid !== 0n) {
+      if (BigInt.asUintN(64, message.manifestid) !== message.manifestid) {
+        throw new globalThis.Error("value provided for field message.manifestid of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.manifestid);
     }
     return writer;
@@ -1838,7 +1871,7 @@ export const CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_Author
             break;
           }
 
-          message.manifestid = longToNumber(reader.fixed64());
+          message.manifestid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1853,10 +1886,10 @@ export const CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_Author
 
 function createBaseCMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_PublishedFileId(): CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_PublishedFileId {
   return {
-    publishedFileId: 0,
+    publishedFileId: 0n,
     rtime32Subscribed: 0,
     appid: 0,
-    fileHcontent: 0,
+    fileHcontent: 0n,
     fileSize: 0,
     rtime32LastUpdated: 0,
     isDepotContent: false,
@@ -1871,7 +1904,10 @@ export const CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_Publis
     message: CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_PublishedFileId,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.publishedFileId !== undefined && message.publishedFileId !== 0) {
+    if (message.publishedFileId !== undefined && message.publishedFileId !== 0n) {
+      if (BigInt.asUintN(64, message.publishedFileId) !== message.publishedFileId) {
+        throw new globalThis.Error("value provided for field message.publishedFileId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.publishedFileId);
     }
     if (message.rtime32Subscribed !== undefined && message.rtime32Subscribed !== 0) {
@@ -1880,7 +1916,10 @@ export const CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_Publis
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(24).uint32(message.appid);
     }
-    if (message.fileHcontent !== undefined && message.fileHcontent !== 0) {
+    if (message.fileHcontent !== undefined && message.fileHcontent !== 0n) {
+      if (BigInt.asUintN(64, message.fileHcontent) !== message.fileHcontent) {
+        throw new globalThis.Error("value provided for field message.fileHcontent of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.fileHcontent);
     }
     if (message.fileSize !== undefined && message.fileSize !== 0) {
@@ -1914,7 +1953,7 @@ export const CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_Publis
             break;
           }
 
-          message.publishedFileId = longToNumber(reader.fixed64());
+          message.publishedFileId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1938,7 +1977,7 @@ export const CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_Publis
             break;
           }
 
-          message.fileHcontent = longToNumber(reader.fixed64());
+          message.fileHcontent = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -1986,12 +2025,23 @@ export const CMsgClientUCMEnumerateUserSubscribedFilesWithUpdatesResponse_Publis
 };
 
 function createBaseCMsgClientUCMPublishedFileUpdated(): CMsgClientUCMPublishedFileUpdated {
-  return { publishedFileId: 0, appId: 0, timeUpdated: 0, hcontent: 0, fileSize: 0, isDepotContent: false, revision: 0 };
+  return {
+    publishedFileId: 0n,
+    appId: 0,
+    timeUpdated: 0,
+    hcontent: 0n,
+    fileSize: 0,
+    isDepotContent: false,
+    revision: 0,
+  };
 }
 
 export const CMsgClientUCMPublishedFileUpdated: MessageFns<CMsgClientUCMPublishedFileUpdated> = {
   encode(message: CMsgClientUCMPublishedFileUpdated, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.publishedFileId !== undefined && message.publishedFileId !== 0) {
+    if (message.publishedFileId !== undefined && message.publishedFileId !== 0n) {
+      if (BigInt.asUintN(64, message.publishedFileId) !== message.publishedFileId) {
+        throw new globalThis.Error("value provided for field message.publishedFileId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.publishedFileId);
     }
     if (message.appId !== undefined && message.appId !== 0) {
@@ -2000,7 +2050,10 @@ export const CMsgClientUCMPublishedFileUpdated: MessageFns<CMsgClientUCMPublishe
     if (message.timeUpdated !== undefined && message.timeUpdated !== 0) {
       writer.uint32(24).uint32(message.timeUpdated);
     }
-    if (message.hcontent !== undefined && message.hcontent !== 0) {
+    if (message.hcontent !== undefined && message.hcontent !== 0n) {
+      if (BigInt.asUintN(64, message.hcontent) !== message.hcontent) {
+        throw new globalThis.Error("value provided for field message.hcontent of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.hcontent);
     }
     if (message.fileSize !== undefined && message.fileSize !== 0) {
@@ -2027,7 +2080,7 @@ export const CMsgClientUCMPublishedFileUpdated: MessageFns<CMsgClientUCMPublishe
             break;
           }
 
-          message.publishedFileId = longToNumber(reader.fixed64());
+          message.publishedFileId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2051,7 +2104,7 @@ export const CMsgClientUCMPublishedFileUpdated: MessageFns<CMsgClientUCMPublishe
             break;
           }
 
-          message.hcontent = longToNumber(reader.fixed64());
+          message.hcontent = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -2209,7 +2262,7 @@ export const CMsgClientWorkshopItemChangesResponse: MessageFns<CMsgClientWorksho
 };
 
 function createBaseCMsgClientWorkshopItemChangesResponse_WorkshopItemInfo(): CMsgClientWorkshopItemChangesResponse_WorkshopItemInfo {
-  return { publishedFileId: 0, timeUpdated: 0, manifestId: 0 };
+  return { publishedFileId: 0n, timeUpdated: 0, manifestId: 0n };
 }
 
 export const CMsgClientWorkshopItemChangesResponse_WorkshopItemInfo: MessageFns<
@@ -2219,13 +2272,19 @@ export const CMsgClientWorkshopItemChangesResponse_WorkshopItemInfo: MessageFns<
     message: CMsgClientWorkshopItemChangesResponse_WorkshopItemInfo,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.publishedFileId !== undefined && message.publishedFileId !== 0) {
+    if (message.publishedFileId !== undefined && message.publishedFileId !== 0n) {
+      if (BigInt.asUintN(64, message.publishedFileId) !== message.publishedFileId) {
+        throw new globalThis.Error("value provided for field message.publishedFileId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.publishedFileId);
     }
     if (message.timeUpdated !== undefined && message.timeUpdated !== 0) {
       writer.uint32(16).uint32(message.timeUpdated);
     }
-    if (message.manifestId !== undefined && message.manifestId !== 0) {
+    if (message.manifestId !== undefined && message.manifestId !== 0n) {
+      if (BigInt.asUintN(64, message.manifestId) !== message.manifestId) {
+        throw new globalThis.Error("value provided for field message.manifestId of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.manifestId);
     }
     return writer;
@@ -2243,7 +2302,7 @@ export const CMsgClientWorkshopItemChangesResponse_WorkshopItemInfo: MessageFns<
             break;
           }
 
-          message.publishedFileId = longToNumber(reader.fixed64());
+          message.publishedFileId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2259,7 +2318,7 @@ export const CMsgClientWorkshopItemChangesResponse_WorkshopItemInfo: MessageFns<
             break;
           }
 
-          message.manifestId = longToNumber(reader.fixed64());
+          message.manifestId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2273,12 +2332,15 @@ export const CMsgClientWorkshopItemChangesResponse_WorkshopItemInfo: MessageFns<
 };
 
 function createBaseCMsgClientUCMSetUserPublishedFileAction(): CMsgClientUCMSetUserPublishedFileAction {
-  return { publishedFileId: 0, appId: 0, action: 0 };
+  return { publishedFileId: 0n, appId: 0, action: 0 };
 }
 
 export const CMsgClientUCMSetUserPublishedFileAction: MessageFns<CMsgClientUCMSetUserPublishedFileAction> = {
   encode(message: CMsgClientUCMSetUserPublishedFileAction, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.publishedFileId !== undefined && message.publishedFileId !== 0) {
+    if (message.publishedFileId !== undefined && message.publishedFileId !== 0n) {
+      if (BigInt.asUintN(64, message.publishedFileId) !== message.publishedFileId) {
+        throw new globalThis.Error("value provided for field message.publishedFileId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.publishedFileId);
     }
     if (message.appId !== undefined && message.appId !== 0) {
@@ -2302,7 +2364,7 @@ export const CMsgClientUCMSetUserPublishedFileAction: MessageFns<CMsgClientUCMSe
             break;
           }
 
-          message.publishedFileId = longToNumber(reader.fixed64());
+          message.publishedFileId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2505,7 +2567,7 @@ export const CMsgClientUCMEnumeratePublishedFilesByUserActionResponse: MessageFn
 };
 
 function createBaseCMsgClientUCMEnumeratePublishedFilesByUserActionResponse_PublishedFileId(): CMsgClientUCMEnumeratePublishedFilesByUserActionResponse_PublishedFileId {
-  return { publishedFileId: 0, rtimeTimeStamp: 0 };
+  return { publishedFileId: 0n, rtimeTimeStamp: 0 };
 }
 
 export const CMsgClientUCMEnumeratePublishedFilesByUserActionResponse_PublishedFileId: MessageFns<
@@ -2515,7 +2577,10 @@ export const CMsgClientUCMEnumeratePublishedFilesByUserActionResponse_PublishedF
     message: CMsgClientUCMEnumeratePublishedFilesByUserActionResponse_PublishedFileId,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.publishedFileId !== undefined && message.publishedFileId !== 0) {
+    if (message.publishedFileId !== undefined && message.publishedFileId !== 0n) {
+      if (BigInt.asUintN(64, message.publishedFileId) !== message.publishedFileId) {
+        throw new globalThis.Error("value provided for field message.publishedFileId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.publishedFileId);
     }
     if (message.rtimeTimeStamp !== undefined && message.rtimeTimeStamp !== 0) {
@@ -2539,7 +2604,7 @@ export const CMsgClientUCMEnumeratePublishedFilesByUserActionResponse_PublishedF
             break;
           }
 
-          message.publishedFileId = longToNumber(reader.fixed64());
+          message.publishedFileId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2585,17 +2650,6 @@ export const CMsgClientScreenshotsChanged: MessageFns<CMsgClientScreenshotsChang
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

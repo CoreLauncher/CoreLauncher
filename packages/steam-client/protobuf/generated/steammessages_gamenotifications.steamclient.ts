@@ -22,7 +22,7 @@ export interface CGameNotificationsLocalizedText {
 }
 
 export interface CGameNotificationsUserStatus {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   state?: string | undefined;
   title?: CGameNotificationsLocalizedText | undefined;
   message?: CGameNotificationsLocalizedText | undefined;
@@ -30,31 +30,31 @@ export interface CGameNotificationsUserStatus {
 
 export interface CGameNotificationsCreateSessionRequest {
   appid?: number | undefined;
-  context?: number | undefined;
+  context?: bigint | undefined;
   title?: CGameNotificationsLocalizedText | undefined;
   users: CGameNotificationsUserStatus[];
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CGameNotificationsCreateSessionResponse {
-  sessionid?: number | undefined;
+  sessionid?: bigint | undefined;
 }
 
 export interface CGameNotificationsDeleteSessionRequest {
-  sessionid?: number | undefined;
+  sessionid?: bigint | undefined;
   appid?: number | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CGameNotificationsDeleteSessionResponse {
 }
 
 export interface CGameNotificationsUpdateSessionRequest {
-  sessionid?: number | undefined;
+  sessionid?: bigint | undefined;
   appid?: number | undefined;
   title?: CGameNotificationsLocalizedText | undefined;
   users: CGameNotificationsUserStatus[];
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CGameNotificationsUpdateSessionResponse {
@@ -68,9 +68,9 @@ export interface CGameNotificationsEnumerateSessionsRequest {
 }
 
 export interface CGameNotificationsSession {
-  sessionid?: number | undefined;
-  appid?: number | undefined;
-  context?: number | undefined;
+  sessionid?: bigint | undefined;
+  appid?: bigint | undefined;
+  context?: bigint | undefined;
   title?: CGameNotificationsLocalizedText | undefined;
   timeCreated?: number | undefined;
   timeUpdated?: number | undefined;
@@ -88,7 +88,7 @@ export interface CGameNotificationsGetSessionDetailsRequest {
 }
 
 export interface CGameNotificationsGetSessionDetailsRequest_RequestedSession {
-  sessionid?: number | undefined;
+  sessionid?: bigint | undefined;
   includeAuthUserMessage?: boolean | undefined;
 }
 
@@ -109,13 +109,13 @@ export interface CGameNotificationsUpdateNotificationSettingsResponse {
 }
 
 export interface CGameNotificationsOnNotificationsRequestedNotification {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   appid?: number | undefined;
 }
 
 export interface CGameNotificationsOnUserStatusChangedNotification {
-  steamid?: number | undefined;
-  sessionid?: number | undefined;
+  steamid?: bigint | undefined;
+  sessionid?: bigint | undefined;
   appid?: number | undefined;
   status?: CGameNotificationsUserStatus | undefined;
   removed?: boolean | undefined;
@@ -229,12 +229,15 @@ export const CGameNotificationsLocalizedText: MessageFns<CGameNotificationsLocal
 };
 
 function createBaseCGameNotificationsUserStatus(): CGameNotificationsUserStatus {
-  return { steamid: 0, state: "", title: undefined, message: undefined };
+  return { steamid: 0n, state: "", title: undefined, message: undefined };
 }
 
 export const CGameNotificationsUserStatus: MessageFns<CGameNotificationsUserStatus> = {
   encode(message: CGameNotificationsUserStatus, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.state !== undefined && message.state !== "") {
@@ -261,7 +264,7 @@ export const CGameNotificationsUserStatus: MessageFns<CGameNotificationsUserStat
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -299,7 +302,7 @@ export const CGameNotificationsUserStatus: MessageFns<CGameNotificationsUserStat
 };
 
 function createBaseCGameNotificationsCreateSessionRequest(): CGameNotificationsCreateSessionRequest {
-  return { appid: 0, context: 0, title: undefined, users: [], steamid: 0 };
+  return { appid: 0, context: 0n, title: undefined, users: [], steamid: 0n };
 }
 
 export const CGameNotificationsCreateSessionRequest: MessageFns<CGameNotificationsCreateSessionRequest> = {
@@ -307,7 +310,10 @@ export const CGameNotificationsCreateSessionRequest: MessageFns<CGameNotificatio
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.context !== undefined && message.context !== 0) {
+    if (message.context !== undefined && message.context !== 0n) {
+      if (BigInt.asUintN(64, message.context) !== message.context) {
+        throw new globalThis.Error("value provided for field message.context of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.context);
     }
     if (message.title !== undefined) {
@@ -316,7 +322,10 @@ export const CGameNotificationsCreateSessionRequest: MessageFns<CGameNotificatio
     for (const v of message.users) {
       CGameNotificationsUserStatus.encode(v!, writer.uint32(34).fork()).join();
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.steamid);
     }
     return writer;
@@ -342,7 +351,7 @@ export const CGameNotificationsCreateSessionRequest: MessageFns<CGameNotificatio
             break;
           }
 
-          message.context = longToNumber(reader.uint64());
+          message.context = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -366,7 +375,7 @@ export const CGameNotificationsCreateSessionRequest: MessageFns<CGameNotificatio
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -380,12 +389,15 @@ export const CGameNotificationsCreateSessionRequest: MessageFns<CGameNotificatio
 };
 
 function createBaseCGameNotificationsCreateSessionResponse(): CGameNotificationsCreateSessionResponse {
-  return { sessionid: 0 };
+  return { sessionid: 0n };
 }
 
 export const CGameNotificationsCreateSessionResponse: MessageFns<CGameNotificationsCreateSessionResponse> = {
   encode(message: CGameNotificationsCreateSessionResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionid !== undefined && message.sessionid !== 0) {
+    if (message.sessionid !== undefined && message.sessionid !== 0n) {
+      if (BigInt.asUintN(64, message.sessionid) !== message.sessionid) {
+        throw new globalThis.Error("value provided for field message.sessionid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.sessionid);
     }
     return writer;
@@ -403,7 +415,7 @@ export const CGameNotificationsCreateSessionResponse: MessageFns<CGameNotificati
             break;
           }
 
-          message.sessionid = longToNumber(reader.uint64());
+          message.sessionid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -417,18 +429,24 @@ export const CGameNotificationsCreateSessionResponse: MessageFns<CGameNotificati
 };
 
 function createBaseCGameNotificationsDeleteSessionRequest(): CGameNotificationsDeleteSessionRequest {
-  return { sessionid: 0, appid: 0, steamid: 0 };
+  return { sessionid: 0n, appid: 0, steamid: 0n };
 }
 
 export const CGameNotificationsDeleteSessionRequest: MessageFns<CGameNotificationsDeleteSessionRequest> = {
   encode(message: CGameNotificationsDeleteSessionRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionid !== undefined && message.sessionid !== 0) {
+    if (message.sessionid !== undefined && message.sessionid !== 0n) {
+      if (BigInt.asUintN(64, message.sessionid) !== message.sessionid) {
+        throw new globalThis.Error("value provided for field message.sessionid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.sessionid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(16).uint32(message.appid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamid);
     }
     return writer;
@@ -446,7 +464,7 @@ export const CGameNotificationsDeleteSessionRequest: MessageFns<CGameNotificatio
             break;
           }
 
-          message.sessionid = longToNumber(reader.uint64());
+          message.sessionid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -462,7 +480,7 @@ export const CGameNotificationsDeleteSessionRequest: MessageFns<CGameNotificatio
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -502,12 +520,15 @@ export const CGameNotificationsDeleteSessionResponse: MessageFns<CGameNotificati
 };
 
 function createBaseCGameNotificationsUpdateSessionRequest(): CGameNotificationsUpdateSessionRequest {
-  return { sessionid: 0, appid: 0, title: undefined, users: [], steamid: 0 };
+  return { sessionid: 0n, appid: 0, title: undefined, users: [], steamid: 0n };
 }
 
 export const CGameNotificationsUpdateSessionRequest: MessageFns<CGameNotificationsUpdateSessionRequest> = {
   encode(message: CGameNotificationsUpdateSessionRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionid !== undefined && message.sessionid !== 0) {
+    if (message.sessionid !== undefined && message.sessionid !== 0n) {
+      if (BigInt.asUintN(64, message.sessionid) !== message.sessionid) {
+        throw new globalThis.Error("value provided for field message.sessionid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.sessionid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
@@ -519,7 +540,10 @@ export const CGameNotificationsUpdateSessionRequest: MessageFns<CGameNotificatio
     for (const v of message.users) {
       CGameNotificationsUserStatus.encode(v!, writer.uint32(34).fork()).join();
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(49).fixed64(message.steamid);
     }
     return writer;
@@ -537,7 +561,7 @@ export const CGameNotificationsUpdateSessionRequest: MessageFns<CGameNotificatio
             break;
           }
 
-          message.sessionid = longToNumber(reader.uint64());
+          message.sessionid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -569,7 +593,7 @@ export const CGameNotificationsUpdateSessionRequest: MessageFns<CGameNotificatio
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -679,18 +703,27 @@ export const CGameNotificationsEnumerateSessionsRequest: MessageFns<CGameNotific
 };
 
 function createBaseCGameNotificationsSession(): CGameNotificationsSession {
-  return { sessionid: 0, appid: 0, context: 0, title: undefined, timeCreated: 0, timeUpdated: 0, userStatus: [] };
+  return { sessionid: 0n, appid: 0n, context: 0n, title: undefined, timeCreated: 0, timeUpdated: 0, userStatus: [] };
 }
 
 export const CGameNotificationsSession: MessageFns<CGameNotificationsSession> = {
   encode(message: CGameNotificationsSession, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.sessionid !== undefined && message.sessionid !== 0) {
+    if (message.sessionid !== undefined && message.sessionid !== 0n) {
+      if (BigInt.asUintN(64, message.sessionid) !== message.sessionid) {
+        throw new globalThis.Error("value provided for field message.sessionid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.sessionid);
     }
-    if (message.appid !== undefined && message.appid !== 0) {
+    if (message.appid !== undefined && message.appid !== 0n) {
+      if (BigInt.asUintN(64, message.appid) !== message.appid) {
+        throw new globalThis.Error("value provided for field message.appid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.appid);
     }
-    if (message.context !== undefined && message.context !== 0) {
+    if (message.context !== undefined && message.context !== 0n) {
+      if (BigInt.asUintN(64, message.context) !== message.context) {
+        throw new globalThis.Error("value provided for field message.context of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.context);
     }
     if (message.title !== undefined) {
@@ -720,7 +753,7 @@ export const CGameNotificationsSession: MessageFns<CGameNotificationsSession> = 
             break;
           }
 
-          message.sessionid = longToNumber(reader.uint64());
+          message.sessionid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -728,7 +761,7 @@ export const CGameNotificationsSession: MessageFns<CGameNotificationsSession> = 
             break;
           }
 
-          message.appid = longToNumber(reader.uint64());
+          message.appid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -736,7 +769,7 @@ export const CGameNotificationsSession: MessageFns<CGameNotificationsSession> = 
             break;
           }
 
-          message.context = longToNumber(reader.uint64());
+          message.context = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -883,7 +916,7 @@ export const CGameNotificationsGetSessionDetailsRequest: MessageFns<CGameNotific
 };
 
 function createBaseCGameNotificationsGetSessionDetailsRequest_RequestedSession(): CGameNotificationsGetSessionDetailsRequest_RequestedSession {
-  return { sessionid: 0, includeAuthUserMessage: false };
+  return { sessionid: 0n, includeAuthUserMessage: false };
 }
 
 export const CGameNotificationsGetSessionDetailsRequest_RequestedSession: MessageFns<
@@ -893,7 +926,10 @@ export const CGameNotificationsGetSessionDetailsRequest_RequestedSession: Messag
     message: CGameNotificationsGetSessionDetailsRequest_RequestedSession,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.sessionid !== undefined && message.sessionid !== 0) {
+    if (message.sessionid !== undefined && message.sessionid !== 0n) {
+      if (BigInt.asUintN(64, message.sessionid) !== message.sessionid) {
+        throw new globalThis.Error("value provided for field message.sessionid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.sessionid);
     }
     if (message.includeAuthUserMessage !== undefined && message.includeAuthUserMessage !== false) {
@@ -917,7 +953,7 @@ export const CGameNotificationsGetSessionDetailsRequest_RequestedSession: Messag
             break;
           }
 
-          message.sessionid = longToNumber(reader.uint64());
+          message.sessionid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1100,7 +1136,7 @@ export const CGameNotificationsUpdateNotificationSettingsResponse: MessageFns<
 };
 
 function createBaseCGameNotificationsOnNotificationsRequestedNotification(): CGameNotificationsOnNotificationsRequestedNotification {
-  return { steamid: 0, appid: 0 };
+  return { steamid: 0n, appid: 0 };
 }
 
 export const CGameNotificationsOnNotificationsRequestedNotification: MessageFns<
@@ -1110,7 +1146,10 @@ export const CGameNotificationsOnNotificationsRequestedNotification: MessageFns<
     message: CGameNotificationsOnNotificationsRequestedNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
@@ -1131,7 +1170,7 @@ export const CGameNotificationsOnNotificationsRequestedNotification: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1153,7 +1192,7 @@ export const CGameNotificationsOnNotificationsRequestedNotification: MessageFns<
 };
 
 function createBaseCGameNotificationsOnUserStatusChangedNotification(): CGameNotificationsOnUserStatusChangedNotification {
-  return { steamid: 0, sessionid: 0, appid: 0, status: undefined, removed: false };
+  return { steamid: 0n, sessionid: 0n, appid: 0, status: undefined, removed: false };
 }
 
 export const CGameNotificationsOnUserStatusChangedNotification: MessageFns<
@@ -1163,10 +1202,16 @@ export const CGameNotificationsOnUserStatusChangedNotification: MessageFns<
     message: CGameNotificationsOnUserStatusChangedNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.sessionid !== undefined && message.sessionid !== 0) {
+    if (message.sessionid !== undefined && message.sessionid !== 0n) {
+      if (BigInt.asUintN(64, message.sessionid) !== message.sessionid) {
+        throw new globalThis.Error("value provided for field message.sessionid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.sessionid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
@@ -1193,7 +1238,7 @@ export const CGameNotificationsOnUserStatusChangedNotification: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1201,7 +1246,7 @@ export const CGameNotificationsOnUserStatusChangedNotification: MessageFns<
             break;
           }
 
-          message.sessionid = longToNumber(reader.uint64());
+          message.sessionid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1340,17 +1385,6 @@ export class GameNotificationsClientClientImpl implements GameNotificationsClien
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

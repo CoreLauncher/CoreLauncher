@@ -57,14 +57,14 @@ export interface CContentServerDirectoryGetServersForSteamPipeResponse {
 export interface CContentServerDirectoryGetDepotPatchInfoRequest {
   appid?: number | undefined;
   depotid?: number | undefined;
-  sourceManifestid?: number | undefined;
-  targetManifestid?: number | undefined;
+  sourceManifestid?: bigint | undefined;
+  targetManifestid?: bigint | undefined;
 }
 
 export interface CContentServerDirectoryGetDepotPatchInfoResponse {
   isAvailable?: boolean | undefined;
-  patchSize?: number | undefined;
-  patchedChunksSize?: number | undefined;
+  patchSize?: bigint | undefined;
+  patchedChunksSize?: bigint | undefined;
 }
 
 export interface CContentServerDirectoryGetClientUpdateHostsRequest {
@@ -73,20 +73,20 @@ export interface CContentServerDirectoryGetClientUpdateHostsRequest {
 
 export interface CContentServerDirectoryGetClientUpdateHostsResponse {
   hostsKv?: string | undefined;
-  validUntilTime?: number | undefined;
+  validUntilTime?: bigint | undefined;
   ipCountry?: string | undefined;
 }
 
 export interface CContentServerDirectoryGetManifestRequestCodeRequest {
   appId?: number | undefined;
   depotId?: number | undefined;
-  manifestId?: number | undefined;
+  manifestId?: bigint | undefined;
   appBranch?: string | undefined;
   branchPasswordHash?: string | undefined;
 }
 
 export interface CContentServerDirectoryGetManifestRequestCodeResponse {
-  manifestRequestCode?: number | undefined;
+  manifestRequestCode?: bigint | undefined;
 }
 
 export interface CContentServerDirectoryGetCDNAuthTokenRequest {
@@ -101,9 +101,9 @@ export interface CContentServerDirectoryGetCDNAuthTokenResponse {
 }
 
 export interface CContentServerDirectoryRequestPeerContentServerRequest {
-  remoteClientId?: number | undefined;
-  steamid?: number | undefined;
-  serverRemoteClientId?: number | undefined;
+  remoteClientId?: bigint | undefined;
+  steamid?: bigint | undefined;
+  serverRemoteClientId?: bigint | undefined;
   appId?: number | undefined;
   currentBuildId?: number | undefined;
 }
@@ -111,13 +111,13 @@ export interface CContentServerDirectoryRequestPeerContentServerRequest {
 export interface CContentServerDirectoryRequestPeerContentServerResponse {
   serverPort?: number | undefined;
   installedDepots: number[];
-  accessToken?: number | undefined;
+  accessToken?: bigint | undefined;
 }
 
 export interface CContentServerDirectoryGetPeerContentInfoRequest {
-  remoteClientId?: number | undefined;
-  steamid?: number | undefined;
-  serverRemoteClientId?: number | undefined;
+  remoteClientId?: bigint | undefined;
+  steamid?: bigint | undefined;
+  serverRemoteClientId?: bigint | undefined;
 }
 
 export interface CContentServerDirectoryGetPeerContentInfoResponse {
@@ -573,7 +573,7 @@ export const CContentServerDirectoryGetServersForSteamPipeResponse: MessageFns<
 };
 
 function createBaseCContentServerDirectoryGetDepotPatchInfoRequest(): CContentServerDirectoryGetDepotPatchInfoRequest {
-  return { appid: 0, depotid: 0, sourceManifestid: 0, targetManifestid: 0 };
+  return { appid: 0, depotid: 0, sourceManifestid: 0n, targetManifestid: 0n };
 }
 
 export const CContentServerDirectoryGetDepotPatchInfoRequest: MessageFns<
@@ -589,10 +589,16 @@ export const CContentServerDirectoryGetDepotPatchInfoRequest: MessageFns<
     if (message.depotid !== undefined && message.depotid !== 0) {
       writer.uint32(16).uint32(message.depotid);
     }
-    if (message.sourceManifestid !== undefined && message.sourceManifestid !== 0) {
+    if (message.sourceManifestid !== undefined && message.sourceManifestid !== 0n) {
+      if (BigInt.asUintN(64, message.sourceManifestid) !== message.sourceManifestid) {
+        throw new globalThis.Error("value provided for field message.sourceManifestid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.sourceManifestid);
     }
-    if (message.targetManifestid !== undefined && message.targetManifestid !== 0) {
+    if (message.targetManifestid !== undefined && message.targetManifestid !== 0n) {
+      if (BigInt.asUintN(64, message.targetManifestid) !== message.targetManifestid) {
+        throw new globalThis.Error("value provided for field message.targetManifestid of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.targetManifestid);
     }
     return writer;
@@ -626,7 +632,7 @@ export const CContentServerDirectoryGetDepotPatchInfoRequest: MessageFns<
             break;
           }
 
-          message.sourceManifestid = longToNumber(reader.uint64());
+          message.sourceManifestid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -634,7 +640,7 @@ export const CContentServerDirectoryGetDepotPatchInfoRequest: MessageFns<
             break;
           }
 
-          message.targetManifestid = longToNumber(reader.uint64());
+          message.targetManifestid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -648,7 +654,7 @@ export const CContentServerDirectoryGetDepotPatchInfoRequest: MessageFns<
 };
 
 function createBaseCContentServerDirectoryGetDepotPatchInfoResponse(): CContentServerDirectoryGetDepotPatchInfoResponse {
-  return { isAvailable: false, patchSize: 0, patchedChunksSize: 0 };
+  return { isAvailable: false, patchSize: 0n, patchedChunksSize: 0n };
 }
 
 export const CContentServerDirectoryGetDepotPatchInfoResponse: MessageFns<
@@ -661,10 +667,16 @@ export const CContentServerDirectoryGetDepotPatchInfoResponse: MessageFns<
     if (message.isAvailable !== undefined && message.isAvailable !== false) {
       writer.uint32(8).bool(message.isAvailable);
     }
-    if (message.patchSize !== undefined && message.patchSize !== 0) {
+    if (message.patchSize !== undefined && message.patchSize !== 0n) {
+      if (BigInt.asUintN(64, message.patchSize) !== message.patchSize) {
+        throw new globalThis.Error("value provided for field message.patchSize of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.patchSize);
     }
-    if (message.patchedChunksSize !== undefined && message.patchedChunksSize !== 0) {
+    if (message.patchedChunksSize !== undefined && message.patchedChunksSize !== 0n) {
+      if (BigInt.asUintN(64, message.patchedChunksSize) !== message.patchedChunksSize) {
+        throw new globalThis.Error("value provided for field message.patchedChunksSize of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.patchedChunksSize);
     }
     return writer;
@@ -690,7 +702,7 @@ export const CContentServerDirectoryGetDepotPatchInfoResponse: MessageFns<
             break;
           }
 
-          message.patchSize = longToNumber(reader.uint64());
+          message.patchSize = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -698,7 +710,7 @@ export const CContentServerDirectoryGetDepotPatchInfoResponse: MessageFns<
             break;
           }
 
-          message.patchedChunksSize = longToNumber(reader.uint64());
+          message.patchedChunksSize = reader.uint64() as bigint;
           continue;
         }
       }
@@ -754,7 +766,7 @@ export const CContentServerDirectoryGetClientUpdateHostsRequest: MessageFns<
 };
 
 function createBaseCContentServerDirectoryGetClientUpdateHostsResponse(): CContentServerDirectoryGetClientUpdateHostsResponse {
-  return { hostsKv: "", validUntilTime: 0, ipCountry: "" };
+  return { hostsKv: "", validUntilTime: 0n, ipCountry: "" };
 }
 
 export const CContentServerDirectoryGetClientUpdateHostsResponse: MessageFns<
@@ -767,7 +779,10 @@ export const CContentServerDirectoryGetClientUpdateHostsResponse: MessageFns<
     if (message.hostsKv !== undefined && message.hostsKv !== "") {
       writer.uint32(10).string(message.hostsKv);
     }
-    if (message.validUntilTime !== undefined && message.validUntilTime !== 0) {
+    if (message.validUntilTime !== undefined && message.validUntilTime !== 0n) {
+      if (BigInt.asUintN(64, message.validUntilTime) !== message.validUntilTime) {
+        throw new globalThis.Error("value provided for field message.validUntilTime of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.validUntilTime);
     }
     if (message.ipCountry !== undefined && message.ipCountry !== "") {
@@ -796,7 +811,7 @@ export const CContentServerDirectoryGetClientUpdateHostsResponse: MessageFns<
             break;
           }
 
-          message.validUntilTime = longToNumber(reader.uint64());
+          message.validUntilTime = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -818,7 +833,7 @@ export const CContentServerDirectoryGetClientUpdateHostsResponse: MessageFns<
 };
 
 function createBaseCContentServerDirectoryGetManifestRequestCodeRequest(): CContentServerDirectoryGetManifestRequestCodeRequest {
-  return { appId: 0, depotId: 0, manifestId: 0, appBranch: "", branchPasswordHash: "" };
+  return { appId: 0, depotId: 0, manifestId: 0n, appBranch: "", branchPasswordHash: "" };
 }
 
 export const CContentServerDirectoryGetManifestRequestCodeRequest: MessageFns<
@@ -834,7 +849,10 @@ export const CContentServerDirectoryGetManifestRequestCodeRequest: MessageFns<
     if (message.depotId !== undefined && message.depotId !== 0) {
       writer.uint32(16).uint32(message.depotId);
     }
-    if (message.manifestId !== undefined && message.manifestId !== 0) {
+    if (message.manifestId !== undefined && message.manifestId !== 0n) {
+      if (BigInt.asUintN(64, message.manifestId) !== message.manifestId) {
+        throw new globalThis.Error("value provided for field message.manifestId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.manifestId);
     }
     if (message.appBranch !== undefined && message.appBranch !== "") {
@@ -874,7 +892,7 @@ export const CContentServerDirectoryGetManifestRequestCodeRequest: MessageFns<
             break;
           }
 
-          message.manifestId = longToNumber(reader.uint64());
+          message.manifestId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -904,7 +922,7 @@ export const CContentServerDirectoryGetManifestRequestCodeRequest: MessageFns<
 };
 
 function createBaseCContentServerDirectoryGetManifestRequestCodeResponse(): CContentServerDirectoryGetManifestRequestCodeResponse {
-  return { manifestRequestCode: 0 };
+  return { manifestRequestCode: 0n };
 }
 
 export const CContentServerDirectoryGetManifestRequestCodeResponse: MessageFns<
@@ -914,7 +932,10 @@ export const CContentServerDirectoryGetManifestRequestCodeResponse: MessageFns<
     message: CContentServerDirectoryGetManifestRequestCodeResponse,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.manifestRequestCode !== undefined && message.manifestRequestCode !== 0) {
+    if (message.manifestRequestCode !== undefined && message.manifestRequestCode !== 0n) {
+      if (BigInt.asUintN(64, message.manifestRequestCode) !== message.manifestRequestCode) {
+        throw new globalThis.Error("value provided for field message.manifestRequestCode of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.manifestRequestCode);
     }
     return writer;
@@ -932,7 +953,7 @@ export const CContentServerDirectoryGetManifestRequestCodeResponse: MessageFns<
             break;
           }
 
-          message.manifestRequestCode = longToNumber(reader.uint64());
+          message.manifestRequestCode = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1062,7 +1083,7 @@ export const CContentServerDirectoryGetCDNAuthTokenResponse: MessageFns<
 };
 
 function createBaseCContentServerDirectoryRequestPeerContentServerRequest(): CContentServerDirectoryRequestPeerContentServerRequest {
-  return { remoteClientId: 0, steamid: 0, serverRemoteClientId: 0, appId: 0, currentBuildId: 0 };
+  return { remoteClientId: 0n, steamid: 0n, serverRemoteClientId: 0n, appId: 0, currentBuildId: 0 };
 }
 
 export const CContentServerDirectoryRequestPeerContentServerRequest: MessageFns<
@@ -1072,13 +1093,22 @@ export const CContentServerDirectoryRequestPeerContentServerRequest: MessageFns<
     message: CContentServerDirectoryRequestPeerContentServerRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.remoteClientId !== undefined && message.remoteClientId !== 0) {
+    if (message.remoteClientId !== undefined && message.remoteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.remoteClientId) !== message.remoteClientId) {
+        throw new globalThis.Error("value provided for field message.remoteClientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.remoteClientId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
-    if (message.serverRemoteClientId !== undefined && message.serverRemoteClientId !== 0) {
+    if (message.serverRemoteClientId !== undefined && message.serverRemoteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.serverRemoteClientId) !== message.serverRemoteClientId) {
+        throw new globalThis.Error("value provided for field message.serverRemoteClientId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.serverRemoteClientId);
     }
     if (message.appId !== undefined && message.appId !== 0) {
@@ -1102,7 +1132,7 @@ export const CContentServerDirectoryRequestPeerContentServerRequest: MessageFns<
             break;
           }
 
-          message.remoteClientId = longToNumber(reader.uint64());
+          message.remoteClientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1110,7 +1140,7 @@ export const CContentServerDirectoryRequestPeerContentServerRequest: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1118,7 +1148,7 @@ export const CContentServerDirectoryRequestPeerContentServerRequest: MessageFns<
             break;
           }
 
-          message.serverRemoteClientId = longToNumber(reader.uint64());
+          message.serverRemoteClientId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -1148,7 +1178,7 @@ export const CContentServerDirectoryRequestPeerContentServerRequest: MessageFns<
 };
 
 function createBaseCContentServerDirectoryRequestPeerContentServerResponse(): CContentServerDirectoryRequestPeerContentServerResponse {
-  return { serverPort: 0, installedDepots: [], accessToken: 0 };
+  return { serverPort: 0, installedDepots: [], accessToken: 0n };
 }
 
 export const CContentServerDirectoryRequestPeerContentServerResponse: MessageFns<
@@ -1164,7 +1194,10 @@ export const CContentServerDirectoryRequestPeerContentServerResponse: MessageFns
     for (const v of message.installedDepots) {
       writer.uint32(16).uint32(v!);
     }
-    if (message.accessToken !== undefined && message.accessToken !== 0) {
+    if (message.accessToken !== undefined && message.accessToken !== 0n) {
+      if (BigInt.asUintN(64, message.accessToken) !== message.accessToken) {
+        throw new globalThis.Error("value provided for field message.accessToken of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.accessToken);
     }
     return writer;
@@ -1208,7 +1241,7 @@ export const CContentServerDirectoryRequestPeerContentServerResponse: MessageFns
             break;
           }
 
-          message.accessToken = longToNumber(reader.uint64());
+          message.accessToken = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1222,7 +1255,7 @@ export const CContentServerDirectoryRequestPeerContentServerResponse: MessageFns
 };
 
 function createBaseCContentServerDirectoryGetPeerContentInfoRequest(): CContentServerDirectoryGetPeerContentInfoRequest {
-  return { remoteClientId: 0, steamid: 0, serverRemoteClientId: 0 };
+  return { remoteClientId: 0n, steamid: 0n, serverRemoteClientId: 0n };
 }
 
 export const CContentServerDirectoryGetPeerContentInfoRequest: MessageFns<
@@ -1232,13 +1265,22 @@ export const CContentServerDirectoryGetPeerContentInfoRequest: MessageFns<
     message: CContentServerDirectoryGetPeerContentInfoRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.remoteClientId !== undefined && message.remoteClientId !== 0) {
+    if (message.remoteClientId !== undefined && message.remoteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.remoteClientId) !== message.remoteClientId) {
+        throw new globalThis.Error("value provided for field message.remoteClientId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.remoteClientId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
-    if (message.serverRemoteClientId !== undefined && message.serverRemoteClientId !== 0) {
+    if (message.serverRemoteClientId !== undefined && message.serverRemoteClientId !== 0n) {
+      if (BigInt.asUintN(64, message.serverRemoteClientId) !== message.serverRemoteClientId) {
+        throw new globalThis.Error("value provided for field message.serverRemoteClientId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.serverRemoteClientId);
     }
     return writer;
@@ -1256,7 +1298,7 @@ export const CContentServerDirectoryGetPeerContentInfoRequest: MessageFns<
             break;
           }
 
-          message.remoteClientId = longToNumber(reader.uint64());
+          message.remoteClientId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1264,7 +1306,7 @@ export const CContentServerDirectoryGetPeerContentInfoRequest: MessageFns<
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1272,7 +1314,7 @@ export const CContentServerDirectoryGetPeerContentInfoRequest: MessageFns<
             break;
           }
 
-          message.serverRemoteClientId = longToNumber(reader.uint64());
+          message.serverRemoteClientId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1617,17 +1659,6 @@ export class DepotContentDetectionClientImpl implements DepotContentDetection {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

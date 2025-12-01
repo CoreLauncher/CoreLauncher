@@ -10,7 +10,7 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 export const protobufPackage = "";
 
 export interface CAchievementsGetInfoRequest {
-  gameid?: number | undefined;
+  gameid?: bigint | undefined;
 }
 
 export interface CAchievementsGetInfoResponse {
@@ -28,12 +28,15 @@ export interface CAchievementsGetInfoResponse_Info {
 }
 
 function createBaseCAchievementsGetInfoRequest(): CAchievementsGetInfoRequest {
-  return { gameid: 0 };
+  return { gameid: 0n };
 }
 
 export const CAchievementsGetInfoRequest: MessageFns<CAchievementsGetInfoRequest> = {
   encode(message: CAchievementsGetInfoRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gameid);
     }
     return writer;
@@ -51,7 +54,7 @@ export const CAchievementsGetInfoRequest: MessageFns<CAchievementsGetInfoRequest
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -226,17 +229,6 @@ export class AchievementsClientImpl implements Achievements {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

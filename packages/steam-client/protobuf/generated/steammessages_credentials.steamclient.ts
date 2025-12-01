@@ -23,7 +23,7 @@ export interface CCredentialsGetSteamGuardDetailsResponse {
   deprecatedMachineNameUserchosen?: string | undefined;
   deprecatedTimestampMachineSteamguardEnabled?: number | undefined;
   deprecatedAuthenticationExistsFromGeolocBeforeMintime?: boolean | undefined;
-  deprecatedMachineId?: number | undefined;
+  deprecatedMachineId?: bigint | undefined;
   sessionData: CCredentialsGetSteamGuardDetailsResponse_SessionData[];
   isTwofactorEnabled?: boolean | undefined;
   timestampTwofactorEnabled?: number | undefined;
@@ -31,7 +31,7 @@ export interface CCredentialsGetSteamGuardDetailsResponse {
 }
 
 export interface CCredentialsGetSteamGuardDetailsResponse_SessionData {
-  machineId?: number | undefined;
+  machineId?: bigint | undefined;
   machineNameUserchosen?: string | undefined;
   timestampMachineSteamguardEnabled?: number | undefined;
   authenticationExistsFromGeolocBeforeMintime?: boolean | undefined;
@@ -160,7 +160,7 @@ function createBaseCCredentialsGetSteamGuardDetailsResponse(): CCredentialsGetSt
     deprecatedMachineNameUserchosen: "",
     deprecatedTimestampMachineSteamguardEnabled: 0,
     deprecatedAuthenticationExistsFromGeolocBeforeMintime: false,
-    deprecatedMachineId: 0,
+    deprecatedMachineId: 0n,
     sessionData: [],
     isTwofactorEnabled: false,
     timestampTwofactorEnabled: 0,
@@ -191,7 +191,10 @@ export const CCredentialsGetSteamGuardDetailsResponse: MessageFns<CCredentialsGe
     ) {
       writer.uint32(48).bool(message.deprecatedAuthenticationExistsFromGeolocBeforeMintime);
     }
-    if (message.deprecatedMachineId !== undefined && message.deprecatedMachineId !== 0) {
+    if (message.deprecatedMachineId !== undefined && message.deprecatedMachineId !== 0n) {
+      if (BigInt.asUintN(64, message.deprecatedMachineId) !== message.deprecatedMachineId) {
+        throw new globalThis.Error("value provided for field message.deprecatedMachineId of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.deprecatedMachineId);
     }
     for (const v of message.sessionData) {
@@ -261,7 +264,7 @@ export const CCredentialsGetSteamGuardDetailsResponse: MessageFns<CCredentialsGe
             break;
           }
 
-          message.deprecatedMachineId = longToNumber(reader.uint64());
+          message.deprecatedMachineId = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -310,7 +313,7 @@ export const CCredentialsGetSteamGuardDetailsResponse: MessageFns<CCredentialsGe
 
 function createBaseCCredentialsGetSteamGuardDetailsResponse_SessionData(): CCredentialsGetSteamGuardDetailsResponse_SessionData {
   return {
-    machineId: 0,
+    machineId: 0n,
     machineNameUserchosen: "",
     timestampMachineSteamguardEnabled: 0,
     authenticationExistsFromGeolocBeforeMintime: false,
@@ -327,7 +330,10 @@ export const CCredentialsGetSteamGuardDetailsResponse_SessionData: MessageFns<
     message: CCredentialsGetSteamGuardDetailsResponse_SessionData,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.machineId !== undefined && message.machineId !== 0) {
+    if (message.machineId !== undefined && message.machineId !== 0n) {
+      if (BigInt.asUintN(64, message.machineId) !== message.machineId) {
+        throw new globalThis.Error("value provided for field message.machineId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.machineId);
     }
     if (message.machineNameUserchosen !== undefined && message.machineNameUserchosen !== "") {
@@ -369,7 +375,7 @@ export const CCredentialsGetSteamGuardDetailsResponse_SessionData: MessageFns<
             break;
           }
 
-          message.machineId = longToNumber(reader.uint64());
+          message.machineId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -943,17 +949,6 @@ export class CredentialsClientImpl implements Credentials {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

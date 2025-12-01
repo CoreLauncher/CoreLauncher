@@ -12,12 +12,12 @@ export const protobufPackage = "";
 
 export interface CInventoryGetInventoryRequest {
   appid?: number | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CInventoryResponse {
   etag?: string | undefined;
-  removeditemids: number[];
+  removeditemids: bigint[];
   itemJson?: string | undefined;
   itemdefJson?: string | undefined;
   ticket?: Buffer | undefined;
@@ -26,83 +26,83 @@ export interface CInventoryResponse {
 
 export interface CInventoryExchangeItemRequest {
   appid?: number | undefined;
-  steamid?: number | undefined;
-  materialsitemid: number[];
+  steamid?: bigint | undefined;
+  materialsitemid: bigint[];
   materialsquantity: number[];
-  outputitemdefid?: number | undefined;
+  outputitemdefid?: bigint | undefined;
 }
 
 export interface CInventoryGetEligiblePromoItemDefIDsRequest {
   appid?: number | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CInventoryGetEligiblePromoItemDefIDsResponse {
-  itemdefids: number[];
+  itemdefids: bigint[];
 }
 
 export interface CInventoryAddItemRequest {
   appid?: number | undefined;
-  itemdefid: number[];
+  itemdefid: bigint[];
   itempropsjson: string[];
   itemquantity: number[];
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   notify?: boolean | undefined;
-  requestid?: number | undefined;
+  requestid?: bigint | undefined;
   tradeRestriction?: boolean | undefined;
   isPurchase?: boolean | undefined;
 }
 
 export interface CInventoryModifyItemsRequest {
   appid?: number | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   updates: CInventoryModifyItemsRequest_ItemPropertyUpdate[];
   timestamp?: number | undefined;
 }
 
 export interface CInventoryModifyItemsRequest_ItemPropertyUpdate {
-  itemid?: number | undefined;
+  itemid?: bigint | undefined;
   removeProperty?: boolean | undefined;
   propertyName?: string | undefined;
   propertyValueBool?: boolean | undefined;
-  propertyValueInt?: number | undefined;
+  propertyValueInt?: bigint | undefined;
   propertyValueString?: string | undefined;
   propertyValueFloat?: number | undefined;
 }
 
 export interface CInventoryConsumePlaytimeRequest {
   appid?: number | undefined;
-  itemdefid?: number | undefined;
+  itemdefid?: bigint | undefined;
 }
 
 export interface CInventoryConsumeItemRequest {
   appid?: number | undefined;
-  itemid?: number | undefined;
+  itemid?: bigint | undefined;
   quantity?: number | undefined;
   timestamp?: string | undefined;
-  steamid?: number | undefined;
-  requestid?: number | undefined;
+  steamid?: bigint | undefined;
+  requestid?: bigint | undefined;
 }
 
 export interface CInventoryDevSetNextDropRequest {
   appid?: number | undefined;
-  itemdefid?: number | undefined;
+  itemdefid?: bigint | undefined;
   droptime?: string | undefined;
 }
 
 export interface CInventorySplitItemStackRequest {
   appid?: number | undefined;
-  itemid?: number | undefined;
+  itemid?: bigint | undefined;
   quantity?: number | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CInventoryCombineItemStacksRequest {
   appid?: number | undefined;
-  fromitemid?: number | undefined;
-  destitemid?: number | undefined;
+  fromitemid?: bigint | undefined;
+  destitemid?: bigint | undefined;
   quantity?: number | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CInventoryGetItemDefMetaRequest {
@@ -128,24 +128,24 @@ export interface CInventoryPurchaseInitRequest {
 }
 
 export interface CInventoryPurchaseInitRequest_LineItem {
-  itemdefid?: number | undefined;
+  itemdefid?: bigint | undefined;
   quantity?: number | undefined;
 }
 
 export interface CInventoryPurchaseInitResponse {
-  orderid?: number | undefined;
-  transid?: number | undefined;
+  orderid?: bigint | undefined;
+  transid?: bigint | undefined;
 }
 
 export interface CInventoryPurchaseFinalizeRequest {
   appid?: number | undefined;
   language?: number | undefined;
-  orderid?: number | undefined;
+  orderid?: bigint | undefined;
 }
 
 export interface CInventoryInspectItemRequest {
-  itemdefid?: number | undefined;
-  itemid?: number | undefined;
+  itemdefid?: bigint | undefined;
+  itemid?: bigint | undefined;
   tags?: string | undefined;
 }
 
@@ -155,7 +155,7 @@ export interface CInventoryClientNewItemsNotification {
 }
 
 function createBaseCInventoryGetInventoryRequest(): CInventoryGetInventoryRequest {
-  return { appid: 0, steamid: 0 };
+  return { appid: 0, steamid: 0n };
 }
 
 export const CInventoryGetInventoryRequest: MessageFns<CInventoryGetInventoryRequest> = {
@@ -163,7 +163,10 @@ export const CInventoryGetInventoryRequest: MessageFns<CInventoryGetInventoryReq
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
     return writer;
@@ -189,7 +192,7 @@ export const CInventoryGetInventoryRequest: MessageFns<CInventoryGetInventoryReq
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -212,6 +215,9 @@ export const CInventoryResponse: MessageFns<CInventoryResponse> = {
       writer.uint32(10).string(message.etag);
     }
     for (const v of message.removeditemids) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(16).uint64(v!);
     }
     if (message.itemJson !== undefined && message.itemJson !== "") {
@@ -246,7 +252,7 @@ export const CInventoryResponse: MessageFns<CInventoryResponse> = {
         }
         case 2: {
           if (tag === 16) {
-            message.removeditemids.push(longToNumber(reader.uint64()));
+            message.removeditemids.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -254,7 +260,7 @@ export const CInventoryResponse: MessageFns<CInventoryResponse> = {
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.removeditemids.push(longToNumber(reader.uint64()));
+              message.removeditemids.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -305,7 +311,7 @@ export const CInventoryResponse: MessageFns<CInventoryResponse> = {
 };
 
 function createBaseCInventoryExchangeItemRequest(): CInventoryExchangeItemRequest {
-  return { appid: 0, steamid: 0, materialsitemid: [], materialsquantity: [], outputitemdefid: 0 };
+  return { appid: 0, steamid: 0n, materialsitemid: [], materialsquantity: [], outputitemdefid: 0n };
 }
 
 export const CInventoryExchangeItemRequest: MessageFns<CInventoryExchangeItemRequest> = {
@@ -313,16 +319,25 @@ export const CInventoryExchangeItemRequest: MessageFns<CInventoryExchangeItemReq
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
     for (const v of message.materialsitemid) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(24).uint64(v!);
     }
     for (const v of message.materialsquantity) {
       writer.uint32(32).uint32(v!);
     }
-    if (message.outputitemdefid !== undefined && message.outputitemdefid !== 0) {
+    if (message.outputitemdefid !== undefined && message.outputitemdefid !== 0n) {
+      if (BigInt.asUintN(64, message.outputitemdefid) !== message.outputitemdefid) {
+        throw new globalThis.Error("value provided for field message.outputitemdefid of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.outputitemdefid);
     }
     return writer;
@@ -348,12 +363,12 @@ export const CInventoryExchangeItemRequest: MessageFns<CInventoryExchangeItemReq
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
           if (tag === 24) {
-            message.materialsitemid.push(longToNumber(reader.uint64()));
+            message.materialsitemid.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -361,7 +376,7 @@ export const CInventoryExchangeItemRequest: MessageFns<CInventoryExchangeItemReq
           if (tag === 26) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.materialsitemid.push(longToNumber(reader.uint64()));
+              message.materialsitemid.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -392,7 +407,7 @@ export const CInventoryExchangeItemRequest: MessageFns<CInventoryExchangeItemReq
             break;
           }
 
-          message.outputitemdefid = longToNumber(reader.uint64());
+          message.outputitemdefid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -406,7 +421,7 @@ export const CInventoryExchangeItemRequest: MessageFns<CInventoryExchangeItemReq
 };
 
 function createBaseCInventoryGetEligiblePromoItemDefIDsRequest(): CInventoryGetEligiblePromoItemDefIDsRequest {
-  return { appid: 0, steamid: 0 };
+  return { appid: 0, steamid: 0n };
 }
 
 export const CInventoryGetEligiblePromoItemDefIDsRequest: MessageFns<CInventoryGetEligiblePromoItemDefIDsRequest> = {
@@ -417,7 +432,10 @@ export const CInventoryGetEligiblePromoItemDefIDsRequest: MessageFns<CInventoryG
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
     return writer;
@@ -443,7 +461,7 @@ export const CInventoryGetEligiblePromoItemDefIDsRequest: MessageFns<CInventoryG
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -466,6 +484,9 @@ export const CInventoryGetEligiblePromoItemDefIDsResponse: MessageFns<CInventory
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
     for (const v of message.itemdefids) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(8).uint64(v!);
     }
     return writer;
@@ -480,7 +501,7 @@ export const CInventoryGetEligiblePromoItemDefIDsResponse: MessageFns<CInventory
       switch (tag >>> 3) {
         case 1: {
           if (tag === 8) {
-            message.itemdefids.push(longToNumber(reader.uint64()));
+            message.itemdefids.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -488,7 +509,7 @@ export const CInventoryGetEligiblePromoItemDefIDsResponse: MessageFns<CInventory
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.itemdefids.push(longToNumber(reader.uint64()));
+              message.itemdefids.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -512,9 +533,9 @@ function createBaseCInventoryAddItemRequest(): CInventoryAddItemRequest {
     itemdefid: [],
     itempropsjson: [],
     itemquantity: [],
-    steamid: 0,
+    steamid: 0n,
     notify: false,
-    requestid: 0,
+    requestid: 0n,
     tradeRestriction: false,
     isPurchase: false,
   };
@@ -526,6 +547,9 @@ export const CInventoryAddItemRequest: MessageFns<CInventoryAddItemRequest> = {
       writer.uint32(8).uint32(message.appid);
     }
     for (const v of message.itemdefid) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(16).uint64(v!);
     }
     for (const v of message.itempropsjson) {
@@ -534,13 +558,19 @@ export const CInventoryAddItemRequest: MessageFns<CInventoryAddItemRequest> = {
     for (const v of message.itemquantity) {
       writer.uint32(72).uint32(v!);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.steamid);
     }
     if (message.notify !== undefined && message.notify !== false) {
       writer.uint32(40).bool(message.notify);
     }
-    if (message.requestid !== undefined && message.requestid !== 0) {
+    if (message.requestid !== undefined && message.requestid !== 0n) {
+      if (BigInt.asUintN(64, message.requestid) !== message.requestid) {
+        throw new globalThis.Error("value provided for field message.requestid of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.requestid);
     }
     if (message.tradeRestriction !== undefined && message.tradeRestriction !== false) {
@@ -569,7 +599,7 @@ export const CInventoryAddItemRequest: MessageFns<CInventoryAddItemRequest> = {
         }
         case 2: {
           if (tag === 16) {
-            message.itemdefid.push(longToNumber(reader.uint64()));
+            message.itemdefid.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -577,7 +607,7 @@ export const CInventoryAddItemRequest: MessageFns<CInventoryAddItemRequest> = {
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.itemdefid.push(longToNumber(reader.uint64()));
+              message.itemdefid.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -616,7 +646,7 @@ export const CInventoryAddItemRequest: MessageFns<CInventoryAddItemRequest> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -632,7 +662,7 @@ export const CInventoryAddItemRequest: MessageFns<CInventoryAddItemRequest> = {
             break;
           }
 
-          message.requestid = longToNumber(reader.uint64());
+          message.requestid = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -662,7 +692,7 @@ export const CInventoryAddItemRequest: MessageFns<CInventoryAddItemRequest> = {
 };
 
 function createBaseCInventoryModifyItemsRequest(): CInventoryModifyItemsRequest {
-  return { appid: 0, steamid: 0, updates: [], timestamp: 0 };
+  return { appid: 0, steamid: 0n, updates: [], timestamp: 0 };
 }
 
 export const CInventoryModifyItemsRequest: MessageFns<CInventoryModifyItemsRequest> = {
@@ -670,7 +700,10 @@ export const CInventoryModifyItemsRequest: MessageFns<CInventoryModifyItemsReque
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.steamid);
     }
     for (const v of message.updates) {
@@ -702,7 +735,7 @@ export const CInventoryModifyItemsRequest: MessageFns<CInventoryModifyItemsReque
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -733,11 +766,11 @@ export const CInventoryModifyItemsRequest: MessageFns<CInventoryModifyItemsReque
 
 function createBaseCInventoryModifyItemsRequest_ItemPropertyUpdate(): CInventoryModifyItemsRequest_ItemPropertyUpdate {
   return {
-    itemid: 0,
+    itemid: 0n,
     removeProperty: false,
     propertyName: "",
     propertyValueBool: false,
-    propertyValueInt: 0,
+    propertyValueInt: 0n,
     propertyValueString: "",
     propertyValueFloat: 0,
   };
@@ -750,7 +783,10 @@ export const CInventoryModifyItemsRequest_ItemPropertyUpdate: MessageFns<
     message: CInventoryModifyItemsRequest_ItemPropertyUpdate,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.itemid !== undefined && message.itemid !== 0) {
+    if (message.itemid !== undefined && message.itemid !== 0n) {
+      if (BigInt.asUintN(64, message.itemid) !== message.itemid) {
+        throw new globalThis.Error("value provided for field message.itemid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.itemid);
     }
     if (message.removeProperty !== undefined && message.removeProperty !== false) {
@@ -762,7 +798,10 @@ export const CInventoryModifyItemsRequest_ItemPropertyUpdate: MessageFns<
     if (message.propertyValueBool !== undefined && message.propertyValueBool !== false) {
       writer.uint32(32).bool(message.propertyValueBool);
     }
-    if (message.propertyValueInt !== undefined && message.propertyValueInt !== 0) {
+    if (message.propertyValueInt !== undefined && message.propertyValueInt !== 0n) {
+      if (BigInt.asIntN(64, message.propertyValueInt) !== message.propertyValueInt) {
+        throw new globalThis.Error("value provided for field message.propertyValueInt of type int64 too large");
+      }
       writer.uint32(40).int64(message.propertyValueInt);
     }
     if (message.propertyValueString !== undefined && message.propertyValueString !== "") {
@@ -786,7 +825,7 @@ export const CInventoryModifyItemsRequest_ItemPropertyUpdate: MessageFns<
             break;
           }
 
-          message.itemid = longToNumber(reader.uint64());
+          message.itemid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -818,7 +857,7 @@ export const CInventoryModifyItemsRequest_ItemPropertyUpdate: MessageFns<
             break;
           }
 
-          message.propertyValueInt = longToNumber(reader.int64());
+          message.propertyValueInt = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -848,7 +887,7 @@ export const CInventoryModifyItemsRequest_ItemPropertyUpdate: MessageFns<
 };
 
 function createBaseCInventoryConsumePlaytimeRequest(): CInventoryConsumePlaytimeRequest {
-  return { appid: 0, itemdefid: 0 };
+  return { appid: 0, itemdefid: 0n };
 }
 
 export const CInventoryConsumePlaytimeRequest: MessageFns<CInventoryConsumePlaytimeRequest> = {
@@ -856,7 +895,10 @@ export const CInventoryConsumePlaytimeRequest: MessageFns<CInventoryConsumePlayt
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.itemdefid !== undefined && message.itemdefid !== 0) {
+    if (message.itemdefid !== undefined && message.itemdefid !== 0n) {
+      if (BigInt.asUintN(64, message.itemdefid) !== message.itemdefid) {
+        throw new globalThis.Error("value provided for field message.itemdefid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.itemdefid);
     }
     return writer;
@@ -882,7 +924,7 @@ export const CInventoryConsumePlaytimeRequest: MessageFns<CInventoryConsumePlayt
             break;
           }
 
-          message.itemdefid = longToNumber(reader.uint64());
+          message.itemdefid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -896,7 +938,7 @@ export const CInventoryConsumePlaytimeRequest: MessageFns<CInventoryConsumePlayt
 };
 
 function createBaseCInventoryConsumeItemRequest(): CInventoryConsumeItemRequest {
-  return { appid: 0, itemid: 0, quantity: 0, timestamp: "", steamid: 0, requestid: 0 };
+  return { appid: 0, itemid: 0n, quantity: 0, timestamp: "", steamid: 0n, requestid: 0n };
 }
 
 export const CInventoryConsumeItemRequest: MessageFns<CInventoryConsumeItemRequest> = {
@@ -904,7 +946,10 @@ export const CInventoryConsumeItemRequest: MessageFns<CInventoryConsumeItemReque
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.itemid !== undefined && message.itemid !== 0) {
+    if (message.itemid !== undefined && message.itemid !== 0n) {
+      if (BigInt.asUintN(64, message.itemid) !== message.itemid) {
+        throw new globalThis.Error("value provided for field message.itemid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.itemid);
     }
     if (message.quantity !== undefined && message.quantity !== 0) {
@@ -913,10 +958,16 @@ export const CInventoryConsumeItemRequest: MessageFns<CInventoryConsumeItemReque
     if (message.timestamp !== undefined && message.timestamp !== "") {
       writer.uint32(34).string(message.timestamp);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.steamid);
     }
-    if (message.requestid !== undefined && message.requestid !== 0) {
+    if (message.requestid !== undefined && message.requestid !== 0n) {
+      if (BigInt.asUintN(64, message.requestid) !== message.requestid) {
+        throw new globalThis.Error("value provided for field message.requestid of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.requestid);
     }
     return writer;
@@ -942,7 +993,7 @@ export const CInventoryConsumeItemRequest: MessageFns<CInventoryConsumeItemReque
             break;
           }
 
-          message.itemid = longToNumber(reader.uint64());
+          message.itemid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -966,7 +1017,7 @@ export const CInventoryConsumeItemRequest: MessageFns<CInventoryConsumeItemReque
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -974,7 +1025,7 @@ export const CInventoryConsumeItemRequest: MessageFns<CInventoryConsumeItemReque
             break;
           }
 
-          message.requestid = longToNumber(reader.uint64());
+          message.requestid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -988,7 +1039,7 @@ export const CInventoryConsumeItemRequest: MessageFns<CInventoryConsumeItemReque
 };
 
 function createBaseCInventoryDevSetNextDropRequest(): CInventoryDevSetNextDropRequest {
-  return { appid: 0, itemdefid: 0, droptime: "" };
+  return { appid: 0, itemdefid: 0n, droptime: "" };
 }
 
 export const CInventoryDevSetNextDropRequest: MessageFns<CInventoryDevSetNextDropRequest> = {
@@ -996,7 +1047,10 @@ export const CInventoryDevSetNextDropRequest: MessageFns<CInventoryDevSetNextDro
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.itemdefid !== undefined && message.itemdefid !== 0) {
+    if (message.itemdefid !== undefined && message.itemdefid !== 0n) {
+      if (BigInt.asUintN(64, message.itemdefid) !== message.itemdefid) {
+        throw new globalThis.Error("value provided for field message.itemdefid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.itemdefid);
     }
     if (message.droptime !== undefined && message.droptime !== "") {
@@ -1025,7 +1079,7 @@ export const CInventoryDevSetNextDropRequest: MessageFns<CInventoryDevSetNextDro
             break;
           }
 
-          message.itemdefid = longToNumber(reader.uint64());
+          message.itemdefid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1047,7 +1101,7 @@ export const CInventoryDevSetNextDropRequest: MessageFns<CInventoryDevSetNextDro
 };
 
 function createBaseCInventorySplitItemStackRequest(): CInventorySplitItemStackRequest {
-  return { appid: 0, itemid: 0, quantity: 0, steamid: 0 };
+  return { appid: 0, itemid: 0n, quantity: 0, steamid: 0n };
 }
 
 export const CInventorySplitItemStackRequest: MessageFns<CInventorySplitItemStackRequest> = {
@@ -1055,13 +1109,19 @@ export const CInventorySplitItemStackRequest: MessageFns<CInventorySplitItemStac
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.itemid !== undefined && message.itemid !== 0) {
+    if (message.itemid !== undefined && message.itemid !== 0n) {
+      if (BigInt.asUintN(64, message.itemid) !== message.itemid) {
+        throw new globalThis.Error("value provided for field message.itemid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.itemid);
     }
     if (message.quantity !== undefined && message.quantity !== 0) {
       writer.uint32(24).uint32(message.quantity);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.steamid);
     }
     return writer;
@@ -1087,7 +1147,7 @@ export const CInventorySplitItemStackRequest: MessageFns<CInventorySplitItemStac
             break;
           }
 
-          message.itemid = longToNumber(reader.uint64());
+          message.itemid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1103,7 +1163,7 @@ export const CInventorySplitItemStackRequest: MessageFns<CInventorySplitItemStac
             break;
           }
 
-          message.steamid = longToNumber(reader.uint64());
+          message.steamid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1117,7 +1177,7 @@ export const CInventorySplitItemStackRequest: MessageFns<CInventorySplitItemStac
 };
 
 function createBaseCInventoryCombineItemStacksRequest(): CInventoryCombineItemStacksRequest {
-  return { appid: 0, fromitemid: 0, destitemid: 0, quantity: 0, steamid: 0 };
+  return { appid: 0, fromitemid: 0n, destitemid: 0n, quantity: 0, steamid: 0n };
 }
 
 export const CInventoryCombineItemStacksRequest: MessageFns<CInventoryCombineItemStacksRequest> = {
@@ -1125,16 +1185,25 @@ export const CInventoryCombineItemStacksRequest: MessageFns<CInventoryCombineIte
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.fromitemid !== undefined && message.fromitemid !== 0) {
+    if (message.fromitemid !== undefined && message.fromitemid !== 0n) {
+      if (BigInt.asUintN(64, message.fromitemid) !== message.fromitemid) {
+        throw new globalThis.Error("value provided for field message.fromitemid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.fromitemid);
     }
-    if (message.destitemid !== undefined && message.destitemid !== 0) {
+    if (message.destitemid !== undefined && message.destitemid !== 0n) {
+      if (BigInt.asUintN(64, message.destitemid) !== message.destitemid) {
+        throw new globalThis.Error("value provided for field message.destitemid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.destitemid);
     }
     if (message.quantity !== undefined && message.quantity !== 0) {
       writer.uint32(32).uint32(message.quantity);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(57).fixed64(message.steamid);
     }
     return writer;
@@ -1160,7 +1229,7 @@ export const CInventoryCombineItemStacksRequest: MessageFns<CInventoryCombineIte
             break;
           }
 
-          message.fromitemid = longToNumber(reader.uint64());
+          message.fromitemid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -1168,7 +1237,7 @@ export const CInventoryCombineItemStacksRequest: MessageFns<CInventoryCombineIte
             break;
           }
 
-          message.destitemid = longToNumber(reader.uint64());
+          message.destitemid = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -1184,7 +1253,7 @@ export const CInventoryCombineItemStacksRequest: MessageFns<CInventoryCombineIte
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1405,12 +1474,15 @@ export const CInventoryPurchaseInitRequest: MessageFns<CInventoryPurchaseInitReq
 };
 
 function createBaseCInventoryPurchaseInitRequest_LineItem(): CInventoryPurchaseInitRequest_LineItem {
-  return { itemdefid: 0, quantity: 0 };
+  return { itemdefid: 0n, quantity: 0 };
 }
 
 export const CInventoryPurchaseInitRequest_LineItem: MessageFns<CInventoryPurchaseInitRequest_LineItem> = {
   encode(message: CInventoryPurchaseInitRequest_LineItem, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.itemdefid !== undefined && message.itemdefid !== 0) {
+    if (message.itemdefid !== undefined && message.itemdefid !== 0n) {
+      if (BigInt.asUintN(64, message.itemdefid) !== message.itemdefid) {
+        throw new globalThis.Error("value provided for field message.itemdefid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.itemdefid);
     }
     if (message.quantity !== undefined && message.quantity !== 0) {
@@ -1431,7 +1503,7 @@ export const CInventoryPurchaseInitRequest_LineItem: MessageFns<CInventoryPurcha
             break;
           }
 
-          message.itemdefid = longToNumber(reader.uint64());
+          message.itemdefid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1453,15 +1525,21 @@ export const CInventoryPurchaseInitRequest_LineItem: MessageFns<CInventoryPurcha
 };
 
 function createBaseCInventoryPurchaseInitResponse(): CInventoryPurchaseInitResponse {
-  return { orderid: 0, transid: 0 };
+  return { orderid: 0n, transid: 0n };
 }
 
 export const CInventoryPurchaseInitResponse: MessageFns<CInventoryPurchaseInitResponse> = {
   encode(message: CInventoryPurchaseInitResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.orderid !== undefined && message.orderid !== 0) {
+    if (message.orderid !== undefined && message.orderid !== 0n) {
+      if (BigInt.asUintN(64, message.orderid) !== message.orderid) {
+        throw new globalThis.Error("value provided for field message.orderid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.orderid);
     }
-    if (message.transid !== undefined && message.transid !== 0) {
+    if (message.transid !== undefined && message.transid !== 0n) {
+      if (BigInt.asUintN(64, message.transid) !== message.transid) {
+        throw new globalThis.Error("value provided for field message.transid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.transid);
     }
     return writer;
@@ -1479,7 +1557,7 @@ export const CInventoryPurchaseInitResponse: MessageFns<CInventoryPurchaseInitRe
             break;
           }
 
-          message.orderid = longToNumber(reader.uint64());
+          message.orderid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1487,7 +1565,7 @@ export const CInventoryPurchaseInitResponse: MessageFns<CInventoryPurchaseInitRe
             break;
           }
 
-          message.transid = longToNumber(reader.uint64());
+          message.transid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1501,7 +1579,7 @@ export const CInventoryPurchaseInitResponse: MessageFns<CInventoryPurchaseInitRe
 };
 
 function createBaseCInventoryPurchaseFinalizeRequest(): CInventoryPurchaseFinalizeRequest {
-  return { appid: 0, language: 0, orderid: 0 };
+  return { appid: 0, language: 0, orderid: 0n };
 }
 
 export const CInventoryPurchaseFinalizeRequest: MessageFns<CInventoryPurchaseFinalizeRequest> = {
@@ -1512,7 +1590,10 @@ export const CInventoryPurchaseFinalizeRequest: MessageFns<CInventoryPurchaseFin
     if (message.language !== undefined && message.language !== 0) {
       writer.uint32(16).int32(message.language);
     }
-    if (message.orderid !== undefined && message.orderid !== 0) {
+    if (message.orderid !== undefined && message.orderid !== 0n) {
+      if (BigInt.asUintN(64, message.orderid) !== message.orderid) {
+        throw new globalThis.Error("value provided for field message.orderid of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.orderid);
     }
     return writer;
@@ -1546,7 +1627,7 @@ export const CInventoryPurchaseFinalizeRequest: MessageFns<CInventoryPurchaseFin
             break;
           }
 
-          message.orderid = longToNumber(reader.uint64());
+          message.orderid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1560,15 +1641,21 @@ export const CInventoryPurchaseFinalizeRequest: MessageFns<CInventoryPurchaseFin
 };
 
 function createBaseCInventoryInspectItemRequest(): CInventoryInspectItemRequest {
-  return { itemdefid: 0, itemid: 0, tags: "" };
+  return { itemdefid: 0n, itemid: 0n, tags: "" };
 }
 
 export const CInventoryInspectItemRequest: MessageFns<CInventoryInspectItemRequest> = {
   encode(message: CInventoryInspectItemRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.itemdefid !== undefined && message.itemdefid !== 0) {
+    if (message.itemdefid !== undefined && message.itemdefid !== 0n) {
+      if (BigInt.asUintN(64, message.itemdefid) !== message.itemdefid) {
+        throw new globalThis.Error("value provided for field message.itemdefid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.itemdefid);
     }
-    if (message.itemid !== undefined && message.itemid !== 0) {
+    if (message.itemid !== undefined && message.itemid !== 0n) {
+      if (BigInt.asUintN(64, message.itemid) !== message.itemid) {
+        throw new globalThis.Error("value provided for field message.itemid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.itemid);
     }
     if (message.tags !== undefined && message.tags !== "") {
@@ -1589,7 +1676,7 @@ export const CInventoryInspectItemRequest: MessageFns<CInventoryInspectItemReque
             break;
           }
 
-          message.itemdefid = longToNumber(reader.uint64());
+          message.itemdefid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1597,7 +1684,7 @@ export const CInventoryInspectItemRequest: MessageFns<CInventoryInspectItemReque
             break;
           }
 
-          message.itemid = longToNumber(reader.fixed64());
+          message.itemid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1832,17 +1919,6 @@ export class InventoryClientClientImpl implements InventoryClient {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

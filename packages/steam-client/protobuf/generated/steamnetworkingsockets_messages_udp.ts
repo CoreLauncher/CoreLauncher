@@ -29,39 +29,39 @@ export enum ESteamNetworkingUDPMsgID {
 
 export interface CMsgSteamSocketsUDPChallengeRequest {
   connectionId?: number | undefined;
-  myTimestamp?: number | undefined;
+  myTimestamp?: bigint | undefined;
   protocolVersion?: number | undefined;
 }
 
 export interface CMsgSteamSocketsUDPChallengeReply {
   connectionId?: number | undefined;
-  challenge?: number | undefined;
-  yourTimestamp?: number | undefined;
+  challenge?: bigint | undefined;
+  yourTimestamp?: bigint | undefined;
   protocolVersion?: number | undefined;
 }
 
 export interface CMsgSteamSocketsUDPConnectRequest {
   clientConnectionId?: number | undefined;
-  challenge?: number | undefined;
-  myTimestamp?: number | undefined;
+  challenge?: bigint | undefined;
+  myTimestamp?: bigint | undefined;
   pingEstMs?: number | undefined;
   crypt?: CMsgSteamDatagramSessionCryptInfoSigned | undefined;
   cert?: CMsgSteamDatagramCertificateSigned | undefined;
   legacyProtocolVersion?: number | undefined;
   identityString?: string | undefined;
-  legacyClientSteamId?: number | undefined;
+  legacyClientSteamId?: bigint | undefined;
   legacyIdentityBinary?: CMsgSteamNetworkingIdentityLegacyBinary | undefined;
 }
 
 export interface CMsgSteamSocketsUDPConnectOK {
   clientConnectionId?: number | undefined;
   serverConnectionId?: number | undefined;
-  yourTimestamp?: number | undefined;
+  yourTimestamp?: bigint | undefined;
   delayTimeUsec?: number | undefined;
   crypt?: CMsgSteamDatagramSessionCryptInfoSigned | undefined;
   cert?: CMsgSteamDatagramCertificateSigned | undefined;
   identityString?: string | undefined;
-  legacyServerSteamId?: number | undefined;
+  legacyServerSteamId?: bigint | undefined;
   legacyIdentityBinary?: CMsgSteamNetworkingIdentityLegacyBinary | undefined;
 }
 
@@ -90,7 +90,7 @@ export enum CMsgSteamSocketsUDPStats_Flags {
 }
 
 function createBaseCMsgSteamSocketsUDPChallengeRequest(): CMsgSteamSocketsUDPChallengeRequest {
-  return { connectionId: 0, myTimestamp: 0, protocolVersion: 0 };
+  return { connectionId: 0, myTimestamp: 0n, protocolVersion: 0 };
 }
 
 export const CMsgSteamSocketsUDPChallengeRequest: MessageFns<CMsgSteamSocketsUDPChallengeRequest> = {
@@ -98,7 +98,10 @@ export const CMsgSteamSocketsUDPChallengeRequest: MessageFns<CMsgSteamSocketsUDP
     if (message.connectionId !== undefined && message.connectionId !== 0) {
       writer.uint32(13).fixed32(message.connectionId);
     }
-    if (message.myTimestamp !== undefined && message.myTimestamp !== 0) {
+    if (message.myTimestamp !== undefined && message.myTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.myTimestamp) !== message.myTimestamp) {
+        throw new globalThis.Error("value provided for field message.myTimestamp of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.myTimestamp);
     }
     if (message.protocolVersion !== undefined && message.protocolVersion !== 0) {
@@ -127,7 +130,7 @@ export const CMsgSteamSocketsUDPChallengeRequest: MessageFns<CMsgSteamSocketsUDP
             break;
           }
 
-          message.myTimestamp = longToNumber(reader.fixed64());
+          message.myTimestamp = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -149,7 +152,7 @@ export const CMsgSteamSocketsUDPChallengeRequest: MessageFns<CMsgSteamSocketsUDP
 };
 
 function createBaseCMsgSteamSocketsUDPChallengeReply(): CMsgSteamSocketsUDPChallengeReply {
-  return { connectionId: 0, challenge: 0, yourTimestamp: 0, protocolVersion: 0 };
+  return { connectionId: 0, challenge: 0n, yourTimestamp: 0n, protocolVersion: 0 };
 }
 
 export const CMsgSteamSocketsUDPChallengeReply: MessageFns<CMsgSteamSocketsUDPChallengeReply> = {
@@ -157,10 +160,16 @@ export const CMsgSteamSocketsUDPChallengeReply: MessageFns<CMsgSteamSocketsUDPCh
     if (message.connectionId !== undefined && message.connectionId !== 0) {
       writer.uint32(13).fixed32(message.connectionId);
     }
-    if (message.challenge !== undefined && message.challenge !== 0) {
+    if (message.challenge !== undefined && message.challenge !== 0n) {
+      if (BigInt.asUintN(64, message.challenge) !== message.challenge) {
+        throw new globalThis.Error("value provided for field message.challenge of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.challenge);
     }
-    if (message.yourTimestamp !== undefined && message.yourTimestamp !== 0) {
+    if (message.yourTimestamp !== undefined && message.yourTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.yourTimestamp) !== message.yourTimestamp) {
+        throw new globalThis.Error("value provided for field message.yourTimestamp of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.yourTimestamp);
     }
     if (message.protocolVersion !== undefined && message.protocolVersion !== 0) {
@@ -189,7 +198,7 @@ export const CMsgSteamSocketsUDPChallengeReply: MessageFns<CMsgSteamSocketsUDPCh
             break;
           }
 
-          message.challenge = longToNumber(reader.fixed64());
+          message.challenge = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -197,7 +206,7 @@ export const CMsgSteamSocketsUDPChallengeReply: MessageFns<CMsgSteamSocketsUDPCh
             break;
           }
 
-          message.yourTimestamp = longToNumber(reader.fixed64());
+          message.yourTimestamp = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -221,14 +230,14 @@ export const CMsgSteamSocketsUDPChallengeReply: MessageFns<CMsgSteamSocketsUDPCh
 function createBaseCMsgSteamSocketsUDPConnectRequest(): CMsgSteamSocketsUDPConnectRequest {
   return {
     clientConnectionId: 0,
-    challenge: 0,
-    myTimestamp: 0,
+    challenge: 0n,
+    myTimestamp: 0n,
     pingEstMs: 0,
     crypt: undefined,
     cert: undefined,
     legacyProtocolVersion: 0,
     identityString: "",
-    legacyClientSteamId: 0,
+    legacyClientSteamId: 0n,
     legacyIdentityBinary: undefined,
   };
 }
@@ -238,10 +247,16 @@ export const CMsgSteamSocketsUDPConnectRequest: MessageFns<CMsgSteamSocketsUDPCo
     if (message.clientConnectionId !== undefined && message.clientConnectionId !== 0) {
       writer.uint32(13).fixed32(message.clientConnectionId);
     }
-    if (message.challenge !== undefined && message.challenge !== 0) {
+    if (message.challenge !== undefined && message.challenge !== 0n) {
+      if (BigInt.asUintN(64, message.challenge) !== message.challenge) {
+        throw new globalThis.Error("value provided for field message.challenge of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.challenge);
     }
-    if (message.myTimestamp !== undefined && message.myTimestamp !== 0) {
+    if (message.myTimestamp !== undefined && message.myTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.myTimestamp) !== message.myTimestamp) {
+        throw new globalThis.Error("value provided for field message.myTimestamp of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.myTimestamp);
     }
     if (message.pingEstMs !== undefined && message.pingEstMs !== 0) {
@@ -259,7 +274,10 @@ export const CMsgSteamSocketsUDPConnectRequest: MessageFns<CMsgSteamSocketsUDPCo
     if (message.identityString !== undefined && message.identityString !== "") {
       writer.uint32(82).string(message.identityString);
     }
-    if (message.legacyClientSteamId !== undefined && message.legacyClientSteamId !== 0) {
+    if (message.legacyClientSteamId !== undefined && message.legacyClientSteamId !== 0n) {
+      if (BigInt.asUintN(64, message.legacyClientSteamId) !== message.legacyClientSteamId) {
+        throw new globalThis.Error("value provided for field message.legacyClientSteamId of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.legacyClientSteamId);
     }
     if (message.legacyIdentityBinary !== undefined) {
@@ -288,7 +306,7 @@ export const CMsgSteamSocketsUDPConnectRequest: MessageFns<CMsgSteamSocketsUDPCo
             break;
           }
 
-          message.challenge = longToNumber(reader.fixed64());
+          message.challenge = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -296,7 +314,7 @@ export const CMsgSteamSocketsUDPConnectRequest: MessageFns<CMsgSteamSocketsUDPCo
             break;
           }
 
-          message.myTimestamp = longToNumber(reader.fixed64());
+          message.myTimestamp = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -344,7 +362,7 @@ export const CMsgSteamSocketsUDPConnectRequest: MessageFns<CMsgSteamSocketsUDPCo
             break;
           }
 
-          message.legacyClientSteamId = longToNumber(reader.fixed64());
+          message.legacyClientSteamId = reader.fixed64() as bigint;
           continue;
         }
         case 9: {
@@ -369,12 +387,12 @@ function createBaseCMsgSteamSocketsUDPConnectOK(): CMsgSteamSocketsUDPConnectOK 
   return {
     clientConnectionId: 0,
     serverConnectionId: 0,
-    yourTimestamp: 0,
+    yourTimestamp: 0n,
     delayTimeUsec: 0,
     crypt: undefined,
     cert: undefined,
     identityString: "",
-    legacyServerSteamId: 0,
+    legacyServerSteamId: 0n,
     legacyIdentityBinary: undefined,
   };
 }
@@ -387,7 +405,10 @@ export const CMsgSteamSocketsUDPConnectOK: MessageFns<CMsgSteamSocketsUDPConnect
     if (message.serverConnectionId !== undefined && message.serverConnectionId !== 0) {
       writer.uint32(45).fixed32(message.serverConnectionId);
     }
-    if (message.yourTimestamp !== undefined && message.yourTimestamp !== 0) {
+    if (message.yourTimestamp !== undefined && message.yourTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.yourTimestamp) !== message.yourTimestamp) {
+        throw new globalThis.Error("value provided for field message.yourTimestamp of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.yourTimestamp);
     }
     if (message.delayTimeUsec !== undefined && message.delayTimeUsec !== 0) {
@@ -402,7 +423,10 @@ export const CMsgSteamSocketsUDPConnectOK: MessageFns<CMsgSteamSocketsUDPConnect
     if (message.identityString !== undefined && message.identityString !== "") {
       writer.uint32(90).string(message.identityString);
     }
-    if (message.legacyServerSteamId !== undefined && message.legacyServerSteamId !== 0) {
+    if (message.legacyServerSteamId !== undefined && message.legacyServerSteamId !== 0n) {
+      if (BigInt.asUintN(64, message.legacyServerSteamId) !== message.legacyServerSteamId) {
+        throw new globalThis.Error("value provided for field message.legacyServerSteamId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.legacyServerSteamId);
     }
     if (message.legacyIdentityBinary !== undefined) {
@@ -439,7 +463,7 @@ export const CMsgSteamSocketsUDPConnectOK: MessageFns<CMsgSteamSocketsUDPConnect
             break;
           }
 
-          message.yourTimestamp = longToNumber(reader.fixed64());
+          message.yourTimestamp = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -479,7 +503,7 @@ export const CMsgSteamSocketsUDPConnectOK: MessageFns<CMsgSteamSocketsUDPConnect
             break;
           }
 
-          message.legacyServerSteamId = longToNumber(reader.fixed64());
+          message.legacyServerSteamId = reader.fixed64() as bigint;
           continue;
         }
         case 10: {
@@ -665,17 +689,6 @@ export const CMsgSteamSocketsUDPStats: MessageFns<CMsgSteamSocketsUDPStats> = {
     return message;
   },
 };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

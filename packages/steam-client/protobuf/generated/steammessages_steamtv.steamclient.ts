@@ -54,7 +54,7 @@ export interface CSteamTVCreateBroadcastChannelRequest {
 }
 
 export interface CSteamTVCreateBroadcastChannelResponse {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVGetBroadcastChannelIDRequest {
@@ -62,13 +62,13 @@ export interface CSteamTVGetBroadcastChannelIDRequest {
 }
 
 export interface CSteamTVGetBroadcastChannelIDResponse {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
   uniqueName?: string | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CSteamTVSetBroadcastChannelProfileRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
   name?: string | undefined;
   language?: string | undefined;
   headline?: string | undefined;
@@ -83,12 +83,12 @@ export interface CSteamTVSetBroadcastChannelProfileResponse {
 }
 
 export interface CSteamTVGetBroadcastChannelProfileRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVGetBroadcastChannelProfileResponse {
   uniqueName?: string | undefined;
-  ownerSteamid?: number | undefined;
+  ownerSteamid?: bigint | undefined;
   name?: string | undefined;
   language?: string | undefined;
   headline?: string | undefined;
@@ -100,7 +100,7 @@ export interface CSteamTVGetBroadcastChannelProfileResponse {
 }
 
 export interface CSteamTVSetBroadcastChannelImageRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
   imageType?: EBroadcastImageType | undefined;
   imageIndex?: number | undefined;
   imageWidth?: number | undefined;
@@ -116,7 +116,7 @@ export interface CSteamTVSetBroadcastChannelImageResponse {
 }
 
 export interface CSteamTVGetBroadcastChannelImagesRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
   imageTypes: EBroadcastImageType[];
 }
 
@@ -131,7 +131,7 @@ export interface CSteamTVGetBroadcastChannelImagesResponse_Images {
 }
 
 export interface CSteamTVSetBroadcastChannelLinkRegionsRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
   links: CSteamTVSetBroadcastChannelLinkRegionsRequest_Links[];
 }
 
@@ -149,7 +149,7 @@ export interface CSteamTVSetBroadcastChannelLinkRegionsResponse {
 }
 
 export interface CSteamTVGetBroadcastChannelLinksRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVGetBroadcastChannelLinksResponse {
@@ -167,7 +167,7 @@ export interface CSteamTVGetBroadcastChannelLinksResponse_Links {
 }
 
 export interface CSteamTVGetBroadcastChannelBroadcastersRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVGetBroadcastChannelBroadcastersResponse {
@@ -175,7 +175,7 @@ export interface CSteamTVGetBroadcastChannelBroadcastersResponse {
 }
 
 export interface CSteamTVGetBroadcastChannelBroadcastersResponse_Broadcaster {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   name?: string | undefined;
   rtmpToken?: string | undefined;
 }
@@ -184,18 +184,18 @@ export interface CSteamTVGetFollowedChannelsRequest {
 }
 
 export interface GetBroadcastChannelEntry {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
   uniqueName?: string | undefined;
   name?: string | undefined;
   appid?: number | undefined;
-  viewers?: number | undefined;
-  views?: number | undefined;
+  viewers?: bigint | undefined;
+  views?: bigint | undefined;
   thumbnailUrl?: string | undefined;
-  followers?: number | undefined;
+  followers?: bigint | undefined;
   headline?: string | undefined;
   avatarUrl?: string | undefined;
-  broadcasterSteamid?: number | undefined;
-  subscribers?: number | undefined;
+  broadcasterSteamid?: bigint | undefined;
+  subscribers?: bigint | undefined;
   backgroundUrl?: string | undefined;
   isFeatured?: boolean | undefined;
   isDisabled?: boolean | undefined;
@@ -217,25 +217,25 @@ export interface CSteamTVGetSubscribedChannelsResponse {
 }
 
 export interface CSteamTVGetBroadcastChannelStatusRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVGetBroadcastChannelStatusResponse {
   isLive?: boolean | undefined;
   isDisabled?: boolean | undefined;
   appid?: number | undefined;
-  viewers?: number | undefined;
-  views?: number | undefined;
-  broadcasterSteamid?: number | undefined;
+  viewers?: bigint | undefined;
+  views?: bigint | undefined;
+  broadcasterSteamid?: bigint | undefined;
   thumbnailUrl?: string | undefined;
-  followers?: number | undefined;
-  subscribers?: number | undefined;
+  followers?: bigint | undefined;
+  subscribers?: bigint | undefined;
   uniqueName?: string | undefined;
-  broadcastSessionId?: number | undefined;
+  broadcastSessionId?: bigint | undefined;
 }
 
 export interface CSteamTVFollowBroadcastChannelRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
   undo?: boolean | undefined;
 }
 
@@ -244,7 +244,7 @@ export interface CSteamTVFollowBroadcastChannelResponse {
 }
 
 export interface CSteamTVSubscribeBroadcastChannelRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVSubscribeBroadcastChannelResponse {
@@ -252,15 +252,15 @@ export interface CSteamTVSubscribeBroadcastChannelResponse {
 }
 
 export interface CSteamTVGetBroadcastChannelClipsRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVBroadcastClipInfo {
-  broadcastClipId?: number | undefined;
-  channelId?: number | undefined;
+  broadcastClipId?: bigint | undefined;
+  channelId?: bigint | undefined;
   appId?: number | undefined;
-  broadcasterSteamid?: number | undefined;
-  creatorSteamid?: number | undefined;
+  broadcasterSteamid?: bigint | undefined;
+  creatorSteamid?: bigint | undefined;
   videoDescription?: string | undefined;
   liveTime?: number | undefined;
   lengthMs?: number | undefined;
@@ -273,7 +273,7 @@ export interface CSteamTVGetBroadcastChannelClipsResponse {
 }
 
 export interface CSteamTVReportBroadcastChannelRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
   reason?: string | undefined;
 }
 
@@ -281,7 +281,7 @@ export interface CSteamTVReportBroadcastChannelResponse {
 }
 
 export interface CSteamTVGetBroadcastChannelInteractionRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVGetBroadcastChannelInteractionResponse {
@@ -299,7 +299,7 @@ export interface CSteamTVGame {
   appid?: number | undefined;
   name?: string | undefined;
   image?: string | undefined;
-  viewers?: number | undefined;
+  viewers?: bigint | undefined;
   channels: GetBroadcastChannelEntry[];
   releaseDate?: string | undefined;
   developer?: string | undefined;
@@ -321,8 +321,8 @@ export interface CSteamTVGetChannelsResponse {
 }
 
 export interface CSteamTVAddChatBanRequest {
-  broadcastChannelId?: number | undefined;
-  chatterSteamid?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
+  chatterSteamid?: bigint | undefined;
   duration?: number | undefined;
   permanent?: boolean | undefined;
   undo?: boolean | undefined;
@@ -332,12 +332,12 @@ export interface CSteamTVAddChatBanResponse {
 }
 
 export interface CSteamTVGetChatBansRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVChatBan {
-  issuerSteamid?: number | undefined;
-  chatterSteamid?: number | undefined;
+  issuerSteamid?: bigint | undefined;
+  chatterSteamid?: bigint | undefined;
   timeExpires?: string | undefined;
   permanent?: boolean | undefined;
   name?: string | undefined;
@@ -348,8 +348,8 @@ export interface CSteamTVGetChatBansResponse {
 }
 
 export interface CSteamTVAddChatModeratorRequest {
-  broadcastChannelId?: number | undefined;
-  moderatorSteamid?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
+  moderatorSteamid?: bigint | undefined;
   undo?: boolean | undefined;
 }
 
@@ -357,11 +357,11 @@ export interface CSteamTVAddChatModeratorResponse {
 }
 
 export interface CSteamTVGetChatModeratorsRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVChatModerator {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   name?: string | undefined;
 }
 
@@ -370,7 +370,7 @@ export interface CSteamTVGetChatModeratorsResponse {
 }
 
 export interface CSteamTVAddWordBanRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
   word?: string | undefined;
   undo?: boolean | undefined;
 }
@@ -379,7 +379,7 @@ export interface CSteamTVAddWordBanResponse {
 }
 
 export interface CSteamTVGetWordBansRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVGetWordBansResponse {
@@ -387,13 +387,13 @@ export interface CSteamTVGetWordBansResponse {
 }
 
 export interface CSteamTVJoinChatRequest {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
 }
 
 export interface CSteamTVJoinChatResponse {
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
   viewUrlTemplate?: string | undefined;
-  flairGroupIds: number[];
+  flairGroupIds: bigint[];
 }
 
 export interface CSteamTVSearchRequest {
@@ -464,7 +464,7 @@ export interface CSteamTVHomePageTemplateConveyorBelt {
 export interface CSteamTVHomePageTemplateWatchParty {
   broadcast?: GetBroadcastChannelEntry | undefined;
   title?: string | undefined;
-  chatGroupId?: number | undefined;
+  chatGroupId?: bigint | undefined;
 }
 
 export interface CSteamTVHomePageTemplateDeveloper {
@@ -499,7 +499,7 @@ export interface CSteamTVAppCheerSingleCheerType {
 
 export interface CSteamTVAppCheerRequest {
   appId?: number | undefined;
-  cheerTargetId?: number | undefined;
+  cheerTargetId?: bigint | undefined;
   cheers: CSteamTVAppCheerSingleCheerType[];
 }
 
@@ -545,12 +545,15 @@ export const CSteamTVCreateBroadcastChannelRequest: MessageFns<CSteamTVCreateBro
 };
 
 function createBaseCSteamTVCreateBroadcastChannelResponse(): CSteamTVCreateBroadcastChannelResponse {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVCreateBroadcastChannelResponse: MessageFns<CSteamTVCreateBroadcastChannelResponse> = {
   encode(message: CSteamTVCreateBroadcastChannelResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     return writer;
@@ -568,7 +571,7 @@ export const CSteamTVCreateBroadcastChannelResponse: MessageFns<CSteamTVCreateBr
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -619,18 +622,24 @@ export const CSteamTVGetBroadcastChannelIDRequest: MessageFns<CSteamTVGetBroadca
 };
 
 function createBaseCSteamTVGetBroadcastChannelIDResponse(): CSteamTVGetBroadcastChannelIDResponse {
-  return { broadcastChannelId: 0, uniqueName: "", steamid: 0 };
+  return { broadcastChannelId: 0n, uniqueName: "", steamid: 0n };
 }
 
 export const CSteamTVGetBroadcastChannelIDResponse: MessageFns<CSteamTVGetBroadcastChannelIDResponse> = {
   encode(message: CSteamTVGetBroadcastChannelIDResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     if (message.uniqueName !== undefined && message.uniqueName !== "") {
       writer.uint32(18).string(message.uniqueName);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.steamid);
     }
     return writer;
@@ -648,7 +657,7 @@ export const CSteamTVGetBroadcastChannelIDResponse: MessageFns<CSteamTVGetBroadc
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -664,7 +673,7 @@ export const CSteamTVGetBroadcastChannelIDResponse: MessageFns<CSteamTVGetBroadc
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -679,7 +688,7 @@ export const CSteamTVGetBroadcastChannelIDResponse: MessageFns<CSteamTVGetBroadc
 
 function createBaseCSteamTVSetBroadcastChannelProfileRequest(): CSteamTVSetBroadcastChannelProfileRequest {
   return {
-    broadcastChannelId: 0,
+    broadcastChannelId: 0n,
     name: "",
     language: "",
     headline: "",
@@ -693,7 +702,10 @@ function createBaseCSteamTVSetBroadcastChannelProfileRequest(): CSteamTVSetBroad
 
 export const CSteamTVSetBroadcastChannelProfileRequest: MessageFns<CSteamTVSetBroadcastChannelProfileRequest> = {
   encode(message: CSteamTVSetBroadcastChannelProfileRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -735,7 +747,7 @@ export const CSteamTVSetBroadcastChannelProfileRequest: MessageFns<CSteamTVSetBr
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -839,12 +851,15 @@ export const CSteamTVSetBroadcastChannelProfileResponse: MessageFns<CSteamTVSetB
 };
 
 function createBaseCSteamTVGetBroadcastChannelProfileRequest(): CSteamTVGetBroadcastChannelProfileRequest {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVGetBroadcastChannelProfileRequest: MessageFns<CSteamTVGetBroadcastChannelProfileRequest> = {
   encode(message: CSteamTVGetBroadcastChannelProfileRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     return writer;
@@ -862,7 +877,7 @@ export const CSteamTVGetBroadcastChannelProfileRequest: MessageFns<CSteamTVGetBr
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -878,7 +893,7 @@ export const CSteamTVGetBroadcastChannelProfileRequest: MessageFns<CSteamTVGetBr
 function createBaseCSteamTVGetBroadcastChannelProfileResponse(): CSteamTVGetBroadcastChannelProfileResponse {
   return {
     uniqueName: "",
-    ownerSteamid: 0,
+    ownerSteamid: 0n,
     name: "",
     language: "",
     headline: "",
@@ -895,7 +910,10 @@ export const CSteamTVGetBroadcastChannelProfileResponse: MessageFns<CSteamTVGetB
     if (message.uniqueName !== undefined && message.uniqueName !== "") {
       writer.uint32(10).string(message.uniqueName);
     }
-    if (message.ownerSteamid !== undefined && message.ownerSteamid !== 0) {
+    if (message.ownerSteamid !== undefined && message.ownerSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.ownerSteamid) !== message.ownerSteamid) {
+        throw new globalThis.Error("value provided for field message.ownerSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.ownerSteamid);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -945,7 +963,7 @@ export const CSteamTVGetBroadcastChannelProfileResponse: MessageFns<CSteamTVGetB
             break;
           }
 
-          message.ownerSteamid = longToNumber(reader.fixed64());
+          message.ownerSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1024,7 +1042,7 @@ export const CSteamTVGetBroadcastChannelProfileResponse: MessageFns<CSteamTVGetB
 
 function createBaseCSteamTVSetBroadcastChannelImageRequest(): CSteamTVSetBroadcastChannelImageRequest {
   return {
-    broadcastChannelId: 0,
+    broadcastChannelId: 0n,
     imageType: 0,
     imageIndex: 0,
     imageWidth: 0,
@@ -1038,7 +1056,10 @@ function createBaseCSteamTVSetBroadcastChannelImageRequest(): CSteamTVSetBroadca
 
 export const CSteamTVSetBroadcastChannelImageRequest: MessageFns<CSteamTVSetBroadcastChannelImageRequest> = {
   encode(message: CSteamTVSetBroadcastChannelImageRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     if (message.imageType !== undefined && message.imageType !== 0) {
@@ -1080,7 +1101,7 @@ export const CSteamTVSetBroadcastChannelImageRequest: MessageFns<CSteamTVSetBroa
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1195,12 +1216,15 @@ export const CSteamTVSetBroadcastChannelImageResponse: MessageFns<CSteamTVSetBro
 };
 
 function createBaseCSteamTVGetBroadcastChannelImagesRequest(): CSteamTVGetBroadcastChannelImagesRequest {
-  return { broadcastChannelId: 0, imageTypes: [] };
+  return { broadcastChannelId: 0n, imageTypes: [] };
 }
 
 export const CSteamTVGetBroadcastChannelImagesRequest: MessageFns<CSteamTVGetBroadcastChannelImagesRequest> = {
   encode(message: CSteamTVGetBroadcastChannelImagesRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     for (const v of message.imageTypes) {
@@ -1221,7 +1245,7 @@ export const CSteamTVGetBroadcastChannelImagesRequest: MessageFns<CSteamTVGetBro
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1354,7 +1378,7 @@ export const CSteamTVGetBroadcastChannelImagesResponse_Images: MessageFns<
 };
 
 function createBaseCSteamTVSetBroadcastChannelLinkRegionsRequest(): CSteamTVSetBroadcastChannelLinkRegionsRequest {
-  return { broadcastChannelId: 0, links: [] };
+  return { broadcastChannelId: 0n, links: [] };
 }
 
 export const CSteamTVSetBroadcastChannelLinkRegionsRequest: MessageFns<CSteamTVSetBroadcastChannelLinkRegionsRequest> =
@@ -1363,7 +1387,10 @@ export const CSteamTVSetBroadcastChannelLinkRegionsRequest: MessageFns<CSteamTVS
       message: CSteamTVSetBroadcastChannelLinkRegionsRequest,
       writer: BinaryWriter = new BinaryWriter(),
     ): BinaryWriter {
-      if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+      if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+        if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+          throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+        }
         writer.uint32(9).fixed64(message.broadcastChannelId);
       }
       for (const v of message.links) {
@@ -1384,7 +1411,7 @@ export const CSteamTVSetBroadcastChannelLinkRegionsRequest: MessageFns<CSteamTVS
               break;
             }
 
-            message.broadcastChannelId = longToNumber(reader.fixed64());
+            message.broadcastChannelId = reader.fixed64() as bigint;
             continue;
           }
           case 2: {
@@ -1542,12 +1569,15 @@ export const CSteamTVSetBroadcastChannelLinkRegionsResponse: MessageFns<
 };
 
 function createBaseCSteamTVGetBroadcastChannelLinksRequest(): CSteamTVGetBroadcastChannelLinksRequest {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVGetBroadcastChannelLinksRequest: MessageFns<CSteamTVGetBroadcastChannelLinksRequest> = {
   encode(message: CSteamTVGetBroadcastChannelLinksRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     return writer;
@@ -1565,7 +1595,7 @@ export const CSteamTVGetBroadcastChannelLinksRequest: MessageFns<CSteamTVGetBroa
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1724,7 +1754,7 @@ export const CSteamTVGetBroadcastChannelLinksResponse_Links: MessageFns<
 };
 
 function createBaseCSteamTVGetBroadcastChannelBroadcastersRequest(): CSteamTVGetBroadcastChannelBroadcastersRequest {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVGetBroadcastChannelBroadcastersRequest: MessageFns<
@@ -1734,7 +1764,10 @@ export const CSteamTVGetBroadcastChannelBroadcastersRequest: MessageFns<
     message: CSteamTVGetBroadcastChannelBroadcastersRequest,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     return writer;
@@ -1752,7 +1785,7 @@ export const CSteamTVGetBroadcastChannelBroadcastersRequest: MessageFns<
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1810,7 +1843,7 @@ export const CSteamTVGetBroadcastChannelBroadcastersResponse: MessageFns<
 };
 
 function createBaseCSteamTVGetBroadcastChannelBroadcastersResponse_Broadcaster(): CSteamTVGetBroadcastChannelBroadcastersResponse_Broadcaster {
-  return { steamid: 0, name: "", rtmpToken: "" };
+  return { steamid: 0n, name: "", rtmpToken: "" };
 }
 
 export const CSteamTVGetBroadcastChannelBroadcastersResponse_Broadcaster: MessageFns<
@@ -1820,7 +1853,10 @@ export const CSteamTVGetBroadcastChannelBroadcastersResponse_Broadcaster: Messag
     message: CSteamTVGetBroadcastChannelBroadcastersResponse_Broadcaster,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -1847,7 +1883,7 @@ export const CSteamTVGetBroadcastChannelBroadcastersResponse_Broadcaster: Messag
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1904,18 +1940,18 @@ export const CSteamTVGetFollowedChannelsRequest: MessageFns<CSteamTVGetFollowedC
 
 function createBaseGetBroadcastChannelEntry(): GetBroadcastChannelEntry {
   return {
-    broadcastChannelId: 0,
+    broadcastChannelId: 0n,
     uniqueName: "",
     name: "",
     appid: 0,
-    viewers: 0,
-    views: 0,
+    viewers: 0n,
+    views: 0n,
     thumbnailUrl: "",
-    followers: 0,
+    followers: 0n,
     headline: "",
     avatarUrl: "",
-    broadcasterSteamid: 0,
-    subscribers: 0,
+    broadcasterSteamid: 0n,
+    subscribers: 0n,
     backgroundUrl: "",
     isFeatured: false,
     isDisabled: false,
@@ -1928,7 +1964,10 @@ function createBaseGetBroadcastChannelEntry(): GetBroadcastChannelEntry {
 
 export const GetBroadcastChannelEntry: MessageFns<GetBroadcastChannelEntry> = {
   encode(message: GetBroadcastChannelEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     if (message.uniqueName !== undefined && message.uniqueName !== "") {
@@ -1940,16 +1979,25 @@ export const GetBroadcastChannelEntry: MessageFns<GetBroadcastChannelEntry> = {
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(32).uint32(message.appid);
     }
-    if (message.viewers !== undefined && message.viewers !== 0) {
+    if (message.viewers !== undefined && message.viewers !== 0n) {
+      if (BigInt.asUintN(64, message.viewers) !== message.viewers) {
+        throw new globalThis.Error("value provided for field message.viewers of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.viewers);
     }
-    if (message.views !== undefined && message.views !== 0) {
+    if (message.views !== undefined && message.views !== 0n) {
+      if (BigInt.asUintN(64, message.views) !== message.views) {
+        throw new globalThis.Error("value provided for field message.views of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.views);
     }
     if (message.thumbnailUrl !== undefined && message.thumbnailUrl !== "") {
       writer.uint32(58).string(message.thumbnailUrl);
     }
-    if (message.followers !== undefined && message.followers !== 0) {
+    if (message.followers !== undefined && message.followers !== 0n) {
+      if (BigInt.asUintN(64, message.followers) !== message.followers) {
+        throw new globalThis.Error("value provided for field message.followers of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.followers);
     }
     if (message.headline !== undefined && message.headline !== "") {
@@ -1958,10 +2006,16 @@ export const GetBroadcastChannelEntry: MessageFns<GetBroadcastChannelEntry> = {
     if (message.avatarUrl !== undefined && message.avatarUrl !== "") {
       writer.uint32(82).string(message.avatarUrl);
     }
-    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0) {
+    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.broadcasterSteamid) !== message.broadcasterSteamid) {
+        throw new globalThis.Error("value provided for field message.broadcasterSteamid of type fixed64 too large");
+      }
       writer.uint32(89).fixed64(message.broadcasterSteamid);
     }
-    if (message.subscribers !== undefined && message.subscribers !== 0) {
+    if (message.subscribers !== undefined && message.subscribers !== 0n) {
+      if (BigInt.asUintN(64, message.subscribers) !== message.subscribers) {
+        throw new globalThis.Error("value provided for field message.subscribers of type uint64 too large");
+      }
       writer.uint32(96).uint64(message.subscribers);
     }
     if (message.backgroundUrl !== undefined && message.backgroundUrl !== "") {
@@ -2000,7 +2054,7 @@ export const GetBroadcastChannelEntry: MessageFns<GetBroadcastChannelEntry> = {
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2032,7 +2086,7 @@ export const GetBroadcastChannelEntry: MessageFns<GetBroadcastChannelEntry> = {
             break;
           }
 
-          message.viewers = longToNumber(reader.uint64());
+          message.viewers = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -2040,7 +2094,7 @@ export const GetBroadcastChannelEntry: MessageFns<GetBroadcastChannelEntry> = {
             break;
           }
 
-          message.views = longToNumber(reader.uint64());
+          message.views = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -2056,7 +2110,7 @@ export const GetBroadcastChannelEntry: MessageFns<GetBroadcastChannelEntry> = {
             break;
           }
 
-          message.followers = longToNumber(reader.uint64());
+          message.followers = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -2080,7 +2134,7 @@ export const GetBroadcastChannelEntry: MessageFns<GetBroadcastChannelEntry> = {
             break;
           }
 
-          message.broadcasterSteamid = longToNumber(reader.fixed64());
+          message.broadcasterSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 12: {
@@ -2088,7 +2142,7 @@ export const GetBroadcastChannelEntry: MessageFns<GetBroadcastChannelEntry> = {
             break;
           }
 
-          message.subscribers = longToNumber(reader.uint64());
+          message.subscribers = reader.uint64() as bigint;
           continue;
         }
         case 13: {
@@ -2258,12 +2312,15 @@ export const CSteamTVGetSubscribedChannelsResponse: MessageFns<CSteamTVGetSubscr
 };
 
 function createBaseCSteamTVGetBroadcastChannelStatusRequest(): CSteamTVGetBroadcastChannelStatusRequest {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVGetBroadcastChannelStatusRequest: MessageFns<CSteamTVGetBroadcastChannelStatusRequest> = {
   encode(message: CSteamTVGetBroadcastChannelStatusRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     return writer;
@@ -2281,7 +2338,7 @@ export const CSteamTVGetBroadcastChannelStatusRequest: MessageFns<CSteamTVGetBro
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2299,14 +2356,14 @@ function createBaseCSteamTVGetBroadcastChannelStatusResponse(): CSteamTVGetBroad
     isLive: false,
     isDisabled: false,
     appid: 0,
-    viewers: 0,
-    views: 0,
-    broadcasterSteamid: 0,
+    viewers: 0n,
+    views: 0n,
+    broadcasterSteamid: 0n,
     thumbnailUrl: "",
-    followers: 0,
-    subscribers: 0,
+    followers: 0n,
+    subscribers: 0n,
     uniqueName: "",
-    broadcastSessionId: 0,
+    broadcastSessionId: 0n,
   };
 }
 
@@ -2321,28 +2378,46 @@ export const CSteamTVGetBroadcastChannelStatusResponse: MessageFns<CSteamTVGetBr
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(24).uint32(message.appid);
     }
-    if (message.viewers !== undefined && message.viewers !== 0) {
+    if (message.viewers !== undefined && message.viewers !== 0n) {
+      if (BigInt.asUintN(64, message.viewers) !== message.viewers) {
+        throw new globalThis.Error("value provided for field message.viewers of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.viewers);
     }
-    if (message.views !== undefined && message.views !== 0) {
+    if (message.views !== undefined && message.views !== 0n) {
+      if (BigInt.asUintN(64, message.views) !== message.views) {
+        throw new globalThis.Error("value provided for field message.views of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.views);
     }
-    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0) {
+    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.broadcasterSteamid) !== message.broadcasterSteamid) {
+        throw new globalThis.Error("value provided for field message.broadcasterSteamid of type fixed64 too large");
+      }
       writer.uint32(49).fixed64(message.broadcasterSteamid);
     }
     if (message.thumbnailUrl !== undefined && message.thumbnailUrl !== "") {
       writer.uint32(58).string(message.thumbnailUrl);
     }
-    if (message.followers !== undefined && message.followers !== 0) {
+    if (message.followers !== undefined && message.followers !== 0n) {
+      if (BigInt.asUintN(64, message.followers) !== message.followers) {
+        throw new globalThis.Error("value provided for field message.followers of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.followers);
     }
-    if (message.subscribers !== undefined && message.subscribers !== 0) {
+    if (message.subscribers !== undefined && message.subscribers !== 0n) {
+      if (BigInt.asUintN(64, message.subscribers) !== message.subscribers) {
+        throw new globalThis.Error("value provided for field message.subscribers of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.subscribers);
     }
     if (message.uniqueName !== undefined && message.uniqueName !== "") {
       writer.uint32(82).string(message.uniqueName);
     }
-    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0) {
+    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastSessionId) !== message.broadcastSessionId) {
+        throw new globalThis.Error("value provided for field message.broadcastSessionId of type uint64 too large");
+      }
       writer.uint32(88).uint64(message.broadcastSessionId);
     }
     return writer;
@@ -2384,7 +2459,7 @@ export const CSteamTVGetBroadcastChannelStatusResponse: MessageFns<CSteamTVGetBr
             break;
           }
 
-          message.viewers = longToNumber(reader.uint64());
+          message.viewers = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -2392,7 +2467,7 @@ export const CSteamTVGetBroadcastChannelStatusResponse: MessageFns<CSteamTVGetBr
             break;
           }
 
-          message.views = longToNumber(reader.uint64());
+          message.views = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -2400,7 +2475,7 @@ export const CSteamTVGetBroadcastChannelStatusResponse: MessageFns<CSteamTVGetBr
             break;
           }
 
-          message.broadcasterSteamid = longToNumber(reader.fixed64());
+          message.broadcasterSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 7: {
@@ -2416,7 +2491,7 @@ export const CSteamTVGetBroadcastChannelStatusResponse: MessageFns<CSteamTVGetBr
             break;
           }
 
-          message.followers = longToNumber(reader.uint64());
+          message.followers = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -2424,7 +2499,7 @@ export const CSteamTVGetBroadcastChannelStatusResponse: MessageFns<CSteamTVGetBr
             break;
           }
 
-          message.subscribers = longToNumber(reader.uint64());
+          message.subscribers = reader.uint64() as bigint;
           continue;
         }
         case 10: {
@@ -2440,7 +2515,7 @@ export const CSteamTVGetBroadcastChannelStatusResponse: MessageFns<CSteamTVGetBr
             break;
           }
 
-          message.broadcastSessionId = longToNumber(reader.uint64());
+          message.broadcastSessionId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -2454,12 +2529,15 @@ export const CSteamTVGetBroadcastChannelStatusResponse: MessageFns<CSteamTVGetBr
 };
 
 function createBaseCSteamTVFollowBroadcastChannelRequest(): CSteamTVFollowBroadcastChannelRequest {
-  return { broadcastChannelId: 0, undo: false };
+  return { broadcastChannelId: 0n, undo: false };
 }
 
 export const CSteamTVFollowBroadcastChannelRequest: MessageFns<CSteamTVFollowBroadcastChannelRequest> = {
   encode(message: CSteamTVFollowBroadcastChannelRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     if (message.undo !== undefined && message.undo !== false) {
@@ -2480,7 +2558,7 @@ export const CSteamTVFollowBroadcastChannelRequest: MessageFns<CSteamTVFollowBro
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2539,12 +2617,15 @@ export const CSteamTVFollowBroadcastChannelResponse: MessageFns<CSteamTVFollowBr
 };
 
 function createBaseCSteamTVSubscribeBroadcastChannelRequest(): CSteamTVSubscribeBroadcastChannelRequest {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVSubscribeBroadcastChannelRequest: MessageFns<CSteamTVSubscribeBroadcastChannelRequest> = {
   encode(message: CSteamTVSubscribeBroadcastChannelRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     return writer;
@@ -2562,7 +2643,7 @@ export const CSteamTVSubscribeBroadcastChannelRequest: MessageFns<CSteamTVSubscr
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2613,12 +2694,15 @@ export const CSteamTVSubscribeBroadcastChannelResponse: MessageFns<CSteamTVSubsc
 };
 
 function createBaseCSteamTVGetBroadcastChannelClipsRequest(): CSteamTVGetBroadcastChannelClipsRequest {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVGetBroadcastChannelClipsRequest: MessageFns<CSteamTVGetBroadcastChannelClipsRequest> = {
   encode(message: CSteamTVGetBroadcastChannelClipsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     return writer;
@@ -2636,7 +2720,7 @@ export const CSteamTVGetBroadcastChannelClipsRequest: MessageFns<CSteamTVGetBroa
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2651,11 +2735,11 @@ export const CSteamTVGetBroadcastChannelClipsRequest: MessageFns<CSteamTVGetBroa
 
 function createBaseCSteamTVBroadcastClipInfo(): CSteamTVBroadcastClipInfo {
   return {
-    broadcastClipId: 0,
-    channelId: 0,
+    broadcastClipId: 0n,
+    channelId: 0n,
     appId: 0,
-    broadcasterSteamid: 0,
-    creatorSteamid: 0,
+    broadcasterSteamid: 0n,
+    creatorSteamid: 0n,
     videoDescription: "",
     liveTime: 0,
     lengthMs: 0,
@@ -2665,19 +2749,31 @@ function createBaseCSteamTVBroadcastClipInfo(): CSteamTVBroadcastClipInfo {
 
 export const CSteamTVBroadcastClipInfo: MessageFns<CSteamTVBroadcastClipInfo> = {
   encode(message: CSteamTVBroadcastClipInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0) {
+    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastClipId) !== message.broadcastClipId) {
+        throw new globalThis.Error("value provided for field message.broadcastClipId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.broadcastClipId);
     }
-    if (message.channelId !== undefined && message.channelId !== 0) {
+    if (message.channelId !== undefined && message.channelId !== 0n) {
+      if (BigInt.asUintN(64, message.channelId) !== message.channelId) {
+        throw new globalThis.Error("value provided for field message.channelId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.channelId);
     }
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(24).uint32(message.appId);
     }
-    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0) {
+    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.broadcasterSteamid) !== message.broadcasterSteamid) {
+        throw new globalThis.Error("value provided for field message.broadcasterSteamid of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.broadcasterSteamid);
     }
-    if (message.creatorSteamid !== undefined && message.creatorSteamid !== 0) {
+    if (message.creatorSteamid !== undefined && message.creatorSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.creatorSteamid) !== message.creatorSteamid) {
+        throw new globalThis.Error("value provided for field message.creatorSteamid of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.creatorSteamid);
     }
     if (message.videoDescription !== undefined && message.videoDescription !== "") {
@@ -2707,7 +2803,7 @@ export const CSteamTVBroadcastClipInfo: MessageFns<CSteamTVBroadcastClipInfo> = 
             break;
           }
 
-          message.broadcastClipId = longToNumber(reader.uint64());
+          message.broadcastClipId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -2715,7 +2811,7 @@ export const CSteamTVBroadcastClipInfo: MessageFns<CSteamTVBroadcastClipInfo> = 
             break;
           }
 
-          message.channelId = longToNumber(reader.uint64());
+          message.channelId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -2731,7 +2827,7 @@ export const CSteamTVBroadcastClipInfo: MessageFns<CSteamTVBroadcastClipInfo> = 
             break;
           }
 
-          message.broadcasterSteamid = longToNumber(reader.fixed64());
+          message.broadcasterSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -2739,7 +2835,7 @@ export const CSteamTVBroadcastClipInfo: MessageFns<CSteamTVBroadcastClipInfo> = 
             break;
           }
 
-          message.creatorSteamid = longToNumber(reader.fixed64());
+          message.creatorSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -2833,12 +2929,15 @@ export const CSteamTVGetBroadcastChannelClipsResponse: MessageFns<CSteamTVGetBro
 };
 
 function createBaseCSteamTVReportBroadcastChannelRequest(): CSteamTVReportBroadcastChannelRequest {
-  return { broadcastChannelId: 0, reason: "" };
+  return { broadcastChannelId: 0n, reason: "" };
 }
 
 export const CSteamTVReportBroadcastChannelRequest: MessageFns<CSteamTVReportBroadcastChannelRequest> = {
   encode(message: CSteamTVReportBroadcastChannelRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     if (message.reason !== undefined && message.reason !== "") {
@@ -2859,7 +2958,7 @@ export const CSteamTVReportBroadcastChannelRequest: MessageFns<CSteamTVReportBro
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2907,7 +3006,7 @@ export const CSteamTVReportBroadcastChannelResponse: MessageFns<CSteamTVReportBr
 };
 
 function createBaseCSteamTVGetBroadcastChannelInteractionRequest(): CSteamTVGetBroadcastChannelInteractionRequest {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVGetBroadcastChannelInteractionRequest: MessageFns<CSteamTVGetBroadcastChannelInteractionRequest> =
@@ -2916,7 +3015,10 @@ export const CSteamTVGetBroadcastChannelInteractionRequest: MessageFns<CSteamTVG
       message: CSteamTVGetBroadcastChannelInteractionRequest,
       writer: BinaryWriter = new BinaryWriter(),
     ): BinaryWriter {
-      if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+      if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+        if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+          throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+        }
         writer.uint32(9).fixed64(message.broadcastChannelId);
       }
       return writer;
@@ -2934,7 +3036,7 @@ export const CSteamTVGetBroadcastChannelInteractionRequest: MessageFns<CSteamTVG
               break;
             }
 
-            message.broadcastChannelId = longToNumber(reader.fixed64());
+            message.broadcastChannelId = reader.fixed64() as bigint;
             continue;
           }
         }
@@ -3060,7 +3162,7 @@ export const CSteamTVGetGamesRequest: MessageFns<CSteamTVGetGamesRequest> = {
 };
 
 function createBaseCSteamTVGame(): CSteamTVGame {
-  return { appid: 0, name: "", image: "", viewers: 0, channels: [], releaseDate: "", developer: "", publisher: "" };
+  return { appid: 0, name: "", image: "", viewers: 0n, channels: [], releaseDate: "", developer: "", publisher: "" };
 }
 
 export const CSteamTVGame: MessageFns<CSteamTVGame> = {
@@ -3074,7 +3176,10 @@ export const CSteamTVGame: MessageFns<CSteamTVGame> = {
     if (message.image !== undefined && message.image !== "") {
       writer.uint32(26).string(message.image);
     }
-    if (message.viewers !== undefined && message.viewers !== 0) {
+    if (message.viewers !== undefined && message.viewers !== 0n) {
+      if (BigInt.asUintN(64, message.viewers) !== message.viewers) {
+        throw new globalThis.Error("value provided for field message.viewers of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.viewers);
     }
     for (const v of message.channels) {
@@ -3128,7 +3233,7 @@ export const CSteamTVGame: MessageFns<CSteamTVGame> = {
             break;
           }
 
-          message.viewers = longToNumber(reader.uint64());
+          message.viewers = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -3307,15 +3412,21 @@ export const CSteamTVGetChannelsResponse: MessageFns<CSteamTVGetChannelsResponse
 };
 
 function createBaseCSteamTVAddChatBanRequest(): CSteamTVAddChatBanRequest {
-  return { broadcastChannelId: 0, chatterSteamid: 0, duration: 0, permanent: false, undo: false };
+  return { broadcastChannelId: 0n, chatterSteamid: 0n, duration: 0, permanent: false, undo: false };
 }
 
 export const CSteamTVAddChatBanRequest: MessageFns<CSteamTVAddChatBanRequest> = {
   encode(message: CSteamTVAddChatBanRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
-    if (message.chatterSteamid !== undefined && message.chatterSteamid !== 0) {
+    if (message.chatterSteamid !== undefined && message.chatterSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.chatterSteamid) !== message.chatterSteamid) {
+        throw new globalThis.Error("value provided for field message.chatterSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.chatterSteamid);
     }
     if (message.duration !== undefined && message.duration !== 0) {
@@ -3342,7 +3453,7 @@ export const CSteamTVAddChatBanRequest: MessageFns<CSteamTVAddChatBanRequest> = 
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3350,7 +3461,7 @@ export const CSteamTVAddChatBanRequest: MessageFns<CSteamTVAddChatBanRequest> = 
             break;
           }
 
-          message.chatterSteamid = longToNumber(reader.fixed64());
+          message.chatterSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -3414,12 +3525,15 @@ export const CSteamTVAddChatBanResponse: MessageFns<CSteamTVAddChatBanResponse> 
 };
 
 function createBaseCSteamTVGetChatBansRequest(): CSteamTVGetChatBansRequest {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVGetChatBansRequest: MessageFns<CSteamTVGetChatBansRequest> = {
   encode(message: CSteamTVGetChatBansRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     return writer;
@@ -3437,7 +3551,7 @@ export const CSteamTVGetChatBansRequest: MessageFns<CSteamTVGetChatBansRequest> 
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3451,15 +3565,21 @@ export const CSteamTVGetChatBansRequest: MessageFns<CSteamTVGetChatBansRequest> 
 };
 
 function createBaseCSteamTVChatBan(): CSteamTVChatBan {
-  return { issuerSteamid: 0, chatterSteamid: 0, timeExpires: "", permanent: false, name: "" };
+  return { issuerSteamid: 0n, chatterSteamid: 0n, timeExpires: "", permanent: false, name: "" };
 }
 
 export const CSteamTVChatBan: MessageFns<CSteamTVChatBan> = {
   encode(message: CSteamTVChatBan, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.issuerSteamid !== undefined && message.issuerSteamid !== 0) {
+    if (message.issuerSteamid !== undefined && message.issuerSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.issuerSteamid) !== message.issuerSteamid) {
+        throw new globalThis.Error("value provided for field message.issuerSteamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.issuerSteamid);
     }
-    if (message.chatterSteamid !== undefined && message.chatterSteamid !== 0) {
+    if (message.chatterSteamid !== undefined && message.chatterSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.chatterSteamid) !== message.chatterSteamid) {
+        throw new globalThis.Error("value provided for field message.chatterSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.chatterSteamid);
     }
     if (message.timeExpires !== undefined && message.timeExpires !== "") {
@@ -3486,7 +3606,7 @@ export const CSteamTVChatBan: MessageFns<CSteamTVChatBan> = {
             break;
           }
 
-          message.issuerSteamid = longToNumber(reader.fixed64());
+          message.issuerSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3494,7 +3614,7 @@ export const CSteamTVChatBan: MessageFns<CSteamTVChatBan> = {
             break;
           }
 
-          message.chatterSteamid = longToNumber(reader.fixed64());
+          message.chatterSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -3569,15 +3689,21 @@ export const CSteamTVGetChatBansResponse: MessageFns<CSteamTVGetChatBansResponse
 };
 
 function createBaseCSteamTVAddChatModeratorRequest(): CSteamTVAddChatModeratorRequest {
-  return { broadcastChannelId: 0, moderatorSteamid: 0, undo: false };
+  return { broadcastChannelId: 0n, moderatorSteamid: 0n, undo: false };
 }
 
 export const CSteamTVAddChatModeratorRequest: MessageFns<CSteamTVAddChatModeratorRequest> = {
   encode(message: CSteamTVAddChatModeratorRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
-    if (message.moderatorSteamid !== undefined && message.moderatorSteamid !== 0) {
+    if (message.moderatorSteamid !== undefined && message.moderatorSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.moderatorSteamid) !== message.moderatorSteamid) {
+        throw new globalThis.Error("value provided for field message.moderatorSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.moderatorSteamid);
     }
     if (message.undo !== undefined && message.undo !== false) {
@@ -3598,7 +3724,7 @@ export const CSteamTVAddChatModeratorRequest: MessageFns<CSteamTVAddChatModerato
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3606,7 +3732,7 @@ export const CSteamTVAddChatModeratorRequest: MessageFns<CSteamTVAddChatModerato
             break;
           }
 
-          message.moderatorSteamid = longToNumber(reader.fixed64());
+          message.moderatorSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -3654,12 +3780,15 @@ export const CSteamTVAddChatModeratorResponse: MessageFns<CSteamTVAddChatModerat
 };
 
 function createBaseCSteamTVGetChatModeratorsRequest(): CSteamTVGetChatModeratorsRequest {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVGetChatModeratorsRequest: MessageFns<CSteamTVGetChatModeratorsRequest> = {
   encode(message: CSteamTVGetChatModeratorsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     return writer;
@@ -3677,7 +3806,7 @@ export const CSteamTVGetChatModeratorsRequest: MessageFns<CSteamTVGetChatModerat
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3691,12 +3820,15 @@ export const CSteamTVGetChatModeratorsRequest: MessageFns<CSteamTVGetChatModerat
 };
 
 function createBaseCSteamTVChatModerator(): CSteamTVChatModerator {
-  return { steamid: 0, name: "" };
+  return { steamid: 0n, name: "" };
 }
 
 export const CSteamTVChatModerator: MessageFns<CSteamTVChatModerator> = {
   encode(message: CSteamTVChatModerator, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.name !== undefined && message.name !== "") {
@@ -3717,7 +3849,7 @@ export const CSteamTVChatModerator: MessageFns<CSteamTVChatModerator> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3776,12 +3908,15 @@ export const CSteamTVGetChatModeratorsResponse: MessageFns<CSteamTVGetChatModera
 };
 
 function createBaseCSteamTVAddWordBanRequest(): CSteamTVAddWordBanRequest {
-  return { broadcastChannelId: 0, word: "", undo: false };
+  return { broadcastChannelId: 0n, word: "", undo: false };
 }
 
 export const CSteamTVAddWordBanRequest: MessageFns<CSteamTVAddWordBanRequest> = {
   encode(message: CSteamTVAddWordBanRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     if (message.word !== undefined && message.word !== "") {
@@ -3805,7 +3940,7 @@ export const CSteamTVAddWordBanRequest: MessageFns<CSteamTVAddWordBanRequest> = 
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3861,12 +3996,15 @@ export const CSteamTVAddWordBanResponse: MessageFns<CSteamTVAddWordBanResponse> 
 };
 
 function createBaseCSteamTVGetWordBansRequest(): CSteamTVGetWordBansRequest {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVGetWordBansRequest: MessageFns<CSteamTVGetWordBansRequest> = {
   encode(message: CSteamTVGetWordBansRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     return writer;
@@ -3884,7 +4022,7 @@ export const CSteamTVGetWordBansRequest: MessageFns<CSteamTVGetWordBansRequest> 
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3935,12 +4073,15 @@ export const CSteamTVGetWordBansResponse: MessageFns<CSteamTVGetWordBansResponse
 };
 
 function createBaseCSteamTVJoinChatRequest(): CSteamTVJoinChatRequest {
-  return { broadcastChannelId: 0 };
+  return { broadcastChannelId: 0n };
 }
 
 export const CSteamTVJoinChatRequest: MessageFns<CSteamTVJoinChatRequest> = {
   encode(message: CSteamTVJoinChatRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     return writer;
@@ -3958,7 +4099,7 @@ export const CSteamTVJoinChatRequest: MessageFns<CSteamTVJoinChatRequest> = {
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3972,18 +4113,24 @@ export const CSteamTVJoinChatRequest: MessageFns<CSteamTVJoinChatRequest> = {
 };
 
 function createBaseCSteamTVJoinChatResponse(): CSteamTVJoinChatResponse {
-  return { chatId: 0, viewUrlTemplate: "", flairGroupIds: [] };
+  return { chatId: 0n, viewUrlTemplate: "", flairGroupIds: [] };
 }
 
 export const CSteamTVJoinChatResponse: MessageFns<CSteamTVJoinChatResponse> = {
   encode(message: CSteamTVJoinChatResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.chatId);
     }
     if (message.viewUrlTemplate !== undefined && message.viewUrlTemplate !== "") {
       writer.uint32(18).string(message.viewUrlTemplate);
     }
     for (const v of message.flairGroupIds) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type uint64 too large");
+      }
       writer.uint32(24).uint64(v!);
     }
     return writer;
@@ -4001,7 +4148,7 @@ export const CSteamTVJoinChatResponse: MessageFns<CSteamTVJoinChatResponse> = {
             break;
           }
 
-          message.chatId = longToNumber(reader.fixed64());
+          message.chatId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -4014,7 +4161,7 @@ export const CSteamTVJoinChatResponse: MessageFns<CSteamTVJoinChatResponse> = {
         }
         case 3: {
           if (tag === 24) {
-            message.flairGroupIds.push(longToNumber(reader.uint64()));
+            message.flairGroupIds.push(reader.uint64() as bigint);
 
             continue;
           }
@@ -4022,7 +4169,7 @@ export const CSteamTVJoinChatResponse: MessageFns<CSteamTVJoinChatResponse> = {
           if (tag === 26) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.flairGroupIds.push(longToNumber(reader.uint64()));
+              message.flairGroupIds.push(reader.uint64() as bigint);
             }
 
             continue;
@@ -4651,7 +4798,7 @@ export const CSteamTVHomePageTemplateConveyorBelt: MessageFns<CSteamTVHomePageTe
 };
 
 function createBaseCSteamTVHomePageTemplateWatchParty(): CSteamTVHomePageTemplateWatchParty {
-  return { broadcast: undefined, title: "", chatGroupId: 0 };
+  return { broadcast: undefined, title: "", chatGroupId: 0n };
 }
 
 export const CSteamTVHomePageTemplateWatchParty: MessageFns<CSteamTVHomePageTemplateWatchParty> = {
@@ -4662,7 +4809,10 @@ export const CSteamTVHomePageTemplateWatchParty: MessageFns<CSteamTVHomePageTemp
     if (message.title !== undefined && message.title !== "") {
       writer.uint32(18).string(message.title);
     }
-    if (message.chatGroupId !== undefined && message.chatGroupId !== 0) {
+    if (message.chatGroupId !== undefined && message.chatGroupId !== 0n) {
+      if (BigInt.asUintN(64, message.chatGroupId) !== message.chatGroupId) {
+        throw new globalThis.Error("value provided for field message.chatGroupId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.chatGroupId);
     }
     return writer;
@@ -4696,7 +4846,7 @@ export const CSteamTVHomePageTemplateWatchParty: MessageFns<CSteamTVHomePageTemp
             break;
           }
 
-          message.chatGroupId = longToNumber(reader.uint64());
+          message.chatGroupId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -5015,7 +5165,7 @@ export const CSteamTVAppCheerSingleCheerType: MessageFns<CSteamTVAppCheerSingleC
 };
 
 function createBaseCSteamTVAppCheerRequest(): CSteamTVAppCheerRequest {
-  return { appId: 0, cheerTargetId: 0, cheers: [] };
+  return { appId: 0, cheerTargetId: 0n, cheers: [] };
 }
 
 export const CSteamTVAppCheerRequest: MessageFns<CSteamTVAppCheerRequest> = {
@@ -5023,7 +5173,10 @@ export const CSteamTVAppCheerRequest: MessageFns<CSteamTVAppCheerRequest> = {
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.cheerTargetId !== undefined && message.cheerTargetId !== 0) {
+    if (message.cheerTargetId !== undefined && message.cheerTargetId !== 0n) {
+      if (BigInt.asUintN(64, message.cheerTargetId) !== message.cheerTargetId) {
+        throw new globalThis.Error("value provided for field message.cheerTargetId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.cheerTargetId);
     }
     for (const v of message.cheers) {
@@ -5052,7 +5205,7 @@ export const CSteamTVAppCheerRequest: MessageFns<CSteamTVAppCheerRequest> = {
             break;
           }
 
-          message.cheerTargetId = longToNumber(reader.fixed64());
+          message.cheerTargetId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -5448,17 +5601,6 @@ export class SteamTVClientImpl implements SteamTV {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

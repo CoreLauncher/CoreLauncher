@@ -10,9 +10,9 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 export const protobufPackage = "";
 
 export interface CFileVerificationSignatureCheckRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   appid?: number | undefined;
-  fileSize?: number | undefined;
+  fileSize?: bigint | undefined;
   fileTimestamp?: number | undefined;
   fileTimestamp2?: number | undefined;
   signatureResult?: number | undefined;
@@ -39,9 +39,9 @@ export interface CFileVerificationSteamServiceCheckResponse {
 
 function createBaseCFileVerificationSignatureCheckRequest(): CFileVerificationSignatureCheckRequest {
   return {
-    steamid: 0,
+    steamid: 0n,
     appid: 0,
-    fileSize: 0,
+    fileSize: 0n,
     fileTimestamp: 0,
     fileTimestamp2: 0,
     signatureResult: 0,
@@ -53,13 +53,19 @@ function createBaseCFileVerificationSignatureCheckRequest(): CFileVerificationSi
 
 export const CFileVerificationSignatureCheckRequest: MessageFns<CFileVerificationSignatureCheckRequest> = {
   encode(message: CFileVerificationSignatureCheckRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(16).uint32(message.appid);
     }
-    if (message.fileSize !== undefined && message.fileSize !== 0) {
+    if (message.fileSize !== undefined && message.fileSize !== 0n) {
+      if (BigInt.asUintN(64, message.fileSize) !== message.fileSize) {
+        throw new globalThis.Error("value provided for field message.fileSize of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.fileSize);
     }
     if (message.fileTimestamp !== undefined && message.fileTimestamp !== 0) {
@@ -95,7 +101,7 @@ export const CFileVerificationSignatureCheckRequest: MessageFns<CFileVerificatio
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -111,7 +117,7 @@ export const CFileVerificationSignatureCheckRequest: MessageFns<CFileVerificatio
             break;
           }
 
-          message.fileSize = longToNumber(reader.uint64());
+          message.fileSize = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -361,17 +367,6 @@ export class FileVerificationClientImpl implements FileVerification {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

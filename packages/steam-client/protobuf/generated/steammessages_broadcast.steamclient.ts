@@ -38,18 +38,18 @@ export enum EBroadcastChatPermission {
 
 export interface CBroadcastBeginBroadcastSessionRequest {
   permission?: number | undefined;
-  gameid?: number | undefined;
-  clientInstanceId?: number | undefined;
+  gameid?: bigint | undefined;
+  clientInstanceId?: bigint | undefined;
   title?: string | undefined;
   cellid?: number | undefined;
-  rtmpToken?: number | undefined;
+  rtmpToken?: bigint | undefined;
   thumbnailUpload?: boolean | undefined;
   sysid?: number | undefined;
   allowWebrtc?: boolean | undefined;
 }
 
 export interface CBroadcastBeginBroadcastSessionResponse {
-  broadcastId?: number | undefined;
+  broadcastId?: bigint | undefined;
   thumbnailUploadAddress?: string | undefined;
   thumbnailUploadToken?: string | undefined;
   thumbnailIntervalSeconds?: number | undefined;
@@ -57,18 +57,18 @@ export interface CBroadcastBeginBroadcastSessionResponse {
 }
 
 export interface CBroadcastEndBroadcastSessionRequest {
-  broadcastId?: number | undefined;
+  broadcastId?: bigint | undefined;
 }
 
 export interface CBroadcastEndBroadcastSessionResponse {
 }
 
 export interface CBroadcastStartBroadcastUploadRequest {
-  broadcastId?: number | undefined;
+  broadcastId?: bigint | undefined;
   cellid?: number | undefined;
   asRtmp?: boolean | undefined;
   delaySeconds?: number | undefined;
-  rtmpToken?: number | undefined;
+  rtmpToken?: bigint | undefined;
   uploadIpAddress?: number | undefined;
   isReplay?: boolean | undefined;
   sysid?: number | undefined;
@@ -77,20 +77,20 @@ export interface CBroadcastStartBroadcastUploadRequest {
 export interface CBroadcastStartBroadcastUploadResponse {
   uploadToken?: string | undefined;
   uploadAddress?: string | undefined;
-  broadcastUploadId?: number | undefined;
+  broadcastUploadId?: bigint | undefined;
   enableReplay?: boolean | undefined;
   httpAddress?: string | undefined;
 }
 
 export interface CBroadcastNotifyBroadcastUploadStopNotification {
-  broadcastUploadId?: number | undefined;
+  broadcastUploadId?: bigint | undefined;
   uploadResult?: number | undefined;
 }
 
 export interface CBroadcastWatchBroadcastRequest {
-  steamid?: number | undefined;
-  existingBroadcastId?: number | undefined;
-  viewerToken?: number | undefined;
+  steamid?: bigint | undefined;
+  existingBroadcastId?: bigint | undefined;
+  viewerToken?: bigint | undefined;
   clientCell?: number | undefined;
   watchLocation?: EBroadcastWatchLocation | undefined;
   isWebrtc?: boolean | undefined;
@@ -99,19 +99,19 @@ export interface CBroadcastWatchBroadcastRequest {
 export interface CBroadcastWatchBroadcastResponse {
   response?: CBroadcastWatchBroadcastResponse_EWatchResponse | undefined;
   mpdUrl?: string | undefined;
-  broadcastId?: number | undefined;
-  gameid?: number | undefined;
+  broadcastId?: bigint | undefined;
+  gameid?: bigint | undefined;
   title?: string | undefined;
   numViewers?: number | undefined;
   permission?: number | undefined;
   isRtmp?: boolean | undefined;
   secondsDelay?: number | undefined;
-  viewerToken?: number | undefined;
+  viewerToken?: bigint | undefined;
   hlsM3u8MasterUrl?: string | undefined;
   heartbeatInterval?: number | undefined;
   thumbnailUrl?: string | undefined;
   isWebrtc?: boolean | undefined;
-  webrtcSessionId?: number | undefined;
+  webrtcSessionId?: bigint | undefined;
   webrtcOfferSdp?: string | undefined;
   webrtcTurnServer?: string | undefined;
   isReplay?: boolean | undefined;
@@ -137,25 +137,25 @@ export enum CBroadcastWatchBroadcastResponse_EWatchResponse {
 }
 
 export interface CBroadcastHeartbeatBroadcastNotification {
-  steamid?: number | undefined;
-  broadcastId?: number | undefined;
-  viewerToken?: number | undefined;
+  steamid?: bigint | undefined;
+  broadcastId?: bigint | undefined;
+  viewerToken?: bigint | undefined;
   representation?: number | undefined;
 }
 
 export interface CBroadcastStopWatchingBroadcastNotification {
-  steamid?: number | undefined;
-  broadcastId?: number | undefined;
-  viewerToken?: number | undefined;
+  steamid?: bigint | undefined;
+  broadcastId?: bigint | undefined;
+  viewerToken?: bigint | undefined;
 }
 
 export interface CBroadcastGetBroadcastStatusRequest {
-  steamid?: number | undefined;
-  broadcastId?: number | undefined;
+  steamid?: bigint | undefined;
+  broadcastId?: bigint | undefined;
 }
 
 export interface CBroadcastGetBroadcastStatusResponse {
-  gameid?: number | undefined;
+  gameid?: bigint | undefined;
   title?: string | undefined;
   numViewers?: number | undefined;
   permission?: number | undefined;
@@ -172,8 +172,8 @@ export interface CBroadcastGetBroadcastStatusResponse {
 }
 
 export interface CBroadcastGetBroadcastThumbnailRequest {
-  steamid?: number | undefined;
-  broadcastId?: number | undefined;
+  steamid?: bigint | undefined;
+  broadcastId?: bigint | undefined;
 }
 
 export interface CBroadcastGetBroadcastThumbnailResponse {
@@ -184,7 +184,7 @@ export interface CBroadcastGetBroadcastThumbnailResponse {
 }
 
 export interface CBroadcastInviteToBroadcastRequest {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   approvalResponse?: boolean | undefined;
 }
 
@@ -194,7 +194,7 @@ export interface CBroadcastInviteToBroadcastResponse {
 
 export interface CBroadcastSendBroadcastStateToServerRequest {
   permission?: number | undefined;
-  gameid?: number | undefined;
+  gameid?: bigint | undefined;
   title?: string | undefined;
   gameDataConfig?: string | undefined;
 }
@@ -203,24 +203,24 @@ export interface CBroadcastSendBroadcastStateToServerResponse {
 }
 
 export interface CBroadcastNotifyBroadcastSessionHeartbeatNotification {
-  broadcastId?: number | undefined;
+  broadcastId?: bigint | undefined;
 }
 
 export interface CBroadcastGetBroadcastChatInfoRequest {
-  steamid?: number | undefined;
-  broadcastId?: number | undefined;
+  steamid?: bigint | undefined;
+  broadcastId?: bigint | undefined;
   clientIp?: number | undefined;
   clientCell?: number | undefined;
 }
 
 export interface CBroadcastGetBroadcastChatInfoResponse {
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
   viewUrlTemplate?: string | undefined;
   flairGroupIds: number[];
 }
 
 export interface CBroadcastPostChatMessageRequest {
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
   message?: string | undefined;
   instanceId?: number | undefined;
   language?: number | undefined;
@@ -235,19 +235,19 @@ export interface CBroadcastPostChatMessageResponse {
 }
 
 export interface CBroadcastUpdateChatMessageFlairRequest {
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
   flair?: string | undefined;
 }
 
 export interface CBroadcastUpdateChatMessageFlairResponse {
   result?: number | undefined;
-  chatId?: number | undefined;
+  chatId?: bigint | undefined;
   flair?: string | undefined;
 }
 
 export interface CBroadcastMuteBroadcastChatUserRequest {
-  chatId?: number | undefined;
-  userSteamid?: number | undefined;
+  chatId?: bigint | undefined;
+  userSteamid?: bigint | undefined;
   muted?: boolean | undefined;
 }
 
@@ -255,16 +255,16 @@ export interface CBroadcastMuteBroadcastChatUserResponse {
 }
 
 export interface CBroadcastRemoveUserChatTextRequest {
-  chatId?: number | undefined;
-  userSteamid?: number | undefined;
+  chatId?: bigint | undefined;
+  userSteamid?: bigint | undefined;
 }
 
 export interface CBroadcastRemoveUserChatTextResponse {
 }
 
 export interface CBroadcastGetBroadcastChatUserNamesRequest {
-  chatId?: number | undefined;
-  userSteamid: number[];
+  chatId?: bigint | undefined;
+  userSteamid: bigint[];
 }
 
 export interface CBroadcastGetBroadcastChatUserNamesResponse {
@@ -272,31 +272,31 @@ export interface CBroadcastGetBroadcastChatUserNamesResponse {
 }
 
 export interface CBroadcastGetBroadcastChatUserNamesResponse_PersonaName {
-  steamId?: number | undefined;
+  steamId?: bigint | undefined;
   persona?: string | undefined;
 }
 
 export interface CBroadcastStartBuildClipRequest {
-  steamid?: number | undefined;
-  broadcastSessionId?: number | undefined;
+  steamid?: bigint | undefined;
+  broadcastSessionId?: bigint | undefined;
   firstSegment?: number | undefined;
   numSegments?: number | undefined;
   clipDescription?: string | undefined;
 }
 
 export interface CBroadcastStartBuildClipResponse {
-  broadcastClipId?: number | undefined;
+  broadcastClipId?: bigint | undefined;
 }
 
 export interface CBroadcastGetBuildClipStatusRequest {
-  broadcastClipId?: number | undefined;
+  broadcastClipId?: bigint | undefined;
 }
 
 export interface CBroadcastGetBuildClipStatusResponse {
 }
 
 export interface CBroadcastSetClipDetailsRequest {
-  broadcastClipId?: number | undefined;
+  broadcastClipId?: bigint | undefined;
   startTime?: number | undefined;
   endTime?: number | undefined;
   videoDescription?: string | undefined;
@@ -306,13 +306,13 @@ export interface CBroadcastSetClipDetailsResponse {
 }
 
 export interface CBroadcastGetClipDetailsRequest {
-  broadcastClipId?: number | undefined;
+  broadcastClipId?: bigint | undefined;
 }
 
 export interface CBroadcastGetClipDetailsResponse {
-  broadcastClipId?: number | undefined;
-  videoId?: number | undefined;
-  channelId?: number | undefined;
+  broadcastClipId?: bigint | undefined;
+  videoId?: bigint | undefined;
+  channelId?: bigint | undefined;
   appId?: number | undefined;
   accountidBroadcaster?: number | undefined;
   accountidClipmaker?: number | undefined;
@@ -330,7 +330,7 @@ export interface CBroadcastSetRTMPInfoRequest {
   requiredAppId?: number | undefined;
   broadcastChatPermission?: EBroadcastChatPermission | undefined;
   broadcastBuffer?: number | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   chatRateLimit?: number | undefined;
   enableReplay?: boolean | undefined;
   isPartnerChatOnly?: boolean | undefined;
@@ -342,7 +342,7 @@ export interface CBroadcastSetRTMPInfoResponse {
 
 export interface CBroadcastGetRTMPInfoRequest {
   ip?: number | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CBroadcastGetRTMPInfoResponse {
@@ -354,7 +354,7 @@ export interface CBroadcastGetRTMPInfoResponse {
   requiredAppId?: number | undefined;
   broadcastChatPermission?: EBroadcastChatPermission | undefined;
   broadcastBuffer?: number | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   chatRateLimit?: number | undefined;
   enableReplay?: boolean | undefined;
   isPartnerChatOnly?: boolean | undefined;
@@ -362,12 +362,12 @@ export interface CBroadcastGetRTMPInfoResponse {
 }
 
 export interface CBroadcastWebRTCHaveTURNServerNotification {
-  broadcastSessionId?: number | undefined;
+  broadcastSessionId?: bigint | undefined;
   turnServer?: string | undefined;
 }
 
 export interface CBroadcastWebRTCStartResultRequest {
-  webrtcSessionId?: number | undefined;
+  webrtcSessionId?: bigint | undefined;
   started?: boolean | undefined;
   offer?: string | undefined;
   resolutionX?: number | undefined;
@@ -379,15 +379,15 @@ export interface CBroadcastWebRTCStartResultResponse {
 }
 
 export interface CBroadcastWebRTCStoppedRequest {
-  webrtcSessionId?: number | undefined;
+  webrtcSessionId?: bigint | undefined;
 }
 
 export interface CBroadcastWebRTCStoppedResponse {
 }
 
 export interface CBroadcastWebRTCSetAnswerRequest {
-  broadcasterSteamid?: number | undefined;
-  webrtcSessionId?: number | undefined;
+  broadcasterSteamid?: bigint | undefined;
+  webrtcSessionId?: bigint | undefined;
   answer?: string | undefined;
 }
 
@@ -409,7 +409,7 @@ export interface CBroadcastWebRTCCandidate {
 }
 
 export interface CBroadcastWebRTCAddHostCandidateRequest {
-  webrtcSessionId?: number | undefined;
+  webrtcSessionId?: bigint | undefined;
   candidate?: CBroadcastWebRTCCandidate | undefined;
 }
 
@@ -417,8 +417,8 @@ export interface CBroadcastWebRTCAddHostCandidateResponse {
 }
 
 export interface CBroadcastWebRTCAddViewerCandidateRequest {
-  broadcasterSteamid?: number | undefined;
-  webrtcSessionId?: number | undefined;
+  broadcasterSteamid?: bigint | undefined;
+  webrtcSessionId?: bigint | undefined;
   candidate?: CBroadcastWebRTCCandidate | undefined;
 }
 
@@ -426,8 +426,8 @@ export interface CBroadcastWebRTCAddViewerCandidateResponse {
 }
 
 export interface CBroadcastWebRTCGetHostCandidatesRequest {
-  broadcasterSteamid?: number | undefined;
-  webrtcSessionId?: number | undefined;
+  broadcasterSteamid?: bigint | undefined;
+  webrtcSessionId?: bigint | undefined;
   candidateGeneration?: number | undefined;
 }
 
@@ -439,9 +439,9 @@ export interface CBroadcastWebRTCGetHostCandidatesResponse {
 export interface CBroadcastGetBroadcastUploadStatsRequest {
   rowLimit?: number | undefined;
   startTime?: number | undefined;
-  uploadId?: number | undefined;
-  steamid?: number | undefined;
-  sessionId?: number | undefined;
+  uploadId?: bigint | undefined;
+  steamid?: bigint | undefined;
+  sessionId?: bigint | undefined;
 }
 
 export interface CBroadcastGetBroadcastUploadStatsResponse {
@@ -456,24 +456,24 @@ export interface CBroadcastGetBroadcastUploadStatsResponse_UploadStats {
   resolutionX?: number | undefined;
   resolutionY?: number | undefined;
   avgBandwidth?: number | undefined;
-  totalBytes?: number | undefined;
+  totalBytes?: bigint | undefined;
   appId?: number | undefined;
   totalUniqueViewers?: number | undefined;
-  totalSecondsWatched?: number | undefined;
+  totalSecondsWatched?: bigint | undefined;
   timeStarted?: number | undefined;
-  uploadId?: number | undefined;
+  uploadId?: bigint | undefined;
   localAddress?: string | undefined;
   remoteAddress?: string | undefined;
   framesPerSecond?: number | undefined;
   numRepresentations?: number | undefined;
   appName?: string | undefined;
   isReplay?: boolean | undefined;
-  sessionId?: number | undefined;
+  sessionId?: bigint | undefined;
 }
 
 export interface CBroadcastGetBroadcastViewerStatsRequest {
-  uploadId?: number | undefined;
-  steamid?: number | undefined;
+  uploadId?: bigint | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CBroadcastGetBroadcastViewerStatsResponse {
@@ -492,7 +492,7 @@ export interface CBroadcastGetBroadcastViewerStatsResponse_CountryStats {
 }
 
 export interface CBroadcastBroadcastViewerStateNotification {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   state?: CBroadcastBroadcastViewerStateNotification_EViewerState | undefined;
 }
 
@@ -504,84 +504,84 @@ export enum CBroadcastBroadcastViewerStateNotification_EViewerState {
 }
 
 export interface CBroadcastWaitingBroadcastViewerNotification {
-  broadcastId?: number | undefined;
+  broadcastId?: bigint | undefined;
 }
 
 export interface CBroadcastBroadcastUploadStartedNotification {
-  broadcastId?: number | undefined;
+  broadcastId?: bigint | undefined;
   uploadToken?: string | undefined;
   uploadAddress?: string | undefined;
   httpAddress?: string | undefined;
-  broadcastUploadId?: number | undefined;
+  broadcastUploadId?: bigint | undefined;
   heartbeatIntervalSeconds?: number | undefined;
   isRtmp?: boolean | undefined;
 }
 
 export interface CBroadcastStopBroadcastUploadNotification {
-  broadcastId?: number | undefined;
-  broadcastRelayId?: number | undefined;
+  broadcastId?: bigint | undefined;
+  broadcastRelayId?: bigint | undefined;
   uploadResult?: number | undefined;
   tooManyPoorUploads?: boolean | undefined;
 }
 
 export interface CBroadcastSessionClosedNotification {
-  broadcastId?: number | undefined;
+  broadcastId?: bigint | undefined;
 }
 
 export interface CBroadcastViewerBroadcastInviteNotification {
-  broadcasterSteamid?: number | undefined;
+  broadcasterSteamid?: bigint | undefined;
 }
 
 export interface CBroadcastBroadcastStatusNotification {
-  broadcastId?: number | undefined;
+  broadcastId?: bigint | undefined;
   numViewers?: number | undefined;
 }
 
 export interface CBroadcastBroadcastChannelLiveNotification {
-  broadcastChannelId?: number | undefined;
+  broadcastChannelId?: bigint | undefined;
   broadcastChannelName?: string | undefined;
   broadcastChannelAvatar?: string | undefined;
 }
 
 export interface CBroadcastSendThumbnailToRelayNotification {
   thumbnailUploadToken?: string | undefined;
-  thumbnailBroadcastSessionId?: number | undefined;
+  thumbnailBroadcastSessionId?: bigint | undefined;
   thumbnailData?: Buffer | undefined;
   thumbnailWidth?: number | undefined;
   thumbnailHeight?: number | undefined;
 }
 
 export interface CBroadcastWebRTCNeedTURNServerNotification {
-  broadcastSessionId?: number | undefined;
+  broadcastSessionId?: bigint | undefined;
 }
 
 export interface CBroadcastWebRTCStartNotification {
-  broadcastSessionId?: number | undefined;
-  webrtcSessionId?: number | undefined;
-  viewerSteamid?: number | undefined;
-  viewerToken?: number | undefined;
+  broadcastSessionId?: bigint | undefined;
+  webrtcSessionId?: bigint | undefined;
+  viewerSteamid?: bigint | undefined;
+  viewerToken?: bigint | undefined;
 }
 
 export interface CBroadcastWebRTCSetAnswerNotification {
-  broadcastSessionId?: number | undefined;
-  webrtcSessionId?: number | undefined;
+  broadcastSessionId?: bigint | undefined;
+  webrtcSessionId?: bigint | undefined;
   answer?: string | undefined;
 }
 
 export interface CBroadcastWebRTCAddViewerCandidateNotification {
-  broadcastSessionId?: number | undefined;
-  webrtcSessionId?: number | undefined;
+  broadcastSessionId?: bigint | undefined;
+  webrtcSessionId?: bigint | undefined;
   candidate?: CBroadcastWebRTCCandidate | undefined;
 }
 
 function createBaseCBroadcastBeginBroadcastSessionRequest(): CBroadcastBeginBroadcastSessionRequest {
   return {
     permission: 0,
-    gameid: 0,
-    clientInstanceId: 0,
+    gameid: 0n,
+    clientInstanceId: 0n,
     title: "",
     cellid: 0,
-    rtmpToken: 0,
+    rtmpToken: 0n,
     thumbnailUpload: false,
     sysid: 0,
     allowWebrtc: false,
@@ -593,10 +593,16 @@ export const CBroadcastBeginBroadcastSessionRequest: MessageFns<CBroadcastBeginB
     if (message.permission !== undefined && message.permission !== 0) {
       writer.uint32(8).int32(message.permission);
     }
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.gameid);
     }
-    if (message.clientInstanceId !== undefined && message.clientInstanceId !== 0) {
+    if (message.clientInstanceId !== undefined && message.clientInstanceId !== 0n) {
+      if (BigInt.asUintN(64, message.clientInstanceId) !== message.clientInstanceId) {
+        throw new globalThis.Error("value provided for field message.clientInstanceId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.clientInstanceId);
     }
     if (message.title !== undefined && message.title !== "") {
@@ -605,7 +611,10 @@ export const CBroadcastBeginBroadcastSessionRequest: MessageFns<CBroadcastBeginB
     if (message.cellid !== undefined && message.cellid !== 0) {
       writer.uint32(40).uint32(message.cellid);
     }
-    if (message.rtmpToken !== undefined && message.rtmpToken !== 0) {
+    if (message.rtmpToken !== undefined && message.rtmpToken !== 0n) {
+      if (BigInt.asUintN(64, message.rtmpToken) !== message.rtmpToken) {
+        throw new globalThis.Error("value provided for field message.rtmpToken of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.rtmpToken);
     }
     if (message.thumbnailUpload !== undefined && message.thumbnailUpload !== false) {
@@ -640,7 +649,7 @@ export const CBroadcastBeginBroadcastSessionRequest: MessageFns<CBroadcastBeginB
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -648,7 +657,7 @@ export const CBroadcastBeginBroadcastSessionRequest: MessageFns<CBroadcastBeginB
             break;
           }
 
-          message.clientInstanceId = longToNumber(reader.uint64());
+          message.clientInstanceId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -672,7 +681,7 @@ export const CBroadcastBeginBroadcastSessionRequest: MessageFns<CBroadcastBeginB
             break;
           }
 
-          message.rtmpToken = longToNumber(reader.uint64());
+          message.rtmpToken = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -711,7 +720,7 @@ export const CBroadcastBeginBroadcastSessionRequest: MessageFns<CBroadcastBeginB
 
 function createBaseCBroadcastBeginBroadcastSessionResponse(): CBroadcastBeginBroadcastSessionResponse {
   return {
-    broadcastId: 0,
+    broadcastId: 0n,
     thumbnailUploadAddress: "",
     thumbnailUploadToken: "",
     thumbnailIntervalSeconds: 0,
@@ -721,7 +730,10 @@ function createBaseCBroadcastBeginBroadcastSessionResponse(): CBroadcastBeginBro
 
 export const CBroadcastBeginBroadcastSessionResponse: MessageFns<CBroadcastBeginBroadcastSessionResponse> = {
   encode(message: CBroadcastBeginBroadcastSessionResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastId);
     }
     if (message.thumbnailUploadAddress !== undefined && message.thumbnailUploadAddress !== "") {
@@ -751,7 +763,7 @@ export const CBroadcastBeginBroadcastSessionResponse: MessageFns<CBroadcastBegin
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -797,12 +809,15 @@ export const CBroadcastBeginBroadcastSessionResponse: MessageFns<CBroadcastBegin
 };
 
 function createBaseCBroadcastEndBroadcastSessionRequest(): CBroadcastEndBroadcastSessionRequest {
-  return { broadcastId: 0 };
+  return { broadcastId: 0n };
 }
 
 export const CBroadcastEndBroadcastSessionRequest: MessageFns<CBroadcastEndBroadcastSessionRequest> = {
   encode(message: CBroadcastEndBroadcastSessionRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastId);
     }
     return writer;
@@ -820,7 +835,7 @@ export const CBroadcastEndBroadcastSessionRequest: MessageFns<CBroadcastEndBroad
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -861,11 +876,11 @@ export const CBroadcastEndBroadcastSessionResponse: MessageFns<CBroadcastEndBroa
 
 function createBaseCBroadcastStartBroadcastUploadRequest(): CBroadcastStartBroadcastUploadRequest {
   return {
-    broadcastId: 0,
+    broadcastId: 0n,
     cellid: 0,
     asRtmp: false,
     delaySeconds: 0,
-    rtmpToken: 0,
+    rtmpToken: 0n,
     uploadIpAddress: 0,
     isReplay: false,
     sysid: 0,
@@ -874,7 +889,10 @@ function createBaseCBroadcastStartBroadcastUploadRequest(): CBroadcastStartBroad
 
 export const CBroadcastStartBroadcastUploadRequest: MessageFns<CBroadcastStartBroadcastUploadRequest> = {
   encode(message: CBroadcastStartBroadcastUploadRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastId);
     }
     if (message.cellid !== undefined && message.cellid !== 0) {
@@ -886,7 +904,10 @@ export const CBroadcastStartBroadcastUploadRequest: MessageFns<CBroadcastStartBr
     if (message.delaySeconds !== undefined && message.delaySeconds !== 0) {
       writer.uint32(32).uint32(message.delaySeconds);
     }
-    if (message.rtmpToken !== undefined && message.rtmpToken !== 0) {
+    if (message.rtmpToken !== undefined && message.rtmpToken !== 0n) {
+      if (BigInt.asUintN(64, message.rtmpToken) !== message.rtmpToken) {
+        throw new globalThis.Error("value provided for field message.rtmpToken of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.rtmpToken);
     }
     if (message.uploadIpAddress !== undefined && message.uploadIpAddress !== 0) {
@@ -913,7 +934,7 @@ export const CBroadcastStartBroadcastUploadRequest: MessageFns<CBroadcastStartBr
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -945,7 +966,7 @@ export const CBroadcastStartBroadcastUploadRequest: MessageFns<CBroadcastStartBr
             break;
           }
 
-          message.rtmpToken = longToNumber(reader.uint64());
+          message.rtmpToken = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -983,7 +1004,7 @@ export const CBroadcastStartBroadcastUploadRequest: MessageFns<CBroadcastStartBr
 };
 
 function createBaseCBroadcastStartBroadcastUploadResponse(): CBroadcastStartBroadcastUploadResponse {
-  return { uploadToken: "", uploadAddress: "", broadcastUploadId: 0, enableReplay: false, httpAddress: "" };
+  return { uploadToken: "", uploadAddress: "", broadcastUploadId: 0n, enableReplay: false, httpAddress: "" };
 }
 
 export const CBroadcastStartBroadcastUploadResponse: MessageFns<CBroadcastStartBroadcastUploadResponse> = {
@@ -994,7 +1015,10 @@ export const CBroadcastStartBroadcastUploadResponse: MessageFns<CBroadcastStartB
     if (message.uploadAddress !== undefined && message.uploadAddress !== "") {
       writer.uint32(18).string(message.uploadAddress);
     }
-    if (message.broadcastUploadId !== undefined && message.broadcastUploadId !== 0) {
+    if (message.broadcastUploadId !== undefined && message.broadcastUploadId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastUploadId) !== message.broadcastUploadId) {
+        throw new globalThis.Error("value provided for field message.broadcastUploadId of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.broadcastUploadId);
     }
     if (message.enableReplay !== undefined && message.enableReplay !== false) {
@@ -1034,7 +1058,7 @@ export const CBroadcastStartBroadcastUploadResponse: MessageFns<CBroadcastStartB
             break;
           }
 
-          message.broadcastUploadId = longToNumber(reader.fixed64());
+          message.broadcastUploadId = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -1064,7 +1088,7 @@ export const CBroadcastStartBroadcastUploadResponse: MessageFns<CBroadcastStartB
 };
 
 function createBaseCBroadcastNotifyBroadcastUploadStopNotification(): CBroadcastNotifyBroadcastUploadStopNotification {
-  return { broadcastUploadId: 0, uploadResult: 0 };
+  return { broadcastUploadId: 0n, uploadResult: 0 };
 }
 
 export const CBroadcastNotifyBroadcastUploadStopNotification: MessageFns<
@@ -1074,7 +1098,10 @@ export const CBroadcastNotifyBroadcastUploadStopNotification: MessageFns<
     message: CBroadcastNotifyBroadcastUploadStopNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.broadcastUploadId !== undefined && message.broadcastUploadId !== 0) {
+    if (message.broadcastUploadId !== undefined && message.broadcastUploadId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastUploadId) !== message.broadcastUploadId) {
+        throw new globalThis.Error("value provided for field message.broadcastUploadId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastUploadId);
     }
     if (message.uploadResult !== undefined && message.uploadResult !== 0) {
@@ -1095,7 +1122,7 @@ export const CBroadcastNotifyBroadcastUploadStopNotification: MessageFns<
             break;
           }
 
-          message.broadcastUploadId = longToNumber(reader.fixed64());
+          message.broadcastUploadId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1117,18 +1144,27 @@ export const CBroadcastNotifyBroadcastUploadStopNotification: MessageFns<
 };
 
 function createBaseCBroadcastWatchBroadcastRequest(): CBroadcastWatchBroadcastRequest {
-  return { steamid: 0, existingBroadcastId: 0, viewerToken: 0, clientCell: 0, watchLocation: 0, isWebrtc: false };
+  return { steamid: 0n, existingBroadcastId: 0n, viewerToken: 0n, clientCell: 0, watchLocation: 0, isWebrtc: false };
 }
 
 export const CBroadcastWatchBroadcastRequest: MessageFns<CBroadcastWatchBroadcastRequest> = {
   encode(message: CBroadcastWatchBroadcastRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.existingBroadcastId !== undefined && message.existingBroadcastId !== 0) {
+    if (message.existingBroadcastId !== undefined && message.existingBroadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.existingBroadcastId) !== message.existingBroadcastId) {
+        throw new globalThis.Error("value provided for field message.existingBroadcastId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.existingBroadcastId);
     }
-    if (message.viewerToken !== undefined && message.viewerToken !== 0) {
+    if (message.viewerToken !== undefined && message.viewerToken !== 0n) {
+      if (BigInt.asUintN(64, message.viewerToken) !== message.viewerToken) {
+        throw new globalThis.Error("value provided for field message.viewerToken of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.viewerToken);
     }
     if (message.clientCell !== undefined && message.clientCell !== 0) {
@@ -1155,7 +1191,7 @@ export const CBroadcastWatchBroadcastRequest: MessageFns<CBroadcastWatchBroadcas
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1163,7 +1199,7 @@ export const CBroadcastWatchBroadcastRequest: MessageFns<CBroadcastWatchBroadcas
             break;
           }
 
-          message.existingBroadcastId = longToNumber(reader.fixed64());
+          message.existingBroadcastId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1171,7 +1207,7 @@ export const CBroadcastWatchBroadcastRequest: MessageFns<CBroadcastWatchBroadcas
             break;
           }
 
-          message.viewerToken = longToNumber(reader.fixed64());
+          message.viewerToken = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -1212,19 +1248,19 @@ function createBaseCBroadcastWatchBroadcastResponse(): CBroadcastWatchBroadcastR
   return {
     response: 1,
     mpdUrl: "",
-    broadcastId: 0,
-    gameid: 0,
+    broadcastId: 0n,
+    gameid: 0n,
     title: "",
     numViewers: 0,
     permission: 0,
     isRtmp: false,
     secondsDelay: 0,
-    viewerToken: 0,
+    viewerToken: 0n,
     hlsM3u8MasterUrl: "",
     heartbeatInterval: 0,
     thumbnailUrl: "",
     isWebrtc: false,
-    webrtcSessionId: 0,
+    webrtcSessionId: 0n,
     webrtcOfferSdp: "",
     webrtcTurnServer: "",
     isReplay: false,
@@ -1241,10 +1277,16 @@ export const CBroadcastWatchBroadcastResponse: MessageFns<CBroadcastWatchBroadca
     if (message.mpdUrl !== undefined && message.mpdUrl !== "") {
       writer.uint32(18).string(message.mpdUrl);
     }
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.broadcastId);
     }
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.gameid);
     }
     if (message.title !== undefined && message.title !== "") {
@@ -1262,7 +1304,10 @@ export const CBroadcastWatchBroadcastResponse: MessageFns<CBroadcastWatchBroadca
     if (message.secondsDelay !== undefined && message.secondsDelay !== 0) {
       writer.uint32(72).int32(message.secondsDelay);
     }
-    if (message.viewerToken !== undefined && message.viewerToken !== 0) {
+    if (message.viewerToken !== undefined && message.viewerToken !== 0n) {
+      if (BigInt.asUintN(64, message.viewerToken) !== message.viewerToken) {
+        throw new globalThis.Error("value provided for field message.viewerToken of type fixed64 too large");
+      }
       writer.uint32(81).fixed64(message.viewerToken);
     }
     if (message.hlsM3u8MasterUrl !== undefined && message.hlsM3u8MasterUrl !== "") {
@@ -1277,7 +1322,10 @@ export const CBroadcastWatchBroadcastResponse: MessageFns<CBroadcastWatchBroadca
     if (message.isWebrtc !== undefined && message.isWebrtc !== false) {
       writer.uint32(112).bool(message.isWebrtc);
     }
-    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0) {
+    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.webrtcSessionId) !== message.webrtcSessionId) {
+        throw new globalThis.Error("value provided for field message.webrtcSessionId of type fixed64 too large");
+      }
       writer.uint32(121).fixed64(message.webrtcSessionId);
     }
     if (message.webrtcOfferSdp !== undefined && message.webrtcOfferSdp !== "") {
@@ -1326,7 +1374,7 @@ export const CBroadcastWatchBroadcastResponse: MessageFns<CBroadcastWatchBroadca
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1334,7 +1382,7 @@ export const CBroadcastWatchBroadcastResponse: MessageFns<CBroadcastWatchBroadca
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -1382,7 +1430,7 @@ export const CBroadcastWatchBroadcastResponse: MessageFns<CBroadcastWatchBroadca
             break;
           }
 
-          message.viewerToken = longToNumber(reader.fixed64());
+          message.viewerToken = reader.fixed64() as bigint;
           continue;
         }
         case 11: {
@@ -1422,7 +1470,7 @@ export const CBroadcastWatchBroadcastResponse: MessageFns<CBroadcastWatchBroadca
             break;
           }
 
-          message.webrtcSessionId = longToNumber(reader.fixed64());
+          message.webrtcSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 16: {
@@ -1476,18 +1524,27 @@ export const CBroadcastWatchBroadcastResponse: MessageFns<CBroadcastWatchBroadca
 };
 
 function createBaseCBroadcastHeartbeatBroadcastNotification(): CBroadcastHeartbeatBroadcastNotification {
-  return { steamid: 0, broadcastId: 0, viewerToken: 0, representation: 0 };
+  return { steamid: 0n, broadcastId: 0n, viewerToken: 0n, representation: 0 };
 }
 
 export const CBroadcastHeartbeatBroadcastNotification: MessageFns<CBroadcastHeartbeatBroadcastNotification> = {
   encode(message: CBroadcastHeartbeatBroadcastNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.broadcastId);
     }
-    if (message.viewerToken !== undefined && message.viewerToken !== 0) {
+    if (message.viewerToken !== undefined && message.viewerToken !== 0n) {
+      if (BigInt.asUintN(64, message.viewerToken) !== message.viewerToken) {
+        throw new globalThis.Error("value provided for field message.viewerToken of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.viewerToken);
     }
     if (message.representation !== undefined && message.representation !== 0) {
@@ -1508,7 +1565,7 @@ export const CBroadcastHeartbeatBroadcastNotification: MessageFns<CBroadcastHear
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1516,7 +1573,7 @@ export const CBroadcastHeartbeatBroadcastNotification: MessageFns<CBroadcastHear
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1524,7 +1581,7 @@ export const CBroadcastHeartbeatBroadcastNotification: MessageFns<CBroadcastHear
             break;
           }
 
-          message.viewerToken = longToNumber(reader.fixed64());
+          message.viewerToken = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -1546,7 +1603,7 @@ export const CBroadcastHeartbeatBroadcastNotification: MessageFns<CBroadcastHear
 };
 
 function createBaseCBroadcastStopWatchingBroadcastNotification(): CBroadcastStopWatchingBroadcastNotification {
-  return { steamid: 0, broadcastId: 0, viewerToken: 0 };
+  return { steamid: 0n, broadcastId: 0n, viewerToken: 0n };
 }
 
 export const CBroadcastStopWatchingBroadcastNotification: MessageFns<CBroadcastStopWatchingBroadcastNotification> = {
@@ -1554,13 +1611,22 @@ export const CBroadcastStopWatchingBroadcastNotification: MessageFns<CBroadcastS
     message: CBroadcastStopWatchingBroadcastNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.broadcastId);
     }
-    if (message.viewerToken !== undefined && message.viewerToken !== 0) {
+    if (message.viewerToken !== undefined && message.viewerToken !== 0n) {
+      if (BigInt.asUintN(64, message.viewerToken) !== message.viewerToken) {
+        throw new globalThis.Error("value provided for field message.viewerToken of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.viewerToken);
     }
     return writer;
@@ -1578,7 +1644,7 @@ export const CBroadcastStopWatchingBroadcastNotification: MessageFns<CBroadcastS
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1586,7 +1652,7 @@ export const CBroadcastStopWatchingBroadcastNotification: MessageFns<CBroadcastS
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -1594,7 +1660,7 @@ export const CBroadcastStopWatchingBroadcastNotification: MessageFns<CBroadcastS
             break;
           }
 
-          message.viewerToken = longToNumber(reader.fixed64());
+          message.viewerToken = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1608,15 +1674,21 @@ export const CBroadcastStopWatchingBroadcastNotification: MessageFns<CBroadcastS
 };
 
 function createBaseCBroadcastGetBroadcastStatusRequest(): CBroadcastGetBroadcastStatusRequest {
-  return { steamid: 0, broadcastId: 0 };
+  return { steamid: 0n, broadcastId: 0n };
 }
 
 export const CBroadcastGetBroadcastStatusRequest: MessageFns<CBroadcastGetBroadcastStatusRequest> = {
   encode(message: CBroadcastGetBroadcastStatusRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.broadcastId);
     }
     return writer;
@@ -1634,7 +1706,7 @@ export const CBroadcastGetBroadcastStatusRequest: MessageFns<CBroadcastGetBroadc
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1642,7 +1714,7 @@ export const CBroadcastGetBroadcastStatusRequest: MessageFns<CBroadcastGetBroadc
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1657,7 +1729,7 @@ export const CBroadcastGetBroadcastStatusRequest: MessageFns<CBroadcastGetBroadc
 
 function createBaseCBroadcastGetBroadcastStatusResponse(): CBroadcastGetBroadcastStatusResponse {
   return {
-    gameid: 0,
+    gameid: 0n,
     title: "",
     numViewers: 0,
     permission: 0,
@@ -1676,7 +1748,10 @@ function createBaseCBroadcastGetBroadcastStatusResponse(): CBroadcastGetBroadcas
 
 export const CBroadcastGetBroadcastStatusResponse: MessageFns<CBroadcastGetBroadcastStatusResponse> = {
   encode(message: CBroadcastGetBroadcastStatusResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.gameid);
     }
     if (message.title !== undefined && message.title !== "") {
@@ -1733,7 +1808,7 @@ export const CBroadcastGetBroadcastStatusResponse: MessageFns<CBroadcastGetBroad
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -1851,15 +1926,21 @@ export const CBroadcastGetBroadcastStatusResponse: MessageFns<CBroadcastGetBroad
 };
 
 function createBaseCBroadcastGetBroadcastThumbnailRequest(): CBroadcastGetBroadcastThumbnailRequest {
-  return { steamid: 0, broadcastId: 0 };
+  return { steamid: 0n, broadcastId: 0n };
 }
 
 export const CBroadcastGetBroadcastThumbnailRequest: MessageFns<CBroadcastGetBroadcastThumbnailRequest> = {
   encode(message: CBroadcastGetBroadcastThumbnailRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.broadcastId);
     }
     return writer;
@@ -1877,7 +1958,7 @@ export const CBroadcastGetBroadcastThumbnailRequest: MessageFns<CBroadcastGetBro
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -1885,7 +1966,7 @@ export const CBroadcastGetBroadcastThumbnailRequest: MessageFns<CBroadcastGetBro
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1969,12 +2050,15 @@ export const CBroadcastGetBroadcastThumbnailResponse: MessageFns<CBroadcastGetBr
 };
 
 function createBaseCBroadcastInviteToBroadcastRequest(): CBroadcastInviteToBroadcastRequest {
-  return { steamid: 0, approvalResponse: false };
+  return { steamid: 0n, approvalResponse: false };
 }
 
 export const CBroadcastInviteToBroadcastRequest: MessageFns<CBroadcastInviteToBroadcastRequest> = {
   encode(message: CBroadcastInviteToBroadcastRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.approvalResponse !== undefined && message.approvalResponse !== false) {
@@ -1995,7 +2079,7 @@ export const CBroadcastInviteToBroadcastRequest: MessageFns<CBroadcastInviteToBr
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2054,7 +2138,7 @@ export const CBroadcastInviteToBroadcastResponse: MessageFns<CBroadcastInviteToB
 };
 
 function createBaseCBroadcastSendBroadcastStateToServerRequest(): CBroadcastSendBroadcastStateToServerRequest {
-  return { permission: 0, gameid: 0, title: "", gameDataConfig: "" };
+  return { permission: 0, gameid: 0n, title: "", gameDataConfig: "" };
 }
 
 export const CBroadcastSendBroadcastStateToServerRequest: MessageFns<CBroadcastSendBroadcastStateToServerRequest> = {
@@ -2065,7 +2149,10 @@ export const CBroadcastSendBroadcastStateToServerRequest: MessageFns<CBroadcastS
     if (message.permission !== undefined && message.permission !== 0) {
       writer.uint32(8).int32(message.permission);
     }
-    if (message.gameid !== undefined && message.gameid !== 0) {
+    if (message.gameid !== undefined && message.gameid !== 0n) {
+      if (BigInt.asUintN(64, message.gameid) !== message.gameid) {
+        throw new globalThis.Error("value provided for field message.gameid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.gameid);
     }
     if (message.title !== undefined && message.title !== "") {
@@ -2097,7 +2184,7 @@ export const CBroadcastSendBroadcastStateToServerRequest: MessageFns<CBroadcastS
             break;
           }
 
-          message.gameid = longToNumber(reader.uint64());
+          message.gameid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -2153,7 +2240,7 @@ export const CBroadcastSendBroadcastStateToServerResponse: MessageFns<CBroadcast
 };
 
 function createBaseCBroadcastNotifyBroadcastSessionHeartbeatNotification(): CBroadcastNotifyBroadcastSessionHeartbeatNotification {
-  return { broadcastId: 0 };
+  return { broadcastId: 0n };
 }
 
 export const CBroadcastNotifyBroadcastSessionHeartbeatNotification: MessageFns<
@@ -2163,7 +2250,10 @@ export const CBroadcastNotifyBroadcastSessionHeartbeatNotification: MessageFns<
     message: CBroadcastNotifyBroadcastSessionHeartbeatNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastId);
     }
     return writer;
@@ -2181,7 +2271,7 @@ export const CBroadcastNotifyBroadcastSessionHeartbeatNotification: MessageFns<
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2195,15 +2285,21 @@ export const CBroadcastNotifyBroadcastSessionHeartbeatNotification: MessageFns<
 };
 
 function createBaseCBroadcastGetBroadcastChatInfoRequest(): CBroadcastGetBroadcastChatInfoRequest {
-  return { steamid: 0, broadcastId: 0, clientIp: 0, clientCell: 0 };
+  return { steamid: 0n, broadcastId: 0n, clientIp: 0, clientCell: 0 };
 }
 
 export const CBroadcastGetBroadcastChatInfoRequest: MessageFns<CBroadcastGetBroadcastChatInfoRequest> = {
   encode(message: CBroadcastGetBroadcastChatInfoRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.broadcastId);
     }
     if (message.clientIp !== undefined && message.clientIp !== 0) {
@@ -2227,7 +2323,7 @@ export const CBroadcastGetBroadcastChatInfoRequest: MessageFns<CBroadcastGetBroa
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2235,7 +2331,7 @@ export const CBroadcastGetBroadcastChatInfoRequest: MessageFns<CBroadcastGetBroa
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2265,12 +2361,15 @@ export const CBroadcastGetBroadcastChatInfoRequest: MessageFns<CBroadcastGetBroa
 };
 
 function createBaseCBroadcastGetBroadcastChatInfoResponse(): CBroadcastGetBroadcastChatInfoResponse {
-  return { chatId: 0, viewUrlTemplate: "", flairGroupIds: [] };
+  return { chatId: 0n, viewUrlTemplate: "", flairGroupIds: [] };
 }
 
 export const CBroadcastGetBroadcastChatInfoResponse: MessageFns<CBroadcastGetBroadcastChatInfoResponse> = {
   encode(message: CBroadcastGetBroadcastChatInfoResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.chatId);
     }
     if (message.viewUrlTemplate !== undefined && message.viewUrlTemplate !== "") {
@@ -2294,7 +2393,7 @@ export const CBroadcastGetBroadcastChatInfoResponse: MessageFns<CBroadcastGetBro
             break;
           }
 
-          message.chatId = longToNumber(reader.fixed64());
+          message.chatId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2334,12 +2433,15 @@ export const CBroadcastGetBroadcastChatInfoResponse: MessageFns<CBroadcastGetBro
 };
 
 function createBaseCBroadcastPostChatMessageRequest(): CBroadcastPostChatMessageRequest {
-  return { chatId: 0, message: "", instanceId: 0, language: 0, countryCode: "" };
+  return { chatId: 0n, message: "", instanceId: 0, language: 0, countryCode: "" };
 }
 
 export const CBroadcastPostChatMessageRequest: MessageFns<CBroadcastPostChatMessageRequest> = {
   encode(message: CBroadcastPostChatMessageRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.chatId);
     }
     if (message.message !== undefined && message.message !== "") {
@@ -2369,7 +2471,7 @@ export const CBroadcastPostChatMessageRequest: MessageFns<CBroadcastPostChatMess
             break;
           }
 
-          message.chatId = longToNumber(reader.fixed64());
+          message.chatId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2485,12 +2587,15 @@ export const CBroadcastPostChatMessageResponse: MessageFns<CBroadcastPostChatMes
 };
 
 function createBaseCBroadcastUpdateChatMessageFlairRequest(): CBroadcastUpdateChatMessageFlairRequest {
-  return { chatId: 0, flair: "" };
+  return { chatId: 0n, flair: "" };
 }
 
 export const CBroadcastUpdateChatMessageFlairRequest: MessageFns<CBroadcastUpdateChatMessageFlairRequest> = {
   encode(message: CBroadcastUpdateChatMessageFlairRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.chatId);
     }
     if (message.flair !== undefined && message.flair !== "") {
@@ -2511,7 +2616,7 @@ export const CBroadcastUpdateChatMessageFlairRequest: MessageFns<CBroadcastUpdat
             break;
           }
 
-          message.chatId = longToNumber(reader.fixed64());
+          message.chatId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2533,7 +2638,7 @@ export const CBroadcastUpdateChatMessageFlairRequest: MessageFns<CBroadcastUpdat
 };
 
 function createBaseCBroadcastUpdateChatMessageFlairResponse(): CBroadcastUpdateChatMessageFlairResponse {
-  return { result: 0, chatId: 0, flair: "" };
+  return { result: 0, chatId: 0n, flair: "" };
 }
 
 export const CBroadcastUpdateChatMessageFlairResponse: MessageFns<CBroadcastUpdateChatMessageFlairResponse> = {
@@ -2541,7 +2646,10 @@ export const CBroadcastUpdateChatMessageFlairResponse: MessageFns<CBroadcastUpda
     if (message.result !== undefined && message.result !== 0) {
       writer.uint32(8).int32(message.result);
     }
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.chatId);
     }
     if (message.flair !== undefined && message.flair !== "") {
@@ -2570,7 +2678,7 @@ export const CBroadcastUpdateChatMessageFlairResponse: MessageFns<CBroadcastUpda
             break;
           }
 
-          message.chatId = longToNumber(reader.fixed64());
+          message.chatId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2592,15 +2700,21 @@ export const CBroadcastUpdateChatMessageFlairResponse: MessageFns<CBroadcastUpda
 };
 
 function createBaseCBroadcastMuteBroadcastChatUserRequest(): CBroadcastMuteBroadcastChatUserRequest {
-  return { chatId: 0, userSteamid: 0, muted: false };
+  return { chatId: 0n, userSteamid: 0n, muted: false };
 }
 
 export const CBroadcastMuteBroadcastChatUserRequest: MessageFns<CBroadcastMuteBroadcastChatUserRequest> = {
   encode(message: CBroadcastMuteBroadcastChatUserRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.chatId);
     }
-    if (message.userSteamid !== undefined && message.userSteamid !== 0) {
+    if (message.userSteamid !== undefined && message.userSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.userSteamid) !== message.userSteamid) {
+        throw new globalThis.Error("value provided for field message.userSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.userSteamid);
     }
     if (message.muted !== undefined && message.muted !== false) {
@@ -2621,7 +2735,7 @@ export const CBroadcastMuteBroadcastChatUserRequest: MessageFns<CBroadcastMuteBr
             break;
           }
 
-          message.chatId = longToNumber(reader.fixed64());
+          message.chatId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2629,7 +2743,7 @@ export const CBroadcastMuteBroadcastChatUserRequest: MessageFns<CBroadcastMuteBr
             break;
           }
 
-          message.userSteamid = longToNumber(reader.fixed64());
+          message.userSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2677,15 +2791,21 @@ export const CBroadcastMuteBroadcastChatUserResponse: MessageFns<CBroadcastMuteB
 };
 
 function createBaseCBroadcastRemoveUserChatTextRequest(): CBroadcastRemoveUserChatTextRequest {
-  return { chatId: 0, userSteamid: 0 };
+  return { chatId: 0n, userSteamid: 0n };
 }
 
 export const CBroadcastRemoveUserChatTextRequest: MessageFns<CBroadcastRemoveUserChatTextRequest> = {
   encode(message: CBroadcastRemoveUserChatTextRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.chatId);
     }
-    if (message.userSteamid !== undefined && message.userSteamid !== 0) {
+    if (message.userSteamid !== undefined && message.userSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.userSteamid) !== message.userSteamid) {
+        throw new globalThis.Error("value provided for field message.userSteamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.userSteamid);
     }
     return writer;
@@ -2703,7 +2823,7 @@ export const CBroadcastRemoveUserChatTextRequest: MessageFns<CBroadcastRemoveUse
             break;
           }
 
-          message.chatId = longToNumber(reader.fixed64());
+          message.chatId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2711,7 +2831,7 @@ export const CBroadcastRemoveUserChatTextRequest: MessageFns<CBroadcastRemoveUse
             break;
           }
 
-          message.userSteamid = longToNumber(reader.fixed64());
+          message.userSteamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -2751,15 +2871,21 @@ export const CBroadcastRemoveUserChatTextResponse: MessageFns<CBroadcastRemoveUs
 };
 
 function createBaseCBroadcastGetBroadcastChatUserNamesRequest(): CBroadcastGetBroadcastChatUserNamesRequest {
-  return { chatId: 0, userSteamid: [] };
+  return { chatId: 0n, userSteamid: [] };
 }
 
 export const CBroadcastGetBroadcastChatUserNamesRequest: MessageFns<CBroadcastGetBroadcastChatUserNamesRequest> = {
   encode(message: CBroadcastGetBroadcastChatUserNamesRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.chatId !== undefined && message.chatId !== 0) {
+    if (message.chatId !== undefined && message.chatId !== 0n) {
+      if (BigInt.asUintN(64, message.chatId) !== message.chatId) {
+        throw new globalThis.Error("value provided for field message.chatId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.chatId);
     }
     for (const v of message.userSteamid) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(v!);
     }
     return writer;
@@ -2777,12 +2903,12 @@ export const CBroadcastGetBroadcastChatUserNamesRequest: MessageFns<CBroadcastGe
             break;
           }
 
-          message.chatId = longToNumber(reader.fixed64());
+          message.chatId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
           if (tag === 17) {
-            message.userSteamid.push(longToNumber(reader.fixed64()));
+            message.userSteamid.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -2790,7 +2916,7 @@ export const CBroadcastGetBroadcastChatUserNamesRequest: MessageFns<CBroadcastGe
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.userSteamid.push(longToNumber(reader.fixed64()));
+              message.userSteamid.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -2851,7 +2977,7 @@ export const CBroadcastGetBroadcastChatUserNamesResponse: MessageFns<CBroadcastG
 };
 
 function createBaseCBroadcastGetBroadcastChatUserNamesResponse_PersonaName(): CBroadcastGetBroadcastChatUserNamesResponse_PersonaName {
-  return { steamId: 0, persona: "" };
+  return { steamId: 0n, persona: "" };
 }
 
 export const CBroadcastGetBroadcastChatUserNamesResponse_PersonaName: MessageFns<
@@ -2861,7 +2987,10 @@ export const CBroadcastGetBroadcastChatUserNamesResponse_PersonaName: MessageFns
     message: CBroadcastGetBroadcastChatUserNamesResponse_PersonaName,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.steamId !== undefined && message.steamId !== 0) {
+    if (message.steamId !== undefined && message.steamId !== 0n) {
+      if (BigInt.asUintN(64, message.steamId) !== message.steamId) {
+        throw new globalThis.Error("value provided for field message.steamId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamId);
     }
     if (message.persona !== undefined && message.persona !== "") {
@@ -2882,7 +3011,7 @@ export const CBroadcastGetBroadcastChatUserNamesResponse_PersonaName: MessageFns
             break;
           }
 
-          message.steamId = longToNumber(reader.fixed64());
+          message.steamId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2904,15 +3033,21 @@ export const CBroadcastGetBroadcastChatUserNamesResponse_PersonaName: MessageFns
 };
 
 function createBaseCBroadcastStartBuildClipRequest(): CBroadcastStartBuildClipRequest {
-  return { steamid: 0, broadcastSessionId: 0, firstSegment: 0, numSegments: 0, clipDescription: "" };
+  return { steamid: 0n, broadcastSessionId: 0n, firstSegment: 0, numSegments: 0, clipDescription: "" };
 }
 
 export const CBroadcastStartBuildClipRequest: MessageFns<CBroadcastStartBuildClipRequest> = {
   encode(message: CBroadcastStartBuildClipRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
-    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0) {
+    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastSessionId) !== message.broadcastSessionId) {
+        throw new globalThis.Error("value provided for field message.broadcastSessionId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.broadcastSessionId);
     }
     if (message.firstSegment !== undefined && message.firstSegment !== 0) {
@@ -2939,7 +3074,7 @@ export const CBroadcastStartBuildClipRequest: MessageFns<CBroadcastStartBuildCli
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -2947,7 +3082,7 @@ export const CBroadcastStartBuildClipRequest: MessageFns<CBroadcastStartBuildCli
             break;
           }
 
-          message.broadcastSessionId = longToNumber(reader.fixed64());
+          message.broadcastSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -2985,12 +3120,15 @@ export const CBroadcastStartBuildClipRequest: MessageFns<CBroadcastStartBuildCli
 };
 
 function createBaseCBroadcastStartBuildClipResponse(): CBroadcastStartBuildClipResponse {
-  return { broadcastClipId: 0 };
+  return { broadcastClipId: 0n };
 }
 
 export const CBroadcastStartBuildClipResponse: MessageFns<CBroadcastStartBuildClipResponse> = {
   encode(message: CBroadcastStartBuildClipResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0) {
+    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastClipId) !== message.broadcastClipId) {
+        throw new globalThis.Error("value provided for field message.broadcastClipId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastClipId);
     }
     return writer;
@@ -3008,7 +3146,7 @@ export const CBroadcastStartBuildClipResponse: MessageFns<CBroadcastStartBuildCl
             break;
           }
 
-          message.broadcastClipId = longToNumber(reader.fixed64());
+          message.broadcastClipId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3022,12 +3160,15 @@ export const CBroadcastStartBuildClipResponse: MessageFns<CBroadcastStartBuildCl
 };
 
 function createBaseCBroadcastGetBuildClipStatusRequest(): CBroadcastGetBuildClipStatusRequest {
-  return { broadcastClipId: 0 };
+  return { broadcastClipId: 0n };
 }
 
 export const CBroadcastGetBuildClipStatusRequest: MessageFns<CBroadcastGetBuildClipStatusRequest> = {
   encode(message: CBroadcastGetBuildClipStatusRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0) {
+    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastClipId) !== message.broadcastClipId) {
+        throw new globalThis.Error("value provided for field message.broadcastClipId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastClipId);
     }
     return writer;
@@ -3045,7 +3186,7 @@ export const CBroadcastGetBuildClipStatusRequest: MessageFns<CBroadcastGetBuildC
             break;
           }
 
-          message.broadcastClipId = longToNumber(reader.fixed64());
+          message.broadcastClipId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3085,12 +3226,15 @@ export const CBroadcastGetBuildClipStatusResponse: MessageFns<CBroadcastGetBuild
 };
 
 function createBaseCBroadcastSetClipDetailsRequest(): CBroadcastSetClipDetailsRequest {
-  return { broadcastClipId: 0, startTime: 0, endTime: 0, videoDescription: "" };
+  return { broadcastClipId: 0n, startTime: 0, endTime: 0, videoDescription: "" };
 }
 
 export const CBroadcastSetClipDetailsRequest: MessageFns<CBroadcastSetClipDetailsRequest> = {
   encode(message: CBroadcastSetClipDetailsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0) {
+    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastClipId) !== message.broadcastClipId) {
+        throw new globalThis.Error("value provided for field message.broadcastClipId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.broadcastClipId);
     }
     if (message.startTime !== undefined && message.startTime !== 0) {
@@ -3117,7 +3261,7 @@ export const CBroadcastSetClipDetailsRequest: MessageFns<CBroadcastSetClipDetail
             break;
           }
 
-          message.broadcastClipId = longToNumber(reader.uint64());
+          message.broadcastClipId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3181,12 +3325,15 @@ export const CBroadcastSetClipDetailsResponse: MessageFns<CBroadcastSetClipDetai
 };
 
 function createBaseCBroadcastGetClipDetailsRequest(): CBroadcastGetClipDetailsRequest {
-  return { broadcastClipId: 0 };
+  return { broadcastClipId: 0n };
 }
 
 export const CBroadcastGetClipDetailsRequest: MessageFns<CBroadcastGetClipDetailsRequest> = {
   encode(message: CBroadcastGetClipDetailsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0) {
+    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastClipId) !== message.broadcastClipId) {
+        throw new globalThis.Error("value provided for field message.broadcastClipId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.broadcastClipId);
     }
     return writer;
@@ -3204,7 +3351,7 @@ export const CBroadcastGetClipDetailsRequest: MessageFns<CBroadcastGetClipDetail
             break;
           }
 
-          message.broadcastClipId = longToNumber(reader.uint64());
+          message.broadcastClipId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -3219,9 +3366,9 @@ export const CBroadcastGetClipDetailsRequest: MessageFns<CBroadcastGetClipDetail
 
 function createBaseCBroadcastGetClipDetailsResponse(): CBroadcastGetClipDetailsResponse {
   return {
-    broadcastClipId: 0,
-    videoId: 0,
-    channelId: 0,
+    broadcastClipId: 0n,
+    videoId: 0n,
+    channelId: 0n,
     appId: 0,
     accountidBroadcaster: 0,
     accountidClipmaker: 0,
@@ -3234,13 +3381,22 @@ function createBaseCBroadcastGetClipDetailsResponse(): CBroadcastGetClipDetailsR
 
 export const CBroadcastGetClipDetailsResponse: MessageFns<CBroadcastGetClipDetailsResponse> = {
   encode(message: CBroadcastGetClipDetailsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0) {
+    if (message.broadcastClipId !== undefined && message.broadcastClipId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastClipId) !== message.broadcastClipId) {
+        throw new globalThis.Error("value provided for field message.broadcastClipId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.broadcastClipId);
     }
-    if (message.videoId !== undefined && message.videoId !== 0) {
+    if (message.videoId !== undefined && message.videoId !== 0n) {
+      if (BigInt.asUintN(64, message.videoId) !== message.videoId) {
+        throw new globalThis.Error("value provided for field message.videoId of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.videoId);
     }
-    if (message.channelId !== undefined && message.channelId !== 0) {
+    if (message.channelId !== undefined && message.channelId !== 0n) {
+      if (BigInt.asUintN(64, message.channelId) !== message.channelId) {
+        throw new globalThis.Error("value provided for field message.channelId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.channelId);
     }
     if (message.appId !== undefined && message.appId !== 0) {
@@ -3279,7 +3435,7 @@ export const CBroadcastGetClipDetailsResponse: MessageFns<CBroadcastGetClipDetai
             break;
           }
 
-          message.broadcastClipId = longToNumber(reader.uint64());
+          message.broadcastClipId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -3287,7 +3443,7 @@ export const CBroadcastGetClipDetailsResponse: MessageFns<CBroadcastGetClipDetai
             break;
           }
 
-          message.videoId = longToNumber(reader.uint64());
+          message.videoId = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -3295,7 +3451,7 @@ export const CBroadcastGetClipDetailsResponse: MessageFns<CBroadcastGetClipDetai
             break;
           }
 
-          message.channelId = longToNumber(reader.uint64());
+          message.channelId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -3373,7 +3529,7 @@ function createBaseCBroadcastSetRTMPInfoRequest(): CBroadcastSetRTMPInfoRequest 
     requiredAppId: 0,
     broadcastChatPermission: 0,
     broadcastBuffer: 0,
-    steamid: 0,
+    steamid: 0n,
     chatRateLimit: 0,
     enableReplay: false,
     isPartnerChatOnly: false,
@@ -3404,7 +3560,10 @@ export const CBroadcastSetRTMPInfoRequest: MessageFns<CBroadcastSetRTMPInfoReque
     if (message.broadcastBuffer !== undefined && message.broadcastBuffer !== 0) {
       writer.uint32(56).int32(message.broadcastBuffer);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(65).fixed64(message.steamid);
     }
     if (message.chatRateLimit !== undefined && message.chatRateLimit !== 0) {
@@ -3490,7 +3649,7 @@ export const CBroadcastSetRTMPInfoRequest: MessageFns<CBroadcastSetRTMPInfoReque
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 9: {
@@ -3562,7 +3721,7 @@ export const CBroadcastSetRTMPInfoResponse: MessageFns<CBroadcastSetRTMPInfoResp
 };
 
 function createBaseCBroadcastGetRTMPInfoRequest(): CBroadcastGetRTMPInfoRequest {
-  return { ip: 0, steamid: 0 };
+  return { ip: 0, steamid: 0n };
 }
 
 export const CBroadcastGetRTMPInfoRequest: MessageFns<CBroadcastGetRTMPInfoRequest> = {
@@ -3570,7 +3729,10 @@ export const CBroadcastGetRTMPInfoRequest: MessageFns<CBroadcastGetRTMPInfoReque
     if (message.ip !== undefined && message.ip !== 0) {
       writer.uint32(8).uint32(message.ip);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     return writer;
@@ -3596,7 +3758,7 @@ export const CBroadcastGetRTMPInfoRequest: MessageFns<CBroadcastGetRTMPInfoReque
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -3619,7 +3781,7 @@ function createBaseCBroadcastGetRTMPInfoResponse(): CBroadcastGetRTMPInfoRespons
     requiredAppId: 0,
     broadcastChatPermission: 0,
     broadcastBuffer: 0,
-    steamid: 0,
+    steamid: 0n,
     chatRateLimit: 0,
     enableReplay: false,
     isPartnerChatOnly: false,
@@ -3653,7 +3815,10 @@ export const CBroadcastGetRTMPInfoResponse: MessageFns<CBroadcastGetRTMPInfoResp
     if (message.broadcastBuffer !== undefined && message.broadcastBuffer !== 0) {
       writer.uint32(64).int32(message.broadcastBuffer);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(73).fixed64(message.steamid);
     }
     if (message.chatRateLimit !== undefined && message.chatRateLimit !== 0) {
@@ -3747,7 +3912,7 @@ export const CBroadcastGetRTMPInfoResponse: MessageFns<CBroadcastGetRTMPInfoResp
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 10: {
@@ -3793,12 +3958,15 @@ export const CBroadcastGetRTMPInfoResponse: MessageFns<CBroadcastGetRTMPInfoResp
 };
 
 function createBaseCBroadcastWebRTCHaveTURNServerNotification(): CBroadcastWebRTCHaveTURNServerNotification {
-  return { broadcastSessionId: 0, turnServer: "" };
+  return { broadcastSessionId: 0n, turnServer: "" };
 }
 
 export const CBroadcastWebRTCHaveTURNServerNotification: MessageFns<CBroadcastWebRTCHaveTURNServerNotification> = {
   encode(message: CBroadcastWebRTCHaveTURNServerNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0) {
+    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastSessionId) !== message.broadcastSessionId) {
+        throw new globalThis.Error("value provided for field message.broadcastSessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastSessionId);
     }
     if (message.turnServer !== undefined && message.turnServer !== "") {
@@ -3819,7 +3987,7 @@ export const CBroadcastWebRTCHaveTURNServerNotification: MessageFns<CBroadcastWe
             break;
           }
 
-          message.broadcastSessionId = longToNumber(reader.fixed64());
+          message.broadcastSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3841,12 +4009,15 @@ export const CBroadcastWebRTCHaveTURNServerNotification: MessageFns<CBroadcastWe
 };
 
 function createBaseCBroadcastWebRTCStartResultRequest(): CBroadcastWebRTCStartResultRequest {
-  return { webrtcSessionId: 0, started: false, offer: "", resolutionX: 0, resolutionY: 0, fps: 0 };
+  return { webrtcSessionId: 0n, started: false, offer: "", resolutionX: 0, resolutionY: 0, fps: 0 };
 }
 
 export const CBroadcastWebRTCStartResultRequest: MessageFns<CBroadcastWebRTCStartResultRequest> = {
   encode(message: CBroadcastWebRTCStartResultRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0) {
+    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.webrtcSessionId) !== message.webrtcSessionId) {
+        throw new globalThis.Error("value provided for field message.webrtcSessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.webrtcSessionId);
     }
     if (message.started !== undefined && message.started !== false) {
@@ -3879,7 +4050,7 @@ export const CBroadcastWebRTCStartResultRequest: MessageFns<CBroadcastWebRTCStar
             break;
           }
 
-          message.webrtcSessionId = longToNumber(reader.fixed64());
+          message.webrtcSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -3959,12 +4130,15 @@ export const CBroadcastWebRTCStartResultResponse: MessageFns<CBroadcastWebRTCSta
 };
 
 function createBaseCBroadcastWebRTCStoppedRequest(): CBroadcastWebRTCStoppedRequest {
-  return { webrtcSessionId: 0 };
+  return { webrtcSessionId: 0n };
 }
 
 export const CBroadcastWebRTCStoppedRequest: MessageFns<CBroadcastWebRTCStoppedRequest> = {
   encode(message: CBroadcastWebRTCStoppedRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0) {
+    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.webrtcSessionId) !== message.webrtcSessionId) {
+        throw new globalThis.Error("value provided for field message.webrtcSessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.webrtcSessionId);
     }
     return writer;
@@ -3982,7 +4156,7 @@ export const CBroadcastWebRTCStoppedRequest: MessageFns<CBroadcastWebRTCStoppedR
             break;
           }
 
-          message.webrtcSessionId = longToNumber(reader.fixed64());
+          message.webrtcSessionId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -4022,15 +4196,21 @@ export const CBroadcastWebRTCStoppedResponse: MessageFns<CBroadcastWebRTCStopped
 };
 
 function createBaseCBroadcastWebRTCSetAnswerRequest(): CBroadcastWebRTCSetAnswerRequest {
-  return { broadcasterSteamid: 0, webrtcSessionId: 0, answer: "" };
+  return { broadcasterSteamid: 0n, webrtcSessionId: 0n, answer: "" };
 }
 
 export const CBroadcastWebRTCSetAnswerRequest: MessageFns<CBroadcastWebRTCSetAnswerRequest> = {
   encode(message: CBroadcastWebRTCSetAnswerRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0) {
+    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.broadcasterSteamid) !== message.broadcasterSteamid) {
+        throw new globalThis.Error("value provided for field message.broadcasterSteamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcasterSteamid);
     }
-    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0) {
+    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.webrtcSessionId) !== message.webrtcSessionId) {
+        throw new globalThis.Error("value provided for field message.webrtcSessionId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.webrtcSessionId);
     }
     if (message.answer !== undefined && message.answer !== "") {
@@ -4051,7 +4231,7 @@ export const CBroadcastWebRTCSetAnswerRequest: MessageFns<CBroadcastWebRTCSetAns
             break;
           }
 
-          message.broadcasterSteamid = longToNumber(reader.fixed64());
+          message.broadcasterSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -4059,7 +4239,7 @@ export const CBroadcastWebRTCSetAnswerRequest: MessageFns<CBroadcastWebRTCSetAns
             break;
           }
 
-          message.webrtcSessionId = longToNumber(reader.fixed64());
+          message.webrtcSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -4240,12 +4420,15 @@ export const CBroadcastWebRTCCandidate: MessageFns<CBroadcastWebRTCCandidate> = 
 };
 
 function createBaseCBroadcastWebRTCAddHostCandidateRequest(): CBroadcastWebRTCAddHostCandidateRequest {
-  return { webrtcSessionId: 0, candidate: undefined };
+  return { webrtcSessionId: 0n, candidate: undefined };
 }
 
 export const CBroadcastWebRTCAddHostCandidateRequest: MessageFns<CBroadcastWebRTCAddHostCandidateRequest> = {
   encode(message: CBroadcastWebRTCAddHostCandidateRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0) {
+    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.webrtcSessionId) !== message.webrtcSessionId) {
+        throw new globalThis.Error("value provided for field message.webrtcSessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.webrtcSessionId);
     }
     if (message.candidate !== undefined) {
@@ -4266,7 +4449,7 @@ export const CBroadcastWebRTCAddHostCandidateRequest: MessageFns<CBroadcastWebRT
             break;
           }
 
-          message.webrtcSessionId = longToNumber(reader.fixed64());
+          message.webrtcSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -4314,15 +4497,21 @@ export const CBroadcastWebRTCAddHostCandidateResponse: MessageFns<CBroadcastWebR
 };
 
 function createBaseCBroadcastWebRTCAddViewerCandidateRequest(): CBroadcastWebRTCAddViewerCandidateRequest {
-  return { broadcasterSteamid: 0, webrtcSessionId: 0, candidate: undefined };
+  return { broadcasterSteamid: 0n, webrtcSessionId: 0n, candidate: undefined };
 }
 
 export const CBroadcastWebRTCAddViewerCandidateRequest: MessageFns<CBroadcastWebRTCAddViewerCandidateRequest> = {
   encode(message: CBroadcastWebRTCAddViewerCandidateRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0) {
+    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.broadcasterSteamid) !== message.broadcasterSteamid) {
+        throw new globalThis.Error("value provided for field message.broadcasterSteamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcasterSteamid);
     }
-    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0) {
+    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.webrtcSessionId) !== message.webrtcSessionId) {
+        throw new globalThis.Error("value provided for field message.webrtcSessionId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.webrtcSessionId);
     }
     if (message.candidate !== undefined) {
@@ -4343,7 +4532,7 @@ export const CBroadcastWebRTCAddViewerCandidateRequest: MessageFns<CBroadcastWeb
             break;
           }
 
-          message.broadcasterSteamid = longToNumber(reader.fixed64());
+          message.broadcasterSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -4351,7 +4540,7 @@ export const CBroadcastWebRTCAddViewerCandidateRequest: MessageFns<CBroadcastWeb
             break;
           }
 
-          message.webrtcSessionId = longToNumber(reader.fixed64());
+          message.webrtcSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -4399,15 +4588,21 @@ export const CBroadcastWebRTCAddViewerCandidateResponse: MessageFns<CBroadcastWe
 };
 
 function createBaseCBroadcastWebRTCGetHostCandidatesRequest(): CBroadcastWebRTCGetHostCandidatesRequest {
-  return { broadcasterSteamid: 0, webrtcSessionId: 0, candidateGeneration: 0 };
+  return { broadcasterSteamid: 0n, webrtcSessionId: 0n, candidateGeneration: 0 };
 }
 
 export const CBroadcastWebRTCGetHostCandidatesRequest: MessageFns<CBroadcastWebRTCGetHostCandidatesRequest> = {
   encode(message: CBroadcastWebRTCGetHostCandidatesRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0) {
+    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.broadcasterSteamid) !== message.broadcasterSteamid) {
+        throw new globalThis.Error("value provided for field message.broadcasterSteamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcasterSteamid);
     }
-    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0) {
+    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.webrtcSessionId) !== message.webrtcSessionId) {
+        throw new globalThis.Error("value provided for field message.webrtcSessionId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.webrtcSessionId);
     }
     if (message.candidateGeneration !== undefined && message.candidateGeneration !== 0) {
@@ -4428,7 +4623,7 @@ export const CBroadcastWebRTCGetHostCandidatesRequest: MessageFns<CBroadcastWebR
             break;
           }
 
-          message.broadcasterSteamid = longToNumber(reader.fixed64());
+          message.broadcasterSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -4436,7 +4631,7 @@ export const CBroadcastWebRTCGetHostCandidatesRequest: MessageFns<CBroadcastWebR
             break;
           }
 
-          message.webrtcSessionId = longToNumber(reader.fixed64());
+          message.webrtcSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -4506,7 +4701,7 @@ export const CBroadcastWebRTCGetHostCandidatesResponse: MessageFns<CBroadcastWeb
 };
 
 function createBaseCBroadcastGetBroadcastUploadStatsRequest(): CBroadcastGetBroadcastUploadStatsRequest {
-  return { rowLimit: 100, startTime: 0, uploadId: 0, steamid: 0, sessionId: 0 };
+  return { rowLimit: 100, startTime: 0, uploadId: 0n, steamid: 0n, sessionId: 0n };
 }
 
 export const CBroadcastGetBroadcastUploadStatsRequest: MessageFns<CBroadcastGetBroadcastUploadStatsRequest> = {
@@ -4517,13 +4712,22 @@ export const CBroadcastGetBroadcastUploadStatsRequest: MessageFns<CBroadcastGetB
     if (message.startTime !== undefined && message.startTime !== 0) {
       writer.uint32(16).uint32(message.startTime);
     }
-    if (message.uploadId !== undefined && message.uploadId !== 0) {
+    if (message.uploadId !== undefined && message.uploadId !== 0n) {
+      if (BigInt.asUintN(64, message.uploadId) !== message.uploadId) {
+        throw new globalThis.Error("value provided for field message.uploadId of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.uploadId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.steamid);
     }
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.sessionId);
     }
     return writer;
@@ -4557,7 +4761,7 @@ export const CBroadcastGetBroadcastUploadStatsRequest: MessageFns<CBroadcastGetB
             break;
           }
 
-          message.uploadId = longToNumber(reader.uint64());
+          message.uploadId = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -4565,7 +4769,7 @@ export const CBroadcastGetBroadcastUploadStatsRequest: MessageFns<CBroadcastGetB
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 5: {
@@ -4573,7 +4777,7 @@ export const CBroadcastGetBroadcastUploadStatsRequest: MessageFns<CBroadcastGetB
             break;
           }
 
-          message.sessionId = longToNumber(reader.uint64());
+          message.sessionId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4634,19 +4838,19 @@ function createBaseCBroadcastGetBroadcastUploadStatsResponse_UploadStats(): CBro
     resolutionX: 0,
     resolutionY: 0,
     avgBandwidth: 0,
-    totalBytes: 0,
+    totalBytes: 0n,
     appId: 0,
     totalUniqueViewers: 0,
-    totalSecondsWatched: 0,
+    totalSecondsWatched: 0n,
     timeStarted: 0,
-    uploadId: 0,
+    uploadId: 0n,
     localAddress: "",
     remoteAddress: "",
     framesPerSecond: 0,
     numRepresentations: 0,
     appName: "",
     isReplay: false,
-    sessionId: 0,
+    sessionId: 0n,
   };
 }
 
@@ -4678,7 +4882,10 @@ export const CBroadcastGetBroadcastUploadStatsResponse_UploadStats: MessageFns<
     if (message.avgBandwidth !== undefined && message.avgBandwidth !== 0) {
       writer.uint32(56).uint32(message.avgBandwidth);
     }
-    if (message.totalBytes !== undefined && message.totalBytes !== 0) {
+    if (message.totalBytes !== undefined && message.totalBytes !== 0n) {
+      if (BigInt.asUintN(64, message.totalBytes) !== message.totalBytes) {
+        throw new globalThis.Error("value provided for field message.totalBytes of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.totalBytes);
     }
     if (message.appId !== undefined && message.appId !== 0) {
@@ -4687,13 +4894,19 @@ export const CBroadcastGetBroadcastUploadStatsResponse_UploadStats: MessageFns<
     if (message.totalUniqueViewers !== undefined && message.totalUniqueViewers !== 0) {
       writer.uint32(80).uint32(message.totalUniqueViewers);
     }
-    if (message.totalSecondsWatched !== undefined && message.totalSecondsWatched !== 0) {
+    if (message.totalSecondsWatched !== undefined && message.totalSecondsWatched !== 0n) {
+      if (BigInt.asUintN(64, message.totalSecondsWatched) !== message.totalSecondsWatched) {
+        throw new globalThis.Error("value provided for field message.totalSecondsWatched of type uint64 too large");
+      }
       writer.uint32(88).uint64(message.totalSecondsWatched);
     }
     if (message.timeStarted !== undefined && message.timeStarted !== 0) {
       writer.uint32(96).uint32(message.timeStarted);
     }
-    if (message.uploadId !== undefined && message.uploadId !== 0) {
+    if (message.uploadId !== undefined && message.uploadId !== 0n) {
+      if (BigInt.asUintN(64, message.uploadId) !== message.uploadId) {
+        throw new globalThis.Error("value provided for field message.uploadId of type uint64 too large");
+      }
       writer.uint32(104).uint64(message.uploadId);
     }
     if (message.localAddress !== undefined && message.localAddress !== "") {
@@ -4714,7 +4927,10 @@ export const CBroadcastGetBroadcastUploadStatsResponse_UploadStats: MessageFns<
     if (message.isReplay !== undefined && message.isReplay !== false) {
       writer.uint32(152).bool(message.isReplay);
     }
-    if (message.sessionId !== undefined && message.sessionId !== 0) {
+    if (message.sessionId !== undefined && message.sessionId !== 0n) {
+      if (BigInt.asUintN(64, message.sessionId) !== message.sessionId) {
+        throw new globalThis.Error("value provided for field message.sessionId of type uint64 too large");
+      }
       writer.uint32(160).uint64(message.sessionId);
     }
     return writer;
@@ -4788,7 +5004,7 @@ export const CBroadcastGetBroadcastUploadStatsResponse_UploadStats: MessageFns<
             break;
           }
 
-          message.totalBytes = longToNumber(reader.uint64());
+          message.totalBytes = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -4812,7 +5028,7 @@ export const CBroadcastGetBroadcastUploadStatsResponse_UploadStats: MessageFns<
             break;
           }
 
-          message.totalSecondsWatched = longToNumber(reader.uint64());
+          message.totalSecondsWatched = reader.uint64() as bigint;
           continue;
         }
         case 12: {
@@ -4828,7 +5044,7 @@ export const CBroadcastGetBroadcastUploadStatsResponse_UploadStats: MessageFns<
             break;
           }
 
-          message.uploadId = longToNumber(reader.uint64());
+          message.uploadId = reader.uint64() as bigint;
           continue;
         }
         case 14: {
@@ -4884,7 +5100,7 @@ export const CBroadcastGetBroadcastUploadStatsResponse_UploadStats: MessageFns<
             break;
           }
 
-          message.sessionId = longToNumber(reader.uint64());
+          message.sessionId = reader.uint64() as bigint;
           continue;
         }
       }
@@ -4898,15 +5114,21 @@ export const CBroadcastGetBroadcastUploadStatsResponse_UploadStats: MessageFns<
 };
 
 function createBaseCBroadcastGetBroadcastViewerStatsRequest(): CBroadcastGetBroadcastViewerStatsRequest {
-  return { uploadId: 0, steamid: 0 };
+  return { uploadId: 0n, steamid: 0n };
 }
 
 export const CBroadcastGetBroadcastViewerStatsRequest: MessageFns<CBroadcastGetBroadcastViewerStatsRequest> = {
   encode(message: CBroadcastGetBroadcastViewerStatsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.uploadId !== undefined && message.uploadId !== 0) {
+    if (message.uploadId !== undefined && message.uploadId !== 0n) {
+      if (BigInt.asUintN(64, message.uploadId) !== message.uploadId) {
+        throw new globalThis.Error("value provided for field message.uploadId of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.uploadId);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     return writer;
@@ -4924,7 +5146,7 @@ export const CBroadcastGetBroadcastViewerStatsRequest: MessageFns<CBroadcastGetB
             break;
           }
 
-          message.uploadId = longToNumber(reader.uint64());
+          message.uploadId = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -4932,7 +5154,7 @@ export const CBroadcastGetBroadcastViewerStatsRequest: MessageFns<CBroadcastGetB
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -5104,12 +5326,15 @@ export const CBroadcastGetBroadcastViewerStatsResponse_CountryStats: MessageFns<
 };
 
 function createBaseCBroadcastBroadcastViewerStateNotification(): CBroadcastBroadcastViewerStateNotification {
-  return { steamid: 0, state: 1 };
+  return { steamid: 0n, state: 1 };
 }
 
 export const CBroadcastBroadcastViewerStateNotification: MessageFns<CBroadcastBroadcastViewerStateNotification> = {
   encode(message: CBroadcastBroadcastViewerStateNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.state !== undefined && message.state !== 1) {
@@ -5130,7 +5355,7 @@ export const CBroadcastBroadcastViewerStateNotification: MessageFns<CBroadcastBr
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -5152,7 +5377,7 @@ export const CBroadcastBroadcastViewerStateNotification: MessageFns<CBroadcastBr
 };
 
 function createBaseCBroadcastWaitingBroadcastViewerNotification(): CBroadcastWaitingBroadcastViewerNotification {
-  return { broadcastId: 0 };
+  return { broadcastId: 0n };
 }
 
 export const CBroadcastWaitingBroadcastViewerNotification: MessageFns<CBroadcastWaitingBroadcastViewerNotification> = {
@@ -5160,7 +5385,10 @@ export const CBroadcastWaitingBroadcastViewerNotification: MessageFns<CBroadcast
     message: CBroadcastWaitingBroadcastViewerNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastId);
     }
     return writer;
@@ -5178,7 +5406,7 @@ export const CBroadcastWaitingBroadcastViewerNotification: MessageFns<CBroadcast
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -5193,11 +5421,11 @@ export const CBroadcastWaitingBroadcastViewerNotification: MessageFns<CBroadcast
 
 function createBaseCBroadcastBroadcastUploadStartedNotification(): CBroadcastBroadcastUploadStartedNotification {
   return {
-    broadcastId: 0,
+    broadcastId: 0n,
     uploadToken: "",
     uploadAddress: "",
     httpAddress: "",
-    broadcastUploadId: 0,
+    broadcastUploadId: 0n,
     heartbeatIntervalSeconds: 0,
     isRtmp: false,
   };
@@ -5208,7 +5436,10 @@ export const CBroadcastBroadcastUploadStartedNotification: MessageFns<CBroadcast
     message: CBroadcastBroadcastUploadStartedNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastId);
     }
     if (message.uploadToken !== undefined && message.uploadToken !== "") {
@@ -5220,7 +5451,10 @@ export const CBroadcastBroadcastUploadStartedNotification: MessageFns<CBroadcast
     if (message.httpAddress !== undefined && message.httpAddress !== "") {
       writer.uint32(34).string(message.httpAddress);
     }
-    if (message.broadcastUploadId !== undefined && message.broadcastUploadId !== 0) {
+    if (message.broadcastUploadId !== undefined && message.broadcastUploadId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastUploadId) !== message.broadcastUploadId) {
+        throw new globalThis.Error("value provided for field message.broadcastUploadId of type fixed64 too large");
+      }
       writer.uint32(41).fixed64(message.broadcastUploadId);
     }
     if (message.heartbeatIntervalSeconds !== undefined && message.heartbeatIntervalSeconds !== 0) {
@@ -5244,7 +5478,7 @@ export const CBroadcastBroadcastUploadStartedNotification: MessageFns<CBroadcast
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -5276,7 +5510,7 @@ export const CBroadcastBroadcastUploadStartedNotification: MessageFns<CBroadcast
             break;
           }
 
-          message.broadcastUploadId = longToNumber(reader.fixed64());
+          message.broadcastUploadId = reader.fixed64() as bigint;
           continue;
         }
         case 6: {
@@ -5306,15 +5540,21 @@ export const CBroadcastBroadcastUploadStartedNotification: MessageFns<CBroadcast
 };
 
 function createBaseCBroadcastStopBroadcastUploadNotification(): CBroadcastStopBroadcastUploadNotification {
-  return { broadcastId: 0, broadcastRelayId: 0, uploadResult: 0, tooManyPoorUploads: false };
+  return { broadcastId: 0n, broadcastRelayId: 0n, uploadResult: 0, tooManyPoorUploads: false };
 }
 
 export const CBroadcastStopBroadcastUploadNotification: MessageFns<CBroadcastStopBroadcastUploadNotification> = {
   encode(message: CBroadcastStopBroadcastUploadNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastId);
     }
-    if (message.broadcastRelayId !== undefined && message.broadcastRelayId !== 0) {
+    if (message.broadcastRelayId !== undefined && message.broadcastRelayId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastRelayId) !== message.broadcastRelayId) {
+        throw new globalThis.Error("value provided for field message.broadcastRelayId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.broadcastRelayId);
     }
     if (message.uploadResult !== undefined && message.uploadResult !== 0) {
@@ -5338,7 +5578,7 @@ export const CBroadcastStopBroadcastUploadNotification: MessageFns<CBroadcastSto
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -5346,7 +5586,7 @@ export const CBroadcastStopBroadcastUploadNotification: MessageFns<CBroadcastSto
             break;
           }
 
-          message.broadcastRelayId = longToNumber(reader.fixed64());
+          message.broadcastRelayId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -5376,12 +5616,15 @@ export const CBroadcastStopBroadcastUploadNotification: MessageFns<CBroadcastSto
 };
 
 function createBaseCBroadcastSessionClosedNotification(): CBroadcastSessionClosedNotification {
-  return { broadcastId: 0 };
+  return { broadcastId: 0n };
 }
 
 export const CBroadcastSessionClosedNotification: MessageFns<CBroadcastSessionClosedNotification> = {
   encode(message: CBroadcastSessionClosedNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastId);
     }
     return writer;
@@ -5399,7 +5642,7 @@ export const CBroadcastSessionClosedNotification: MessageFns<CBroadcastSessionCl
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -5413,7 +5656,7 @@ export const CBroadcastSessionClosedNotification: MessageFns<CBroadcastSessionCl
 };
 
 function createBaseCBroadcastViewerBroadcastInviteNotification(): CBroadcastViewerBroadcastInviteNotification {
-  return { broadcasterSteamid: 0 };
+  return { broadcasterSteamid: 0n };
 }
 
 export const CBroadcastViewerBroadcastInviteNotification: MessageFns<CBroadcastViewerBroadcastInviteNotification> = {
@@ -5421,7 +5664,10 @@ export const CBroadcastViewerBroadcastInviteNotification: MessageFns<CBroadcastV
     message: CBroadcastViewerBroadcastInviteNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0) {
+    if (message.broadcasterSteamid !== undefined && message.broadcasterSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.broadcasterSteamid) !== message.broadcasterSteamid) {
+        throw new globalThis.Error("value provided for field message.broadcasterSteamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcasterSteamid);
     }
     return writer;
@@ -5439,7 +5685,7 @@ export const CBroadcastViewerBroadcastInviteNotification: MessageFns<CBroadcastV
             break;
           }
 
-          message.broadcasterSteamid = longToNumber(reader.fixed64());
+          message.broadcasterSteamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -5453,12 +5699,15 @@ export const CBroadcastViewerBroadcastInviteNotification: MessageFns<CBroadcastV
 };
 
 function createBaseCBroadcastBroadcastStatusNotification(): CBroadcastBroadcastStatusNotification {
-  return { broadcastId: 0, numViewers: 0 };
+  return { broadcastId: 0n, numViewers: 0 };
 }
 
 export const CBroadcastBroadcastStatusNotification: MessageFns<CBroadcastBroadcastStatusNotification> = {
   encode(message: CBroadcastBroadcastStatusNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastId !== undefined && message.broadcastId !== 0) {
+    if (message.broadcastId !== undefined && message.broadcastId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastId) !== message.broadcastId) {
+        throw new globalThis.Error("value provided for field message.broadcastId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastId);
     }
     if (message.numViewers !== undefined && message.numViewers !== 0) {
@@ -5479,7 +5728,7 @@ export const CBroadcastBroadcastStatusNotification: MessageFns<CBroadcastBroadca
             break;
           }
 
-          message.broadcastId = longToNumber(reader.fixed64());
+          message.broadcastId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -5501,12 +5750,15 @@ export const CBroadcastBroadcastStatusNotification: MessageFns<CBroadcastBroadca
 };
 
 function createBaseCBroadcastBroadcastChannelLiveNotification(): CBroadcastBroadcastChannelLiveNotification {
-  return { broadcastChannelId: 0, broadcastChannelName: "", broadcastChannelAvatar: "" };
+  return { broadcastChannelId: 0n, broadcastChannelName: "", broadcastChannelAvatar: "" };
 }
 
 export const CBroadcastBroadcastChannelLiveNotification: MessageFns<CBroadcastBroadcastChannelLiveNotification> = {
   encode(message: CBroadcastBroadcastChannelLiveNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0) {
+    if (message.broadcastChannelId !== undefined && message.broadcastChannelId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastChannelId) !== message.broadcastChannelId) {
+        throw new globalThis.Error("value provided for field message.broadcastChannelId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastChannelId);
     }
     if (message.broadcastChannelName !== undefined && message.broadcastChannelName !== "") {
@@ -5530,7 +5782,7 @@ export const CBroadcastBroadcastChannelLiveNotification: MessageFns<CBroadcastBr
             break;
           }
 
-          message.broadcastChannelId = longToNumber(reader.fixed64());
+          message.broadcastChannelId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -5562,7 +5814,7 @@ export const CBroadcastBroadcastChannelLiveNotification: MessageFns<CBroadcastBr
 function createBaseCBroadcastSendThumbnailToRelayNotification(): CBroadcastSendThumbnailToRelayNotification {
   return {
     thumbnailUploadToken: "",
-    thumbnailBroadcastSessionId: 0,
+    thumbnailBroadcastSessionId: 0n,
     thumbnailData: Buffer.alloc(0),
     thumbnailWidth: 0,
     thumbnailHeight: 0,
@@ -5574,7 +5826,12 @@ export const CBroadcastSendThumbnailToRelayNotification: MessageFns<CBroadcastSe
     if (message.thumbnailUploadToken !== undefined && message.thumbnailUploadToken !== "") {
       writer.uint32(10).string(message.thumbnailUploadToken);
     }
-    if (message.thumbnailBroadcastSessionId !== undefined && message.thumbnailBroadcastSessionId !== 0) {
+    if (message.thumbnailBroadcastSessionId !== undefined && message.thumbnailBroadcastSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.thumbnailBroadcastSessionId) !== message.thumbnailBroadcastSessionId) {
+        throw new globalThis.Error(
+          "value provided for field message.thumbnailBroadcastSessionId of type fixed64 too large",
+        );
+      }
       writer.uint32(17).fixed64(message.thumbnailBroadcastSessionId);
     }
     if (message.thumbnailData !== undefined && message.thumbnailData.length !== 0) {
@@ -5609,7 +5866,7 @@ export const CBroadcastSendThumbnailToRelayNotification: MessageFns<CBroadcastSe
             break;
           }
 
-          message.thumbnailBroadcastSessionId = longToNumber(reader.fixed64());
+          message.thumbnailBroadcastSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -5647,12 +5904,15 @@ export const CBroadcastSendThumbnailToRelayNotification: MessageFns<CBroadcastSe
 };
 
 function createBaseCBroadcastWebRTCNeedTURNServerNotification(): CBroadcastWebRTCNeedTURNServerNotification {
-  return { broadcastSessionId: 0 };
+  return { broadcastSessionId: 0n };
 }
 
 export const CBroadcastWebRTCNeedTURNServerNotification: MessageFns<CBroadcastWebRTCNeedTURNServerNotification> = {
   encode(message: CBroadcastWebRTCNeedTURNServerNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0) {
+    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastSessionId) !== message.broadcastSessionId) {
+        throw new globalThis.Error("value provided for field message.broadcastSessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastSessionId);
     }
     return writer;
@@ -5670,7 +5930,7 @@ export const CBroadcastWebRTCNeedTURNServerNotification: MessageFns<CBroadcastWe
             break;
           }
 
-          message.broadcastSessionId = longToNumber(reader.fixed64());
+          message.broadcastSessionId = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -5684,21 +5944,33 @@ export const CBroadcastWebRTCNeedTURNServerNotification: MessageFns<CBroadcastWe
 };
 
 function createBaseCBroadcastWebRTCStartNotification(): CBroadcastWebRTCStartNotification {
-  return { broadcastSessionId: 0, webrtcSessionId: 0, viewerSteamid: 0, viewerToken: 0 };
+  return { broadcastSessionId: 0n, webrtcSessionId: 0n, viewerSteamid: 0n, viewerToken: 0n };
 }
 
 export const CBroadcastWebRTCStartNotification: MessageFns<CBroadcastWebRTCStartNotification> = {
   encode(message: CBroadcastWebRTCStartNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0) {
+    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastSessionId) !== message.broadcastSessionId) {
+        throw new globalThis.Error("value provided for field message.broadcastSessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastSessionId);
     }
-    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0) {
+    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.webrtcSessionId) !== message.webrtcSessionId) {
+        throw new globalThis.Error("value provided for field message.webrtcSessionId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.webrtcSessionId);
     }
-    if (message.viewerSteamid !== undefined && message.viewerSteamid !== 0) {
+    if (message.viewerSteamid !== undefined && message.viewerSteamid !== 0n) {
+      if (BigInt.asUintN(64, message.viewerSteamid) !== message.viewerSteamid) {
+        throw new globalThis.Error("value provided for field message.viewerSteamid of type fixed64 too large");
+      }
       writer.uint32(25).fixed64(message.viewerSteamid);
     }
-    if (message.viewerToken !== undefined && message.viewerToken !== 0) {
+    if (message.viewerToken !== undefined && message.viewerToken !== 0n) {
+      if (BigInt.asUintN(64, message.viewerToken) !== message.viewerToken) {
+        throw new globalThis.Error("value provided for field message.viewerToken of type fixed64 too large");
+      }
       writer.uint32(33).fixed64(message.viewerToken);
     }
     return writer;
@@ -5716,7 +5988,7 @@ export const CBroadcastWebRTCStartNotification: MessageFns<CBroadcastWebRTCStart
             break;
           }
 
-          message.broadcastSessionId = longToNumber(reader.fixed64());
+          message.broadcastSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -5724,7 +5996,7 @@ export const CBroadcastWebRTCStartNotification: MessageFns<CBroadcastWebRTCStart
             break;
           }
 
-          message.webrtcSessionId = longToNumber(reader.fixed64());
+          message.webrtcSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -5732,7 +6004,7 @@ export const CBroadcastWebRTCStartNotification: MessageFns<CBroadcastWebRTCStart
             break;
           }
 
-          message.viewerSteamid = longToNumber(reader.fixed64());
+          message.viewerSteamid = reader.fixed64() as bigint;
           continue;
         }
         case 4: {
@@ -5740,7 +6012,7 @@ export const CBroadcastWebRTCStartNotification: MessageFns<CBroadcastWebRTCStart
             break;
           }
 
-          message.viewerToken = longToNumber(reader.fixed64());
+          message.viewerToken = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -5754,15 +6026,21 @@ export const CBroadcastWebRTCStartNotification: MessageFns<CBroadcastWebRTCStart
 };
 
 function createBaseCBroadcastWebRTCSetAnswerNotification(): CBroadcastWebRTCSetAnswerNotification {
-  return { broadcastSessionId: 0, webrtcSessionId: 0, answer: "" };
+  return { broadcastSessionId: 0n, webrtcSessionId: 0n, answer: "" };
 }
 
 export const CBroadcastWebRTCSetAnswerNotification: MessageFns<CBroadcastWebRTCSetAnswerNotification> = {
   encode(message: CBroadcastWebRTCSetAnswerNotification, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0) {
+    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastSessionId) !== message.broadcastSessionId) {
+        throw new globalThis.Error("value provided for field message.broadcastSessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastSessionId);
     }
-    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0) {
+    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.webrtcSessionId) !== message.webrtcSessionId) {
+        throw new globalThis.Error("value provided for field message.webrtcSessionId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.webrtcSessionId);
     }
     if (message.answer !== undefined && message.answer !== "") {
@@ -5783,7 +6061,7 @@ export const CBroadcastWebRTCSetAnswerNotification: MessageFns<CBroadcastWebRTCS
             break;
           }
 
-          message.broadcastSessionId = longToNumber(reader.fixed64());
+          message.broadcastSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -5791,7 +6069,7 @@ export const CBroadcastWebRTCSetAnswerNotification: MessageFns<CBroadcastWebRTCS
             break;
           }
 
-          message.webrtcSessionId = longToNumber(reader.fixed64());
+          message.webrtcSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -5813,7 +6091,7 @@ export const CBroadcastWebRTCSetAnswerNotification: MessageFns<CBroadcastWebRTCS
 };
 
 function createBaseCBroadcastWebRTCAddViewerCandidateNotification(): CBroadcastWebRTCAddViewerCandidateNotification {
-  return { broadcastSessionId: 0, webrtcSessionId: 0, candidate: undefined };
+  return { broadcastSessionId: 0n, webrtcSessionId: 0n, candidate: undefined };
 }
 
 export const CBroadcastWebRTCAddViewerCandidateNotification: MessageFns<
@@ -5823,10 +6101,16 @@ export const CBroadcastWebRTCAddViewerCandidateNotification: MessageFns<
     message: CBroadcastWebRTCAddViewerCandidateNotification,
     writer: BinaryWriter = new BinaryWriter(),
   ): BinaryWriter {
-    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0) {
+    if (message.broadcastSessionId !== undefined && message.broadcastSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.broadcastSessionId) !== message.broadcastSessionId) {
+        throw new globalThis.Error("value provided for field message.broadcastSessionId of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.broadcastSessionId);
     }
-    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0) {
+    if (message.webrtcSessionId !== undefined && message.webrtcSessionId !== 0n) {
+      if (BigInt.asUintN(64, message.webrtcSessionId) !== message.webrtcSessionId) {
+        throw new globalThis.Error("value provided for field message.webrtcSessionId of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.webrtcSessionId);
     }
     if (message.candidate !== undefined) {
@@ -5847,7 +6131,7 @@ export const CBroadcastWebRTCAddViewerCandidateNotification: MessageFns<
             break;
           }
 
-          message.broadcastSessionId = longToNumber(reader.fixed64());
+          message.broadcastSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -5855,7 +6139,7 @@ export const CBroadcastWebRTCAddViewerCandidateNotification: MessageFns<
             break;
           }
 
-          message.webrtcSessionId = longToNumber(reader.fixed64());
+          message.webrtcSessionId = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -6330,17 +6614,6 @@ export class BroadcastClientClientImpl implements BroadcastClient {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

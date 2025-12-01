@@ -17,7 +17,7 @@ export interface CDataPublisherClientContentCorruptionReportNotification {
   objectid?: string | undefined;
   cellid?: number | undefined;
   isManifest?: boolean | undefined;
-  objectSize?: number | undefined;
+  objectSize?: bigint | undefined;
   corruptionType?: number | undefined;
   usedHttps?: boolean | undefined;
   ocProxyDetected?: boolean | undefined;
@@ -31,19 +31,19 @@ export interface CDataPublisherClientUpdateAppJobNotification {
   errorDetails?: string | undefined;
   jobDuration?: number | undefined;
   filesValidationFailed?: number | undefined;
-  jobBytesDownloaded?: number | undefined;
-  jobBytesStaged?: number | undefined;
-  bytesComitted?: number | undefined;
+  jobBytesDownloaded?: bigint | undefined;
+  jobBytesStaged?: bigint | undefined;
+  bytesComitted?: bigint | undefined;
   startAppState?: number | undefined;
-  statsMachineId?: number | undefined;
+  statsMachineId?: bigint | undefined;
   branchName?: string | undefined;
-  totalBytesDownloaded?: number | undefined;
-  totalBytesStaged?: number | undefined;
-  totalBytesRestored?: number | undefined;
+  totalBytesDownloaded?: bigint | undefined;
+  totalBytesStaged?: bigint | undefined;
+  totalBytesRestored?: bigint | undefined;
   isBorrowed?: boolean | undefined;
   isFreeWeekend?: boolean | undefined;
-  totalBytesPatched?: number | undefined;
-  totalBytesSaved?: number | undefined;
+  totalBytesPatched?: bigint | undefined;
+  totalBytesSaved?: bigint | undefined;
   cellId?: number | undefined;
   isWorkshop?: boolean | undefined;
   isShader?: boolean | undefined;
@@ -91,12 +91,12 @@ export interface CDataPublisherAddVRDeviceInfoResponse {
 
 export interface CValveHWSurveyGetSurveyScheduleRequest {
   surveydatetoken?: string | undefined;
-  surveydatetokenversion?: number | undefined;
+  surveydatetokenversion?: bigint | undefined;
 }
 
 export interface CValveHWSurveyGetSurveyScheduleResponse {
   surveydatetoken?: number | undefined;
-  surveydatetokenversion?: number | undefined;
+  surveydatetokenversion?: bigint | undefined;
 }
 
 function createBaseCDataPublisherClientContentCorruptionReportNotification(): CDataPublisherClientContentCorruptionReportNotification {
@@ -107,7 +107,7 @@ function createBaseCDataPublisherClientContentCorruptionReportNotification(): CD
     objectid: "",
     cellid: 0,
     isManifest: false,
-    objectSize: 0,
+    objectSize: 0n,
     corruptionType: 0,
     usedHttps: false,
     ocProxyDetected: false,
@@ -139,7 +139,10 @@ export const CDataPublisherClientContentCorruptionReportNotification: MessageFns
     if (message.isManifest !== undefined && message.isManifest !== false) {
       writer.uint32(48).bool(message.isManifest);
     }
-    if (message.objectSize !== undefined && message.objectSize !== 0) {
+    if (message.objectSize !== undefined && message.objectSize !== 0n) {
+      if (BigInt.asUintN(64, message.objectSize) !== message.objectSize) {
+        throw new globalThis.Error("value provided for field message.objectSize of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.objectSize);
     }
     if (message.corruptionType !== undefined && message.corruptionType !== 0) {
@@ -214,7 +217,7 @@ export const CDataPublisherClientContentCorruptionReportNotification: MessageFns
             break;
           }
 
-          message.objectSize = longToNumber(reader.uint64());
+          message.objectSize = reader.uint64() as bigint;
           continue;
         }
         case 8: {
@@ -260,19 +263,19 @@ function createBaseCDataPublisherClientUpdateAppJobNotification(): CDataPublishe
     errorDetails: "",
     jobDuration: 0,
     filesValidationFailed: 0,
-    jobBytesDownloaded: 0,
-    jobBytesStaged: 0,
-    bytesComitted: 0,
+    jobBytesDownloaded: 0n,
+    jobBytesStaged: 0n,
+    bytesComitted: 0n,
     startAppState: 0,
-    statsMachineId: 0,
+    statsMachineId: 0n,
     branchName: "",
-    totalBytesDownloaded: 0,
-    totalBytesStaged: 0,
-    totalBytesRestored: 0,
+    totalBytesDownloaded: 0n,
+    totalBytesStaged: 0n,
+    totalBytesRestored: 0n,
     isBorrowed: false,
     isFreeWeekend: false,
-    totalBytesPatched: 0,
-    totalBytesSaved: 0,
+    totalBytesPatched: 0n,
+    totalBytesSaved: 0n,
     cellId: 0,
     isWorkshop: false,
     isShader: false,
@@ -306,31 +309,52 @@ export const CDataPublisherClientUpdateAppJobNotification: MessageFns<CDataPubli
     if (message.filesValidationFailed !== undefined && message.filesValidationFailed !== 0) {
       writer.uint32(56).uint32(message.filesValidationFailed);
     }
-    if (message.jobBytesDownloaded !== undefined && message.jobBytesDownloaded !== 0) {
+    if (message.jobBytesDownloaded !== undefined && message.jobBytesDownloaded !== 0n) {
+      if (BigInt.asUintN(64, message.jobBytesDownloaded) !== message.jobBytesDownloaded) {
+        throw new globalThis.Error("value provided for field message.jobBytesDownloaded of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.jobBytesDownloaded);
     }
-    if (message.jobBytesStaged !== undefined && message.jobBytesStaged !== 0) {
+    if (message.jobBytesStaged !== undefined && message.jobBytesStaged !== 0n) {
+      if (BigInt.asUintN(64, message.jobBytesStaged) !== message.jobBytesStaged) {
+        throw new globalThis.Error("value provided for field message.jobBytesStaged of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.jobBytesStaged);
     }
-    if (message.bytesComitted !== undefined && message.bytesComitted !== 0) {
+    if (message.bytesComitted !== undefined && message.bytesComitted !== 0n) {
+      if (BigInt.asUintN(64, message.bytesComitted) !== message.bytesComitted) {
+        throw new globalThis.Error("value provided for field message.bytesComitted of type uint64 too large");
+      }
       writer.uint32(80).uint64(message.bytesComitted);
     }
     if (message.startAppState !== undefined && message.startAppState !== 0) {
       writer.uint32(88).uint32(message.startAppState);
     }
-    if (message.statsMachineId !== undefined && message.statsMachineId !== 0) {
+    if (message.statsMachineId !== undefined && message.statsMachineId !== 0n) {
+      if (BigInt.asUintN(64, message.statsMachineId) !== message.statsMachineId) {
+        throw new globalThis.Error("value provided for field message.statsMachineId of type fixed64 too large");
+      }
       writer.uint32(97).fixed64(message.statsMachineId);
     }
     if (message.branchName !== undefined && message.branchName !== "") {
       writer.uint32(106).string(message.branchName);
     }
-    if (message.totalBytesDownloaded !== undefined && message.totalBytesDownloaded !== 0) {
+    if (message.totalBytesDownloaded !== undefined && message.totalBytesDownloaded !== 0n) {
+      if (BigInt.asUintN(64, message.totalBytesDownloaded) !== message.totalBytesDownloaded) {
+        throw new globalThis.Error("value provided for field message.totalBytesDownloaded of type uint64 too large");
+      }
       writer.uint32(112).uint64(message.totalBytesDownloaded);
     }
-    if (message.totalBytesStaged !== undefined && message.totalBytesStaged !== 0) {
+    if (message.totalBytesStaged !== undefined && message.totalBytesStaged !== 0n) {
+      if (BigInt.asUintN(64, message.totalBytesStaged) !== message.totalBytesStaged) {
+        throw new globalThis.Error("value provided for field message.totalBytesStaged of type uint64 too large");
+      }
       writer.uint32(120).uint64(message.totalBytesStaged);
     }
-    if (message.totalBytesRestored !== undefined && message.totalBytesRestored !== 0) {
+    if (message.totalBytesRestored !== undefined && message.totalBytesRestored !== 0n) {
+      if (BigInt.asUintN(64, message.totalBytesRestored) !== message.totalBytesRestored) {
+        throw new globalThis.Error("value provided for field message.totalBytesRestored of type uint64 too large");
+      }
       writer.uint32(128).uint64(message.totalBytesRestored);
     }
     if (message.isBorrowed !== undefined && message.isBorrowed !== false) {
@@ -339,10 +363,16 @@ export const CDataPublisherClientUpdateAppJobNotification: MessageFns<CDataPubli
     if (message.isFreeWeekend !== undefined && message.isFreeWeekend !== false) {
       writer.uint32(144).bool(message.isFreeWeekend);
     }
-    if (message.totalBytesPatched !== undefined && message.totalBytesPatched !== 0) {
+    if (message.totalBytesPatched !== undefined && message.totalBytesPatched !== 0n) {
+      if (BigInt.asUintN(64, message.totalBytesPatched) !== message.totalBytesPatched) {
+        throw new globalThis.Error("value provided for field message.totalBytesPatched of type uint64 too large");
+      }
       writer.uint32(160).uint64(message.totalBytesPatched);
     }
-    if (message.totalBytesSaved !== undefined && message.totalBytesSaved !== 0) {
+    if (message.totalBytesSaved !== undefined && message.totalBytesSaved !== 0n) {
+      if (BigInt.asUintN(64, message.totalBytesSaved) !== message.totalBytesSaved) {
+        throw new globalThis.Error("value provided for field message.totalBytesSaved of type uint64 too large");
+      }
       writer.uint32(168).uint64(message.totalBytesSaved);
     }
     if (message.cellId !== undefined && message.cellId !== 0) {
@@ -438,7 +468,7 @@ export const CDataPublisherClientUpdateAppJobNotification: MessageFns<CDataPubli
             break;
           }
 
-          message.jobBytesDownloaded = longToNumber(reader.uint64());
+          message.jobBytesDownloaded = reader.uint64() as bigint;
           continue;
         }
         case 9: {
@@ -446,7 +476,7 @@ export const CDataPublisherClientUpdateAppJobNotification: MessageFns<CDataPubli
             break;
           }
 
-          message.jobBytesStaged = longToNumber(reader.uint64());
+          message.jobBytesStaged = reader.uint64() as bigint;
           continue;
         }
         case 10: {
@@ -454,7 +484,7 @@ export const CDataPublisherClientUpdateAppJobNotification: MessageFns<CDataPubli
             break;
           }
 
-          message.bytesComitted = longToNumber(reader.uint64());
+          message.bytesComitted = reader.uint64() as bigint;
           continue;
         }
         case 11: {
@@ -470,7 +500,7 @@ export const CDataPublisherClientUpdateAppJobNotification: MessageFns<CDataPubli
             break;
           }
 
-          message.statsMachineId = longToNumber(reader.fixed64());
+          message.statsMachineId = reader.fixed64() as bigint;
           continue;
         }
         case 13: {
@@ -486,7 +516,7 @@ export const CDataPublisherClientUpdateAppJobNotification: MessageFns<CDataPubli
             break;
           }
 
-          message.totalBytesDownloaded = longToNumber(reader.uint64());
+          message.totalBytesDownloaded = reader.uint64() as bigint;
           continue;
         }
         case 15: {
@@ -494,7 +524,7 @@ export const CDataPublisherClientUpdateAppJobNotification: MessageFns<CDataPubli
             break;
           }
 
-          message.totalBytesStaged = longToNumber(reader.uint64());
+          message.totalBytesStaged = reader.uint64() as bigint;
           continue;
         }
         case 16: {
@@ -502,7 +532,7 @@ export const CDataPublisherClientUpdateAppJobNotification: MessageFns<CDataPubli
             break;
           }
 
-          message.totalBytesRestored = longToNumber(reader.uint64());
+          message.totalBytesRestored = reader.uint64() as bigint;
           continue;
         }
         case 17: {
@@ -526,7 +556,7 @@ export const CDataPublisherClientUpdateAppJobNotification: MessageFns<CDataPubli
             break;
           }
 
-          message.totalBytesPatched = longToNumber(reader.uint64());
+          message.totalBytesPatched = reader.uint64() as bigint;
           continue;
         }
         case 21: {
@@ -534,7 +564,7 @@ export const CDataPublisherClientUpdateAppJobNotification: MessageFns<CDataPubli
             break;
           }
 
-          message.totalBytesSaved = longToNumber(reader.uint64());
+          message.totalBytesSaved = reader.uint64() as bigint;
           continue;
         }
         case 22: {
@@ -973,7 +1003,7 @@ export const CDataPublisherAddVRDeviceInfoResponse: MessageFns<CDataPublisherAdd
 };
 
 function createBaseCValveHWSurveyGetSurveyScheduleRequest(): CValveHWSurveyGetSurveyScheduleRequest {
-  return { surveydatetoken: "", surveydatetokenversion: 0 };
+  return { surveydatetoken: "", surveydatetokenversion: 0n };
 }
 
 export const CValveHWSurveyGetSurveyScheduleRequest: MessageFns<CValveHWSurveyGetSurveyScheduleRequest> = {
@@ -981,7 +1011,10 @@ export const CValveHWSurveyGetSurveyScheduleRequest: MessageFns<CValveHWSurveyGe
     if (message.surveydatetoken !== undefined && message.surveydatetoken !== "") {
       writer.uint32(10).string(message.surveydatetoken);
     }
-    if (message.surveydatetokenversion !== undefined && message.surveydatetokenversion !== 0) {
+    if (message.surveydatetokenversion !== undefined && message.surveydatetokenversion !== 0n) {
+      if (BigInt.asUintN(64, message.surveydatetokenversion) !== message.surveydatetokenversion) {
+        throw new globalThis.Error("value provided for field message.surveydatetokenversion of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.surveydatetokenversion);
     }
     return writer;
@@ -1007,7 +1040,7 @@ export const CValveHWSurveyGetSurveyScheduleRequest: MessageFns<CValveHWSurveyGe
             break;
           }
 
-          message.surveydatetokenversion = longToNumber(reader.fixed64());
+          message.surveydatetokenversion = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1021,7 +1054,7 @@ export const CValveHWSurveyGetSurveyScheduleRequest: MessageFns<CValveHWSurveyGe
 };
 
 function createBaseCValveHWSurveyGetSurveyScheduleResponse(): CValveHWSurveyGetSurveyScheduleResponse {
-  return { surveydatetoken: 0, surveydatetokenversion: 0 };
+  return { surveydatetoken: 0, surveydatetokenversion: 0n };
 }
 
 export const CValveHWSurveyGetSurveyScheduleResponse: MessageFns<CValveHWSurveyGetSurveyScheduleResponse> = {
@@ -1029,7 +1062,10 @@ export const CValveHWSurveyGetSurveyScheduleResponse: MessageFns<CValveHWSurveyG
     if (message.surveydatetoken !== undefined && message.surveydatetoken !== 0) {
       writer.uint32(8).uint32(message.surveydatetoken);
     }
-    if (message.surveydatetokenversion !== undefined && message.surveydatetokenversion !== 0) {
+    if (message.surveydatetokenversion !== undefined && message.surveydatetokenversion !== 0n) {
+      if (BigInt.asUintN(64, message.surveydatetokenversion) !== message.surveydatetokenversion) {
+        throw new globalThis.Error("value provided for field message.surveydatetokenversion of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.surveydatetokenversion);
     }
     return writer;
@@ -1055,7 +1091,7 @@ export const CValveHWSurveyGetSurveyScheduleResponse: MessageFns<CValveHWSurveyG
             break;
           }
 
-          message.surveydatetokenversion = longToNumber(reader.fixed64());
+          message.surveydatetokenversion = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -1148,17 +1184,6 @@ export class ValveHWSurveyClientImpl implements ValveHWSurvey {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

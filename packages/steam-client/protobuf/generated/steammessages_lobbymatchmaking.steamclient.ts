@@ -19,7 +19,7 @@ export enum ELobbyStatus {
 
 export interface LobbyMatchmakingLegacyGetLobbyStatusRequest {
   appId?: number | undefined;
-  steamidLobby?: number | undefined;
+  steamidLobby?: bigint | undefined;
   claimOwnership?: boolean | undefined;
   claimMembership?: boolean | undefined;
   versionNum?: number | undefined;
@@ -27,12 +27,12 @@ export interface LobbyMatchmakingLegacyGetLobbyStatusRequest {
 
 export interface LobbyMatchmakingLegacyGetLobbyStatusResponse {
   appId?: number | undefined;
-  steamidLobby?: number | undefined;
+  steamidLobby?: bigint | undefined;
   lobbyStatus?: ELobbyStatus | undefined;
 }
 
 function createBaseLobbyMatchmakingLegacyGetLobbyStatusRequest(): LobbyMatchmakingLegacyGetLobbyStatusRequest {
-  return { appId: 0, steamidLobby: 0, claimOwnership: false, claimMembership: false, versionNum: 0 };
+  return { appId: 0, steamidLobby: 0n, claimOwnership: false, claimMembership: false, versionNum: 0 };
 }
 
 export const LobbyMatchmakingLegacyGetLobbyStatusRequest: MessageFns<LobbyMatchmakingLegacyGetLobbyStatusRequest> = {
@@ -43,7 +43,10 @@ export const LobbyMatchmakingLegacyGetLobbyStatusRequest: MessageFns<LobbyMatchm
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamidLobby !== undefined && message.steamidLobby !== 0) {
+    if (message.steamidLobby !== undefined && message.steamidLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamidLobby) !== message.steamidLobby) {
+        throw new globalThis.Error("value provided for field message.steamidLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamidLobby);
     }
     if (message.claimOwnership !== undefined && message.claimOwnership !== false) {
@@ -78,7 +81,7 @@ export const LobbyMatchmakingLegacyGetLobbyStatusRequest: MessageFns<LobbyMatchm
             break;
           }
 
-          message.steamidLobby = longToNumber(reader.fixed64());
+          message.steamidLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -116,7 +119,7 @@ export const LobbyMatchmakingLegacyGetLobbyStatusRequest: MessageFns<LobbyMatchm
 };
 
 function createBaseLobbyMatchmakingLegacyGetLobbyStatusResponse(): LobbyMatchmakingLegacyGetLobbyStatusResponse {
-  return { appId: 0, steamidLobby: 0, lobbyStatus: 0 };
+  return { appId: 0, steamidLobby: 0n, lobbyStatus: 0 };
 }
 
 export const LobbyMatchmakingLegacyGetLobbyStatusResponse: MessageFns<LobbyMatchmakingLegacyGetLobbyStatusResponse> = {
@@ -127,7 +130,10 @@ export const LobbyMatchmakingLegacyGetLobbyStatusResponse: MessageFns<LobbyMatch
     if (message.appId !== undefined && message.appId !== 0) {
       writer.uint32(8).uint32(message.appId);
     }
-    if (message.steamidLobby !== undefined && message.steamidLobby !== 0) {
+    if (message.steamidLobby !== undefined && message.steamidLobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamidLobby) !== message.steamidLobby) {
+        throw new globalThis.Error("value provided for field message.steamidLobby of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamidLobby);
     }
     if (message.lobbyStatus !== undefined && message.lobbyStatus !== 0) {
@@ -156,7 +162,7 @@ export const LobbyMatchmakingLegacyGetLobbyStatusResponse: MessageFns<LobbyMatch
             break;
           }
 
-          message.steamidLobby = longToNumber(reader.fixed64());
+          message.steamidLobby = reader.fixed64() as bigint;
           continue;
         }
         case 3: {
@@ -203,17 +209,6 @@ export class LobbyMatchmakingLegacyClientImpl implements LobbyMatchmakingLegacy 
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

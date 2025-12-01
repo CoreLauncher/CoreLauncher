@@ -39,23 +39,23 @@ export interface CQueuedMatchmakingSearchForGameRequest {
   params: GameSearchParam[];
   playerMin?: number | undefined;
   playerMax?: number | undefined;
-  steamidlobby?: number | undefined;
-  searchid?: number | undefined;
+  steamidlobby?: bigint | undefined;
+  searchid?: bigint | undefined;
 }
 
 export interface CQueuedMatchmakingSearchForGameResponse {
   gamesearchresult?: EGameSearchResult | undefined;
-  searchid?: number | undefined;
+  searchid?: bigint | undefined;
   secondsTimeEstimate?: number | undefined;
   pollFrequency?: number | undefined;
   countSearching?: number | undefined;
   playersInMatch?: number | undefined;
   playersAccepted?: number | undefined;
   connectString?: string | undefined;
-  steamidhost?: number | undefined;
+  steamidhost?: bigint | undefined;
   rtimeMatchMade?: number | undefined;
   rtimeNow?: number | undefined;
-  steamidCanceledSearch?: number | undefined;
+  steamidCanceledSearch?: bigint | undefined;
 }
 
 export interface CQueuedMatchmakingGameHostSearchForPlayersRequest {
@@ -66,11 +66,11 @@ export interface CQueuedMatchmakingGameHostSearchForPlayersRequest {
   playerMax?: number | undefined;
   playerMaxTeamSize?: number | undefined;
   connectionString?: string | undefined;
-  searchid?: number | undefined;
+  searchid?: bigint | undefined;
 }
 
 export interface PlayerFound {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   action?: EGameSearchAction | undefined;
   params: GameSearchParam[];
   teamNumber?: number | undefined;
@@ -78,22 +78,22 @@ export interface PlayerFound {
 
 export interface CQueuedMatchmakingGameHostSearchForPlayersResponse {
   gamesearchresult?: EGameSearchResult | undefined;
-  searchid?: number | undefined;
+  searchid?: bigint | undefined;
   pollFrequency?: number | undefined;
-  matchid?: number | undefined;
+  matchid?: bigint | undefined;
   players: PlayerFound[];
   rtimeMatchMade?: number | undefined;
   rtimeNow?: number | undefined;
 }
 
 export interface PlayerResult {
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   value?: number | undefined;
 }
 
 export interface CQueuedMatchmakingGameHostSubmitPlayerResultRequest {
   appid?: number | undefined;
-  matchid?: number | undefined;
+  matchid?: bigint | undefined;
   playerResults: PlayerResult[];
 }
 
@@ -102,7 +102,7 @@ export interface CQueuedMatchmakingGameHostSubmitPlayerResultResponse {
 
 export interface CQueuedMatchmakingGameHostEndGameRequest {
   appid?: number | undefined;
-  matchid?: number | undefined;
+  matchid?: bigint | undefined;
 }
 
 export interface CQueuedMatchmakingGameHostEndGameResponse {
@@ -157,7 +157,7 @@ export const GameSearchParam: MessageFns<GameSearchParam> = {
 };
 
 function createBaseCQueuedMatchmakingSearchForGameRequest(): CQueuedMatchmakingSearchForGameRequest {
-  return { appid: 0, action: 0, params: [], playerMin: 0, playerMax: 0, steamidlobby: 0, searchid: 0 };
+  return { appid: 0, action: 0, params: [], playerMin: 0, playerMax: 0, steamidlobby: 0n, searchid: 0n };
 }
 
 export const CQueuedMatchmakingSearchForGameRequest: MessageFns<CQueuedMatchmakingSearchForGameRequest> = {
@@ -177,10 +177,16 @@ export const CQueuedMatchmakingSearchForGameRequest: MessageFns<CQueuedMatchmaki
     if (message.playerMax !== undefined && message.playerMax !== 0) {
       writer.uint32(40).uint32(message.playerMax);
     }
-    if (message.steamidlobby !== undefined && message.steamidlobby !== 0) {
+    if (message.steamidlobby !== undefined && message.steamidlobby !== 0n) {
+      if (BigInt.asUintN(64, message.steamidlobby) !== message.steamidlobby) {
+        throw new globalThis.Error("value provided for field message.steamidlobby of type fixed64 too large");
+      }
       writer.uint32(49).fixed64(message.steamidlobby);
     }
-    if (message.searchid !== undefined && message.searchid !== 0) {
+    if (message.searchid !== undefined && message.searchid !== 0n) {
+      if (BigInt.asUintN(64, message.searchid) !== message.searchid) {
+        throw new globalThis.Error("value provided for field message.searchid of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.searchid);
     }
     return writer;
@@ -238,7 +244,7 @@ export const CQueuedMatchmakingSearchForGameRequest: MessageFns<CQueuedMatchmaki
             break;
           }
 
-          message.steamidlobby = longToNumber(reader.fixed64());
+          message.steamidlobby = reader.fixed64() as bigint;
           continue;
         }
         case 7: {
@@ -246,7 +252,7 @@ export const CQueuedMatchmakingSearchForGameRequest: MessageFns<CQueuedMatchmaki
             break;
           }
 
-          message.searchid = longToNumber(reader.uint64());
+          message.searchid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -262,17 +268,17 @@ export const CQueuedMatchmakingSearchForGameRequest: MessageFns<CQueuedMatchmaki
 function createBaseCQueuedMatchmakingSearchForGameResponse(): CQueuedMatchmakingSearchForGameResponse {
   return {
     gamesearchresult: 0,
-    searchid: 0,
+    searchid: 0n,
     secondsTimeEstimate: 0,
     pollFrequency: 0,
     countSearching: 0,
     playersInMatch: 0,
     playersAccepted: 0,
     connectString: "",
-    steamidhost: 0,
+    steamidhost: 0n,
     rtimeMatchMade: 0,
     rtimeNow: 0,
-    steamidCanceledSearch: 0,
+    steamidCanceledSearch: 0n,
   };
 }
 
@@ -281,7 +287,10 @@ export const CQueuedMatchmakingSearchForGameResponse: MessageFns<CQueuedMatchmak
     if (message.gamesearchresult !== undefined && message.gamesearchresult !== 0) {
       writer.uint32(8).int32(message.gamesearchresult);
     }
-    if (message.searchid !== undefined && message.searchid !== 0) {
+    if (message.searchid !== undefined && message.searchid !== 0n) {
+      if (BigInt.asUintN(64, message.searchid) !== message.searchid) {
+        throw new globalThis.Error("value provided for field message.searchid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.searchid);
     }
     if (message.secondsTimeEstimate !== undefined && message.secondsTimeEstimate !== 0) {
@@ -302,7 +311,10 @@ export const CQueuedMatchmakingSearchForGameResponse: MessageFns<CQueuedMatchmak
     if (message.connectString !== undefined && message.connectString !== "") {
       writer.uint32(74).string(message.connectString);
     }
-    if (message.steamidhost !== undefined && message.steamidhost !== 0) {
+    if (message.steamidhost !== undefined && message.steamidhost !== 0n) {
+      if (BigInt.asUintN(64, message.steamidhost) !== message.steamidhost) {
+        throw new globalThis.Error("value provided for field message.steamidhost of type fixed64 too large");
+      }
       writer.uint32(81).fixed64(message.steamidhost);
     }
     if (message.rtimeMatchMade !== undefined && message.rtimeMatchMade !== 0) {
@@ -311,7 +323,10 @@ export const CQueuedMatchmakingSearchForGameResponse: MessageFns<CQueuedMatchmak
     if (message.rtimeNow !== undefined && message.rtimeNow !== 0) {
       writer.uint32(96).uint32(message.rtimeNow);
     }
-    if (message.steamidCanceledSearch !== undefined && message.steamidCanceledSearch !== 0) {
+    if (message.steamidCanceledSearch !== undefined && message.steamidCanceledSearch !== 0n) {
+      if (BigInt.asUintN(64, message.steamidCanceledSearch) !== message.steamidCanceledSearch) {
+        throw new globalThis.Error("value provided for field message.steamidCanceledSearch of type fixed64 too large");
+      }
       writer.uint32(105).fixed64(message.steamidCanceledSearch);
     }
     return writer;
@@ -337,7 +352,7 @@ export const CQueuedMatchmakingSearchForGameResponse: MessageFns<CQueuedMatchmak
             break;
           }
 
-          message.searchid = longToNumber(reader.uint64());
+          message.searchid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -393,7 +408,7 @@ export const CQueuedMatchmakingSearchForGameResponse: MessageFns<CQueuedMatchmak
             break;
           }
 
-          message.steamidhost = longToNumber(reader.fixed64());
+          message.steamidhost = reader.fixed64() as bigint;
           continue;
         }
         case 11: {
@@ -417,7 +432,7 @@ export const CQueuedMatchmakingSearchForGameResponse: MessageFns<CQueuedMatchmak
             break;
           }
 
-          message.steamidCanceledSearch = longToNumber(reader.fixed64());
+          message.steamidCanceledSearch = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -439,7 +454,7 @@ function createBaseCQueuedMatchmakingGameHostSearchForPlayersRequest(): CQueuedM
     playerMax: 0,
     playerMaxTeamSize: 0,
     connectionString: "",
-    searchid: 0,
+    searchid: 0n,
   };
 }
 
@@ -471,7 +486,10 @@ export const CQueuedMatchmakingGameHostSearchForPlayersRequest: MessageFns<
     if (message.connectionString !== undefined && message.connectionString !== "") {
       writer.uint32(58).string(message.connectionString);
     }
-    if (message.searchid !== undefined && message.searchid !== 0) {
+    if (message.searchid !== undefined && message.searchid !== 0n) {
+      if (BigInt.asUintN(64, message.searchid) !== message.searchid) {
+        throw new globalThis.Error("value provided for field message.searchid of type uint64 too large");
+      }
       writer.uint32(64).uint64(message.searchid);
     }
     return writer;
@@ -545,7 +563,7 @@ export const CQueuedMatchmakingGameHostSearchForPlayersRequest: MessageFns<
             break;
           }
 
-          message.searchid = longToNumber(reader.uint64());
+          message.searchid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -559,12 +577,15 @@ export const CQueuedMatchmakingGameHostSearchForPlayersRequest: MessageFns<
 };
 
 function createBasePlayerFound(): PlayerFound {
-  return { steamid: 0, action: 0, params: [], teamNumber: 0 };
+  return { steamid: 0n, action: 0, params: [], teamNumber: 0 };
 }
 
 export const PlayerFound: MessageFns<PlayerFound> = {
   encode(message: PlayerFound, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.action !== undefined && message.action !== 0) {
@@ -591,7 +612,7 @@ export const PlayerFound: MessageFns<PlayerFound> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -631,9 +652,9 @@ export const PlayerFound: MessageFns<PlayerFound> = {
 function createBaseCQueuedMatchmakingGameHostSearchForPlayersResponse(): CQueuedMatchmakingGameHostSearchForPlayersResponse {
   return {
     gamesearchresult: 0,
-    searchid: 0,
+    searchid: 0n,
     pollFrequency: 0,
-    matchid: 0,
+    matchid: 0n,
     players: [],
     rtimeMatchMade: 0,
     rtimeNow: 0,
@@ -650,13 +671,19 @@ export const CQueuedMatchmakingGameHostSearchForPlayersResponse: MessageFns<
     if (message.gamesearchresult !== undefined && message.gamesearchresult !== 0) {
       writer.uint32(8).int32(message.gamesearchresult);
     }
-    if (message.searchid !== undefined && message.searchid !== 0) {
+    if (message.searchid !== undefined && message.searchid !== 0n) {
+      if (BigInt.asUintN(64, message.searchid) !== message.searchid) {
+        throw new globalThis.Error("value provided for field message.searchid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.searchid);
     }
     if (message.pollFrequency !== undefined && message.pollFrequency !== 0) {
       writer.uint32(24).uint32(message.pollFrequency);
     }
-    if (message.matchid !== undefined && message.matchid !== 0) {
+    if (message.matchid !== undefined && message.matchid !== 0n) {
+      if (BigInt.asUintN(64, message.matchid) !== message.matchid) {
+        throw new globalThis.Error("value provided for field message.matchid of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.matchid);
     }
     for (const v of message.players) {
@@ -691,7 +718,7 @@ export const CQueuedMatchmakingGameHostSearchForPlayersResponse: MessageFns<
             break;
           }
 
-          message.searchid = longToNumber(reader.uint64());
+          message.searchid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -707,7 +734,7 @@ export const CQueuedMatchmakingGameHostSearchForPlayersResponse: MessageFns<
             break;
           }
 
-          message.matchid = longToNumber(reader.uint64());
+          message.matchid = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -745,12 +772,15 @@ export const CQueuedMatchmakingGameHostSearchForPlayersResponse: MessageFns<
 };
 
 function createBasePlayerResult(): PlayerResult {
-  return { steamid: 0, value: 0 };
+  return { steamid: 0n, value: 0 };
 }
 
 export const PlayerResult: MessageFns<PlayerResult> = {
   encode(message: PlayerResult, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(message.steamid);
     }
     if (message.value !== undefined && message.value !== 0) {
@@ -771,7 +801,7 @@ export const PlayerResult: MessageFns<PlayerResult> = {
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 2: {
@@ -793,7 +823,7 @@ export const PlayerResult: MessageFns<PlayerResult> = {
 };
 
 function createBaseCQueuedMatchmakingGameHostSubmitPlayerResultRequest(): CQueuedMatchmakingGameHostSubmitPlayerResultRequest {
-  return { appid: 0, matchid: 0, playerResults: [] };
+  return { appid: 0, matchid: 0n, playerResults: [] };
 }
 
 export const CQueuedMatchmakingGameHostSubmitPlayerResultRequest: MessageFns<
@@ -806,7 +836,10 @@ export const CQueuedMatchmakingGameHostSubmitPlayerResultRequest: MessageFns<
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.matchid !== undefined && message.matchid !== 0) {
+    if (message.matchid !== undefined && message.matchid !== 0n) {
+      if (BigInt.asUintN(64, message.matchid) !== message.matchid) {
+        throw new globalThis.Error("value provided for field message.matchid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.matchid);
     }
     for (const v of message.playerResults) {
@@ -835,7 +868,7 @@ export const CQueuedMatchmakingGameHostSubmitPlayerResultRequest: MessageFns<
             break;
           }
 
-          message.matchid = longToNumber(reader.uint64());
+          message.matchid = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -888,7 +921,7 @@ export const CQueuedMatchmakingGameHostSubmitPlayerResultResponse: MessageFns<
 };
 
 function createBaseCQueuedMatchmakingGameHostEndGameRequest(): CQueuedMatchmakingGameHostEndGameRequest {
-  return { appid: 0, matchid: 0 };
+  return { appid: 0, matchid: 0n };
 }
 
 export const CQueuedMatchmakingGameHostEndGameRequest: MessageFns<CQueuedMatchmakingGameHostEndGameRequest> = {
@@ -896,7 +929,10 @@ export const CQueuedMatchmakingGameHostEndGameRequest: MessageFns<CQueuedMatchma
     if (message.appid !== undefined && message.appid !== 0) {
       writer.uint32(8).uint32(message.appid);
     }
-    if (message.matchid !== undefined && message.matchid !== 0) {
+    if (message.matchid !== undefined && message.matchid !== 0n) {
+      if (BigInt.asUintN(64, message.matchid) !== message.matchid) {
+        throw new globalThis.Error("value provided for field message.matchid of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.matchid);
     }
     return writer;
@@ -922,7 +958,7 @@ export const CQueuedMatchmakingGameHostEndGameRequest: MessageFns<CQueuedMatchma
             break;
           }
 
-          message.matchid = longToNumber(reader.uint64());
+          message.matchid = reader.uint64() as bigint;
           continue;
         }
       }
@@ -1027,17 +1063,6 @@ export class QueuedMatchmakingGameHostClientImpl implements QueuedMatchmakingGam
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {

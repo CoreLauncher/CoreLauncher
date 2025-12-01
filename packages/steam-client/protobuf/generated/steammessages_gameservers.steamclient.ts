@@ -21,11 +21,11 @@ export interface CGameServersIPsWithSteamIDsResponse {
 
 export interface CGameServersIPsWithSteamIDsResponse_Server {
   addr?: string | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
 }
 
 export interface CGameServersGetServerIPsBySteamIDRequest {
-  serverSteamids: number[];
+  serverSteamids: bigint[];
 }
 
 export interface CGameServersQueryByFakeIPRequest {
@@ -50,7 +50,7 @@ export interface CMsgGameServerPingQueryData {
   spectatorPort?: number | undefined;
   spectatorServerName?: string | undefined;
   serverName?: string | undefined;
-  steamid?: number | undefined;
+  steamid?: bigint | undefined;
   appId?: number | undefined;
   gamedir?: string | undefined;
   map?: string | undefined;
@@ -182,7 +182,7 @@ export const CGameServersIPsWithSteamIDsResponse: MessageFns<CGameServersIPsWith
 };
 
 function createBaseCGameServersIPsWithSteamIDsResponse_Server(): CGameServersIPsWithSteamIDsResponse_Server {
-  return { addr: "", steamid: 0 };
+  return { addr: "", steamid: 0n };
 }
 
 export const CGameServersIPsWithSteamIDsResponse_Server: MessageFns<CGameServersIPsWithSteamIDsResponse_Server> = {
@@ -190,7 +190,10 @@ export const CGameServersIPsWithSteamIDsResponse_Server: MessageFns<CGameServers
     if (message.addr !== undefined && message.addr !== "") {
       writer.uint32(10).string(message.addr);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(17).fixed64(message.steamid);
     }
     return writer;
@@ -216,7 +219,7 @@ export const CGameServersIPsWithSteamIDsResponse_Server: MessageFns<CGameServers
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
       }
@@ -236,6 +239,9 @@ function createBaseCGameServersGetServerIPsBySteamIDRequest(): CGameServersGetSe
 export const CGameServersGetServerIPsBySteamIDRequest: MessageFns<CGameServersGetServerIPsBySteamIDRequest> = {
   encode(message: CGameServersGetServerIPsBySteamIDRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.serverSteamids) {
+      if (BigInt.asUintN(64, v!) !== v!) {
+        throw new globalThis.Error("value provided for field v! of type fixed64 too large");
+      }
       writer.uint32(9).fixed64(v!);
     }
     return writer;
@@ -250,7 +256,7 @@ export const CGameServersGetServerIPsBySteamIDRequest: MessageFns<CGameServersGe
       switch (tag >>> 3) {
         case 1: {
           if (tag === 9) {
-            message.serverSteamids.push(longToNumber(reader.fixed64()));
+            message.serverSteamids.push(reader.fixed64() as bigint);
 
             continue;
           }
@@ -258,7 +264,7 @@ export const CGameServersGetServerIPsBySteamIDRequest: MessageFns<CGameServersGe
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.serverSteamids.push(longToNumber(reader.fixed64()));
+              message.serverSteamids.push(reader.fixed64() as bigint);
             }
 
             continue;
@@ -354,7 +360,7 @@ function createBaseCMsgGameServerPingQueryData(): CMsgGameServerPingQueryData {
     spectatorPort: 0,
     spectatorServerName: "",
     serverName: "",
-    steamid: 0,
+    steamid: 0n,
     appId: 0,
     gamedir: "",
     map: "",
@@ -392,7 +398,10 @@ export const CMsgGameServerPingQueryData: MessageFns<CMsgGameServerPingQueryData
     if (message.serverName !== undefined && message.serverName !== "") {
       writer.uint32(50).string(message.serverName);
     }
-    if (message.steamid !== undefined && message.steamid !== 0) {
+    if (message.steamid !== undefined && message.steamid !== 0n) {
+      if (BigInt.asUintN(64, message.steamid) !== message.steamid) {
+        throw new globalThis.Error("value provided for field message.steamid of type fixed64 too large");
+      }
       writer.uint32(57).fixed64(message.steamid);
     }
     if (message.appId !== undefined && message.appId !== 0) {
@@ -500,7 +509,7 @@ export const CMsgGameServerPingQueryData: MessageFns<CMsgGameServerPingQueryData
             break;
           }
 
-          message.steamid = longToNumber(reader.fixed64());
+          message.steamid = reader.fixed64() as bigint;
           continue;
         }
         case 8: {
@@ -1087,17 +1096,6 @@ export class GameServerClientClientImpl implements GameServerClient {
 
 interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
 }
 
 export interface MessageFns<T> {
