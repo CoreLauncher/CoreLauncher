@@ -9,11 +9,15 @@
 		"@types/react-dom",
 		"@fontsource/inter",
 		"@biomejs/biome",
-		"long"
+		"protoc",
+		"ts-proto"
 	],
 	"workspaces": {
 		"packages/*": {
 			"entry": ["**/*.d.ts", "**/*.test.ts"]
+		},
+		"packages/steam-client": {
+			"entry": ["protobuf/generated/**/*.ts"]
 		},
 		"plugins/*": {
 			"entry": ["public/index.tsx", "migrations/*.ts"]

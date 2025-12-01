@@ -3,17 +3,16 @@
 	"main": "./index.ts",
 	"dependencies": {
 		"@corelauncher/typed-emitter": "*",
-		"protobufjs": "^7.5.4",
 		"bytebuffer": "^5.0.1",
 		"jwt-decode": "^4.0.0",
 		"p-event": "^7.0.0",
 		"binarykvparser": "^2.3.0",
 		"@node-steam/vdf": "^2.2.0",
+		"@bufbuild/protobuf": "^2.10.1",
 		"native-reg": "^1.1.1",
 		"jsonschema": "^1.5.0"
 	},
 	"devDependencies": {
-		"@corelauncher/types": "*",
 		"@corelauncher/json-value": "*"
 	}
 }
