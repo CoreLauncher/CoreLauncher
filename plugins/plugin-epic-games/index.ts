@@ -20,7 +20,14 @@ export class Plugin extends PluginShape {
 			const games = await getEpicGames();
 			this.emit(
 				"games",
-				games.map((game) => new EpicGame({ id: game.id, name: game.name })),
+				games.map(
+					(game) =>
+						new EpicGame({
+							id: game.id,
+							name: game.name,
+							processes: game.processes,
+						}),
+				),
 			);
 
 			this.emit("ready");

@@ -39,7 +39,7 @@ type EpicManifest = {
 	VaultTitleText: string;
 	InstallSize: number;
 	MainWindowProcessName: string;
-	//ProcessNames: any[];
+	ProcessNames: string[];
 	//BackgroundProcessNames: any[];
 	//IgnoredProcessNames: any[];
 	//DlcProcessNames: any[];
@@ -65,6 +65,7 @@ export async function getEpicGames() {
 		name: string;
 		directory: string;
 		exe: string;
+		processes: string[];
 		command: string;
 		version: string;
 		manifest: EpicManifest;
@@ -79,12 +80,14 @@ export async function getEpicGames() {
 		const content = await readFile(filePath, "utf-8");
 
 		const manifest = JSON.parse(content) as EpicManifest;
+		console.log(manifest);
 
 		games.push({
 			id: manifest.AppName,
 			name: manifest.DisplayName,
 			directory: manifest.InstallLocation,
 			exe: manifest.LaunchExecutable,
+			processes: manifest.ProcessNames,
 			command: manifest.LaunchCommand,
 			version: manifest.AppVersionString,
 			manifest,

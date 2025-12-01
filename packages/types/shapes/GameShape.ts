@@ -6,7 +6,7 @@ import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { GameState } from "../enums/GameState";
 
 interface GameShapeEvents {
-	"state-changed": (newStatus: GameState, oldStatus: GameState) => void;
+	"state-changed": (newState: GameState, oldState: GameState) => void;
 }
 
 export abstract class GameShape<
