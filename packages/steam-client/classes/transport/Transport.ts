@@ -60,10 +60,6 @@ export default abstract class Transport extends TypedEmitter<TransportEvents> {
 		this.client = client;
 		this.heartbeat = null;
 
-		// this.on("message", (message) => {
-		// console.log("Received", getMessageName(message.type));
-		// });
-
 		// Handle Job callbacks
 		this.on("message", (message) => {
 			const job = message.header.jobidTarget as number;
