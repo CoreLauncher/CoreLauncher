@@ -13,7 +13,7 @@
 		"open": "^11.0.0",
 		"react-bootstrap-icons": "^1.11.6",
 		"uqr": "^0.1.2",
-		"react": "^19.2.0",
+		"react": "^19.2.1",
 		"react-dom": "^19.2.0",
 		"kysely": "^0.28.8",
 		"clsx": "^2.1.1"
