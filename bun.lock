@@ -170,6 +170,7 @@
       "dependencies": {
         "@corelauncher/console-addon": "*",
         "@corelauncher/console-hide": "*",
+        "@corelauncher/database": "*",
         "@corelauncher/is-production": "*",
         "@corelauncher/plugin-epic-games": "*",
         "@corelauncher/plugin-react-frontend": "*",

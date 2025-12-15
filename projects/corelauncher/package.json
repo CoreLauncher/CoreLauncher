@@ -6,6 +6,7 @@
 		"@corelauncher/plugin-react-frontend": "*",
 		"@corelauncher/is-production": "*",
 		"@corelauncher/typed-emitter": "*",
+		"@corelauncher/database": "*",
 		"@corelauncher/console-addon": "*",
 		"@corelauncher/console-hide": "*",
 		"@corelauncher/types": "*",
