@@ -1,9 +1,19 @@
 import { TypedEmitter } from "@corelauncher/typed-emitter";
-import type { PluginExport, PluginShapeEvents } from "@corelauncher/types";
+import type {
+	GameShape,
+	GameState,
+	PluginExport,
+	PluginShapeEvents,
+} from "@corelauncher/types";
 import PluginContainer from "./PluginContainer";
 
 interface PluginManagerEvents extends PluginShapeEvents {
 	app_instance: (args: string[]) => void;
+	game_state_changed: (
+		game: InstanceType<typeof GameShape>,
+		newState: GameState,
+		oldState: GameState,
+	) => void;
 }
 
 /**
@@ -40,6 +50,13 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 				`Plugin "${plugin.name}" (${plugin.id}) registered ${games.length} games.`,
 			);
 			this.emit("games", games);
+		});
+
+		container.on("game_state_changed", (game, newState, oldState) => {
+			console.info(
+				`Plugin "${plugin.name}" (${plugin.id}) reported state change "${oldState}" > "${newState}" for game "${game.name}" (${game.id}).`,
+			);
+			this.emit("game_state_changed", game, newState, oldState);
 		});
 
 		container.on("account_providers", (providers) => {

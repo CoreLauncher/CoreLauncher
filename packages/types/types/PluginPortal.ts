@@ -1,4 +1,5 @@
 import { TypedEmitter } from "@corelauncher/typed-emitter";
+import type { GameState } from "../enums/GameState";
 import type { AccountInstanceShape } from "../shapes/AccountInstanceShape";
 import type { AccountProviderShape } from "../shapes/AccountProviderShape";
 import type { GameShape } from "../shapes/GameShape";
@@ -14,6 +15,12 @@ interface PluginPortalEvents {
 	 * @param games The updated list of games.
 	 */
 	games: (games: GameShape[]) => void;
+
+	game_state_changed: (
+		game: GameShape,
+		newState: GameState,
+		oldState: GameState,
+	) => void;
 
 	/**
 	 * The list of registered account providers has changed.

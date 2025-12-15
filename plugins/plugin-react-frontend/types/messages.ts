@@ -7,6 +7,7 @@ import type {
 export enum MessageType {
 	ApplicationInformation = "ApplicationInformation",
 	GamesUpdated = "GamesUpdated",
+	GameStateUpdated = "GameStateUpdated",
 	AccountInstancesUpdated = "AccountInstancesUpdated",
 	AccountProvidersUpdated = "AccountProvidersUpdated",
 	StartAccountProviderConnection = "StartAccountProviderConnection",
@@ -21,6 +22,12 @@ export interface ApplicationInformationMessage {
 
 export interface GamesUpdatedMessage {
 	games: ReturnType<GameShape["toJSON"]>[];
+}
+
+export interface GameStateUpdatedMessage {
+	id: string;
+	newState: string;
+	oldState: string;
 }
 
 export type AccountInstancesUpdatedMessage = {
@@ -46,6 +53,7 @@ export type OpenExternalLinkMessage = {
 export type Message =
 	| ApplicationInformationMessage
 	| GamesUpdatedMessage
+	| GameStateUpdatedMessage
 	| AccountInstancesUpdatedMessage
 	| AccountProvidersUpdatedMessages
 	| StartAccountProviderConnectionMessage
@@ -55,6 +63,7 @@ export type Message =
 export type MessageTypeMap = {
 	[MessageType.ApplicationInformation]: ApplicationInformationMessage;
 	[MessageType.GamesUpdated]: GamesUpdatedMessage;
+	[MessageType.GameStateUpdated]: GameStateUpdatedMessage;
 	[MessageType.AccountInstancesUpdated]: AccountInstancesUpdatedMessage;
 	[MessageType.AccountProvidersUpdated]: AccountProvidersUpdatedMessages;
 	[MessageType.StartAccountProviderConnection]: StartAccountProviderConnectionMessage;

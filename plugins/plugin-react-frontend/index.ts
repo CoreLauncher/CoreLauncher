@@ -90,6 +90,14 @@ export class Plugin extends PluginShape {
 			);
 		});
 
+		portal.on("game_state_changed", (game, newState, oldState) => {
+			this.server.send(MessageType.GameStateUpdated, {
+				id: game.id,
+				newState,
+				oldState,
+			});
+		});
+
 		portal.on("account_providers", () => {
 			this.server.send(
 				MessageType.AccountProvidersUpdated,

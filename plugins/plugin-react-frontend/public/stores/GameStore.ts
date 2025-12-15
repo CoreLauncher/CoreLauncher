@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import { type GamesUpdatedMessage, MessageType } from "../../types/messages";
+import {
+	type GameStateUpdatedMessage,
+	type GamesUpdatedMessage,
+	MessageType,
+} from "../../types/messages";
 import Socket from "../classes/Socket";
 
 type GameStoreState = {
@@ -18,4 +22,16 @@ socket.on("message", (type, message) => {
 	if (type !== MessageType.GamesUpdated) return;
 	const data = message as GamesUpdatedMessage;
 	useGameStore.setState({ games: data.games });
+});
+
+socket.on("message", (type, message) => {
+	if (type !== MessageType.GameStateUpdated) return;
+	const data = message as GameStateUpdatedMessage;
+	useGameStore.setState((state) => ({
+		games: state.games.map((game) =>
+			game.id === data.id
+				? { ...game, state: data.newState as typeof game.state }
+				: game,
+		),
+	}));
 });

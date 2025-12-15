@@ -12,7 +12,7 @@ export default class SteamGame extends GameShape {
 		let oldState: GameState = this.state;
 		setInterval(() => {
 			const newState = this.state;
-			if (newState !== oldState) this.emit("state-changed", newState, oldState);
+			if (newState !== oldState) this.emit("state_changed", newState, oldState);
 			oldState = newState;
 		}, 5000);
 	}

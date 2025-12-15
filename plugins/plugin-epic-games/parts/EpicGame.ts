@@ -46,6 +46,6 @@ export default class EpicGame extends GameShape {
 		const found = this.processes.some((proc) => exes.includes(proc));
 		this.state = found ? GameState.Running : GameState.Installed;
 		if (oldState !== this.state)
-			this.emit("state-changed", this.state, oldState);
+			this.emit("state_changed", this.state, oldState);
 	}
 }
