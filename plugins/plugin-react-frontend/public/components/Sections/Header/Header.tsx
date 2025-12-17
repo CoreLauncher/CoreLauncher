@@ -45,7 +45,7 @@ export default function Header({
 			<div className="spacer" />
 
 			<button type="button" className="window-controls">
-				—
+				‒
 			</button>
 			<button type="button" className="window-controls">
 				☐
