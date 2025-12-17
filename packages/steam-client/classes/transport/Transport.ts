@@ -17,6 +17,7 @@ const MESSAGE_TYPE_MASK = 0x80000000;
 
 interface TransportEvents {
 	connected: () => void;
+	disconnected: () => void;
 	message: (message: Message) => void;
 }
 

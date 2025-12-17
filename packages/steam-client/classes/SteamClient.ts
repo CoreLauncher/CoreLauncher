@@ -81,6 +81,12 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 			});
 		});
 
+		this.transport.on("disconnected", () => {
+			setTimeout(() => {
+				this.connect();
+			}, 5000);
+		});
+
 		// Handle license list
 		this.transport.on("message", async (message) => {
 			const type = message.type;
@@ -114,18 +120,7 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 			this.emit("apps");
 		});
 
-		// Start by fetching a CM list and connecting to the first one
-		this.api
-			.fetch("GET", "ISteamDirectory", "GetCMListForConnect", "1", {
-				cmtype: "websockets",
-				maxcount: 10,
-			})
-			.then((response) => {
-				const endpoint = response.serverlist[0]?.endpoint;
-				if (!endpoint) throw new Error("No endpoint found");
-
-				this.transport.connect(endpoint);
-			});
+		this.connect();
 	}
 
 	private async requestProductInformation(options: {
@@ -191,5 +186,19 @@ export class SteamClient extends TypedEmitter<SteamClientEvents> {
 			apps: returnedApps,
 			packages: returnedPackages,
 		};
+	}
+
+	private connect() {
+		this.api
+			.fetch("GET", "ISteamDirectory", "GetCMListForConnect", "1", {
+				cmtype: "websockets",
+				maxcount: 10,
+			})
+			.then((response) => {
+				const endpoint = response.serverlist[0]?.endpoint;
+				if (!endpoint) throw new Error("No endpoint found");
+
+				this.transport.connect(endpoint);
+			});
 	}
 }

@@ -18,7 +18,7 @@ export default class WebsocketTransport extends Transport {
 		});
 
 		this.connection.addEventListener("close", () => {
-			// this.emit("disconnected");
+			this.emit("disconnected");
 			console.info("[steam-client] Disconnected from WebSocket");
 		});
 
