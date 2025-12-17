@@ -80,7 +80,6 @@ export async function getEpicGames() {
 		const content = await readFile(filePath, "utf-8");
 
 		const manifest = JSON.parse(content) as EpicManifest;
-		console.log(manifest);
 
 		games.push({
 			id: manifest.AppName,
