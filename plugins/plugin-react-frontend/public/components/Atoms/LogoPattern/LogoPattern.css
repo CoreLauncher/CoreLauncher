@@ -13,15 +13,14 @@
 		top: 50%;
 		left: 50%;
 
-		width: var(--container-size);
-		height: var(--container-size);
+		width: max(100vh, 100vw);
+		height: max(100vh, 100vw);
 
 		pointer-events: none;
 		content: "";
-		background-image: url("@corelauncher/react/assets/logo.svg");
+		background-image: var(--image);
 		background-repeat: repeat;
 		background-position: center;
-		background-size: calc(var(--size) + var(--gap));
 
 		filter: brightness(var(--brightness));
 		transform: translate(-50%, -50%) rotate(var(--rotation));

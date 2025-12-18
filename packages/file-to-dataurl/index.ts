@@ -1,13 +1,12 @@
 import { readFileSync } from "node:fs";
 
 export function fileToDataURL(path: string) {
-	const file = Bun.file(path);
+	const file = globalThis?.Bun.file(path);
 	const content = readFileSync(path, "utf-8");
 
 	return dataToDataURL(content, file.type.split(";")[0]!);
 }
 
 export function dataToDataURL(data: string, type: string) {
-	btoa;
 	return `data:${type};base64,${btoa(data)}`;
 }

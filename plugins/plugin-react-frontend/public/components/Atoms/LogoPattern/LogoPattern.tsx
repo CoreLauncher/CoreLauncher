@@ -1,13 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import logoSVG from "@corelauncher/react/assets/logo.svg";
 import "./LogoPattern.css";
+import { dataToDataURL } from "@corelauncher/file-to-dataurl";
 import clsx from "clsx";
+
+const logoRequest = await fetch(logoSVG);
+const logo = await logoRequest.text();
 
 export default function LogoPattern({
 	className = "",
 	rotation = 15,
 	brightness = 30,
 	size = 150,
-	gap = 30,
+	gap = 10,
 }: {
 	className?: string;
 	rotation?: number;
@@ -15,34 +19,14 @@ export default function LogoPattern({
 	size?: number;
 	gap?: number;
 }) {
-	const ref = useRef<HTMLDivElement>(null);
-	const [containerSize, setContainerSize] = useState(0);
-
-	useEffect(() => {
-		if (!ref.current) return () => {};
-
-		function onResize() {
-			const width = ref.current?.clientWidth || 0;
-			const height = ref.current?.clientHeight || 0;
-			setContainerSize(Math.max(width, height) * 2);
-		}
-
-		const observer = new ResizeObserver(onResize);
-		observer.observe(ref.current);
-		return () => observer.disconnect();
-	});
-
 	return (
 		<div
 			className={clsx("LogoPattern", className)}
-			ref={ref}
 			style={
 				{
+					"--image": `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${size + gap}" height="${size + gap}"><image width="${size}" height="${size}" xlink:href="${dataToDataURL(logo, "image/svg+xml")}" /></svg>')`,
 					"--rotation": `${rotation}deg`,
 					"--brightness": `${brightness}%`,
-					"--size": `${size}px`,
-					"--gap": `${gap}px`,
-					"--container-size": `${containerSize}px`,
 				} as React.CSSProperties
 			}
 		/>
