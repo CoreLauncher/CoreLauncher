@@ -83,7 +83,7 @@ export default function LibraryList({
 				className="games"
 				gap={0}
 				items={games
-					.sort((a, b) => {
+					.toSorted((a, b) => {
 						const aPriority = a.state === GameState.Installed ? 0 : 1;
 						const bPriority = b.state === GameState.Installed ? 0 : 1;
 						if (aPriority !== bPriority) return aPriority - bPriority;
