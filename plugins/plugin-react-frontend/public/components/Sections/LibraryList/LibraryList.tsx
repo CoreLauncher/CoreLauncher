@@ -4,6 +4,7 @@ import { Button, Input } from "@corelauncher/react";
 import { GameState } from "@corelauncher/types";
 import clsx from "clsx";
 import { Question, ViewList } from "react-bootstrap-icons";
+import type { GamesUpdatedMessage } from "../../../../types/messages";
 import { useGameStore } from "../../../stores/GameStore";
 import VerticalList from "../../Atoms/VerticalList/VerticalList";
 
@@ -84,8 +85,16 @@ export default function LibraryList({
 				gap={0}
 				items={games
 					.toSorted((a, b) => {
-						const aPriority = a.state === GameState.Installed ? 0 : 1;
-						const bPriority = b.state === GameState.Installed ? 0 : 1;
+						const isPriority = (game: GamesUpdatedMessage["games"][0]) =>
+							[
+								GameState.Installed,
+								GameState.Running,
+								GameState.UpdateAvailable,
+								GameState.Updating,
+							].includes(game.state);
+
+						const aPriority = isPriority(a) ? 0 : 1;
+						const bPriority = isPriority(b) ? 0 : 1;
 						if (aPriority !== bPriority) return aPriority - bPriority;
 						return a.name.localeCompare(b.name);
 					})
