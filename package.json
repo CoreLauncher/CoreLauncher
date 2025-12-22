@@ -31,7 +31,8 @@
 		"typescript": "^5.9.3"
 	},
 	"patchedDependencies": {
-		"native-reg@1.1.1": "patches/native-reg@1.1.1.patch"
+		"native-reg@1.1.1": "patches/native-reg@1.1.1.patch",
+		"csv-generate@3.4.3": "patches/csv-generate@3.4.3.patch"
 	},
 	"trustedDependencies": [
 		"@biomejs/biome",
