@@ -6,7 +6,6 @@
       "name": "corelauncher",
       "dependencies": {
         "@corelauncher/console-addon": "*",
-        "tasklist": "^5.0.0",
       },
       "devDependencies": {
         "@biomejs/biome": "2.3.10",
@@ -117,7 +116,7 @@
       "dependencies": {
         "native-reg": "^1.1.1",
         "open": "^11.0.0",
-        "ps-list": "^9.0.0",
+        "tasklist": "^5.0.0",
       },
       "devDependencies": {
         "@corelauncher/types": "*",
@@ -557,8 +556,6 @@
     "prop-types": ["prop-types@15.8.1", "", { "dependencies": { "loose-envify": "^1.4.0", "object-assign": "^4.1.1", "react-is": "^16.13.1" } }, "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="],
 
     "protoc": ["protoc@33.2.0", "", { "bin": { "protoc": "protoc.cjs" } }, "sha512-SQwG0NBae7ASCu5iOXnycA+8D9h0sclgGmdgE0gy4QKjK+k5glswMT1SLmo9tecSleqik2N9fzleGr9X3vLWgw=="],
-
-    "ps-list": ["ps-list@9.0.0", "", {}, "sha512-lxMEoIL/BQlk2KunFzxwUPwMvjFH7x7cmvzSLsSHpyMXl9FFfLUlfKrYwFc4wx/ZaIxxuXC4n8rjQ1CX/tkXVQ=="],
 
     "queue-microtask": ["queue-microtask@1.2.3", "", {}, "sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A=="],
 

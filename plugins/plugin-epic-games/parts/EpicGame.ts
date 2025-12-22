@@ -1,6 +1,5 @@
 import { GameShape, GameState } from "@corelauncher/types";
 import open from "open";
-import psList from "ps-list";
 
 type EpicGameOptions = {
 	id: string;
