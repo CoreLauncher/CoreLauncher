@@ -1,0 +1,13 @@
+diff --git a/index.js b/index.js
+index 9793c204cc6a040df1df937915b360e9c47c4f0d..c94465eba1350c166be7d603d1e716323c0f193e 100644
+--- a/index.js
++++ b/index.js
+@@ -103,7 +103,7 @@ function main(options = {}) {
+ 
+ export async function tasklist(options = {}) {
+ 	const {args, columns, currentTransform} = main(options);
+-	const {stdout} = await execFile('tasklist.exe', args);
++	const {stdout} = await execFile('tasklist.exe', args, {windowsHide: true});
+ 	if (!stdout.startsWith('"')) {
+ 		return [];
+ 	}
