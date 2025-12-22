@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import { join, resolve } from "node:path";
+import createShortcut from "@corelauncher/create-shortcut";
 import { isProduction } from "@corelauncher/is-production";
 import { Octokit } from "@octokit/rest";
 import type { SupportedCryptoAlgorithms } from "bun";
@@ -15,7 +16,6 @@ import {
 } from "fs-extra";
 import * as registry from "native-reg";
 import prettyBytes from "pretty-bytes";
-import * as ws from "windows-shortcuts";
 import packageJSON from "../../../package.json";
 import { applicationDirectory } from "../util/directories";
 
@@ -26,17 +26,6 @@ function error() {
 	);
 	alert("Press Enter to continue...");
 	return;
-}
-
-function createShortcut(
-	path: string,
-	options: ws.ShortcutOptions,
-): Promise<void> {
-	return new Promise((resolve, reject) => {
-		ws.create(path, options, (error) => {
-			resolve(error ? reject(new Error(error)) : undefined);
-		});
-	});
 }
 
 function getOS() {
@@ -212,11 +201,15 @@ export default class InstallationManager {
 		);
 
 		console.info("Start Menu Path:", startMenuPath);
-		await createShortcut(resolve(startMenuPath), {
-			target: this.applicationExecutable,
-			desc: "CoreLauncher",
-			icon: this.applicationExecutable,
-			workingDir: this.applicationDirectory,
+
+		await createShortcut({
+			outputPath: resolve(startMenuPath),
+			targetPath: this.applicationExecutable,
+			cwd: this.applicationDirectory,
+			comment: "CoreLauncher",
+			iconPath: this.applicationExecutable,
+			iconIndex: 0,
+			args: "--hide-console",
 		});
 
 		console.info("Registering corelauncher:// protocol handler...");

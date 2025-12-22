@@ -12,3 +12,8 @@ declare module "*.ico" {
 	const path: `${string}.ico`;
 	export = path;
 }
+
+declare module "*.vbs" {
+	const path: `${string}.vbs`;
+	export = path;
+}
