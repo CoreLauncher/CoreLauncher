@@ -16,6 +16,6 @@ await SingleInstanceLock.check();
 await installation.checkApply();
 await installation.checkUpdate();
 
-hideConsole();
+if (process.argv.includes("--hide-console")) hideConsole();
 
 new CoreLauncher();

@@ -27,9 +27,6 @@ export default class EpicGame extends GameShape {
 		this.processes = options.processes;
 
 		this.rawId = options.id;
-
-		setInterval(() => this.updateState(), 5000);
-		this.updateState();
 	}
 
 	async launch() {
@@ -39,11 +36,9 @@ export default class EpicGame extends GameShape {
 		return true;
 	}
 
-	private async updateState() {
+	async updateState(executables: string[]) {
 		const oldState = this.state;
-		const ps = await psList();
-		const exes = ps.map((p) => p.name);
-		const found = this.processes.some((proc) => exes.includes(proc));
+		const found = this.processes.some((proc) => executables.includes(proc));
 		this.state = found ? GameState.Running : GameState.Installed;
 		if (oldState !== this.state)
 			this.emit("state_changed", this.state, oldState);
