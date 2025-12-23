@@ -1,4 +1,4 @@
-import { readdir, readFile, stat } from "node:fs/promises";
+import { exists, readdir, readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { getEpicInstallationDirectory } from "./registry";
 
@@ -58,6 +58,7 @@ type EpicManifest = {
 
 export async function getEpicGames() {
 	const manifestDir = (await getEpicInstallationDirectory()) as string;
+	if (!(await exists(manifestDir))) return [];
 	const files = await readdir(manifestDir);
 
 	const games: {
