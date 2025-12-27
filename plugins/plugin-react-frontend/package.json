@@ -1,7 +1,7 @@
 {
 	"name": "@corelauncher/plugin-react-frontend",
 	"dependencies": {
-		"@corelauncher/rod": "^1.0.5",
+		"@corelauncher/rod": "^1.0.7",
 		"@corelauncher/is-production": "*",
 		"@corelauncher/typed-emitter": "*",
 		"@corelauncher/types": "*",
