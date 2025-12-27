@@ -129,7 +129,7 @@
         "@corelauncher/file-to-dataurl": "*",
         "@corelauncher/is-production": "*",
         "@corelauncher/react": "*",
-        "@corelauncher/rod": "^1.0.7",
+        "@corelauncher/rod": "^1.0.8",
         "@corelauncher/typed-emitter": "*",
         "@corelauncher/types": "*",
         "@fontsource/inter": "^5.2.8",
@@ -265,7 +265,7 @@
 
     "@corelauncher/recolor-svg": ["@corelauncher/recolor-svg@workspace:packages/recolor-svg"],
 
-    "@corelauncher/rod": ["@corelauncher/rod@1.0.7", "", { "dependencies": { "tiny-typed-emitter": "^2.1.0" } }, "sha512-iQTAtAaEIq3gp12MSKWjzIgLC2fYfsvvWpOriFM4vRnc7VqZTS1Rgrk2JuIW7vpbkG64Zd0VtJh7L9eUMrl11w=="],
+    "@corelauncher/rod": ["@corelauncher/rod@1.0.8", "", { "dependencies": { "tiny-typed-emitter": "^2.1.0" } }, "sha512-Jw5yJQABgSmi5p9ZCNJyrFuAjDBvYuKQ/vMJIkcHrFAhrT0NT/KNu5fTE8WcbzEZqqVmR2PR1Z1IZPSb0cGeXw=="],
 
     "@corelauncher/steam-client": ["@corelauncher/steam-client@workspace:packages/steam-client"],
 

@@ -1,3 +1,4 @@
+import { join } from "node:path";
 import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { isProduction } from "@corelauncher/is-production";
 import { Rod, type WebView } from "@corelauncher/rod";
@@ -43,6 +44,7 @@ export class Plugin extends PluginShape {
 			devTools: !isProduction,
 			decorations: false,
 			minimumSize: { width: 1200, height: 800 },
+			dataDirectory: join(portal.getDataDirectory(), "rod_data"),
 		});
 
 		portal.on("app_instance", () => {
