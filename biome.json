@@ -9,6 +9,7 @@
 		"ignoreUnknown": false,
 		"includes": [
 			"**",
+			"!**/rod_data",
 			"!**/node_modules",
 			"!**/.bundle",
 			"!**/packages/steam-client/protobuf/generated"
