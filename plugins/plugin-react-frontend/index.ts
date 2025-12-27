@@ -1,5 +1,4 @@
 import { join } from "node:path";
-import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { isProduction } from "@corelauncher/is-production";
 import { Rod, type WebView } from "@corelauncher/rod";
 import { type PluginPortal, PluginShape } from "@corelauncher/types";

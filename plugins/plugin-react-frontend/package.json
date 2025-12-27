@@ -7,7 +7,6 @@
 		"@corelauncher/types": "*",
 		"@corelauncher/react": "*",
 		"@corelauncher/file-to-dataurl": "*",
-		"@corebyte/webwindow": "^1.1.4",
 		"@fontsource/inter": "^5.2.8",
 		"get-port": "^7.1.0",
 		"react": "^19.2.3",
