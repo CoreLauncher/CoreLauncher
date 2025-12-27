@@ -129,6 +129,7 @@
         "@corelauncher/file-to-dataurl": "*",
         "@corelauncher/is-production": "*",
         "@corelauncher/react": "*",
+        "@corelauncher/rod": "^1.0.5",
         "@corelauncher/typed-emitter": "*",
         "@corelauncher/types": "*",
         "@fontsource/inter": "^5.2.8",
@@ -204,6 +205,7 @@
     "native-reg",
     "@biomejs/biome",
     "oxc-resolver",
+    "@corelauncher/rod",
   ],
   "patchedDependencies": {
     "native-reg@1.1.1": "patches/native-reg@1.1.1.patch",
@@ -262,6 +264,8 @@
     "@corelauncher/react": ["@corelauncher/react@workspace:packages/react"],
 
     "@corelauncher/recolor-svg": ["@corelauncher/recolor-svg@workspace:packages/recolor-svg"],
+
+    "@corelauncher/rod": ["@corelauncher/rod@1.0.5", "", { "dependencies": { "tiny-typed-emitter": "^2.1.0" } }, "sha512-ZbaW+1Vpu88Oh8UuNji+WXlNS69l6hNMaJC3a0UMItxN3dBPyfXfPcTxMVGUSUkUGVmYEulEtxRERha18xUvxQ=="],
 
     "@corelauncher/steam-client": ["@corelauncher/steam-client@workspace:packages/steam-client"],
 

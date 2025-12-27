@@ -1,5 +1,6 @@
 import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { isProduction } from "@corelauncher/is-production";
+import { Rod, type WebView } from "@corelauncher/rod";
 import { type PluginPortal, PluginShape } from "@corelauncher/types";
 import open from "open";
 import temporaryDirectory from "temp-dir";
@@ -9,6 +10,7 @@ import {
 	MessageType,
 	type OpenExternalLinkMessage,
 	type StartAccountProviderConnectionMessage,
+	type WindowInteractionMessage,
 } from "./types/messages";
 import { getVersion } from "./util/version" with { type: "macro" };
 
@@ -26,29 +28,26 @@ export const description =
 
 export class Plugin extends PluginShape {
 	private server: Server;
-	private window: Window;
+	private rod: Rod;
+	private window: WebView;
 	constructor(portal: PluginPortal) {
 		super(portal);
 
 		this.server = new Server();
+		this.rod = new Rod();
 
-		const windowOptions = {
-			debug: !isProduction,
+		this.window = this.rod.createWebView({
 			title: "CoreLauncher",
 			url: this.server.url,
-			show: portal.arguments[0] !== "hidden",
-			size: {
-				width: 1200,
-				height: 800,
-				constraint: SizeConstraint.MIN,
-			},
-		} as ConstructorParameters<typeof Window>[0];
-
-		this.window = new Window(windowOptions);
-		this.window.on("close", () => {});
+			visible: portal.arguments[0] !== "hidden",
+			devTools: !isProduction,
+			decorations: false,
+			minimumSize: { width: 1200, height: 800 },
+		});
 
 		portal.on("app_instance", () => {
-			this.window.show();
+			if (this.window.isVisible) return;
+			this.window.setVisible(true);
 		});
 
 		this.server.send(
@@ -59,6 +58,16 @@ export class Plugin extends PluginShape {
 			},
 			true,
 		);
+
+		this.server.on("message", (type, message) => {
+			if (type !== MessageType.WindowInteraction) return;
+			const data = message as WindowInteractionMessage;
+			if (data.type === "drag") this.window.startDrag();
+			if (data.type === "close") return this.window.setVisible(false);
+			if (data.type === "minimize") return this.window.setMinimized(true);
+			if (data.type === "maximize")
+				this.window.setMaximized(!this.window.isMaximized);
+		});
 
 		this.server.on("message", (type, message) => {
 			if (type !== MessageType.OpenExternalLink) return;

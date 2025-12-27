@@ -37,6 +37,7 @@
 	},
 	"trustedDependencies": [
 		"@biomejs/biome",
+		"@corelauncher/rod",
 		"native-reg",
 		"oxc-resolver"
 	],

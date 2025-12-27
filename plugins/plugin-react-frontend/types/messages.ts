@@ -5,6 +5,7 @@ import type {
 } from "@corelauncher/types";
 
 export enum MessageType {
+	WindowInteraction = "WindowInteraction",
 	ApplicationInformation = "ApplicationInformation",
 	GamesUpdated = "GamesUpdated",
 	GameStateUpdated = "GameStateUpdated",
@@ -14,6 +15,10 @@ export enum MessageType {
 	LaunchGame = "LaunchGame",
 	OpenExternalLink = "OpenExternalLink",
 }
+
+export type WindowInteractionMessage = {
+	type: "drag" | "minimize" | "maximize" | "close";
+};
 
 export interface ApplicationInformationMessage {
 	version: string;
@@ -51,6 +56,7 @@ export type OpenExternalLinkMessage = {
 };
 
 export type Message =
+	| WindowInteractionMessage
 	| ApplicationInformationMessage
 	| GamesUpdatedMessage
 	| GameStateUpdatedMessage
@@ -61,6 +67,7 @@ export type Message =
 	| OpenExternalLinkMessage;
 
 export type MessageTypeMap = {
+	[MessageType.WindowInteraction]: WindowInteractionMessage;
 	[MessageType.ApplicationInformation]: ApplicationInformationMessage;
 	[MessageType.GamesUpdated]: GamesUpdatedMessage;
 	[MessageType.GameStateUpdated]: GameStateUpdatedMessage;

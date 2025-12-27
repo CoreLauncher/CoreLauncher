@@ -63,6 +63,7 @@
 	}
 
 	.window-controls {
+		--hover-color: var(--cl-color-accent);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -76,7 +77,11 @@
 		transition: background-color 0.2s ease-in-out;
 
 		&:hover {
-			background-color: var(--cl-color-accent);
+			background-color: var(--hover-color);
+		}
+
+		&.close {
+			--hover-color: color-mix(in hsl, var(--cl-color-error), black 30%);
 		}
 	}
 }
