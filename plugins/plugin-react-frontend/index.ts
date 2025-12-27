@@ -41,6 +41,7 @@ export class Plugin extends PluginShape {
 			url: this.server.url,
 			visible: portal.arguments[0] !== "hidden",
 			devTools: !isProduction,
+			focused: !isProduction,
 			decorations: false,
 			minimumSize: { width: 1200, height: 800 },
 			dataDirectory: join(portal.getDataDirectory(), "rod_data"),
@@ -64,10 +65,11 @@ export class Plugin extends PluginShape {
 			if (type !== MessageType.WindowInteraction) return;
 			const data = message as WindowInteractionMessage;
 			if (data.type === "drag") this.window.startDrag();
-			if (data.type === "close") return this.window.setVisible(false);
 			if (data.type === "minimize") return this.window.setMinimized(true);
 			if (data.type === "maximize")
 				this.window.setMaximized(!this.window.isMaximized);
+			if (data.type === "close") return this.window.setVisible(false);
+			if (data.type === "close_fully") return process.exit(0);
 		});
 
 		this.server.on("message", (type, message) => {

@@ -25,8 +25,10 @@ export default function Header({
 		Socket.instance.send(MessageType.WindowInteraction, { type: "maximize" });
 	}
 
-	function onClose() {
-		Socket.instance.send(MessageType.WindowInteraction, { type: "close" });
+	function onClose(event: React.MouseEvent) {
+		Socket.instance.send(MessageType.WindowInteraction, {
+			type: !event.shiftKey ? "close" : "close_fully",
+		});
 	}
 
 	return (

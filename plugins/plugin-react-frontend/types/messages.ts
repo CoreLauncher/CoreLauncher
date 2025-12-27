@@ -17,7 +17,7 @@ export enum MessageType {
 }
 
 export type WindowInteractionMessage = {
-	type: "drag" | "minimize" | "maximize" | "close";
+	type: "drag" | "minimize" | "maximize" | "close" | "close_fully";
 };
 
 export interface ApplicationInformationMessage {
