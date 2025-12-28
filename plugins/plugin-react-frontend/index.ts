@@ -1,6 +1,6 @@
 import { join } from "node:path";
 import { isProduction } from "@corelauncher/is-production";
-import { Rod, type WebView } from "@corelauncher/rod";
+import { Rod, type Tray, type WebView } from "@corelauncher/rod";
 import { type PluginPortal, PluginShape } from "@corelauncher/types";
 import open from "open";
 import temporaryDirectory from "temp-dir";
@@ -30,6 +30,7 @@ export class Plugin extends PluginShape {
 	private server: Server;
 	private rod: Rod;
 	private window: WebView;
+	private tray: Tray;
 	constructor(portal: PluginPortal) {
 		super(portal);
 
@@ -45,6 +46,17 @@ export class Plugin extends PluginShape {
 			decorations: false,
 			minimumSize: { width: 1200, height: 800 },
 			dataDirectory: join(portal.getDataDirectory(), "rod_data"),
+		});
+
+		this.tray = this.rod.createTray({
+			iconPath: tempIcon,
+			tooltip: "CoreLauncher",
+			title: "CoreLauncher",
+		});
+
+		this.tray.on("click", () => {
+			if (this.window.isVisible) return;
+			this.window.setVisible(true);
 		});
 
 		portal.on("app_instance", () => {
