@@ -48,6 +48,10 @@ export class Plugin extends PluginShape {
 			dataDirectory: join(portal.getDataDirectory(), "rod_data"),
 		});
 
+		this.window.on("close_requested", () => {
+			this.window.setVisible(false);
+		});
+
 		this.tray = this.rod.createTray({
 			iconPath: tempIcon,
 			tooltip: "CoreLauncher",
