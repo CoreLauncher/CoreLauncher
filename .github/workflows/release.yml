@@ -21,6 +21,9 @@ jobs:
             - name: Install dependencies
               run: bun install
 
+            - name: Update Version
+              run: bun run update-version ${{ github.ref_name }}
+
             - name: Generate binaries
               run: bun run release
 
