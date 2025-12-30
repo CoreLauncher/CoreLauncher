@@ -15,7 +15,15 @@ export class Plugin extends PluginShape {
 		noop().then(async () => {
 			const accountProvider = new MinecraftAccountProvider();
 
-			// portal.on("protocol_launch", (url) => {});
+			portal.on("protocol_launch", (url) => {
+				const code = url.searchParams.get("code");
+				if (url.host !== "plugin") return;
+				if (url.pathname !== "/minecraft/login_callback") return;
+				if (code === null) return;
+
+				console.log(url);
+				accountProvider.handleCode(code);
+			});
 
 			// this.emit("account_instances", accountInstances);
 			this.emit("account_providers", [accountProvider]);
