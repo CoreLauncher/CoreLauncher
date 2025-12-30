@@ -75,6 +75,7 @@ export default class MinecraftAccountProvider extends AccountProviderShape {
 		);
 
 		console.log("Authorize URL:", `${authorizeUrl}&prompt=select_account`);
+		open(authorizeUrl);
 		return true;
 	}
 }

@@ -1,9 +1,10 @@
 {
 	"name": "@corelauncher/corelauncher",
 	"dependencies": {
-		"@corelauncher/plugin-steam": "*",
 		"@corelauncher/plugin-epic-games": "*",
+		"@corelauncher/plugin-minecraft": "*",
 		"@corelauncher/plugin-react-frontend": "*",
+		"@corelauncher/plugin-steam": "*",
 		"@corelauncher/is-production": "*",
 		"@corelauncher/typed-emitter": "*",
 		"@corelauncher/create-shortcut": "*",
