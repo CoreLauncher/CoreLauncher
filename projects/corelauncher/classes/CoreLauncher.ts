@@ -1,5 +1,6 @@
 import { join } from "node:path";
 import createDatabase from "@corelauncher/database";
+import { isProduction } from "@corelauncher/is-production";
 import * as EpicPlugin from "@corelauncher/plugin-epic-games";
 import * as MinecraftPlugin from "@corelauncher/plugin-minecraft";
 import * as ReactPlugin from "@corelauncher/plugin-react-frontend";
@@ -27,10 +28,10 @@ export default class CoreLauncher {
 			[],
 		);
 
-		this.plugins.loadPlugin(EpicPlugin);
+		if (isProduction) this.plugins.loadPlugin(EpicPlugin);
 		this.plugins.loadPlugin(MinecraftPlugin);
 		this.plugins.loadPlugin(ReactPlugin);
-		this.plugins.loadPlugin(SteamPlugin);
+		if (isProduction) this.plugins.loadPlugin(SteamPlugin);
 
 		this.singleInstanceLock.on("instance", (args) => {
 			if (args[0] === "protocol" && args[1])
