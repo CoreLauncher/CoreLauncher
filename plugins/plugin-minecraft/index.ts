@@ -15,6 +15,8 @@ export class Plugin extends PluginShape {
 		noop().then(async () => {
 			const accountProvider = new MinecraftAccountProvider();
 
+			// portal.on("protocol_launch", (url) => {});
+
 			// this.emit("account_instances", accountInstances);
 			this.emit("account_providers", [accountProvider]);
 			this.emit("ready");

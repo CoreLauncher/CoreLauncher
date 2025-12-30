@@ -9,7 +9,7 @@ import PluginContainer from "./PluginContainer";
 
 interface PluginManagerEvents extends PluginShapeEvents {
 	app_instance: (args: string[]) => void;
-	protocol_launch: (url: string) => void;
+	protocol_launch: (url: URL) => void;
 	game_state_changed: (
 		game: InstanceType<typeof GameShape>,
 		newState: GameState,
@@ -84,6 +84,6 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 	}
 
 	propagateProtocolLaunch(url: string) {
-		this.emit("protocol_launch", url);
+		this.emit("protocol_launch", new URL(url));
 	}
 }
