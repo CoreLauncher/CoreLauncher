@@ -13,6 +13,11 @@ declare module "*.ico" {
 	export = path;
 }
 
+declare module "*.png" {
+	const path: `${string}.png`;
+	export = path;
+}
+
 declare module "*.vbs" {
 	const path: `${string}.vbs`;
 	export = path;

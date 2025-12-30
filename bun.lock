@@ -116,6 +116,14 @@
         "@corelauncher/types": "*",
       },
     },
+    "plugins/plugin-minecraft": {
+      "name": "@corelauncher/plugin-minecraft",
+      "dependencies": {
+        "@corelauncher/types": "*",
+        "@xboxreplay/xboxlive-auth": "^5.1.0",
+        "open": "^11.0.0",
+      },
+    },
     "plugins/plugin-react-frontend": {
       "name": "@corelauncher/plugin-react-frontend",
       "dependencies": {
@@ -250,6 +258,8 @@
 
     "@corelauncher/plugin-epic-games": ["@corelauncher/plugin-epic-games@workspace:plugins/plugin-epic-games"],
 
+    "@corelauncher/plugin-minecraft": ["@corelauncher/plugin-minecraft@workspace:plugins/plugin-minecraft"],
+
     "@corelauncher/plugin-react-frontend": ["@corelauncher/plugin-react-frontend@workspace:plugins/plugin-react-frontend"],
 
     "@corelauncher/plugin-steam": ["@corelauncher/plugin-steam@workspace:plugins/plugin-steam"],
@@ -375,6 +385,8 @@
     "@types/react": ["@types/react@19.2.7", "", { "dependencies": { "csstype": "^3.2.2" } }, "sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg=="],
 
     "@types/react-dom": ["@types/react-dom@19.2.3", "", { "peerDependencies": { "@types/react": "^19.2.0" } }, "sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ=="],
+
+    "@xboxreplay/xboxlive-auth": ["@xboxreplay/xboxlive-auth@5.1.0", "", {}, "sha512-UngHHsehZbiTjyyNmo8HvdoUDKMID1U9uVfrpFWUK/2UxPuVTKy5n+CzZQ3S488sW5vOhgh0lHqqynT8ouwgvw=="],
 
     "ansi-regex": ["ansi-regex@6.2.2", "", {}, "sha512-Bq3SmSpyFHaWjPk8If9yc6svM8c56dB5BAtW4Qbw5jHTwwXXcTLoRMkpDJp6VL0XzlWaCHTXrkFURMYmD0sLqg=="],
 

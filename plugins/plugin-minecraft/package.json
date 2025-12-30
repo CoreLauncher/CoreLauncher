@@ -1,0 +1,9 @@
+{
+	"name": "@corelauncher/plugin-minecraft",
+	"dependencies": {
+		"@corelauncher/types": "*",
+		"open": "^11.0.0",
+		"@xboxreplay/xboxlive-auth": "^5.1.0"
+	},
+	"devDependencies": {}
+}
