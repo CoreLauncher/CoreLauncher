@@ -119,6 +119,7 @@
     "plugins/plugin-minecraft": {
       "name": "@corelauncher/plugin-minecraft",
       "dependencies": {
+        "@corelauncher/file-to-dataurl": "*",
         "@corelauncher/types": "*",
         "@xboxreplay/xboxlive-auth": "^5.1.0",
         "open": "^11.0.0",
@@ -183,6 +184,7 @@
         "@corelauncher/database": "*",
         "@corelauncher/is-production": "*",
         "@corelauncher/plugin-epic-games": "*",
+        "@corelauncher/plugin-minecraft": "*",
         "@corelauncher/plugin-react-frontend": "*",
         "@corelauncher/plugin-steam": "*",
         "@corelauncher/typed-emitter": "*",
