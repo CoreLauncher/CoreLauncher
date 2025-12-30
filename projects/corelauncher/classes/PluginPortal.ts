@@ -39,6 +39,10 @@ export default class PluginPortal extends AbstractPluginPortal {
 		this.pluginManager.on("app_instance", (args) => {
 			this.emit("app_instance", args);
 		});
+
+		this.pluginManager.on("protocol_launch", (url) => {
+			this.emit("protocol_launch", url);
+		});
 	}
 
 	get arguments() {

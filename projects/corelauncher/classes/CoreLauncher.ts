@@ -33,6 +33,9 @@ export default class CoreLauncher {
 		this.plugins.loadPlugin(SteamPlugin);
 
 		this.singleInstanceLock.on("instance", (args) => {
+			if (args[0] === "protocol" && args[1])
+				return this.plugins.propagateProtocolLaunch(args[1]);
+
 			this.plugins.propagateAppInstance(args);
 		});
 	}

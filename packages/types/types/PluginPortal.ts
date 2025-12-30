@@ -39,6 +39,12 @@ interface PluginPortalEvents {
 	 * @param args The command line arguments.
 	 */
 	app_instance: (args: string[]) => void;
+
+	/**
+	 * This event emits when the application is launched via a protocol link.
+	 * @param url The launched protocol URL.
+	 */
+	protocol_launch: (url: string) => void;
 }
 
 /**
