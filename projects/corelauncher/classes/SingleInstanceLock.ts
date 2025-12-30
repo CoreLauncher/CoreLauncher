@@ -1,5 +1,6 @@
 import { join } from "node:path";
 import { TypedEmitter } from "@corelauncher/typed-emitter";
+import { env } from "bun";
 import getPort from "get-port";
 import { applicationDirectory } from "../util/directories";
 
@@ -48,5 +49,7 @@ export default class SingleInstanceLock extends TypedEmitter<SingleInstanceLockE
 		}).unref();
 
 		Bun.write(SingleInstanceLock.lockfile, listenPort.toString());
+		if (env.ALTERNATIVE_LOCK_FILE)
+			Bun.write(env.ALTERNATIVE_LOCK_FILE, listenPort.toString());
 	}
 }
