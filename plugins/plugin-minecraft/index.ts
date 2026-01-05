@@ -1,5 +1,6 @@
 import { type PluginPortal, PluginShape } from "@corelauncher/types";
 import MinecraftAccountProvider from "./parts/MinecraftAccountProvider";
+import MinecraftGame from "./parts/MinecraftGame";
 
 async function noop() {}
 
@@ -25,6 +26,7 @@ export class Plugin extends PluginShape {
 				accountProvider.handleCode(code);
 			});
 
+			this.emit("games", [new MinecraftGame()]);
 			// this.emit("account_instances", accountInstances);
 			this.emit("account_providers", [accountProvider]);
 			this.emit("ready");
