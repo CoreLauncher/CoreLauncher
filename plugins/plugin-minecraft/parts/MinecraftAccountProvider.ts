@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { dataToDataURL } from "@corelauncher/file-to-dataurl";
 import { AccountProviderShape } from "@corelauncher/types";
 import { live, xnet } from "@xboxreplay/xboxlive-auth";
+import open from "open";
 import logoSVG from "../assets/minecraft.svg";
 
 const CLIENT_ID = "54e48db0-6129-4320-82a7-3b0156811a91";
