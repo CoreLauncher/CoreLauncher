@@ -26,8 +26,11 @@ export class Plugin extends PluginShape {
 				accountProvider.handleCode(code);
 			});
 
+			accountProvider.on("instances_updated", (instances) => {
+				this.emit("account_instances", instances);
+			});
+
 			this.emit("games", [new MinecraftGame()]);
-			// this.emit("account_instances", accountInstances);
 			this.emit("account_providers", [accountProvider]);
 			this.emit("ready");
 		});

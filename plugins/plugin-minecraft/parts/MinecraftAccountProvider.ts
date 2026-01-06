@@ -4,6 +4,7 @@ import { AccountProviderShape } from "@corelauncher/types";
 import { live, xnet } from "@xboxreplay/xboxlive-auth";
 import open from "open";
 import logoSVG from "../assets/minecraft.svg";
+import type MinecraftAccountInstance from "./MinecraftAccountInstance";
 
 const CLIENT_ID = "54e48db0-6129-4320-82a7-3b0156811a91";
 const SCOPE = ["XboxLive.signin", "XboxLive.offline_access"];
@@ -11,15 +12,23 @@ const REDIRECT_URI = "corelauncher://plugin/minecraft/login_callback";
 const MINECRAFT_LOGIN_URL =
 	"https://api.minecraftservices.com/authentication/login_with_xbox";
 
-export default class MinecraftAccountProvider extends AccountProviderShape {
+interface MinecraftAccountProviderEvents {
+	instances_updated: (instances: MinecraftAccountInstance[]) => void;
+}
+
+export default class MinecraftAccountProvider extends AccountProviderShape<MinecraftAccountProviderEvents> {
 	id = "minecraft";
 	name = "Minecraft";
 	color = "#52a535";
 	logoUrl = dataToDataURL(readFileSync(logoSVG, "utf-8"), "image/svg+xml");
 
-	// constructor() {
-	// 	super();
-	// }
+	private instances: MinecraftAccountInstance[];
+
+	constructor() {
+		super();
+
+		this.instances = [];
+	}
 
 	async handleCode(code: string) {
 		const liveResult = await live.exchangeCodeForAccessToken(

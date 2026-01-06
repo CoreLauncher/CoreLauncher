@@ -10,4 +10,6 @@ export default class MinecraftAccountInstance extends AccountInstanceShape {
 	constructor() {
 		super();
 	}
+
+	static async fromCode(code: string) {}
 }
