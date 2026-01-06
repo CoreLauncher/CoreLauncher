@@ -7,9 +7,9 @@ export default class MinecraftAccountInstance extends AccountInstanceShape {
 	id = "minecraft:minecraft_java";
 	name = "Minecraft Java Edition";
 
-	constructor() {
-		super();
-	}
+	// constructor() {
+	// 	super();
+	// }
 
-	static async fromCode(code: string) {}
+	static async fromCode(_code: string) {}
 }
