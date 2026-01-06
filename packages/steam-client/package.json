@@ -5,7 +5,7 @@
 		"@corelauncher/typed-emitter": "*",
 		"bytebuffer": "^5.0.1",
 		"jwt-decode": "^4.0.0",
-		"p-event": "^7.0.1",
+		"p-event": "^7.0.2",
 		"binarykvparser": "^2.3.0",
 		"@node-steam/vdf": "^2.2.0",
 		"@bufbuild/protobuf": "^2.10.2",
