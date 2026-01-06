@@ -1,9 +1,11 @@
 import { type SteamApp, SteamAppState } from "@corelauncher/steam-client";
-import { GameShape, GameState } from "@corelauncher/types";
+import { GameShape, GameState, GameType } from "@corelauncher/types";
 import open from "open";
 
 export default class SteamGame extends GameShape {
-	app: SteamApp;
+	type = GameType.Normal;
+
+	private app: SteamApp;
 
 	constructor(app: SteamApp) {
 		super();

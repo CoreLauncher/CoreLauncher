@@ -4,6 +4,8 @@ import type {
 } from "@corelauncher/typed-emitter";
 import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type { GameState } from "../enums/GameState";
+import type { GameType } from "../enums/GameType";
+import type { GameInstanceProviderShape } from "./GameInstanceProviderShape";
 
 interface GameShapeEvents {
 	state_changed: (newState: GameState, oldState: GameState) => void;
@@ -14,10 +16,13 @@ export abstract class GameShape<
 > extends TypedEmitter<GameShapeEvents & L> {
 	abstract id: string;
 	abstract name: string;
+	abstract type: GameType;
 	abstract state: GameState;
 	abstract iconUrl: string | null;
 	abstract bannerUrl: string | null;
 	abstract capsuleUrl: string | null;
+
+	instanceProvider?: GameInstanceProviderShape | null;
 
 	/**
 	 * Launches the game.

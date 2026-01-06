@@ -1,4 +1,4 @@
-import { GameShape, GameState } from "@corelauncher/types";
+import { GameShape, GameState, GameType } from "@corelauncher/types";
 import open from "open";
 
 type EpicGameOptions = {
@@ -10,6 +10,7 @@ type EpicGameOptions = {
 export default class EpicGame extends GameShape {
 	id: string;
 	name: string;
+	type = GameType.Normal;
 	state = GameState.Installed;
 	iconUrl: null = null;
 	bannerUrl: null = null;

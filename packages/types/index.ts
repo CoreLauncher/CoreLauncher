@@ -1,7 +1,10 @@
 export { GameState } from "./enums/GameState";
+export { GameType } from "./enums/GameType";
 
 export { AccountInstanceShape } from "./shapes/AccountInstanceShape";
 export { AccountProviderShape } from "./shapes/AccountProviderShape";
+export { GameInstanceProviderShape } from "./shapes/GameInstanceProviderShape";
+export { GameInstanceShape } from "./shapes/GameInstanceShape";
 export { GameShape } from "./shapes/GameShape";
 export { PluginShape, type PluginShapeEvents } from "./shapes/PluginShape";
 
