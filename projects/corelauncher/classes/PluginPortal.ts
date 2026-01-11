@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import type { ShowDialogOptions } from "@corelauncher/types";
 import { PluginPortal as AbstractPluginPortal } from "@corelauncher/types";
 import { ensureDirSync } from "fs-extra";
 import { pluginDataDirectory } from "../util/directories";
@@ -98,5 +99,17 @@ export default class PluginPortal extends AbstractPluginPortal {
 		if (!instance)
 			throw new Error(`Account instance with ID ${id} does not exist`);
 		return instance;
+	}
+
+	showDialog(options: ShowDialogOptions) {
+		this.container.pluginManager.plugins.forEach((plugin) => {
+			plugin.portal.emit("show_dialog_request", options);
+		});
+	}
+
+	closeDialog(options: { id: string }) {
+		this.container.pluginManager.plugins.forEach((plugin) => {
+			plugin.portal.emit("close_dialog_request", options);
+		});
 	}
 }

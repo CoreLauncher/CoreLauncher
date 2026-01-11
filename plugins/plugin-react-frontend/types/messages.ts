@@ -2,6 +2,7 @@ import type {
 	AccountInstanceShape,
 	AccountProviderShape,
 	GameShape,
+	ShowDialogOptions,
 } from "@corelauncher/types";
 
 export enum MessageType {
@@ -14,6 +15,8 @@ export enum MessageType {
 	StartAccountProviderConnection = "StartAccountProviderConnection",
 	LaunchGame = "LaunchGame",
 	OpenExternalLink = "OpenExternalLink",
+	ShowDialogRequest = "ShowDialogRequest",
+	CloseDialogRequest = "CloseDialogRequest",
 }
 
 export type WindowInteractionMessage = {
@@ -55,6 +58,12 @@ export type OpenExternalLinkMessage = {
 	url: string;
 };
 
+export type ShowDialogRequestMessage = ShowDialogOptions;
+
+export type CloseDialogRequestMessage = {
+	id: string;
+};
+
 export type Message =
 	| WindowInteractionMessage
 	| ApplicationInformationMessage
@@ -64,7 +73,9 @@ export type Message =
 	| AccountProvidersUpdatedMessages
 	| StartAccountProviderConnectionMessage
 	| LaunchGameMessage
-	| OpenExternalLinkMessage;
+	| OpenExternalLinkMessage
+	| ShowDialogRequestMessage
+	| CloseDialogRequestMessage;
 
 export type MessageTypeMap = {
 	[MessageType.WindowInteraction]: WindowInteractionMessage;
@@ -76,4 +87,6 @@ export type MessageTypeMap = {
 	[MessageType.StartAccountProviderConnection]: StartAccountProviderConnectionMessage;
 	[MessageType.LaunchGame]: LaunchGameMessage;
 	[MessageType.OpenExternalLink]: OpenExternalLinkMessage;
+	[MessageType.ShowDialogRequest]: ShowDialogRequestMessage;
+	[MessageType.CloseDialogRequest]: CloseDialogRequestMessage;
 };

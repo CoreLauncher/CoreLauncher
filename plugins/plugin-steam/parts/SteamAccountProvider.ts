@@ -1,9 +1,12 @@
 import { readFileSync } from "node:fs";
-import { SizeConstraint, Window } from "@corebyte/webwindow";
 import { dataToDataURL } from "@corelauncher/file-to-dataurl";
 import { isProduction } from "@corelauncher/is-production";
 import type { JSONValue } from "@corelauncher/json-value";
-import { AccountProviderShape } from "@corelauncher/types";
+import {
+	AccountProviderShape,
+	DialogType,
+	type PluginPortal,
+} from "@corelauncher/types";
 import SteamSVG from "bootstrap-icons/icons/steam.svg" with { type: "file" };
 import { env } from "bun";
 import getPort from "get-port";
@@ -36,12 +39,13 @@ export class SteamAccountProvider extends AccountProviderShape<SteamAccountProvi
 		"image/svg+xml",
 	);
 
+	private portal: PluginPortal;
 	private database: Kysely<Database>;
 	private qrLoginSession: QRLoginSession | null = null;
 	private server: Bun.Server<never>;
-	private window: Window;
-	constructor(database: Kysely<Database>) {
+	constructor(portal: PluginPortal, database: Kysely<Database>) {
 		super();
+		this.portal = portal;
 		this.database = database;
 
 		const broadcast = (type: string, data?: JSONValue) => {
@@ -92,7 +96,7 @@ export class SteamAccountProvider extends AccountProviderShape<SteamAccountProvi
 						});
 
 						this.qrLoginSession.on("complete", async (data) => {
-							this.window.close();
+							this.portal.closeDialog({ id: "steam-account-connection" });
 
 							const { id } = await this.database
 								.insertInto("accounts")
@@ -140,24 +144,20 @@ export class SteamAccountProvider extends AccountProviderShape<SteamAccountProvi
 		this.server = Bun.serve(serveOptions);
 		this.server.unref();
 
-		const windowOptions = {
-			debug: !isProduction,
-			title: "Connect Steam Account",
-			url: `http://localhost:${port}`,
-			show: false,
-			size: {
-				width: 800,
-				height: 400,
-				constraint: SizeConstraint.MIN,
-			},
-		} as ConstructorParameters<typeof Window>[0];
-
-		this.window = new Window(windowOptions);
+		console.log(this.server.url.toString());
 	}
 
 	connect() {
 		console.log("Connecting to Steam account provider...");
-		this.window.show();
+
+		this.portal.showDialog({
+			id: "steam-account-connection",
+			type: DialogType.Webview,
+			url: this.server.url.toString(),
+			width: 800,
+			height: 400,
+		});
+
 		return true;
 	}
 }

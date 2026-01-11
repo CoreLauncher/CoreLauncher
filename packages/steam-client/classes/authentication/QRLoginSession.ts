@@ -52,7 +52,6 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 			device_friendly_name: this.deviceName,
 			platform_type: 1, // 1 for desktop
 		});
-		console.log(data);
 
 		this.clientId = data.client_id;
 		this.challengeUrl = data.challenge_url;
@@ -78,8 +77,6 @@ export class QRLoginSession extends TypedEmitter<QRLoginSessionEvents> {
 			client_id: this.clientId,
 			request_id: this.requestId,
 		});
-
-		console.log(data);
 
 		if ("new_client_id" in data) {
 			this.clientId = data.new_client_id;

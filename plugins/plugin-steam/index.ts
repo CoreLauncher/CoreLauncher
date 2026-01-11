@@ -33,7 +33,7 @@ export class Plugin extends PluginShape {
 				.then((instances) => instances.map((i) => new SteamAccountInstance(i)));
 
 			// Create account provider and listen for new instances
-			const accountProvider = new SteamAccountProvider(database);
+			const accountProvider = new SteamAccountProvider(portal, database);
 			accountProvider.on("connection", async (data) => {
 				if (accountInstances.find((a) => a.name === data.name)) return;
 				accountInstances.push(new SteamAccountInstance(data));

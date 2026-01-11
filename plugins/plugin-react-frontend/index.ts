@@ -68,6 +68,14 @@ export class Plugin extends PluginShape {
 			this.window.setVisible(true);
 		});
 
+		portal.on("show_dialog_request", (options) => {
+			this.server.send(MessageType.ShowDialogRequest, options, false);
+		});
+
+		portal.on("close_dialog_request", (options) => {
+			this.server.send(MessageType.CloseDialogRequest, options, false);
+		});
+
 		this.server.send(
 			MessageType.ApplicationInformation,
 			{

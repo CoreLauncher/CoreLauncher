@@ -3,6 +3,7 @@ import type { GameState } from "../enums/GameState";
 import type { AccountInstanceShape } from "../shapes/AccountInstanceShape";
 import type { AccountProviderShape } from "../shapes/AccountProviderShape";
 import type { GameShape } from "../shapes/GameShape";
+import type { ShowDialogOptions } from "./ShowDialogOptions";
 
 interface PluginPortalEvents {
 	/**
@@ -45,6 +46,18 @@ interface PluginPortalEvents {
 	 * @param url The launched protocol URL.
 	 */
 	protocol_launch: (url: URL) => void;
+
+	/**
+	 * Another plugin is requesting to show a dialog.
+	 * @param options The dialog options.
+	 */
+	show_dialog_request: (options: ShowDialogOptions) => void;
+
+	/**
+	 * Another plugin is requesting to close a dialog.
+	 * @param options The dialog options.
+	 */
+	close_dialog_request: (options: { id: string }) => void;
 }
 
 /**
@@ -104,4 +117,16 @@ export abstract class PluginPortal extends TypedEmitter<PluginPortalEvents> {
 	 * @throws {Error} If the account instance with the specified ID does not exist.
 	 */
 	abstract getAccountInstance(id: string): AccountInstanceShape;
+
+	/**
+	 * Shows a dialog to the user.
+	 * @param options The dialog options.
+	 */
+	abstract showDialog(options: ShowDialogOptions): void;
+
+	/**
+	 * Closes a dialog.
+	 * @param options The dialog options.
+	 */
+	abstract closeDialog(options: { id: string }): void;
 }

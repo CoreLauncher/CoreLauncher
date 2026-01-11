@@ -14,7 +14,6 @@ export default function App() {
 		socket.addEventListener("message", (event) => {
 			const message = JSON.parse(event.data);
 			const { type, data } = message;
-			console.log(message);
 
 			switch (type) {
 				case "qr-change": {
@@ -38,8 +37,8 @@ export default function App() {
 	}, []);
 
 	return (
-		<div className="App">
-			<Style>
+		<Style>
+			<Block className="App">
 				<div className="header">
 					<div className="logo-container">
 						<Logo size={32} />
@@ -49,7 +48,7 @@ export default function App() {
 					<h3>Connect Steam to CoreLauncher</h3>
 					<LockFill className="lock" />
 				</div>
-				<Block className="body">
+				<div className="body">
 					<QRCode className="qrcode" state={qrState} value={qrValue} />
 					<div className="info">
 						<p>
@@ -57,12 +56,13 @@ export default function App() {
 							Steam Mobile App.
 						</p>
 						<TextMuted>
-							All login credentials are sent to the Steam servers directly, we
-							do not store or process them in any way.
+							All login credentials are only sent to the Steam servers directly,
+							we do not store or process them in any way outside of your
+							computer.
 						</TextMuted>
 					</div>
-				</Block>
-			</Style>
-		</div>
+				</div>
+			</Block>
+		</Style>
 	);
 }
