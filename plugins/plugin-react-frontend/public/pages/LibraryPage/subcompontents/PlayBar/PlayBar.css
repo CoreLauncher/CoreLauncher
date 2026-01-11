@@ -18,7 +18,7 @@
 		aspect-ratio: 5 / 2;
 
 		cursor: pointer;
-		background-color: var(--cl-color-branding);
+		background-color: var(--cl-color-success);
 
 		border: none;
 		transition: background-color 0.2s ease-in-out;
