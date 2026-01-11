@@ -15,7 +15,7 @@ export default class MinecraftGame extends GameShape {
 	id = "minecraft:minecraft_java";
 	name = "Minecraft Java Edition";
 	type = GameType.Instanced;
-	state = GameState.Unknown;
+	state = GameState.Installed;
 	iconUrl = iconUrl;
 	bannerUrl = null;
 	capsuleUrl = capsuleUrl;
