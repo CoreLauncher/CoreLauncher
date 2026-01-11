@@ -34,6 +34,7 @@ export abstract class GameShape<
 		return {
 			id: this.id,
 			name: this.name,
+			type: this.type,
 			state: this.state,
 			iconUrl: this.iconUrl,
 			bannerUrl: this.bannerUrl,
