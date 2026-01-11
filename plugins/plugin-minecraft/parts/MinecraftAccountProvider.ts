@@ -3,7 +3,7 @@ import { dataToDataURL } from "@corelauncher/file-to-dataurl";
 import { AccountProviderShape } from "@corelauncher/types";
 import { live, xnet } from "@xboxreplay/xboxlive-auth";
 import open from "open";
-import logoSVG from "../assets/minecraft.svg";
+import iconSVG from "../assets/minecraft-account-logo.svg";
 import type MinecraftAccountInstance from "./MinecraftAccountInstance";
 
 const CLIENT_ID = "54e48db0-6129-4320-82a7-3b0156811a91";
@@ -20,7 +20,7 @@ export default class MinecraftAccountProvider extends AccountProviderShape<Minec
 	id = "minecraft";
 	name = "Minecraft";
 	color = "#52a535";
-	logoUrl = dataToDataURL(readFileSync(logoSVG, "utf-8"), "image/svg+xml");
+	logoUrl = dataToDataURL(readFileSync(iconSVG, "utf-8"), "image/svg+xml");
 
 	private instances: MinecraftAccountInstance[];
 

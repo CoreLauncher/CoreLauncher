@@ -1,14 +1,24 @@
+import { readFileSync } from "node:fs";
+import { dataToDataURL } from "@corelauncher/file-to-dataurl";
 import { GameShape, GameState, GameType } from "@corelauncher/types";
+import capsuleSVG from "../assets/minecraft-game-capsule.svg";
+import logoSVG from "../assets/minecraft-game-logo.svg";
 import { MinecraftInstanceProvider } from "./MinecraftInstanceProvider";
+
+const iconUrl = dataToDataURL(readFileSync(logoSVG, "utf-8"), "image/svg+xml");
+const capsuleUrl = dataToDataURL(
+	readFileSync(capsuleSVG, "utf-8"),
+	"image/svg+xml",
+);
 
 export default class MinecraftGame extends GameShape {
 	id = "minecraft:minecraft_java";
 	name = "Minecraft Java Edition";
 	type = GameType.Instanced;
 	state = GameState.Unknown;
-	iconUrl = null;
+	iconUrl = iconUrl;
 	bannerUrl = null;
-	capsuleUrl = null;
+	capsuleUrl = capsuleUrl;
 
 	constructor() {
 		super();
