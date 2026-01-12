@@ -10,8 +10,8 @@ const COLOR_WARN = chalk.hex("ffff00");
 const COLOR_ERROR = chalk.hex("ff0000");
 const COLOR_ALERT = chalk.hex("00ffff");
 
-const TREE_BRANCH = chalk.hex("808080")("┣");
-const TREE_END = chalk.hex("808080")("┗");
+const TREE_BRANCH = "┣";
+const TREE_END = "┗";
 
 function format(options: {
 	icon: string;
@@ -35,8 +35,8 @@ function format(options: {
 		const isFirst = index === "0";
 		const isLast = Number.parseInt(index, 10) === lines.length - 1;
 
-		let prefix = TREE_BRANCH;
-		if (isLast) prefix = TREE_END;
+		let prefix = color(TREE_BRANCH);
+		if (isLast) prefix = color(TREE_END);
 		if (isFirst) prefix = color(icon);
 
 		lines[index] = `${prefix} ${line}`;
