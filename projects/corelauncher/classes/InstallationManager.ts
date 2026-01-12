@@ -112,18 +112,20 @@ export default class InstallationManager {
 			join(this.applicationDirectory, "corelauncher.exe"),
 		);
 
-		console.info("Corelauncher Version:", packageJSON.version);
-		console.info("Operating System:", getOS(), getArchitecture());
-		console.info("Arguments:", Bun.argv, process.argv);
-		console.info("Is Executable:", this.isExecutable);
-		console.info("This Executable:", resolve(this.thisExecutable));
-		console.info("This Directory:", resolve(this.thisDirectory));
-		console.info("Update Executable:", resolve(this.updateExecutable));
-		console.info("Is Update Executable:", this.isUpdateExecutable);
-		console.info("Application Directory:", resolve(this.applicationDirectory));
 		console.info(
-			"Application Executable:",
-			resolve(this.applicationExecutable),
+			[
+				`CoreLauncher Version: ${packageJSON.version}`,
+				`Operating System: ${getOS()} ${getArchitecture()}`,
+				`Bun.argv: ${Bun.argv.join(" ")}`,
+				`process.argv: ${process.argv.join(" ")}`,
+				`Is Executable: ${this.isExecutable}`,
+				`Is Update Executable: ${this.isUpdateExecutable}`,
+				`This Executable: ${resolve(this.thisExecutable)}`,
+				`This Directory: ${resolve(this.thisDirectory)}`,
+				`Application Directory: ${resolve(this.applicationDirectory)}`,
+				`Application Executable: ${resolve(this.applicationExecutable)}`,
+				`Update Executable: ${resolve(this.updateExecutable)}`,
+			].join("\n"),
 		);
 
 		ensureDirSync(this.applicationDirectory);
