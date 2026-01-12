@@ -41,7 +41,7 @@ export class Plugin extends PluginShape {
 			title: "CoreLauncher",
 			url: this.server.url,
 			visible: portal.arguments[0] !== "hidden",
-			devTools: !isProduction,
+			devTools: true, //!isProduction,
 			focused: !isProduction,
 			decorations: false,
 			minimumSize: { width: 1200, height: 800 },
