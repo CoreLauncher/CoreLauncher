@@ -31,8 +31,7 @@ export default class CoreLauncher {
 		if (isProduction) this.plugins.loadPlugin(EpicPlugin);
 		this.plugins.loadPlugin(MinecraftPlugin);
 		this.plugins.loadPlugin(ReactPlugin);
-		// if (isProduction)
-		this.plugins.loadPlugin(SteamPlugin);
+		if (isProduction) this.plugins.loadPlugin(SteamPlugin);
 
 		this.singleInstanceLock.on("instance", (args) => {
 			if (args[0] === "protocol" && args[1])
