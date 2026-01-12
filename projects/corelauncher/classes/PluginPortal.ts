@@ -112,4 +112,8 @@ export default class PluginPortal extends AbstractPluginPortal {
 			plugin.portal.emit("close_dialog_request", options);
 		});
 	}
+
+	exit() {
+		process.exit(0);
+	}
 }

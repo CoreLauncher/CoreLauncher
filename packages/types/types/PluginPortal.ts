@@ -129,4 +129,9 @@ export abstract class PluginPortal extends TypedEmitter<PluginPortalEvents> {
 	 * @param options The dialog options.
 	 */
 	abstract closeDialog(options: { id: string }): void;
+
+	/**
+	 * Exits the application.
+	 */
+	abstract exit(): void;
 }

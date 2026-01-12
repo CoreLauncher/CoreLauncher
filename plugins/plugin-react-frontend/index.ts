@@ -93,7 +93,7 @@ export class Plugin extends PluginShape {
 			if (data.type === "maximize")
 				this.window.setMaximized(!this.window.isMaximized);
 			if (data.type === "close") return this.window.setVisible(false);
-			if (data.type === "close_fully") return process.exit(0);
+			if (data.type === "close_fully") return portal.exit();
 		});
 
 		this.server.on("message", (type, message) => {
