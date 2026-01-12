@@ -91,7 +91,7 @@ export class Plugin extends PluginShape {
 			if (data.type === "drag") this.window.startDrag();
 			if (data.type === "minimize") return this.window.setMinimized(true);
 			if (data.type === "maximize")
-				this.window.setMaximized(!this.window.isMaximized);
+				return this.window.setMaximized(!this.window.isMaximized);
 			if (data.type === "close") return this.window.setVisible(false);
 			if (data.type === "close_fully") return portal.exit();
 		});
