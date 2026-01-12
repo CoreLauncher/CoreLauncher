@@ -143,8 +143,6 @@ export class SteamAccountProvider extends AccountProviderShape<SteamAccountProvi
 
 		this.server = Bun.serve(serveOptions);
 		this.server.unref();
-
-		console.log(this.server.url.toString());
 	}
 
 	connect() {
