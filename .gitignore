@@ -1,5 +1,7 @@
 # Secrets
 .env
+.env.app
+.env.updates
 
 # Dependencies
 /node_modules
