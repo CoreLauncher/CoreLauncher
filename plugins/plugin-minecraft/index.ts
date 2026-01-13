@@ -1,6 +1,10 @@
+import { join } from "node:path";
+import createDatabase from "@corelauncher/database";
 import { type PluginPortal, PluginShape } from "@corelauncher/types";
+import { migrations } from "./migrations";
 import MinecraftAccountProvider from "./parts/MinecraftAccountProvider";
 import MinecraftGame from "./parts/MinecraftGame";
+import type { Database } from "./types/database";
 
 async function noop() {}
 
@@ -14,7 +18,12 @@ export class Plugin extends PluginShape {
 		super(portal);
 
 		noop().then(async () => {
-			const accountProvider = new MinecraftAccountProvider();
+			const database = await createDatabase<Database>(
+				join(portal.getDataDirectory(), "database.sqlite"),
+				migrations,
+			);
+
+			const accountProvider = new MinecraftAccountProvider(database);
 
 			portal.on("protocol_launch", (url) => {
 				const code = url.searchParams.get("code");
