@@ -11,6 +11,7 @@ export default class SteamAccountInstance extends AccountInstanceShape<SteamAcco
 
 	id: string;
 	name: string;
+	avatarUrl = null;
 
 	games: SteamGame[] = [];
 
