@@ -9,7 +9,7 @@ export abstract class AccountInstanceShape<
 > extends TypedEmitter<L> {
 	abstract id: string;
 	abstract name: string;
-	abstract avatarUrl?: string;
+	abstract avatarUrl?: string | null | undefined;
 	abstract providerId: string;
 
 	toJSON() {
