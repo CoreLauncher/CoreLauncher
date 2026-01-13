@@ -44,8 +44,11 @@ export default function AccountsTab({
 						throw new Error(`Provider not found for instance ${instance.id}`);
 					return (
 						<div key={instance.id} className="account-instance">
-							{/* <img src={instance.icon} /> */}
-							<QuestionLg className="icon unknown-icon" />
+							{instance.avatarUrl ? (
+								<img className="icon" src={instance.avatarUrl} alt="avatar" />
+							) : (
+								<QuestionLg className="icon unknown-icon" />
+							)}
 							<div>
 								<p className="account-name">{instance.name}</p>
 								<div className="account-provider">

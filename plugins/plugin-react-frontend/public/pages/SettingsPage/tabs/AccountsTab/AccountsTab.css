@@ -30,10 +30,10 @@
 			background-color: var(--color);
 			border: none;
 			border-radius: 8px;
-			transition: background-color 0.2s ease-in-out;
+			transition: filter 0.2s ease-in-out;
 
 			&:hover {
-				background-color: color-mix(in srgb, var(--color) 80%, black 20%);
+				filter: brightness(0.8);
 			}
 
 			img {
@@ -75,6 +75,12 @@
 				display: flex;
 				flex-direction: row;
 				gap: 0.25em;
+
+				img {
+					width: 16px;
+					height: 16px;
+					border-radius: 4px;
+				}
 			}
 		}
 	}
