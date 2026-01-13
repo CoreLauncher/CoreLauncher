@@ -44,13 +44,15 @@ async function fetchReleases() {
 	);
 }
 
+const _releases = await fetchReleases();
+
 Bun.serve({
 	port: env.WEBSERVER_PORT!,
 	routes: {
 		"/": async () => {
 			return new Response("CoreLauncher Updates Server");
 		},
-		"/check": async (request) => {
+		"/check": async (_request) => {
 			return Response.json({});
 		},
 	},
