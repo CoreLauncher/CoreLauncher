@@ -14,7 +14,7 @@
 
 	--cl-color-branding: hsl(210, 100%, 40%);
 	--cl-color-success: hsl(120, 100%, 30%);
-	--cl-color-error: hsl(0, 100%, 50%);
+	--cl-color-error: hsl(0, 100%, 25%);
 	--cl-color-warning: hsl(40, 100%, 50%);
 	--cl-color-info: hsl(210, 100%, 50%);
 }

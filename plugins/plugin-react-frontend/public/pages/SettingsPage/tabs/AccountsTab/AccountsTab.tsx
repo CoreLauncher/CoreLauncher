@@ -1,8 +1,9 @@
+import { Button } from "@corelauncher/react";
 import { MessageType } from "../../../../../types/messages";
 import Socket from "../../../../classes/Socket";
 import { useAccountStore } from "../../../../stores/AccountStore";
 import "./AccountsTab.css";
-import { QuestionLg } from "react-bootstrap-icons";
+import { QuestionLg, TrashFill } from "react-bootstrap-icons";
 
 export default function AccountsTab({
 	isVisible = true,
@@ -13,8 +14,15 @@ export default function AccountsTab({
 	const accountInstances = useAccountStore((store) => store.accounts);
 	if (!isVisible) return null;
 
-	function connect(id: string) {
+	function connectAccount(id: string) {
 		Socket.instance.send(MessageType.StartAccountProviderConnection, { id });
+	}
+
+	function deleteAccount(provider: string, instance: string) {
+		Socket.instance.send(MessageType.DeleteAccountProviderConnection, {
+			provider,
+			instance,
+		});
 	}
 
 	return (
@@ -28,7 +36,7 @@ export default function AccountsTab({
 							type="button"
 							className="account-button"
 							style={{ ["--color" as string]: provider.color }}
-							onClick={() => connect(provider.id)}
+							onClick={() => connectAccount(provider.id)}
 						>
 							<img src={provider.logoUrl} alt={`${provider.name} logo`} />
 						</button>
@@ -56,6 +64,12 @@ export default function AccountsTab({
 									<p>{provider.name} Account</p>
 								</div>
 							</div>
+							<Button
+								className="delete-button"
+								onClick={() => deleteAccount(provider.id, instance.id)}
+							>
+								<TrashFill size={16} />
+							</Button>
 						</div>
 					);
 				})}

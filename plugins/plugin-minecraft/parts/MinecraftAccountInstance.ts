@@ -58,7 +58,11 @@ async function retrieveMinecraftProfile(accessToken: string) {
 	};
 }
 
-export default class MinecraftAccountInstance extends AccountInstanceShape {
+interface MinecraftAccountInstanceEvents {
+	disconnect: () => void;
+}
+
+export default class MinecraftAccountInstance extends AccountInstanceShape<MinecraftAccountInstanceEvents> {
 	static async fromCode(code: string) {
 		const liveResult = await live.exchangeCodeForAccessToken(
 			code,
@@ -97,12 +101,20 @@ export default class MinecraftAccountInstance extends AccountInstanceShape {
 		return `minecraft:${this.data.id}`;
 	}
 
+	get rawId() {
+		return this.data.id;
+	}
+
 	get name() {
 		return this.data.name;
 	}
 
 	get avatarUrl() {
 		return `https://api.mineatar.io/face/${this.data.id}?scale=32`;
+	}
+
+	disconnect() {
+		this.emit("disconnect");
 	}
 
 	/**

@@ -6,6 +6,7 @@ import open from "open";
 import temporaryDirectory from "temp-dir";
 import Server from "./classes/Server";
 import {
+	type DeleteAccountProviderConnectionMessage,
 	type LaunchGameMessage,
 	MessageType,
 	type OpenExternalLinkMessage,
@@ -114,6 +115,13 @@ export class Plugin extends PluginShape {
 			const data = message as StartAccountProviderConnectionMessage;
 			const provider = portal.getAccountProvider(data.id);
 			provider.connect();
+		});
+
+		this.server.on("message", (type, message) => {
+			if (type !== MessageType.DeleteAccountProviderConnection) return;
+			const data = message as DeleteAccountProviderConnectionMessage;
+			const instance = portal.getAccountInstance(data.instance);
+			instance.disconnect();
 		});
 
 		portal.on("games", () => {

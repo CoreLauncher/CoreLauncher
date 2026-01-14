@@ -13,7 +13,7 @@ export abstract class AccountProviderShape<
 	abstract logoUrl: string;
 
 	/**
-	 * Connects the account provider.
+	 * Connects a new account using the account provider.
 	 * @returns {boolean | string | Promise<boolean | string>} A boolean indicating success or a string failure message.
 	 */
 	abstract connect(): boolean | string | Promise<boolean | string>;

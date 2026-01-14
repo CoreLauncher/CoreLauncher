@@ -35,10 +35,17 @@ export default class MinecraftAccountProvider extends AccountProviderShape<Minec
 				.selectAll()
 				.execute();
 
-			const instances = rows.map((data) =>
-				MinecraftAccountInstance.fromDatabase(data),
+			const instances = await Promise.all(
+				rows.map((data) => MinecraftAccountInstance.fromDatabase(data)),
 			);
-			this.instances.push(...(await Promise.all(instances)));
+
+			instances.forEach((instance) => {
+				instance.on("disconnect", () => {
+					this.disconnect(instance);
+				});
+			});
+
+			this.instances.push(...instances);
 			this.emit("instances_updated", this.instances);
 		});
 	}
@@ -51,6 +58,10 @@ export default class MinecraftAccountProvider extends AccountProviderShape<Minec
 			.insertInto("accounts")
 			.values(instance.export())
 			.execute();
+
+		instance.on("disconnect", () => {
+			this.disconnect(instance);
+		});
 
 		this.instances.push(instance);
 		this.emit("instances_updated", this.instances);
@@ -71,5 +82,16 @@ export default class MinecraftAccountProvider extends AccountProviderShape<Minec
 		console.log("Authorize URL:", `${authorizeUrl}&prompt=select_account`);
 		open(`${authorizeUrl}&prompt=select_account`);
 		return true;
+	}
+
+	async disconnect(instance: MinecraftAccountInstance) {
+		instance.removeAllListeners("disconnect");
+		this.instances = this.instances.filter((i) => i.id !== instance.id);
+		this.emit("instances_updated", this.instances);
+
+		await this.database
+			.deleteFrom("accounts")
+			.where("id", "=", instance.rawId)
+			.execute();
 	}
 }

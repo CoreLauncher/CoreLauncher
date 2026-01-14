@@ -12,6 +12,11 @@ export abstract class AccountInstanceShape<
 	abstract avatarUrl?: string | null | undefined;
 	abstract providerId: string;
 
+	/**
+	 * Removes the account instance
+	 */
+	abstract disconnect(): void;
+
 	toJSON() {
 		return {
 			id: this.id,

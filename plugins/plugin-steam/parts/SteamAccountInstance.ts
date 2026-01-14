@@ -39,4 +39,6 @@ export default class SteamAccountInstance extends AccountInstanceShape<SteamAcco
 			this.emit("games", this.games);
 		});
 	}
+
+	disconnect() {}
 }

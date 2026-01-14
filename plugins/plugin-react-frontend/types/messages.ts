@@ -13,6 +13,7 @@ export enum MessageType {
 	AccountInstancesUpdated = "AccountInstancesUpdated",
 	AccountProvidersUpdated = "AccountProvidersUpdated",
 	StartAccountProviderConnection = "StartAccountProviderConnection",
+	DeleteAccountProviderConnection = "DeleteAccountProviderConnection",
 	LaunchGame = "LaunchGame",
 	OpenExternalLink = "OpenExternalLink",
 	ShowDialogRequest = "ShowDialogRequest",
@@ -50,6 +51,11 @@ export type StartAccountProviderConnectionMessage = {
 	id: string;
 };
 
+export type DeleteAccountProviderConnectionMessage = {
+	provider: string;
+	instance: string;
+};
+
 export type LaunchGameMessage = {
 	id: string;
 };
@@ -72,6 +78,7 @@ export type Message =
 	| AccountInstancesUpdatedMessage
 	| AccountProvidersUpdatedMessages
 	| StartAccountProviderConnectionMessage
+	| DeleteAccountProviderConnectionMessage
 	| LaunchGameMessage
 	| OpenExternalLinkMessage
 	| ShowDialogRequestMessage
@@ -85,6 +92,7 @@ export type MessageTypeMap = {
 	[MessageType.AccountInstancesUpdated]: AccountInstancesUpdatedMessage;
 	[MessageType.AccountProvidersUpdated]: AccountProvidersUpdatedMessages;
 	[MessageType.StartAccountProviderConnection]: StartAccountProviderConnectionMessage;
+	[MessageType.DeleteAccountProviderConnection]: DeleteAccountProviderConnectionMessage;
 	[MessageType.LaunchGame]: LaunchGameMessage;
 	[MessageType.OpenExternalLink]: OpenExternalLinkMessage;
 	[MessageType.ShowDialogRequest]: ShowDialogRequestMessage;
