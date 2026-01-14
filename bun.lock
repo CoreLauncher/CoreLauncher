@@ -10,10 +10,10 @@
       "devDependencies": {
         "@biomejs/biome": "2.3.11",
         "@octokit/rest": "^22.0.1",
-        "@types/bun": "^1.3.5",
+        "@types/bun": "^1.3.6",
         "husky": "^9.1.7",
         "knip": "^5.80.2",
-        "protoc": "^33.2.0",
+        "protoc": "^33.4.0",
         "ts-json-schema-generator": "^2.4.0",
         "ts-proto": "^2.10.1",
         "typescript": "^5.9.3",
@@ -122,6 +122,7 @@
         "@corelauncher/file-to-dataurl": "*",
         "@corelauncher/types": "*",
         "@xboxreplay/xboxlive-auth": "^5.1.0",
+        "kysely": "^0.28.9",
         "open": "^11.0.0",
       },
     },
@@ -142,7 +143,7 @@
         "react-bootstrap-icons": "^1.11.6",
         "react-dom": "^19.2.3",
         "temp-dir": "^3.0.0",
-        "zustand": "^5.0.9",
+        "zustand": "^5.0.10",
       },
       "devDependencies": {
         "@types/react": "^19.2.8",
@@ -202,6 +203,19 @@
     "projects/corelauncher-cloud": {
       "name": "@corelauncher/corelauncher-cloud",
     },
+    "projects/corelauncher-handoff": {
+      "name": "@corelauncher/handoff",
+      "dependencies": {
+        "@corelauncher/react": "*",
+        "clsx": "^2.1.1",
+        "react": "^19.2.3",
+        "react-dom": "^19.2.3",
+      },
+      "devDependencies": {
+        "@types/react": "^19.2.8",
+        "@types/react-dom": "^19.2.3",
+      },
+    },
     "projects/corelauncher-updates": {
       "name": "@corelauncher/corelauncher-updates",
       "dependencies": {
@@ -257,6 +271,8 @@
     "@corelauncher/database": ["@corelauncher/database@workspace:packages/database"],
 
     "@corelauncher/file-to-dataurl": ["@corelauncher/file-to-dataurl@workspace:packages/file-to-dataurl"],
+
+    "@corelauncher/handoff": ["@corelauncher/handoff@workspace:projects/corelauncher-handoff"],
 
     "@corelauncher/is-production": ["@corelauncher/is-production@workspace:packages/is-production"],
 
@@ -378,7 +394,7 @@
 
     "@tybys/wasm-util": ["@tybys/wasm-util@0.10.1", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg=="],
 
-    "@types/bun": ["@types/bun@1.3.5", "", { "dependencies": { "bun-types": "1.3.5" } }, "sha512-RnygCqNrd3srIPEWBd5LFeUYG7plCoH2Yw9WaZGyNmdTEei+gWaHqydbaIRkIkcbXwhBT94q78QljxN0Sk838w=="],
+    "@types/bun": ["@types/bun@1.3.6", "", { "dependencies": { "bun-types": "1.3.6" } }, "sha512-uWCv6FO/8LcpREhenN1d1b6fcspAB+cefwD7uti8C8VffIv0Um08TKMn98FynpTiU38+y2dUO55T11NgDt8VAA=="],
 
     "@types/bytebuffer": ["@types/bytebuffer@5.0.49", "", { "dependencies": { "@types/long": "^3.0.0", "@types/node": "*" } }, "sha512-lV4YLiolMdD4upDmr4vnfiwV/FN9Jg33eNTSFMkHqyMKqTIAn5TmFTYsARwXwUXeFU7yzRpECmWV1SOhIvdkRQ=="],
 
@@ -414,7 +430,7 @@
 
     "braces": ["braces@3.0.3", "", { "dependencies": { "fill-range": "^7.1.1" } }, "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA=="],
 
-    "bun-types": ["bun-types@1.3.5", "", { "dependencies": { "@types/node": "*" } }, "sha512-inmAYe2PFLs0SUbFOWSVD24sg1jFlMPxOjOSSCYqUgn4Hsc3rDc7dFvfVYjFPNHtov6kgUeulV4SxbuIV/stPw=="],
+    "bun-types": ["bun-types@1.3.6", "", { "dependencies": { "@types/node": "*" } }, "sha512-OlFwHcnNV99r//9v5IIOgQ9Uk37gZqrNMCcqEaExdkVq3Avwqok1bJFmvGMCkCE0FqzdY8VMOZpfpR3lwI+CsQ=="],
 
     "bundle-name": ["bundle-name@4.1.0", "", { "dependencies": { "run-applescript": "^7.0.0" } }, "sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q=="],
 
@@ -576,7 +592,7 @@
 
     "prop-types": ["prop-types@15.8.1", "", { "dependencies": { "loose-envify": "^1.4.0", "object-assign": "^4.1.1", "react-is": "^16.13.1" } }, "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="],
 
-    "protoc": ["protoc@33.2.0", "", { "bin": { "protoc": "protoc.cjs" } }, "sha512-SQwG0NBae7ASCu5iOXnycA+8D9h0sclgGmdgE0gy4QKjK+k5glswMT1SLmo9tecSleqik2N9fzleGr9X3vLWgw=="],
+    "protoc": ["protoc@33.4.0", "", { "bin": { "protoc": "protoc.cjs" } }, "sha512-dC1SJKbn4f60onsAMrfiPMygfSz4w/tPGHtPCqMSa5CLfHocJXkHjsvXeuuhjSPAJ8uUc8rfUvs0Hy9nmKIOhA=="],
 
     "queue-microtask": ["queue-microtask@1.2.3", "", {}, "sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A=="],
 
@@ -660,7 +676,7 @@
 
     "zod": ["zod@4.1.13", "", {}, "sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig=="],
 
-    "zustand": ["zustand@5.0.9", "", { "peerDependencies": { "@types/react": ">=18.0.0", "immer": ">=9.0.6", "react": ">=18.0.0", "use-sync-external-store": ">=1.2.0" }, "optionalPeers": ["@types/react", "immer", "react", "use-sync-external-store"] }, "sha512-ALBtUj0AfjJt3uNRQoL1tL2tMvj6Gp/6e39dnfT6uzpelGru8v1tPOGBzayOWbPJvujM8JojDk3E1LxeFisBNg=="],
+    "zustand": ["zustand@5.0.10", "", { "peerDependencies": { "@types/react": ">=18.0.0", "immer": ">=9.0.6", "react": ">=18.0.0", "use-sync-external-store": ">=1.2.0" }, "optionalPeers": ["@types/react", "immer", "react", "use-sync-external-store"] }, "sha512-U1AiltS1O9hSy3rul+Ub82ut2fqIAefiSuwECWt6jlMVUGejvf+5omLcRBSzqbRagSM3hQZbtzdeRc6QVScXTg=="],
 
     "binarykvparser/long": ["long@3.2.0", "", { "bundled": true }, "sha512-ZYvPPOMqUwPoDsbJaR10iQJYnMuZhRTvHYl62ErLIEX7RgFlziSBUUvrt3OVfc47QlHHpzPZYP17g3Fv7oeJkg=="],
 
