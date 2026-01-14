@@ -12,6 +12,7 @@
 			"!**/rod_data",
 			"!**/node_modules",
 			"!**/.bundle",
+			"!**/.dist-handoff",
 			"!**/packages/steam-client/protobuf/generated"
 		]
 	},
