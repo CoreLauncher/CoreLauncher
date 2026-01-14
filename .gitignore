@@ -10,8 +10,8 @@
 /.corelauncher
 
 # Compiled output
-/.dist
 /.bundle
+/.dist-handoff
 
 # Binaries
 /corelauncher

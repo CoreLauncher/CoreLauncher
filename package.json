@@ -10,6 +10,7 @@
 		"dev": "bun run --env-file=./.env.app --watch ./projects/corelauncher/index.ts",
 		"dev-updates": "bun run --env-file=./.env.updates --watch ./projects/corelauncher-updates/index.ts",
 		"dev-handoff": "bun run --env-file=./.env.updates --watch ./projects/corelauncher-handoff/index.html",
+		"build-handoff": "bun build ./projects/corelauncher-handoff/index.html --outdir ./.dist-handoff/",
 		"release": "bun run ./scripts/release.ts",
 		"update-version": "bun run ./scripts/update-version.ts",
 		"bundle": "bun build --target=bun --sourcemap=inline --root . --entry-naming=entrypoint-[hash].[ext] --chunk-naming=chunk-[hash].[ext] --asset-naming=asset-[hash].[ext] --outdir .bundle  ./projects/corelauncher/index.ts",
