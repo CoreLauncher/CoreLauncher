@@ -14,4 +14,9 @@
 
 		padding: 32px;
 	}
+
+	.copyright {
+		position: absolute;
+		bottom: 8px;
+	}
 }

@@ -1,4 +1,4 @@
-import { Block, Style } from "@corelauncher/react";
+import { Block, CopyRight, Style } from "@corelauncher/react";
 import "./App.css";
 
 export default function App() {
@@ -9,6 +9,7 @@ export default function App() {
 					<h1>Authentication complete!</h1>
 					<p>You can now close this tab and return to CoreLauncher</p>
 				</Block>
+				<CopyRight className="copyright" />
 			</div>
 		</Style>
 	);
