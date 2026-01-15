@@ -3,7 +3,7 @@ import { dataToDataURL } from "@corelauncher/file-to-dataurl";
 import { GameShape, GameState, GameType } from "@corelauncher/types";
 import capsuleSVG from "../assets/minecraft-game-capsule.svg";
 import logoSVG from "../assets/minecraft-game-logo.svg";
-import { MinecraftInstanceProvider } from "./MinecraftInstanceProvider";
+import MinecraftGameInstanceProvider from "./MinecraftGameInstanceProvider";
 
 const iconUrl = dataToDataURL(readFileSync(logoSVG, "utf-8"), "image/svg+xml");
 const capsuleUrl = dataToDataURL(
@@ -23,7 +23,7 @@ export default class MinecraftGame extends GameShape {
 	constructor() {
 		super();
 
-		this.instanceProvider = new MinecraftInstanceProvider();
+		this.instanceProvider = new MinecraftGameInstanceProvider();
 	}
 
 	async launch() {
