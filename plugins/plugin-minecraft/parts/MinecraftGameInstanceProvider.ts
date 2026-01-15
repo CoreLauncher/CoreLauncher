@@ -1,4 +1,4 @@
-import { GameInstanceProviderShape } from "@corelauncher/types";
+import { GameInstanceProviderShape } from "@corelauncher/sdk";
 import MinecraftGameInstance from "./MinecraftGameInstance";
 
 export default class MinecraftGameInstanceProvider extends GameInstanceProviderShape {

@@ -4,7 +4,7 @@
 		"@corelauncher/rod": "^1.1.1",
 		"@corelauncher/is-production": "*",
 		"@corelauncher/typed-emitter": "*",
-		"@corelauncher/types": "*",
+		"@corelauncher/sdk": "*",
 		"@corelauncher/react": "*",
 		"@corelauncher/file-to-dataurl": "*",
 		"@fontsource/inter": "^5.2.8",

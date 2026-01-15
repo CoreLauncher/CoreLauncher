@@ -1,7 +1,7 @@
 import { join } from "node:path";
 import { isProduction } from "@corelauncher/is-production";
 import { Rod, type Tray, type WebView } from "@corelauncher/rod";
-import { type PluginPortal, PluginShape } from "@corelauncher/types";
+import { type PluginPortal, PluginShape } from "@corelauncher/sdk";
 import open from "open";
 import temporaryDirectory from "temp-dir";
 import Server from "./classes/Server";

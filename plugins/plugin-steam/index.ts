@@ -1,6 +1,6 @@
 import { join } from "node:path";
 import createDatabase from "@corelauncher/database";
-import { type PluginPortal, PluginShape } from "@corelauncher/types";
+import { type PluginPortal, PluginShape } from "@corelauncher/sdk";
 import { migrations } from "./migrations";
 import SteamAccountInstance from "./parts/SteamAccountInstance";
 import { SteamAccountProvider } from "./parts/SteamAccountProvider";

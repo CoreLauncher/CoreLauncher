@@ -1,5 +1,5 @@
+import { AccountInstanceShape } from "@corelauncher/sdk";
 import { SteamClient } from "@corelauncher/steam-client";
-import { AccountInstanceShape } from "@corelauncher/types";
 import SteamGame from "./SteamGame";
 
 interface SteamAccountInstanceEvents {

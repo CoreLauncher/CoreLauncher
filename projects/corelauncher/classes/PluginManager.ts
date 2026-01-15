@@ -1,10 +1,10 @@
-import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type {
 	GameShape,
 	GameState,
 	PluginExport,
 	PluginShapeEvents,
-} from "@corelauncher/types";
+} from "@corelauncher/sdk";
+import { TypedEmitter } from "@corelauncher/typed-emitter";
 import PluginContainer from "./PluginContainer";
 
 interface PluginManagerEvents extends PluginShapeEvents {

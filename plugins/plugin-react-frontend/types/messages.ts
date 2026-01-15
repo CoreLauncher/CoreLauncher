@@ -3,7 +3,7 @@ import type {
 	AccountProviderShape,
 	GameShape,
 	ShowDialogOptions,
-} from "@corelauncher/types";
+} from "@corelauncher/sdk";
 
 export enum MessageType {
 	WindowInteraction = "WindowInteraction",

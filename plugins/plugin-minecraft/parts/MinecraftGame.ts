@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { dataToDataURL } from "@corelauncher/file-to-dataurl";
-import { GameShape, GameState, GameType } from "@corelauncher/types";
+import { GameShape, GameState, GameType } from "@corelauncher/sdk";
 import capsuleSVG from "../assets/minecraft-game-capsule.svg";
 import logoSVG from "../assets/minecraft-game-logo.svg";
 import MinecraftGameInstanceProvider from "./MinecraftGameInstanceProvider";

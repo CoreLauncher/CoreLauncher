@@ -1,5 +1,5 @@
+import { GameShape, GameState, GameType } from "@corelauncher/sdk";
 import { type SteamApp, SteamAppState } from "@corelauncher/steam-client";
-import { GameShape, GameState, GameType } from "@corelauncher/types";
 import open from "open";
 
 export default class SteamGame extends GameShape {

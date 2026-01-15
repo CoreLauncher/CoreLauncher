@@ -6,7 +6,7 @@ import {
 	AccountProviderShape,
 	DialogType,
 	type PluginPortal,
-} from "@corelauncher/types";
+} from "@corelauncher/sdk";
 import SteamSVG from "bootstrap-icons/icons/steam.svg" with { type: "file" };
 import { env } from "bun";
 import getPort from "get-port";

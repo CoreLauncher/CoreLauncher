@@ -1,7 +1,7 @@
 {
 	"name": "@corelauncher/plugin-minecraft",
 	"dependencies": {
-		"@corelauncher/types": "*",
+		"@corelauncher/sdk": "*",
 		"@corelauncher/database": "*",
 		"@corelauncher/file-to-dataurl": "*",
 		"@xboxreplay/xboxlive-auth": "^5.1.0",

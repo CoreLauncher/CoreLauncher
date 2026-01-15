@@ -6,6 +6,6 @@
 		"tasklist": "^5.0.0"
 	},
 	"devDependencies": {
-		"@corelauncher/types": "*"
+		"@corelauncher/sdk": "*"
 	}
 }

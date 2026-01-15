@@ -1,6 +1,6 @@
 import { join } from "node:path";
-import type { ShowDialogOptions } from "@corelauncher/types";
-import { PluginPortal as AbstractPluginPortal } from "@corelauncher/types";
+import type { ShowDialogOptions } from "@corelauncher/sdk";
+import { PluginPortal as AbstractPluginPortal } from "@corelauncher/sdk";
 import { ensureDirSync } from "fs-extra";
 import { pluginDataDirectory } from "../util/directories";
 import type PluginContainer from "./PluginContainer";

@@ -1,4 +1,4 @@
-import { GameShape, GameState, GameType } from "@corelauncher/types";
+import { GameShape, GameState, GameType } from "@corelauncher/sdk";
 import open from "open";
 
 type EpicGameOptions = {

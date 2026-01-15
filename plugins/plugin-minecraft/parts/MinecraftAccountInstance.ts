@@ -1,4 +1,4 @@
-import { AccountInstanceShape } from "@corelauncher/types";
+import { AccountInstanceShape } from "@corelauncher/sdk";
 import { live, xnet } from "@xboxreplay/xboxlive-auth";
 import {
 	CLIENT_ID,

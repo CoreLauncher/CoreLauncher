@@ -1,4 +1,4 @@
-import { type PluginPortal, PluginShape } from "@corelauncher/types";
+import { type PluginPortal, PluginShape } from "@corelauncher/sdk";
 import { tasklist } from "tasklist";
 import EpicGame from "./parts/EpicGame.ts";
 import { getEpicGames } from "./util/epic";

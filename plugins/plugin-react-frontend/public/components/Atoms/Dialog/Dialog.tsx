@@ -1,5 +1,5 @@
 import "./Dialog.css";
-import type { ShowDialogOptions } from "@corelauncher/types";
+import type { ShowDialogOptions } from "@corelauncher/sdk";
 
 export default function Dialog({
 	dialog,

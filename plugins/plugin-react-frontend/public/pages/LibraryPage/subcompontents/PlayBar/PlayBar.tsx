@@ -1,6 +1,6 @@
 import { type Icon, PlayFill, Plus } from "react-bootstrap-icons";
 import "./PlayBar.css";
-import { GameType } from "@corelauncher/types";
+import { GameType } from "@corelauncher/sdk";
 import { MessageType } from "../../../../../types/messages";
 import Socket from "../../../../classes/Socket";
 import { useGameStore } from "../../../../stores/GameStore";

@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { dataToDataURL } from "@corelauncher/file-to-dataurl";
-import { AccountProviderShape } from "@corelauncher/types";
+import { AccountProviderShape } from "@corelauncher/sdk";
 import { live } from "@xboxreplay/xboxlive-auth";
 import type { Kysely } from "kysely";
 import open from "open";

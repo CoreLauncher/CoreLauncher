@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./LibraryList.css";
 import { Button, Input } from "@corelauncher/react";
-import { GameState } from "@corelauncher/types";
+import { GameState } from "@corelauncher/sdk";
 import clsx from "clsx";
 import { Question, ViewList } from "react-bootstrap-icons";
 import type { GamesUpdatedMessage } from "../../../../types/messages";
