@@ -23,7 +23,7 @@ await Bun.write(tempIcon, Bun.file(icon.default));
 
 export const id = "plugin-react-frontend";
 export const format = 1;
-export const name = "React frontend";
+export const name = "React Frontend";
 export const description =
 	"A pretty frontend for CoreLauncher using React and a browserview.";
 
