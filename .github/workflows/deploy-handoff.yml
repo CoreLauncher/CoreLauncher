@@ -26,5 +26,5 @@ jobs:
               with:
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-                  command: pages deploy ./.dist-handoff --project-name=corelauncher-handoff
+                  command: pages deploy ./.dist-handoff --project-name=corelauncher-handoff --branch=main
                   gitHubToken: ${{ secrets.GITHUB_TOKEN }}
