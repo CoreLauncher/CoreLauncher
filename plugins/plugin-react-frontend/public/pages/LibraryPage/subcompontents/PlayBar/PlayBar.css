@@ -26,7 +26,7 @@
 		&:hover {
 			background-color: color-mix(
 				in srgb,
-				var(--cl-color-branding) 80%,
+				var(--cl-color-success) 80%,
 				black 20%
 			);
 		}
