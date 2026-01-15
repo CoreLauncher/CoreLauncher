@@ -119,6 +119,7 @@
     "plugins/plugin-minecraft": {
       "name": "@corelauncher/plugin-minecraft",
       "dependencies": {
+        "@corelauncher/database": "*",
         "@corelauncher/file-to-dataurl": "*",
         "@corelauncher/types": "*",
         "@xboxreplay/xboxlive-auth": "^5.1.0",
@@ -207,7 +208,6 @@
       "name": "@corelauncher/handoff",
       "dependencies": {
         "@corelauncher/react": "*",
-        "clsx": "^2.1.1",
         "react": "^19.2.3",
         "react-dom": "^19.2.3",
       },
