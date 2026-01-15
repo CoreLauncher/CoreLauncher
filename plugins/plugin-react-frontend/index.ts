@@ -25,7 +25,7 @@ export const id = "plugin-react-frontend";
 export const format = 1;
 export const name = "React Frontend";
 export const description =
-	"A pretty frontend for CoreLauncher using React and a browserview.";
+	"A pretty frontend for CoreLauncher using React and a webview.";
 
 export class Plugin extends PluginShape {
 	private server: Server;
