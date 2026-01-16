@@ -1,0 +1,13 @@
+{
+	"name": "@corelauncher/styledemo",
+	"main": "./index.html",
+	"dependencies": {
+		"@corelauncher/react": "*",
+		"react": "^19.2.3",
+		"react-dom": "^19.2.3"
+	},
+	"devDependencies": {
+		"@types/react": "^19.2.8",
+		"@types/react-dom": "^19.2.3"
+	}
+}
