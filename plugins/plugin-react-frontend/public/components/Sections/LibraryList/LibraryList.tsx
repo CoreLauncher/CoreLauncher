@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./LibraryList.css";
-import { Button, Input } from "@corelauncher/react";
+import { Button, TextInput } from "@corelauncher/react";
 import { GameState } from "@corelauncher/sdk";
 import clsx from "clsx";
 import { Question, ViewList } from "react-bootstrap-icons";
@@ -78,7 +78,11 @@ export default function LibraryList({
 				<Button className="home" onClick={onHome}>
 					<ViewList />
 				</Button>
-				<Input type="text" placeholder="Search..." onChange={onQuery} />
+				<TextInput
+					className="search-input"
+					placeholder="Search..."
+					onChange={onQuery}
+				/>
 			</div>
 			<VerticalList
 				className="games"

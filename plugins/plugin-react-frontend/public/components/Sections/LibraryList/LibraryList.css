@@ -21,6 +21,10 @@
 			height: 100%;
 			aspect-ratio: 1;
 		}
+
+		.search-input {
+			width: 100%;
+		}
 	}
 
 	.games {
