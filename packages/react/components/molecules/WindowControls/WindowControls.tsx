@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import "./WindowControls.css";
 import { Activity, type MouseEventHandler } from "react";
-import { Button } from "../../atoms/Button/Button";
+import { Button } from "../../input/Button/Button";
 
 export function WindowControls({
 	className,
@@ -23,29 +23,17 @@ export function WindowControls({
 	return (
 		<div className={clsx("cl-windowcontrols", className)}>
 			<Activity mode={hasMinimize ? "visible" : "hidden"}>
-				<Button
-					className="button minimize"
-					onClick={onMinimize}
-					hoverColor="var(--cl-color-accent)"
-				>
+				<Button className="button minimize" onClick={onMinimize}>
 					‒
 				</Button>
 			</Activity>
 			<Activity mode={hasMaximize ? "visible" : "hidden"}>
-				<Button
-					className="button maximize"
-					onClick={onMaximize}
-					hoverColor="var(--cl-color-accent)"
-				>
+				<Button className="button maximize" onClick={onMaximize}>
 					☐
 				</Button>
 			</Activity>
 			<Activity mode={hasClose ? "visible" : "hidden"}>
-				<Button
-					className="button close"
-					onClick={onClose}
-					hoverColor="var(--cl-color-error)"
-				>
+				<Button className="button close" onClick={onClose}>
 					✕
 				</Button>
 			</Activity>

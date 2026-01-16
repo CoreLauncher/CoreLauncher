@@ -6,23 +6,23 @@ export function Button({
 	onClick,
 	className,
 	children,
-	color = "var(--cl-color-input)",
-	hoverColor = "var(--cl-color-input-hover)",
+	type = "standard",
 }: {
 	onClick?: MouseEventHandler<HTMLButtonElement>;
 	className?: string;
 	children?: React.ReactNode;
-	color?: string;
-	hoverColor?: string;
+	type?: "standard" | "brand" | "success" | "warning" | "danger";
 }) {
+	const color = `--cl-color-button-${type}`;
+
 	return (
 		<button
-			className={clsx("cl-button", className)}
+			className={clsx("cl-button", "cl-input", className)}
 			type="button"
 			onClick={onClick}
 			style={{
-				["--cl-button-color" as string]: color,
-				["--cl-button-hover-color" as string]: hoverColor,
+				["--cl-color-input" as string]: `var(${color})`,
+				["--cl-color-input-hover" as string]: `var(${color}-hover)`,
 			}}
 		>
 			{children}
