@@ -1,5 +1,5 @@
 import "./Header.css";
-import { Logo } from "@corelauncher/react";
+import { Logo, WindowControls } from "@corelauncher/react";
 import clsx from "clsx";
 import { MessageType } from "../../../../types/messages";
 import Socket from "../../../classes/Socket";
@@ -39,33 +39,40 @@ export default function Header({
 				<p>CORELAUNCHER</p>
 			</div>
 
-			<div />
+			<div className="tabs">
+				<button
+					type="button"
+					className={clsx("tab", { selected: tab === "library" })}
+					onClick={() => onSelect("library")}
+				>
+					Library
+				</button>
 
-			<button
-				type="button"
-				className={clsx("tab", { selected: tab === "library" })}
-				onClick={() => onSelect("library")}
-			>
-				Library
-			</button>
+				<button
+					type="button"
+					className={clsx("tab", { selected: tab === "profile" })}
+					onClick={() => onSelect("profile")}
+				>
+					Profile
+				</button>
 
-			<button
-				type="button"
-				className={clsx("tab", { selected: tab === "profile" })}
-				onClick={() => onSelect("profile")}
-			>
-				Profile
-			</button>
+				<button
+					type="button"
+					className={clsx("tab", { selected: tab === "settings" })}
+					onClick={() => onSelect("settings")}
+				>
+					Settings
+				</button>
+			</div>
 
-			<button
-				type="button"
-				className={clsx("tab", { selected: tab === "settings" })}
-				onClick={() => onSelect("settings")}
-			>
-				Settings
-			</button>
+			<WindowControls
+				className="window-controls"
+				onMinimize={onMinimize}
+				onMaximize={onMaximize}
+				onClose={onClose}
+			/>
 
-			<div className="spacer" />
+			{/*<div className="spacer" />
 
 			<button type="button" className="window-controls" onClick={onMinimize}>
 				‒
@@ -75,7 +82,7 @@ export default function Header({
 			</button>
 			<button type="button" className="window-controls close" onClick={onClose}>
 				✕
-			</button>
+			</button>*/}
 		</header>
 	);
 }

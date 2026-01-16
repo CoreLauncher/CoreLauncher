@@ -1,0 +1,10 @@
+.cl-windowcontrols {
+	display: flex;
+	flex-direction: row;
+	gap: 4px;
+
+	.button {
+		height: 100%;
+		aspect-ratio: 1;
+	}
+}
