@@ -1,14 +1,10 @@
+import { TextMuted } from "../../text/TextMuted/TextMuted";
 import "./CopyRight.css";
 
 export function CopyRight({ className = "" }: { className?: string }) {
 	return (
-		<p
-			className={`cl-copyright ${className}`}
-			style={{
-				color: "var(--cl-color-text-muted)",
-			}}
-		>
+		<TextMuted className={`cl-copyright ${className}`}>
 			Copyright © {new Date().getFullYear()} CoreByte & Contributors.
-		</p>
+		</TextMuted>
 	);
 }
