@@ -1,4 +1,4 @@
-import { Block, Logo, Style, TextMuted } from "@corelauncher/react";
+import { Logo, Style, TextMuted } from "@corelauncher/react";
 import "./App.css";
 import { useEffect, useState } from "react";
 import { LockFill, Steam, X } from "react-bootstrap-icons";
@@ -37,8 +37,8 @@ export default function App() {
 	}, []);
 
 	return (
-		<Style>
-			<Block className="App">
+		<Style hasTransparentBackground={true}>
+			<div className="App">
 				<div className="header">
 					<div className="logo-container">
 						<Logo size={32} />
@@ -62,7 +62,7 @@ export default function App() {
 						</TextMuted>
 					</div>
 				</div>
-			</Block>
+			</div>
 		</Style>
 	);
 }

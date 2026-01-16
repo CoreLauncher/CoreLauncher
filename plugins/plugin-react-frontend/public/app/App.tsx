@@ -1,5 +1,6 @@
 import "./App.css";
-import { Style } from "@corelauncher/react";
+import { Dialog, Style } from "@corelauncher/react";
+import { DialogType } from "@corelauncher/sdk";
 import { Activity, useEffect, useRef, useState } from "react";
 import {
 	type CloseDialogRequestMessage,
@@ -8,7 +9,6 @@ import {
 	type ShowDialogRequestMessage,
 } from "../../types/messages";
 import Socket from "../classes/Socket";
-import Dialog from "../components/Atoms/Dialog/Dialog";
 import Header from "../components/Sections/Header/Header";
 import useDisableContextMenu from "../hooks/useDisableContextMenu";
 import LibraryPage, {
@@ -42,7 +42,6 @@ export default function App() {
 
 		const socket = Socket.instance;
 		socket.on("message", onMessage);
-
 		return () => {
 			socket.off("message", onMessage);
 		};
@@ -73,7 +72,23 @@ export default function App() {
 					<SettingsPage />
 				</Activity>
 
-				{dialog && <Dialog dialog={dialog} onClose={() => setDialog(null)} />}
+				{dialog?.type === DialogType.Webview && (
+					<Dialog
+						hasHeader={false}
+						hasOverflow={false}
+						onClose={() => setDialog(null)}
+					>
+						<iframe
+							src={dialog.url}
+							title="dialog"
+							style={{
+								border: "none",
+								width: "100%",
+								height: "100%",
+							}}
+						/>
+					</Dialog>
+				)}
 
 				<LoadingPage />
 			</div>

@@ -4,4 +4,6 @@ export * from "./components/atoms/CopyRight/CopyRight";
 export * from "./components/atoms/Input/Input";
 export * from "./components/atoms/Logo/Logo";
 export * from "./components/atoms/TextMuted/TextMuted";
+export * from "./components/molecules/Dialog/Dialog";
+export * from "./components/molecules/WindowControls/WindowControls";
 export * from "./components/other/Style/Style";
