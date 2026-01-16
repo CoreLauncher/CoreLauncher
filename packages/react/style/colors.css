@@ -1,17 +1,39 @@
 :root {
+	/* Background */
 	--cl-color-background: hsl(0, 0%, 0%);
 	--cl-color-block: hsl(0, 0%, 5%);
 	--cl-color-accent: hsl(0, 0%, 10%);
+
+	/* Border */
+	--cl-color-border: hsl(0, 0%, 10%);
+
+	/* Scrollbar */
 	--cl-color-scrollbar: hsl(0, 0%, 20%);
 
+	/* Text */
 	--cl-color-text: hsl(0, 0%, 90%);
 	--cl-color-text-muted: hsl(0, 0%, 50%);
+	--cl-color-text-link: hsl(210, 100%, 50%);
 	--cl-color-text-blue: hsl(210, 100%, 70%);
 	--cl-color-text-green: hsl(120, 100%, 70%);
 
+	/* Input */
 	--cl-color-input: hsl(0, 0%, 3%);
-	--cl-color-input-hover: hsl(0, 0%, 6%);
+	--cl-color-input-hover: hsl(0, 0%, 8%);
 
+	/* Button */
+	--cl-color-button-standard: var(--cl-color-input);
+	--cl-color-button-standard-hover: var(--cl-color-input-hover);
+	--cl-color-button-brand: hsl(210, 100%, 40%);
+	--cl-color-button-brand-hover: hsl(210, 100%, 50%);
+	--cl-color-button-success: hsl(120, 100%, 30%);
+	--cl-color-button-success-hover: hsl(120, 100%, 40%);
+	--cl-color-button-warning: hsl(40, 100%, 40%);
+	--cl-color-button-warning-hover: hsl(40, 100%, 50%);
+	--cl-color-button-danger: hsl(0, 100%, 25%);
+	--cl-color-button-danger-hover: hsl(0, 100%, 35%);
+
+	/* Other */
 	--cl-color-branding: hsl(210, 100%, 40%);
 	--cl-color-success: hsl(120, 100%, 30%);
 	--cl-color-error: hsl(0, 100%, 25%);

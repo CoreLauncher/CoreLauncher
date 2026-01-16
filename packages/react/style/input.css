@@ -1,24 +1,14 @@
 .cl-input {
-	width: 100%;
-
-	padding: 10px;
+	padding: 8px;
 	outline: none;
 	background-color: var(--cl-color-input);
 
-	border: none;
+	border: 1px var(--cl-color-border) solid;
 	border-radius: 8px;
 
 	transition: background-color 0.2s ease-in-out;
 
-	&::placeholder {
-		color: var(--cl-color-text-muted);
-	}
-
 	&:hover {
 		background-color: var(--cl-color-input-hover);
-	}
-
-	&::-ms-reveal {
-		display: none;
 	}
 }

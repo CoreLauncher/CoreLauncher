@@ -1,7 +1,8 @@
 @import "@fontsource/inter";
 
-@import "./normalize.css";
 @import "./colors.css";
+@import "./input.css";
+@import "./normalize.css";
 
 html,
 body,

@@ -1,0 +1,9 @@
+.cl-textinput {
+	&::placeholder {
+		color: var(--cl-color-text-muted);
+	}
+
+	&::-ms-reveal {
+		display: none;
+	}
+}
