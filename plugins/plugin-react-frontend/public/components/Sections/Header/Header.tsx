@@ -13,7 +13,7 @@ export default function Header({
 }) {
 	function onMouseDown(event: React.MouseEvent) {
 		const target = event.target as HTMLElement;
-		if (target.nodeName !== "DIV") return;
+		if (target.nodeName !== "DIV" && target.nodeName !== "HEADER") return;
 		Socket.instance.send(MessageType.WindowInteraction, { type: "drag" });
 	}
 
