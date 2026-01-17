@@ -15,11 +15,11 @@ import "./App.css";
 export default function App() {
 	const components = (
 		<>
-			<Button type="standard">This is a button</Button>
-			<Button type="brand">This is a button</Button>
-			<Button type="success">This is a button</Button>
-			<Button type="warning">This is a button</Button>
-			<Button type="danger">This is a button</Button>
+			<Button style="standard">This is a button</Button>
+			<Button style="brand">This is a button</Button>
+			<Button style="success">This is a button</Button>
+			<Button style="warning">This is a button</Button>
+			<Button style="danger">This is a button</Button>
 			<CopyRight />
 			<NumberInput />
 			<NumberInput placeholder="placeholder" />

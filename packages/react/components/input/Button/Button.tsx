@@ -6,12 +6,12 @@ export function Button({
 	onClick,
 	className,
 	children,
-	type = "standard",
+	style: type = "standard",
 }: {
 	onClick?: MouseEventHandler<HTMLButtonElement>;
 	className?: string;
 	children?: React.ReactNode;
-	type?: "standard" | "brand" | "success" | "warning" | "danger";
+	style?: "standard" | "brand" | "success" | "warning" | "danger";
 }) {
 	const color = `--cl-color-button-${type}`;
 
