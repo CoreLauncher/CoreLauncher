@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import "./TextInput.css";
-import type { ChangeEventHandler } from "react";
+import { type ChangeEventHandler, useId } from "react";
 
 export function TextInput({
 	className,
@@ -17,11 +17,14 @@ export function TextInput({
 	placeholder?: string;
 	onChange?: ChangeEventHandler<HTMLInputElement>;
 }) {
+	const id = useId();
+
 	return (
 		<input
 			className={clsx("cl-textinput", "cl-input", className)}
 			type={isPassword ? "password" : "text"}
 			name={name}
+			id={id}
 			defaultValue={value}
 			placeholder={placeholder}
 			onChange={onChange}

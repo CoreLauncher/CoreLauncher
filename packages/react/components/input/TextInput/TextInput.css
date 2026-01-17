@@ -3,6 +3,7 @@
 		color: var(--cl-color-text-muted);
 	}
 
+	/* Hide eye default button */
 	&::-ms-reveal {
 		display: none;
 	}
