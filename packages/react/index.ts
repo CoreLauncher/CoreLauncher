@@ -5,6 +5,7 @@ export * from "./components/atoms/Logo/Logo";
 
 // Input
 export * from "./components/input/Button/Button";
+export * from "./components/input/NumberInput/NumberInput";
 export * from "./components/input/TextInput/TextInput";
 
 // Molecules

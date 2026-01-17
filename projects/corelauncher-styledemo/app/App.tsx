@@ -3,6 +3,7 @@ import {
 	CopyRight,
 	Link,
 	Logo,
+	NumberInput,
 	Style,
 	Text,
 	TextInput,
@@ -20,6 +21,9 @@ export default function App() {
 			<Button type="warning">This is a button</Button>
 			<Button type="danger">This is a button</Button>
 			<CopyRight />
+			<NumberInput />
+			<NumberInput placeholder="placeholder" />
+			<NumberInput default="1234567890" />
 			<TextInput />
 			<TextInput placeholder="placeholder" />
 			<TextInput default="value" />
