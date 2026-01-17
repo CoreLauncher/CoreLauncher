@@ -66,6 +66,7 @@ export default function AccountsTab({
 							</div>
 							<Button
 								className="delete-button"
+								type="danger"
 								onClick={() => deleteAccount(provider.id, instance.id)}
 							>
 								<TrashFill size={16} />
