@@ -70,8 +70,6 @@ export default class MinecraftAccountProvider extends AccountProviderShape<Minec
 	async connect() {
 		console.log("Connecting to Minecraft account provider...");
 
-		console.log(await live.preAuth());
-
 		const authorizeUrl = live.getAuthorizeUrl(
 			CLIENT_ID,
 			SCOPE.join(" "),
