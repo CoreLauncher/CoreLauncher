@@ -1,3 +1,21 @@
+@keyframes cl-dialog-initialize-background {
+	100% {
+		background-color: rgba(0, 0, 0, 0.8);
+	}
+}
+
+@keyframes cl-dialog-initialize-content {
+	0% {
+		transform: scale(0.5);
+		opacity: 0;
+	}
+
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
 .cl-dialog {
 	position: absolute;
 	top: 0;
@@ -12,7 +30,7 @@
 	width: 100%;
 	height: 100%;
 
-	background-color: rgba(0, 0, 0, 0.8);
+	animation: cl-dialog-initialize-background 0.5s forwards;
 
 	.content {
 		display: flex;
@@ -21,6 +39,8 @@
 
 		width: var(--cl-dialog-width);
 		height: var(--cl-dialog-height);
+
+		animation: cl-dialog-initialize-content 0.1s forwards;
 
 		.header {
 			display: flex;
@@ -33,7 +53,7 @@
 			.header-content {
 				display: flex;
 				flex-direction: row;
-				gap: 4px;
+				gap: 8px;
 
 				.title {
 					font-weight: 600;
