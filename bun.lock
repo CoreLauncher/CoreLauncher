@@ -136,6 +136,7 @@
         "@corelauncher/react": "*",
         "@corelauncher/rod": "^1.1.1",
         "@corelauncher/sdk": "*",
+        "@corelauncher/rod": "^1.2.3",
         "@corelauncher/typed-emitter": "*",
         "@fontsource/inter": "^5.2.8",
         "clsx": "^2.1.1",
@@ -305,7 +306,7 @@
 
     "@corelauncher/recolor-svg": ["@corelauncher/recolor-svg@workspace:packages/recolor-svg"],
 
-    "@corelauncher/rod": ["@corelauncher/rod@1.1.1", "", { "dependencies": { "tiny-typed-emitter": "^2.1.0" } }, "sha512-3JgltLzisPFf09JBHepkaRgnoAJ2lW8NpZwyIpGRQYfubqn4zsXFikiHAMnYRnx6F+8AkJDwa983gZB7ZtnhPw=="],
+    "@corelauncher/rod": ["@corelauncher/rod@1.2.3", "", { "dependencies": { "tiny-typed-emitter": "^2.1.0" } }, "sha512-5gINNWDAwtR8XeJBmrNAFjsSuepBOg4758ozsGvfe9YIkKxqNm13Ka9GV4hjgM6AtyzuJDgVqYX6/EiU32yQ4A=="],
 
     "@corelauncher/sdk": ["@corelauncher/sdk@workspace:packages/sdk"],
 
