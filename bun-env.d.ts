@@ -8,6 +8,11 @@ declare module "*.dll" {
 	export = path;
 }
 
+declare module "*.so" {
+	const path: `${string}.so`;
+	export = path;
+}
+
 declare module "*.ico" {
 	const path: `${string}.ico`;
 	export = path;
