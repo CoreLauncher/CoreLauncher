@@ -13,7 +13,7 @@ const capsuleUrl = dataToDataURL(
 
 export default class MinecraftGame extends GameShape {
 	id = "minecraft:minecraft_java";
-	name = "Minecraft Java Edition";
+	name = "Minecraft: Java Edition";
 	type = GameType.Instanced;
 	state = GameState.Installed;
 	iconUrl = iconUrl;
