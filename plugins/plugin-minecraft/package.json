@@ -6,7 +6,7 @@
 		"@corelauncher/file-to-dataurl": "*",
 		"@xboxreplay/xboxlive-auth": "^5.1.0",
 		"open": "^11.0.0",
-		"kysely": "^0.28.9"
+		"kysely": "^0.28.10"
 	},
 	"devDependencies": {}
 }

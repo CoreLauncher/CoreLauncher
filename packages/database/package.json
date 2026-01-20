@@ -3,7 +3,7 @@
 	"main": "./index.ts",
 	"dependencies": {
 		"@corelauncher/is-production": "*",
-		"kysely": "^0.28.9",
+		"kysely": "^0.28.10",
 		"kysely-bun-sqlite": "^0.4.0"
 	}
 }

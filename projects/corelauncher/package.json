@@ -20,6 +20,6 @@
 	},
 	"devDependencies": {
 		"@types/fs-extra": "^11.0.4",
-		"kysely": "^0.28.9"
+		"kysely": "^0.28.10"
 	}
 }
