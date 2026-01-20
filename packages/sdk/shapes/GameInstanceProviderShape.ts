@@ -13,6 +13,7 @@ export abstract class GameInstanceProviderShape<
 		options: Record<string, string | number | boolean>,
 	): Option[] | Promise<Option[]>;
 	abstract create(
+		name: string,
 		options: Record<string, string | number | boolean>,
 	): GameInstanceShape | null | Promise<GameInstanceShape | null>;
 }

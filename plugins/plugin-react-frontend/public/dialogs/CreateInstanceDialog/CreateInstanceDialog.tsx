@@ -85,6 +85,7 @@ export default function CreateInstanceDialog({
 
 		Socket.instance.send(MessageType.GameInstanceCreate, {
 			id: game!.id,
+			name: name,
 			options: values,
 		});
 

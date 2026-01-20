@@ -36,6 +36,7 @@ export type GameInstanceCreateOptionsResponseMessage = {
 
 export type GameInstanceCreateMessage = {
 	id: string;
+	name: string;
 	options: Record<string, string | number | boolean>;
 };
 

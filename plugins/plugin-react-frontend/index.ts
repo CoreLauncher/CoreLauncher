@@ -155,7 +155,7 @@ export class Plugin extends PluginShape {
 					if (!instanceProvider)
 						throw new Error("Could not get instance provider");
 
-					instanceProvider.create(data.options);
+					instanceProvider.create(data.name, data.options);
 					break;
 				}
 				case MessageType.WindowInteraction: {
