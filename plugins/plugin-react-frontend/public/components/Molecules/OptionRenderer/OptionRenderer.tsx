@@ -17,8 +17,9 @@ export function OptionRenderer({
 		case OptionType.OptionRow:
 			return (
 				<div className={clsx("OptionRenderer", "optionrow")}>
-					{option.options.map((o) => (
-						<OptionRenderer key={o.id} option={o} onChange={onChange} />
+					{option.options.map((o, index) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: Its the best we have here
+						<OptionRenderer key={index} option={o} onChange={onChange} />
 					))}
 				</div>
 			);

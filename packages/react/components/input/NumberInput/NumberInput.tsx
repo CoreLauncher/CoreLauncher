@@ -24,7 +24,7 @@ export function NumberInput({
 	disabled?: boolean;
 	minimum?: number;
 	maximum?: number;
-	onChange?: ChangeEventHandler<HTMLInputElement>;
+	onChange?: (value: number) => void;
 }) {
 	const id = useId();
 
@@ -46,7 +46,7 @@ export function NumberInput({
 				placeholder={placeholder}
 				required={required}
 				disabled={disabled}
-				onChange={onChange}
+				onChange={(event) => onChange?.(Number(event.target.value))}
 				onKeyDown={(event) => {
 					if (!/[0-9]/.test(event.key)) event.preventDefault();
 				}}

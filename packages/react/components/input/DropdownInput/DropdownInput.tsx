@@ -12,7 +12,7 @@ export default function DropdownInput({
 	onChange,
 }: {
 	label?: string;
-	default: string;
+	default?: string;
 	values: {
 		label: string;
 		value: string;

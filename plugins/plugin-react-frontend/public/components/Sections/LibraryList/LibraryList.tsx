@@ -68,8 +68,8 @@ export default function LibraryList({
 		};
 	}, []);
 
-	function onQuery(event: React.ChangeEvent<HTMLInputElement>) {
-		setQuery(event.target.value);
+	function onQuery(value: string) {
+		setQuery(value);
 	}
 
 	return (
