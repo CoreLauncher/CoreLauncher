@@ -1,5 +1,6 @@
 import { type Option, OptionType } from "@corelauncher/sdk";
 import "./OptionRenderer.css";
+import { NumberInput } from "@corelauncher/react";
 import DropdownInput from "@corelauncher/react/components/input/DropdownInput/DropdownInput";
 import clsx from "clsx";
 
@@ -29,6 +30,18 @@ export function OptionRenderer({
 					values={option.values}
 					required={option.required}
 					disabled={option.disabled}
+					onChange={(value) => onChange(option.id, value)}
+				/>
+			);
+		case OptionType.Number:
+			return (
+				<NumberInput
+					label={option.label}
+					default={option.default}
+					required={option.required}
+					disabled={option.disabled}
+					minimum={option.minimum}
+					maximum={option.maximum}
 					onChange={(value) => onChange(option.id, value)}
 				/>
 			);

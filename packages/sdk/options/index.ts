@@ -1,12 +1,11 @@
 export enum OptionType {
 	OptionRow = "option_row",
 	Dropdown = "dropdown",
+	Number = "Number",
 }
 
 export type Option =
 	| {
-			id: string;
-			label: string;
 			type: OptionType.OptionRow;
 			options: Option[];
 	  }
@@ -14,13 +13,23 @@ export type Option =
 			id: string;
 			label: string;
 			type: OptionType.Dropdown;
-			default: string;
+			default?: string;
 			disabled?: boolean;
 			required?: boolean;
 			values: {
 				label: string;
 				value: string;
 			}[];
+	  }
+	| {
+			id: string;
+			label: string;
+			type: OptionType.Number;
+			default?: string;
+			disabled?: boolean;
+			required?: boolean;
+			minimum?: number;
+			maximum?: number;
 	  };
 
 export function getRequired(options: Option[]) {

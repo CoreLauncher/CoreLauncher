@@ -10,15 +10,12 @@ type CreateOptions = {
 	loader_type: "vanilla" | "fabric";
 	loader_version: string;
 	game_version: string;
+	ram_amount: number;
+	ram_unit: "gib" | "mib";
 };
 
 export default class MinecraftGameInstanceProvider extends GameInstanceProviderShape {
 	async createOptions(values: Partial<CreateOptions>) {
-		values = {
-			loader_type: "vanilla",
-			...values,
-		};
-
 		if (!values.loader_type) values.loader_type = "vanilla";
 		const gameVersions = await fetchGameVersions(values.loader_type);
 		if (!values.game_version)
@@ -38,8 +35,6 @@ export default class MinecraftGameInstanceProvider extends GameInstanceProviderS
 		return [
 			{
 				type: OptionType.OptionRow,
-				id: "versions",
-				label: "Loader",
 				options: [
 					{
 						type: OptionType.Dropdown,
@@ -73,6 +68,35 @@ export default class MinecraftGameInstanceProvider extends GameInstanceProviderS
 							label: version.name,
 							value: version.name,
 						})),
+					},
+				],
+			},
+			{
+				type: OptionType.OptionRow,
+				options: [
+					{
+						type: OptionType.Number,
+						label: "RAM Amount",
+						id: "ram_amount",
+						default: 4,
+						required: true,
+					},
+					{
+						type: OptionType.Dropdown,
+						label: "RAM Unit",
+						id: "ram_unit",
+						default: "gib",
+						required: true,
+						values: [
+							{
+								label: "GiB",
+								value: "gib",
+							},
+							{
+								label: "MiB",
+								value: "mib",
+							},
+						],
 					},
 				],
 			},

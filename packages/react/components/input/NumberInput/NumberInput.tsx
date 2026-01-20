@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import "./NumberInput.css";
 import { type ChangeEventHandler, useId } from "react";
+import { RequiredIndicator } from "../../other/RequiredIndicator/RequiredIndicator";
 
 export function NumberInput({
 	className,
@@ -8,6 +9,8 @@ export function NumberInput({
 	label,
 	default: value = "",
 	placeholder = "",
+	required,
+	disabled,
 	minimum,
 	maximum,
 	onChange,
@@ -17,6 +20,8 @@ export function NumberInput({
 	label?: string;
 	default?: string | number;
 	placeholder?: string;
+	required?: boolean;
+	disabled?: boolean;
 	minimum?: number;
 	maximum?: number;
 	onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -27,7 +32,7 @@ export function NumberInput({
 		<div className={clsx("cl-numberinput", "cl-input-container", className)}>
 			{label && (
 				<label className="cl-input-label" htmlFor={id}>
-					{label}
+					{label} <RequiredIndicator visible={required} />
 				</label>
 			)}
 			<input
@@ -39,6 +44,8 @@ export function NumberInput({
 				min={minimum}
 				max={maximum}
 				placeholder={placeholder}
+				required={required}
+				disabled={disabled}
 				onChange={onChange}
 				onKeyDown={(event) => {
 					if (!/[0-9]/.test(event.key)) event.preventDefault();
