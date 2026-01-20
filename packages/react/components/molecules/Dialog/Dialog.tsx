@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Block } from "../../atoms/Block/Block";
 import "./Dialog.css";
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import type { Icon } from "react-bootstrap-icons";
 import { createPortal } from "react-dom";
 import { WindowControls } from "../WindowControls/WindowControls";
@@ -29,10 +29,14 @@ export function Dialog({
 }) {
 	const IconComponent = icon;
 
+	function onClick(event: MouseEvent) {
+		if (event.target === event.currentTarget) onClose();
+	}
+
 	return createPortal(
 		// biome-ignore lint/a11y/useKeyWithClickEvents: We also have a close button
 		// biome-ignore lint/a11y/noStaticElementInteractions: We also have a close button
-		<div className={clsx("cl-dialog", className)} onClick={onClose}>
+		<div className={clsx("cl-dialog", className)} onClick={onClick}>
 			<Block
 				className="content"
 				style={{
