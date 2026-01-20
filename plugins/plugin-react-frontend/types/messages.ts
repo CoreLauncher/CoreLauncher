@@ -7,8 +7,8 @@ import type {
 } from "@corelauncher/sdk";
 
 export enum MessageType {
-	GameOptionsRequest = "GameOptionsRequest",
-	GameOptionsResponse = "GameOptionsResponse",
+	GameInstanceCreateOptionsRequest = "GameInstanceCreateOptionsRequest",
+	GameInstanceCreateOptionsResponse = "GameInstanceCreateOptionsResponse",
 	WindowInteraction = "WindowInteraction",
 	ApplicationInformation = "ApplicationInformation",
 	GamesUpdated = "GamesUpdated",
@@ -23,12 +23,12 @@ export enum MessageType {
 	CloseDialogRequest = "CloseDialogRequest",
 }
 
-export type GameOptionsRequestMessage = {
+export type GameInstanceCreateOptionsRequestMessage = {
 	id: string;
 	options: Record<string, string | number | boolean>;
 };
 
-export type GameOptionsResponseMessage = {
+export type GameInstanceCreateOptionsResponseMessage = {
 	id: string;
 	options: Option[];
 };
@@ -84,8 +84,8 @@ export type CloseDialogRequestMessage = {
 };
 
 export type Message =
-	| GameOptionsRequestMessage
-	| GameOptionsResponseMessage
+	| GameInstanceCreateOptionsRequestMessage
+	| GameInstanceCreateOptionsResponseMessage
 	| WindowInteractionMessage
 	| ApplicationInformationMessage
 	| GamesUpdatedMessage
@@ -100,8 +100,8 @@ export type Message =
 	| CloseDialogRequestMessage;
 
 export type MessageTypeMap = {
-	[MessageType.GameOptionsRequest]: GameOptionsRequestMessage;
-	[MessageType.GameOptionsResponse]: GameOptionsResponseMessage;
+	[MessageType.GameInstanceCreateOptionsRequest]: GameInstanceCreateOptionsRequestMessage;
+	[MessageType.GameInstanceCreateOptionsResponse]: GameInstanceCreateOptionsResponseMessage;
 	[MessageType.WindowInteraction]: WindowInteractionMessage;
 	[MessageType.ApplicationInformation]: ApplicationInformationMessage;
 	[MessageType.GamesUpdated]: GamesUpdatedMessage;

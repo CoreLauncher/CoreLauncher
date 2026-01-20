@@ -4,7 +4,7 @@ import { getDefaults, getRequired, type Option } from "@corelauncher/sdk";
 import { useEffect, useState } from "react";
 import { PlusSquareFill } from "react-bootstrap-icons";
 import {
-	type GameOptionsResponseMessage,
+	type GameInstanceCreateOptionsResponseMessage,
 	type Message,
 	MessageType,
 } from "../../../types/messages";
@@ -31,7 +31,7 @@ export default function CreateInstanceDialog({
 	if (!game) throw new Error("Game not found");
 
 	useEffect(() => {
-		Socket.instance.send(MessageType.GameOptionsRequest, {
+		Socket.instance.send(MessageType.GameInstanceCreateOptionsRequest, {
 			id: game.id,
 			options: values,
 		});
@@ -39,8 +39,8 @@ export default function CreateInstanceDialog({
 
 	useEffect(() => {
 		function onMessage(type: MessageType, message: Message) {
-			if (type !== MessageType.GameOptionsResponse) return;
-			const data = message as GameOptionsResponseMessage;
+			if (type !== MessageType.GameInstanceCreateOptionsResponse) return;
+			const data = message as GameInstanceCreateOptionsResponseMessage;
 			if (data.id !== game?.id) return;
 
 			const options = data.options;
@@ -80,6 +80,11 @@ export default function CreateInstanceDialog({
 		setValues((v) => ({ ...v, [id]: value }));
 	}
 
+	function onCreate() {
+		console.log("cretea", name, values);
+		onClose();
+	}
+
 	return (
 		<Dialog
 			title={`Create ${game.name} instance`}
@@ -94,11 +99,16 @@ export default function CreateInstanceDialog({
 					required
 					onChange={(value) => setName(value)}
 				/>
-				{options.map((option) => (
-					<OptionRenderer key={option.id} option={option} onChange={onChange} />
+				{options.map((option, index) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: Its the best we have here
+					<OptionRenderer key={index} option={option} onChange={onChange} />
 				))}
 				<hr style={{ marginTop: "auto" }} />
-				<Button style={"success"} disabled={!requiredFilled || name === ""}>
+				<Button
+					style={"success"}
+					disabled={!requiredFilled || name === ""}
+					onClick={onCreate}
+				>
 					{" "}
 					Create Instance{" "}
 				</Button>

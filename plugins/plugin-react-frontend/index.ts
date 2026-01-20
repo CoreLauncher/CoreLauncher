@@ -7,7 +7,7 @@ import temporaryDirectory from "temp-dir";
 import Server from "./classes/Server";
 import {
 	type DeleteAccountProviderConnectionMessage,
-	type GameOptionsRequestMessage,
+	type GameInstanceCreateOptionsRequestMessage,
 	type LaunchGameMessage,
 	MessageType,
 	type OpenExternalLinkMessage,
@@ -132,15 +132,15 @@ export class Plugin extends PluginShape {
 
 		this.server.on("message", async (type, message) => {
 			switch (type) {
-				case MessageType.GameOptionsRequest: {
-					const data = message as GameOptionsRequestMessage;
+				case MessageType.GameInstanceCreateOptionsRequest: {
+					const data = message as GameInstanceCreateOptionsRequestMessage;
 					const game = portal.getGame(data.id);
 					const instanceProvider = game.instanceProvider;
 					if (!instanceProvider)
 						throw new Error("Could not get instance provider");
 					const options = await instanceProvider.createOptions(data.options);
 
-					this.server.send(MessageType.GameOptionsResponse, {
+					this.server.send(MessageType.GameInstanceCreateOptionsResponse, {
 						id: data.id,
 						options: options,
 					});
