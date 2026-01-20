@@ -20,18 +20,24 @@
 	/* Input */
 	--cl-color-input: hsl(0, 0%, 3%);
 	--cl-color-input-hover: hsl(0, 0%, 8%);
+	--cl-color-input-disabled: hsl(0, 0%, 10%);
 
 	/* Button */
 	--cl-color-button-standard: var(--cl-color-input);
 	--cl-color-button-standard-hover: var(--cl-color-input-hover);
+	--cl-color-button-standard-disabled: var(--cl-color-input-disabled);
 	--cl-color-button-brand: hsl(210, 100%, 40%);
 	--cl-color-button-brand-hover: hsl(210, 100%, 50%);
+	--cl-color-button-brand-disabled: hsl(210, 100%, 30%);
 	--cl-color-button-success: hsl(120, 100%, 30%);
 	--cl-color-button-success-hover: hsl(120, 100%, 40%);
+	--cl-color-button-success-disabled: hsl(120, 100%, 20%);
 	--cl-color-button-warning: hsl(40, 100%, 40%);
 	--cl-color-button-warning-hover: hsl(40, 100%, 50%);
+	--cl-color-button-warning-disabled: hsl(40, 100%, 30%);
 	--cl-color-button-danger: hsl(0, 100%, 25%);
 	--cl-color-button-danger-hover: hsl(0, 100%, 35%);
+	--cl-color-button-danger-disabled: hsl(0, 100%, 10%);
 
 	/* Other */
 	--cl-color-branding: hsl(210, 100%, 40%);

@@ -1,4 +1,20 @@
+.cl-input-container {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	width: 100%;
+}
+
+.cl-input-label {
+	display: flex;
+	flex-direction: row;
+	gap: 4px;
+
+	font-weight: 800;
+}
+
 .cl-input {
+	width: 100%;
 	padding: 8px;
 	outline: none;
 	background-color: var(--cl-color-input);
@@ -10,5 +26,19 @@
 
 	&:hover {
 		background-color: var(--cl-color-input-hover);
+	}
+
+	&::placeholder {
+		color: var(--cl-color-text-muted);
+	}
+
+	&:disabled {
+		color: var(--cl-color-text-muted);
+		background-color: var(--cl-color-input-disabled);
+	}
+
+	/* Hide eye default button */
+	&::-ms-reveal {
+		display: none;
 	}
 }

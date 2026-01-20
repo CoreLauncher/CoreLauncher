@@ -2,10 +2,6 @@
 	-moz-appearance: textfield;
 	appearance: textfield;
 
-	&::placeholder {
-		color: var(--cl-color-text-muted);
-	}
-
 	/* Hide default arrows */
 	input::-webkit-outer-spin-button,
 	input::-webkit-inner-spin-button {

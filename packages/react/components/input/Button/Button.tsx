@@ -7,11 +7,13 @@ export function Button({
 	className,
 	children,
 	style: type = "standard",
+	disabled,
 }: {
 	onClick?: MouseEventHandler<HTMLButtonElement>;
 	className?: string;
 	children?: React.ReactNode;
 	style?: "standard" | "brand" | "success" | "warning" | "danger";
+	disabled?: boolean;
 }) {
 	const color = `--cl-color-button-${type}`;
 
@@ -23,7 +25,9 @@ export function Button({
 			style={{
 				["--cl-color-input" as string]: `var(${color})`,
 				["--cl-color-input-hover" as string]: `var(${color}-hover)`,
+				["--cl-color-input-disabled" as string]: `var(${color}-disabled)`,
 			}}
+			disabled={disabled}
 		>
 			{children}
 		</button>

@@ -3,5 +3,12 @@
 	align-items: center;
 	justify-content: center;
 
+	width: auto;
+	height: auto;
+
 	cursor: pointer;
+
+	&:disabled {
+		cursor: not-allowed;
+	}
 }
