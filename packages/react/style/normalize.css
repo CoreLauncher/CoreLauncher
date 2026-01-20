@@ -22,3 +22,7 @@ body,
 
 	-webkit-user-drag: none;
 }
+
+hr {
+	color: var(--cl-color-border);
+}
