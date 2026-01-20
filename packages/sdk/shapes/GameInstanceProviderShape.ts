@@ -3,10 +3,14 @@ import type {
 	ListenerSignature,
 } from "@corelauncher/typed-emitter";
 import { TypedEmitter } from "@corelauncher/typed-emitter";
+import type { Option } from "../options";
 import type { GameInstanceShape } from "./GameInstanceShape";
 
 export abstract class GameInstanceProviderShape<
 	L extends ListenerSignature<L> = DefaultListener,
 > extends TypedEmitter<L> {
-	abstract create(): GameInstanceShape;
+	abstract createOptions(
+		options: Record<string, string | number | boolean>,
+	): Option[] | Promise<Option[]>;
+	abstract create(): GameInstanceShape | Promise<GameInstanceShape>;
 }

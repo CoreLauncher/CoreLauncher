@@ -2,10 +2,13 @@ import type {
 	AccountInstanceShape,
 	AccountProviderShape,
 	GameShape,
+	Option,
 	ShowDialogOptions,
 } from "@corelauncher/sdk";
 
 export enum MessageType {
+	GameOptionsRequest = "GameOptionsRequest",
+	GameOptionsResponse = "GameOptionsResponse",
 	WindowInteraction = "WindowInteraction",
 	ApplicationInformation = "ApplicationInformation",
 	GamesUpdated = "GamesUpdated",
@@ -19,6 +22,16 @@ export enum MessageType {
 	ShowDialogRequest = "ShowDialogRequest",
 	CloseDialogRequest = "CloseDialogRequest",
 }
+
+export type GameOptionsRequestMessage = {
+	id: string;
+	options: Record<string, string | number | boolean>;
+};
+
+export type GameOptionsResponseMessage = {
+	id: string;
+	options: Option[];
+};
 
 export type WindowInteractionMessage = {
 	type: "drag" | "minimize" | "maximize" | "close" | "close_fully";
@@ -71,6 +84,8 @@ export type CloseDialogRequestMessage = {
 };
 
 export type Message =
+	| GameOptionsRequestMessage
+	| GameOptionsResponseMessage
 	| WindowInteractionMessage
 	| ApplicationInformationMessage
 	| GamesUpdatedMessage
@@ -85,6 +100,8 @@ export type Message =
 	| CloseDialogRequestMessage;
 
 export type MessageTypeMap = {
+	[MessageType.GameOptionsRequest]: GameOptionsRequestMessage;
+	[MessageType.GameOptionsResponse]: GameOptionsResponseMessage;
 	[MessageType.WindowInteraction]: WindowInteractionMessage;
 	[MessageType.ApplicationInformation]: ApplicationInformationMessage;
 	[MessageType.GamesUpdated]: GamesUpdatedMessage;

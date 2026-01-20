@@ -7,6 +7,7 @@ import temporaryDirectory from "temp-dir";
 import Server from "./classes/Server";
 import {
 	type DeleteAccountProviderConnectionMessage,
+	type GameOptionsRequestMessage,
 	type LaunchGameMessage,
 	MessageType,
 	type OpenExternalLinkMessage,
@@ -77,53 +78,6 @@ export class Plugin extends PluginShape {
 			this.server.send(MessageType.CloseDialogRequest, options, false);
 		});
 
-		this.server.send(
-			MessageType.ApplicationInformation,
-			{
-				version: getVersion(),
-				environment: isProduction ? "production" : "development",
-			},
-			true,
-		);
-
-		this.server.on("message", (type, message) => {
-			if (type !== MessageType.WindowInteraction) return;
-			const data = message as WindowInteractionMessage;
-			if (data.type === "drag") this.window.startDrag();
-			if (data.type === "minimize") return this.window.setMinimized(true);
-			if (data.type === "maximize")
-				return this.window.setMaximized(!this.window.isMaximized);
-			if (data.type === "close") return this.window.setVisible(false);
-			if (data.type === "close_fully") return portal.exit();
-		});
-
-		this.server.on("message", (type, message) => {
-			if (type !== MessageType.OpenExternalLink) return;
-			const data = message as OpenExternalLinkMessage;
-			open(data.url);
-		});
-
-		this.server.on("message", (type, message) => {
-			if (type !== MessageType.LaunchGame) return;
-			const data = message as LaunchGameMessage;
-			const game = portal.getGame(data.id);
-			game.launch();
-		});
-
-		this.server.on("message", (type, message) => {
-			if (type !== MessageType.StartAccountProviderConnection) return;
-			const data = message as StartAccountProviderConnectionMessage;
-			const provider = portal.getAccountProvider(data.id);
-			provider.connect();
-		});
-
-		this.server.on("message", (type, message) => {
-			if (type !== MessageType.DeleteAccountProviderConnection) return;
-			const data = message as DeleteAccountProviderConnectionMessage;
-			const instance = portal.getAccountInstance(data.instance);
-			instance.disconnect();
-		});
-
 		portal.on("games", () => {
 			this.server.send(
 				MessageType.GamesUpdated,
@@ -165,6 +119,64 @@ export class Plugin extends PluginShape {
 				},
 				true,
 			);
+		});
+
+		this.server.send(
+			MessageType.ApplicationInformation,
+			{
+				version: getVersion(),
+				environment: isProduction ? "production" : "development",
+			},
+			true,
+		);
+
+		this.server.on("message", async (type, message) => {
+			switch (type) {
+				case MessageType.GameOptionsRequest: {
+					const data = message as GameOptionsRequestMessage;
+					const game = portal.getGame(data.id);
+					const instanceProvider = game.instanceProvider;
+					if (!instanceProvider)
+						throw new Error("Could not get instance provider");
+					const options = await instanceProvider.createOptions(data.options);
+
+					this.server.send(MessageType.GameOptionsResponse, {
+						id: data.id,
+						options: options,
+					});
+
+					break;
+				}
+				case MessageType.WindowInteraction: {
+					const data = message as WindowInteractionMessage;
+					if (data.type === "drag") this.window.startDrag();
+					if (data.type === "minimize") return this.window.setMinimized(true);
+					if (data.type === "maximize")
+						return this.window.setMaximized(!this.window.isMaximized);
+					if (data.type === "close") return this.window.setVisible(false);
+					if (data.type === "close_fully") return portal.exit();
+					break;
+				}
+				case MessageType.OpenExternalLink: {
+					const data = message as OpenExternalLinkMessage;
+					return open(data.url);
+				}
+				case MessageType.LaunchGame: {
+					const data = message as LaunchGameMessage;
+					const game = portal.getGame(data.id);
+					return game.launch();
+				}
+				case MessageType.StartAccountProviderConnection: {
+					const data = message as StartAccountProviderConnectionMessage;
+					const provider = portal.getAccountProvider(data.id);
+					return provider.connect();
+				}
+				case MessageType.DeleteAccountProviderConnection: {
+					const data = message as DeleteAccountProviderConnectionMessage;
+					const instance = portal.getAccountInstance(data.instance);
+					return instance.disconnect();
+				}
+			}
 		});
 
 		setImmediate(() => this.emit("ready"));
