@@ -7,6 +7,7 @@ import temporaryDirectory from "temp-dir";
 import Server from "./classes/Server";
 import {
 	type DeleteAccountProviderConnectionMessage,
+	type GameInstanceCreateMessage,
 	type GameInstanceCreateOptionsRequestMessage,
 	type LaunchGameMessage,
 	MessageType,
@@ -145,6 +146,16 @@ export class Plugin extends PluginShape {
 						options: options,
 					});
 
+					break;
+				}
+				case MessageType.GameInstanceCreate: {
+					const data = message as GameInstanceCreateMessage;
+					const game = portal.getGame(data.id);
+					const instanceProvider = game.instanceProvider;
+					if (!instanceProvider)
+						throw new Error("Could not get instance provider");
+
+					instanceProvider.create(data.options);
 					break;
 				}
 				case MessageType.WindowInteraction: {

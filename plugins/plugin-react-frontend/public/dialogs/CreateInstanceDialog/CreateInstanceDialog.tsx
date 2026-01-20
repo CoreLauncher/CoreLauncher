@@ -82,6 +82,12 @@ export default function CreateInstanceDialog({
 
 	function onCreate() {
 		console.log("cretea", name, values);
+
+		Socket.instance.send(MessageType.GameInstanceCreate, {
+			id: game!.id,
+			options: values,
+		});
+
 		onClose();
 	}
 

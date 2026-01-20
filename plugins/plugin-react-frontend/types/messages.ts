@@ -9,6 +9,7 @@ import type {
 export enum MessageType {
 	GameInstanceCreateOptionsRequest = "GameInstanceCreateOptionsRequest",
 	GameInstanceCreateOptionsResponse = "GameInstanceCreateOptionsResponse",
+	GameInstanceCreate = "GameInstanceCreate",
 	WindowInteraction = "WindowInteraction",
 	ApplicationInformation = "ApplicationInformation",
 	GamesUpdated = "GamesUpdated",
@@ -31,6 +32,11 @@ export type GameInstanceCreateOptionsRequestMessage = {
 export type GameInstanceCreateOptionsResponseMessage = {
 	id: string;
 	options: Option[];
+};
+
+export type GameInstanceCreateMessage = {
+	id: string;
+	options: Record<string, string | number | boolean>;
 };
 
 export type WindowInteractionMessage = {
@@ -86,6 +92,7 @@ export type CloseDialogRequestMessage = {
 export type Message =
 	| GameInstanceCreateOptionsRequestMessage
 	| GameInstanceCreateOptionsResponseMessage
+	| GameInstanceCreateMessage
 	| WindowInteractionMessage
 	| ApplicationInformationMessage
 	| GamesUpdatedMessage
@@ -102,6 +109,7 @@ export type Message =
 export type MessageTypeMap = {
 	[MessageType.GameInstanceCreateOptionsRequest]: GameInstanceCreateOptionsRequestMessage;
 	[MessageType.GameInstanceCreateOptionsResponse]: GameInstanceCreateOptionsResponseMessage;
+	[MessageType.GameInstanceCreate]: GameInstanceCreateMessage;
 	[MessageType.WindowInteraction]: WindowInteractionMessage;
 	[MessageType.ApplicationInformation]: ApplicationInformationMessage;
 	[MessageType.GamesUpdated]: GamesUpdatedMessage;
