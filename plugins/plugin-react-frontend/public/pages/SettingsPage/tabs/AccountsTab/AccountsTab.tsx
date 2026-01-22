@@ -46,7 +46,7 @@ export default function AccountsTab({
 			<div className="account-instances">
 				{accountInstances.map((instance) => {
 					const provider = accountProviders.find(
-						(provider) => provider.id === instance.providerId,
+						(provider) => provider.id === instance.provider,
 					);
 					if (!provider)
 						throw new Error(`Provider not found for instance ${instance.id}`);

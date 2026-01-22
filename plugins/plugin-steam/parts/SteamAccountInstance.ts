@@ -1,19 +1,19 @@
 import { AccountInstanceShape } from "@corelauncher/sdk";
 import { SteamClient } from "@corelauncher/steam-client";
-import SteamGame from "./SteamGame";
+import SteamGameInstance from "./SteamGameInstance";
 
 interface SteamAccountInstanceEvents {
-	games: (games: SteamGame[]) => void;
+	games: (games: SteamGameInstance[]) => void;
 }
 
 export default class SteamAccountInstance extends AccountInstanceShape<SteamAccountInstanceEvents> {
-	providerId = "steam";
+	provider = "steam";
 
 	id: string;
 	name: string;
 	avatarUrl = null;
 
-	games: SteamGame[] = [];
+	games: SteamGameInstance[] = [];
 
 	client: SteamClient;
 	constructor(data: {
@@ -35,7 +35,7 @@ export default class SteamAccountInstance extends AccountInstanceShape<SteamAcco
 
 		this.client.on("apps", () => {
 			console.info("Received Steam games");
-			this.games = this.client.apps.map((app) => new SteamGame(app));
+			this.games = this.client.apps.map((app) => new SteamGameInstance(app));
 			this.emit("games", this.games);
 		});
 	}

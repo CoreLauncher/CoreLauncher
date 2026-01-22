@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import "./NumberInput.css";
-import { type ChangeEventHandler, useId } from "react";
+import { useId } from "react";
 import { RequiredIndicator } from "../../other/RequiredIndicator/RequiredIndicator";
 
 export function NumberInput({

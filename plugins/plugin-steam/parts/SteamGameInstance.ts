@@ -1,9 +1,10 @@
-import { GameShape, GameState, GameType } from "@corelauncher/sdk";
+import { GameFeature, GameInstanceShape, GameState } from "@corelauncher/sdk";
 import { type SteamApp, SteamAppState } from "@corelauncher/steam-client";
 import open from "open";
 
-export default class SteamGame extends GameShape {
-	type = GameType.Normal;
+export default class SteamGameInstance extends GameInstanceShape {
+	features = [GameFeature.NormalLaunch];
+	provider = "steam";
 
 	private app: SteamApp;
 
@@ -50,5 +51,13 @@ export default class SteamGame extends GameShape {
 	async launch() {
 		await open(`steam://launch/${this.app.id}`);
 		return true;
+	}
+
+	createProfileOptions() {
+		return [];
+	}
+
+	createProfile() {
+		return undefined;
 	}
 }

@@ -2,8 +2,10 @@ import { join } from "node:path";
 import createDatabase from "@corelauncher/database";
 import { type PluginPortal, PluginShape } from "@corelauncher/sdk";
 import { migrations } from "./migrations";
-import SteamAccountInstance from "./parts/SteamAccountInstance";
+import type SteamAccountInstance from "./parts/SteamAccountInstance";
 import { SteamAccountProvider } from "./parts/SteamAccountProvider";
+import type SteamGameInstance from "./parts/SteamGameInstance";
+import { SteamGameProvider } from "./parts/SteamGameProvider";
 import type { Database } from "./types/database";
 
 async function noop() {}
@@ -15,6 +17,12 @@ export const description =
 	"Allows you to launch Steam games from CoreLauncher.";
 
 export class Plugin extends PluginShape {
+	gameProviders: SteamGameProvider[] = [];
+	gameInstances: SteamGameInstance[] = [];
+	gameProfiles: never[] = [];
+	accountProviders: SteamAccountProvider[] = [];
+	accountInstances: SteamAccountInstance[] = [];
+
 	constructor(portal: PluginPortal) {
 		super(portal);
 
@@ -24,31 +32,27 @@ export class Plugin extends PluginShape {
 				migrations,
 			);
 
-			// #region Accounts
-			// Load stored account instances
-			const accountInstances: SteamAccountInstance[] = await database
-				.selectFrom("accounts")
-				.selectAll()
-				.execute()
-				.then((instances) => instances.map((i) => new SteamAccountInstance(i)));
+			const gameProvider = new SteamGameProvider();
+			this.gameProviders = [gameProvider];
+			this.emit("game_providers_updated");
 
-			// Create account provider and listen for new instances
+			gameProvider.on(
+				"game_instances_updated",
+				(instances: SteamGameInstance[]) => {
+					this.gameInstances = instances;
+					this.emit("game_instances_updated");
+				},
+			);
+
 			const accountProvider = new SteamAccountProvider(portal, database);
-			accountProvider.on("connection", async (data) => {
-				if (accountInstances.find((a) => a.name === data.name)) return;
-				accountInstances.push(new SteamAccountInstance(data));
-				this.emit("account_instances", accountInstances);
+			this.accountProviders = [accountProvider];
+			this.emit("account_providers_updated");
+
+			accountProvider.on("account_instances_updated", (instances) => {
+				this.accountInstances = instances;
+				this.emit("account_instances_updated");
 			});
-			// #endregion
 
-			for (const instance of accountInstances) {
-				instance.on("games", () => {
-					this.emit("games", instance.games);
-				});
-			}
-
-			this.emit("account_instances", accountInstances);
-			this.emit("account_providers", [accountProvider]);
 			this.emit("ready");
 		});
 	}

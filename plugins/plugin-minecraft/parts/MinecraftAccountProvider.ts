@@ -11,7 +11,7 @@ import type { Database } from "../types/database";
 import MinecraftAccountInstance from "./MinecraftAccountInstance";
 
 interface MinecraftAccountProviderEvents {
-	instances_updated: (instances: MinecraftAccountInstance[]) => void;
+	account_instances_updated: (instances: MinecraftAccountInstance[]) => void;
 }
 
 export default class MinecraftAccountProvider extends AccountProviderShape<MinecraftAccountProviderEvents> {
@@ -46,7 +46,7 @@ export default class MinecraftAccountProvider extends AccountProviderShape<Minec
 			});
 
 			this.instances.push(...instances);
-			this.emit("instances_updated", this.instances);
+			this.emit("account_instances_updated", this.instances);
 		});
 	}
 
@@ -64,7 +64,7 @@ export default class MinecraftAccountProvider extends AccountProviderShape<Minec
 		});
 
 		this.instances.push(instance);
-		this.emit("instances_updated", this.instances);
+		this.emit("account_instances_updated", this.instances);
 	}
 
 	async connect() {
@@ -85,7 +85,7 @@ export default class MinecraftAccountProvider extends AccountProviderShape<Minec
 	async disconnect(instance: MinecraftAccountInstance) {
 		instance.removeAllListeners("disconnect");
 		this.instances = this.instances.filter((i) => i.id !== instance.id);
-		this.emit("instances_updated", this.instances);
+		this.emit("account_instances_updated", this.instances);
 
 		await this.database
 			.deleteFrom("accounts")

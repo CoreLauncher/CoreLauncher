@@ -1,8 +1,4 @@
 import type {
-	AccountInstanceShape,
-	AccountProviderShape,
-	GameShape,
-	GameState,
 	PluginExport,
 	PluginShape,
 	PluginShapeEvents,
@@ -11,13 +7,7 @@ import { TypedEmitter } from "@corelauncher/typed-emitter";
 import type PluginManager from "./PluginManager";
 import PluginPortal from "./PluginPortal";
 
-interface PluginContainerEvents extends PluginShapeEvents {
-	game_state_changed: (
-		game: InstanceType<typeof GameShape>,
-		newState: GameState,
-		oldState: GameState,
-	) => void;
-}
+interface PluginContainerEvents extends PluginShapeEvents {}
 
 export default class PluginContainer extends TypedEmitter<PluginContainerEvents> {
 	id: string;
@@ -26,15 +16,6 @@ export default class PluginContainer extends TypedEmitter<PluginContainerEvents>
 	plugin: new (
 		...args: ConstructorParameters<typeof PluginShape>
 	) => PluginShape;
-
-	games: InstanceType<typeof GameShape>[] = [];
-	accountProviders: InstanceType<typeof AccountProviderShape>[] = [];
-	accountInstances: InstanceType<typeof AccountInstanceShape>[] = [];
-
-	gameStateListeners: Map<
-		InstanceType<typeof GameShape>,
-		(newState: GameState, oldState: GameState) => void
-	> = new Map();
 
 	instance: InstanceType<typeof PluginShape> | null = null;
 
@@ -60,31 +41,40 @@ export default class PluginContainer extends TypedEmitter<PluginContainerEvents>
 			this.emit("ready");
 		});
 
-		this.instance.on("games", (games) => {
-			this.gameStateListeners.forEach((listener, game) => {
-				game.off("state_changed", listener);
-			});
-			this.gameStateListeners.clear();
-
-			games.forEach((game) => {
-				const listener = (newState: GameState, oldState: GameState) =>
-					this.emit("game_state_changed", game, newState, oldState);
-				this.gameStateListeners.set(game, listener);
-				game.on("state_changed", listener);
-			});
-
-			this.games = games;
-			this.emit("games", games);
+		this.instance.on("game_providers_updated", () => {
+			this.emit("game_providers_updated");
 		});
 
-		this.instance.on("account_providers", (providers) => {
-			this.accountProviders = providers;
-			this.emit("account_providers", providers);
+		this.instance.on("game_instances_updated", () => {
+			this.emit("game_instances_updated");
 		});
 
-		this.instance.on("account_instances", (instances) => {
-			this.accountInstances = instances;
-			this.emit("account_instances", instances);
+		this.instance.on("account_providers_updated", () => {
+			this.emit("account_providers_updated");
 		});
+
+		this.instance.on("account_instances_updated", () => {
+			this.emit("account_instances_updated");
+		});
+	}
+
+	get gameProviders() {
+		return this.instance?.gameProviders || [];
+	}
+
+	get gameInstances() {
+		return this.instance?.gameInstances || [];
+	}
+
+	get gameProfiles() {
+		return this.instance?.gameProfiles || [];
+	}
+
+	get accountProviders() {
+		return this.instance?.accountProviders || [];
+	}
+
+	get accountInstances() {
+		return this.instance?.accountInstances || [];
 	}
 }

@@ -88,7 +88,7 @@ export default class MinecraftAccountInstance extends AccountInstanceShape<Minec
 		return new MinecraftAccountInstance(data);
 	}
 
-	providerId = "minecraft";
+	provider = "minecraft";
 	private data: MinecraftProfile;
 
 	constructor(data: MinecraftProfile) {

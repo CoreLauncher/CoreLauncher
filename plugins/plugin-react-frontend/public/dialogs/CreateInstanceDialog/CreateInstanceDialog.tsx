@@ -4,7 +4,7 @@ import { getDefaults, getRequired, type Option } from "@corelauncher/sdk";
 import { useEffect, useState } from "react";
 import { PlusSquareFill } from "react-bootstrap-icons";
 import {
-	type GameInstanceCreateOptionsResponseMessage,
+	type GameProfileCreateOptionsResponseMessage,
 	type Message,
 	MessageType,
 } from "../../../types/messages";
@@ -31,7 +31,7 @@ export default function CreateInstanceDialog({
 	if (!game) throw new Error("Game not found");
 
 	useEffect(() => {
-		Socket.instance.send(MessageType.GameInstanceCreateOptionsRequest, {
+		Socket.instance.send(MessageType.GameProfileCreateOptionsRequest, {
 			id: game.id,
 			options: values,
 		});
@@ -39,8 +39,8 @@ export default function CreateInstanceDialog({
 
 	useEffect(() => {
 		function onMessage(type: MessageType, message: Message) {
-			if (type !== MessageType.GameInstanceCreateOptionsResponse) return;
-			const data = message as GameInstanceCreateOptionsResponseMessage;
+			if (type !== MessageType.GameProfileCreateOptionsResponse) return;
+			const data = message as GameProfileCreateOptionsResponseMessage;
 			if (data.id !== game?.id) return;
 
 			const options = data.options;
@@ -83,7 +83,7 @@ export default function CreateInstanceDialog({
 	function onCreate() {
 		console.log("cretea", name, values);
 
-		Socket.instance.send(MessageType.GameInstanceCreate, {
+		Socket.instance.send(MessageType.GameProfileCreate, {
 			id: game!.id,
 			name: name,
 			options: values,

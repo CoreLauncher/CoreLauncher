@@ -1,8 +1,9 @@
 import { TypedEmitter } from "@corelauncher/typed-emitter";
-import type { GameState } from "../enums/GameState";
 import type { AccountInstanceShape } from "../shapes/AccountInstanceShape";
 import type { AccountProviderShape } from "../shapes/AccountProviderShape";
-import type { GameShape } from "../shapes/GameShape";
+import type { GameInstanceShape } from "../shapes/GameInstanceShape";
+import type { GameProfileShape } from "../shapes/GameProfileShape";
+import type { GameProviderShape } from "../shapes/GameProviderShape";
 import type { ShowDialogOptions } from "./ShowDialogOptions";
 
 interface PluginPortalEvents {
@@ -12,28 +13,24 @@ interface PluginPortalEvents {
 	ready: () => void;
 
 	/**
-	 * The list of registered games has changed.
-	 * @param games The updated list of games.
+	 * The list of registered game providers has changed.
 	 */
-	games: (games: GameShape[]) => void;
+	game_providers_updated: () => void;
 
-	game_state_changed: (
-		game: GameShape,
-		newState: GameState,
-		oldState: GameState,
-	) => void;
+	/**
+	 * The list of registered game instances has changed.
+	 */
+	game_instances_updated: () => void;
 
 	/**
 	 * The list of registered account providers has changed.
-	 * @param providers The updated list of account providers.
 	 */
-	account_providers: (providers: AccountProviderShape[]) => void;
+	account_providers_updated: () => void;
 
 	/**
-	 * The list of account instances has changed.
-	 * @param instances The updated list of account instances.
+	 * The list of registered account instances has changed.
 	 */
-	account_instances: (instances: AccountInstanceShape[]) => void;
+	account_instances_updated: () => void;
 
 	/**
 	 * This event emits when a second instance of the application is started.
@@ -77,18 +74,46 @@ export abstract class PluginPortal extends TypedEmitter<PluginPortalEvents> {
 	abstract getDataDirectory(): string;
 
 	/**
-	 * Returns a list of games from all plugins.
-	 * @returns {GameShape[]} An array of GameShape objects.
+	 * Returns a list of game providers from all plugins.
+	 * @returns {GameProviderShape[]} An array of GameProviderShape objects.
 	 */
-	abstract getGames(): GameShape[];
+	abstract getGameProviders(): GameProviderShape[];
+
+	/**
+	 * Retrieves a specific game provider by its ID.
+	 * @param id The ID of the game provider to retrieve.
+	 * @return {GameProviderShape} The GameProviderShape object representing the game provider.
+	 * @throws {Error} If the game provider with the specified ID does not exist.
+	 */
+	abstract getGameProvider(id: string): GameProviderShape;
+
+	/**
+	 * Returns a list of games from all plugins.
+	 * @returns {GameInstanceShape[]} An array of GameShape objects.
+	 */
+	abstract getGameInstances(): GameInstanceShape[];
 
 	/**
 	 * Retrieves a specific game by its ID.
 	 * @param id The ID of the game to retrieve.
-	 * @return {GameShape} The GameShape object representing the game.
+	 * @return {GameInstanceShape} The GameShape object representing the game.
 	 * @throws {Error} If the game with the specified ID does not exist.
 	 */
-	abstract getGame(id: string): GameShape;
+	abstract getGameInstance(id: string): GameInstanceShape;
+
+	/**
+	 * Returns a list of game profiles from all plugins.
+	 * @returns {GameProfileShape[]} An array of GameProfileShape objects.
+	 */
+	abstract getGameProfiles(): GameProfileShape[];
+
+	/**
+	 * Retrieves a specific game profile by its ID.
+	 * @param id The ID of the game profile to retrieve.
+	 * @return {GameProfileShape} The GameProfileShape object representing the game profile.
+	 * @throws {Error} If the game profile with the specified ID does not exist.
+	 */
+	abstract getGameProfile(id: string): GameProfileShape;
 
 	/**
 	 * Returns a list of account providers from all plugins.

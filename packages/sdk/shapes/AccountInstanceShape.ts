@@ -10,7 +10,11 @@ export abstract class AccountInstanceShape<
 	abstract id: string;
 	abstract name: string;
 	abstract avatarUrl?: string | null | undefined;
-	abstract providerId: string;
+
+	/**
+	 * Id of the AccountProvider that registered this instance
+	 */
+	abstract provider: string;
 
 	/**
 	 * Removes the account instance
@@ -22,7 +26,7 @@ export abstract class AccountInstanceShape<
 			id: this.id,
 			name: this.name,
 			avatarUrl: this.avatarUrl,
-			providerId: this.providerId,
+			provider: this.provider,
 		};
 	}
 }

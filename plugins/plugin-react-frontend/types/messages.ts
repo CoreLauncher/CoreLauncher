@@ -1,15 +1,15 @@
 import type {
 	AccountInstanceShape,
 	AccountProviderShape,
-	GameShape,
+	GameInstanceShape,
 	Option,
 	ShowDialogOptions,
 } from "@corelauncher/sdk";
 
 export enum MessageType {
-	GameInstanceCreateOptionsRequest = "GameInstanceCreateOptionsRequest",
-	GameInstanceCreateOptionsResponse = "GameInstanceCreateOptionsResponse",
-	GameInstanceCreate = "GameInstanceCreate",
+	GameProfileCreateOptionsRequest = "GameProfileCreateOptionsRequest",
+	GameProfileCreateOptionsResponse = "GameProfileCreateOptionsResponse",
+	GameProfileCreate = "GameProfileCreate",
 	WindowInteraction = "WindowInteraction",
 	ApplicationInformation = "ApplicationInformation",
 	GamesUpdated = "GamesUpdated",
@@ -24,17 +24,17 @@ export enum MessageType {
 	CloseDialogRequest = "CloseDialogRequest",
 }
 
-export type GameInstanceCreateOptionsRequestMessage = {
+export type GameProfileCreateOptionsRequestMessage = {
 	id: string;
 	options: Record<string, string | number | boolean>;
 };
 
-export type GameInstanceCreateOptionsResponseMessage = {
+export type GameProfileCreateOptionsResponseMessage = {
 	id: string;
 	options: Option[];
 };
 
-export type GameInstanceCreateMessage = {
+export type GameProfileCreateMessage = {
 	id: string;
 	name: string;
 	options: Record<string, string | number | boolean>;
@@ -50,7 +50,7 @@ export interface ApplicationInformationMessage {
 }
 
 export interface GamesUpdatedMessage {
-	games: ReturnType<GameShape["toJSON"]>[];
+	games: ReturnType<GameInstanceShape["toJSON"]>[];
 }
 
 export interface GameStateUpdatedMessage {
@@ -91,9 +91,9 @@ export type CloseDialogRequestMessage = {
 };
 
 export type Message =
-	| GameInstanceCreateOptionsRequestMessage
-	| GameInstanceCreateOptionsResponseMessage
-	| GameInstanceCreateMessage
+	| GameProfileCreateOptionsRequestMessage
+	| GameProfileCreateOptionsResponseMessage
+	| GameProfileCreateMessage
 	| WindowInteractionMessage
 	| ApplicationInformationMessage
 	| GamesUpdatedMessage
@@ -108,9 +108,9 @@ export type Message =
 	| CloseDialogRequestMessage;
 
 export type MessageTypeMap = {
-	[MessageType.GameInstanceCreateOptionsRequest]: GameInstanceCreateOptionsRequestMessage;
-	[MessageType.GameInstanceCreateOptionsResponse]: GameInstanceCreateOptionsResponseMessage;
-	[MessageType.GameInstanceCreate]: GameInstanceCreateMessage;
+	[MessageType.GameProfileCreateOptionsRequest]: GameProfileCreateOptionsRequestMessage;
+	[MessageType.GameProfileCreateOptionsResponse]: GameProfileCreateOptionsResponseMessage;
+	[MessageType.GameProfileCreate]: GameProfileCreateMessage;
 	[MessageType.WindowInteraction]: WindowInteractionMessage;
 	[MessageType.ApplicationInformation]: ApplicationInformationMessage;
 	[MessageType.GamesUpdated]: GamesUpdatedMessage;

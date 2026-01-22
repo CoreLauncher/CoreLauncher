@@ -21,20 +21,20 @@ export default class PluginPortal extends AbstractPluginPortal {
 			this.emit("ready");
 		});
 
-		this.pluginManager.on("games", (games) => {
-			this.emit("games", games);
+		this.pluginManager.on("game_providers_updated", () => {
+			this.emit("game_providers_updated");
 		});
 
-		this.pluginManager.on("game_state_changed", (game, newState, oldState) => {
-			this.emit("game_state_changed", game, newState, oldState);
+		this.pluginManager.on("game_instances_updated", () => {
+			this.emit("game_instances_updated");
 		});
 
-		this.pluginManager.on("account_providers", (providers) => {
-			this.emit("account_providers", providers);
+		this.pluginManager.on("account_providers_updated", () => {
+			this.emit("account_providers_updated");
 		});
 
-		this.pluginManager.on("account_instances", (instances) => {
-			this.emit("account_instances", instances);
+		this.pluginManager.on("account_instances_updated", () => {
+			this.emit("account_instances_updated");
 		});
 
 		this.pluginManager.on("app_instance", (args) => {
@@ -56,48 +56,55 @@ export default class PluginPortal extends AbstractPluginPortal {
 		return directory;
 	}
 
-	getGames() {
-		return this.pluginManager.plugins.flatMap((plugin) => plugin.games);
+	getGameProviders() {
+		return this.pluginManager.getGameProviders();
 	}
 
-	getGame(id: string) {
-		const game = this.pluginManager.plugins
-			.flatMap((plugin) => plugin.games)
-			.find((game) => game.id === id);
+	getGameProvider(id: string) {
+		const provider = this.pluginManager.getGameProvider(id);
+		if (!provider) throw new Error(`Game provider with id "${id}" not found.`);
+		return provider;
+	}
 
-		if (!game) throw new Error(`Game with ID ${id} does not exist`);
-		return game;
+	getGameInstances() {
+		return this.pluginManager.getGameInstances();
+	}
+
+	getGameInstance(id: string) {
+		const instance = this.pluginManager.getGameInstance(id);
+		if (!instance) throw new Error(`Game instance with id "${id}" not found.`);
+		return instance;
+	}
+
+	getGameProfiles() {
+		return this.pluginManager.getGameProfiles();
+	}
+
+	getGameProfile(id: string) {
+		const profile = this.pluginManager.getGameProfile(id);
+		if (!profile) throw new Error(`Game profile with id "${id}" not found.`);
+		return profile;
 	}
 
 	getAccountProviders() {
-		return this.pluginManager.plugins
-			.flatMap((plugin) => plugin.accountProviders)
-			.filter((provider) => provider);
+		return this.pluginManager.getAccountProviders();
 	}
 
 	getAccountProvider(id: string) {
-		const provider = this.pluginManager.plugins
-			.flatMap((plugin) => plugin.accountProviders)
-			.find((provider) => provider.id === id);
-
+		const provider = this.pluginManager.getAccountProvider(id);
 		if (!provider)
-			throw new Error(`Account provider with ID ${id} does not exist`);
+			throw new Error(`Account provider with id "${id}" not found.`);
 		return provider;
 	}
 
 	getAccountInstances() {
-		return this.pluginManager.plugins
-			.flatMap((plugin) => plugin.accountInstances)
-			.filter((instance) => instance);
+		return this.pluginManager.getAccountInstances();
 	}
 
 	getAccountInstance(id: string) {
-		const instance = this.pluginManager.plugins
-			.flatMap((plugin) => plugin.accountInstances)
-			.find((instance) => instance.id === id);
-
+		const instance = this.pluginManager.getAccountInstance(id);
 		if (!instance)
-			throw new Error(`Account instance with ID ${id} does not exist`);
+			throw new Error(`Account instance with id "${id}" not found.`);
 		return instance;
 	}
 

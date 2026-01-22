@@ -1,4 +1,4 @@
-import { GameShape, GameState, GameType } from "@corelauncher/sdk";
+import { GameFeature, GameInstanceShape, GameState } from "@corelauncher/sdk";
 import open from "open";
 
 type EpicGameOptions = {
@@ -7,14 +7,16 @@ type EpicGameOptions = {
 	processes: string[];
 };
 
-export default class EpicGame extends GameShape {
+export default class EpicGameInstance extends GameInstanceShape {
 	id: string;
 	name: string;
-	type = GameType.Normal;
+	features = [GameFeature.NormalLaunch];
 	state = GameState.Installed;
-	iconUrl: null = null;
-	bannerUrl: null = null;
-	capsuleUrl: null = null;
+	iconUrl = null;
+	bannerUrl = null;
+	capsuleUrl = null;
+
+	provider = "epic-games";
 
 	private processes: string[];
 	private rawId: string;
@@ -42,5 +44,13 @@ export default class EpicGame extends GameShape {
 		this.state = found ? GameState.Running : GameState.Installed;
 		if (oldState !== this.state)
 			this.emit("state_changed", this.state, oldState);
+	}
+
+	createProfileOptions() {
+		return [];
+	}
+
+	createProfile() {
+		return undefined;
 	}
 }

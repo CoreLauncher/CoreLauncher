@@ -2,8 +2,11 @@ import { join } from "node:path";
 import createDatabase from "@corelauncher/database";
 import { type PluginPortal, PluginShape } from "@corelauncher/sdk";
 import { migrations } from "./migrations";
+import type MinecraftAccountInstance from "./parts/MinecraftAccountInstance";
 import MinecraftAccountProvider from "./parts/MinecraftAccountProvider";
-import MinecraftGame from "./parts/MinecraftGame";
+import MinecraftGameInstance from "./parts/MinecraftGameInstance";
+import type MinecraftGameProfile from "./parts/MinecraftGameProfile";
+import { MinecraftGameProvider } from "./parts/MinecraftGameProvider";
 import type { Database } from "./types/database";
 
 async function noop() {}
@@ -14,6 +17,12 @@ export const name = "Minecraft";
 export const description = "Allows you to launch Minecraft from CoreLauncher.";
 
 export class Plugin extends PluginShape {
+	gameProviders: MinecraftGameProvider[] = [];
+	gameInstances: MinecraftGameInstance[] = [];
+	gameProfiles: MinecraftGameProfile[] = [];
+	accountProviders: MinecraftAccountProvider[] = [];
+	accountInstances: MinecraftAccountInstance[] = [];
+
 	constructor(portal: PluginPortal) {
 		super(portal);
 
@@ -23,7 +32,22 @@ export class Plugin extends PluginShape {
 				migrations,
 			);
 
+			const gameProvider = new MinecraftGameProvider();
+			this.gameProviders = [gameProvider];
+			this.emit("game_providers_updated");
+
+			const gameInstance = new MinecraftGameInstance();
+			this.gameInstances = [gameInstance];
+			this.emit("game_instances_updated");
+
+			gameInstance.on("game_profiles_updated", (profiles) => {
+				this.gameProfiles = profiles;
+				this.emit("game_profiles_updated");
+			});
+
 			const accountProvider = new MinecraftAccountProvider(database);
+			this.accountProviders = [accountProvider];
+			this.emit("account_providers_updated");
 
 			portal.on("protocol_launch", (url) => {
 				const code = url.searchParams.get("code");
@@ -35,12 +59,11 @@ export class Plugin extends PluginShape {
 				accountProvider.handleCode(code);
 			});
 
-			accountProvider.on("instances_updated", (instances) => {
-				this.emit("account_instances", instances);
+			accountProvider.on("account_instances_updated", (instances) => {
+				this.accountInstances = instances;
+				this.emit("account_instances_updated");
 			});
 
-			this.emit("games", [new MinecraftGame()]);
-			this.emit("account_providers", [accountProvider]);
 			this.emit("ready");
 		});
 	}

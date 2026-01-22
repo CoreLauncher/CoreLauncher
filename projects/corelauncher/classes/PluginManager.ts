@@ -1,5 +1,5 @@
 import type {
-	GameShape,
+	GameInstanceShape,
 	GameState,
 	PluginExport,
 	PluginShapeEvents,
@@ -11,7 +11,7 @@ interface PluginManagerEvents extends PluginShapeEvents {
 	app_instance: (args: string[]) => void;
 	protocol_launch: (url: URL) => void;
 	game_state_changed: (
-		game: InstanceType<typeof GameShape>,
+		game: InstanceType<typeof GameInstanceShape>,
 		newState: GameState,
 		oldState: GameState,
 	) => void;
@@ -46,32 +46,32 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 			this.emit("ready");
 		});
 
-		container.on("games", (games) => {
+		container.on("game_providers_updated", () => {
 			console.info(
-				`Plugin "${plugin.name}" (${plugin.id}) registered ${games.length} games.`,
+				`Plugin "${plugin.name}" (${plugin.id}) registered game providers.`,
 			);
-			this.emit("games", games);
+			this.emit("game_providers_updated");
 		});
 
-		container.on("game_state_changed", (game, newState, oldState) => {
+		container.on("game_instances_updated", () => {
 			console.info(
-				`Plugin "${plugin.name}" (${plugin.id}) reported state change "${oldState}" > "${newState}" for game "${game.name}" (${game.id}).`,
+				`Plugin "${plugin.name}" (${plugin.id}) registered game instances.`,
 			);
-			this.emit("game_state_changed", game, newState, oldState);
+			this.emit("game_instances_updated");
 		});
 
-		container.on("account_providers", (providers) => {
+		container.on("account_providers_updated", () => {
 			console.info(
-				`Plugin "${plugin.name}" (${plugin.id}) registered ${providers.length} account providers.`,
+				`Plugin "${plugin.name}" (${plugin.id}) registered account providers.`,
 			);
-			this.emit("account_providers", providers);
+			this.emit("account_providers_updated");
 		});
 
-		container.on("account_instances", (instances) => {
+		container.on("account_instances_updated", () => {
 			console.info(
-				`Plugin "${plugin.name}" (${plugin.id}) registered ${instances.length} account instances.`,
+				`Plugin "${plugin.name}" (${plugin.id}) registered account instances.`,
 			);
-			this.emit("account_instances", instances);
+			this.emit("account_instances_updated");
 		});
 	}
 
@@ -85,5 +85,45 @@ export default class PluginManager extends TypedEmitter<PluginManagerEvents> {
 
 	propagateProtocolLaunch(url: string) {
 		this.emit("protocol_launch", new URL(url));
+	}
+
+	getGameProviders() {
+		return this.plugins.flatMap((plugin) => plugin.accountProviders);
+	}
+
+	getGameProvider(id: string) {
+		return this.getGameProviders().find((provider) => provider.id === id);
+	}
+
+	getGameInstances() {
+		return this.plugins.flatMap((plugin) => plugin.gameInstances);
+	}
+
+	getGameInstance(id: string) {
+		return this.getGameInstances().find((game) => game.id === id);
+	}
+
+	getGameProfiles() {
+		return this.plugins.flatMap((plugin) => plugin.gameProfiles);
+	}
+
+	getGameProfile(id: string) {
+		return this.getGameProfiles().find((profile) => profile.id === id);
+	}
+
+	getAccountProviders() {
+		return this.plugins.flatMap((plugin) => plugin.accountProviders);
+	}
+
+	getAccountProvider(id: string) {
+		return this.getAccountProviders().find((provider) => provider.id === id);
+	}
+
+	getAccountInstances() {
+		return this.plugins.flatMap((plugin) => plugin.accountInstances);
+	}
+
+	getAccountInstance(id: string) {
+		return this.getAccountInstances().find((instance) => instance.id === id);
 	}
 }

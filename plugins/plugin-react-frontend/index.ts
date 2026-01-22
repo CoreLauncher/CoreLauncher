@@ -7,8 +7,8 @@ import temporaryDirectory from "temp-dir";
 import Server from "./classes/Server";
 import {
 	type DeleteAccountProviderConnectionMessage,
-	type GameInstanceCreateMessage,
-	type GameInstanceCreateOptionsRequestMessage,
+	type GameProfileCreateMessage,
+	type GameProfileCreateOptionsRequestMessage,
 	type LaunchGameMessage,
 	MessageType,
 	type OpenExternalLinkMessage,
@@ -30,6 +30,12 @@ export const description =
 	"A pretty frontend for CoreLauncher using React and a webview.";
 
 export class Plugin extends PluginShape {
+	gameProviders: never[] = [];
+	gameInstances: never[] = [];
+	gameProfiles: never[] = [];
+	accountProviders: never[] = [];
+	accountInstances: never[] = [];
+
 	private server: Server;
 	private rod: Rod;
 	private window: WebView;
@@ -79,25 +85,17 @@ export class Plugin extends PluginShape {
 			this.server.send(MessageType.CloseDialogRequest, options, false);
 		});
 
-		portal.on("games", () => {
+		portal.on("game_instances_updated", () => {
 			this.server.send(
 				MessageType.GamesUpdated,
 				{
-					games: portal.getGames().map((game) => game.toJSON()),
+					games: portal.getGameInstances().map((game) => game.toJSON()),
 				},
 				true,
 			);
 		});
 
-		portal.on("game_state_changed", (game, newState, oldState) => {
-			this.server.send(MessageType.GameStateUpdated, {
-				id: game.id,
-				newState,
-				oldState,
-			});
-		});
-
-		portal.on("account_providers", () => {
+		portal.on("account_providers_updated", () => {
 			this.server.send(
 				MessageType.AccountProvidersUpdated,
 				{
@@ -109,7 +107,7 @@ export class Plugin extends PluginShape {
 			);
 		});
 
-		portal.on("account_instances", () => {
+		portal.on("account_instances_updated", () => {
 			this.server.send(
 				MessageType.AccountInstancesUpdated,
 				{
@@ -133,29 +131,23 @@ export class Plugin extends PluginShape {
 
 		this.server.on("message", async (type, message) => {
 			switch (type) {
-				case MessageType.GameInstanceCreateOptionsRequest: {
-					const data = message as GameInstanceCreateOptionsRequestMessage;
-					const game = portal.getGame(data.id);
-					const instanceProvider = game.instanceProvider;
-					if (!instanceProvider)
-						throw new Error("Could not get instance provider");
-					const options = await instanceProvider.createOptions(data.options);
+				case MessageType.GameProfileCreateOptionsRequest: {
+					const data = message as GameProfileCreateOptionsRequestMessage;
+					const game = portal.getGameInstance(data.id);
+					const options = await game.createProfileOptions(data.options);
 
-					this.server.send(MessageType.GameInstanceCreateOptionsResponse, {
+					this.server.send(MessageType.GameProfileCreateOptionsResponse, {
 						id: data.id,
 						options: options,
 					});
 
 					break;
 				}
-				case MessageType.GameInstanceCreate: {
-					const data = message as GameInstanceCreateMessage;
-					const game = portal.getGame(data.id);
-					const instanceProvider = game.instanceProvider;
-					if (!instanceProvider)
-						throw new Error("Could not get instance provider");
+				case MessageType.GameProfileCreate: {
+					const data = message as GameProfileCreateMessage;
+					const game = portal.getGameInstance(data.id);
 
-					instanceProvider.create(data.name, data.options);
+					game.createProfile(data.name, data.options);
 					break;
 				}
 				case MessageType.WindowInteraction: {
@@ -174,7 +166,7 @@ export class Plugin extends PluginShape {
 				}
 				case MessageType.LaunchGame: {
 					const data = message as LaunchGameMessage;
-					const game = portal.getGame(data.id);
+					const game = portal.getGameInstance(data.id);
 					return game.launch();
 				}
 				case MessageType.StartAccountProviderConnection: {

@@ -15,19 +15,13 @@ import recolorSVG from "../../../packages/recolor-svg";
 import { QRLoginSession } from "../../../packages/steam-client";
 import indexHTML from "../public/index.html";
 import type { Database } from "../types/database";
+import SteamAccountInstance from "./SteamAccountInstance";
 
 const port = await getPort({ port: isProduction ? undefined : 4000 });
 const machineName = `${env.USERNAME}@${env.USERDOMAIN} (CoreLauncher)`;
 
-type AccountData = {
-	id: number;
-	name: string;
-	accessToken: string;
-	refreshToken: string;
-};
-
 interface SteamAccountProviderEvents {
-	connection: (data: AccountData) => void;
+	account_instances_updated: (instances: SteamAccountInstance[]) => void;
 }
 
 export class SteamAccountProvider extends AccountProviderShape<SteamAccountProviderEvents> {
@@ -41,6 +35,7 @@ export class SteamAccountProvider extends AccountProviderShape<SteamAccountProvi
 
 	private portal: PluginPortal;
 	private database: Kysely<Database>;
+	private instances: SteamAccountInstance[] = [];
 	private qrLoginSession: QRLoginSession | null = null;
 	private server: Bun.Server<never>;
 	constructor(portal: PluginPortal, database: Kysely<Database>) {
@@ -109,12 +104,15 @@ export class SteamAccountProvider extends AccountProviderShape<SteamAccountProvi
 								.returning("accounts.id")
 								.executeTakeFirstOrThrow();
 
-							this.emit("connection", {
-								id,
-								name: data.accountName,
-								accessToken: data.accessToken,
-								refreshToken: data.refreshToken,
-							});
+							this.instances.push(
+								new SteamAccountInstance({
+									id,
+									name: data.accountName,
+									accessToken: data.accessToken,
+									refreshToken: data.refreshToken,
+								}),
+							);
+							this.emit("account_instances_updated", this.instances);
 						});
 
 						return;
@@ -143,6 +141,16 @@ export class SteamAccountProvider extends AccountProviderShape<SteamAccountProvi
 
 		this.server = Bun.serve(serveOptions);
 		this.server.unref();
+
+		Promise.resolve().then(async () => {
+			this.instances = await database
+				.selectFrom("accounts")
+				.selectAll()
+				.execute()
+				.then((instances) => instances.map((i) => new SteamAccountInstance(i)));
+
+			this.emit("account_instances_updated", this.instances);
+		});
 	}
 
 	connect() {
