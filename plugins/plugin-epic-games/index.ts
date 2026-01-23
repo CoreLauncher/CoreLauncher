@@ -34,6 +34,10 @@ export class Plugin extends PluginShape {
 				},
 			);
 
+			gameProvider.on("game_state_changed", () => {
+				this.emit("game_instances_updated");
+			});
+
 			this.emit("ready");
 		});
 	}

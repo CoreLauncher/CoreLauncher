@@ -5,6 +5,7 @@ import EpicGameInstance from "./EpicGameInstance";
 
 interface EpicGameProviderEvents {
 	game_instances_updated: (instances: EpicGameInstance[]) => void;
+	game_state_changed: () => void;
 }
 
 export class EpicGameProvider extends GameProviderShape<EpicGameProviderEvents> {
@@ -28,11 +29,13 @@ export class EpicGameProvider extends GameProviderShape<EpicGameProviderEvents> 
 			this.emit("game_instances_updated", games);
 
 			setInterval(async () => {
+				let changed = false;
 				const tasks = await tasklist();
 				const executables = tasks.map((task) => task.imageName);
 				games.forEach((game) => {
-					game.updateState(executables);
+					changed = changed || game.updateState(executables);
 				});
+				if (changed) this.emit("game_state_changed");
 			}, 5000);
 		});
 	}

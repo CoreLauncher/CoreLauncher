@@ -9,9 +9,8 @@ import type { Option } from "../options";
 import type { MaybePromise } from "../utility/MaybePromise";
 import type { GameProfileShape } from "./GameProfileShape";
 
-interface GameShapeEvents {
-	state_changed: (newState: GameState, oldState: GameState) => void;
-}
+// biome-ignore lint/complexity/noBannedTypes: No
+type GameShapeEvents = {};
 
 export abstract class GameInstanceShape<
 	L extends ListenerSignature<L> = DefaultListener,

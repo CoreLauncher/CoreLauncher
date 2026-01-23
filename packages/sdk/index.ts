@@ -1,3 +1,5 @@
+export { BulkListener } from "./classes/BulkListener";
+
 export { DialogType } from "./enums/DialogType";
 export { GameFeature } from "./enums/GameFeature";
 export { GameState } from "./enums/GameState";

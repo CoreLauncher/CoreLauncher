@@ -38,12 +38,11 @@ export default class EpicGameInstance extends GameInstanceShape {
 		return true;
 	}
 
-	async updateState(executables: string[]) {
+	updateState(executables: string[]) {
 		const oldState = this.state;
 		const found = this.processes.some((proc) => executables.includes(proc));
 		this.state = found ? GameState.Running : GameState.Installed;
-		if (oldState !== this.state)
-			this.emit("state_changed", this.state, oldState);
+		return oldState !== this.state;
 	}
 
 	createProfileOptions() {

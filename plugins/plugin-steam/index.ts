@@ -1,6 +1,10 @@
 import { join } from "node:path";
 import createDatabase from "@corelauncher/database";
-import { type PluginPortal, PluginShape } from "@corelauncher/sdk";
+import {
+	BulkListener,
+	type PluginPortal,
+	PluginShape,
+} from "@corelauncher/sdk";
 import { migrations } from "./migrations";
 import type SteamAccountInstance from "./parts/SteamAccountInstance";
 import { SteamAccountProvider } from "./parts/SteamAccountProvider";
@@ -32,6 +36,10 @@ export class Plugin extends PluginShape {
 				migrations,
 			);
 
+			const statelistener = new BulkListener("state_changed", (game) => {
+				this.emit("game_instances_updated");
+			});
+
 			const gameProvider = new SteamGameProvider();
 			this.gameProviders = [gameProvider];
 			this.emit("game_providers_updated");
@@ -41,6 +49,7 @@ export class Plugin extends PluginShape {
 				(instances: SteamGameInstance[]) => {
 					this.gameInstances = instances;
 					this.emit("game_instances_updated");
+					statelistener.listen(instances);
 				},
 			);
 
@@ -51,6 +60,7 @@ export class Plugin extends PluginShape {
 			accountProvider.on("account_instances_updated", (instances) => {
 				this.accountInstances = instances;
 				this.emit("account_instances_updated");
+				gameProvider.registerAccounts(instances);
 			});
 
 			this.emit("ready");
