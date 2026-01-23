@@ -1,5 +1,5 @@
 import "./Header.css";
-import { Logo, WindowControls } from "@corelauncher/react";
+import { BrandingLogo, WindowControls } from "@corelauncher/react";
 import clsx from "clsx";
 import { MessageType } from "../../../../types/messages";
 import Socket from "../../../classes/Socket";
@@ -34,10 +34,7 @@ export default function Header({
 	return (
 		// biome-ignore lint/a11y/noStaticElementInteractions: Shut your piehole
 		<header className="Header" onMouseDown={onMouseDown}>
-			<div className="logo">
-				<Logo size={"2.3em"} />
-				<p>CORELAUNCHER</p>
-			</div>
+			<BrandingLogo size={"2em"} />
 
 			<div className="tabs">
 				<button

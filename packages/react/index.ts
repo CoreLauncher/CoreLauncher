@@ -1,7 +1,8 @@
 // Atoms
 export * from "./components/atoms/Block/Block";
+export * from "./components/atoms/BrandingLogo/BrandingLogo";
+export * from "./components/atoms/BrandingSymbol/BrandingSymbol";
 export * from "./components/atoms/CopyRight/CopyRight";
-export * from "./components/atoms/Logo/Logo";
 
 // Input
 export * from "./components/input/Button/Button";

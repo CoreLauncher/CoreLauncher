@@ -1,6 +1,6 @@
-import "./Logo.css";
+import "./BrandingSymbol.css";
 
-export function Logo({
+export function BrandingSymbol({
 	className = "",
 	size = 16,
 }: {

@@ -1,4 +1,5 @@
 @import "@fontsource/inter";
+@import "@fontsource-variable/rubik";
 
 @import "./colors.css";
 @import "./input.css";
@@ -12,6 +13,8 @@ body,
 
 * {
 	font-family: "Inter", sans-serif;
+	/*font-family:
+		ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";*/
 	color: var(--cl-color-text);
 
 	scrollbar-color: var(--cl-color-scrollbar) var(--cl-color-block);

@@ -1,8 +1,8 @@
 import {
+	BrandingSymbol,
 	Button,
 	CopyRight,
 	Link,
-	Logo,
 	NumberInput,
 	Style,
 	Text,
@@ -27,7 +27,7 @@ export default function App() {
 			<TextInput />
 			<TextInput placeholder="placeholder" />
 			<TextInput default="value" />
-			<Logo />
+			<BrandingSymbol />
 			{/*Text*/}
 			<Link url={"https://example.com"}>This is a link</Link>
 			<Text>

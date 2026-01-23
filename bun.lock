@@ -60,6 +60,7 @@
     "packages/react": {
       "name": "@corelauncher/react",
       "dependencies": {
+        "@fontsource-variable/rubik": "^5.2.8",
         "clsx": "^2.1.1",
         "react": "^19.2.3",
         "react-dom": "^19.2.3",
@@ -122,6 +123,7 @@
       "dependencies": {
         "@corelauncher/database": "*",
         "@corelauncher/file-to-dataurl": "*",
+        "@corelauncher/noop": "*",
         "@corelauncher/sdk": "*",
         "@xboxreplay/xboxlive-auth": "^5.1.0",
         "kysely": "^0.28.10",
@@ -322,6 +324,8 @@
     "@emnapi/runtime": ["@emnapi/runtime@1.8.1", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-mehfKSMWjjNol8659Z8KxEMrdSJDDot5SXMq00dM8BN4o+CLNXQ0xH2V7EchNHV4RmbZLmmPdEaXZc5H2FXmDg=="],
 
     "@emnapi/wasi-threads": ["@emnapi/wasi-threads@1.1.0", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-WI0DdZ8xFSbgMjR1sFsKABJ/C5OnRrjT06JXbZKexJGrDuPTzZdDYfFlsgcCXCyf+suG5QU2e/y1Wo2V/OapLQ=="],
+
+    "@fontsource-variable/rubik": ["@fontsource-variable/rubik@5.2.8", "", {}, "sha512-vGDExLzB4a2Fj9mca5LqNoA2ZKcU9o+x5FEBLte/nxYkCB9hOQwZS6ZlItUv+Ssn7YMzKauGuI/Po+YueFuZbg=="],
 
     "@fontsource/inter": ["@fontsource/inter@5.2.8", "", {}, "sha512-P6r5WnJoKiNVV+zvW2xM13gNdFhAEpQ9dQJHt3naLvfg+LkF2ldgSLiF4T41lf1SQCM9QmkqPTn4TH568IRagg=="],
 

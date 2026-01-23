@@ -1,4 +1,4 @@
-import { Logo, Style, TextMuted } from "@corelauncher/react";
+import { BrandingSymbol, Style, TextMuted } from "@corelauncher/react";
 import "./App.css";
 import { useEffect, useState } from "react";
 import { LockFill, Steam, X } from "react-bootstrap-icons";
@@ -41,7 +41,7 @@ export default function App() {
 			<div className="App">
 				<div className="header">
 					<div className="logo-container">
-						<Logo size={32} />
+						<BrandingSymbol size={32} />
 						<X size={20} />
 						<Steam size={32} />
 					</div>
