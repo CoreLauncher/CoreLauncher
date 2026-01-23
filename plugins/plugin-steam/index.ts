@@ -36,7 +36,7 @@ export class Plugin extends PluginShape {
 				migrations,
 			);
 
-			const statelistener = new BulkListener("state_changed", (game) => {
+			const statelistener = new BulkListener("state_changed", () => {
 				this.emit("game_instances_updated");
 			});
 
