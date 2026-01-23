@@ -8,6 +8,7 @@
 		"@types/react",
 		"@types/react-dom",
 		"@fontsource/inter",
+		"@fontsource-variable/rubik",
 		"@biomejs/biome",
 		"protoc",
 		"ts-proto"
