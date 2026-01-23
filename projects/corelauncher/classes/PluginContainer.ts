@@ -49,6 +49,10 @@ export default class PluginContainer extends TypedEmitter<PluginContainerEvents>
 			this.emit("game_instances_updated");
 		});
 
+		this.instance.on("game_profiles_updated", () => {
+			this.emit("game_profiles_updated");
+		});
+
 		this.instance.on("account_providers_updated", () => {
 			this.emit("account_providers_updated");
 		});

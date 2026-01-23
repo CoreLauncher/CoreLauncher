@@ -29,6 +29,10 @@ export default class PluginPortal extends AbstractPluginPortal {
 			this.emit("game_instances_updated");
 		});
 
+		this.pluginManager.on("game_profiles_updated", () => {
+			this.emit("game_profiles_updated");
+		});
+
 		this.pluginManager.on("account_providers_updated", () => {
 			this.emit("account_providers_updated");
 		});

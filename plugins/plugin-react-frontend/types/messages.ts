@@ -2,6 +2,7 @@ import type {
 	AccountInstanceShape,
 	AccountProviderShape,
 	GameInstanceShape,
+	GameProfileShape,
 	Option,
 	ShowDialogOptions,
 } from "@corelauncher/sdk";
@@ -13,12 +14,14 @@ export enum MessageType {
 	WindowInteraction = "WindowInteraction",
 	ApplicationInformation = "ApplicationInformation",
 	GamesUpdated = "GamesUpdated",
+	ProfilesUpdated = "ProfilesUpdated",
 	GameStateUpdated = "GameStateUpdated",
 	AccountInstancesUpdated = "AccountInstancesUpdated",
 	AccountProvidersUpdated = "AccountProvidersUpdated",
 	StartAccountProviderConnection = "StartAccountProviderConnection",
 	DeleteAccountProviderConnection = "DeleteAccountProviderConnection",
 	LaunchGame = "LaunchGame",
+	LaunchProfile = "LaunchProfile",
 	OpenExternalLink = "OpenExternalLink",
 	ShowDialogRequest = "ShowDialogRequest",
 	CloseDialogRequest = "CloseDialogRequest",
@@ -53,6 +56,10 @@ export interface GamesUpdatedMessage {
 	games: ReturnType<GameInstanceShape["toJSON"]>[];
 }
 
+export interface ProfilesUpdatedMessage {
+	profiles: ReturnType<GameProfileShape["toJSON"]>[];
+}
+
 export interface GameStateUpdatedMessage {
 	id: string;
 	newState: string;
@@ -80,6 +87,10 @@ export type LaunchGameMessage = {
 	id: string;
 };
 
+export type LaunchProfileMessage = {
+	id: string;
+};
+
 export type OpenExternalLinkMessage = {
 	url: string;
 };
@@ -97,12 +108,14 @@ export type Message =
 	| WindowInteractionMessage
 	| ApplicationInformationMessage
 	| GamesUpdatedMessage
+	| ProfilesUpdatedMessage
 	| GameStateUpdatedMessage
 	| AccountInstancesUpdatedMessage
 	| AccountProvidersUpdatedMessages
 	| StartAccountProviderConnectionMessage
 	| DeleteAccountProviderConnectionMessage
 	| LaunchGameMessage
+	| LaunchProfileMessage
 	| OpenExternalLinkMessage
 	| ShowDialogRequestMessage
 	| CloseDialogRequestMessage;
@@ -114,12 +127,14 @@ export type MessageTypeMap = {
 	[MessageType.WindowInteraction]: WindowInteractionMessage;
 	[MessageType.ApplicationInformation]: ApplicationInformationMessage;
 	[MessageType.GamesUpdated]: GamesUpdatedMessage;
+	[MessageType.ProfilesUpdated]: ProfilesUpdatedMessage;
 	[MessageType.GameStateUpdated]: GameStateUpdatedMessage;
 	[MessageType.AccountInstancesUpdated]: AccountInstancesUpdatedMessage;
 	[MessageType.AccountProvidersUpdated]: AccountProvidersUpdatedMessages;
 	[MessageType.StartAccountProviderConnection]: StartAccountProviderConnectionMessage;
 	[MessageType.DeleteAccountProviderConnection]: DeleteAccountProviderConnectionMessage;
 	[MessageType.LaunchGame]: LaunchGameMessage;
+	[MessageType.LaunchProfile]: LaunchProfileMessage;
 	[MessageType.OpenExternalLink]: OpenExternalLinkMessage;
 	[MessageType.ShowDialogRequest]: ShowDialogRequestMessage;
 	[MessageType.CloseDialogRequest]: CloseDialogRequestMessage;

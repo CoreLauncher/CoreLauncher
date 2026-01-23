@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { dataToDataURL } from "@corelauncher/file-to-dataurl";
+import { noop } from "@corelauncher/noop";
 import {
 	GameFeature,
 	GameInstanceShape,
@@ -7,8 +8,10 @@ import {
 	type Option,
 	OptionType,
 } from "@corelauncher/sdk";
+import type { Kysely } from "kysely";
 import capsuleSVG from "../assets/minecraft-game-capsule.svg";
 import logoSVG from "../assets/minecraft-game-logo.svg";
+import type { Database } from "../types/database";
 import { fetchGameVersions, fetchLoaderVersions } from "../utility/versions";
 import MinecraftGameProfile from "./MinecraftGameProfile";
 
@@ -41,28 +44,45 @@ export default class MinecraftGameInstance extends GameInstanceShape<MinecraftGa
 
 	provider = "minecraft";
 
+	private database: Kysely<Database>;
+	private profiles: MinecraftGameProfile[] = [];
+	constructor(database: Kysely<Database>) {
+		super();
+
+		this.database = database;
+
+		noop().then(async () => {
+			const data = await this.database
+				.selectFrom("profiles")
+				.selectAll()
+				.execute();
+
+			this.profiles = data.map((profile) => new MinecraftGameProfile(profile));
+			this.emit("game_profiles_updated", this.profiles);
+		});
+	}
+
 	async launch() {
 		console.log("Launching Minecraft Java Edition...");
 		return true;
 	}
 
-	async createProfileOptions(values: Partial<CreateProfileOptions>) {
-		if (!values.loader_type) values.loader_type = "vanilla";
-		const gameVersions = await fetchGameVersions(values.loader_type);
-		if (!values.game_version)
-			values.game_version = gameVersions.find(
+	async createProfileOptions(options: Partial<CreateProfileOptions>) {
+		if (!options.loader_type) options.loader_type = "vanilla";
+		const gameVersions = await fetchGameVersions(options.loader_type);
+		if (!options.game_version)
+			options.game_version = gameVersions.find(
 				(version) => version.stable,
 			)!.name;
 		const loaderVersions = await fetchLoaderVersions(
-			values.loader_type!,
-			values.game_version!,
+			options.loader_type!,
+			options.game_version!,
 		);
-		if (!values.loader_version)
-			values.loader_version = loaderVersions.find(
+		if (!options.loader_version)
+			options.loader_version = loaderVersions.find(
 				(version) => version.stable,
 			)!.name;
 
-		console.log(values);
 		return [
 			{
 				type: OptionType.OptionRow,
@@ -71,7 +91,7 @@ export default class MinecraftGameInstance extends GameInstanceShape<MinecraftGa
 						type: OptionType.Dropdown,
 						label: "Type",
 						id: "loader_type",
-						default: values.loader_type,
+						default: options.loader_type,
 						required: true,
 						values: [
 							{ label: "Vanilla", value: "vanilla" },
@@ -83,7 +103,7 @@ export default class MinecraftGameInstance extends GameInstanceShape<MinecraftGa
 						label: "Game version",
 						id: "game_version",
 						required: true,
-						default: values.game_version,
+						default: options.game_version,
 						values: gameVersions
 							.filter((version) => version.stable)
 							.map((version) => ({ label: version.name, value: version.name })),
@@ -92,9 +112,9 @@ export default class MinecraftGameInstance extends GameInstanceShape<MinecraftGa
 						type: OptionType.Dropdown,
 						label: "Loader version",
 						id: "loader_version",
-						disabled: values.loader_type === "vanilla",
+						disabled: options.loader_type === "vanilla",
 						required: true,
-						default: values.loader_version,
+						default: options.loader_version,
 						values: loaderVersions.map((version) => ({
 							label: version.name,
 							value: version.name,
@@ -134,7 +154,27 @@ export default class MinecraftGameInstance extends GameInstanceShape<MinecraftGa
 		] as Option[];
 	}
 
-	async createProfile() {
-		return new MinecraftGameProfile();
+	async createProfile(name: string, options: CreateProfileOptions) {
+		console.log(name, options);
+		const data = await this.database
+			.insertInto("profiles")
+			.values({
+				name: name,
+				gameVersion: options.game_version,
+				loaderType: options.loader_type,
+				loaderVersion:
+					options.loader_version === "N/A" ? null : options.loader_version,
+				ramAmount: options.ram_amount,
+				ramUnit: options.ram_unit,
+			})
+			.returningAll()
+			.execute();
+
+		console.log(data);
+
+		const profile = new MinecraftGameProfile(data[0]!);
+		this.profiles.push(profile);
+		this.emit("game_profiles_updated", this.profiles);
+		return profile;
 	}
 }

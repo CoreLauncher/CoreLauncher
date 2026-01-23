@@ -23,6 +23,11 @@ interface PluginPortalEvents {
 	game_instances_updated: () => void;
 
 	/**
+	 * The list of registered game profiles has changed.
+	 */
+	game_profiles_updated: () => void;
+
+	/**
 	 * The list of registered account providers has changed.
 	 */
 	account_providers_updated: () => void;

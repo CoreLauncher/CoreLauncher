@@ -33,7 +33,7 @@ export abstract class GameInstanceShape<
 	 * Launches the game.
 	 * @returns {boolean | string | Promise<boolean | string>} A boolean indicating success or a string failure message.
 	 */
-	abstract launch(): boolean | string | Promise<boolean | string>;
+	abstract launch(): MaybePromise<boolean | string>;
 
 	/**
 	 * Retrieves the profile creation options for this game.

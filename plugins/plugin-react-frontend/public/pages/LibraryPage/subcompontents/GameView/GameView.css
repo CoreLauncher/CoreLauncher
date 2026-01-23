@@ -1,4 +1,8 @@
 .GameView {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+
 	width: 100%;
 
 	.banner {
@@ -13,5 +17,33 @@
 		background-repeat: repeat-x;
 		background-position: center;
 		background-size: cover;
+	}
+
+	.features {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		height: fit-content;
+
+		.profiles {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+
+			.profiles-list {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				padding-bottom: 4px;
+				overflow-x: auto;
+
+				.profile {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: space-between;
+				}
+			}
+		}
 	}
 }

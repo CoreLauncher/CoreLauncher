@@ -36,7 +36,7 @@ export class Plugin extends PluginShape {
 			this.gameProviders = [gameProvider];
 			this.emit("game_providers_updated");
 
-			const gameInstance = new MinecraftGameInstance();
+			const gameInstance = new MinecraftGameInstance(database);
 			this.gameInstances = [gameInstance];
 			this.emit("game_instances_updated");
 

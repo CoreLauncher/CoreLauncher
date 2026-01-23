@@ -1,28 +1,19 @@
 import { type Icon, PlayFill } from "react-bootstrap-icons";
 import "./PlayBar.css";
 import { GameFeature } from "@corelauncher/sdk";
-import { useState } from "react";
-import { MessageType } from "../../../../../types/messages";
-import Socket from "../../../../classes/Socket";
-import CreateInstanceDialog from "../../../../dialogs/CreateInstanceDialog/CreateInstanceDialog";
 import { useGameStore } from "../../../../stores/GameStore";
 
 export default function PlayBar({
 	meta = [],
 	gameId,
+	onPlay,
 }: {
 	meta?: { icon: Icon; title: string; content: string }[];
 	gameId: string;
+	onPlay: () => void;
 }) {
-	const [isCreatingInstance, setIsCreatingInstance] = useState(false);
 	const game = useGameStore((state) => state.getGame(gameId));
 	if (!game) throw new Error(`Game with ID ${gameId} not found`);
-
-	function onPlay() {
-		return Socket.instance.send(MessageType.LaunchGame, {
-			id: gameId,
-		});
-	}
 
 	return (
 		<div className="PlayBar">
@@ -42,12 +33,6 @@ export default function PlayBar({
 					</div>
 				))}
 			</div>
-			{isCreatingInstance && (
-				<CreateInstanceDialog
-					gameId={gameId}
-					onClose={() => setIsCreatingInstance(false)}
-				/>
-			)}
 		</div>
 	);
 }

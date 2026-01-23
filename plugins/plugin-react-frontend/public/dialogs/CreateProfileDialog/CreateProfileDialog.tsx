@@ -1,5 +1,5 @@
 import { Button, Dialog, TextInput } from "@corelauncher/react";
-import "./CreateInstanceDialog.css";
+import "./CreateProfileDialog.css";
 import { getDefaults, getRequired, type Option } from "@corelauncher/sdk";
 import { useEffect, useState } from "react";
 import { PlusSquareFill } from "react-bootstrap-icons";
@@ -81,8 +81,6 @@ export default function CreateInstanceDialog({
 	}
 
 	function onCreate() {
-		console.log("cretea", name, values);
-
 		Socket.instance.send(MessageType.GameProfileCreate, {
 			id: game!.id,
 			name: name,
@@ -94,15 +92,15 @@ export default function CreateInstanceDialog({
 
 	return (
 		<Dialog
-			title={`Create ${game.name} instance`}
+			title={`Create ${game.name} profile`}
 			icon={PlusSquareFill}
 			height={600}
 			width={500}
 			onClose={onClose}
 		>
-			<div className="CreateInstanceDialog">
+			<div className="CreateProfileDialog">
 				<TextInput
-					label="Instance Name"
+					label="Profile name"
 					required
 					onChange={(value) => setName(value)}
 				/>
@@ -116,8 +114,7 @@ export default function CreateInstanceDialog({
 					disabled={!requiredFilled || name === ""}
 					onClick={onCreate}
 				>
-					{" "}
-					Create Instance{" "}
+					Create profile
 				</Button>
 			</div>
 		</Dialog>

@@ -10,6 +10,7 @@ import {
 	type GameProfileCreateMessage,
 	type GameProfileCreateOptionsRequestMessage,
 	type LaunchGameMessage,
+	type LaunchProfileMessage,
 	MessageType,
 	type OpenExternalLinkMessage,
 	type StartAccountProviderConnectionMessage,
@@ -95,6 +96,16 @@ export class Plugin extends PluginShape {
 			);
 		});
 
+		portal.on("game_profiles_updated", () => {
+			this.server.send(
+				MessageType.ProfilesUpdated,
+				{
+					profiles: portal.getGameProfiles().map((profile) => profile.toJSON()),
+				},
+				true,
+			);
+		});
+
 		portal.on("account_providers_updated", () => {
 			this.server.send(
 				MessageType.AccountProvidersUpdated,
@@ -168,6 +179,11 @@ export class Plugin extends PluginShape {
 					const data = message as LaunchGameMessage;
 					const game = portal.getGameInstance(data.id);
 					return game.launch();
+				}
+				case MessageType.LaunchProfile: {
+					const data = message as LaunchProfileMessage;
+					const profile = portal.getGameProfile(data.id);
+					return profile.launch();
 				}
 				case MessageType.StartAccountProviderConnection: {
 					const data = message as StartAccountProviderConnectionMessage;
