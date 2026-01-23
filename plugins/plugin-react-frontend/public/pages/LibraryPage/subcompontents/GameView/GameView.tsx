@@ -1,4 +1,10 @@
-import { Activity, ClockHistory, PlayFill, Plus } from "react-bootstrap-icons";
+import {
+	Activity,
+	ClockHistory,
+	PlayFill,
+	Plus,
+	ThreeDotsVertical,
+} from "react-bootstrap-icons";
 
 import PlayBar from "../PlayBar/PlayBar";
 import "./GameView.css";
@@ -68,12 +74,17 @@ export default function GameView({ gameId }: { gameId: string }) {
 											<Text>{profile.name}</Text>
 											<TextMuted>{profile.subname}</TextMuted>
 										</div>
-										<Button
-											style="success"
-											onClick={() => onLaunchProfile(profile.id)}
-										>
-											<PlayFill /> Play
-										</Button>
+										<div className="actions">
+											<Button
+												style="success"
+												onClick={() => onLaunchProfile(profile.id)}
+											>
+												<PlayFill /> Play
+											</Button>
+											<Button onClick={() => onLaunchProfile(profile.id)}>
+												<ThreeDotsVertical /> Edit
+											</Button>
+										</div>
 									</Block>
 								))}
 						</div>
