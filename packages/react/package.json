@@ -3,7 +3,7 @@
 	"main": "./index.ts",
 	"dependencies": {
 		"react": "^19.2.3",
-		"react-dom": "^19.2.3",
+		"react-dom": "^19.2.4",
 		"clsx": "^2.1.1",
 		"@fontsource-variable/rubik": "^5.2.8"
 	},
