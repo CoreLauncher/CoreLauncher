@@ -9,7 +9,7 @@
 		"@corelauncher/file-to-dataurl": "*",
 		"@fontsource/inter": "^5.2.8",
 		"get-port": "^7.1.0",
-		"react": "^19.2.3",
+		"react": "^19.2.4",
 		"react-dom": "^19.2.3",
 		"react-bootstrap-icons": "^1.11.6",
 		"temp-dir": "^3.0.0",
