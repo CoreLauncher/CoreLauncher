@@ -8,7 +8,7 @@
 		"p-event": "^7.1.0",
 		"binarykvparser": "^2.3.0",
 		"@node-steam/vdf": "^2.2.0",
-		"@bufbuild/protobuf": "^2.10.2",
+		"@bufbuild/protobuf": "^2.11.0",
 		"native-reg": "^1.1.1",
 		"jsonschema": "^1.5.0"
 	},
