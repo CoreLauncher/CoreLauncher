@@ -9,6 +9,7 @@ import {
 	OptionType,
 } from "@corelauncher/sdk";
 import type { Kysely } from "kysely";
+import type { MinecraftPlugin } from "..";
 import capsuleSVG from "../assets/minecraft-game-capsule.svg";
 import logoSVG from "../assets/minecraft-game-logo.svg";
 import type { Database } from "../types/database";
@@ -44,11 +45,13 @@ export default class MinecraftGameInstance extends GameInstanceShape<MinecraftGa
 
 	provider = "minecraft";
 
+	private plugin: MinecraftPlugin;
 	private database: Kysely<Database>;
 	private profiles: MinecraftGameProfile[] = [];
-	constructor(database: Kysely<Database>) {
+	constructor(plugin: MinecraftPlugin, database: Kysely<Database>) {
 		super();
 
+		this.plugin = plugin;
 		this.database = database;
 
 		noop().then(async () => {
@@ -57,7 +60,9 @@ export default class MinecraftGameInstance extends GameInstanceShape<MinecraftGa
 				.selectAll()
 				.execute();
 
-			this.profiles = data.map((profile) => new MinecraftGameProfile(profile));
+			this.profiles = data.map(
+				(profile) => new MinecraftGameProfile(this.plugin, profile),
+			);
 			this.emit("game_profiles_updated", this.profiles);
 		});
 	}
@@ -172,7 +177,7 @@ export default class MinecraftGameInstance extends GameInstanceShape<MinecraftGa
 
 		console.log(data);
 
-		const profile = new MinecraftGameProfile(data[0]!);
+		const profile = new MinecraftGameProfile(this.plugin, data[0]!);
 		this.profiles.push(profile);
 		this.emit("game_profiles_updated", this.profiles);
 		return profile;

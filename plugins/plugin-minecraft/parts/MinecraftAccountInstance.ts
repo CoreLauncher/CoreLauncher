@@ -117,6 +117,24 @@ export default class MinecraftAccountInstance extends AccountInstanceShape<Minec
 		this.emit("disconnect");
 	}
 
+	private async refresh() {
+		if (Date.now() < this.data.expiresAt - 5 * 60 * 1000) return;
+
+		const liveResult = await live.refreshAccessToken(
+			this.data.refreshToken,
+			CLIENT_ID,
+			SCOPE.join(" "),
+		);
+
+		this.data.accessToken = liveResult.access_token;
+		this.data.refreshToken = liveResult.refresh_token!;
+		this.data.expiresAt = Date.now() + liveResult.expires_in * 1000;
+	}
+
+	async fetchProfile() {
+		return await retrieveMinecraftProfile(this.data.accessToken);
+	}
+
 	/**
 	 * Exports all the data required to save
 	 * @returns save data

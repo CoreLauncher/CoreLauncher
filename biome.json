@@ -9,10 +9,10 @@
 		"ignoreUnknown": false,
 		"includes": [
 			"**",
-			"!**/rod_data",
-			"!**/node_modules",
 			"!**/.bundle",
+			"!**/.corelauncher",
 			"!**/.dist-handoff",
+			"!**/node_modules",
 			"!**/packages/steam-client/protobuf/generated"
 		]
 	},
