@@ -14,7 +14,7 @@
 		"uqr": "^0.1.2",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
-		"kysely": "^0.28.10",
+		"kysely": "^0.28.11",
 		"clsx": "^2.1.1"
 	},
 	"devDependencies": {
