@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import createDatabase from "@corelauncher/database";
 import { type PluginPortal, PluginShape } from "@corelauncher/sdk";
+import { ensureDirSync } from "fs-extra";
 import { migrations } from "./migrations";
 import type MinecraftAccountInstance from "./parts/MinecraftAccountInstance";
 import MinecraftAccountProvider from "./parts/MinecraftAccountProvider";
@@ -10,9 +11,14 @@ import type MinecraftGameProfile from "./parts/MinecraftGameProfile";
 import { MinecraftGameProvider } from "./parts/MinecraftGameProvider";
 import type { AssetIndex } from "./types/asset-index";
 import type { Database } from "./types/database";
+import type {
+	JavaComponentIndex,
+	JavaComponentManifest,
+} from "./types/java-components";
 import type { Rule } from "./types/rule";
 import type { MinecraftVersionManifest } from "./types/version-manifest";
-import { getOS } from "./utility/get-os";
+import { fillTemplates } from "./utility/fill-templates";
+import { getComponentOS, getOS } from "./utility/get-os";
 import { hashFile } from "./utility/hash-file";
 
 async function noop() {}
@@ -31,10 +37,37 @@ export class MinecraftPlugin extends PluginShape {
 	accountProviders: MinecraftAccountProvider[] = [];
 	accountInstances: MinecraftAccountInstance[] = [];
 
+	assetsDirectory: string;
+	instancesDirectory: string;
+	javaDirectory: string;
+	librariesDirectory: string;
+	nativesDirectory: string;
+	versionsDirectory: string;
+
 	constructor(portal: PluginPortal) {
 		super(portal);
 
 		this.portal = portal;
+
+		const dataDirectory = this.portal.getDataDirectory();
+
+		this.assetsDirectory = join(dataDirectory, "assets");
+		ensureDirSync(this.assetsDirectory);
+
+		this.instancesDirectory = join(dataDirectory, "instances");
+		ensureDirSync(this.instancesDirectory);
+
+		this.javaDirectory = join(dataDirectory, "java");
+		ensureDirSync(this.javaDirectory);
+
+		this.librariesDirectory = join(dataDirectory, "libraries");
+		ensureDirSync(this.librariesDirectory);
+
+		this.nativesDirectory = join(dataDirectory, "natives");
+		ensureDirSync(this.nativesDirectory);
+
+		this.versionsDirectory = join(dataDirectory, "versions");
+		ensureDirSync(this.versionsDirectory);
 
 		noop().then(async () => {
 			const database = await createDatabase<Database>(
@@ -186,6 +219,59 @@ export class MinecraftPlugin extends PluginShape {
 		}
 	}
 
+	async fetchJavaComponentIndex() {
+		const response = await fetch(
+			"https://launchermeta.mojang.com/v1/products/java-runtime/2ec0cc96c44e5a76b9c8b7c39df7210883d12871/all.json",
+		);
+		const data = await response.json();
+		return data as JavaComponentIndex;
+	}
+
+	async fetchJavaComponentManifest(component: string) {
+		const file = join(this.javaDirectory, component, "manifest.json");
+
+		if (!existsSync(file)) {
+			const index = await this.fetchJavaComponentIndex();
+			const os = getComponentOS();
+			const download = index[os]?.[component]?.[0];
+
+			if (!download) throw new Error("Java component not found");
+
+			console.log(download);
+
+			const response = await fetch(download.manifest.url);
+			const content = await response.text();
+			await Bun.write(file, content);
+		}
+
+		const data = await Bun.file(file).json();
+		return data as JavaComponentManifest;
+	}
+
+	async downloadJava(component: string) {
+		const directory = join(this.javaDirectory, component);
+		ensureDirSync(directory);
+
+		const manifest = await this.fetchJavaComponentManifest(component);
+
+		for (const [path, info] of Object.entries(manifest.files)) {
+			if (info.type === "directory") continue;
+			const file = join(directory, path);
+			const url = info.downloads.raw.url;
+
+			if (existsSync(file)) continue;
+
+			const response = await fetch(url);
+			const bytes = await response.bytes();
+
+			await Bun.write(file, bytes);
+
+			console.log(file, path, info);
+		}
+
+		return directory;
+	}
+
 	async downloadLibraries(manifest: MinecraftVersionManifest) {
 		const libraries = manifest.libraries;
 		const paths = [];
@@ -231,6 +317,88 @@ export class MinecraftPlugin extends PluginShape {
 		}
 
 		return file;
+	}
+
+	async generateArguments(
+		manifest: MinecraftVersionManifest,
+		account: MinecraftAccountInstance,
+		directory: string,
+		libraries: string[],
+		client: string,
+	) {
+		const profile = await account.fetchProfile();
+
+		const templates = {
+			version_type: manifest.type,
+			version_name: manifest.id,
+
+			auth_uuid: profile.id,
+			auth_xuid: "",
+			auth_access_token: profile.accessToken,
+			auth_player_name: profile.username,
+
+			assets_index_name: manifest.assets,
+			assets_root: this.assetsDirectory,
+
+			launcher_version: "1.0.0",
+			launcher_name: "CoreLauncher",
+
+			game_directory: directory,
+			natives_directory: `${this.portal.getDataDirectory()}/natives/`,
+
+			clientid: "",
+			classpath: [...libraries, client].join(";"),
+		};
+
+		return [
+			...manifest.arguments.jvm,
+			manifest.mainClass,
+			...manifest.arguments.game,
+		]
+			.filter((argument) => {
+				if (typeof argument === "string") return true;
+				return this.evaluateRules(argument.rules);
+			})
+			.flatMap((argument) => {
+				if (typeof argument === "string") return argument;
+				return argument.value;
+			})
+			.map((arg) => fillTemplates(arg, templates));
+	}
+
+	async launchMinecraft(
+		directory: string,
+		versions: {
+			game: string;
+			loader: string | null;
+			type: string;
+		},
+	) {
+		const manifest = await this.downloadVersionManifest(versions.game);
+		const assetIndex = await this.downloadAssetIndex(manifest);
+		await this.downloadAssets(assetIndex);
+		const libraries = await this.downloadLibraries(manifest);
+		const java = await this.downloadJava(manifest.javaVersion.component);
+		const client = await this.downloadClient(manifest);
+
+		const account = this.getAccount();
+		if (!account) throw new Error("No Minecraft account selected");
+
+		ensureDirSync(directory);
+
+		const processArguments = await this.generateArguments(
+			manifest,
+			account,
+			directory,
+			libraries,
+			client,
+		);
+
+		Bun.spawnSync({
+			cmd: [join(java, "bin/java.exe"), ...processArguments],
+			cwd: directory,
+			stdio: ["inherit", "inherit", "inherit"],
+		});
 	}
 }
 

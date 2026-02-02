@@ -36,7 +36,9 @@ export default class MinecraftAccountProvider extends AccountProviderShape<Minec
 				.execute();
 
 			const instances = await Promise.all(
-				rows.map((data) => MinecraftAccountInstance.fromDatabase(data)),
+				rows.map((data) =>
+					MinecraftAccountInstance.fromDatabase(this.database, data),
+				),
 			);
 
 			instances.forEach((instance) => {
@@ -51,7 +53,10 @@ export default class MinecraftAccountProvider extends AccountProviderShape<Minec
 	}
 
 	async handleCode(code: string) {
-		const instance = await MinecraftAccountInstance.fromCode(code);
+		const instance = await MinecraftAccountInstance.fromCode(
+			this.database,
+			code,
+		);
 		if (this.instances.find((i) => i.id === instance.id)) return;
 
 		await this.database

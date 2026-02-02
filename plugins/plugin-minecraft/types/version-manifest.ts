@@ -27,7 +27,7 @@ export type MinecraftVersionManifest = {
 		client: Download;
 	};
 	id: string;
-	javaVersion: unknown;
+	javaVersion: { component: string; majorVersion: number };
 	libraries: {
 		name: string;
 		downloads: {

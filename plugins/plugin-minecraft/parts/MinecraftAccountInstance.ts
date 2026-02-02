@@ -1,5 +1,6 @@
 import { AccountInstanceShape } from "@corelauncher/sdk";
 import { live, xnet } from "@xboxreplay/xboxlive-auth";
+import type { Kysely } from "kysely";
 import {
 	CLIENT_ID,
 	MINECRAFT_LOGIN_URL,
@@ -7,6 +8,7 @@ import {
 	REDIRECT_URI,
 	SCOPE,
 } from "../constants";
+import type { Database } from "../types/database";
 
 type MinecraftProfile = {
 	id: string;
@@ -63,7 +65,7 @@ interface MinecraftAccountInstanceEvents {
 }
 
 export default class MinecraftAccountInstance extends AccountInstanceShape<MinecraftAccountInstanceEvents> {
-	static async fromCode(code: string) {
+	static async fromCode(database: Kysely<Database>, code: string) {
 		const liveResult = await live.exchangeCodeForAccessToken(
 			code,
 			CLIENT_ID,
@@ -75,7 +77,7 @@ export default class MinecraftAccountInstance extends AccountInstanceShape<Minec
 			liveResult.access_token,
 		);
 
-		return new MinecraftAccountInstance({
+		return new MinecraftAccountInstance(database, {
 			id: profileResult.id,
 			name: profileResult.username,
 			accessToken: liveResult.access_token,
@@ -84,16 +86,22 @@ export default class MinecraftAccountInstance extends AccountInstanceShape<Minec
 		});
 	}
 
-	static async fromDatabase(data: MinecraftProfile) {
-		return new MinecraftAccountInstance(data);
+	static async fromDatabase(
+		database: Kysely<Database>,
+		data: MinecraftProfile,
+	) {
+		return new MinecraftAccountInstance(database, data);
 	}
 
 	provider = "minecraft";
+
+	private database: Kysely<Database>;
 	private data: MinecraftProfile;
 
-	constructor(data: MinecraftProfile) {
+	constructor(database: Kysely<Database>, data: MinecraftProfile) {
 		super();
 
+		this.database = database;
 		this.data = data;
 	}
 
@@ -118,7 +126,8 @@ export default class MinecraftAccountInstance extends AccountInstanceShape<Minec
 	}
 
 	private async refresh() {
-		if (Date.now() < this.data.expiresAt - 5 * 60 * 1000) return;
+		if (Date.now() < this.data.expiresAt - 5 * 60 * 1000)
+			return console.log("Access token is still valid, no need to refresh.");
 
 		const liveResult = await live.refreshAccessToken(
 			this.data.refreshToken,
@@ -129,10 +138,25 @@ export default class MinecraftAccountInstance extends AccountInstanceShape<Minec
 		this.data.accessToken = liveResult.access_token;
 		this.data.refreshToken = liveResult.refresh_token!;
 		this.data.expiresAt = Date.now() + liveResult.expires_in * 1000;
+		await this.save();
 	}
 
 	async fetchProfile() {
+		await this.refresh();
 		return await retrieveMinecraftProfile(this.data.accessToken);
+	}
+
+	async save() {
+		await this.database
+			.updateTable("accounts")
+			.where("id", "==", this.data.id)
+			.set({
+				name: this.data.name,
+				accessToken: this.data.accessToken,
+				refreshToken: this.data.refreshToken,
+				expiresAt: this.data.expiresAt,
+			})
+			.execute();
 	}
 
 	/**
