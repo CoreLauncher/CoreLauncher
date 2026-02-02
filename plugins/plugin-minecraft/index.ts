@@ -28,7 +28,7 @@ export const format = 1;
 export const name = "Minecraft";
 export const description = "Allows you to launch Minecraft from CoreLauncher.";
 
-export class MinecraftPlugin extends PluginShape {
+class MinecraftPlugin extends PluginShape {
 	portal: PluginPortal;
 
 	gameProviders: MinecraftGameProvider[] = [];
