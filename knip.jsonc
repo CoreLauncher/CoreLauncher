@@ -1,6 +1,7 @@
 {
 	"$schema": "./node_modules/knip/schema-jsonc.json",
 	"rules": {
+		"duplicates": "off",
 		"exports": "off"
 	},
 	"ignoreBinaries": ["i", "build", "CoreLauncher"],
