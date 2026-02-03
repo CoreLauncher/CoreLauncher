@@ -28,7 +28,7 @@
 		"@octokit/rest": "^22.0.1",
 		"@types/bun": "^1.3.8",
 		"husky": "^9.1.7",
-		"knip": "^5.82.1",
+		"knip": "^5.83.0",
 		"protoc": "^33.4.0",
 		"ts-json-schema-generator": "^2.4.0",
 		"ts-proto": "^2.11.1",
