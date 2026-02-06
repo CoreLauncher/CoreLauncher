@@ -14,7 +14,7 @@ impl Render for RootView {
             .flex_col()
             .gap_3()
             .bg(rgb(0x505050))
-            .size(px(500.0))
+            .size_full()
             .justify_center()
             .items_center()
             .shadow_lg()
