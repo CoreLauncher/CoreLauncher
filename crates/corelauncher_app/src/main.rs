@@ -1,14 +1,12 @@
 use gpui::{
-    App, AppContext, Application, Bounds, Context, IntoElement, ParentElement, Render,
-    SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations, WindowOptions,
-    div, px, rgb, size,
+    App, AppContext, Application, Bounds, Context, IntoElement, ParentElement, Render, Styled,
+    TitlebarOptions, Window, WindowBounds, WindowDecorations, WindowOptions, div, px, rgb, size,
 };
+use gpui_component::Root;
 
-struct HelloWorld {
-    text: SharedString,
-}
+struct RootView;
 
-impl Render for HelloWorld {
+impl Render for RootView {
     fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
         div()
             .flex()
@@ -23,7 +21,7 @@ impl Render for HelloWorld {
             .border_color(rgb(0x0000ff))
             .text_xl()
             .text_color(rgb(0xffffff))
-            .child(format!("Hello, {}!", &self.text))
+            .child("Hello!")
             .child(
                 div()
                     .flex()
@@ -53,10 +51,10 @@ fn main() {
                 window_decorations: Some(WindowDecorations::Client),
                 ..Default::default()
             },
-            |_, cx| {
-                cx.new(|_| HelloWorld {
-                    text: "World".into(),
-                })
+            |window, cx| {
+                let view = cx.new(|_| RootView);
+                // This first level on the window, should be a Root.
+                cx.new(|cx| Root::new(view, window, cx))
             },
         )
         .unwrap();
