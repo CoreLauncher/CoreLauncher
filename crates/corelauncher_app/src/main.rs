@@ -1,6 +1,7 @@
 use gpui::{
     App, AppContext, Application, Bounds, Context, IntoElement, ParentElement, Render,
-    SharedString, Styled, Window, WindowBounds, WindowOptions, div, px, rgb, size,
+    SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations, WindowOptions,
+    div, px, rgb, size,
 };
 
 struct HelloWorld {
@@ -45,6 +46,11 @@ fn main() {
         cx.open_window(
             WindowOptions {
                 window_bounds: Some(WindowBounds::Windowed(bounds)),
+                titlebar: Some(TitlebarOptions {
+                    appears_transparent: true,
+                    ..Default::default()
+                }),
+                window_decorations: Some(WindowDecorations::Client),
                 ..Default::default()
             },
             |_, cx| {
