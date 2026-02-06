@@ -5,3 +5,5 @@ edition = "2024"
 build = "build.rs"
 
 [dependencies]
+gpui = "0.2.2"
+gpui-component = "0.5.1"
