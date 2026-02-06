@@ -1,0 +1,4 @@
+[workspace]
+resolver = "3"
+members = ["crates/corelauncher_app"]
+default-members = ["crates/corelauncher_app"]
