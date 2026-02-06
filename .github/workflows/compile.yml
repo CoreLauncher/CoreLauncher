@@ -1,32 +1,33 @@
 name: Compile and upload artifact
 
-on: 
-  workflow_dispatch:
-  push:
-
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - dev
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest]
+    build:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [windows-latest, ubuntu-latest]
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
 
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2
+            - name: Install Bun
+              uses: oven-sh/setup-bun@v2
 
-      - name: Install dependencies
-        run: bun install
+            - name: Install dependencies
+              run: bun install
 
-      - name: Compile with Bun
-        run: bun compile
+            - name: Compile with Bun
+              run: bun compile
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: corelauncher-${{ matrix.os }}
-          path: |
-            ${{ matrix.os == 'windows-latest' && 'corelauncher.exe' || 'corelauncher' }}
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: corelauncher-${{ matrix.os }}
+                  path: |
+                      ${{ matrix.os == 'windows-latest' && 'corelauncher.exe' || 'corelauncher' }}
