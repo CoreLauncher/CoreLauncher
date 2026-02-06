@@ -45,6 +45,7 @@ fn main() {
         cx.open_window(
             WindowOptions {
                 window_bounds: Some(WindowBounds::Windowed(bounds)),
+                is_resizable: false,
                 titlebar: Some(TitlebarOptions {
                     title: Some(SharedString::new("CoreLauncher")),
                     appears_transparent: true,
