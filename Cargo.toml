@@ -2,3 +2,21 @@
 resolver = "3"
 members = ["crates/corelauncher_app"]
 default-members = ["crates/corelauncher_app"]
+
+[profile.release]
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+debug = false
+strip = true
+panic = "abort"
+overflow-checks = false
+incremental = false
+debug-assertions = false
+
+[profile.dev]
+opt-level = 0
+lto = false
+codegen-units = 256
+debug = true
+overflow-checks = false
