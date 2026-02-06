@@ -1,7 +1,0 @@
-{
-	"name": "@corelauncher/sdk",
-	"main": "./index.ts",
-	"dependencies": {
-		"@corelauncher/typed-emitter": "*"
-	}
-}
