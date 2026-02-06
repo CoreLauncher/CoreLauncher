@@ -22,3 +22,6 @@
 
 /corelauncher.update
 /corelauncher.update.exe
+
+# Rust
+/target
