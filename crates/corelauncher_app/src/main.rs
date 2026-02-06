@@ -1,6 +1,7 @@
 use gpui::{
-    App, AppContext, Application, Bounds, Context, IntoElement, ParentElement, Render, Styled,
-    TitlebarOptions, Window, WindowBounds, WindowDecorations, WindowOptions, div, px, rgb, size,
+    App, AppContext, Application, Bounds, Context, IntoElement, ParentElement, Render,
+    SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations, WindowOptions,
+    div, px, rgb, size,
 };
 use gpui_component::Root;
 
@@ -45,6 +46,7 @@ fn main() {
             WindowOptions {
                 window_bounds: Some(WindowBounds::Windowed(bounds)),
                 titlebar: Some(TitlebarOptions {
+                    title: Some(SharedString::new("CoreLauncher")),
                     appears_transparent: true,
                     ..Default::default()
                 }),
