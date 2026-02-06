@@ -1,53 +1,55 @@
 name: CI
 on:
-  workflow_dispatch:
-  push:
+    workflow_dispatch:
+    push:
+        branches:
+            - dev
 jobs:
-  knip:
-    name: Run knip checks 
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install bun
-        uses: oven-sh/setup-bun@v2
-      - name: Install dependencies
-        run: bun install
-      - name: Run knip
-        run: bun run knip --reporter github-actions --no-config-hints
-  lint:
-    name: Run lint checks
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install bun
-        uses: oven-sh/setup-bun@v2
-      - name: Install dependencies
-        run: bun install
-      - name: Run lint checks
-        run: bun run biome ci . --reporter github
-  types:
-    name: Run type checks
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install bun
-        uses: oven-sh/setup-bun@v2
-      - name: Install dependencies
-        run: bun install
-      - name: Run type checks
-        run: bun run tsc --noEmit
-  test:
-    name: Run unit tests
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install bun
-        uses: oven-sh/setup-bun@v2
-      - name: Install dependencies
-        run: bun install
-      - name: Run unit tests
-        run: bun test
+    knip:
+        name: Run knip checks
+        runs-on: windows-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Install bun
+              uses: oven-sh/setup-bun@v2
+            - name: Install dependencies
+              run: bun install
+            - name: Run knip
+              run: bun run knip --reporter github-actions --no-config-hints
+    lint:
+        name: Run lint checks
+        runs-on: windows-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Install bun
+              uses: oven-sh/setup-bun@v2
+            - name: Install dependencies
+              run: bun install
+            - name: Run lint checks
+              run: bun run biome ci . --reporter github
+    types:
+        name: Run type checks
+        runs-on: windows-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Install bun
+              uses: oven-sh/setup-bun@v2
+            - name: Install dependencies
+              run: bun install
+            - name: Run type checks
+              run: bun run tsc --noEmit
+    test:
+        name: Run unit tests
+        runs-on: windows-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Install bun
+              uses: oven-sh/setup-bun@v2
+            - name: Install dependencies
+              run: bun install
+            - name: Run unit tests
+              run: bun test
