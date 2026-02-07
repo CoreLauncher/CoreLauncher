@@ -1,19 +1,18 @@
-use gpui::Hsla;
-use gpui_component::hsl;
+use gpui::{Hsla, hsla};
 
 pub struct Style;
 
 impl Style {
     pub fn background() -> Hsla {
-        hsl(0., 0., 0.)
+        hsla(0., 0., 0.0, 1.)
     }
     pub fn foreground() -> Hsla {
-        hsl(0., 0., 5.)
+        hsla(0., 0., 0.5, 1.)
     }
     pub fn accent() -> Hsla {
-        hsl(0., 0., 10.)
+        hsla(0., 0., 0.1, 1.)
     }
     pub fn text_color() -> Hsla {
-        hsl(0., 0., 90.)
+        hsla(0., 0., 0.9, 1.)
     }
 }

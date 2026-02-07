@@ -8,7 +8,6 @@ use gpui::{
     Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
     WindowOptions, div, px, size,
 };
-use gpui_component_assets::Assets as IconAssets;
 
 mod assets;
 mod components;
@@ -31,7 +30,6 @@ impl Render for RootView {
 
 fn main() {
     Application::new()
-        .with_assets(IconAssets)
         .with_assets(CustomAssets)
         .run(|cx: &mut App| {
             cx.text_system()
@@ -43,7 +41,6 @@ fn main() {
                 ])
                 .unwrap();
 
-            println!("{:?}", IconAssets.list("").unwrap());
             println!("{:?}", CustomAssets.list("").unwrap());
 
             let bounds = Bounds::centered(None, size(px(1200.), px(800.0)), cx);
@@ -63,8 +60,7 @@ fn main() {
                 },
                 |window, cx| {
                     window.set_window_title("CoreLauncher");
-                    let view = cx.new(|_| RootView);
-                    return view;
+                    return cx.new(|_| RootView);
                 },
             )
             .unwrap();
