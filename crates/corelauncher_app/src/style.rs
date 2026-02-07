@@ -6,17 +6,17 @@ impl Style {
     pub fn background() -> Hsla {
         hsla(0., 0., 0.0, 1.)
     }
-    pub fn foreground() -> Hsla {
+    pub fn _foreground() -> Hsla {
         hsla(0., 0., 0.5, 1.)
     }
-    pub fn accent() -> Hsla {
+    pub fn _accent() -> Hsla {
         hsla(0., 0., 0.1, 1.)
     }
     pub fn text_color() -> Hsla {
         hsla(0., 0., 0.9, 1.)
     }
 
-    pub fn small_gap() -> Pixels {
+    pub fn _small_gap() -> Pixels {
         px(4.)
     }
 
@@ -24,7 +24,7 @@ impl Style {
         px(8.)
     }
 
-    pub fn large_gap() -> Pixels {
+    pub fn _large_gap() -> Pixels {
         px(16.)
     }
 
