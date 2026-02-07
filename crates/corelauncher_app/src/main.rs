@@ -1,6 +1,9 @@
+use std::{fs, path};
+
 use crate::{
     assets::CustomAssets,
     components::{logo, title_bar},
+    constants::Constants,
     style::Style,
 };
 use gpui::{
@@ -11,6 +14,7 @@ use gpui::{
 
 mod assets;
 mod components;
+mod constants;
 mod style;
 
 struct RootView;
@@ -29,6 +33,14 @@ impl Render for RootView {
 }
 
 fn main() {
+    println!("App Directory: {:?}", Constants::app_directory());
+    let _ = fs::create_dir(Constants::app_directory());
+
+    println!(
+        "Embedded Assets: {}",
+        CustomAssets.list("").unwrap().join(", ")
+    );
+
     Application::new()
         .with_assets(CustomAssets)
         .run(|cx: &mut App| {
@@ -40,8 +52,6 @@ fn main() {
                         .unwrap(),
                 ])
                 .unwrap();
-
-            println!("{:?}", CustomAssets.list("").unwrap());
 
             let bounds = Bounds::centered(None, size(px(1200.), px(800.0)), cx);
             cx.open_window(
