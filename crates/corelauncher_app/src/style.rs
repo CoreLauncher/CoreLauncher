@@ -16,6 +16,18 @@ impl Style {
         hsla(0., 0., 0.9, 1.)
     }
 
+    pub fn small_gap() -> Pixels {
+        px(4.)
+    }
+
+    pub fn normal_gap() -> Pixels {
+        px(8.)
+    }
+
+    pub fn large_gap() -> Pixels {
+        px(16.)
+    }
+
     pub fn window_rounding() -> Pixels {
         px(10.)
     }

@@ -4,7 +4,7 @@ use crate::{assets::CustomAssets, components::title_bar, constants::Constants, s
 use gpui::{
     App, AppContext, Application, AssetSource, Bounds, Context, IntoElement, ParentElement, Render,
     SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations, WindowOptions,
-    div, px, size,
+    div, px, red, size,
 };
 
 mod assets;
@@ -23,7 +23,17 @@ impl Render for RootView {
             .rounded(Style::window_rounding())
             .overflow_hidden()
             .size_full()
+            .flex()
+            .flex_col()
             .child(title_bar())
+            .child(
+                div()
+                    .flex()
+                    .flex_row()
+                    .size_full()
+                    .p(Style::normal_gap())
+                    .child("Hello, World!"),
+            )
     }
 }
 
