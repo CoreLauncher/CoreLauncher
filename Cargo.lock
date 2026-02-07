@@ -1144,9 +1144,11 @@ dependencies = [
 name = "corelauncher-app"
 version = "1.0.0-beta.23"
 dependencies = [
+ "anyhow",
  "gpui",
  "gpui-component",
  "gpui-component-assets",
+ "rust-embed",
 ]
 
 [[package]]
