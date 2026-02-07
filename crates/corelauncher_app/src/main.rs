@@ -4,7 +4,7 @@ use crate::{assets::CustomAssets, components::title_bar, constants::Constants, s
 use gpui::{
     App, AppContext, Application, AssetSource, Bounds, Context, IntoElement, ParentElement, Render,
     SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations, WindowOptions,
-    div, px, red, size,
+    div, px, size,
 };
 
 mod assets;
@@ -52,7 +52,11 @@ fn main() {
             cx.text_system()
                 .add_fonts(vec![
                     CustomAssets
-                        .load("inter/Inter-Regular.ttf")
+                        .load("fonts/inter/Inter-Regular.ttf")
+                        .unwrap()
+                        .unwrap(),
+                    CustomAssets
+                        .load("fonts/rubik/rubik-latin-700-normal.ttf")
                         .unwrap()
                         .unwrap(),
                 ])

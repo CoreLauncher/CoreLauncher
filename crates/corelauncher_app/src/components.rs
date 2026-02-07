@@ -1,6 +1,6 @@
 use gpui::{
-    Div, InteractiveElement, MouseButton, ParentElement, Pixels, Styled, Svg, WindowControlArea,
-    div, px, red, svg,
+    Div, FontWeight, InteractiveElement, MouseButton, ParentElement, Pixels, Styled, Svg,
+    WindowControlArea, div, px, red, svg,
 };
 
 use crate::{constants::Constants, style::Style};
@@ -23,11 +23,11 @@ pub fn title_bar() -> Div {
         .rounded_tr(Style::window_rounding())
         .flex()
         .flex_row()
-        .child(logo(height))
+        .child(branding_logo(height))
         .bg(red())
 }
 
-pub fn logo(height: Pixels) -> Div {
+pub fn branding_logo(height: Pixels) -> Div {
     let margin = px(4.0);
     let size = height - margin * 2.0;
 
@@ -36,10 +36,18 @@ pub fn logo(height: Pixels) -> Div {
         .flex_row()
         .items_center()
         .gap(px(8.0))
-        .child(symbol().size(size).m(margin))
-        .child(Constants::app_name())
+        .child(branding_symbol().size(size).m(margin))
+        .child(branding_stamp())
 }
 
-pub fn symbol() -> Svg {
+pub fn branding_symbol() -> Svg {
     svg().path("logos/logo.svg").text_color(Style::text_color())
+}
+
+pub fn branding_stamp() -> Div {
+    div()
+        .child(Constants::app_name())
+        .text_size(px(20.))
+        .font_family("Rubik")
+        .font_weight(FontWeight::BOLD)
 }

@@ -3,7 +3,7 @@ use std::{env::current_exe, fs};
 pub struct Constants;
 
 impl Constants {
-    pub fn app_id() -> String {
+    pub fn _app_id() -> String {
         "corelauncher".to_string()
     }
 
@@ -11,7 +11,7 @@ impl Constants {
         "CoreLauncher".to_string()
     }
 
-    pub fn app_version() -> String {
+    pub fn _app_version() -> String {
         env!("CARGO_PKG_VERSION").to_string()
     }
 
