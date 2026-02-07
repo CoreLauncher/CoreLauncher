@@ -1,4 +1,4 @@
-use gpui::{Hsla, hsla};
+use gpui::{Hsla, Pixels, hsla, px};
 
 pub struct Style;
 
@@ -14,5 +14,9 @@ impl Style {
     }
     pub fn text_color() -> Hsla {
         hsla(0., 0., 0.9, 1.)
+    }
+
+    pub fn window_rounding() -> Pixels {
+        px(10.)
     }
 }

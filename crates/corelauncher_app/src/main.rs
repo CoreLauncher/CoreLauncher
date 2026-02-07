@@ -1,15 +1,10 @@
-use std::{fs, path};
+use std::fs;
 
-use crate::{
-    assets::CustomAssets,
-    components::{logo, title_bar},
-    constants::Constants,
-    style::Style,
-};
+use crate::{assets::CustomAssets, components::title_bar, constants::Constants, style::Style};
 use gpui::{
-    App, AppContext, Application, AssetSource, Bounds, Context, IntoElement, ParentElement, Pixels,
-    Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
-    WindowOptions, div, px, size,
+    App, AppContext, Application, AssetSource, Bounds, Context, IntoElement, ParentElement, Render,
+    SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations, WindowOptions,
+    div, px, size,
 };
 
 mod assets;
@@ -25,7 +20,7 @@ impl Render for RootView {
             .font_family("Inter")
             .bg(Style::background())
             .text_color(Style::text_color())
-            .rounded(px(10.))
+            .rounded(Style::window_rounding())
             .overflow_hidden()
             .size_full()
             .child(title_bar())
@@ -60,6 +55,7 @@ fn main() {
                     window_min_size: Some(size(px(1200.0), px(800.0))),
                     window_bounds: Some(WindowBounds::Windowed(bounds)),
                     is_resizable: false,
+
                     titlebar: Some(TitlebarOptions {
                         title: Some(SharedString::new_static("CoreLauncher")),
                         appears_transparent: true,
