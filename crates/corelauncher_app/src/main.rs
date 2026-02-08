@@ -1,38 +1,59 @@
 use std::fs;
 
-use crate::{assets::CustomAssets, components::title_bar, constants::Constants, style::Style};
+use crate::{assets::CustomAssets, constants::Constants, sections::TitlebarSection, style::Style};
 use gpui::{
-    App, AppContext, Application, AssetSource, Bounds, Context, IntoElement, ParentElement, Render,
-    SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations, WindowOptions,
-    div, px, size,
+    App, AppContext, Application, AssetSource, Bounds, Context, Entity, Hsla, IntoElement,
+    ParentElement, Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds,
+    WindowDecorations, WindowOptions, div, point, px, size,
 };
 
 mod assets;
 mod components;
 mod constants;
+mod sections;
 mod style;
 
-struct RootView;
+struct SettingsView;
+
+impl Render for SettingsView {
+    fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
+        div().child("Settings View")
+    }
+}
+
+struct LibraryView;
+
+impl Render for LibraryView {
+    fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
+        div().child("Library View")
+    }
+}
+
+struct RootView {
+    titlebar_section: Entity<TitlebarSection>,
+    settings_view: Entity<SettingsView>,
+    library_view: Entity<LibraryView>,
+}
 
 impl Render for RootView {
     fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
         div()
             .font_family("Inter")
-            .bg(Style::background())
             .text_color(Style::text_color())
             .rounded(Style::window_rounding())
             .overflow_hidden()
             .size_full()
             .flex()
             .flex_col()
-            .child(title_bar())
+            .bg(Style::background())
+            .child(self.titlebar_section.clone())
             .child(
                 div()
                     .flex()
                     .flex_row()
                     .size_full()
                     .p(Style::normal_gap())
-                    .child("Hello, World!"),
+                    .child(self.library_view.clone()),
             )
     }
 }
@@ -80,7 +101,11 @@ fn main() {
                 },
                 |window, cx| {
                     window.set_window_title("CoreLauncher");
-                    return cx.new(|_| RootView);
+                    return cx.new(|cx| RootView {
+                        titlebar_section: cx.new(|_| TitlebarSection),
+                        settings_view: cx.new(|_| SettingsView),
+                        library_view: cx.new(|_| LibraryView),
+                    });
                 },
             )
             .unwrap();

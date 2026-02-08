@@ -6,8 +6,8 @@ impl Style {
     pub fn background() -> Hsla {
         hsla(0., 0., 0.0, 1.)
     }
-    pub fn _foreground() -> Hsla {
-        hsla(0., 0., 0.5, 1.)
+    pub fn foreground() -> Hsla {
+        hsla(0., 0., 0.05, 1.)
     }
     pub fn _accent() -> Hsla {
         hsla(0., 0., 0.1, 1.)
@@ -15,8 +15,11 @@ impl Style {
     pub fn text_color() -> Hsla {
         hsla(0., 0., 0.9, 1.)
     }
+    pub fn border_color() -> Hsla {
+        hsla(0., 0., 0.1, 1.)
+    }
 
-    pub fn _small_gap() -> Pixels {
+    pub fn small_gap() -> Pixels {
         px(4.)
     }
 
