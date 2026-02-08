@@ -2,9 +2,9 @@ use std::fs;
 
 use crate::{assets::CustomAssets, constants::Constants, sections::TitlebarSection, style::Style};
 use gpui::{
-    App, AppContext, Application, AssetSource, Bounds, Context, Entity, Hsla, IntoElement,
-    ParentElement, Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds,
-    WindowDecorations, WindowOptions, div, point, px, size,
+    App, AppContext, Application, AssetSource, Bounds, Context, Entity, IntoElement, ParentElement,
+    Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
+    WindowOptions, div, px, size,
 };
 
 mod assets;
