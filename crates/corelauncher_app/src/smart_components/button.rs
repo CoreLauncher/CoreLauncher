@@ -143,6 +143,7 @@ impl RenderOnce for Button {
             // Interactivity
             .cursor_pointer()
             .id(self.id.clone())
+            .occlude()
             // Flex
             .flex()
             .flex_row()

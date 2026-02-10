@@ -35,11 +35,7 @@ impl RenderOnce for TitlebarSection {
 
         div()
             .id("titlebar")
-            .when(is_linux, |element| {
-                element.on_mouse_down(MouseButton::Left, |_, window, _| {
-                    window.start_window_move();
-                })
-            })
+            .window_control_area(WindowControlArea::Drag)
             .on_mouse_down_out(window.listener_for(&state, |state, _, _, _| {
                 state.should_drag = false;
             }))
