@@ -17,8 +17,7 @@ impl Constants {
 
     pub fn app_directory() -> String {
         let exe_path = current_exe().unwrap();
-        let joined_dir = exe_path.parent().unwrap().join("../../.corelauncher/");
-        let app_dir = fs::canonicalize(joined_dir).unwrap();
-        app_dir.to_str().unwrap().to_string()
+        let app_dir = exe_path.parent().unwrap().join("../../.corelauncher/");
+        return app_dir.to_str().unwrap().to_string();
     }
 }
