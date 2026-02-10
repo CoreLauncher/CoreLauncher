@@ -165,27 +165,31 @@ impl RenderOnce for Button {
             })
             // Interactivity
             .when(self.function == ButtonFunction::Minimize, |element| {
-                element.window_control_area(WindowControlArea::Min)
-                // .on_click(|event, window, _| {
-                // window.minimize_window();
-                // })
+                element
+                    .window_control_area(WindowControlArea::Min)
+                    .on_click(|event, window, _| {
+                        window.minimize_window();
+                    })
             })
             .when(self.function == ButtonFunction::Maximize, |element| {
                 println!("maxmize function");
-                element.window_control_area(WindowControlArea::Max)
-                // .on_click(|event, window, _| {
-                //     window.zoom_window();
-                // })
+                element
+                    .window_control_area(WindowControlArea::Max)
+                    .on_click(|event, window, _| {
+                        window.zoom_window();
+                    })
             })
             .when(self.function == ButtonFunction::Close, |element| {
                 println!("close ufnc");
-                element.window_control_area(WindowControlArea::Close)
-                // .on_click(|event, window, _| {
-                //     window.minimize_window();
-                // })
+                element
+                    .window_control_area(WindowControlArea::Close)
+                    .on_click(|event, window, _| {
+                        window.minimize_window();
+                    })
             })
             .when_some(self.on_click, |element, on_click| {
                 println!("custom func");
+
                 element.on_click(move |event, window, cx| on_click(event, window, cx))
             })
             // Render children

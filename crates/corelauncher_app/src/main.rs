@@ -31,7 +31,6 @@ impl Render for LibraryView {
 }
 
 struct RootView {
-    titlebar_section: Entity<TitlebarSection>,
     settings_view: Entity<SettingsView>,
     library_view: Entity<LibraryView>,
 }
@@ -47,7 +46,7 @@ impl Render for RootView {
             .flex()
             .flex_col()
             .bg(Style::background())
-            .child(self.titlebar_section.clone())
+            .child(TitlebarSection::new())
             .child(
                 div()
                     .flex()
@@ -102,7 +101,6 @@ fn main() {
                 |window, cx| {
                     window.set_window_title("CoreLauncher");
                     return cx.new(|cx| RootView {
-                        titlebar_section: cx.new(|_| TitlebarSection),
                         settings_view: cx.new(|_| SettingsView),
                         library_view: cx.new(|_| LibraryView),
                     });

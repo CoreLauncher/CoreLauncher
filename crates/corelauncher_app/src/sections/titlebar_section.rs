@@ -1,36 +1,66 @@
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    Context, Div, InteractiveElement, IntoElement, MouseButton, ParentElement, Render, Styled,
-    Window, WindowControlArea, div, px,
+    App, Context, Div, InteractiveElement, IntoElement, MouseButton, ParentElement, Render,
+    RenderOnce, Styled, Window, WindowControlArea, div, px,
 };
 
 use crate::smart_components::{Button, ButtonFunction, ButtonVariant};
 use crate::{components::branding_logo, style::Style};
 
+struct TitlebarSectionState {
+    should_drag: bool,
+}
+
+// TODO: Remove this when GPUI has released v0.2.3
+impl Render for TitlebarSectionState {
+    fn render(&mut self, _: &mut Window, _: &mut Context<Self>) -> impl IntoElement {
+        div()
+    }
+}
+
+#[derive(IntoElement)]
 pub struct TitlebarSection;
 
 impl TitlebarSection {
-    fn window_drag_area(&self) -> Div {
+    pub fn new() -> Self {
+        Self
+    }
+}
+
+impl RenderOnce for TitlebarSection {
+    fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
         let is_linux = cfg!(target_os = "linux");
-        let is_windows = cfg!(target_os = "windows");
+        let height = px(50.);
+        let state = window.use_state(cx, |_, _| TitlebarSectionState { should_drag: false });
 
         div()
-            .when(is_windows, |element| {
-                element.window_control_area(WindowControlArea::Drag)
-            })
+            .id("titlebar")
             .when(is_linux, |element| {
                 element.on_mouse_down(MouseButton::Left, |_, window, _| {
                     window.start_window_move();
                 })
             })
-    }
-}
-
-impl Render for TitlebarSection {
-    fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
-        let height = px(50.);
-
-        self.window_drag_area()
+            .on_mouse_down_out(window.listener_for(&state, |state, _, _, _| {
+                state.should_drag = false;
+            }))
+            .on_mouse_down(
+                MouseButton::Left,
+                window.listener_for(&state, |state, _, _, _| {
+                    state.should_drag = true;
+                }),
+            )
+            .on_mouse_up(
+                MouseButton::Left,
+                window.listener_for(&state, |state, _, _, _| {
+                    state.should_drag = false;
+                }),
+            )
+            .on_mouse_move(window.listener_for(&state, |state, _, window, _| {
+                if state.should_drag {
+                    state.should_drag = false;
+                    window.start_window_move();
+                }
+            }))
             .h(height)
             .w_full()
             .flex()
