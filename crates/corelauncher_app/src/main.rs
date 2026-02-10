@@ -11,6 +11,7 @@ mod assets;
 mod components;
 mod constants;
 mod sections;
+mod smart_components;
 mod style;
 
 struct SettingsView;
@@ -89,8 +90,7 @@ fn main() {
                     app_id: Some("corelauncher".to_string()),
                     window_min_size: Some(size(px(1200.0), px(800.0))),
                     window_bounds: Some(WindowBounds::Windowed(bounds)),
-                    is_resizable: false,
-
+                    // is_resizable: false,
                     titlebar: Some(TitlebarOptions {
                         title: Some(SharedString::new_static("CoreLauncher")),
                         appears_transparent: true,
