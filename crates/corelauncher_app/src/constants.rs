@@ -1,4 +1,4 @@
-use std::{env::current_exe, fs};
+use std::env::current_exe;
 
 pub struct Constants;
 
