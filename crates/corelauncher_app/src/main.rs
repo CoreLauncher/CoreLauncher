@@ -4,7 +4,7 @@ use crate::{assets::CustomAssets, constants::Constants, sections::TitlebarSectio
 use gpui::{
     App, AppContext, Application, AssetSource, Bounds, Context, Entity, IntoElement, ParentElement,
     Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
-    WindowOptions, div, px, size,
+    WindowOptions, div, prelude::FluentBuilder, px, size,
 };
 
 mod assets;
@@ -14,14 +14,6 @@ mod sections;
 mod smart_components;
 mod style;
 
-struct SettingsView;
-
-impl Render for SettingsView {
-    fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
-        div().child("Settings View")
-    }
-}
-
 struct LibraryView;
 
 impl Render for LibraryView {
@@ -30,10 +22,38 @@ impl Render for LibraryView {
     }
 }
 
+struct ProfileView;
+
+impl Render for ProfileView {
+    fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
+        div().child("Profile View")
+    }
+}
+
+struct SettingsView;
+
+impl Render for SettingsView {
+    fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
+        div().child("Settings View")
+    }
+}
+
 struct RootView {
     active_tab: String,
-    settings_view: Entity<SettingsView>,
     library_view: Entity<LibraryView>,
+    profile_view: Entity<ProfileView>,
+    settings_view: Entity<SettingsView>,
+}
+
+impl RootView {
+    pub fn new(cx: &mut App) -> Entity<Self> {
+        cx.new(|cx| RootView {
+            active_tab: "library".to_string(),
+            library_view: cx.new(|_| LibraryView),
+            profile_view: cx.new(|_| ProfileView),
+            settings_view: cx.new(|_| SettingsView),
+        })
+    }
 }
 
 impl Render for RootView {
@@ -62,7 +82,15 @@ impl Render for RootView {
                     .flex_row()
                     .size_full()
                     .p(Style::normal_gap())
-                    .child(self.library_view.clone()),
+                    .when(self.active_tab == "library", |element| {
+                        element.child(self.library_view.clone())
+                    })
+                    .when(self.active_tab == "profile", |element| {
+                        element.child(self.profile_view.clone())
+                    })
+                    .when(self.active_tab == "settings", |element| {
+                        element.child(self.settings_view.clone())
+                    }),
             )
     }
 }
@@ -109,11 +137,7 @@ fn main() {
                 },
                 |window, cx| {
                     window.set_window_title("CoreLauncher");
-                    return cx.new(|cx| RootView {
-                        active_tab: "library".to_string(),
-                        settings_view: cx.new(|_| SettingsView),
-                        library_view: cx.new(|_| LibraryView),
-                    });
+                    return RootView::new(cx);
                 },
             )
             .unwrap();
