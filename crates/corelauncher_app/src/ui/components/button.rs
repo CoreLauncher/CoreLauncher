@@ -200,7 +200,7 @@ impl RenderOnce for Button {
             .when(self.function == ButtonFunction::Close, |element| {
                 element
                     .window_control_area(WindowControlArea::Close)
-                    .on_click(|_, window, cx| {
+                    .on_click(|_, window, _| {
                         window.remove_window();
                     })
             })

@@ -1,9 +1,9 @@
 use std::fs;
 
 use gpui::{
-    App, AppContext, Application, AssetSource, Bounds, Context, Entity, InteractiveElement,
-    IntoElement, ParentElement, Render, SharedString, Styled, TitlebarOptions, Window,
-    WindowBounds, WindowDecorations, WindowOptions, div, prelude::FluentBuilder, px, size,
+    App, AppContext, Application, AssetSource, Bounds, Context, Entity, IntoElement, ParentElement,
+    Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
+    WindowOptions, div, prelude::FluentBuilder, px, size,
 };
 
 use crate::{
