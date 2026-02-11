@@ -49,7 +49,11 @@ impl RenderOnce for TitlebarSection {
             }))
             .on_mouse_down(
                 MouseButton::Left,
-                window.listener_for(&state, |state, _, _, _| {
+                window.listener_for(&state, |state, _, window, _| {
+                    let position = window.mouse_position();
+                    if position.y < px(10.) {
+                        return;
+                    }
                     state.should_drag = true;
                 }),
             )
