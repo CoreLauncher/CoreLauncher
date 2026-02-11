@@ -111,16 +111,14 @@ fn main() {
         .with_assets(CustomAssets)
         .run(|cx: &mut App| {
             cx.text_system()
-                .add_fonts(vec![
+                .add_fonts(
                     CustomAssets
-                        .load("fonts/inter/Inter-Regular.ttf")
+                        .list("fonts")
                         .unwrap()
-                        .unwrap(),
-                    CustomAssets
-                        .load("fonts/rubik/rubik-latin-700-normal.ttf")
-                        .unwrap()
-                        .unwrap(),
-                ])
+                        .iter()
+                        .map(|path| CustomAssets.load(&path.as_str()).unwrap().unwrap())
+                        .collect(),
+                )
                 .unwrap();
 
             let bounds = Bounds::centered(None, size(px(1200.), px(800.0)), cx);
