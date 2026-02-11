@@ -11,7 +11,7 @@ impl Constants {
         "CoreLauncher".to_string()
     }
 
-    pub fn _app_version() -> String {
+    pub fn app_version() -> String {
         env!("CARGO_PKG_VERSION").to_string()
     }
 

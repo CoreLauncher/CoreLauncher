@@ -9,7 +9,7 @@ use gpui::{
 use crate::{
     assets::CustomAssets,
     constants::Constants,
-    ui::{Style, TitlebarSection, window_root},
+    ui::{SettingsView, Style, TitlebarSection, window_root},
 };
 
 mod assets;
@@ -29,14 +29,6 @@ struct ProfileView;
 impl Render for ProfileView {
     fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
         div().child("Profile View")
-    }
-}
-
-struct SettingsView;
-
-impl Render for SettingsView {
-    fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
-        div().child("Settings View")
     }
 }
 
