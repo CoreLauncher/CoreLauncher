@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 use gpui::prelude::FluentBuilder;
 use gpui::{
     App, Context, Div, InteractiveElement, IntoElement, MouseButton, ParentElement, Render,
@@ -19,17 +21,25 @@ impl Render for TitlebarSectionState {
 }
 
 #[derive(IntoElement)]
-pub struct TitlebarSection;
+pub struct TitlebarSection {
+    active_tab: String,
+    on_tab_change: Rc<dyn FnMut(String, &mut Window, &mut App)>,
+}
 
 impl TitlebarSection {
-    pub fn new() -> Self {
-        Self
+    pub fn new(
+        active_tab: &str,
+        on_tab_change: impl FnMut(String, &mut Window, &mut App) + 'static,
+    ) -> Self {
+        Self {
+            active_tab: active_tab.to_string(),
+            on_tab_change: Rc::new(on_tab_change),
+        }
     }
 }
 
 impl RenderOnce for TitlebarSection {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
-        let is_linux = cfg!(target_os = "linux");
         let height = px(50.);
         let state = window.use_state(cx, |_, _| TitlebarSectionState { should_drag: false });
 
@@ -74,9 +84,39 @@ impl RenderOnce for TitlebarSection {
                             .flex()
                             .flex_row()
                             .gap(Style::normal_gap())
-                            .child(Button::new("titlebar_tab_library").set_label("Library"))
-                            .child(Button::new("titlebar_tab_profile").set_label("Profile"))
-                            .child(Button::new("titlebar_tab_settings").set_label("Settings")),
+                            .child(
+                                Button::new("titlebar_tab_library")
+                                    .set_label("Library")
+                                    .set_active(self.active_tab == "library")
+                                    .on_click({
+                                        let on_tab_change = self.on_tab_change.clone();
+                                        move |_, window, app| {
+                                            on_tab_change("library".to_string(), window, app)
+                                        }
+                                    }),
+                            )
+                            .child(
+                                Button::new("titlebar_tab_profile")
+                                    .set_label("Profile")
+                                    .set_active(self.active_tab == "profile")
+                                    .on_click({
+                                        let on_tab_change = self.on_tab_change.clone();
+                                        move |_, window, app| {
+                                            on_tab_change("profile".to_string(), window, app)
+                                        }
+                                    }),
+                            )
+                            .child(
+                                Button::new("titlebar_tab_settings")
+                                    .set_label("Settings")
+                                    .set_active(self.active_tab == "settings")
+                                    .on_click({
+                                        let on_tab_change = self.on_tab_change.clone();
+                                        move |_, window, app| {
+                                            on_tab_change("settings".to_string(), window, app)
+                                        }
+                                    }),
+                            ),
                     ),
             )
             .child(

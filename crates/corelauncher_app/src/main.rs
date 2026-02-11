@@ -31,12 +31,13 @@ impl Render for LibraryView {
 }
 
 struct RootView {
+    active_tab: String,
     settings_view: Entity<SettingsView>,
     library_view: Entity<LibraryView>,
 }
 
 impl Render for RootView {
-    fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
+    fn render(&mut self, window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
         div()
             .font_family("Inter")
             .text_color(Style::text_color())
@@ -46,7 +47,13 @@ impl Render for RootView {
             .flex()
             .flex_col()
             .bg(Style::background())
-            .child(TitlebarSection::new())
+            .child(TitlebarSection::new(
+                &self.active_tab,
+                window.listener_for::<RootView, String>(
+                    _cx.entity(),
+                    |root, new_active_tab, _, _| {},
+                ),
+            ))
             .child(
                 div()
                     .flex()

@@ -73,6 +73,7 @@ pub struct Button {
     id: ElementId,
     style: ButtonStyle,
     ghost: bool,
+    active: bool,
     function: ButtonFunction,
 
     // Contents
@@ -88,6 +89,7 @@ impl Button {
             id: id.into(),
             style: ButtonStyle::from(ButtonVariant::Standard),
             ghost: false,
+            active: false,
             function: ButtonFunction::Custom,
             icon: None,
             label: SharedString::new(""),
@@ -107,6 +109,11 @@ impl Button {
 
     pub fn set_ghost(mut self, ghost: bool) -> Self {
         self.ghost = ghost;
+        self
+    }
+
+    pub fn set_active(mut self, active: bool) -> Self {
+        self.active = active;
         self
     }
 
@@ -136,9 +143,6 @@ impl Button {
 
 impl RenderOnce for Button {
     fn render(self, window: &mut gpui::Window, cx: &mut gpui::App) -> impl gpui::IntoElement {
-        let is_windows = cfg!(target_os = "windows");
-        let is_linux = cfg!(target_os = "linux");
-
         return div()
             // Interactivity
             .cursor_pointer()
@@ -156,6 +160,9 @@ impl RenderOnce for Button {
                     .bg(self.style.background_normal)
                     .border_1()
                     .border_color(Style::border_color())
+            })
+            .when(self.active, |element| {
+                element.bg(self.style.background_active)
             })
             .active(|element| element.bg(self.style.background_active))
             .hover(|element| {
