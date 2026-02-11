@@ -1,15 +1,15 @@
 use std::fs;
 
 use gpui::{
-    App, AppContext, Application, AssetSource, Bounds, Context, Entity, IntoElement, ParentElement,
-    Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
-    WindowOptions, div, prelude::FluentBuilder, px, size,
+    App, AppContext, Application, AssetSource, Bounds, Context, Entity, InteractiveElement,
+    IntoElement, ParentElement, Render, SharedString, Styled, TitlebarOptions, Window,
+    WindowBounds, WindowDecorations, WindowOptions, div, prelude::FluentBuilder, px, size,
 };
 
 use crate::{
     assets::CustomAssets,
     constants::Constants,
-    ui::{Style, TitlebarSection},
+    ui::{Style, TitlebarSection, window_root},
 };
 
 mod assets;
@@ -61,6 +61,7 @@ impl RootView {
 impl Render for RootView {
     fn render(&mut self, window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
         div()
+            .child(window_root())
             .font_family("Inter")
             .text_color(Style::text_color())
             .rounded(Style::window_rounding())
