@@ -1,6 +1,6 @@
 use gpui::{Div, FontWeight, ParentElement, Pixels, Styled, Svg, div, px, svg};
 
-use crate::{constants::Constants, style::Style};
+use crate::{constants::Constants, ui::Style};
 
 pub fn branding_logo(size: Pixels) -> Div {
     div()
@@ -22,11 +22,4 @@ pub fn branding_stamp() -> Div {
         .text_size(px(20.))
         .font_family("Rubik")
         .font_weight(FontWeight::BOLD)
-}
-
-pub fn block() -> Div {
-    div()
-        .bg(Style::foreground())
-        .rounded(Style::normal_gap())
-        .p(Style::normal_gap())
 }

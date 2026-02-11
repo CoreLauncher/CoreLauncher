@@ -1,13 +1,11 @@
 use std::rc::Rc;
 
-use gpui::prelude::FluentBuilder;
 use gpui::{
-    App, Context, Div, InteractiveElement, IntoElement, MouseButton, ParentElement, Render,
-    RenderOnce, Styled, Window, WindowControlArea, div, px,
+    App, Context, InteractiveElement, IntoElement, MouseButton, ParentElement, Render, RenderOnce,
+    Styled, Window, WindowControlArea, div, px,
 };
 
-use crate::smart_components::{Button, ButtonFunction, ButtonVariant};
-use crate::{components::branding_logo, style::Style};
+use crate::ui::{Button, ButtonFunction, ButtonVariant, Style, branding_logo};
 
 struct TitlebarSectionState {
     should_drag: bool,

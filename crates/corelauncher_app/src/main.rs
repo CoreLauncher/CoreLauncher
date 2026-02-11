@@ -1,18 +1,20 @@
 use std::fs;
 
-use crate::{assets::CustomAssets, constants::Constants, sections::TitlebarSection, style::Style};
 use gpui::{
     App, AppContext, Application, AssetSource, Bounds, Context, Entity, IntoElement, ParentElement,
     Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
     WindowOptions, div, prelude::FluentBuilder, px, size,
 };
 
+use crate::{
+    assets::CustomAssets,
+    constants::Constants,
+    ui::{Style, TitlebarSection},
+};
+
 mod assets;
-mod components;
 mod constants;
-mod sections;
-mod smart_components;
-mod style;
+mod ui;
 
 struct LibraryView;
 
