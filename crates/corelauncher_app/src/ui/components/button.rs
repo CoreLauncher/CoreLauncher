@@ -1,8 +1,8 @@
 use std::rc::Rc;
 
 use gpui::{
-    App, ClickEvent, ElementId, Hsla, InteractiveElement, IntoElement, ParentElement, Render,
-    RenderOnce, SharedString, StatefulInteractiveElement, Styled, Window, WindowControlArea, div,
+    App, ClickEvent, ElementId, Hsla, InteractiveElement, IntoElement, ParentElement, RenderOnce,
+    SharedString, StatefulInteractiveElement, Styled, Window, WindowControlArea, div,
     prelude::FluentBuilder, svg,
 };
 
@@ -74,6 +74,7 @@ pub struct Button {
     style: ButtonStyle,
     ghost: bool,
     active: bool,
+    disabled: bool,
     function: ButtonFunction,
 
     // Contents
@@ -90,6 +91,7 @@ impl Button {
             style: ButtonStyle::from(ButtonVariant::Standard),
             ghost: false,
             active: false,
+            disabled: false,
             function: ButtonFunction::Custom,
             icon: None,
             label: SharedString::new(""),
@@ -114,6 +116,11 @@ impl Button {
 
     pub fn set_active(mut self, active: bool) -> Self {
         self.active = active;
+        self
+    }
+
+    pub fn set_disabled(mut self, disabled: bool) -> Self {
+        self.disabled = disabled;
         self
     }
 
@@ -142,7 +149,7 @@ impl Button {
 }
 
 impl RenderOnce for Button {
-    fn render(self, window: &mut gpui::Window, cx: &mut gpui::App) -> impl gpui::IntoElement {
+    fn render(self, _window: &mut gpui::Window, _cx: &mut gpui::App) -> impl gpui::IntoElement {
         return div()
             // Interactivity
             .cursor_pointer()
@@ -152,6 +159,7 @@ impl RenderOnce for Button {
             .flex()
             .flex_row()
             .items_center()
+            .justify_center()
             // Styling
             .p(Style::normal_gap())
             .rounded(Style::small_gap())
@@ -160,6 +168,9 @@ impl RenderOnce for Button {
                     .bg(self.style.background_normal)
                     .border_1()
                     .border_color(Style::border_color())
+                    .when(self.disabled, |element| {
+                        element.bg(self.style.background_disabled)
+                    })
             })
             .when(self.active, |element| {
                 element.bg(self.style.background_active)
@@ -175,21 +186,21 @@ impl RenderOnce for Button {
             .when(self.function == ButtonFunction::Minimize, |element| {
                 element
                     .window_control_area(WindowControlArea::Min)
-                    .on_click(|event, window, _| {
+                    .on_click(|_, window, _| {
                         window.minimize_window();
                     })
             })
             .when(self.function == ButtonFunction::Maximize, |element| {
                 element
                     .window_control_area(WindowControlArea::Max)
-                    .on_click(|event, window, _| {
+                    .on_click(|_, window, _| {
                         window.zoom_window();
                     })
             })
             .when(self.function == ButtonFunction::Close, |element| {
                 element
                     .window_control_area(WindowControlArea::Close)
-                    .on_click(|event, window, _| {
+                    .on_click(|_, window, _| {
                         window.minimize_window();
                     })
             })
