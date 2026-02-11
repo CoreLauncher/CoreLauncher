@@ -158,6 +158,7 @@ impl RenderOnce for Button {
             // Flex
             .flex()
             .flex_row()
+            .gap(Style::normal_gap())
             .items_center()
             .justify_center()
             // Styling

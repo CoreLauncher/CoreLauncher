@@ -2,7 +2,7 @@ use gpui::{Context, FontWeight, IntoElement, ParentElement, Render, Styled, Wind
 
 use crate::{
     constants::Constants,
-    ui::{Style, block},
+    ui::{Button, Style, block},
 };
 
 pub struct SettingsView;
@@ -29,7 +29,17 @@ impl Render for SettingsView {
                     .child(format!(
                         "You are currently using version {} of CoreLauncher.",
                         Constants::app_version()
-                    )),
+                    ))
+                    .child(
+                        div().flex().flex_row().gap(Style::normal_gap()).child(
+                            Button::new("settings_button_github")
+                                .set_icon("icons/github.svg")
+                                .set_label("Star on GitHub")
+                                .on_click(|_, _, cx| {
+                                    cx.open_url("https://github.com/CoreLauncher/CoreLauncher");
+                                }),
+                        ),
+                    ),
             )
     }
 }
