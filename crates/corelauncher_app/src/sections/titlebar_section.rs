@@ -23,13 +23,13 @@ impl Render for TitlebarSectionState {
 #[derive(IntoElement)]
 pub struct TitlebarSection {
     active_tab: String,
-    on_tab_change: Rc<dyn FnMut(String, &mut Window, &mut App)>,
+    on_tab_change: Rc<dyn Fn(&String, &mut Window, &mut App)>,
 }
 
 impl TitlebarSection {
     pub fn new(
         active_tab: &str,
-        on_tab_change: impl FnMut(String, &mut Window, &mut App) + 'static,
+        on_tab_change: impl Fn(&String, &mut Window, &mut App) + 'static,
     ) -> Self {
         Self {
             active_tab: active_tab.to_string(),
@@ -91,7 +91,7 @@ impl RenderOnce for TitlebarSection {
                                     .on_click({
                                         let on_tab_change = self.on_tab_change.clone();
                                         move |_, window, app| {
-                                            on_tab_change("library".to_string(), window, app)
+                                            on_tab_change(&"library".to_string(), window, app)
                                         }
                                     }),
                             )
@@ -102,7 +102,7 @@ impl RenderOnce for TitlebarSection {
                                     .on_click({
                                         let on_tab_change = self.on_tab_change.clone();
                                         move |_, window, app| {
-                                            on_tab_change("profile".to_string(), window, app)
+                                            on_tab_change(&"profile".to_string(), window, app)
                                         }
                                     }),
                             )
@@ -113,7 +113,7 @@ impl RenderOnce for TitlebarSection {
                                     .on_click({
                                         let on_tab_change = self.on_tab_change.clone();
                                         move |_, window, app| {
-                                            on_tab_change("settings".to_string(), window, app)
+                                            on_tab_change(&"settings".to_string(), window, app)
                                         }
                                     }),
                             ),

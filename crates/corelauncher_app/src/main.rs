@@ -50,8 +50,10 @@ impl Render for RootView {
             .child(TitlebarSection::new(
                 &self.active_tab,
                 window.listener_for::<RootView, String>(
-                    _cx.entity(),
-                    |root, new_active_tab, _, _| {},
+                    &_cx.entity(),
+                    |root, new_active_tab, _, _| {
+                        root.active_tab = new_active_tab.clone();
+                    },
                 ),
             ))
             .child(
@@ -108,6 +110,7 @@ fn main() {
                 |window, cx| {
                     window.set_window_title("CoreLauncher");
                     return cx.new(|cx| RootView {
+                        active_tab: "library".to_string(),
                         settings_view: cx.new(|_| SettingsView),
                         library_view: cx.new(|_| LibraryView),
                     });
