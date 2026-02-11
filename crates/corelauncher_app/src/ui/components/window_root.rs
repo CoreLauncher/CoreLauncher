@@ -96,9 +96,10 @@ impl RenderOnce for WindowRoot {
                             HitboxBehavior::Normal,
                         )
                     },
-                    move |_bounds, hitbox, window, cx| match state_clone.read(cx).cursor_style {
-                        Some(style) => window.set_cursor_style(style, &hitbox),
-                        _ => (),
+                    move |_bounds, hitbox, window, cx| {
+                        if let Some(style) = state_clone.read(cx).cursor_style {
+                            window.set_cursor_style(style, &hitbox);
+                        }
                     },
                 )
                 .size_full()
@@ -125,7 +126,6 @@ impl RenderOnce for WindowRoot {
                 if let Some(edge) = edge {
                     window.start_window_resize(edge.resize_direction());
                 }
-                println!("{:?} {:?}", size, position)
             })
             .size_full()
             .absolute()
