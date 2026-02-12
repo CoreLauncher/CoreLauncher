@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/corelauncher_app", "crates/ipc_handler", "crates/minecraft"]
+members = ["crates/corelauncher_app", "crates/ipc_handler", "crates/minecraft", "crates/steam-client"]
 default-members = ["crates/corelauncher_app"]
 
 [profile.release]
