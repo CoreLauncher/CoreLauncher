@@ -91,6 +91,4 @@ fn main() {
             panic!("Failed to compile protos: {}", e);
         }
     }
-
-    panic!("Hi")
 }
