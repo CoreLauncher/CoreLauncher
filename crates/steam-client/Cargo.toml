@@ -2,5 +2,14 @@
 name = "steam-client"
 version = "0.1.0"
 edition = "2024"
+build = "build.rs"
 
 [dependencies]
+
+[build-dependencies]
+reqwest = "0.13.2"
+tokio = { version = "1.49.0", features = ["full"] }
+serde = {version="1.0.228", features=["derive"]}
+serde_json = "1.0.149"
+# protobuf_codegen = { version = "4.34.0-rc.2" }
+# protobuf-well-known-types = { version = "4.34.0-rc.2" }
