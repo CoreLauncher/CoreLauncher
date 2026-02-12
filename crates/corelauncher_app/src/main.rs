@@ -108,6 +108,7 @@ fn main() {
                         .list("fonts")
                         .unwrap()
                         .iter()
+                        .filter(|path| path.ends_with(".ttf"))
                         .map(|path| CustomAssets.load(&path.as_str()).unwrap().unwrap())
                         .collect(),
                 )
