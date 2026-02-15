@@ -10,11 +10,8 @@ use crate::{
     assets::CustomAssets,
     constants::Constants,
     ui::{
-        components::window_root::{self, window_root},
-        sections::titlebar_section::TitlebarSection,
-        style::Style,
-        views::library_view::LibraryView,
-        views::profile_view::ProfileView,
+        components::window_root::window_root, sections::titlebar_section::TitlebarSection,
+        style::Style, views::library_view::LibraryView, views::profile_view::ProfileView,
         views::settings_view::SettingsView,
     },
 };
