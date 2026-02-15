@@ -1,2 +1,3 @@
-mod settings_view;
-pub use settings_view::*;
+pub mod library_view;
+pub mod profile_view;
+pub mod settings_view;

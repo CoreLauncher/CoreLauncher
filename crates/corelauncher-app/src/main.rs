@@ -9,28 +9,15 @@ use gpui::{
 use crate::{
     assets::CustomAssets,
     constants::Constants,
-    ui::{SettingsView, Style, TitlebarSection, window_root},
+    ui::{
+        Style, TitlebarSection, library_view::LibraryView, profile_view::ProfileView,
+        settings_view::SettingsView, window_root,
+    },
 };
 
 mod assets;
 mod constants;
 mod ui;
-
-struct LibraryView;
-
-impl Render for LibraryView {
-    fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
-        div().child("Library View")
-    }
-}
-
-struct ProfileView;
-
-impl Render for ProfileView {
-    fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
-        div().child("Profile View")
-    }
-}
 
 struct RootView {
     active_tab: String,
