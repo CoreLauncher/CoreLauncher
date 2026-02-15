@@ -1,8 +1,4 @@
-mod components;
-mod sections;
-mod style;
-mod views;
-pub use components::*;
-pub use sections::*;
-pub use style::Style;
-pub use views::*;
+pub mod components;
+pub mod sections;
+pub mod style;
+pub mod views;

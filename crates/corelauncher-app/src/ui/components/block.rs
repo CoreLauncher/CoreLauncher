@@ -1,6 +1,6 @@
 use gpui::{Div, Styled, div};
 
-use crate::ui::Style;
+use crate::ui::style::Style;
 
 pub fn block() -> Div {
     div()

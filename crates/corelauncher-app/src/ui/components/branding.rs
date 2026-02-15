@@ -1,6 +1,6 @@
 use gpui::{Div, FontWeight, ParentElement, Pixels, Styled, Svg, div, px, svg};
 
-use crate::{constants::Constants, ui::Style};
+use crate::{constants::Constants, ui::style::Style};
 
 pub fn branding_logo(size: Pixels) -> Div {
     div()

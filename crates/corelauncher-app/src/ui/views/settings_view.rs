@@ -2,7 +2,10 @@ use gpui::{Context, FontWeight, IntoElement, ParentElement, Render, Styled, Wind
 
 use crate::{
     constants::Constants,
-    ui::{Button, Style, block},
+    ui::{
+        components::{block::block, button::Button},
+        style::Style,
+    },
 };
 
 pub struct SettingsView;

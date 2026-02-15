@@ -5,7 +5,13 @@ use gpui::{
     Styled, Window, WindowControlArea, div, px,
 };
 
-use crate::ui::{Button, ButtonFunction, ButtonVariant, Style, branding_logo};
+use crate::ui::{
+    components::{
+        branding::branding_logo,
+        button::{Button, ButtonFunction, ButtonVariant},
+    },
+    style::Style,
+};
 
 struct TitlebarSectionState {
     should_drag: bool,

@@ -6,7 +6,7 @@ use gpui::{
     prelude::FluentBuilder, svg,
 };
 
-use crate::ui::Style;
+use crate::ui::style::Style;
 
 pub enum ButtonVariant {
     Standard,
