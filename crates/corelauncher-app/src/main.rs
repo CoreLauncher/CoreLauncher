@@ -4,7 +4,7 @@ use corelauncher_plugin_steam::PluginSteam;
 use gpui::{
     App, AppContext, Application, AssetSource, Bounds, Context, Entity, IntoElement, ParentElement,
     Pixels, Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
-    WindowOptions, div, prelude::FluentBuilder, px, size,
+    WindowOptions, div, prelude::FluentBuilder, px, rgb, size,
 };
 
 use crate::{
@@ -58,6 +58,8 @@ impl Render for RootView {
             .size_full()
             .flex()
             .flex_col()
+            .border_color(Style::border_color())
+            .border_2()
             .bg(Style::background())
             .child(TitlebarSection::new(
                 &self.active_tab,
@@ -90,7 +92,7 @@ impl Render for RootView {
 fn window_options(bounds: Bounds<Pixels>) -> WindowOptions {
     WindowOptions {
         app_id: Some("corelauncher".to_string()),
-        window_min_size: Some(size(px(1200.0), px(800.0))),
+        window_min_size: Some(size(px(1000.0), px(600.0))),
         window_bounds: Some(WindowBounds::Windowed(bounds)),
         titlebar: Some(TitlebarOptions {
             title: Some(SharedString::new_static("CoreLauncher")),
