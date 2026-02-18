@@ -5,6 +5,8 @@ edition = "2024"
 build = "build.rs"
 
 [dependencies]
+corelauncher-types = { path = "../corelauncher-types" }
+corelauncher-plugin-steam = { path = "../corelauncher-plugin-steam" }
 gpui = "0.2.2"
 rust-embed = "8.11.0"
 anyhow = "1.0.101"

@@ -1,0 +1,1 @@
+- Prefer early returns and guard clauses to reduce nesting and improve readability.

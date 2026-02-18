@@ -1,26 +1,34 @@
 use std::fs;
 
+use corelauncher_plugin_steam::PluginSteam;
 use gpui::{
     App, AppContext, Application, AssetSource, Bounds, Context, Entity, IntoElement, ParentElement,
-    Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
+    Pixels, Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
     WindowOptions, div, prelude::FluentBuilder, px, size,
 };
 
 use crate::{
     assets::CustomAssets,
     constants::Constants,
+    plugins::manager::PluginManager,
     ui::{
-        components::window_root::window_root, sections::titlebar_section::TitlebarSection,
-        style::Style, views::library_view::LibraryView, views::profile_view::ProfileView,
-        views::settings_view::SettingsView,
+        components::window_root::window_root,
+        sections::titlebar_section::TitlebarSection,
+        style::Style,
+        views::{
+            library_view::LibraryView, profile_view::ProfileView, settings_view::SettingsView,
+        },
     },
 };
 
 mod assets;
 mod constants;
+mod plugins;
 mod ui;
 
 struct RootView {
+    #[allow(dead_code)]
+    plugin_manager: PluginManager,
     active_tab: String,
     library_view: Entity<LibraryView>,
     profile_view: Entity<ProfileView>,
@@ -28,8 +36,9 @@ struct RootView {
 }
 
 impl RootView {
-    pub fn new(cx: &mut App) -> Entity<Self> {
+    pub fn new(cx: &mut App, plugin_manager: PluginManager) -> Entity<Self> {
         cx.new(|cx| RootView {
+            plugin_manager,
             active_tab: "library".to_string(),
             library_view: cx.new(|_| LibraryView),
             profile_view: cx.new(|_| ProfileView),
@@ -78,6 +87,21 @@ impl Render for RootView {
     }
 }
 
+fn window_options(bounds: Bounds<Pixels>) -> WindowOptions {
+    WindowOptions {
+        app_id: Some("corelauncher".to_string()),
+        window_min_size: Some(size(px(1200.0), px(800.0))),
+        window_bounds: Some(WindowBounds::Windowed(bounds)),
+        titlebar: Some(TitlebarOptions {
+            title: Some(SharedString::new_static("CoreLauncher")),
+            appears_transparent: true,
+            ..Default::default()
+        }),
+        window_decorations: Some(WindowDecorations::Client),
+        ..Default::default()
+    }
+}
+
 fn main() {
     println!("App Directory: {:?}", Constants::app_directory());
     let _ = fs::create_dir(Constants::app_directory());
@@ -102,26 +126,31 @@ fn main() {
                 )
                 .unwrap();
 
+            let mut plugin_manager = PluginManager::new(Box::new(|event| {
+                println!("Plugin event: {:?}", event);
+            }));
+
+            plugin_manager.register_plugin(Box::new(PluginSteam::new()));
+
+            println!("Loaded {} plugins", plugin_manager.plugin_count());
+            for plugin in plugin_manager.plugins() {
+                println!(
+                    "  - {} v{}: {}",
+                    plugin.name(),
+                    plugin.version(),
+                    plugin.description()
+                );
+            }
+
+            let state = RootView::new(cx, plugin_manager);
+
             let bounds = Bounds::centered(None, size(px(1200.), px(800.0)), cx);
-            cx.open_window(
-                WindowOptions {
-                    app_id: Some("corelauncher".to_string()),
-                    window_min_size: Some(size(px(1200.0), px(800.0))),
-                    window_bounds: Some(WindowBounds::Windowed(bounds)),
-                    // is_resizable: false,
-                    titlebar: Some(TitlebarOptions {
-                        title: Some(SharedString::new_static("CoreLauncher")),
-                        appears_transparent: true,
-                        ..Default::default()
-                    }),
-                    window_decorations: Some(WindowDecorations::Client),
-                    ..Default::default()
-                },
-                |window, cx| {
-                    window.set_window_title("CoreLauncher");
-                    return RootView::new(cx);
-                },
-            )
+            let options = window_options(bounds);
+
+            cx.open_window(options, |window, _cx| {
+                window.set_window_title("CoreLauncher");
+                return state;
+            })
             .unwrap();
         });
 }

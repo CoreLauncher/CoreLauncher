@@ -1173,10 +1173,23 @@ name = "corelauncher-app"
 version = "1.0.0-beta.23"
 dependencies = [
  "anyhow",
+ "corelauncher-plugin-steam",
+ "corelauncher-types",
  "gpui",
  "rust-embed",
  "winresource",
 ]
+
+[[package]]
+name = "corelauncher-plugin-steam"
+version = "0.1.0"
+dependencies = [
+ "corelauncher-types",
+]
+
+[[package]]
+name = "corelauncher-types"
+version = "0.1.0"
 
 [[package]]
 name = "cosmic-text"
