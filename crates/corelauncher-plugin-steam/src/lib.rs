@@ -3,46 +3,30 @@ use std::any::Any;
 use corelauncher_types::{Plugin, PluginPortal};
 
 pub struct PluginSteam {
-    initialized: bool,
+    _portal: Box<dyn PluginPortal>,
 }
 
 impl PluginSteam {
-    pub fn new() -> Self {
-        Self { initialized: false }
-    }
-}
-
-impl Default for PluginSteam {
-    fn default() -> Self {
-        Self::new()
+    pub fn new(portal: Box<dyn PluginPortal>) -> Self {
+        Self { _portal: portal }
     }
 }
 
 impl Plugin for PluginSteam {
-    fn id(&self) -> String {
+    fn get_id(&self) -> String {
         "corelauncher-plugin-steam".into()
     }
 
-    fn name(&self) -> String {
+    fn get_name(&self) -> String {
         "Steam".into()
     }
 
-    fn version(&self) -> String {
+    fn get_version(&self) -> String {
         "0.1.0".into()
     }
 
-    fn description(&self) -> String {
+    fn get_description(&self) -> String {
         "A plugin to integrate Steam games into CoreLauncher.".into()
-    }
-
-    fn on_load(&mut self, _portal: &dyn PluginPortal) {
-        self.initialized = true;
-        println!("Steam plugin loaded");
-    }
-
-    fn on_unload(&mut self) {
-        self.initialized = false;
-        println!("Steam plugin unloaded");
     }
 
     fn as_any(&self) -> &dyn Any {

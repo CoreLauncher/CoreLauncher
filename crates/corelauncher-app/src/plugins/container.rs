@@ -1,32 +1,42 @@
 use std::sync::Arc;
 
-use corelauncher_types::{Plugin, PluginEvent, PluginEventCallback};
+use corelauncher_types::{Plugin, PluginEventCallback, PluginLoader};
 
 use crate::plugins::portal::PluginPortalImpl;
 
 pub struct PluginContainer {
-    #[allow(dead_code)]
-    portal: Arc<PluginPortalImpl>,
-    plugin: Box<dyn Plugin>,
+    callback: Arc<PluginEventCallback>,
+    loader: PluginLoader,
+    plugin: Option<Box<dyn Plugin>>,
 }
 
 impl PluginContainer {
-    pub fn new(mut plugin: Box<dyn Plugin>, callback: Arc<PluginEventCallback>) -> Self {
-        let portal = Arc::new(PluginPortalImpl::new(Arc::clone(&callback)));
+    pub fn new(loader: PluginLoader, callback: Arc<PluginEventCallback>) -> Self {
+        Self {
+            callback,
+            loader,
+            plugin: None,
+        }
+    }
 
-        plugin.on_load(&*portal);
+    pub fn enable(&mut self) {
+        if self.is_enabled() {
+            panic!("Tried to enabled an already enabled plugin!");
+        };
 
-        callback(PluginEvent::PluginLoaded(plugin.id()));
+        let portal = PluginPortalImpl::new(Arc::clone(&self.callback));
+        let plugin = (self.loader)(Box::new(portal));
+        self.plugin = Some(plugin);
+    }
 
-        Self { plugin, portal }
+    pub fn is_enabled(&self) -> bool {
+        self.plugin.is_some()
     }
 
     pub fn plugin(&self) -> &dyn Plugin {
-        &*self.plugin
-    }
-
-    #[allow(dead_code)]
-    pub fn plugin_mut(&mut self) -> &mut dyn Plugin {
-        &mut *self.plugin
+        self.plugin
+            .as_ref()
+            .expect("Tried to access a plugin that is not enabled!")
+            .as_ref()
     }
 }

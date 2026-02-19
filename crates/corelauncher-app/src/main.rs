@@ -4,7 +4,7 @@ use corelauncher_plugin_steam::PluginSteam;
 use gpui::{
     App, AppContext, Application, AssetSource, Bounds, Context, Entity, IntoElement, ParentElement,
     Pixels, Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
-    WindowOptions, div, prelude::FluentBuilder, px, rgb, size,
+    WindowOptions, div, prelude::FluentBuilder, px, size,
 };
 
 use crate::{
@@ -132,15 +132,15 @@ fn main() {
                 println!("Plugin event: {:?}", event);
             }));
 
-            plugin_manager.register_plugin(Box::new(PluginSteam::new()));
+            plugin_manager.register_plugin(Box::new(|portal| Box::new(PluginSteam::new(portal))));
 
             println!("Loaded {} plugins", plugin_manager.plugin_count());
             for plugin in plugin_manager.plugins() {
                 println!(
-                    "  - {} v{}: {}",
-                    plugin.name(),
-                    plugin.version(),
-                    plugin.description()
+                    " - {} v{}: {}",
+                    plugin.get_name(),
+                    plugin.get_version(),
+                    plugin.get_description()
                 );
             }
 

@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use corelauncher_types::{Plugin, PluginEventCallback};
+use corelauncher_types::{Plugin, PluginEventCallback, PluginLoader};
 
 use crate::plugins::container::PluginContainer;
 
@@ -17,8 +17,9 @@ impl PluginManager {
         }
     }
 
-    pub fn register_plugin(&mut self, plugin: Box<dyn Plugin>) {
-        let container = PluginContainer::new(plugin, Arc::clone(&self.callback));
+    pub fn register_plugin(&mut self, loader: PluginLoader) {
+        let mut container = PluginContainer::new(loader, Arc::clone(&self.callback));
+        container.enable();
         self.containers.push(container);
     }
 
@@ -30,7 +31,7 @@ impl PluginManager {
     pub fn get_plugin(&self, id: &str) -> Option<&dyn Plugin> {
         self.containers
             .iter()
-            .find(|c| c.plugin().id() == id)
+            .find(|c| c.plugin().get_id() == id)
             .map(|c| c.plugin())
     }
 
