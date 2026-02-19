@@ -10,6 +10,8 @@ corelauncher-plugin-steam = { path = "../corelauncher-plugin-steam" }
 gpui = "0.2.2"
 rust-embed = "8.11.0"
 anyhow = "1.0.101"
+tray = "0.1.2"
+image = { version = "0.25", default-features = false, features = ["png", "ico"] }
 
 [build-dependencies]
 winresource = "0.1.30"

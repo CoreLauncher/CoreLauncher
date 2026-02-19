@@ -6,6 +6,11 @@ use gpui::{
     Pixels, Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
     WindowOptions, div, prelude::FluentBuilder, px, size,
 };
+use image::EncodableLayout;
+// use tray_icon::{
+//     TrayIconBuilder, TrayIconEvent,
+//     menu::{MenuEvent, MenuItem},
+// };
 
 use crate::{
     assets::CustomAssets,
@@ -127,6 +132,56 @@ fn main() {
                         .collect(),
                 )
                 .unwrap();
+
+            std::thread::spawn(|| {
+                use tray::{Icon, MouseButton, TrayIconBuilder, TrayIconEvent};
+
+                let image = image::load_from_memory(
+                    CustomAssets
+                        .load("logos/logo.ico")
+                        .unwrap()
+                        .unwrap()
+                        .as_bytes(),
+                )
+                .unwrap()
+                .into_rgba8();
+
+                let (width, height) = image.dimensions();
+
+                let icon = Icon::from_rgba(image.into_raw(), width, height).unwrap();
+
+                let tray = TrayIconBuilder::new()
+                    .with_tooltip("My App")
+                    .with_icon(icon)
+                    .build()
+                    .unwrap();
+
+                // Poll for events
+                let receiver = TrayIconEvent::receiver();
+                loop {
+                    if let Ok(event) = receiver.recv() {
+                        match event {
+                            TrayIconEvent::Click {
+                                button: MouseButton::Right,
+                                position,
+                                ..
+                            } => {
+                                println!("Right click at position: {:?}", position);
+                            }
+                            TrayIconEvent::Click {
+                                button: MouseButton::Left,
+                                position,
+                                ..
+                            } => {
+                                println!("Left click at position: {:?}", position);
+                            }
+                            _ => {
+                                println!("Other event: {:?}", event);
+                            }
+                        }
+                    }
+                }
+            });
 
             let mut plugin_manager = PluginManager::new(Box::new(|event| {
                 println!("Plugin event: {:?}", event);
