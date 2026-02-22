@@ -7,6 +7,7 @@ use gpui::{
     WindowOptions, div, prelude::FluentBuilder, px, size,
 };
 use image::EncodableLayout;
+use tray::MouseButtonState;
 // use tray_icon::{
 //     TrayIconBuilder, TrayIconEvent,
 //     menu::{MenuEvent, MenuItem},
@@ -133,7 +134,7 @@ fn main() {
                 )
                 .unwrap();
 
-            std::thread::spawn(|| {
+            std::thread::spawn(move || {
                 use tray::{Icon, MouseButton, TrayIconBuilder, TrayIconEvent};
 
                 let image = image::load_from_memory(
@@ -151,7 +152,9 @@ fn main() {
                 let icon = Icon::from_rgba(image.into_raw(), width, height).unwrap();
 
                 let tray = TrayIconBuilder::new()
-                    .with_tooltip("My App")
+                    .with_id("corelauncher")
+                    .with_title("CoreLauncher")
+                    .with_tooltip("CoreLauncher")
                     .with_icon(icon)
                     .build()
                     .unwrap();
@@ -162,22 +165,14 @@ fn main() {
                     if let Ok(event) = receiver.recv() {
                         match event {
                             TrayIconEvent::Click {
-                                button: MouseButton::Right,
-                                position,
-                                ..
-                            } => {
-                                println!("Right click at position: {:?}", position);
-                            }
-                            TrayIconEvent::Click {
                                 button: MouseButton::Left,
                                 position,
+                                button_state: MouseButtonState::Up,
                                 ..
                             } => {
                                 println!("Left click at position: {:?}", position);
                             }
-                            _ => {
-                                println!("Other event: {:?}", event);
-                            }
+                            _ => {}
                         }
                     }
                 }
