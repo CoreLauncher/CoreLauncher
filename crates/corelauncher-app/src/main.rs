@@ -134,6 +134,11 @@ fn main() {
                 )
                 .unwrap();
 
+            cx.on_window_closed(move |cx| {
+                println!("window closed");
+            })
+            .detach();
+
             std::thread::spawn(move || {
                 use tray::{Icon, MouseButton, TrayIconBuilder, TrayIconEvent};
 
