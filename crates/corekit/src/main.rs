@@ -59,27 +59,13 @@ impl State {
 
         let surface_caps = surface.get_capabilities(&adapter);
 
-        let surface_format = surface_caps
-            .formats
-            .iter()
-            .copied()
-            .find(|f| f.is_srgb())
-            .unwrap_or(surface_caps.formats[0]);
-
-        let alpha_mode = surface_caps
-            .alpha_modes
-            .iter()
-            .copied()
-            .find(|&mode| mode == wgpu::CompositeAlphaMode::PreMultiplied)
-            .unwrap_or(surface_caps.alpha_modes[0]);
-
         let config = wgpu::SurfaceConfiguration {
             usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
-            format: surface_format,
+            format: surface_caps.formats[0],
             width: size.width,
             height: size.height,
             present_mode: surface_caps.present_modes[0],
-            alpha_mode,
+            alpha_mode: surface_caps.alpha_modes[0],
             desired_maximum_frame_latency: 2,
             view_formats: vec![],
         };
@@ -170,21 +156,11 @@ struct Application {
 impl ApplicationHandler for Application {
     fn resumed(&mut self, event_loop: &winit::event_loop::ActiveEventLoop) {
         let window: Arc<Window> = event_loop
-            .create_window(
-                WindowAttributes::default()
-                    .with_inner_size(LogicalSize::new(256, 256))
-                    .with_transparent(true)
-                    .with_decorations(false)
-                    .with_window_level(winit::window::WindowLevel::AlwaysOnTop)
-                    .with_fullscreen(Some(winit::window::Fullscreen::Borderless(None))),
-            )
+            .create_window(WindowAttributes::default().with_inner_size(LogicalSize::new(256, 256)))
             .unwrap()
             .into();
 
-        window.set_cursor_hittest(false).unwrap();
-
         let state = pollster::block_on(State::new(window));
-
         self.state = Some(state);
     }
 
