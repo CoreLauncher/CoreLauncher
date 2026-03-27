@@ -108,7 +108,7 @@ impl State {
                 label: Some("Render Encoder"),
             });
 
-        let render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+        let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some("Render Pass"),
             color_attachments: &[Some(wgpu::RenderPassColorAttachment {
                 view: &view,
@@ -129,6 +129,8 @@ impl State {
             timestamp_writes: None,
             multiview_mask: None,
         });
+
+        render_pass.draw(0..3, 0..1);
 
         drop(render_pass);
 
