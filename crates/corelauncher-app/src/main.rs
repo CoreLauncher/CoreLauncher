@@ -199,6 +199,10 @@ fn main() {
                 );
             }
 
+            cx.on_app_quit(|| {
+                println!("quitting");
+            });
+
             let state = RootView::new(cx, plugin_manager);
 
             let bounds = Bounds::centered(None, size(px(1200.), px(800.0)), cx);
