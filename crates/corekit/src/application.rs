@@ -1,16 +1,31 @@
+use std::sync::{Arc, Mutex};
+
 use winit::{
     application::ApplicationHandler,
     event_loop::{self, EventLoop, EventLoopProxy},
+    window::WindowAttributes,
 };
 
-use crate::context::ApplicationContext;
+use crate::{WindowOptions, context::ApplicationContext};
 
-enum UserEvent {}
+#[derive(Debug)]
+pub enum UserEvent {
+    OpenWindow { options: WindowOptions },
+}
+
+pub struct ApplicationState {}
+
+impl ApplicationState {
+    fn new() -> Self {
+        Self {}
+    }
+}
 
 pub struct Application {
     started: bool,
     callback: Box<dyn FnMut(ApplicationContext)>,
     proxy: Option<EventLoopProxy<UserEvent>>,
+    state: Option<Arc<Mutex<ApplicationState>>>,
 }
 
 impl Application {
@@ -19,6 +34,7 @@ impl Application {
             started: false,
             callback: Box::new(|_| {}),
             proxy: None,
+            state: None,
         }
     }
 
@@ -35,19 +51,25 @@ impl Application {
         let proxy = event_loop.create_proxy();
         self.proxy = proxy.into();
 
+        let state = ApplicationState::new();
+        self.state = Arc::new(Mutex::new(state)).into();
+
         event_loop.run_app(self).expect("Running eventloop failed");
     }
 }
 
 impl ApplicationHandler<UserEvent> for Application {
-    fn resumed(&mut self, event_loop: &event_loop::ActiveEventLoop) {
+    fn resumed(&mut self, _event_loop: &event_loop::ActiveEventLoop) {
         if self.started {
             return;
         } else {
             self.started = true
         };
 
-        (self.callback)(ApplicationContext {});
+        (self.callback)(ApplicationContext::new(
+            self.state.as_ref().unwrap().clone(),
+            self.proxy.as_ref().unwrap().clone(),
+        ));
     }
 
     fn window_event(
@@ -56,5 +78,15 @@ impl ApplicationHandler<UserEvent> for Application {
         window_id: winit::window::WindowId,
         event: winit::event::WindowEvent,
     ) {
+    }
+
+    fn user_event(&mut self, event_loop: &event_loop::ActiveEventLoop, event: UserEvent) {
+        match event {
+            UserEvent::OpenWindow { options } => {
+                event_loop
+                    .create_window(WindowAttributes::default())
+                    .unwrap();
+            }
+        }
     }
 }
