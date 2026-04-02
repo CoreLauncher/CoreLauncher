@@ -1,4 +1,6 @@
-#[derive(Debug, Default)]
+use crate::Component;
+
+#[derive(Debug)]
 pub struct WindowOptions {
     pub title: String,
 }
@@ -11,14 +13,21 @@ impl WindowOptions {
 
 pub struct WindowOptionsBuilder {
     title: Option<String>,
+    root: Option<Box<dyn Component>>,
 }
 
 impl WindowOptionsBuilder {
     fn new() -> Self {
-        Self { title: None }
+        Self {
+            title: None,
+            root: None,
+        }
     }
 
-    pub fn with_root(mut self)
+    pub fn with_root<C: Component + 'static>(mut self, component: C) -> Self {
+        self.root = Some(Box::new(component));
+        return self;
+    }
 
     pub fn with_title(mut self, title: &str) -> Self {
         self.title = title.to_string().into();
