@@ -3,7 +3,7 @@ use std::sync::{Arc, Mutex};
 use winit::{
     application::ApplicationHandler,
     event_loop::{self, EventLoop, EventLoopProxy},
-    window::WindowAttributes,
+    window::{Window, WindowAttributes},
 };
 
 use crate::{WindowOptions, context::ApplicationContext};
@@ -13,11 +13,15 @@ pub enum UserEvent {
     OpenWindow { options: WindowOptions },
 }
 
-pub struct ApplicationState {}
+pub struct ApplicationState {
+    windows: Vec<Window>,
+}
 
 impl ApplicationState {
     fn new() -> Self {
-        Self {}
+        Self {
+            windows: Vec::new(),
+        }
     }
 }
 
@@ -83,9 +87,18 @@ impl ApplicationHandler<UserEvent> for Application {
     fn user_event(&mut self, event_loop: &event_loop::ActiveEventLoop, event: UserEvent) {
         match event {
             UserEvent::OpenWindow { options } => {
-                event_loop
-                    .create_window(WindowAttributes::default())
-                    .unwrap();
+                let mut attributes = WindowAttributes::default();
+                attributes = attributes.with_title(options.title);
+
+                let window = event_loop.create_window(attributes).unwrap();
+
+                self.state
+                    .as_ref()
+                    .unwrap()
+                    .lock()
+                    .unwrap()
+                    .windows
+                    .push(window);
             }
         }
     }
