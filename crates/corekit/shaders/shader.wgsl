@@ -1,3 +1,5 @@
+@group(0) @binding(0) var<uniform> window_size: vec2<f32>;
+
 struct VertexOutput {
     @builtin(position) position: vec4f,
     @location(0) color: vec4f,
@@ -8,9 +10,9 @@ fn vs_main(
     @builtin(vertex_index) vertex_index: u32,
 ) -> VertexOutput {
     let positions = array(
-        vec4f( 0.0,  0.5, 1.0, 1.0),
-        vec4f(-0.5, -0.5, 1.0, 1.0),
-        vec4f( 0.5, -0.5, 1.0, 1.0)
+        vec2<f32>(64.0, 64.0),
+        vec2<f32>(64.0, 256.0),
+        vec2<f32>(256.0, 64.0),
     );
 
     var colors = array<vec4f, 3>(
@@ -19,8 +21,11 @@ fn vs_main(
       vec4f(0, 0, 1, 1),
     );
 
+    var position = positions[vertex_index];
+    var ndc = (position / window_size) * vec2<f32>(2.0, -2.0) + vec2<f32>(-1.0, 1.0);
+
     return VertexOutput(
-        positions[vertex_index],
+        vec4f(ndc, 0.0, 1.0),
         colors[vertex_index]
     );
 }

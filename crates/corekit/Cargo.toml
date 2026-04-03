@@ -8,3 +8,4 @@ winit = { version = "0.30.13" }
 rand = { version = "0.10.0" }
 wgpu = { version = "29.0.0" }
 pollster = "0.4.0"
+bytemuck = "1.25.0"

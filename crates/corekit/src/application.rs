@@ -1,10 +1,10 @@
 use std::sync::{Arc, Mutex};
 
 use wgpu::{
-    BackendOptions, Backends, FragmentState, InstanceDescriptor, InstanceFlags,
-    MemoryBudgetThresholds, PipelineCompilationOptions, PowerPreference, PrimitiveState,
-    RenderPipelineDescriptor, RequestAdapterOptions, Surface, SurfaceConfiguration, TextureFormat,
-    VertexState,
+    BackendOptions, Backends, BindGroup, Buffer, FragmentState, InstanceDescriptor, InstanceFlags,
+    MemoryBudgetThresholds, PipelineCompilationOptions, PipelineLayoutDescriptor, PowerPreference,
+    PrimitiveState, RenderPipeline, RenderPipelineDescriptor, RequestAdapterOptions, Surface,
+    SurfaceConfiguration, VertexState, util::DeviceExt,
 };
 use winit::{
     application::ApplicationHandler,
@@ -14,6 +14,13 @@ use winit::{
 };
 
 use crate::{WindowOptions, context::ApplicationContext};
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, bytemuck::Pod, bytemuck::Zeroable)]
+struct WindowSizeUniform {
+    width: f32,
+    height: f32,
+}
 
 #[derive(Debug)]
 pub enum UserEvent {
@@ -27,7 +34,9 @@ pub struct Window {
     handle: Arc<winit::window::Window>,
     surface: Surface<'static>,
     config: SurfaceConfiguration,
-    pipeline: wgpu::RenderPipeline,
+    pipeline: RenderPipeline,
+    window_size_buffer: Buffer,
+    bind_group: BindGroup,
 }
 
 impl Window {
@@ -38,7 +47,6 @@ impl Window {
         let device = &render_state_lock.device;
 
         let shader = &render_state_lock.shader;
-        let pipeline_layout = &render_state_lock.pipeline_layout;
 
         let window = Arc::new(window);
         let window_size = window.inner_size();
@@ -57,6 +65,44 @@ impl Window {
             view_formats: vec![],
         };
 
+        let window_size_buffer = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
+            label: Some("window_size_buffer"),
+            contents: &bytemuck::cast_slice(&[WindowSizeUniform {
+                width: 0.,
+                height: 0.0,
+            }]),
+            usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
+        });
+
+        let bind_group_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+            entries: &[wgpu::BindGroupLayoutEntry {
+                binding: 0,
+                visibility: wgpu::ShaderStages::VERTEX,
+                ty: wgpu::BindingType::Buffer {
+                    ty: wgpu::BufferBindingType::Uniform,
+                    has_dynamic_offset: false,
+                    min_binding_size: None,
+                },
+                count: None,
+            }],
+            label: Some("camera_bind_group_layout"),
+        });
+
+        let pipeline_layout = device.create_pipeline_layout(&PipelineLayoutDescriptor {
+            label: Some("Render pipeline layout"),
+            bind_group_layouts: &[Some(&bind_group_layout)],
+            immediate_size: 0,
+        });
+
+        let bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
+            layout: &bind_group_layout,
+            entries: &[wgpu::BindGroupEntry {
+                binding: 0,
+                resource: window_size_buffer.as_entire_binding(),
+            }],
+            label: Some("window_size_bind_group"),
+        });
+
         let pipeline = device.create_render_pipeline(&RenderPipelineDescriptor {
             label: Some("Render pipeline"),
             layout: Some(&pipeline_layout),
@@ -64,12 +110,12 @@ impl Window {
                 module: &shader,
                 buffers: &[],
                 compilation_options: PipelineCompilationOptions::default(),
-                entry_point: None,
+                entry_point: Some("vs_main"),
             },
             fragment: Some(FragmentState {
                 module: &shader,
                 compilation_options: PipelineCompilationOptions::default(),
-                entry_point: None,
+                entry_point: Some("fs_main"),
                 targets: &[Some(wgpu::ColorTargetState {
                     format: config.format,
                     blend: Some(wgpu::BlendState::REPLACE),
@@ -104,6 +150,8 @@ impl Window {
             surface,
             config,
             pipeline,
+            window_size_buffer,
+            bind_group,
         }
     }
 
@@ -152,6 +200,15 @@ impl Window {
         let device = &render_state.device;
         let queue = &render_state.queue;
 
+        queue.write_buffer(
+            &self.window_size_buffer,
+            0,
+            &&bytemuck::cast_slice(&[WindowSizeUniform {
+                width: self.config.width as f32,
+                height: self.config.height as f32,
+            }]),
+        );
+
         let view = surface_texture
             .texture
             .create_view(&wgpu::TextureViewDescriptor::default());
@@ -183,6 +240,7 @@ impl Window {
         });
 
         render_pass.set_pipeline(&self.pipeline);
+        render_pass.set_bind_group(0, &self.bind_group, &[]);
         render_pass.draw(0..3, 0..1);
 
         drop(render_pass);
@@ -211,7 +269,6 @@ pub struct RenderState {
     device: wgpu::Device,
     queue: wgpu::Queue,
     shader: wgpu::ShaderModule,
-    pipeline_layout: wgpu::PipelineLayout,
 }
 
 impl RenderState {
@@ -251,19 +308,12 @@ impl RenderState {
 
         let shader = device.create_shader_module(wgpu::include_wgsl!("../shaders/shader.wgsl"));
 
-        let pipeline_layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
-            label: Some("Render Pipeline Layout"),
-            bind_group_layouts: &[],
-            immediate_size: 0,
-        });
-
         Self {
             instance,
             adapter,
             device,
             queue,
             shader,
-            pipeline_layout,
         }
     }
 }
