@@ -64,13 +64,11 @@ impl Window {
             view_formats: vec![],
         };
 
-        let window_size_buffer = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
+        let window_size_buffer = device.create_buffer(&wgpu::BufferDescriptor {
             label: Some("window_size_buffer"),
-            contents: &bytemuck::cast_slice(&[WindowSizeUniform {
-                width: 0.,
-                height: 0.0,
-            }]),
             usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
+            mapped_at_creation: false,
+            size: 8,
         });
 
         let bind_group_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
