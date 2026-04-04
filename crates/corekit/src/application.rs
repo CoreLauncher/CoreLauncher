@@ -192,7 +192,7 @@ impl Window {
                 return;
             }
             wgpu::CurrentSurfaceTexture::Lost => {
-                return;
+                panic!("We lost the surface");
             }
         };
 
