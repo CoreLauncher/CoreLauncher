@@ -1,7 +1,7 @@
 use crate::Component;
 
-#[derive(Debug)]
 pub struct WindowOptions {
+    pub root: Box<dyn Component>,
     pub title: String,
 }
 
@@ -36,6 +36,7 @@ impl WindowOptionsBuilder {
 
     pub fn build(self) -> WindowOptions {
         WindowOptions {
+            root: self.root.expect("Can not construct window without root."),
             title: self.title.unwrap_or("CoreKit Window".into()),
         }
     }

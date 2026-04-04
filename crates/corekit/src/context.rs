@@ -18,8 +18,6 @@ impl ApplicationContext {
     }
 
     pub fn open_window(&self, options: WindowOptions) {
-        self.proxy
-            .send_event(UserEvent::OpenWindow { options })
-            .unwrap();
+        let _ = self.proxy.send_event(UserEvent::OpenWindow { options });
     }
 }

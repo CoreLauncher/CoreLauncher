@@ -22,7 +22,6 @@ struct WindowSizeUniform {
     height: f32,
 }
 
-#[derive(Debug)]
 pub enum UserEvent {
     OpenWindow { options: WindowOptions },
 }
