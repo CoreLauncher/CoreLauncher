@@ -82,7 +82,7 @@ impl Window {
                 },
                 count: None,
             }],
-            label: Some("camera_bind_group_layout"),
+            label: Some("window_size_bind_group_layout"),
         });
 
         let pipeline_layout = device.create_pipeline_layout(&PipelineLayoutDescriptor {
