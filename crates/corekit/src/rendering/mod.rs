@@ -1,0 +1,12 @@
+mod wgpu_renderer;
+
+use std::sync::Arc;
+
+pub use wgpu_renderer::new_wgpu_renderer;
+
+pub trait Renderer {
+    fn register_window(&mut self, window: Arc<winit::window::Window>);
+    fn deregister_window(&mut self, window: Arc<winit::window::Window>);
+    fn resize_window(&mut self, window: Arc<winit::window::Window>, width: u32, height: u32);
+    fn render_window(&mut self, window: Arc<winit::window::Window>);
+}
