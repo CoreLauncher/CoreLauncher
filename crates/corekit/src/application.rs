@@ -101,6 +101,10 @@ impl ApplicationHandler<UserEvent> for Application {
         window_id: winit::window::WindowId,
         event: WindowEvent,
     ) {
+        if matches!(event, WindowEvent::Destroyed) {
+            return;
+        }
+
         let mut app_state = self.app_state.as_ref().unwrap().lock().unwrap();
         let mut window_option = app_state
             .windows
@@ -113,6 +117,13 @@ impl ApplicationHandler<UserEvent> for Application {
 
         match event {
             WindowEvent::CloseRequested => {
+                self.renderer.deregister_window(window.handle.clone());
+
+                let handle = window.handle.clone();
+                app_state
+                    .windows
+                    .retain(|w| !Arc::ptr_eq(&w.handle, &handle));
+
                 event_loop.exit();
             }
             WindowEvent::Resized(size) => {
