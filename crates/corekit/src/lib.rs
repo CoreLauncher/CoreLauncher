@@ -3,6 +3,7 @@ mod component;
 mod context;
 mod element;
 mod options;
+mod rendering;
 
 // REMOVE LATER
 mod main_old;
