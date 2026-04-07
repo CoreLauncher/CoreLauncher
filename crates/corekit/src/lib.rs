@@ -7,9 +7,6 @@ pub(crate) mod options;
 pub(crate) mod rendering;
 pub mod style;
 
-// REMOVE LATER
-mod main_old;
-
 pub use application::Application;
 pub use component::Component;
 pub use element::Element;
