@@ -9,9 +9,9 @@ use winit::{
 };
 
 use crate::{
-    WindowOptions,
     context::ApplicationContext,
     rendering::{Renderer, new_wgpu_renderer},
+    window::options::WindowOptions,
 };
 
 pub enum UserEvent {

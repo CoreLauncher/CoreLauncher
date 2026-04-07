@@ -1,6 +1,7 @@
 use corekit::{
-    Application, Component, Element, WindowOptions, div,
+    Application, Component, Element, div,
     style::{Styled, color::rgb},
+    window::options::WindowOptions,
 };
 
 struct Root;

@@ -4,7 +4,7 @@ use winit::event_loop::EventLoopProxy;
 
 use crate::{
     application::{ApplicationState, UserEvent},
-    options::WindowOptions,
+    window::options::WindowOptions,
 };
 
 pub struct ApplicationContext {
