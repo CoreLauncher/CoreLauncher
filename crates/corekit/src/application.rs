@@ -131,7 +131,8 @@ impl ApplicationHandler<UserEvent> for Application {
                     .resize_window(window.handle.clone(), size.width, size.height);
             }
             WindowEvent::RedrawRequested => {
-                self.renderer.render_window(window.handle.clone());
+                self.renderer
+                    .render_window(window.handle.clone(), Vec::new());
             }
             WindowEvent::CursorMoved {
                 device_id: _device_id,

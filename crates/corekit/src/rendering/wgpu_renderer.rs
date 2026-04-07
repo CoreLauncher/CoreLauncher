@@ -7,7 +7,7 @@ use wgpu::{
     SurfaceConfiguration, VertexState,
 };
 
-use crate::rendering::Renderer;
+use crate::rendering::{PaintOperation, Renderer};
 
 pub fn new_wgpu_renderer() -> Box<WgpuRenderer> {
     Box::new(WgpuRenderer::new())
@@ -95,13 +95,20 @@ impl Renderer for WgpuRenderer {
         window.as_mut().unwrap().resize(&self.device, width, height);
     }
 
-    fn render_window(&mut self, window: Arc<winit::window::Window>) {
+    fn render_window(
+        &mut self,
+        window: Arc<winit::window::Window>,
+        operations: Vec<PaintOperation>,
+    ) {
         let mut window = self
             .windows
             .iter_mut()
             .find(|w| Arc::ptr_eq(&w.handle, &window));
 
-        window.as_mut().unwrap().render(&self.device, &self.queue);
+        window
+            .as_mut()
+            .unwrap()
+            .render(&self.device, &self.queue, operations);
     }
 }
 
@@ -234,7 +241,12 @@ impl RenderWindow {
         self.configured = true;
     }
 
-    fn render(&mut self, device: &wgpu::Device, queue: &wgpu::Queue) {
+    fn render(
+        &mut self,
+        device: &wgpu::Device,
+        queue: &wgpu::Queue,
+        operations: Vec<PaintOperation>,
+    ) {
         if self.configured == false {
             self.handle.request_redraw();
             return;
@@ -287,7 +299,7 @@ impl RenderWindow {
                     load: wgpu::LoadOp::Clear(wgpu::Color {
                         r: 0.,
                         g: 0.,
-                        b: 0.3,
+                        b: 0.,
                         a: 0.,
                     }),
                     store: wgpu::StoreOp::Store,
@@ -298,10 +310,6 @@ impl RenderWindow {
             timestamp_writes: None,
             multiview_mask: None,
         });
-
-        render_pass.set_pipeline(&self.pipeline);
-        render_pass.set_bind_group(0, &self.bind_group, &[]);
-        render_pass.draw(0..3, 0..1);
 
         drop(render_pass);
 
