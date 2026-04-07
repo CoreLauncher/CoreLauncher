@@ -2,6 +2,7 @@ use std::sync::{Arc, Mutex};
 
 use winit::{
     application::ApplicationHandler,
+    dpi::{PhysicalSize, Size},
     event::WindowEvent,
     event_loop::{self, EventLoop, EventLoopProxy},
     window::WindowAttributes,
@@ -149,6 +150,10 @@ impl ApplicationHandler<UserEvent> for Application {
             UserEvent::OpenWindow { options } => {
                 let mut attributes = WindowAttributes::default();
                 attributes = attributes.with_title(options.title);
+                attributes = attributes.with_min_inner_size(Size::Physical(PhysicalSize {
+                    width: options.minimum_size.0,
+                    height: options.minimum_size.1,
+                }));
 
                 let handle = event_loop.create_window(attributes).unwrap();
                 let window = Window::new(handle);
