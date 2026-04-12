@@ -22,7 +22,7 @@ impl ElementStyle {
     }
 }
 
-pub trait Styled: Sized {
+pub trait StyledElement: Sized {
     fn style(&mut self) -> &mut ElementStyle;
 
     fn size_full(mut self) -> Self {

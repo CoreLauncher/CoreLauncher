@@ -1,6 +1,6 @@
 use corekit::{
     Application, Component, Element, div,
-    style::{Styled, color::rgb},
+    style::{StyledElement, color::rgb},
     window::options::WindowOptions,
 };
 

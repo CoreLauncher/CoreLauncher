@@ -199,7 +199,7 @@ fn main() {
                 );
             }
 
-            cx.on_app_quit(|| {
+            cx.on_app_quit(|_cx| async {
                 println!("quitting");
             });
 

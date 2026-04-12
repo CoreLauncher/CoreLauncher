@@ -1,6 +1,6 @@
 use crate::{
-    element::Element,
-    style::{ElementStyle, Styled},
+    element::{Element, ParentElement},
+    style::{ElementStyle, StyledElement},
 };
 
 pub fn div() -> Div {
@@ -9,12 +9,14 @@ pub fn div() -> Div {
 
 pub struct Div {
     style: ElementStyle,
+    children: Vec<Box<dyn Element>>,
 }
 
 impl Div {
     fn new() -> Self {
         Self {
             style: ElementStyle::new(),
+            children: Vec::new(),
         }
     }
 }
@@ -29,8 +31,14 @@ impl Element for Div {
     }
 }
 
-impl Styled for Div {
+impl StyledElement for Div {
     fn style(&mut self) -> &mut ElementStyle {
         &mut self.style
+    }
+}
+
+impl ParentElement for Div {
+    fn expand(&mut self, children: impl IntoIterator<Item = Box<dyn Element>>) {
+        self.children.extend(children);
     }
 }

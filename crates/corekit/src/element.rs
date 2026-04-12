@@ -8,3 +8,15 @@ impl<T: Element + 'static> From<T> for Box<dyn Element> {
         Box::new(element)
     }
 }
+
+pub trait ParentElement {
+    fn expand(&mut self, children: impl IntoIterator<Item = Box<dyn Element>>);
+
+    fn child(&mut self, child: impl Element) {
+        todo!()
+    }
+
+    fn children(&mut self, child: impl IntoIterator<Item = Box<dyn Element>>) {
+        todo!()
+    }
+}
