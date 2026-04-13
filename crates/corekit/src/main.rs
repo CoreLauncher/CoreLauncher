@@ -19,7 +19,7 @@ impl Component for RootComponent {
         return div()
             .size_full()
             .background_color(rgb(0, 255, 0))
-            .child(SubComponent {})
+            .child(Box::new(SubComponent {}))
             .into();
     }
 }

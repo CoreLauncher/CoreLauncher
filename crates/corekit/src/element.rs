@@ -12,11 +12,13 @@ impl<T: Element + 'static> From<T> for Box<dyn Element> {
 pub trait ParentElement: Sized {
     fn expand(&mut self, children: impl IntoIterator<Item = Box<dyn Element>>);
 
-    fn child(self, child: impl Element) -> Self {
-        self
+    fn child(mut self, child: Box<dyn Element>) -> Self {
+        self.expand(std::iter::once(child));
+        return self;
     }
 
-    fn children(self, child: impl IntoIterator<Item = Box<dyn Element>>) -> Self {
-        self
+    fn children(mut self, children: impl IntoIterator<Item = Box<dyn Element>>) -> Self {
+        self.expand(children);
+        return self;
     }
 }
