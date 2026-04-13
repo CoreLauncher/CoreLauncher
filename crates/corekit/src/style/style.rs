@@ -1,5 +1,3 @@
-use wgpu::naga::back;
-
 use crate::style::{
     color::Color,
     units::{Length, Percent},
@@ -18,6 +16,12 @@ impl ElementStyle {
                 height: Length::Auto,
             },
             background: Background::None,
+        }
+    }
+
+    fn into_taffy_style(&mut self) -> taffy::Style {
+        taffy::Style {
+            ..Default::default()
         }
     }
 }

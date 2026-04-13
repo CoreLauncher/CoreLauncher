@@ -10,4 +10,5 @@ pub mod window;
 pub use application::Application;
 pub use component::Component;
 pub use element::Element;
+pub use element::ParentElement;
 pub use elements::div::div;

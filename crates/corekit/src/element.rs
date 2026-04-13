@@ -9,14 +9,14 @@ impl<T: Element + 'static> From<T> for Box<dyn Element> {
     }
 }
 
-pub trait ParentElement {
+pub trait ParentElement: Sized {
     fn expand(&mut self, children: impl IntoIterator<Item = Box<dyn Element>>);
 
-    fn child(&mut self, child: impl Element) {
-        todo!()
+    fn child(self, child: impl Element) -> Self {
+        self
     }
 
-    fn children(&mut self, child: impl IntoIterator<Item = Box<dyn Element>>) {
-        todo!()
+    fn children(self, child: impl IntoIterator<Item = Box<dyn Element>>) -> Self {
+        self
     }
 }

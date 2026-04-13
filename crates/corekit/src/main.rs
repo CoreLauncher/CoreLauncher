@@ -1,14 +1,26 @@
 use corekit::{
-    Application, Component, Element, div,
+    Application, Component, Element, ParentElement, div,
     style::{StyledElement, color::rgb},
     window::options::WindowOptions,
 };
 
-struct Root;
+struct SubComponent;
 
-impl Component for Root {
+impl Component for SubComponent {
     fn render(&self) -> Box<dyn Element> {
-        return div().size_full().background_color(rgb(0, 255, 0)).into();
+        return div().size_full().into();
+    }
+}
+
+struct RootComponent;
+
+impl Component for RootComponent {
+    fn render(&self) -> Box<dyn Element> {
+        return div()
+            .size_full()
+            .background_color(rgb(0, 255, 0))
+            .child(SubComponent {})
+            .into();
     }
 }
 
@@ -18,7 +30,7 @@ fn main() {
 
         context.open_window(
             WindowOptions::builder()
-                .with_root(Root)
+                .with_root(RootComponent)
                 .with_title("CoreKit Test")
                 .build(),
         );

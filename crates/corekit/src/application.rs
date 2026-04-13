@@ -1,5 +1,6 @@
 use std::sync::{Arc, Mutex};
 
+use taffy::TaffyTree;
 use winit::{
     application::ApplicationHandler,
     dpi::{PhysicalSize, Size},
@@ -28,6 +29,10 @@ impl Window {
         Self {
             handle: Arc::new(window),
         }
+    }
+
+    fn render(&self) {
+        let mut tree = TaffyTree::<()>::new();
     }
 }
 
