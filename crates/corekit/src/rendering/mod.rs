@@ -4,6 +4,8 @@ use std::sync::Arc;
 
 pub use wgpu_renderer::new_wgpu_renderer;
 
+use crate::style::color::Color;
+
 pub trait Renderer {
     fn register_window(&mut self, window: Arc<winit::window::Window>);
     fn deregister_window(&mut self, window: Arc<winit::window::Window>);
@@ -21,5 +23,6 @@ pub enum PaintOperation {
         y: u32,
         width: u32,
         height: u32,
+        color: Color,
     },
 }

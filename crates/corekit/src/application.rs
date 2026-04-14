@@ -11,7 +11,8 @@ use winit::{
 
 use crate::{
     context::ApplicationContext,
-    rendering::{Renderer, new_wgpu_renderer},
+    rendering::{PaintOperation, Renderer, new_wgpu_renderer},
+    style::color::rgb,
     window::options::WindowOptions,
 };
 
@@ -31,8 +32,16 @@ impl Window {
         }
     }
 
-    fn render(&self) {
+    fn render(&self) -> Vec<PaintOperation> {
         let mut tree = TaffyTree::<()>::new();
+
+        return vec![PaintOperation::Rectangle {
+            x: 10,
+            y: 10,
+            width: 32,
+            height: 64,
+            color: rgb(255, 0, 0),
+        }];
     }
 }
 
@@ -137,8 +146,10 @@ impl ApplicationHandler<UserEvent> for Application {
                     .resize_window(window.handle.clone(), size.width, size.height);
             }
             WindowEvent::RedrawRequested => {
+                let operations = window.render();
+
                 self.renderer
-                    .render_window(window.handle.clone(), Vec::new());
+                    .render_window(window.handle.clone(), operations);
             }
             WindowEvent::CursorMoved {
                 device_id: _device_id,

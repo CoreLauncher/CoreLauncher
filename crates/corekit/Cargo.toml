@@ -5,8 +5,8 @@ edition = "2024"
 
 [dependencies]
 winit = { version = "0.30.13" }
-rand = { version = "0.10.0" }
 wgpu = { version = "29.0.0" }
 pollster = "0.4.0"
 bytemuck = "1.25.0"
 taffy = "0.10.0"
+cosmic-text = "0.18.2"
