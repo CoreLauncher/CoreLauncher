@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub enum Color {
     RGB(u8, u8, u8),
 }

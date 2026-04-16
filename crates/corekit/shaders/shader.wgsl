@@ -1,8 +1,10 @@
 @group(0) @binding(0) var<uniform> window_size: vec2<f32>;
 
-fn pixel_to_ndc(pixel_coordinates: vec2<f32>) -> vec2<f32> {
+fn pixel_to_device_coordinates(pixel_coordinates: vec2<f32>) -> vec2<f32> {
     return (pixel_coordinates / window_size) * vec2<f32>(2.0, -2.0) + vec2<f32>(-1.0, 1.0);
 }
+
+struct VertexInput {}
 
 struct VertexOutput {
     @builtin(position) position: vec4f,
@@ -20,13 +22,13 @@ fn vs_main(
     );
 
     var colors = array<vec4f, 3>(
-      vec4f(1, 0, 0, 1),
-      vec4f(0, 1, 0, 1),
-      vec4f(0, 0, 1, 1),
+        vec4f(1, 0, 0, 1),
+        vec4f(0, 1, 0, 1),
+        vec4f(0, 0, 1, 1),
     );
 
     var position = positions[vertex_index];
-    var ndc = pixel_to_ndc(position);
+    var ndc = pixel_to_device_coordinates(position);
 
     return VertexOutput(
         vec4f(ndc, 0.0, 1.0),

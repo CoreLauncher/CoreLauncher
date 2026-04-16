@@ -311,6 +311,19 @@ impl RenderWindow {
             multiview_mask: None,
         });
 
+        for operation in operations {
+            println!("{:?}", operation);
+            match operation {
+                PaintOperation::Rectangle {
+                    x,
+                    y,
+                    width,
+                    height,
+                    color,
+                } => {}
+            }
+        }
+
         render_pass.set_pipeline(&self.pipeline);
         render_pass.set_bind_group(0, Some(&self.bind_group), &[]);
         render_pass.draw(0..3, 0..1);

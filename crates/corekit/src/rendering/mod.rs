@@ -17,6 +17,7 @@ pub trait Renderer {
     );
 }
 
+#[derive(Debug)]
 pub enum PaintOperation {
     Rectangle {
         x: u32,
