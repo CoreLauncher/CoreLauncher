@@ -117,9 +117,13 @@ struct RenderWindow {
     configured: bool,
     config: SurfaceConfiguration,
     surface: Surface<'static>,
-    pipeline: RenderPipeline,
+    pipelines: RenderPipelines,
     window_size_buffer: Buffer,
     bind_group: BindGroup,
+}
+
+struct RenderPipelines {
+    rectangle_pipeline: RenderPipeline,
 }
 
 impl RenderWindow {
@@ -181,7 +185,7 @@ impl RenderWindow {
             label: Some("window_size_bind_group"),
         });
 
-        let pipeline = device.create_render_pipeline(&RenderPipelineDescriptor {
+        let rectangle_pipeline = device.create_render_pipeline(&RenderPipelineDescriptor {
             label: Some("Render pipeline"),
             layout: Some(&pipeline_layout),
             vertex: VertexState {
@@ -201,7 +205,7 @@ impl RenderWindow {
                 })],
             }),
             primitive: PrimitiveState {
-                topology: wgpu::PrimitiveTopology::TriangleList,
+                topology: wgpu::PrimitiveTopology::TriangleStrip,
                 strip_index_format: None,
                 front_face: wgpu::FrontFace::Ccw,
                 cull_mode: Some(wgpu::Face::Back),
@@ -219,13 +223,15 @@ impl RenderWindow {
             cache: None,
         });
 
+        let pipelines = RenderPipelines { rectangle_pipeline };
+
         Self {
             handle: window,
             surface,
             configured: false,
             config,
             window_size_buffer,
-            pipeline,
+            pipelines,
             bind_group,
         }
     }
@@ -311,7 +317,7 @@ impl RenderWindow {
             multiview_mask: None,
         });
 
-        for operation in operations {
+        for (index, operation) in operations.iter().enumerate() {
             println!("{:?}", operation);
             match operation {
                 PaintOperation::Rectangle {
@@ -320,13 +326,17 @@ impl RenderWindow {
                     width,
                     height,
                     color,
-                } => {}
+                } => {
+                    render_pass.set_pipeline(&self.pipelines.rectangle_pipeline);
+                    render_pass.set_bind_group(0, Some(&self.bind_group), &[]);
+                    render_pass.draw(0..5, index as u32..index as u32 + 1);
+                }
             }
         }
 
-        render_pass.set_pipeline(&self.pipeline);
-        render_pass.set_bind_group(0, Some(&self.bind_group), &[]);
-        render_pass.draw(0..3, 0..1);
+        // render_pass.set_pipeline(&self.pipeline);
+        // render_pass.set_bind_group(0, Some(&self.bind_group), &[]);
+        // render_pass.draw(0..3, 0..1);
 
         drop(render_pass);
 
