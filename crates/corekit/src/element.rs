@@ -1,5 +1,7 @@
+use taffy::{NodeId, TaffyTree};
+
 pub trait Element {
-    fn calculate_layout(&self);
+    fn taffy_layout(&self, tree: &mut TaffyTree) -> NodeId;
     fn paint(&self);
 }
 

@@ -1,3 +1,5 @@
+use taffy::{NodeId, TaffyTree};
+
 use crate::{
     element::{Element, ParentElement},
     style::{ElementStyle, StyledElement},
@@ -22,8 +24,13 @@ impl Div {
 }
 
 impl Element for Div {
-    fn calculate_layout(&self) {
-        todo!()
+    fn taffy_layout(&self, tree: &mut TaffyTree) -> NodeId {
+        let children: Vec<NodeId> = self.children.iter().map(|c| c.taffy_layout(tree)).collect();
+        let node = tree
+            .new_with_children(self.style.into_taffy_style(), &children)
+            .unwrap();
+
+        return node;
     }
 
     fn paint(&self) {

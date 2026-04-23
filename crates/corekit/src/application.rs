@@ -1,7 +1,7 @@
 use std::sync::{Arc, Mutex};
 
-use cosmic_text::{Attrs, Buffer, Color, FontSystem, Metrics, Shaping, SwashCache};
-use taffy::TaffyTree;
+use cosmic_text::{Attrs, Buffer, FontSystem, Metrics, Shaping, SwashCache};
+use taffy::{AvailableSpace, TaffyTree};
 use winit::{
     application::ApplicationHandler,
     dpi::{PhysicalSize, Size},
@@ -11,9 +11,10 @@ use winit::{
 };
 
 use crate::{
+    Component, Element,
     context::ApplicationContext,
     rendering::{PaintOperation, Renderer, new_wgpu_renderer},
-    style::color::{rgb, rgba},
+    style::color::rgba,
     window::options::WindowOptions,
 };
 
@@ -21,20 +22,31 @@ pub enum UserEvent {
     OpenWindow { options: WindowOptions },
 }
 
-#[derive(Debug)]
 pub struct Window {
     handle: Arc<winit::window::Window>,
+    root: Box<dyn Component>,
 }
 
 impl Window {
-    fn new(window: winit::window::Window) -> Self {
+    fn new(window: winit::window::Window, root: Box<dyn Component>) -> Self {
         Self {
             handle: Arc::new(window),
+            root,
         }
     }
 
     fn render(&self) -> Vec<PaintOperation> {
         let mut tree = TaffyTree::<()>::new();
+        let node = self.root.taffy_layout(&mut tree);
+        let size = self.handle.inner_size();
+        tree.compute_layout(
+            node,
+            taffy::Size {
+                width: AvailableSpace::Definite(size.width as f32),
+                height: AvailableSpace::Definite(size.height as f32),
+            },
+        );
+        tree.print_tree(node);
 
         let mut font_system = FontSystem::new();
         let mut swash_cache = SwashCache::new();
@@ -204,7 +216,7 @@ impl ApplicationHandler<UserEvent> for Application {
                 }));
 
                 let handle = event_loop.create_window(attributes).unwrap();
-                let window = Window::new(handle);
+                let window = Window::new(handle, options.root);
 
                 self.renderer.register_window(window.handle.clone());
 

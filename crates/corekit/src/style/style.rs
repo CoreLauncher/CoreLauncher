@@ -19,7 +19,7 @@ impl ElementStyle {
         }
     }
 
-    fn into_taffy_style(&mut self) -> taffy::Style {
+    pub fn into_taffy_style(&self) -> taffy::Style {
         taffy::Style {
             ..Default::default()
         }
