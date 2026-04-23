@@ -1,9 +1,9 @@
 use std::sync::Arc;
 
 use wgpu::{
-    BackendOptions, Backends, BindGroup, Buffer, Device, FragmentState, InstanceDescriptor,
-    InstanceFlags, MemoryBudgetThresholds, PipelineCompilationOptions, PipelineLayout,
-    PipelineLayoutDescriptor, PowerPreference, PrimitiveState, RenderPipeline,
+    BackendOptions, Backends, BindGroup, Buffer, CompositeAlphaMode, Device, FragmentState,
+    InstanceDescriptor, InstanceFlags, MemoryBudgetThresholds, PipelineCompilationOptions,
+    PipelineLayout, PipelineLayoutDescriptor, PowerPreference, PrimitiveState, RenderPipeline,
     RenderPipelineDescriptor, RequestAdapterOptions, ShaderModule, Surface, SurfaceConfiguration,
     VertexState,
 };
@@ -171,7 +171,7 @@ impl RenderPipelines {
                 entry_point: Some("fs_rectangle"),
                 targets: &[Some(wgpu::ColorTargetState {
                     format: config.format,
-                    blend: Some(wgpu::BlendState::REPLACE),
+                    blend: Some(wgpu::BlendState::ALPHA_BLENDING),
                     write_mask: wgpu::ColorWrites::ALL,
                 })],
             }),
@@ -387,9 +387,12 @@ impl RenderWindow {
                     height,
                     color,
                 } => {
-                    let (r, g, b) = match color {
+                    let (r, g, b, a) = match color {
                         crate::style::color::Color::RGB(r, g, b) => {
-                            (*r as u32, *g as u32, *b as u32)
+                            (*r as u32, *g as u32, *b as u32, 255)
+                        }
+                        crate::style::color::Color::RGBA(r, g, b, a) => {
+                            (*r as u32, *g as u32, *b as u32, *a as u32)
                         }
                     };
                     rectangles.push(RectangleData {
@@ -400,7 +403,7 @@ impl RenderWindow {
                         color_r: r,
                         color_g: g,
                         color_b: b,
-                        color_a: 255,
+                        color_a: a,
                     });
                 }
             }
@@ -410,7 +413,7 @@ impl RenderWindow {
         println!("Rendering {} rectangles", rectangles.len());
         for (i, rect) in rectangles.iter().enumerate() {
             println!(
-                "  Rectangle {}: x={}, y={}, w={}, h={}, color=({}, {}, {})",
+                "  Rectangle {}: x={}, y={}, w={}, h={}, color=({}, {}, {}, {})",
                 i,
                 rect.x,
                 rect.y,
@@ -418,7 +421,8 @@ impl RenderWindow {
                 rect.height,
                 rect.color_r,
                 rect.color_g,
-                rect.color_b
+                rect.color_b,
+                rect.color_a,
             );
         }
         println!("Window size: {}x{}", self.config.width, self.config.height);
