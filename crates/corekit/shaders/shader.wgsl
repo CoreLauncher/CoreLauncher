@@ -52,5 +52,5 @@ fn vs_rectangle(
 fn fs_rectangle(
     input: RectangleOutput,
 ) -> @location(0) vec4<f32> {
-    return vec4<f32>(input.color / 255);
+    return vec4<f32>(input.color) / 255;
 }
