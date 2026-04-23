@@ -140,7 +140,7 @@ struct RenderWindow {
     surface: Surface<'static>,
     pipelines: RenderPipelines,
     window_size_buffer: Buffer,
-    bind_group: BindGroup,
+    globals_bind_group: BindGroup,
     rectangles_buffer: Buffer,
     rectangles_bind_group: BindGroup,
 }
@@ -228,19 +228,20 @@ impl RenderWindow {
             size: 8,
         });
 
-        let bind_group_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
-            entries: &[wgpu::BindGroupLayoutEntry {
-                binding: 0,
-                visibility: wgpu::ShaderStages::VERTEX,
-                ty: wgpu::BindingType::Buffer {
-                    ty: wgpu::BufferBindingType::Uniform,
-                    has_dynamic_offset: false,
-                    min_binding_size: None,
-                },
-                count: None,
-            }],
-            label: Some("window_size_bind_group_layout"),
-        });
+        let globals_bind_group_layout =
+            device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+                entries: &[wgpu::BindGroupLayoutEntry {
+                    binding: 0,
+                    visibility: wgpu::ShaderStages::VERTEX,
+                    ty: wgpu::BindingType::Buffer {
+                        ty: wgpu::BufferBindingType::Uniform,
+                        has_dynamic_offset: false,
+                        min_binding_size: None,
+                    },
+                    count: None,
+                }],
+                label: Some("globals_bind_group_layout"),
+            });
 
         let rectangles_bind_group_layout =
             device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
@@ -260,19 +261,19 @@ impl RenderWindow {
         let pipeline_layout = device.create_pipeline_layout(&PipelineLayoutDescriptor {
             label: Some("Render pipeline layout"),
             bind_group_layouts: &[
-                Some(&bind_group_layout),
+                Some(&globals_bind_group_layout),
                 Some(&rectangles_bind_group_layout),
             ],
             immediate_size: 0,
         });
 
-        let bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
-            layout: &bind_group_layout,
+        let globals_bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
+            layout: &globals_bind_group_layout,
             entries: &[wgpu::BindGroupEntry {
                 binding: 0,
                 resource: window_size_buffer.as_entire_binding(),
             }],
-            label: Some("window_size_bind_group"),
+            label: Some("globals_bind_group"),
         });
 
         let rectangles_buffer = device.create_buffer(&wgpu::BufferDescriptor {
@@ -300,7 +301,7 @@ impl RenderWindow {
             config,
             window_size_buffer,
             pipelines,
-            bind_group,
+            globals_bind_group,
             rectangles_buffer,
             rectangles_bind_group,
         }
@@ -432,7 +433,7 @@ impl RenderWindow {
         });
 
         render_pass.set_pipeline(&self.pipelines.rectangle_pipeline);
-        render_pass.set_bind_group(0, Some(&self.bind_group), &[]);
+        render_pass.set_bind_group(0, Some(&self.globals_bind_group), &[]);
         render_pass.set_bind_group(1, Some(&self.rectangles_bind_group), &[]);
 
         if !rectangles.is_empty() {
