@@ -323,40 +323,27 @@ impl RenderWindow {
         queue: &wgpu::Queue,
         operations: Vec<PaintOperation>,
     ) {
-        println!("=== RENDER START ===");
-        println!("Configured: {}", self.configured);
-        println!("Operations count: {}", operations.len());
-
         if self.configured == false {
             self.handle.request_redraw();
-            println!("Not configured, requesting redraw");
             return;
         }
 
         let surface_texture = match self.surface.get_current_texture() {
-            wgpu::CurrentSurfaceTexture::Success(surface_texture) => {
-                println!("Surface texture: Success");
-                surface_texture
-            }
+            wgpu::CurrentSurfaceTexture::Success(surface_texture) => surface_texture,
             wgpu::CurrentSurfaceTexture::Suboptimal(surface_texture) => {
-                println!("Surface texture: Suboptimal, reconfiguring");
                 self.configure(device);
                 surface_texture
             }
             wgpu::CurrentSurfaceTexture::Timeout => {
-                println!("Surface texture: Timeout");
                 return;
             }
             wgpu::CurrentSurfaceTexture::Occluded => {
-                println!("Surface texture: Occluded");
                 return;
             }
             wgpu::CurrentSurfaceTexture::Validation => {
-                println!("Surface texture: Validation error");
                 return;
             }
             wgpu::CurrentSurfaceTexture::Outdated => {
-                println!("Surface texture: Outdated, reconfiguring");
                 self.configure(device);
                 return;
             }
@@ -364,7 +351,6 @@ impl RenderWindow {
                 panic!("We lost the surface");
             }
         };
-        println!("Window size: {}x{}", self.config.width, self.config.height);
 
         queue.write_buffer(
             &self.window_size_buffer,
@@ -374,9 +360,7 @@ impl RenderWindow {
                 height: self.config.height as f32,
             }]),
         );
-        println!("Window size buffer written");
 
-        // Collect rectangles from operations
         let mut rectangles = Vec::new();
         for operation in operations.iter() {
             match operation {
@@ -409,31 +393,12 @@ impl RenderWindow {
             }
         }
 
-        // Write rectangle data to GPU buffer before render pass
-        println!("Rendering {} rectangles", rectangles.len());
-        for (i, rect) in rectangles.iter().enumerate() {
-            println!(
-                "  Rectangle {}: x={}, y={}, w={}, h={}, color=({}, {}, {}, {})",
-                i,
-                rect.x,
-                rect.y,
-                rect.width,
-                rect.height,
-                rect.color_r,
-                rect.color_g,
-                rect.color_b,
-                rect.color_a,
-            );
-        }
-        println!("Window size: {}x{}", self.config.width, self.config.height);
         if !rectangles.is_empty() {
-            println!("Writing {} rectangles to GPU buffer", rectangles.len());
             queue.write_buffer(
                 &self.rectangles_buffer,
                 0,
                 &bytemuck::cast_slice(&rectangles),
             );
-            println!("Rectangles written to GPU buffer");
         }
 
         let view = surface_texture
@@ -466,27 +431,17 @@ impl RenderWindow {
             multiview_mask: None,
         });
 
-        println!("Setting pipeline and bind groups");
         render_pass.set_pipeline(&self.pipelines.rectangle_pipeline);
         render_pass.set_bind_group(0, Some(&self.bind_group), &[]);
         render_pass.set_bind_group(1, Some(&self.rectangles_bind_group), &[]);
 
         if !rectangles.is_empty() {
-            println!(
-                "Drawing {} instances with 4 vertices each",
-                rectangles.len()
-            );
             render_pass.draw(0..4, 0..rectangles.len() as u32);
-            println!("Draw call submitted");
-        } else {
-            println!("No rectangles to draw");
         }
 
         drop(render_pass);
 
-        println!("Submitting command buffer");
         queue.submit(std::iter::once(encoder.finish()));
         surface_texture.present();
-        println!("=== RENDER END ===");
     }
 }

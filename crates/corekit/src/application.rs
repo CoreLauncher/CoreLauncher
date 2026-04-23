@@ -55,14 +55,12 @@ impl Window {
 
         for run in buffer.layout_runs() {
             for glyph in run.glyphs.iter() {
-                println!("{:?}", glyph);
                 let glyph = glyph.physical((10.0, 10.0), 1.0);
                 swash_cache.with_pixels(
                     &mut font_system,
                     glyph.cache_key,
                     cosmic_text::Color::rgb(255, 255, 255),
                     |x, y, color| {
-                        println!("ix: {} iy: {} ux: {} uy: {}", x, y, x as u32, y as u32);
                         operations.push(PaintOperation::Rectangle {
                             x: (glyph.x + x) as u32,
                             y: (glyph.y + y + 32) as u32,
