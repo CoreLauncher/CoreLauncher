@@ -1,5 +1,6 @@
 use std::sync::{Arc, Mutex};
 
+use cosmic_text::{Attrs, Buffer, Color, FontSystem, Metrics, Shaping, SwashCache};
 use taffy::TaffyTree;
 use winit::{
     application::ApplicationHandler,
@@ -35,13 +36,53 @@ impl Window {
     fn render(&self) -> Vec<PaintOperation> {
         let mut tree = TaffyTree::<()>::new();
 
-        return vec![PaintOperation::Rectangle {
+        let mut font_system = FontSystem::new();
+        let mut swash_cache = SwashCache::new();
+        let metrics = Metrics::new(14.0, 20.0);
+        let mut buffer = Buffer::new(&mut font_system, metrics);
+        buffer.set_size(&mut font_system, Some(80.0), Some(25.0));
+        let attrs = Attrs::new();
+        buffer.set_text(
+            &mut font_system,
+            "Hello, Rust! 🦀\n",
+            &attrs,
+            Shaping::Advanced,
+            None,
+        );
+        buffer.shape_until_scroll(&mut font_system, true);
+
+        let mut operations = Vec::new();
+        operations.push(PaintOperation::Rectangle {
             x: 10,
             y: 10,
             width: 32,
             height: 64,
             color: rgb(255, 0, 0),
-        }];
+        });
+
+        for run in buffer.layout_runs() {
+            for glyph in run.glyphs.iter() {
+                println!("{:?}", glyph);
+                let glyph = glyph.physical((10.0, 10.0), 1.0);
+                swash_cache.with_pixels(
+                    &mut font_system,
+                    glyph.cache_key,
+                    cosmic_text::Color::rgb(255, 255, 255),
+                    |x, y, color| {
+                        println!("{} {}", x, y);
+                        operations.push(PaintOperation::Rectangle {
+                            x: x as u32,
+                            y: y as u32,
+                            width: 1,
+                            height: 1,
+                            color: rgb(color.r(), color.g(), color.b()),
+                        });
+                    },
+                );
+            }
+        }
+
+        return operations;
     }
 }
 

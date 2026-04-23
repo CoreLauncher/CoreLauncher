@@ -1,13 +1,34 @@
 use std::sync::Arc;
 
 use wgpu::{
-    BackendOptions, Backends, BindGroup, Buffer, FragmentState, InstanceDescriptor, InstanceFlags,
-    MemoryBudgetThresholds, PipelineCompilationOptions, PipelineLayoutDescriptor, PowerPreference,
-    PrimitiveState, RenderPipeline, RenderPipelineDescriptor, RequestAdapterOptions, Surface,
-    SurfaceConfiguration, VertexState,
+    BackendOptions, Backends, BindGroup, Buffer, Device, FragmentState, InstanceDescriptor,
+    InstanceFlags, MemoryBudgetThresholds, PipelineCompilationOptions, PipelineLayout,
+    PipelineLayoutDescriptor, PowerPreference, PrimitiveState, RenderPipeline,
+    RenderPipelineDescriptor, RequestAdapterOptions, ShaderModule, Surface, SurfaceConfiguration,
+    VertexState,
 };
 
 use crate::rendering::{PaintOperation, Renderer};
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, bytemuck::Pod, bytemuck::Zeroable)]
+struct RectangleData {
+    x: u32,
+    y: u32,
+    width: u32,
+    height: u32,
+    color_r: u32,
+    color_g: u32,
+    color_b: u32,
+    color_a: u32,
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, bytemuck::Pod, bytemuck::Zeroable)]
+struct WindowSizeUniform {
+    width: f32,
+    height: f32,
+}
 
 pub fn new_wgpu_renderer() -> Box<WgpuRenderer> {
     Box::new(WgpuRenderer::new())
@@ -120,10 +141,61 @@ struct RenderWindow {
     pipelines: RenderPipelines,
     window_size_buffer: Buffer,
     bind_group: BindGroup,
+    rectangles_buffer: Buffer,
+    rectangles_bind_group: BindGroup,
 }
 
 struct RenderPipelines {
     rectangle_pipeline: RenderPipeline,
+}
+
+impl RenderPipelines {
+    fn new(
+        device: &Device,
+        shader: &ShaderModule,
+        config: &SurfaceConfiguration,
+        pipeline_layout: &PipelineLayout,
+    ) -> Self {
+        let rectangle_pipeline = device.create_render_pipeline(&RenderPipelineDescriptor {
+            label: Some("Render pipeline"),
+            layout: Some(&pipeline_layout),
+            vertex: VertexState {
+                module: &shader,
+                buffers: &[],
+                compilation_options: PipelineCompilationOptions::default(),
+                entry_point: Some("vs_rectangle"),
+            },
+            fragment: Some(FragmentState {
+                module: &shader,
+                compilation_options: PipelineCompilationOptions::default(),
+                entry_point: Some("fs_rectangle"),
+                targets: &[Some(wgpu::ColorTargetState {
+                    format: config.format,
+                    blend: Some(wgpu::BlendState::REPLACE),
+                    write_mask: wgpu::ColorWrites::ALL,
+                })],
+            }),
+            primitive: PrimitiveState {
+                topology: wgpu::PrimitiveTopology::TriangleStrip,
+                strip_index_format: None,
+                front_face: wgpu::FrontFace::Ccw,
+                cull_mode: None,
+                polygon_mode: wgpu::PolygonMode::Fill,
+                unclipped_depth: false,
+                conservative: false,
+            },
+            depth_stencil: None,
+            multisample: wgpu::MultisampleState {
+                count: 1,
+                mask: !0,
+                alpha_to_coverage_enabled: false,
+            },
+            multiview_mask: None,
+            cache: None,
+        });
+
+        RenderPipelines { rectangle_pipeline }
+    }
 }
 
 impl RenderWindow {
@@ -170,9 +242,27 @@ impl RenderWindow {
             label: Some("window_size_bind_group_layout"),
         });
 
+        let rectangles_bind_group_layout =
+            device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+                entries: &[wgpu::BindGroupLayoutEntry {
+                    binding: 0,
+                    visibility: wgpu::ShaderStages::VERTEX_FRAGMENT,
+                    ty: wgpu::BindingType::Buffer {
+                        ty: wgpu::BufferBindingType::Storage { read_only: true },
+                        has_dynamic_offset: false,
+                        min_binding_size: None,
+                    },
+                    count: None,
+                }],
+                label: Some("rectangles_bind_group_layout"),
+            });
+
         let pipeline_layout = device.create_pipeline_layout(&PipelineLayoutDescriptor {
             label: Some("Render pipeline layout"),
-            bind_group_layouts: &[Some(&bind_group_layout)],
+            bind_group_layouts: &[
+                Some(&bind_group_layout),
+                Some(&rectangles_bind_group_layout),
+            ],
             immediate_size: 0,
         });
 
@@ -185,45 +275,23 @@ impl RenderWindow {
             label: Some("window_size_bind_group"),
         });
 
-        let rectangle_pipeline = device.create_render_pipeline(&RenderPipelineDescriptor {
-            label: Some("Render pipeline"),
-            layout: Some(&pipeline_layout),
-            vertex: VertexState {
-                module: &shader,
-                buffers: &[],
-                compilation_options: PipelineCompilationOptions::default(),
-                entry_point: Some("vs_main"),
-            },
-            fragment: Some(FragmentState {
-                module: &shader,
-                compilation_options: PipelineCompilationOptions::default(),
-                entry_point: Some("fs_main"),
-                targets: &[Some(wgpu::ColorTargetState {
-                    format: config.format,
-                    blend: Some(wgpu::BlendState::REPLACE),
-                    write_mask: wgpu::ColorWrites::ALL,
-                })],
-            }),
-            primitive: PrimitiveState {
-                topology: wgpu::PrimitiveTopology::TriangleStrip,
-                strip_index_format: None,
-                front_face: wgpu::FrontFace::Ccw,
-                cull_mode: Some(wgpu::Face::Back),
-                polygon_mode: wgpu::PolygonMode::Fill,
-                unclipped_depth: false,
-                conservative: false,
-            },
-            depth_stencil: None,
-            multisample: wgpu::MultisampleState {
-                count: 1,
-                mask: !0,
-                alpha_to_coverage_enabled: false,
-            },
-            multiview_mask: None,
-            cache: None,
+        let rectangles_buffer = device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("rectangles_buffer"),
+            usage: wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::COPY_DST,
+            mapped_at_creation: false,
+            size: 1024 * 1024, // 1MB for rectangles
         });
 
-        let pipelines = RenderPipelines { rectangle_pipeline };
+        let rectangles_bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
+            layout: &rectangles_bind_group_layout,
+            entries: &[wgpu::BindGroupEntry {
+                binding: 0,
+                resource: rectangles_buffer.as_entire_binding(),
+            }],
+            label: Some("rectangles_bind_group"),
+        });
+
+        let pipelines = RenderPipelines::new(device, shader, &config, &pipeline_layout);
 
         Self {
             handle: window,
@@ -233,6 +301,8 @@ impl RenderWindow {
             window_size_buffer,
             pipelines,
             bind_group,
+            rectangles_buffer,
+            rectangles_bind_group,
         }
     }
 
@@ -253,23 +323,40 @@ impl RenderWindow {
         queue: &wgpu::Queue,
         operations: Vec<PaintOperation>,
     ) {
+        println!("=== RENDER START ===");
+        println!("Configured: {}", self.configured);
+        println!("Operations count: {}", operations.len());
+
         if self.configured == false {
             self.handle.request_redraw();
+            println!("Not configured, requesting redraw");
             return;
         }
 
         let surface_texture = match self.surface.get_current_texture() {
-            wgpu::CurrentSurfaceTexture::Success(surface_texture) => surface_texture,
+            wgpu::CurrentSurfaceTexture::Success(surface_texture) => {
+                println!("Surface texture: Success");
+                surface_texture
+            }
             wgpu::CurrentSurfaceTexture::Suboptimal(surface_texture) => {
+                println!("Surface texture: Suboptimal, reconfiguring");
                 self.configure(device);
                 surface_texture
             }
-            wgpu::CurrentSurfaceTexture::Timeout
-            | wgpu::CurrentSurfaceTexture::Occluded
-            | wgpu::CurrentSurfaceTexture::Validation => {
+            wgpu::CurrentSurfaceTexture::Timeout => {
+                println!("Surface texture: Timeout");
+                return;
+            }
+            wgpu::CurrentSurfaceTexture::Occluded => {
+                println!("Surface texture: Occluded");
+                return;
+            }
+            wgpu::CurrentSurfaceTexture::Validation => {
+                println!("Surface texture: Validation error");
                 return;
             }
             wgpu::CurrentSurfaceTexture::Outdated => {
+                println!("Surface texture: Outdated, reconfiguring");
                 self.configure(device);
                 return;
             }
@@ -277,15 +364,73 @@ impl RenderWindow {
                 panic!("We lost the surface");
             }
         };
+        println!("Window size: {}x{}", self.config.width, self.config.height);
 
         queue.write_buffer(
             &self.window_size_buffer,
             0,
-            &&bytemuck::cast_slice(&[WindowSizeUniform {
+            &bytemuck::cast_slice(&[WindowSizeUniform {
                 width: self.config.width as f32,
                 height: self.config.height as f32,
             }]),
         );
+        println!("Window size buffer written");
+
+        // Collect rectangles from operations
+        let mut rectangles = Vec::new();
+        for operation in operations.iter() {
+            match operation {
+                PaintOperation::Rectangle {
+                    x,
+                    y,
+                    width,
+                    height,
+                    color,
+                } => {
+                    let (r, g, b) = match color {
+                        crate::style::color::Color::RGB(r, g, b) => {
+                            (*r as u32, *g as u32, *b as u32)
+                        }
+                    };
+                    rectangles.push(RectangleData {
+                        x: *x,
+                        y: *y,
+                        width: *width,
+                        height: *height,
+                        color_r: r,
+                        color_g: g,
+                        color_b: b,
+                        color_a: 255,
+                    });
+                }
+            }
+        }
+
+        // Write rectangle data to GPU buffer before render pass
+        println!("Rendering {} rectangles", rectangles.len());
+        for (i, rect) in rectangles.iter().enumerate() {
+            println!(
+                "  Rectangle {}: x={}, y={}, w={}, h={}, color=({}, {}, {})",
+                i,
+                rect.x,
+                rect.y,
+                rect.width,
+                rect.height,
+                rect.color_r,
+                rect.color_g,
+                rect.color_b
+            );
+        }
+        println!("Window size: {}x{}", self.config.width, self.config.height);
+        if !rectangles.is_empty() {
+            println!("Writing {} rectangles to GPU buffer", rectangles.len());
+            queue.write_buffer(
+                &self.rectangles_buffer,
+                0,
+                &bytemuck::cast_slice(&rectangles),
+            );
+            println!("Rectangles written to GPU buffer");
+        }
 
         let view = surface_texture
             .texture
@@ -317,37 +462,27 @@ impl RenderWindow {
             multiview_mask: None,
         });
 
-        for (index, operation) in operations.iter().enumerate() {
-            println!("{:?}", operation);
-            match operation {
-                PaintOperation::Rectangle {
-                    x,
-                    y,
-                    width,
-                    height,
-                    color,
-                } => {
-                    render_pass.set_pipeline(&self.pipelines.rectangle_pipeline);
-                    render_pass.set_bind_group(0, Some(&self.bind_group), &[]);
-                    render_pass.draw(0..5, index as u32..index as u32 + 1);
-                }
-            }
-        }
+        println!("Setting pipeline and bind groups");
+        render_pass.set_pipeline(&self.pipelines.rectangle_pipeline);
+        render_pass.set_bind_group(0, Some(&self.bind_group), &[]);
+        render_pass.set_bind_group(1, Some(&self.rectangles_bind_group), &[]);
 
-        // render_pass.set_pipeline(&self.pipeline);
-        // render_pass.set_bind_group(0, Some(&self.bind_group), &[]);
-        // render_pass.draw(0..3, 0..1);
+        if !rectangles.is_empty() {
+            println!(
+                "Drawing {} instances with 4 vertices each",
+                rectangles.len()
+            );
+            render_pass.draw(0..4, 0..rectangles.len() as u32);
+            println!("Draw call submitted");
+        } else {
+            println!("No rectangles to draw");
+        }
 
         drop(render_pass);
 
+        println!("Submitting command buffer");
         queue.submit(std::iter::once(encoder.finish()));
         surface_texture.present();
+        println!("=== RENDER END ===");
     }
-}
-
-#[repr(C)]
-#[derive(Debug, Copy, Clone, bytemuck::Pod, bytemuck::Zeroable)]
-struct WindowSizeUniform {
-    width: f32,
-    height: f32,
 }
