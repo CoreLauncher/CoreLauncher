@@ -1,9 +1,9 @@
 use std::sync::Arc;
 
 use wgpu::{
-    BackendOptions, Backends, BindGroup, Buffer, CompositeAlphaMode, Device, FragmentState,
-    InstanceDescriptor, InstanceFlags, MemoryBudgetThresholds, PipelineCompilationOptions,
-    PipelineLayout, PipelineLayoutDescriptor, PowerPreference, PrimitiveState, RenderPipeline,
+    BackendOptions, Backends, BindGroup, Buffer, Device, FragmentState, InstanceDescriptor,
+    InstanceFlags, MemoryBudgetThresholds, PipelineCompilationOptions, PipelineLayout,
+    PipelineLayoutDescriptor, PowerPreference, PrimitiveState, RenderPipeline,
     RenderPipelineDescriptor, RequestAdapterOptions, ShaderModule, Surface, SurfaceConfiguration,
     VertexState,
 };
@@ -17,10 +17,7 @@ struct RectangleData {
     y: u32,
     width: u32,
     height: u32,
-    color_r: u32,
-    color_g: u32,
-    color_b: u32,
-    color_a: u32,
+    color: Vec<u32>,
 }
 
 #[repr(C)]
@@ -385,10 +382,7 @@ impl RenderWindow {
                         y: *y,
                         width: *width,
                         height: *height,
-                        color_r: r,
-                        color_g: g,
-                        color_b: b,
-                        color_a: a,
+                        color: color,
                     });
                 }
             }

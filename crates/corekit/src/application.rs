@@ -45,7 +45,8 @@ impl Window {
                 width: AvailableSpace::Definite(size.width as f32),
                 height: AvailableSpace::Definite(size.height as f32),
             },
-        );
+        )
+        .unwrap();
         tree.print_tree(node);
 
         let mut font_system = FontSystem::new();
