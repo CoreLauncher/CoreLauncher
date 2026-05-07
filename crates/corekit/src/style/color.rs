@@ -11,44 +11,16 @@ impl Color {
         match self {
             Color::RGB(r, g, b) => [r, g, b, 1.0],
             Color::RGBA(r, g, b, a) => [r, g, b, a],
-            Color::HSL(..) => todo!(),
-            Color::HSLA(..) => todo!(),
-        }
-    }
-
-    pub fn r(&self) -> f32 {
-        match self {
-            Color::RGB(r, _, _) => *r,
-            Color::RGBA(r, _, _, _) => *r,
-            Color::HSL(..) => todo!(),
-            Color::HSLA(..) => todo!(),
-        }
-    }
-
-    pub fn g(&self) -> f32 {
-        match self {
-            Color::RGB(_, g, _) => *g,
-            Color::RGBA(_, g, _, _) => *g,
-            Color::HSL(..) => todo!(),
-            Color::HSLA(..) => todo!(),
-        }
-    }
-
-    pub fn b(&self) -> f32 {
-        match self {
-            Color::RGB(_, _, b) => *b,
-            Color::RGBA(_, _, b, _) => *b,
-            Color::HSL(..) => todo!(),
-            Color::HSLA(..) => todo!(),
-        }
-    }
-
-    pub fn a(&self) -> f32 {
-        match self {
-            Color::RGB(..) => 1.0,
-            Color::RGBA(_, _, _, a) => *a,
-            Color::HSL(..) => todo!(),
-            Color::HSLA(..) => todo!(),
+            Color::HSL(h, s, l) => return Color::HSLA(h, s, l, 1.).into_rgba_array(),
+            Color::HSLA(h, s, l, a) => {
+                let value = hsl::HSL {
+                    h: h as f64,
+                    s: s as f64,
+                    l: l as f64,
+                };
+                let (r, g, b) = value.to_rgb();
+                return [r as f32 / 255.0, g as f32 / 255.0, b as f32 / 255.0, a];
+            }
         }
     }
 }
