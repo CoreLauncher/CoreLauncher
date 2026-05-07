@@ -1,11 +1,53 @@
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum Color {
     RGB(RGB),
     RGBA(RGBA),
     HSLA(HSLA),
 }
 
-#[derive(Debug)]
+impl Color {
+    pub fn into_rgba_array(self) -> [f32; 4] {
+        match self {
+            Color::RGB(rgb) => [rgb.r, rgb.g, rgb.b, 1.0],
+            Color::RGBA(rgba) => [rgba.r, rgba.g, rgba.b, rgba.a],
+            Color::HSLA(_) => todo!(),
+        }
+    }
+
+    pub fn r(&self) -> f32 {
+        match self {
+            Color::RGB(rgb) => rgb.r,
+            Color::RGBA(rgba) => rgba.r,
+            Color::HSLA(_) => todo!(),
+        }
+    }
+
+    pub fn g(&self) -> f32 {
+        match self {
+            Color::RGB(rgb) => rgb.g,
+            Color::RGBA(rgba) => rgba.g,
+            Color::HSLA(_) => todo!(),
+        }
+    }
+
+    pub fn b(&self) -> f32 {
+        match self {
+            Color::RGB(rgb) => rgb.b,
+            Color::RGBA(rgba) => rgba.b,
+            Color::HSLA(_) => todo!(),
+        }
+    }
+
+    pub fn a(&self) -> f32 {
+        match self {
+            Color::RGB(_) => 1.0,
+            Color::RGBA(rgba) => rgba.a,
+            Color::HSLA(_) => todo!(),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
 pub struct RGB {
     // range from 0 to 1
     r: f32,
@@ -15,7 +57,7 @@ pub struct RGB {
     b: f32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct RGBA {
     // range from 0 to 1
     r: f32,
@@ -27,7 +69,7 @@ pub struct RGBA {
     a: f32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct HSL {
     // range from 0 to 1
     h: f32,
@@ -37,7 +79,7 @@ pub struct HSL {
     l: f32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct HSLA {
     // range from 0 to 1
     h: f32,
@@ -49,10 +91,12 @@ pub struct HSLA {
     a: f32,
 }
 
-pub fn rgb(r: u8, g: u8, b: u8) -> Color {
-    return Color::RGB(r, g, b);
+pub fn rgb(r: f32, g: f32, b: f32) -> Color {
+    let value = RGB { r, g, b };
+    return Color::RGB(value);
 }
 
-pub fn rgba(r: u8, g: u8, b: u8, a: u8) -> Color {
-    return Color::RGBA(r, g, b, a);
+pub fn rgba(r: f32, g: f32, b: f32, a: f32) -> Color {
+    let value = RGBA { r, g, b, a };
+    return Color::RGBA(value);
 }

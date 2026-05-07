@@ -17,7 +17,7 @@ struct RectangleData {
     y: u32,
     width: u32,
     height: u32,
-    color: Vec<u32>,
+    color: [f32; 4],
 }
 
 #[repr(C)]
@@ -369,20 +369,12 @@ impl RenderWindow {
                     height,
                     color,
                 } => {
-                    let (r, g, b, a) = match color {
-                        crate::style::color::Color::RGB(r, g, b) => {
-                            (*r as u32, *g as u32, *b as u32, 255)
-                        }
-                        crate::style::color::Color::RGBA(r, g, b, a) => {
-                            (*r as u32, *g as u32, *b as u32, *a as u32)
-                        }
-                    };
                     rectangles.push(RectangleData {
                         x: *x,
                         y: *y,
                         width: *width,
                         height: *height,
-                        color: color,
+                        color: color.clone().into_rgba_array(),
                     });
                 }
             }

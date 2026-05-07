@@ -79,7 +79,12 @@ impl Window {
                             y: (glyph.y + y + 32) as u32,
                             width: 1,
                             height: 1,
-                            color: rgba(color.r(), color.g(), color.b(), color.a()),
+                            color: rgba(
+                                (color.r() as f32) / 255.0,
+                                (color.g() as f32) / 255.0,
+                                (color.b() as f32) / 255.0,
+                                (color.a() as f32) / 255.0,
+                            ),
                         });
                     },
                 );

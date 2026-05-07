@@ -18,7 +18,7 @@ impl Component for RootComponent {
     fn render(&self) -> Box<dyn Element> {
         return div()
             .size_full()
-            .background_color(rgb(0, 255, 0))
+            .background_color(rgb(0.0, 1.0, 0.0))
             .child(Box::new(SubComponent {}))
             .into();
     }

@@ -16,13 +16,13 @@ struct Rectangle {
     y: u32,
     width: u32,
     height: u32,
-    color: vec4<u32>,
+    color: vec4<f32>,
 }
 
 struct RectangleOutput {
     @location(0) @interpolate(flat) index: u32,
     @builtin(position) position: vec4<f32>,
-    @location(1) color: vec4<u32>,
+    @location(1) color: vec4<f32>,
 }
 
 @vertex
@@ -52,5 +52,5 @@ fn vs_rectangle(
 fn fs_rectangle(
     input: RectangleOutput,
 ) -> @location(0) vec4<f32> {
-    return vec4<f32>(input.color) / 255;
+    return input.color;
 }
