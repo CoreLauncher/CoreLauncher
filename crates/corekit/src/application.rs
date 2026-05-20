@@ -53,6 +53,8 @@ impl Window {
         .unwrap();
         tree.print_tree(node);
 
+        let operations = Vec::new();
+
         // let mut state_lock = self.state.lock().unwrap();
         // let metrics = Metrics::new(32.0, 20.0);
         // let mut buffer = Buffer::new(&mut state_lock.font_system, metrics);
@@ -67,13 +69,11 @@ impl Window {
         // );
         // buffer.shape_until_scroll(&mut state_lock.font_system, true);
 
-        // let mut operations = Vec::new();
-
         // for run in buffer.layout_runs() {
         //     for glyph in run.glyphs.iter() {
         //         let glyph = glyph.physical((10.0, 10.0), 1.0);
-        //         state_lock.swash_cache.with_pixels(
-        //             &mut state_lock.font_system,
+        //         swash_cache.with_pixels(
+        //             &mut font_system,
         //             glyph.cache_key,
         //             cosmic_text::Color::rgb(255, 255, 255),
         //             |x, y, color| {
@@ -82,7 +82,12 @@ impl Window {
         //                     y: (glyph.y + y + 32) as u32,
         //                     width: 1,
         //                     height: 1,
-        //                     color: rgba(color.r(), color.g(), color.b(), color.a()),
+        //                     color: rgba(
+        //                         (color.r() as f32) / 255.0,
+        //                         (color.g() as f32) / 255.0,
+        //                         (color.b() as f32) / 255.0,
+        //                         (color.a() as f32) / 255.0,
+        //                     ),
         //                 });
         //             },
         //         );
