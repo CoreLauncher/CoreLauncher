@@ -1,9 +1,9 @@
 use std::sync::Arc;
 
 use wgpu::{
-    BackendOptions, Backends, BindGroup, Buffer, CompositeAlphaMode, Device, FragmentState,
-    InstanceDescriptor, InstanceFlags, MemoryBudgetThresholds, PipelineCompilationOptions,
-    PipelineLayout, PipelineLayoutDescriptor, PowerPreference, PrimitiveState, RenderPipeline,
+    BackendOptions, Backends, BindGroup, Buffer, Device, FragmentState, InstanceDescriptor,
+    InstanceFlags, MemoryBudgetThresholds, PipelineCompilationOptions, PipelineLayout,
+    PipelineLayoutDescriptor, PowerPreference, PrimitiveState, RenderPipeline,
     RenderPipelineDescriptor, RequestAdapterOptions, ShaderModule, Surface, SurfaceConfiguration,
     VertexState,
 };

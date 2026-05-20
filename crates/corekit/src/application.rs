@@ -1,6 +1,5 @@
 use std::sync::{Arc, Mutex};
 
-use cosmic_text::{Attrs, Buffer, FontSystem, Metrics, Shaping, SwashCache};
 use taffy::{AvailableSpace, TaffyTree};
 use winit::{
     application::ApplicationHandler,
@@ -14,7 +13,6 @@ use crate::{
     Component, Element,
     context::ApplicationContext,
     rendering::{PaintOperation, Renderer, new_wgpu_renderer},
-    style::color::rgba,
     window::options::WindowOptions,
 };
 
@@ -24,13 +22,19 @@ pub enum UserEvent {
 
 pub struct Window {
     handle: Arc<winit::window::Window>,
+    state: Arc<Mutex<ApplicationState>>,
     root: Box<dyn Component>,
 }
 
 impl Window {
-    fn new(window: winit::window::Window, root: Box<dyn Component>) -> Self {
+    fn new(
+        window: winit::window::Window,
+        state: Arc<Mutex<ApplicationState>>,
+        root: Box<dyn Component>,
+    ) -> Self {
         Self {
             handle: Arc::new(window),
+            state,
             root,
         }
     }
@@ -45,45 +49,45 @@ impl Window {
                 width: AvailableSpace::Definite(size.width as f32),
                 height: AvailableSpace::Definite(size.height as f32),
             },
-        );
+        )
+        .unwrap();
         tree.print_tree(node);
 
-        let mut font_system = FontSystem::new();
-        let mut swash_cache = SwashCache::new();
-        let metrics = Metrics::new(32.0, 20.0);
-        let mut buffer = Buffer::new(&mut font_system, metrics);
-        buffer.set_size(&mut font_system, Some(200.0), Some(25.0));
-        let attrs = Attrs::new();
-        buffer.set_text(
-            &mut font_system,
-            "Hello, Rust!",
-            &attrs,
-            Shaping::Advanced,
-            None,
-        );
-        buffer.shape_until_scroll(&mut font_system, true);
+        // let mut state_lock = self.state.lock().unwrap();
+        // let metrics = Metrics::new(32.0, 20.0);
+        // let mut buffer = Buffer::new(&mut state_lock.font_system, metrics);
+        // buffer.set_size(&mut state_lock.font_system, Some(200.0), Some(25.0));
+        // let attrs = Attrs::new();
+        // buffer.set_text(
+        //     &mut state_lock.font_system,
+        //     "Hello, Rust!",
+        //     &attrs,
+        //     Shaping::Advanced,
+        //     None,
+        // );
+        // buffer.shape_until_scroll(&mut state_lock.font_system, true);
 
-        let mut operations = Vec::new();
+        // let mut operations = Vec::new();
 
-        for run in buffer.layout_runs() {
-            for glyph in run.glyphs.iter() {
-                let glyph = glyph.physical((10.0, 10.0), 1.0);
-                swash_cache.with_pixels(
-                    &mut font_system,
-                    glyph.cache_key,
-                    cosmic_text::Color::rgb(255, 255, 255),
-                    |x, y, color| {
-                        operations.push(PaintOperation::Rectangle {
-                            x: (glyph.x + x) as u32,
-                            y: (glyph.y + y + 32) as u32,
-                            width: 1,
-                            height: 1,
-                            color: rgba(color.r(), color.g(), color.b(), color.a()),
-                        });
-                    },
-                );
-            }
-        }
+        // for run in buffer.layout_runs() {
+        //     for glyph in run.glyphs.iter() {
+        //         let glyph = glyph.physical((10.0, 10.0), 1.0);
+        //         state_lock.swash_cache.with_pixels(
+        //             &mut state_lock.font_system,
+        //             glyph.cache_key,
+        //             cosmic_text::Color::rgb(255, 255, 255),
+        //             |x, y, color| {
+        //                 operations.push(PaintOperation::Rectangle {
+        //                     x: (glyph.x + x) as u32,
+        //                     y: (glyph.y + y + 32) as u32,
+        //                     width: 1,
+        //                     height: 1,
+        //                     color: rgba(color.r(), color.g(), color.b(), color.a()),
+        //                 });
+        //             },
+        //         );
+        //     }
+        // }
 
         return operations;
     }
@@ -91,12 +95,16 @@ impl Window {
 
 pub struct ApplicationState {
     windows: Vec<Window>,
+    // font_system: FontSystem,
+    // swash_cache: SwashCache,
 }
 
 impl ApplicationState {
     fn new() -> Self {
         Self {
             windows: Vec::new(),
+            // font_system: FontSystem::new(),
+            // swash_cache: SwashCache::new(),
         }
     }
 }
@@ -216,7 +224,11 @@ impl ApplicationHandler<UserEvent> for Application {
                 }));
 
                 let handle = event_loop.create_window(attributes).unwrap();
-                let window = Window::new(handle, options.root);
+                let window = Window::new(
+                    handle,
+                    self.app_state.as_ref().unwrap().clone(),
+                    options.root,
+                );
 
                 self.renderer.register_window(window.handle.clone());
 
