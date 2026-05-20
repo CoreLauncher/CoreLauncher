@@ -1253,7 +1253,7 @@ name = "corekit"
 version = "0.1.0"
 dependencies = [
  "bytemuck",
- "cosmic-text 0.18.2",
+ "cosmic-text 0.19.0",
  "hsl",
  "pollster 0.4.0",
  "taffy 0.10.1",
@@ -1311,9 +1311,9 @@ dependencies = [
 
 [[package]]
 name = "cosmic-text"
-version = "0.18.2"
+version = "0.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bbe782a9e7520cc7de2232c957a47f99d3a35e855552677d07a557bc1a3b66ed"
+checksum = "be17b688510d934ce13f48a2beba700e11583e281e0fda99c22bb256a14eda73"
 dependencies = [
  "bitflags 2.11.1",
  "fontdb 0.23.0",
