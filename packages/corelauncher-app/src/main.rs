@@ -1,112 +1,59 @@
-use std::fs;
+use std::{borrow::Cow, fs};
 
-use corelauncher_plugin_steam::PluginSteam;
-use gpui::{
-    App, AppContext, Application, AssetSource, Bounds, Context, Entity, IntoElement, ParentElement,
-    Pixels, Render, SharedString, Styled, TitlebarOptions, Window, WindowBounds, WindowDecorations,
-    WindowOptions, div, prelude::FluentBuilder, px, size,
+use crate::constants::Constants;
+use tao::{
+    event_loop::{ControlFlow, EventLoop},
+    window::WindowBuilder,
 };
-use image::EncodableLayout;
-use tray::MouseButtonState;
-// use tray_icon::{
-//     TrayIconBuilder, TrayIconEvent,
-//     menu::{MenuEvent, MenuItem},
-// };
+use wry::{WebViewBuilder, http::Response};
 
-use crate::{
-    assets::CustomAssets,
-    constants::Constants,
-    plugins::manager::PluginManager,
-    ui::{
-        components::window_root::window_root,
-        sections::titlebar_section::TitlebarSection,
-        style::Style,
-        views::{
-            library_view::LibraryView, profile_view::ProfileView, settings_view::SettingsView,
-        },
-    },
-};
-
-mod assets;
 mod constants;
 mod plugins;
-mod ui;
 
-struct RootView {
-    #[allow(dead_code)]
-    plugin_manager: PluginManager,
-    active_tab: String,
-    library_view: Entity<LibraryView>,
-    profile_view: Entity<ProfileView>,
-    settings_view: Entity<SettingsView>,
+struct Window {
+    window: tao::window::Window,
+    webview: wry::WebView,
 }
 
-impl RootView {
-    pub fn new(cx: &mut App, plugin_manager: PluginManager) -> Entity<Self> {
-        cx.new(|cx| RootView {
-            plugin_manager,
-            active_tab: "library".to_string(),
-            library_view: cx.new(|_| LibraryView),
-            profile_view: cx.new(|_| ProfileView),
-            settings_view: cx.new(|_| SettingsView),
-        })
+impl Window {
+    fn new(event_loop: &EventLoop<()>) -> Self {
+        let window = WindowBuilder::new().build(event_loop).unwrap();
+
+        let webview_builder = WebViewBuilder::new()
+            .with_url("corelauncher-webview://index.html")
+            .with_custom_protocol("corelauncher-webview".into(), |_, _| {
+                return Response::builder()
+                    .header("content-type", "text/html")
+                    .body(Cow::Owned("Hello World".into()))
+                    .unwrap();
+            });
+
+        #[cfg(not(target_os = "linux"))]
+        let webview = webview_builder.build(&window).unwrap();
+        #[cfg(target_os = "linux")]
+        let webview = {
+            use tao::platform::unix::WindowExtUnix;
+            use wry::WebViewBuilderExtUnix;
+
+            unsafe {
+                std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
+            }
+
+            let vbox = window.default_vbox().unwrap();
+            webview_builder.build_gtk(vbox).unwrap()
+        };
+
+        Self { window, webview }
     }
 }
 
-impl Render for RootView {
-    fn render(&mut self, window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
-        div()
-            .child(window_root())
-            .font_family("Inter")
-            .text_color(Style::text_color())
-            .rounded(Style::window_rounding())
-            .overflow_hidden()
-            .size_full()
-            .flex()
-            .flex_col()
-            .border_color(Style::border_color())
-            .border_2()
-            .bg(Style::background())
-            .child(TitlebarSection::new(
-                &self.active_tab,
-                window.listener_for::<RootView, String>(
-                    &_cx.entity(),
-                    |root, new_active_tab, _, _| {
-                        root.active_tab = new_active_tab.clone();
-                    },
-                ),
-            ))
-            .child(
-                div()
-                    .flex()
-                    .flex_row()
-                    .size_full()
-                    .p(Style::normal_gap())
-                    .when(self.active_tab == "library", |element| {
-                        element.child(self.library_view.clone())
-                    })
-                    .when(self.active_tab == "profile", |element| {
-                        element.child(self.profile_view.clone())
-                    })
-                    .when(self.active_tab == "settings", |element| {
-                        element.child(self.settings_view.clone())
-                    }),
-            )
-    }
+struct CoreLauncher {
+    main_window: Option<Window>,
 }
 
-fn window_options(bounds: Bounds<Pixels>) -> WindowOptions {
-    WindowOptions {
-        app_id: Some("corelauncher".to_string()),
-        window_min_size: Some(size(px(1000.0), px(600.0))),
-        window_bounds: Some(WindowBounds::Windowed(bounds)),
-        titlebar: Some(TitlebarOptions {
-            title: Some(SharedString::new_static("CoreLauncher")),
-            appears_transparent: true,
-            ..Default::default()
-        }),
-        window_decorations: Some(WindowDecorations::Client),
-        ..Default::default()
+impl CoreLauncher {
+    fn new() -> Self {
+        Self { main_window: None }
     }
 }
 
@@ -114,104 +61,13 @@ fn main() {
     println!("App Directory: {:?}", Constants::app_directory());
     let _ = fs::create_dir(Constants::app_directory());
 
-    println!(
-        "Embedded Assets: {}",
-        CustomAssets.list("").unwrap().join(", ")
-    );
+    let event_loop = EventLoop::new();
 
-    Application::new()
-        .with_assets(CustomAssets)
-        .run(|cx: &mut App| {
-            cx.text_system()
-                .add_fonts(
-                    CustomAssets
-                        .list("fonts")
-                        .unwrap()
-                        .iter()
-                        .filter(|path| path.ends_with(".ttf"))
-                        .map(|path| CustomAssets.load(&path.as_str()).unwrap().unwrap())
-                        .collect(),
-                )
-                .unwrap();
+    let mut app = CoreLauncher::new();
+    let window = Window::new(&event_loop);
+    app.main_window = Some(window);
 
-            cx.on_window_closed(move |cx| {
-                println!("window closed");
-            })
-            .detach();
-
-            std::thread::spawn(move || {
-                use tray::{Icon, MouseButton, TrayIconBuilder, TrayIconEvent};
-
-                let image = image::load_from_memory(
-                    CustomAssets
-                        .load("logos/logo.ico")
-                        .unwrap()
-                        .unwrap()
-                        .as_bytes(),
-                )
-                .unwrap()
-                .into_rgba8();
-
-                let (width, height) = image.dimensions();
-
-                let icon = Icon::from_rgba(image.into_raw(), width, height).unwrap();
-
-                let tray = TrayIconBuilder::new()
-                    .with_id("corelauncher")
-                    .with_title("CoreLauncher")
-                    .with_tooltip("CoreLauncher")
-                    .with_icon(icon)
-                    .build()
-                    .unwrap();
-
-                // Poll for events
-                let receiver = TrayIconEvent::receiver();
-                loop {
-                    if let Ok(event) = receiver.recv() {
-                        match event {
-                            TrayIconEvent::Click {
-                                button: MouseButton::Left,
-                                position,
-                                button_state: MouseButtonState::Up,
-                                ..
-                            } => {
-                                println!("Left click at position: {:?}", position);
-                            }
-                            _ => {}
-                        }
-                    }
-                }
-            });
-
-            let mut plugin_manager = PluginManager::new(Box::new(|event| {
-                println!("Plugin event: {:?}", event);
-            }));
-
-            plugin_manager.register_plugin(Box::new(|portal| Box::new(PluginSteam::new(portal))));
-
-            println!("Loaded {} plugins", plugin_manager.plugin_count());
-            for plugin in plugin_manager.plugins() {
-                println!(
-                    " - {} v{}: {}",
-                    plugin.get_name(),
-                    plugin.get_version(),
-                    plugin.get_description()
-                );
-            }
-
-            cx.on_app_quit(|_cx| async {
-                println!("quitting");
-            });
-
-            let state = RootView::new(cx, plugin_manager);
-
-            let bounds = Bounds::centered(None, size(px(1200.), px(800.0)), cx);
-            let options = window_options(bounds);
-
-            cx.open_window(options, |window, _cx| {
-                window.set_window_title("CoreLauncher");
-                return state;
-            })
-            .unwrap();
-        });
+    event_loop.run(move |_, _, control_flow| {
+        *control_flow = ControlFlow::Wait;
+    });
 }

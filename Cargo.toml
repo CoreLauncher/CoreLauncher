@@ -1,22 +1,11 @@
 [workspace]
 resolver = "3"
-members = ["crates/corelauncher-app", "crates/corelauncher-types", "crates/ipc-handler", "crates/minecraft", "crates/corelauncher-plugin-steam", "crates/steam-client", "crates/corekit"]
-default-members = ["crates/corelauncher-app"]
-
-[profile.release]
-opt-level = "z"
-lto = "fat"
-codegen-units = 1
-debug = false
-strip = true
-panic = "abort"
-overflow-checks = false
-incremental = false
-debug-assertions = false
-
-[profile.dev]
-opt-level = 0
-lto = false
-codegen-units = 256
-debug = true
-overflow-checks = false
+members = [
+    "packages/corekit",
+    "packages/corelauncher-app",
+    "packages/corelauncher-plugin-steam",
+    "packages/corelauncher-types",
+    "packages/minecraft",
+    "packages/steam-client",
+]
+default-members = ["packages/corelauncher-app"]
