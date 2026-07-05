@@ -1,0 +1,4 @@
+.Block {
+	background-color: var(--color-block);
+	border-radius: var(--border-normal);
+}

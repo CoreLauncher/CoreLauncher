@@ -2,8 +2,10 @@
 	"name": "bun-react-template",
 	"type": "module",
 	"dependencies": {
+		"@fontsource/inter": "^5.2.8",
 		"react": "^19",
-		"react-dom": "^19"
+		"react-dom": "^19",
+		"clsx": "^2.1.1"
 	},
 	"devDependencies": {
 		"@types/react": "^19",

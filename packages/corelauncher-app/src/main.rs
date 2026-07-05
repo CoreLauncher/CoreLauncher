@@ -2,6 +2,7 @@ use std::{borrow::Cow, fs};
 
 use crate::{assets::Assets, constants::Constants};
 use tao::{
+    dpi::{LogicalSize, Size},
     event_loop::{ControlFlow, EventLoop},
     window::WindowBuilder,
 };
@@ -18,11 +19,15 @@ struct Window {
 
 impl Window {
     fn new(event_loop: &EventLoop<()>) -> Self {
-        let window = WindowBuilder::new().build(event_loop).unwrap();
+        let window = WindowBuilder::new()
+            .with_inner_size(LogicalSize::new(1200, 800))
+            .with_decorations(false)
+            .build(event_loop)
+            .unwrap();
 
-        let webview_builder = WebViewBuilder::new()
-            .with_url("corelauncher-webview://index.html")
-            .with_custom_protocol("corelauncher-webview".into(), |_, request| {
+        let webview_builder = WebViewBuilder::new().with_custom_protocol(
+            "corelauncher-webview".into(),
+            |_, request| {
                 let uri = request.uri().to_string();
                 let mut path = uri.split("://").last().unwrap_or("index.html");
 
@@ -47,7 +52,13 @@ impl Window {
                         .body(Cow::Owned("404 Not Found".into()))
                         .unwrap();
                 }
-            });
+            },
+        );
+
+        #[cfg(not(debug_assertions))]
+        let webview_builder = webview_builder.with_url("corelauncher-webview://index.html");
+        #[cfg(debug_assertions)]
+        let webview_builder = webview_builder.with_url("http://localhost:3000");
 
         #[cfg(not(target_os = "linux"))]
         let webview = webview_builder.build(&window).unwrap();
@@ -63,6 +74,8 @@ impl Window {
             let vbox = window.default_vbox().unwrap();
             webview_builder.build_gtk(vbox).unwrap()
         };
+
+        webview.open_devtools();
 
         Self { window, webview }
     }
