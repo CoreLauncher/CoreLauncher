@@ -1,12 +1,13 @@
 use std::{borrow::Cow, fs};
 
-use crate::constants::Constants;
+use crate::{assets::Assets, constants::Constants};
 use tao::{
     event_loop::{ControlFlow, EventLoop},
     window::WindowBuilder,
 };
 use wry::{WebViewBuilder, http::Response};
 
+mod assets;
 mod constants;
 mod plugins;
 
@@ -21,11 +22,32 @@ impl Window {
 
         let webview_builder = WebViewBuilder::new()
             .with_url("corelauncher-webview://index.html")
-            .with_custom_protocol("corelauncher-webview".into(), |_, _| {
-                return Response::builder()
-                    .header("content-type", "text/html")
-                    .body(Cow::Owned("Hello World".into()))
-                    .unwrap();
+            .with_custom_protocol("corelauncher-webview".into(), |_, request| {
+                let uri = request.uri().to_string();
+                let mut path = uri.split("://").last().unwrap_or("index.html");
+
+                if path == "index.html/" {
+                    path = "index.html";
+                } else if path.starts_with("index.html/") {
+                    path = &path["index.html/".len()..];
+                }
+
+                let file = Assets::get(path);
+                let mime = mime_guess::from_path(path).first_or_octet_stream();
+                println!("{:#?} {:#?}", path, file.is_some());
+
+                if let Some(file) = file {
+                    return Response::builder()
+                        .header("content-type", mime.to_string())
+                        .body(file.data)
+                        .unwrap();
+                } else {
+                    return Response::builder()
+                        .status(404)
+                        .header("content-type", mime.to_string())
+                        .body(Cow::Owned("404 Not Found".into()))
+                        .unwrap();
+                }
             });
 
         #[cfg(not(target_os = "linux"))]

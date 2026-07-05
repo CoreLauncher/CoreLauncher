@@ -1,0 +1,12 @@
+{
+    "workspaces": [
+        "./packages/corelauncher-app/public/"
+    ],
+    "devDependencies": {
+        "@biomejs/biome": "2.5.2"
+    },
+    "scripts": {
+        "lint": "bun biome check --fix",
+        "dev": "bun run --port 3000 --hot ./packages/corelauncher-app/public/index.html"
+    }
+}

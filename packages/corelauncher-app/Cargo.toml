@@ -7,11 +7,12 @@ build = "build.rs"
 [dependencies]
 corelauncher-types = { path = "../corelauncher-types" }
 corelauncher-plugin-steam = { path = "../corelauncher-plugin-steam" }
-rust-embed = "8.11.0"
 
-# Windowing
+# Frontend
 tao = "0.35.3"
 wry = "0.55.1"
+mime_guess = "2.0.5"
+rust-embed = { version = "8.11.0", features = ["interpolate-folder-path"] }
 
 [build-dependencies]
 winresource = "0.1.30"
