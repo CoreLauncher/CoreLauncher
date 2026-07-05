@@ -1,0 +1,4 @@
+.BrandingStamp {
+	font-size: calc(var(--size) / 3 * 2);
+	font-weight: 900;
+}

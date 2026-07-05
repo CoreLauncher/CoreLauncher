@@ -1,0 +1,7 @@
+.BrandingLogo {
+	display: flex;
+	flex-direction: row;
+
+	gap: var(--padding-normal);
+	align-items: center;
+}

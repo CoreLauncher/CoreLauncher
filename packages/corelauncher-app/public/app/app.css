@@ -7,6 +7,7 @@
 	main {
 		height: 100%;
 		padding: var(--padding-normal);
+		padding-top: 0;
 	}
 
 	main > * {
