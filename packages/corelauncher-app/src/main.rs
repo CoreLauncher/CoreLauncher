@@ -48,7 +48,7 @@ impl Window {
                 } else {
                     return Response::builder()
                         .status(404)
-                        .header("content-type", mime.to_string())
+                        .header("content-type", "text/plain")
                         .body(Cow::Owned("404 Not Found".into()))
                         .unwrap();
                 }
