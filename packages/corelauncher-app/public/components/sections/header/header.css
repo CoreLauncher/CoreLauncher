@@ -13,17 +13,17 @@
 		gap: var(--gap-small);
 
 		button {
+			height: 100%;
+			padding: var(--padding-normal);
+			font-weight: 400;
+			color: var(--color-text-muted);
+			cursor: pointer;
 			background-color: var(--color-accent);
 			border: none;
 			border-radius: var(--border-small);
-			height: 100%;
-			font-weight: 400;
-			padding: var(--padding-normal);
-			cursor: pointer;
-			color: var(--color-text-muted);
 
 			&.active {
-                font-weight: 600;
+				font-weight: 600;
 			}
 		}
 	}

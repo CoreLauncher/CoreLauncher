@@ -1,22 +1,21 @@
 import clsx from "clsx";
 import BrandingLogo from "../../branding/branding-logo/branding-logo";
 import "./header.css";
+import useCoreLauncher from "../../../hooks/use-corelauncher";
 
 export default function Header({
-    activeTab,
+	activeTab,
 	onTabChange,
 }: {
-    activeTab: string;
+	activeTab: string;
 	onTabChange: (tab: string) => void;
 }) {
+	const corelauncher = useCoreLauncher();
+
 	function onMouseDown(event: React.MouseEvent) {
 		const target = event.target as HTMLElement;
 		if (target.nodeName !== "DIV" && target.nodeName !== "HEADER") return;
-		window.ipc.postMessage(
-			JSON.stringify({
-				type: "window_drag",
-			}),
-		);
+		corelauncher.sendMessage("window_drag");
 	}
 
 	const tabs = [

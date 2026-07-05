@@ -6,7 +6,7 @@
 	--color-block: hsl(0, 0%, 5%);
 	--color-accent: hsl(0, 0%, 15%);
 	--color-text: hsl(0, 0%, 100%);
-		--color-text-muted: hsl(0, 0%, 50%);
+	--color-text-muted: hsl(0, 0%, 50%);
 	--color-scrollbar: hsl(0, 0%, 20%);
 
 	--padding-normal: 8px;

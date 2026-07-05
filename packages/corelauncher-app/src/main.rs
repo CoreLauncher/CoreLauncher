@@ -18,6 +18,7 @@ mod plugins;
 #[serde(tag = "type", content = "payload")]
 #[serde(rename_all = "snake_case")]
 enum IPCEvent {
+    WebviewInitialized,
     WindowDrag,
 }
 
@@ -172,16 +173,30 @@ async fn main() {
         *control_flow = ControlFlow::Wait;
 
         match event {
+            tao::event::Event::WindowEvent { event, .. } => match event {
+                tao::event::WindowEvent::CloseRequested => {
+                    *control_flow = ControlFlow::Exit;
+                }
+                _ => {}
+            },
             tao::event::Event::UserEvent(user_event) => {
                 println!("Received user event: {:#?}", user_event);
                 match user_event {
                     UserEvent::IPCEvent(ipc_event) => match ipc_event {
+                        IPCEvent::WebviewInitialized => {
+                            println!("WebviewInitialized");
+                        },
                         IPCEvent::WindowDrag => {
                             app.main_window.window.drag_window().unwrap();
                         }
                     },
                     UserEvent::PluginEvent(plugin_event) => {
                         println!("Received plugin event: {:#?}", plugin_event);
+                        let js = format!(
+                            "window.dispatchEvent(new CustomEvent('corelauncher:plugin-event', {{ detail: {} }}));",
+                            serde_json::to_string(&plugin_event).unwrap()
+                        );
+                        app.main_window.webview.evaluate_script(js.as_str()).expect("Failed to evaluate script");
                     }
                 }
             }
