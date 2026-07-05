@@ -24,6 +24,11 @@ body,
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
+
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+
 	font-family: "Inter", sans-serif;
 	color: var(--color-text);
 

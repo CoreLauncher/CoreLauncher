@@ -5,7 +5,7 @@ export default function Header() {
 	return (
 		<header className="Header">
 			<BrandingLogo size={20} />
-			Header
+			<p>Header</p>
 		</header>
 	);
 }
