@@ -7,10 +7,12 @@ impl Constants {
         "corelauncher".to_string()
     }
 
+    #[allow(dead_code)]
     pub fn app_name() -> String {
         "CoreLauncher".to_string()
     }
 
+    #[allow(dead_code)]
     pub fn app_version() -> String {
         env!("CARGO_PKG_VERSION").to_string()
     }
