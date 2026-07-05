@@ -36,6 +36,7 @@ impl Window {
         let (ipc_sender, ipc_receiver) = std::sync::mpsc::channel::<IPCEvent>();
 
         let window = WindowBuilder::new()
+            .with_title("CoreLauncher")
             .with_inner_size(LogicalSize::new(1200, 800))
             .with_decorations(false)
             .with_transparent(true)
