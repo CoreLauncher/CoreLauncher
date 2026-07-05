@@ -38,10 +38,12 @@ impl Window {
         let window = WindowBuilder::new()
             .with_inner_size(LogicalSize::new(1200, 800))
             .with_decorations(false)
+            .with_transparent(true)
             .build(event_loop)
             .unwrap();
 
         let webview_builder = WebViewBuilder::new()
+            .with_transparent(true)
             .with_ipc_handler(move |request| {
                 let body = request.body();
                 let data = serde_json::from_str::<IPCEvent>(body);
@@ -110,12 +112,14 @@ impl Window {
 }
 
 struct CoreLauncher {
-    main_window: Option<Window>,
+    main_window: Window,
 }
 
 impl CoreLauncher {
-    fn new() -> Self {
-        Self { main_window: None }
+    fn new(event_loop: &EventLoop<UserEvent>) -> Self {
+        Self {
+            main_window: Window::new(&event_loop),
+        }
     }
 }
 
@@ -127,9 +131,8 @@ async fn main() {
     let event_loop = EventLoopBuilder::with_user_event().build();
     let event_proxy = event_loop.create_proxy();
 
-    let mut app = CoreLauncher::new();
-    let mut window = Window::new(&event_loop);
-    let ipc_receiver = window.ipc_receiver.take().unwrap();
+    let mut app = CoreLauncher::new(&event_loop);
+    let ipc_receiver = app.main_window.ipc_receiver.take().unwrap();
     thread::spawn(move || {
         loop {
             if let Ok(event) = ipc_receiver.recv() {
@@ -137,7 +140,6 @@ async fn main() {
             }
         }
     });
-    app.main_window = Some(window);
 
     event_loop.run(move |event, _, control_flow| {
         *control_flow = ControlFlow::Wait;
@@ -145,12 +147,7 @@ async fn main() {
         match event {
             tao::event::Event::UserEvent(event) => {
                 println!("Received user event: {:#?}", event);
-                app.main_window
-                    .as_ref()
-                    .unwrap()
-                    .window
-                    .drag_window()
-                    .unwrap();
+                app.main_window.window.drag_window().unwrap();
             }
             _ => {}
         }
