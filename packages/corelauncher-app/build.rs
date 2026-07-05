@@ -1,4 +1,4 @@
-#[cfg(debug_assertions)]
+#[cfg(not(debug_assertions))]
 fn build_frontend() {
     let out_dir = std::env::var("OUT_DIR").unwrap();
 
@@ -37,7 +37,7 @@ fn main() {
     println!("cargo:rerun-if-changed=packages/corelauncher-app/public/");
     println!("cargo:rerun-if-changed=build.rs");
 
-    #[cfg(debug_assertions)]
+    #[cfg(not(debug_assertions))]
     build_frontend();
 
     #[cfg(windows)]
