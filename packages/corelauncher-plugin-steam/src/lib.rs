@@ -1,14 +1,21 @@
-use std::any::Any;
+use std::{any::Any, sync::Arc};
 
-use corelauncher_types::{Plugin, PluginPortal};
+use corelauncher_types::{AccountProvider, Plugin, PluginPortal};
 
+#[allow(dead_code)]
 pub struct PluginSteam {
-    _portal: Box<dyn PluginPortal>,
+    portal: Arc<Box<dyn PluginPortal>>,
+    account_provider: SteamAccountProvider,
 }
 
 impl PluginSteam {
-    pub fn new(portal: Box<dyn PluginPortal>) -> Self {
-        Self { _portal: portal }
+    pub fn new(portal: Arc<Box<dyn PluginPortal>>) -> Self {
+        portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated);
+
+        Self {
+            portal,
+            account_provider: SteamAccountProvider::new(),
+        }
     }
 }
 
@@ -35,5 +42,19 @@ impl Plugin for PluginSteam {
 
     fn as_any_mut(&mut self) -> &mut dyn Any {
         self
+    }
+}
+
+struct SteamAccountProvider;
+
+impl SteamAccountProvider {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+
+impl AccountProvider for SteamAccountProvider {
+    fn id(&self) -> String {
+        "steam".into()
     }
 }

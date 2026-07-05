@@ -1,6 +1,7 @@
 use std::{borrow::Cow, fs, thread};
 
-use crate::{assets::Assets, constants::Constants};
+use crate::{assets::Assets, constants::Constants, plugins::manager::PluginManager};
+use corelauncher_types::PluginEvent;
 use serde::Deserialize;
 use tao::{
     dpi::LogicalSize,
@@ -23,6 +24,7 @@ enum IPCEvent {
 #[derive(Debug)]
 enum UserEvent {
     IPCEvent(IPCEvent),
+    PluginEvent(PluginEvent),
 }
 
 struct Window {
@@ -102,6 +104,7 @@ impl Window {
             webview_builder.build_gtk(vbox).unwrap()
         };
 
+        #[cfg(debug_assertions)]
         webview.open_devtools();
 
         Self {
@@ -114,12 +117,19 @@ impl Window {
 
 struct CoreLauncher {
     main_window: Window,
+    plugin_manager: PluginManager,
 }
 
 impl CoreLauncher {
     fn new(event_loop: &EventLoop<UserEvent>) -> Self {
+        let mut plugin_manager = PluginManager::new();
+        plugin_manager.register_plugin(Box::new(|portal| {
+            Box::new(corelauncher_plugin_steam::PluginSteam::new(portal))
+        }));
+
         Self {
             main_window: Window::new(&event_loop),
+            plugin_manager,
         }
     }
 }
@@ -130,25 +140,50 @@ async fn main() {
     let _ = fs::create_dir(Constants::app_directory());
 
     let event_loop = EventLoopBuilder::with_user_event().build();
-    let event_proxy = event_loop.create_proxy();
-
     let mut app = CoreLauncher::new(&event_loop);
-    let ipc_receiver = app.main_window.ipc_receiver.take().unwrap();
-    thread::spawn(move || {
-        loop {
-            if let Ok(event) = ipc_receiver.recv() {
-                event_proxy.send_event(UserEvent::IPCEvent(event)).unwrap();
+
+    {
+        let event_proxy = event_loop.create_proxy();
+        let plugin_receiver = app.plugin_manager.event_receiver;
+        thread::spawn(move || {
+            loop {
+                if let Ok(event) = plugin_receiver.recv() {
+                    event_proxy
+                        .send_event(UserEvent::PluginEvent(event))
+                        .unwrap();
+                }
             }
-        }
-    });
+        });
+    }
+
+    {
+        let event_proxy = event_loop.create_proxy();
+        let ipc_receiver = app.main_window.ipc_receiver.take().unwrap();
+        thread::spawn(move || {
+            loop {
+                if let Ok(event) = ipc_receiver.recv() {
+                    event_proxy.send_event(UserEvent::IPCEvent(event)).unwrap();
+                }
+            }
+        });
+    }
 
     event_loop.run(move |event, _, control_flow| {
         *control_flow = ControlFlow::Wait;
 
         match event {
-            tao::event::Event::UserEvent(event) => {
-                println!("Received user event: {:#?}", event);
-                app.main_window.window.drag_window().unwrap();
+            tao::event::Event::UserEvent(user_event) => {
+                println!("Received user event: {:#?}", user_event);
+                match user_event {
+                    UserEvent::IPCEvent(ipc_event) => match ipc_event {
+                        IPCEvent::WindowDrag => {
+                            app.main_window.window.drag_window().unwrap();
+                        }
+                    },
+                    UserEvent::PluginEvent(plugin_event) => {
+                        println!("Received plugin event: {:#?}", plugin_event);
+                    }
+                }
             }
             _ => {}
         }
