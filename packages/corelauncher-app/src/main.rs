@@ -34,7 +34,6 @@ impl Window {
 
                 let file = Assets::get(path);
                 let mime = mime_guess::from_path(path).first_or_octet_stream();
-                println!("{:#?} {:#?}", path, file.is_some());
 
                 if let Some(file) = file {
                     return Response::builder()
