@@ -1,13 +1,13 @@
-.LibraryPage {
+.SettingsPage {
 	display: flex;
 	flex-direction: row;
 	gap: var(--gap-normal);
 
-	.library {
+	.tabs {
 		width: 400px;
 	}
 
-	.game {
+	.page {
 		width: 100%;
 	}
 }

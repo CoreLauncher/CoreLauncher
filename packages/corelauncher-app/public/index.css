@@ -2,12 +2,17 @@
 @import "@fontsource-variable/rubik";
 
 :root {
-	--color-background: #000;
-	--color-text: #fff;
-	--color-scrollbar: hsl(0, 0%, 20%);
+	--color-background: hsl(0, 0%, 0%);
 	--color-block: hsl(0, 0%, 5%);
+	--color-accent: hsl(0, 0%, 15%);
+	--color-text: hsl(0, 0%, 100%);
+		--color-text-muted: hsl(0, 0%, 50%);
+	--color-scrollbar: hsl(0, 0%, 20%);
 
 	--padding-normal: 8px;
+	--gap-small: 4px;
+	--gap-normal: 8px;
+	--border-small: 4px;
 	--border-normal: 8px;
 }
 
@@ -34,4 +39,8 @@ body,
 
 	scrollbar-color: var(--cl-color-scrollbar) var(--cl-color-block);
 	scrollbar-width: thin;
+}
+
+*:not(h1, h2, h3, h4, h5, h6) {
+	font-size: 1em;
 }
