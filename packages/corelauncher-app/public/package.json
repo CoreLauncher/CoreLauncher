@@ -3,6 +3,7 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource/inter": "^5.2.8",
+				"@fontsource-variable/rubik": "^5.2.8",
 		"react": "^19",
 		"react-dom": "^19",
 		"clsx": "^2.1.1"
