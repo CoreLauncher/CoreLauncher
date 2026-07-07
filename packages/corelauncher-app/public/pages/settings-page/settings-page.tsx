@@ -3,12 +3,14 @@ import "./settings-page.css";
 import { useState } from "react";
 import Block from "../../components/layout/block/block";
 import useAccountProviders from "../../hooks/use-account-providers";
+import useCoreLauncher from "../../hooks/use-corelauncher";
 
 function GeneralSettingsPage() {
 	return <div className="page"></div>;
 }
 
 function AccountsSettingsPage() {
+	const corelauncher = useCoreLauncher();
 	const accountProviders = useAccountProviders();
 	return (
 		<div className="page accounts">
@@ -26,6 +28,11 @@ function AccountsSettingsPage() {
 							style={{
 								backgroundColor: provider.color,
 							}}
+							onClick={() => [
+								corelauncher.sendMessage("account_connect", {
+									id: provider.id,
+								}),
+							]}
 						>
 							<img src={provider.icon} alt={provider.name} />
 						</button>

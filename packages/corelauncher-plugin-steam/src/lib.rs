@@ -89,4 +89,8 @@ impl AccountProvider for SteamAccountProvider {
     fn icon(&self) -> String {
         Assets::get_base64_resource("steam.svg").expect("Missing steam plugin icon")
     }
+
+    fn connect(&self) -> Result<(), String> {
+        todo!()
+    }
 }

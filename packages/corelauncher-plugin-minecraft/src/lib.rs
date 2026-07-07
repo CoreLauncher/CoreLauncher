@@ -88,4 +88,9 @@ impl AccountProvider for MinecraftAccountProvider {
     fn icon(&self) -> String {
         Assets::get_base64_resource("account-icon.svg").expect("Missing minecraft plugin icon")
     }
+
+    fn connect(&self) -> Result<(), String> {
+        webbrowser::open("https://example.com").expect("Failed to open web browser");
+        Ok(())
+    }
 }

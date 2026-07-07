@@ -11,6 +11,8 @@ pub trait AccountProvider: std::fmt::Debug + Send + Sync {
     fn color(&self) -> String;
     /// Base64 encoded icon for the provider, used in the UI
     fn icon(&self) -> String;
+
+    fn connect(&self) -> Result<(), String>;
 }
 
 impl Serialize for dyn AccountProvider + Send + 'static {

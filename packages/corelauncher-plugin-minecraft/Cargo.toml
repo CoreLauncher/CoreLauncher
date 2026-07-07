@@ -8,3 +8,5 @@ corelauncher-types.workspace = true
 
 rust-embed-addon.workspace = true
 rust-embed = { version = "8.11.0", features = [] }
+
+webbrowser = "1.2.1"

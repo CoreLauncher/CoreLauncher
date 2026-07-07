@@ -49,6 +49,20 @@ impl PluginManager {
             .collect()
     }
 
+    pub fn get_account_provider(
+        &self,
+        id: String,
+    ) -> Option<Box<dyn corelauncher_types::AccountProvider + Send + 'static>> {
+        for plugin in &self.plugins {
+            for provider in plugin.get_account_providers() {
+                if provider.id() == id {
+                    return Some(provider);
+                }
+            }
+        }
+        None
+    }
+
     pub fn setup_events(&mut self) -> Vec<PluginEvent> {
         let mut events = Vec::new();
 

@@ -20,6 +20,7 @@ mod plugins;
 enum IPCEvent {
     WebviewInitialized,
     WindowDrag,
+    AccountConnect { id: String },
 }
 
 #[derive(Debug)]
@@ -205,6 +206,13 @@ async fn main() {
                         }
                         IPCEvent::WindowDrag => {
                             app.main_window.window.drag_window().unwrap();
+                        }
+                        IPCEvent::AccountConnect { id } => {
+                            let provider = app.plugin_manager.get_account_provider(id);
+                            if let Some(provider) = provider {
+                                let account = provider.connect();
+                                println!("Connected account: {:#?}", account);
+                            }
                         }
                     },
                     UserEvent::PluginEvent(plugin_event) => {
