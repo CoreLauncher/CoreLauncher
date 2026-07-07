@@ -1,4 +1,12 @@
-export default class CoreLauncher {
+import { TypedEmitter } from "typed-emitter";
+import type { AccountProvider } from "../types/account-provider";
+import type { PluginEvent } from "../types/event";
+
+interface CoreLauncherEvents {
+	account_providers_updated: (providers: AccountProvider[]) => void;
+}
+
+export default class CoreLauncher extends TypedEmitter<CoreLauncherEvents> {
 	private static _instance: CoreLauncher;
 
 	static get instance() {
@@ -11,9 +19,25 @@ export default class CoreLauncher {
 		return CoreLauncher._instance;
 	}
 
+	accountProviders: AccountProvider[] = [];
+
 	constructor() {
+		super();
 		console.info("CoreLauncher initialized");
-		window.addEventListener("corelauncher:plugin-event", console.log);
+		window.addEventListener("corelauncher:plugin-event", (event) => {
+			const payload = (event as CustomEvent<PluginEvent>).detail;
+			switch (payload.type) {
+				case "account_providers_updated": {
+					console.info("Account providers updated", payload.payload);
+					this.accountProviders = payload.payload;
+					this.emit("account_providers_updated", payload.payload);
+					break;
+				}
+				default: {
+					console.warn("Unknown plugin event type", payload);
+				}
+			}
+		});
 		this.sendMessage("webview_initialized");
 	}
 

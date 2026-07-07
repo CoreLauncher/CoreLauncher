@@ -1,6 +1,7 @@
 {
 	"workspaces": [
-		"./packages/corelauncher-app/public/"
+		"./packages/corelauncher-app/public/",
+		"./packages/typed-emitter/"
 	],
 	"devDependencies": {
 		"@biomejs/biome": "2.5.2"
