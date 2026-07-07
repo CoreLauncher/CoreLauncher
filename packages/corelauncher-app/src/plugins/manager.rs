@@ -39,4 +39,23 @@ impl PluginManager {
             .find(|p| p.get_id() == id)
             .map(|p| p.as_ref())
     }
+
+    pub fn get_account_providers(
+        &self,
+    ) -> Vec<Box<dyn corelauncher_types::AccountProvider + Send + 'static>> {
+        self.plugins
+            .iter()
+            .flat_map(|p| p.get_account_providers())
+            .collect()
+    }
+
+    pub fn setup_events(&mut self) -> Vec<PluginEvent> {
+        let mut events = Vec::new();
+
+        events.push(PluginEvent::AccountProvidersUpdated(
+            self.get_account_providers(),
+        ));
+
+        return events;
+    }
 }

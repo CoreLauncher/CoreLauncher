@@ -10,11 +10,14 @@ pub struct PluginSteam {
 
 impl PluginSteam {
     pub fn new(portal: Arc<Box<dyn PluginPortal>>) -> Self {
-        portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated);
+        let account_provider = SteamAccountProvider::new();
+        portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated(
+            vec![Box::new(account_provider.clone())],
+        ));
 
         Self {
             portal,
-            account_provider: SteamAccountProvider::new(),
+            account_provider,
         }
     }
 }
@@ -36,6 +39,12 @@ impl Plugin for PluginSteam {
         "A plugin to integrate Steam games into CoreLauncher.".into()
     }
 
+    fn get_account_providers(
+        &self,
+    ) -> Vec<Box<dyn corelauncher_types::AccountProvider + Send + 'static>> {
+        vec![Box::new(self.account_provider.clone())]
+    }
+
     fn as_any(&self) -> &dyn Any {
         self
     }
@@ -45,6 +54,7 @@ impl Plugin for PluginSteam {
     }
 }
 
+#[derive(Debug, Clone)]
 struct SteamAccountProvider;
 
 impl SteamAccountProvider {
