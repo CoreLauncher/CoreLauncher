@@ -12,10 +12,13 @@ export default function BrandingLogo({
 	size?: number | string;
 }) {
 	return (
-		<div className={clsx("BrandingLogo", className)}>
-			<BrandingSymbol
-				size={`calc(${typeof size === "number" ? `${size}px` : size} * 1.5)`}
-			/>
+		<div
+			className={clsx("BrandingLogo", className)}
+			style={{
+				["--symbol-size" as string]: `calc(${typeof size === "number" ? `${size}px` : size} * 1.5)`,
+			}}
+		>
+			<BrandingSymbol className="branding-symbol" size={"100%"} />
 			<BrandingStamp size={size} />
 		</div>
 	);

@@ -4,4 +4,8 @@
 
 	gap: var(--gap-normal);
 	align-items: center;
+
+	.branding-symbol {
+		width: var(--symbol-size);
+	}
 }
