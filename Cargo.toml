@@ -6,6 +6,13 @@ members = [
     "packages/corelauncher-plugin-steam",
     "packages/corelauncher-types",
     "packages/minecraft",
+    "packages/rust-embed-addon",
     "packages/steam-client",
 ]
 default-members = ["packages/corelauncher-app"]
+
+[workspace.dependencies]
+corelauncher-plugin-steam = { path = "packages/corelauncher-plugin-steam" }
+corelauncher-types = { path = "packages/corelauncher-types" }
+rust-embed-addon = { path = "packages/rust-embed-addon" }
+steam-client = { path = "packages/steam-client" }

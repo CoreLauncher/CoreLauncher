@@ -4,10 +4,53 @@
 	gap: var(--gap-normal);
 
 	.tabs {
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap-normal);
 		width: 400px;
+
+		padding: var(--padding-normal);
+
+		.tab {
+			padding: var(--padding-normal);
+			background-color: var(--color-accent);
+			border-radius: var(--border-normal);
+		}
+
+		.tab.active {
+			font-weight: bold;
+		}
 	}
 
 	.page {
 		width: 100%;
+
+		&.accounts {
+			.account-providers {
+				display: flex;
+				flex-direction: column;
+				gap: var(--gap-normal);
+				padding: var(--padding-normal);
+
+				.items {
+					display: flex;
+					flex-direction: row;
+					gap: var(--gap-normal);
+
+					.account-provider {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						padding: var(--padding-normal);
+						border-radius: var(--border-normal);
+
+						img {
+							width: 32px;
+							height: 32px;
+						}
+					}
+				}
+			}
+		}
 	}
 }

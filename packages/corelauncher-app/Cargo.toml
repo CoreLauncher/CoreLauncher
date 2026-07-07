@@ -5,8 +5,8 @@ edition = "2024"
 build = "build.rs"
 
 [dependencies]
-corelauncher-types = { path = "../corelauncher-types" }
-corelauncher-plugin-steam = { path = "../corelauncher-plugin-steam" }
+corelauncher-types.workspace = true
+corelauncher-plugin-steam.workspace = true
 
 tokio = { version = "1.52.3", features = ["full"] }
 

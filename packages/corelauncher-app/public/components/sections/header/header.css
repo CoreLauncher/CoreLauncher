@@ -17,9 +17,7 @@
 			padding: var(--padding-normal);
 			font-weight: 400;
 			color: var(--color-text-muted);
-			cursor: pointer;
 			background-color: var(--color-accent);
-			border: none;
 			border-radius: var(--border-small);
 
 			&.active {

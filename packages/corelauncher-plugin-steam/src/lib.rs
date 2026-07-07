@@ -1,6 +1,12 @@
 use std::{any::Any, sync::Arc};
 
 use corelauncher_types::{AccountProvider, Plugin, PluginPortal};
+use rust_embed::Embed;
+use rust_embed_addon::RustEmbedAddon;
+
+#[derive(Embed)]
+#[folder = "assets"]
+struct Assets;
 
 #[allow(dead_code)]
 pub struct PluginSteam {
@@ -66,5 +72,21 @@ impl SteamAccountProvider {
 impl AccountProvider for SteamAccountProvider {
     fn id(&self) -> String {
         "steam".into()
+    }
+
+    fn name(&self) -> String {
+        "Steam".into()
+    }
+
+    fn description(&self) -> Option<String> {
+        None
+    }
+
+    fn color(&self) -> String {
+        "#1a9fff".into()
+    }
+
+    fn icon(&self) -> String {
+        Assets::get_base64_resource("steam.svg").expect("Missing steam plugin icon")
     }
 }

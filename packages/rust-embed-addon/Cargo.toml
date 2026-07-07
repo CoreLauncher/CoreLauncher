@@ -1,10 +1,9 @@
 [package]
-name = "corelauncher-plugin-steam"
+name = "rust-embed-addon"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-corelauncher-types.workspace = true
-rust-embed-addon.workspace = true
-
 rust-embed = { version = "8.11.0", features = [] }
+mime_guess = "2.0.5"
+base64 = "0.22.1"
