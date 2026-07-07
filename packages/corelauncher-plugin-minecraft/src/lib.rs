@@ -8,15 +8,14 @@ use rust_embed_addon::RustEmbedAddon;
 #[folder = "assets"]
 struct Assets;
 
-#[allow(dead_code)]
-pub struct PluginSteam {
+pub struct PluginMinecraft {
     portal: Arc<Box<dyn PluginPortal>>,
-    account_provider: SteamAccountProvider,
+    account_provider: MinecraftAccountProvider,
 }
 
-impl PluginSteam {
+impl PluginMinecraft {
     pub fn new(portal: Arc<Box<dyn PluginPortal>>) -> Self {
-        let account_provider = SteamAccountProvider::new();
+        let account_provider = MinecraftAccountProvider::new();
         portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated(
             vec![Box::new(account_provider.clone())],
         ));
@@ -28,13 +27,13 @@ impl PluginSteam {
     }
 }
 
-impl Plugin for PluginSteam {
+impl Plugin for PluginMinecraft {
     fn get_id(&self) -> String {
-        "corelauncher-plugin-steam".into()
+        "corelauncher-plugin-minecraft".into()
     }
 
     fn get_name(&self) -> String {
-        "Steam".into()
+        "Minecraft".into()
     }
 
     fn get_version(&self) -> String {
@@ -42,7 +41,7 @@ impl Plugin for PluginSteam {
     }
 
     fn get_description(&self) -> String {
-        "A plugin to integrate Steam games into CoreLauncher.".into()
+        "A plugin to integrate Minecraft into CoreLauncher.".into()
     }
 
     fn get_account_providers(
@@ -61,21 +60,21 @@ impl Plugin for PluginSteam {
 }
 
 #[derive(Debug, Clone)]
-struct SteamAccountProvider;
+struct MinecraftAccountProvider;
 
-impl SteamAccountProvider {
+impl MinecraftAccountProvider {
     pub fn new() -> Self {
         Self {}
     }
 }
 
-impl AccountProvider for SteamAccountProvider {
+impl AccountProvider for MinecraftAccountProvider {
     fn id(&self) -> String {
-        "steam".into()
+        "minecraft".into()
     }
 
     fn name(&self) -> String {
-        "Steam".into()
+        "Minecraft".into()
     }
 
     fn description(&self) -> Option<String> {
@@ -83,10 +82,10 @@ impl AccountProvider for SteamAccountProvider {
     }
 
     fn color(&self) -> String {
-        "#1a9fff".into()
+        "#52a535".into()
     }
 
     fn icon(&self) -> String {
-        Assets::get_base64_resource("steam.svg").expect("Missing steam plugin icon")
+        Assets::get_base64_resource("account-icon.svg").expect("Missing minecraft plugin icon")
     }
 }

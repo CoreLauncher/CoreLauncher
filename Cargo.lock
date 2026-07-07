@@ -568,6 +568,7 @@ dependencies = [
 name = "corelauncher-app"
 version = "1.0.0-beta.23"
 dependencies = [
+ "corelauncher-plugin-minecraft",
  "corelauncher-plugin-steam",
  "corelauncher-types",
  "mime_guess",
@@ -578,6 +579,15 @@ dependencies = [
  "tokio",
  "winresource",
  "wry",
+]
+
+[[package]]
+name = "corelauncher-plugin-minecraft"
+version = "0.1.0"
+dependencies = [
+ "corelauncher-types",
+ "rust-embed",
+ "rust-embed-addon",
 ]
 
 [[package]]

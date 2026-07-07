@@ -138,6 +138,10 @@ impl CoreLauncher {
             Box::new(corelauncher_plugin_steam::PluginSteam::new(portal))
         }));
 
+        plugin_manager.register_plugin(Box::new(|portal| {
+            Box::new(corelauncher_plugin_minecraft::PluginMinecraft::new(portal))
+        }));
+
         Self {
             main_window: Window::new(&event_loop),
             plugin_manager,

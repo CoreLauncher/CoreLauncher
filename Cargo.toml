@@ -3,6 +3,7 @@ resolver = "3"
 members = [
     "packages/corekit",
     "packages/corelauncher-app",
+    "packages/corelauncher-plugin-minecraft",
     "packages/corelauncher-plugin-steam",
     "packages/corelauncher-types",
     "packages/minecraft",
@@ -12,6 +13,7 @@ members = [
 default-members = ["packages/corelauncher-app"]
 
 [workspace.dependencies]
+corelauncher-plugin-minecraft = { path = "packages/corelauncher-plugin-minecraft" }
 corelauncher-plugin-steam = { path = "packages/corelauncher-plugin-steam" }
 corelauncher-types = { path = "packages/corelauncher-types" }
 rust-embed-addon = { path = "packages/rust-embed-addon" }
