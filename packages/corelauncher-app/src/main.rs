@@ -194,7 +194,6 @@ async fn main() {
                 match user_event {
                     UserEvent::IPCEvent(ipc_event) => match ipc_event {
                         IPCEvent::WebviewInitialized => {
-                            println!("WebviewInitialized");
                             let events = app.plugin_manager.setup_events();
                             for event in events {
                                 app.main_window.dispatch_event(event);
