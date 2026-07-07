@@ -210,8 +210,7 @@ async fn main() {
                         IPCEvent::AccountConnect { id } => {
                             let provider = app.plugin_manager.get_account_provider(id);
                             if let Some(provider) = provider {
-                                let account = provider.connect();
-                                println!("Connected account: {:#?}", account);
+                                provider.connect().ok();
                             }
                         }
                     },
