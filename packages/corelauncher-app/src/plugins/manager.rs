@@ -7,7 +7,7 @@ use crate::plugins::portal::PluginPortalImpl;
 pub struct PluginManager {
     portal: Arc<Box<dyn corelauncher_types::PluginPortal>>,
     plugins: Vec<Box<dyn Plugin>>,
-    pub event_receiver: mpsc::Receiver<PluginEvent>,
+    pub event_receiver: Option<mpsc::Receiver<PluginEvent>>,
 }
 
 type PluginConstructor =
@@ -19,7 +19,7 @@ impl PluginManager {
         Self {
             portal: Arc::new(Box::new(PluginPortalImpl::new(event_sender))),
             plugins: Vec::new(),
-            event_receiver,
+            event_receiver: Some(event_receiver),
         }
     }
 

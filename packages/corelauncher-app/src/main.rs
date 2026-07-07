@@ -145,7 +145,7 @@ async fn main() {
 
     {
         let event_proxy = event_loop.create_proxy();
-        let plugin_receiver = app.plugin_manager.event_receiver;
+        let plugin_receiver = app.plugin_manager.event_receiver.take().unwrap();
         thread::spawn(move || {
             loop {
                 if let Ok(event) = plugin_receiver.recv() {
