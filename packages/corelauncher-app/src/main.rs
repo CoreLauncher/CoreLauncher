@@ -114,6 +114,16 @@ impl Window {
             ipc_receiver: Some(ipc_receiver),
         }
     }
+
+    fn dispatch_event(&self, event: PluginEvent) {
+        let js = format!(
+            "window.dispatchEvent(new CustomEvent('corelauncher:plugin-event', {{ detail: {} }}));",
+            serde_json::to_string(&event).unwrap()
+        );
+        self.webview
+            .evaluate_script(js.as_str())
+            .expect("Failed to evaluate script");
+    }
 }
 
 struct CoreLauncher {
@@ -185,18 +195,18 @@ async fn main() {
                     UserEvent::IPCEvent(ipc_event) => match ipc_event {
                         IPCEvent::WebviewInitialized => {
                             println!("WebviewInitialized");
-                        },
+                            let events = app.plugin_manager.setup_events();
+                            for event in events {
+                                app.main_window.dispatch_event(event);
+                            }
+                        }
                         IPCEvent::WindowDrag => {
                             app.main_window.window.drag_window().unwrap();
                         }
                     },
                     UserEvent::PluginEvent(plugin_event) => {
                         println!("Received plugin event: {:#?}", plugin_event);
-                        let js = format!(
-                            "window.dispatchEvent(new CustomEvent('corelauncher:plugin-event', {{ detail: {} }}));",
-                            serde_json::to_string(&plugin_event).unwrap()
-                        );
-                        app.main_window.webview.evaluate_script(js.as_str()).expect("Failed to evaluate script");
+                        app.main_window.dispatch_event(plugin_event);
                     }
                 }
             }
