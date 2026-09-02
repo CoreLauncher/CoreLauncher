@@ -56,7 +56,7 @@ impl Window {
                 if let Ok(event) = data {
                     ipc_sender.send(event).unwrap();
                 } else {
-                    eprintln!("Failed to parse IPC event: {:?}", data);
+                    tracing::error!("Failed to parse IPC event: {:?}", data);
                 }
             })
             .with_custom_protocol("corelauncher-webview".into(), |_, request| {
@@ -152,7 +152,10 @@ impl CoreLauncher {
 
 #[tokio::main]
 async fn main() {
-    println!("App Directory: {:?}", Constants::app_directory());
+    tracing_subscriber::fmt()
+        .with_max_level(tracing::Level::INFO)
+        .init();
+    tracing::info!("App Directory: {:?}", Constants::app_directory());
     let _ = fs::create_dir(Constants::app_directory());
 
     let event_loop = EventLoopBuilder::with_user_event().build();
@@ -195,7 +198,7 @@ async fn main() {
                 _ => {}
             },
             tao::event::Event::UserEvent(user_event) => {
-                println!("Received user event: {:#?}", user_event);
+                tracing::info!("Received user event: {:#?}", user_event);
                 match user_event {
                     UserEvent::IPCEvent(ipc_event) => match ipc_event {
                         IPCEvent::WebviewInitialized => {
@@ -215,7 +218,7 @@ async fn main() {
                         }
                     },
                     UserEvent::PluginEvent(plugin_event) => {
-                        println!("Received plugin event: {:#?}", plugin_event);
+                        tracing::info!("Received plugin event: {:#?}", plugin_event);
                         app.main_window.dispatch_event(plugin_event);
                     }
                 }
