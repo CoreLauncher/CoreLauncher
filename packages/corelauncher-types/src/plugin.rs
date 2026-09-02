@@ -6,7 +6,7 @@ pub trait Plugin: Send + Sync {
     fn get_version(&self) -> String;
     fn get_description(&self) -> String;
 
-    fn get_account_providers(&self) -> Vec<Box<dyn crate::AccountProvider + Send + 'static>>;
+    fn get_account_providers(&self) -> Vec<&dyn crate::AccountProvider>;
 
     // Called when another plugin is loaded.
     fn on_plugin_load(&mut self) {}

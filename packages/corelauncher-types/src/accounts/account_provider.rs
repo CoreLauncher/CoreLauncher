@@ -13,9 +13,19 @@ pub trait AccountProvider: std::fmt::Debug + Send + Sync {
     fn icon(&self) -> String;
 
     fn connect(&self) -> Result<(), String>;
+
+    fn into_info(&self) -> AccountProviderInfo {
+        AccountProviderInfo {
+            id: self.id(),
+            name: self.name(),
+            description: self.description(),
+            color: self.color(),
+            icon: self.icon(),
+        }
+    }
 }
 
-impl Serialize for dyn AccountProvider + Send + 'static {
+impl Serialize for dyn AccountProvider {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
@@ -28,4 +38,13 @@ impl Serialize for dyn AccountProvider + Send + 'static {
         state.serialize_field("icon", &self.icon())?;
         state.end()
     }
+}
+
+#[derive(Debug, Serialize)]
+pub struct AccountProviderInfo {
+    pub id: String,
+    pub name: String,
+    pub description: Option<String>,
+    pub color: String,
+    pub icon: String,
 }
