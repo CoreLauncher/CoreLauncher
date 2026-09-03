@@ -16,5 +16,6 @@ default-members = ["packages/corelauncher-app"]
 corelauncher-plugin-minecraft = { path = "packages/corelauncher-plugin-minecraft" }
 corelauncher-plugin-steam = { path = "packages/corelauncher-plugin-steam" }
 corelauncher-types = { path = "packages/corelauncher-types" }
+minecraft = { path = "packages/minecraft" }
 rust-embed-addon = { path = "packages/rust-embed-addon" }
 steam-client = { path = "packages/steam-client" }

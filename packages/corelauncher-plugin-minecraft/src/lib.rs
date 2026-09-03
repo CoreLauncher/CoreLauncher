@@ -1,8 +1,13 @@
 use std::{any::Any, sync::Arc};
 
 use corelauncher_types::{AccountProvider, Plugin, PluginPortal};
+use minecraft::msa::get_authorize_url;
 use rust_embed::Embed;
 use rust_embed_addon::RustEmbedAddon;
+
+use crate::constants::{MSA_CLIENT_ID, MSA_REDIRECT_URI, MSA_SCOPE};
+
+mod constants;
 
 #[derive(Embed)]
 #[folder = "assets"]
@@ -88,7 +93,10 @@ impl AccountProvider for MinecraftAccountProvider {
     }
 
     fn connect(&self) -> Result<(), String> {
-        webbrowser::open("https://example.com").expect("Failed to open web browser");
+        let authorize_url =
+            get_authorize_url(MSA_CLIENT_ID.into(), MSA_SCOPE, MSA_REDIRECT_URI.into());
+
+        webbrowser::open(authorize_url.as_str()).expect("Failed to open web browser");
         Ok(())
     }
 }
