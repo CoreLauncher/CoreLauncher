@@ -155,8 +155,50 @@ async fn main() {
     tracing_subscriber::fmt()
         .with_max_level(tracing::Level::INFO)
         .init();
+
     tracing::info!("App Directory: {:?}", Constants::app_directory());
     let _ = fs::create_dir(Constants::app_directory());
+
+    #[cfg(all(debug_assertions, target_os = "linux"))]
+    {
+        tracing::info!("Writing desktop files");
+
+        let home = std::env::home_dir().expect("Could not determine home directory");
+        let cwd = std::env::current_dir()
+            .expect("Could not determine current directory")
+            .to_string_lossy()
+            .to_string();
+        let exec = std::env::current_exe()
+            .expect("Could not determine current executable")
+            .to_string_lossy()
+            .to_string();
+
+        let desktop_content = include_str!("../../../assets/desktop/development.desktop")
+            .replace("{CWD}", &cwd)
+            .replace("{EXEC}", &exec);
+
+        let applications_dir = home.join(".local/share/applications");
+        let _ = fs::create_dir_all(&applications_dir);
+        fs::write(
+            applications_dir.join("corelauncher_development.desktop"),
+            &desktop_content,
+        )
+        .expect("Failed to write desktop file");
+
+        let icon_dir = home.join(".local/share/icons/hicolor/scalable/apps");
+        let _ = fs::create_dir_all(&icon_dir);
+        fs::write(
+            icon_dir.join("corelauncher_development.svg"),
+            include_bytes!("../../../assets/logos/logo.svg"),
+        )
+        .expect("Failed to write icon file");
+    }
+
+    let args: Vec<String> = std::env::args().collect();
+    if let Some(url) = args.get(1) {
+        tracing::info!("Protocol URL received: {}", url);
+        // TODO: handle protocol URL
+    }
 
     let event_loop = EventLoopBuilder::with_user_event().build();
     let mut app = CoreLauncher::new(&event_loop);

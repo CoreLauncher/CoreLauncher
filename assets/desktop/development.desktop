@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=CoreLauncher (Development)
+Comment=Game Launcher
+Path={CWD}
+Exec={EXEC} %u
+Icon=corelauncher_development
+Terminal=false
+Categories=Game
+MimeType=x-scheme-handler/corelauncher;
