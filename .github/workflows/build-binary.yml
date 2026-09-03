@@ -11,9 +11,10 @@ jobs:
         steps:
             - uses: actions/checkout@v6
 
+            - run: sudo apt install -y libwebkit2gtk-4.1-dev
+
             # Setup
             - uses: oven-sh/setup-bun@v2
-            # - uses: Swatinem/rust-cache@v2
             - run: bun install
 
             - name: Build binary
