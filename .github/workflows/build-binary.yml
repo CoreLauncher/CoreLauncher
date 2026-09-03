@@ -36,7 +36,7 @@ jobs:
 
             - name: Copy binary
               shell: bash
-              run: cp target/debug/${{ matrix.binary }} ./${{ matrix.output }}
+              run: cp target/release/${{ matrix.binary }} ./${{ matrix.output }}
 
             - uses: actions/upload-artifact@v7
               with:
