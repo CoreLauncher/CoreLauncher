@@ -1,0 +1,76 @@
+name: Run checks
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - rust
+    pull_request:
+        branches:
+            - rust
+jobs:
+    biome-check:
+        name: Run biome checks
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6
+            - name: Install bun
+              uses: oven-sh/setup-bun@v2
+            - name: Install dependencies
+              run: bun install
+            - name: Run lint checks
+              run: bun run biome check
+
+    tsc-check:
+        name: Run tsc checks
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6
+            - name: Install bun
+              uses: oven-sh/setup-bun@v2
+            - name: Install dependencies
+              run: bun install
+            - name: Run type checks
+              run: bun run tsc --noEmit
+
+    bun-test:
+        name: Run bun tests
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6
+            - name: Install bun
+              uses: oven-sh/setup-bun@v2
+            - name: Install dependencies
+              run: bun install
+            - name: Run unit tests
+              run: bun test
+
+    cargo-check:
+        name: Run cargo checks
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6
+            - name: Install bun
+              uses: oven-sh/setup-bun@v2
+            # - uses: Swatinem/rust-cache@v2
+            - name: Install bun dependencies
+              run: bun install
+            - name: Run cargo checks
+              run: cargo check
+
+    cargo-test:
+        name: Run cargo tests
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6
+            - name: Install bun
+              uses: oven-sh/setup-bun@v2
+            # - uses: Swatinem/rust-cache@v2
+            - name: Install bun dependencies
+              run: bun install
+            - name: Run cargo tests
+              run: cargo test

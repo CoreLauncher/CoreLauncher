@@ -1,0 +1,39 @@
+name: Publish release
+
+permissions:
+    contents: write
+
+on:
+    push:
+        tags:
+            - "v*"
+jobs:
+    publish-release:
+        name: Publish release
+        runs-on: ubuntu-24.04-arm
+        steps:
+            - uses: actions/checkout@v6
+
+            # Setup
+            - uses: oven-sh/setup-bun@v2
+            # - uses: Swatinem/rust-cache@v2
+            - run: bun install
+
+            - name: Build binary
+              run: cargo build --release --verbose
+
+            - run: cp target/release/muziekdoosje-api ./muziekdoosje-api-arm64
+
+            - name: Publish release
+              uses: softprops/action-gh-release@v3
+              with:
+                  files: ./muziekdoosje-api-arm64
+                  generate_release_notes: true
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - uses: actions/upload-artifact@v7
+              with:
+                  name: muziekdoosje-api-arm64
+                  path: ./muziekdoosje-api-arm64
+                  archive: false
