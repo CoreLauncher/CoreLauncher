@@ -1,6 +1,6 @@
 {
 	"workspaces": [
-		"./packages/corelauncher-app/public/",
+		"./packages/corelauncher-app/",
 		"./packages/typed-emitter/"
 	],
 	"devDependencies": {
@@ -8,6 +8,6 @@
 	},
 	"scripts": {
 		"lint": "bun biome check --fix",
-		"dev": "bun run --port 3000 --hot ./packages/corelauncher-app/public/index.html"
+		"dev": "bun run --port 3000 --hot ./packages/corelauncher-app"
 	}
 }

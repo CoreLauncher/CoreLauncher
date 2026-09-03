@@ -4,6 +4,10 @@ version = "1.0.0-beta.23"
 edition = "2024"
 build = "build.rs"
 
+[[bin]]
+name = "corelauncher-app"
+path = "src-rs/main.rs"
+
 [dependencies]
 corelauncher-types.workspace = true
 corelauncher-plugin-minecraft.workspace = true
