@@ -37,7 +37,7 @@ impl Plugin for PluginMinecraft {
     }
 
     fn get_version(&self) -> String {
-        "1.0.0".into()
+        env!("CARGO_PKG_VERSION").into()
     }
 
     fn get_description(&self) -> String {
