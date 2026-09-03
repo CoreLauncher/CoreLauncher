@@ -32,7 +32,7 @@ jobs:
             - run: bun install
 
             - name: Build binary
-              run: cargo build --verbose
+              run: cargo build --verbose --release
 
             - name: Copy binary
               shell: bash
