@@ -8,32 +8,56 @@ on:
         tags:
             - "v*"
 jobs:
-    publish-release:
-        name: Publish release
-        runs-on: ubuntu-24.04-arm
+    build:
+        name: Build (${{ matrix.target }})
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                include:
+                    - os: ubuntu-latest
+                      target: linux-x64
+                      binary: corelauncher-app
+                      output: corelauncher-app-linux-x64
+                    - os: windows-latest
+                      target: windows-x64
+                      binary: corelauncher-app.exe
+                      output: corelauncher-app-windows-x64.exe
         steps:
             - uses: actions/checkout@v6
 
-            # Setup
+            - name: Install system dependencies (Linux)
+              if: runner.os == 'Linux'
+              run: sudo apt install -y libwebkit2gtk-4.1-dev
+
             - uses: oven-sh/setup-bun@v2
-            # - uses: Swatinem/rust-cache@v2
             - run: bun install
 
             - name: Build binary
               run: cargo build --release --verbose
 
-            - run: cp target/release/muziekdoosje-api ./muziekdoosje-api-arm64
+            - name: Copy binary
+              shell: bash
+              run: cp target/release/${{ matrix.binary }} ./${{ matrix.output }}
+
+            - uses: actions/upload-artifact@v7
+              with:
+                  name: ${{ matrix.target }}
+                  path: ./${{ matrix.output }}
+                  archive: false
+
+    release:
+        name: Publish release
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/download-artifact@v4
 
             - name: Publish release
               uses: softprops/action-gh-release@v3
               with:
-                  files: ./muziekdoosje-api-arm64
+                  files: |
+                      linux-x64/corelauncher-app-linux-x64
+                      windows-x64/corelauncher-app-windows-x64.exe
                   generate_release_notes: true
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - uses: actions/upload-artifact@v7
-              with:
-                  name: muziekdoosje-api-arm64
-                  path: ./muziekdoosje-api-arm64
-                  archive: false
