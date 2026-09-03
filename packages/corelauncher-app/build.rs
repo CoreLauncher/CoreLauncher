@@ -7,14 +7,14 @@ fn build_frontend() {
         "--target=browser",
         "--outdir",
         out_dir.as_str(),
-        "./index.html",
+        "./src-ts/index.html",
     ];
 
     println!("bun {}", arguments.join(" "));
 
     let output = std::process::Command::new("bun")
         .args(arguments)
-        .current_dir("../../packages/corelauncher-app/public/")
+        .current_dir("../../packages/corelauncher-app/")
         .output()
         .expect("Failed to bundle html with bun");
 
