@@ -13,12 +13,12 @@ mod constants;
 #[folder = "assets"]
 struct Assets;
 
-pub struct PluginMinecraft {
+pub struct MinecraftPlugin {
     portal: Arc<Box<dyn PluginPortal>>,
     account_provider: MinecraftAccountProvider,
 }
 
-impl PluginMinecraft {
+impl MinecraftPlugin {
     pub fn new(portal: Arc<Box<dyn PluginPortal>>) -> Self {
         let account_provider = MinecraftAccountProvider::new();
         portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated(
@@ -32,7 +32,7 @@ impl PluginMinecraft {
     }
 }
 
-impl Plugin for PluginMinecraft {
+impl Plugin for MinecraftPlugin {
     fn get_id(&self) -> String {
         "corelauncher-plugin-minecraft".into()
     }

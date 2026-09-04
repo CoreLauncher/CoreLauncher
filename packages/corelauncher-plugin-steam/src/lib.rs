@@ -9,12 +9,12 @@ use rust_embed_addon::RustEmbedAddon;
 struct Assets;
 
 #[allow(dead_code)]
-pub struct PluginSteam {
+pub struct SteamPlugin {
     portal: Arc<Box<dyn PluginPortal>>,
     account_provider: SteamAccountProvider,
 }
 
-impl PluginSteam {
+impl SteamPlugin {
     pub fn new(portal: Arc<Box<dyn PluginPortal>>) -> Self {
         let account_provider = SteamAccountProvider::new();
         portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated(
@@ -28,7 +28,7 @@ impl PluginSteam {
     }
 }
 
-impl Plugin for PluginSteam {
+impl Plugin for SteamPlugin {
     fn get_id(&self) -> String {
         "corelauncher-plugin-steam".into()
     }

@@ -137,11 +137,11 @@ impl CoreLauncher {
     fn new(event_loop: &EventLoop<UserEvent>) -> Self {
         let mut plugin_manager = PluginManager::new();
         plugin_manager.register_plugin(Box::new(|portal| {
-            Box::new(corelauncher_plugin_steam::PluginSteam::new(portal))
+            Box::new(corelauncher_plugin_steam::SteamPlugin::new(portal))
         }));
 
         plugin_manager.register_plugin(Box::new(|portal| {
-            Box::new(corelauncher_plugin_minecraft::PluginMinecraft::new(portal))
+            Box::new(corelauncher_plugin_minecraft::MinecraftPlugin::new(portal))
         }));
 
         Self {
