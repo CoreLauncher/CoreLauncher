@@ -27,6 +27,7 @@ enum IPCEvent {
 enum UserEvent {
     IPCEvent(IPCEvent),
     PluginEvent(PluginEvent),
+    SingleInstanceLockEvent(Vec<String>),
 }
 
 struct Window {
@@ -198,13 +199,27 @@ async fn main() {
             .output();
     }
 
-    let args: Vec<String> = std::env::args().collect();
-    if let Some(url) = args.get(1) {
-        tracing::info!("Protocol URL received: {}", url);
-        // TODO: handle protocol URL
+    let event_loop = EventLoopBuilder::with_user_event().build();
+
+    {
+        let event_proxy = event_loop.create_proxy();
+        let lock = singleinstancelock::SingleInstanceLock::new("corelauncher");
+        if lock.forward_arguments() {
+            tracing::info!("Another instance is already running. Forwarded arguments and exiting.");
+            std::process::exit(0);
+        }
+        thread::spawn(move || {
+            loop {
+                let Some(arguments) = lock.incoming() else {
+                    continue;
+                };
+                event_proxy
+                    .send_event(UserEvent::SingleInstanceLockEvent(arguments))
+                    .unwrap();
+            }
+        });
     }
 
-    let event_loop = EventLoopBuilder::with_user_event().build();
     let mut app = CoreLauncher::new(&event_loop);
 
     {
@@ -266,6 +281,9 @@ async fn main() {
                     UserEvent::PluginEvent(plugin_event) => {
                         tracing::info!("Received plugin event: {:#?}", plugin_event);
                         app.main_window.dispatch_event(plugin_event);
+                    }
+                    UserEvent::SingleInstanceLockEvent(arguments) => {
+                        tracing::info!("Received arguments from another instance: {:?}", arguments);
                     }
                 }
             }
