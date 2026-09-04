@@ -96,6 +96,11 @@ impl AccountProvider for MinecraftAccountProvider {
         let authorize_url =
             get_authorize_url(MSA_CLIENT_ID.into(), MSA_SCOPE, MSA_REDIRECT_URI.into());
 
+        tracing::info!(
+            "Opening web browser for Minecraft account connection: {}",
+            authorize_url
+        );
+
         webbrowser::open(authorize_url.as_str()).expect("Failed to open web browser");
         Ok(())
     }

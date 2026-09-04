@@ -7,6 +7,8 @@ edition = "2024"
 corelauncher-types.workspace = true
 minecraft.workspace = true
 
+tracing = "0.1.44"
+
 rust-embed-addon.workspace = true
 rust-embed = { version = "8.11.0", features = ["debug-embed"] }
 

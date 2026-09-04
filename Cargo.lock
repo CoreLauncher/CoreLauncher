@@ -612,6 +612,7 @@ dependencies = [
  "minecraft",
  "rust-embed",
  "rust-embed-addon",
+ "tracing",
  "webbrowser",
 ]
 
