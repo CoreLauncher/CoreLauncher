@@ -2,7 +2,7 @@ pub struct SingleInstanceLock {
     socket_path: std::path::PathBuf,
 
     #[cfg(target_os = "windows")]
-    listener: std::sync::OnceLock<std::os::windows::net::UnixListener>,
+    listener: std::sync::OnceLock<uds_windows::UnixListener>,
     #[cfg(target_family = "unix")]
     listener: std::sync::OnceLock<std::os::unix::net::UnixListener>,
 }
@@ -17,7 +17,7 @@ impl SingleInstanceLock {
             #[cfg(target_family = "unix")]
             let can_connect = std::os::unix::net::UnixStream::connect(&socket_path).is_ok();
             #[cfg(target_os = "windows")]
-            let can_connect = std::os::windows::net::UnixStream::connect(&socket_path).is_ok();
+            let can_connect = uds_windows::UnixStream::connect(&socket_path).is_ok();
 
             if !can_connect {
                 let _ = std::fs::remove_file(&socket_path);
@@ -38,7 +38,7 @@ impl SingleInstanceLock {
         #[cfg(target_family = "unix")]
         let connect = || std::os::unix::net::UnixStream::connect(&self.socket_path);
         #[cfg(target_os = "windows")]
-        let connect = || std::os::windows::net::UnixStream::connect(&self.socket_path);
+        let connect = || uds_windows::UnixStream::connect(&self.socket_path);
 
         let Ok(mut stream) = connect() else {
             return false;
@@ -60,8 +60,7 @@ impl SingleInstanceLock {
         });
         #[cfg(target_os = "windows")]
         let listener = self.listener.get_or_init(|| {
-            std::os::windows::net::UnixListener::bind(&self.socket_path)
-                .expect("failed to bind socket")
+            uds_windows::UnixListener::bind(&self.socket_path).expect("failed to bind socket")
         });
 
         use std::io::Read;
