@@ -192,6 +192,10 @@ async fn main() {
             include_bytes!("../../../assets/logos/logo.svg"),
         )
         .expect("Failed to write icon file");
+
+        let _ = std::process::Command::new("update-desktop-database")
+            .arg(&applications_dir)
+            .output();
     }
 
     let args: Vec<String> = std::env::args().collect();
