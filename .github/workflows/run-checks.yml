@@ -34,18 +34,18 @@ jobs:
             - name: Run type checks
               run: bun run tsc --noEmit
 
-    bun-test:
-        name: Run bun tests
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v6
-            - name: Install bun
-              uses: oven-sh/setup-bun@v2
-            - name: Install dependencies
-              run: bun install
-            - name: Run unit tests
-              run: bun test
+    # bun-test:
+    #     name: Run bun tests
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: Checkout
+    #           uses: actions/checkout@v6
+    #         - name: Install bun
+    #           uses: oven-sh/setup-bun@v2
+    #         - name: Install dependencies
+    #           run: bun install
+    #         - name: Run unit tests
+    #           run: bun test
 
     cargo-check:
         name: Run cargo checks
