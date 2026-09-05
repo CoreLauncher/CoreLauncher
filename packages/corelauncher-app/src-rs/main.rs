@@ -110,10 +110,6 @@ impl Window {
             use tao::platform::unix::WindowExtUnix;
             use wry::WebViewBuilderExtUnix;
 
-            unsafe {
-                std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
-            }
-
             let vbox = window.default_vbox().unwrap();
             webview_builder.build_gtk(vbox).unwrap()
         };
@@ -164,6 +160,12 @@ impl CoreLauncher {
 
 #[tokio::main]
 async fn main() {
+    #[cfg(target_os = "linux")]
+    unsafe {
+        std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
+        std::env::set_var("LC_ALL", "C");
+    }
+
     tracing_subscriber::fmt()
         .with_max_level(tracing::Level::INFO)
         .init();
