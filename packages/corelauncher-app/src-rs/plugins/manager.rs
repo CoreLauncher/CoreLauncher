@@ -1,4 +1,7 @@
-use std::sync::{Arc, mpsc};
+use std::{
+    path::PathBuf,
+    sync::{Arc, mpsc},
+};
 
 use corelauncher_types::{Plugin, PluginEvent};
 
@@ -14,10 +17,13 @@ type PluginConstructor =
     dyn FnOnce(Arc<Box<dyn corelauncher_types::PluginPortal>>) -> Box<dyn Plugin>;
 
 impl PluginManager {
-    pub fn new() -> Self {
+    pub fn new(data_directory: PathBuf) -> Self {
         let (event_sender, event_receiver) = mpsc::channel::<PluginEvent>();
         Self {
-            portal: Arc::new(Box::new(PluginPortalImpl::new(event_sender))),
+            portal: Arc::new(Box::new(PluginPortalImpl::new(
+                event_sender,
+                data_directory,
+            ))),
             plugins: Vec::new(),
             event_receiver: Some(event_receiver),
         }

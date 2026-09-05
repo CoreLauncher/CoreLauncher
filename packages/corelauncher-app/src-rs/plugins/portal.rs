@@ -1,4 +1,4 @@
-use std::sync::mpsc::Sender;
+use std::{path::PathBuf, sync::mpsc::Sender};
 
 use corelauncher_types::{PluginEvent, PluginPortal};
 
@@ -7,8 +7,11 @@ pub struct PluginPortalImpl {
 }
 
 impl PluginPortalImpl {
-    pub fn new(event_sender: Sender<PluginEvent>) -> Self {
-        Self { event_sender }
+    pub fn new(event_sender: Sender<PluginEvent>, data_directory: PathBuf) -> Self {
+        Self {
+            event_sender,
+            data_directory,
+        }
     }
 }
 
@@ -17,5 +20,9 @@ impl PluginPortal for PluginPortalImpl {
         self.event_sender
             .send(event)
             .expect("Failed to send event to the event emitter");
+    }
+
+    fn get_data_directory(&self, plugin_id: String) -> PathBuf {
+        self.data_directory.join("plugins").join(plugin_id)
     }
 }

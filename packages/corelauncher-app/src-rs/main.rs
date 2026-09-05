@@ -134,8 +134,8 @@ struct CoreLauncher {
 }
 
 impl CoreLauncher {
-    fn new(event_loop: &EventLoop<UserEvent>) -> Self {
-        let mut plugin_manager = PluginManager::new();
+    fn new(event_loop: &EventLoop<UserEvent>, app_directory: PathBuf) -> Self {
+        let mut plugin_manager = PluginManager::new(app_directory);
         plugin_manager.register_plugin(Box::new(|portal| {
             Box::new(corelauncher_plugin_steam::SteamPlugin::new(portal))
         }));
@@ -157,8 +157,9 @@ async fn main() {
         .with_max_level(tracing::Level::INFO)
         .init();
 
-    tracing::info!("App Directory: {:?}", Constants::app_directory());
-    let _ = fs::create_dir(Constants::app_directory());
+    let app_directory = Constants::app_directory();
+    tracing::info!("App Directory: {:?}", app_directory);
+    let _ = fs::create_dir(&app_directory);
 
     #[cfg(all(debug_assertions, target_os = "linux"))]
     {
@@ -220,7 +221,7 @@ async fn main() {
         });
     }
 
-    let mut app = CoreLauncher::new(&event_loop);
+    let mut app = CoreLauncher::new(&event_loop, app_directory);
 
     {
         let event_proxy = event_loop.create_proxy();

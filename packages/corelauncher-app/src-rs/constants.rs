@@ -1,4 +1,4 @@
-use std::env::current_exe;
+use std::{env::current_exe, path::PathBuf};
 
 pub struct Constants;
 
@@ -17,9 +17,15 @@ impl Constants {
         env!("CARGO_PKG_VERSION").to_string()
     }
 
-    pub fn app_directory() -> String {
-        let exe_path = current_exe().unwrap();
-        let app_dir = exe_path.parent().unwrap().join("../../.corelauncher/");
-        return app_dir.to_str().unwrap().to_string();
+    pub fn app_directory() -> PathBuf {
+        let exe_path = current_exe().expect("Failed to get current executable");
+        let parent = exe_path.parent().expect("Failed to get parent");
+        let is_in_target = parent.ends_with("target/debug") || parent.ends_with("target/release");
+
+        if is_in_target {
+            return parent.join("../../.corelauncher");
+        } else {
+            panic!("CoreLauncher can only be run under the rust target directory at this time.")
+        }
     }
 }
