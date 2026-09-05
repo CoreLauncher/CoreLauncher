@@ -4,6 +4,7 @@ use corelauncher_types::{PluginEvent, PluginPortal};
 
 pub struct PluginPortalImpl {
     event_sender: Sender<PluginEvent>,
+    data_directory: PathBuf,
 }
 
 impl PluginPortalImpl {

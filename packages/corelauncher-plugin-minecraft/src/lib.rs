@@ -21,9 +21,7 @@ pub struct MinecraftPlugin {
 impl MinecraftPlugin {
     pub fn new(portal: Arc<Box<dyn PluginPortal>>) -> Self {
         let account_provider = MinecraftAccountProvider::new();
-        portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated(
-            vec![account_provider.into_info()],
-        ));
+        portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated);
 
         Self {
             portal,
@@ -52,6 +50,12 @@ impl Plugin for MinecraftPlugin {
     fn get_account_providers(&self) -> Vec<&dyn corelauncher_types::AccountProvider> {
         vec![&self.account_provider]
     }
+
+    fn get_account_instances(&self) -> Vec<&dyn corelauncher_types::AccountInstance> {
+        vec![]
+    }
+
+    fn on_protocol_launched(&mut self, protocol: &str) {}
 
     fn as_any(&self) -> &dyn Any {
         self

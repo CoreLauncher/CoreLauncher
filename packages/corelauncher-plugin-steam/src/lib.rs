@@ -17,9 +17,7 @@ pub struct SteamPlugin {
 impl SteamPlugin {
     pub fn new(portal: Arc<Box<dyn PluginPortal>>) -> Self {
         let account_provider = SteamAccountProvider::new();
-        portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated(
-            vec![account_provider.into_info()],
-        ));
+        portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated);
 
         Self {
             portal,
@@ -47,6 +45,10 @@ impl Plugin for SteamPlugin {
 
     fn get_account_providers(&self) -> Vec<&dyn corelauncher_types::AccountProvider> {
         vec![&self.account_provider]
+    }
+
+    fn get_account_instances(&self) -> Vec<&dyn corelauncher_types::AccountInstance> {
+        vec![]
     }
 
     fn as_any(&self) -> &dyn Any {

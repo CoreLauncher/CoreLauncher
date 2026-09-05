@@ -5,7 +5,7 @@ use std::{
 
 use corelauncher_types::{Plugin, PluginEvent};
 
-use crate::plugins::portal::PluginPortalImpl;
+use crate::{IPCEvent, plugins::portal::PluginPortalImpl};
 
 pub struct PluginManager {
     portal: Arc<Box<dyn corelauncher_types::PluginPortal>>,
@@ -46,6 +46,7 @@ impl PluginManager {
             .map(|p| p.as_ref())
     }
 
+    /// Returns all account providers from all plugins.
     pub fn get_account_providers(&self) -> Vec<&dyn corelauncher_types::AccountProvider> {
         self.plugins
             .iter()
@@ -53,6 +54,7 @@ impl PluginManager {
             .collect()
     }
 
+    /// Returns the account provider with the given id, or None if not found.
     pub fn get_account_provider(
         &self,
         id: String,
@@ -67,10 +69,11 @@ impl PluginManager {
         None
     }
 
-    pub fn setup_events(&mut self) -> Vec<PluginEvent> {
+    /// Returns events required to sync the frontend with the current state.
+    pub fn setup_events(&mut self) -> Vec<IPCEvent> {
         let mut events = Vec::new();
 
-        events.push(PluginEvent::AccountProvidersUpdated(
+        events.push(IPCEvent::AccountProvidersUpdated(
             self.get_account_providers()
                 .iter()
                 .map(|p| p.into_info())

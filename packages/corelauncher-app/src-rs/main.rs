@@ -1,8 +1,8 @@
-use std::{borrow::Cow, fs, thread};
+use std::{borrow::Cow, fs, path::PathBuf, thread};
 
 use crate::{assets::Assets, constants::Constants, plugins::manager::PluginManager};
-use corelauncher_types::PluginEvent;
-use serde::Deserialize;
+use corelauncher_types::{AccountProviderInfo, PluginEvent};
+use serde::{Deserialize, Serialize};
 use tao::{
     dpi::LogicalSize,
     event_loop::{ControlFlow, EventLoop, EventLoopBuilder},
@@ -14,31 +14,42 @@ mod assets;
 mod constants;
 mod plugins;
 
+/// Command that is sent from the frontend to the backend.
 #[derive(Debug, Deserialize)]
 #[serde(tag = "type", content = "payload")]
 #[serde(rename_all = "snake_case")]
-enum IPCEvent {
+pub enum IPCCommand {
     WebviewInitialized,
     WindowDrag,
     AccountConnect { id: String },
 }
 
+#[derive(Debug, Serialize)]
+#[serde(tag = "type", content = "payload")]
+#[serde(rename_all = "snake_case")]
+pub enum IPCEvent {
+    AccountProvidersUpdated(Vec<AccountProviderInfo>),
+}
+
 #[derive(Debug)]
 enum UserEvent {
-    IPCEvent(IPCEvent),
+    /// Command that is sent from the frontend to the backend.
+    IPCCommand(IPCCommand),
+    /// Event that is emitted by a plugin
     PluginEvent(PluginEvent),
+    /// Emitted when another instance of CoreLauncher forwards its arguments.
     SingleInstanceLockEvent(Vec<String>),
 }
 
 struct Window {
     window: tao::window::Window,
     webview: wry::WebView,
-    pub ipc_receiver: Option<std::sync::mpsc::Receiver<IPCEvent>>,
+    pub ipc_receiver: Option<std::sync::mpsc::Receiver<IPCCommand>>,
 }
 
 impl Window {
     fn new(event_loop: &EventLoop<UserEvent>) -> Self {
-        let (ipc_sender, ipc_receiver) = std::sync::mpsc::channel::<IPCEvent>();
+        let (ipc_sender, ipc_receiver) = std::sync::mpsc::channel::<IPCCommand>();
 
         let window = WindowBuilder::new()
             .with_title("CoreLauncher")
@@ -52,7 +63,7 @@ impl Window {
             .with_transparent(true)
             .with_ipc_handler(move |request| {
                 let body = request.body();
-                let data = serde_json::from_str::<IPCEvent>(body);
+                let data = serde_json::from_str::<IPCCommand>(body);
 
                 if let Ok(event) = data {
                     ipc_sender.send(event).unwrap();
@@ -117,7 +128,7 @@ impl Window {
         }
     }
 
-    fn dispatch_event(&self, event: PluginEvent) {
+    fn dispatch_event(&self, event: IPCEvent) {
         let js = format!(
             "window.dispatchEvent(new CustomEvent('corelauncher:plugin-event', {{ detail: {} }}));",
             serde_json::to_string(&event).unwrap()
@@ -243,7 +254,9 @@ async fn main() {
         thread::spawn(move || {
             loop {
                 if let Ok(event) = ipc_receiver.recv() {
-                    event_proxy.send_event(UserEvent::IPCEvent(event)).unwrap();
+                    event_proxy
+                        .send_event(UserEvent::IPCCommand(event))
+                        .unwrap();
                 }
             }
         });
@@ -262,17 +275,17 @@ async fn main() {
             tao::event::Event::UserEvent(user_event) => {
                 tracing::info!("Received user event: {:#?}", user_event);
                 match user_event {
-                    UserEvent::IPCEvent(ipc_event) => match ipc_event {
-                        IPCEvent::WebviewInitialized => {
+                    UserEvent::IPCCommand(ipc_event) => match ipc_event {
+                        IPCCommand::WebviewInitialized => {
                             let events = app.plugin_manager.setup_events();
                             for event in events {
                                 app.main_window.dispatch_event(event);
                             }
                         }
-                        IPCEvent::WindowDrag => {
+                        IPCCommand::WindowDrag => {
                             app.main_window.window.drag_window().unwrap();
                         }
-                        IPCEvent::AccountConnect { id } => {
+                        IPCCommand::AccountConnect { id } => {
                             let provider = app.plugin_manager.get_account_provider(id);
                             if let Some(provider) = provider {
                                 provider.connect().ok();
@@ -281,7 +294,17 @@ async fn main() {
                     },
                     UserEvent::PluginEvent(plugin_event) => {
                         tracing::info!("Received plugin event: {:#?}", plugin_event);
-                        app.main_window.dispatch_event(plugin_event);
+
+                        let mapped_event = match plugin_event {
+                            PluginEvent::AccountProvidersUpdated => {
+                                let providers = app.plugin_manager.get_account_providers();
+                                let info = providers.iter().map(|p| p.into_info());
+
+                                IPCEvent::AccountProvidersUpdated(info.collect())
+                            }
+                        };
+
+                        app.main_window.dispatch_event(mapped_event);
                     }
                     UserEvent::SingleInstanceLockEvent(arguments) => {
                         tracing::info!("Received arguments from another instance: {:?}", arguments);
