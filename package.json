@@ -4,7 +4,8 @@
 		"./packages/typed-emitter/"
 	],
 	"devDependencies": {
-		"@biomejs/biome": "2.5.11"
+		"@biomejs/biome": "2.5.11",
+		"typescript": "^7"
 	},
 	"scripts": {
 		"lint": "bun biome check --fix",
