@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-winit = { version = "0.30.13" }
-wgpu = { version = "29.0.0" }
+winit = "0.30.13"
+wgpu = "29.0.0"
 pollster = "0.4.0"
 bytemuck = "1.25.0"
 taffy = "0.10.0"
