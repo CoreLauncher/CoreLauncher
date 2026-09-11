@@ -26,4 +26,8 @@ impl PluginPortal for PluginPortalImpl {
     fn get_data_directory(&self, plugin_id: String) -> PathBuf {
         self.data_directory.join("plugins").join(plugin_id)
     }
+
+    fn focus_main_window(&self) {
+        let _ = self.event_sender.send(PluginEvent::FocusMainWindow);
+    }
 }

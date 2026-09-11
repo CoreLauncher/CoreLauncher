@@ -1,4 +1,4 @@
-use std::{any::Any, sync::Arc};
+use std::sync::Arc;
 
 use corelauncher_types::{AccountProvider, Plugin, PluginPortal};
 use rust_embed::Embed;
@@ -7,6 +7,8 @@ use rust_embed_addon::RustEmbedAddon;
 #[derive(Embed)]
 #[folder = "assets"]
 struct Assets;
+
+const PLUGIN_ID: &str = "corelauncher-plugin-steam";
 
 #[allow(dead_code)]
 pub struct SteamPlugin {
@@ -28,7 +30,7 @@ impl SteamPlugin {
 
 impl Plugin for SteamPlugin {
     fn get_id(&self) -> String {
-        "corelauncher-plugin-steam".into()
+        PLUGIN_ID.into()
     }
 
     fn get_name(&self) -> String {
@@ -50,14 +52,6 @@ impl Plugin for SteamPlugin {
     fn get_account_instances(&self) -> Vec<&dyn corelauncher_types::AccountInstance> {
         vec![]
     }
-
-    fn as_any(&self) -> &dyn Any {
-        self
-    }
-
-    fn as_any_mut(&mut self) -> &mut dyn Any {
-        self
-    }
 }
 
 #[derive(Debug, Clone)]
@@ -74,6 +68,10 @@ impl AccountProvider for SteamAccountProvider {
         "steam".into()
     }
 
+    fn plugin_id(&self) -> String {
+        PLUGIN_ID.into()
+    }
+
     fn name(&self) -> String {
         "Steam".into()
     }
@@ -88,9 +86,5 @@ impl AccountProvider for SteamAccountProvider {
 
     fn icon(&self) -> String {
         Assets::get_base64_resource("steam.svg").expect("Missing steam plugin icon")
-    }
-
-    fn connect(&self) -> Result<(), String> {
-        todo!()
     }
 }

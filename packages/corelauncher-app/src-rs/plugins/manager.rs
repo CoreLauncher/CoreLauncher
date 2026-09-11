@@ -54,19 +54,52 @@ impl PluginManager {
             .collect()
     }
 
-    /// Returns the account provider with the given id, or None if not found.
-    pub fn get_account_provider(
-        &self,
-        id: String,
-    ) -> Option<&dyn corelauncher_types::AccountProvider> {
-        for plugin in &self.plugins {
-            for provider in plugin.get_account_providers() {
-                if provider.id() == id {
-                    return Some(provider);
-                }
-            }
+    /// Returns all account instances from all plugins.
+    pub fn get_account_instances(&self) -> Vec<&dyn corelauncher_types::AccountInstance> {
+        self.plugins
+            .iter()
+            .flat_map(|p| p.get_account_instances())
+            .collect()
+    }
+
+    /// Notifies all plugins that corelauncher was launched via protocol.
+    pub async fn emit_protocol_launched(&mut self, protocol: &str) {
+        for plugin in &mut self.plugins {
+            plugin.on_protocol_launched(protocol).await;
         }
-        None
+    }
+
+    /// Triggers account connection for the plugin that owns the given provider id.
+    pub async fn emit_connect_account_instance(
+        &mut self,
+        plugin_id: &str,
+        account_provider_id: &str,
+    ) -> Result<(), String> {
+        self.plugins
+            .iter_mut()
+            .find(|p| p.get_id() == plugin_id)
+            .ok_or_else(|| String::from("Plugin not found"))?
+            .on_connect_account_instance(account_provider_id)
+            .await
+            .map(|_| ())
+            .map_err(|e| format!("Failed to connect account instance: {}", e))
+    }
+
+    /// Triggers account disconnection for the plugin that owns the given provider and instance id.
+    pub async fn emit_disconnect_account_instance(
+        &mut self,
+        plugin_id: &str,
+        account_provider_id: &str,
+        account_instance_id: &str,
+    ) -> Result<(), String> {
+        self.plugins
+            .iter_mut()
+            .find(|p| p.get_id() == plugin_id)
+            .ok_or_else(|| String::from("Plugin not found"))?
+            .on_disconnect_account_instance(account_provider_id, account_instance_id)
+            .await
+            .map(|_| ())
+            .map_err(|e| format!("Failed to disconnect account instance: {}", e))
     }
 
     /// Returns events required to sync the frontend with the current state.
@@ -75,6 +108,13 @@ impl PluginManager {
 
         events.push(IPCEvent::AccountProvidersUpdated(
             self.get_account_providers()
+                .iter()
+                .map(|p| p.into_info())
+                .collect(),
+        ));
+
+        events.push(IPCEvent::AccountInstancesUpdated(
+            self.get_account_instances()
                 .iter()
                 .map(|p| p.into_info())
                 .collect(),

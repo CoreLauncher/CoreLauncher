@@ -31,5 +31,8 @@ wry = "0.55.1"
 mime_guess = "2.0.5"
 rust-embed = { version = "8.11.0", features = ["interpolate-folder-path"] }
 
+# Other
+url = "2.5.8"
+
 [build-dependencies]
 winresource = "0.1.30"
