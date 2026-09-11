@@ -5,10 +5,21 @@
 
 version: 2
 updates:
-  - package-ecosystem: "cargo" # See documentation for possible values
+  - package-ecosystem: "cargo"
     versioning-strategy: increase
-    directory: "/" # Location of package manifests
+    directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "cron"
+      cronjob: "0 18 * * *"
+      timezone: "Europe/Amsterdam"
+    allow:
+      - dependency-type: "direct"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "cron"
+      cronjob: "0 18 * * *"
+      timezone: "Europe/Amsterdam"
     allow:
       - dependency-type: "direct"
