@@ -23,7 +23,7 @@ impl PluginPortal for PluginPortalImpl {
             .expect("Failed to send event to the event emitter");
     }
 
-    fn get_data_directory(&self, plugin_id: String) -> PathBuf {
+    fn get_data_directory(&self, plugin_id: &str) -> PathBuf {
         self.data_directory.join("plugins").join(plugin_id)
     }
 

@@ -34,7 +34,7 @@ pub struct MinecraftPlugin {
 
 impl MinecraftPlugin {
     pub fn new(portal: Arc<Box<dyn PluginPortal>>) -> Self {
-        let data_directory = portal.get_data_directory(PLUGIN_ID.into());
+        let data_directory = portal.get_data_directory(PLUGIN_ID);
         std::fs::create_dir_all(&data_directory).expect("Failed to create data directory");
         let database = create_database(
             data_directory.join("database.sqlite").to_str().unwrap(),
