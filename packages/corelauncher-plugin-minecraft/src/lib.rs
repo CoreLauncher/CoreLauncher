@@ -46,14 +46,6 @@ impl MinecraftPlugin {
         let account_provider = MinecraftAccountProvider::new();
         portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated);
 
-        tracing::info!(
-            "Data directory is: {}",
-            portal
-                .get_data_directory(PLUGIN_ID.into())
-                .into_string()
-                .unwrap()
-        );
-
         let handle = tokio::runtime::Handle::current();
         let account_instances = tokio::task::block_in_place(|| {
             handle.block_on(MinecraftAccountInstance::load_all(&database))
