@@ -15,7 +15,7 @@ export default function Header({
 	function onMouseDown(event: React.MouseEvent) {
 		const target = event.target as HTMLElement;
 		if (target.nodeName !== "DIV" && target.nodeName !== "HEADER") return;
-		corelauncher.sendMessage("window_drag");
+		corelauncher.startWindowDrag();
 	}
 
 	const tabs = [

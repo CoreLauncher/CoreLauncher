@@ -5,6 +5,7 @@ mod plugin;
 mod portal;
 
 pub use accounts::account_instance::AccountInstance;
+pub use accounts::account_instance::AccountInstanceInfo;
 pub use accounts::account_provider::AccountProvider;
 pub use accounts::account_provider::AccountProviderInfo;
 pub use event::PluginEvent;

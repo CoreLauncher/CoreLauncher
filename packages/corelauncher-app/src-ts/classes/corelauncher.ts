@@ -1,9 +1,10 @@
 import { TypedEmitter } from "typed-emitter";
-import type { AccountProvider } from "../types/account-provider";
+import type { AccountInstance, AccountProvider } from "../types/accounts";
 import type { PluginEvent } from "../types/event";
 
 interface CoreLauncherEvents {
 	account_providers_updated: (providers: AccountProvider[]) => void;
+	account_instances_updated: (instances: AccountInstance[]) => void;
 }
 
 export default class CoreLauncher extends TypedEmitter<CoreLauncherEvents> {
@@ -20,6 +21,7 @@ export default class CoreLauncher extends TypedEmitter<CoreLauncherEvents> {
 	}
 
 	accountProviders: AccountProvider[] = [];
+	accountInstances: AccountInstance[] = [];
 
 	constructor() {
 		super();
@@ -33,6 +35,12 @@ export default class CoreLauncher extends TypedEmitter<CoreLauncherEvents> {
 					this.emit("account_providers_updated", payload.payload);
 					break;
 				}
+				case "account_instances_updated": {
+					console.info("Account instances updated", payload.payload);
+					this.accountInstances = payload.payload;
+					this.emit("account_instances_updated", payload.payload);
+					break;
+				}
 				default: {
 					console.warn("Unknown plugin event type", payload);
 				}
@@ -42,12 +50,31 @@ export default class CoreLauncher extends TypedEmitter<CoreLauncherEvents> {
 	}
 
 	// biome-ignore lint/suspicious/noExplicitAny: temporary?
-	sendMessage(type: string, payload?: any) {
+	private sendMessage(type: string, payload?: any) {
 		window.ipc.postMessage(
 			JSON.stringify({
 				type,
 				payload,
 			}),
 		);
+	}
+
+	startWindowDrag() {
+		this.sendMessage("window_drag");
+	}
+
+	connectAccountInstance(provider: AccountProvider) {
+		this.sendMessage("account_connect", {
+			pluginId: provider.pluginId,
+			providerId: provider.id,
+		});
+	}
+
+	disconnectAccountInstance(instance: AccountInstance) {
+		this.sendMessage("account_disconnect", {
+			pluginId: instance.pluginId,
+			providerId: instance.providerId,
+			instanceId: instance.id,
+		});
 	}
 }

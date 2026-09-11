@@ -1,7 +1,9 @@
 import "./settings-page.css";
 
 import { useState } from "react";
+import { TrashFill } from "react-bootstrap-icons";
 import Block from "../../components/layout/block/block";
+import useAccountInstances from "../../hooks/use-account-instances";
 import useAccountProviders from "../../hooks/use-account-providers";
 import useCoreLauncher from "../../hooks/use-corelauncher";
 
@@ -12,6 +14,8 @@ function GeneralSettingsPage() {
 function AccountsSettingsPage() {
 	const corelauncher = useCoreLauncher();
 	const accountProviders = useAccountProviders();
+	const accountInstances = useAccountInstances();
+
 	return (
 		<div className="page accounts">
 			<Block className="account-providers">
@@ -28,17 +32,40 @@ function AccountsSettingsPage() {
 							style={{
 								backgroundColor: provider.color,
 							}}
-							onClick={() => [
-								corelauncher.sendMessage("account_connect", {
-									id: provider.id,
-								}),
-							]}
+							onClick={() => [corelauncher.connectAccountInstance(provider)]}
 						>
 							<img src={provider.icon} alt={provider.name} />
 						</button>
 					))}
 				</div>
 			</Block>
+			<div className="account-instances">
+				{accountInstances.map((instance) => (
+					<Block key={instance.id} className="account-instance">
+						{instance.avatar ? (
+							<img src={instance.avatar} alt={instance.name} />
+						) : (
+							<div className="avatar-placeholder">{instance.name[0]}</div>
+						)}
+						<div className="account-info">
+							<span className="account-name">{instance.name}</span>
+							<span className="account-provider">
+								{
+									accountProviders.find((p) => p.id === instance.providerId)
+										?.name
+								}
+							</span>
+						</div>
+						<button
+							type="button"
+							className="delete-button"
+							onClick={() => corelauncher.disconnectAccountInstance(instance)}
+						>
+							<TrashFill />
+						</button>
+					</Block>
+				))}
+			</div>
 		</div>
 	);
 }

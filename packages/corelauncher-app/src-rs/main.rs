@@ -1,7 +1,7 @@
 use std::{borrow::Cow, fs, path::PathBuf, thread};
 
 use crate::{assets::Assets, constants::Constants, plugins::manager::PluginManager};
-use corelauncher_types::{AccountProviderInfo, PluginEvent};
+use corelauncher_types::{AccountInstanceInfo, AccountProviderInfo, PluginEvent};
 use serde::{Deserialize, Serialize};
 use tao::{
     dpi::LogicalSize,
@@ -17,11 +17,19 @@ mod plugins;
 /// Command that is sent from the frontend to the backend.
 #[derive(Debug, Deserialize)]
 #[serde(tag = "type", content = "payload")]
-#[serde(rename_all = "snake_case")]
+#[serde(rename_all = "snake_case", rename_all_fields = "camelCase")]
 pub enum IPCCommand {
     WebviewInitialized,
     WindowDrag,
-    AccountConnect { id: String },
+    AccountConnect {
+        plugin_id: String,
+        provider_id: String,
+    },
+    AccountDisconnect {
+        plugin_id: String,
+        provider_id: String,
+        instance_id: String,
+    },
 }
 
 #[derive(Debug, Serialize)]
@@ -29,6 +37,7 @@ pub enum IPCCommand {
 #[serde(rename_all = "snake_case")]
 pub enum IPCEvent {
     AccountProvidersUpdated(Vec<AccountProviderInfo>),
+    AccountInstancesUpdated(Vec<AccountInstanceInfo>),
 }
 
 #[derive(Debug)]
@@ -264,6 +273,7 @@ async fn main() {
         });
     }
 
+    let handle = tokio::runtime::Handle::current();
     event_loop.run(move |event, _, control_flow| {
         *control_flow = ControlFlow::Wait;
 
@@ -287,22 +297,65 @@ async fn main() {
                         IPCCommand::WindowDrag => {
                             app.main_window.window.drag_window().unwrap();
                         }
-                        IPCCommand::AccountConnect { id } => {
-                            let provider = app.plugin_manager.get_account_provider(id);
-                            if let Some(provider) = provider {
-                                provider.connect().ok();
-                            }
+                        IPCCommand::AccountConnect {
+                            plugin_id,
+                            provider_id,
+                        } => {
+                            tokio::task::block_in_place(|| {
+                                handle.block_on(
+                                    app.plugin_manager
+                                        .emit_connect_account_instance(&plugin_id, &provider_id),
+                                )
+                            })
+                            .ok();
+                        }
+                        IPCCommand::AccountDisconnect {
+                            plugin_id,
+                            provider_id,
+                            instance_id,
+                        } => {
+                            tokio::task::block_in_place(|| {
+                                handle.block_on(
+                                    app.plugin_manager.emit_disconnect_account_instance(
+                                        &plugin_id,
+                                        &provider_id,
+                                        &instance_id,
+                                    ),
+                                )
+                            })
+                            .ok();
                         }
                     },
                     UserEvent::PluginEvent(plugin_event) => {
                         tracing::info!("Received plugin event: {:#?}", plugin_event);
 
                         let mapped_event = match plugin_event {
+                            PluginEvent::FocusMainWindow => {
+                                #[cfg(not(target_os = "linux"))]
+                                app.main_window.window.set_focus();
+
+                                #[cfg(target_os = "linux")]
+                                {
+                                    // Hacky workaround for Linux, since set_focus() doesn't work on Linux with GTK3
+                                    // https://github.com/tauri-apps/tauri/issues/5620#issuecomment-1704340661
+                                    app.main_window.window.set_visible(false);
+                                    app.main_window.window.set_visible(true);
+                                }
+
+                                return;
+                            }
+
                             PluginEvent::AccountProvidersUpdated => {
                                 let providers = app.plugin_manager.get_account_providers();
                                 let info = providers.iter().map(|p| p.into_info());
 
                                 IPCEvent::AccountProvidersUpdated(info.collect())
+                            }
+                            PluginEvent::AccountInstancesUpdated => {
+                                let instances = app.plugin_manager.get_account_instances();
+                                let info = instances.iter().map(|i| i.into_info());
+
+                                IPCEvent::AccountInstancesUpdated(info.collect())
                             }
                         };
 
@@ -310,6 +363,23 @@ async fn main() {
                     }
                     UserEvent::SingleInstanceLockEvent(arguments) => {
                         tracing::info!("Received arguments from another instance: {:?}", arguments);
+
+                        if let Some(Ok(mut url)) = arguments.get(1).map(|s| url::Url::parse(s)) {
+                            if url.scheme() == "corelauncher"
+                                || url.scheme() == "corelauncher-development"
+                            {
+                                if let Some(host) = url.host_str().map(String::from) {
+                                    url.set_path(&format!("{}{}", host, url.path()));
+                                }
+                                let _ = url.set_host(None);
+                                tracing::info!("Protocol launched: {url:#?}");
+                                tokio::task::block_in_place(|| {
+                                    handle.block_on(
+                                        app.plugin_manager.emit_protocol_launched(url.as_str()),
+                                    )
+                                });
+                            }
+                        }
                     }
                 }
             }

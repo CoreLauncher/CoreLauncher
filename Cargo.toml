@@ -6,6 +6,7 @@ members = [
     "packages/corelauncher-plugin-minecraft",
     "packages/corelauncher-plugin-steam",
     "packages/corelauncher-types",
+    "packages/database",
     "packages/minecraft",
     "packages/rust-embed-addon",
     "packages/singleinstancelock",
@@ -17,6 +18,7 @@ default-members = ["packages/corelauncher-app"]
 corelauncher-plugin-minecraft = { path = "packages/corelauncher-plugin-minecraft" }
 corelauncher-plugin-steam = { path = "packages/corelauncher-plugin-steam" }
 corelauncher-types = { path = "packages/corelauncher-types" }
+database = { path = "packages/database" }
 minecraft = { path = "packages/minecraft" }
 rust-embed-addon = { path = "packages/rust-embed-addon" }
 singleinstancelock = { path = "packages/singleinstancelock" }

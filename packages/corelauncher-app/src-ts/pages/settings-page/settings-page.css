@@ -51,6 +51,67 @@
 					}
 				}
 			}
+
+			.account-instances {
+				display: flex;
+				flex-direction: column;
+				gap: var(--gap-normal);
+				margin-top: var(--gap-normal);
+
+				.account-instance {
+					display: flex;
+					gap: var(--gap-normal);
+					align-items: center;
+					padding: var(--padding-normal);
+
+					img {
+						width: 32px;
+						height: 32px;
+						border-radius: var(--border-normal);
+					}
+
+					.avatar-placeholder {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						width: 32px;
+						height: 32px;
+						font-weight: bold;
+						background-color: var(--color-accent);
+						border-radius: var(--border-normal);
+					}
+
+					.account-info {
+						display: flex;
+						flex: 1;
+						flex-direction: column;
+
+						.account-provider {
+							font-size: 0.8em;
+							opacity: 0.7;
+						}
+					}
+
+					.delete-button {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						width: 32px;
+						height: 32px;
+						padding: var(--padding-normal);
+						background-color: var(--color-accent);
+						border-radius: var(--border-normal);
+
+						svg {
+							fill: var(--color-text-muted);
+						}
+
+						&:hover svg {
+							fill: var(--color-text);
+						}
+					}
+				}
+			}
 		}
 	}
 }

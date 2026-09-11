@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { AccountProvider } from "../types/account-provider";
+import type { AccountProvider } from "../types/accounts";
 import useCoreLauncher from "./use-corelauncher";
 
 export default function useAccountProviders() {
