@@ -69,9 +69,8 @@ impl SingleInstanceLock {
         let mut buf = Vec::new();
         stream.read_to_end(&mut buf).ok()?;
 
-        let payload = String::from_utf8_lossy(&buf).to_string();
-        let args: Vec<String> = payload.split('\0').map(String::from).collect();
-        let args: Vec<String> = args.into_iter().filter(|a| !a.is_empty()).collect();
+        let payload = String::from_utf8_lossy(&buf);
+        let args: Vec<String> = payload.split('\0').filter(|a| !a.is_empty()).map(String::from).collect();
 
         (!args.is_empty()).then_some(args)
     }
