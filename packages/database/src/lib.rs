@@ -22,7 +22,7 @@ pub fn create_database(path: &str, migrations: &'static Migrations) -> Database 
                 PRAGMA journal_mode = WAL;
                 PRAGMA synchronous=NORMAL;
                 PRAGMA temp_store=MEMORY;
-                PRAGMA cache_size=-65536
+                PRAGMA cache_size=-1024
             ",
         )
         .unwrap();
