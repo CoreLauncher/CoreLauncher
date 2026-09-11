@@ -1,0 +1,90 @@
+use std::sync::Arc;
+
+use corelauncher_types::{AccountProvider, Plugin, PluginPortal};
+use rust_embed::Embed;
+use rust_embed_addon::RustEmbedAddon;
+
+#[derive(Embed)]
+#[folder = "assets"]
+struct Assets;
+
+const PLUGIN_ID: &str = "corelauncher-plugin-steam";
+
+#[allow(dead_code)]
+pub struct SteamPlugin {
+    portal: Arc<Box<dyn PluginPortal>>,
+    account_provider: SteamAccountProvider,
+}
+
+impl SteamPlugin {
+    pub fn new(portal: Arc<Box<dyn PluginPortal>>) -> Self {
+        let account_provider = SteamAccountProvider::new();
+        portal.emit(corelauncher_types::PluginEvent::AccountProvidersUpdated);
+
+        Self {
+            portal,
+            account_provider,
+        }
+    }
+}
+
+impl Plugin for SteamPlugin {
+    fn get_id(&self) -> String {
+        PLUGIN_ID.into()
+    }
+
+    fn get_name(&self) -> String {
+        "Steam".into()
+    }
+
+    fn get_version(&self) -> String {
+        env!("CARGO_PKG_VERSION").into()
+    }
+
+    fn get_description(&self) -> String {
+        "A plugin to integrate Steam games into CoreLauncher.".into()
+    }
+
+    fn get_account_providers(&self) -> Vec<&dyn corelauncher_types::AccountProvider> {
+        vec![&self.account_provider]
+    }
+
+    fn get_account_instances(&self) -> Vec<&dyn corelauncher_types::AccountInstance> {
+        vec![]
+    }
+}
+
+#[derive(Debug, Clone)]
+struct SteamAccountProvider;
+
+impl SteamAccountProvider {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+
+impl AccountProvider for SteamAccountProvider {
+    fn id(&self) -> String {
+        "steam".into()
+    }
+
+    fn plugin_id(&self) -> String {
+        PLUGIN_ID.into()
+    }
+
+    fn name(&self) -> String {
+        "Steam".into()
+    }
+
+    fn description(&self) -> Option<String> {
+        None
+    }
+
+    fn color(&self) -> String {
+        "#1a9fff".into()
+    }
+
+    fn icon(&self) -> String {
+        Assets::get_base64_resource("steam.svg").expect("Missing steam plugin icon")
+    }
+}

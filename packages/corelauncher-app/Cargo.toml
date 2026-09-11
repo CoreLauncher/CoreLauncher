@@ -1,0 +1,38 @@
+[package]
+name = "corelauncher-app"
+version = "1.0.0-beta.23"
+edition = "2024"
+build = "build.rs"
+
+[[bin]]
+name = "corelauncher-app"
+path = "src-rs/main.rs"
+
+[dependencies]
+corelauncher-types.workspace = true
+corelauncher-plugin-minecraft.workspace = true
+corelauncher-plugin-steam.workspace = true
+singleinstancelock.workspace = true
+
+# Async
+tokio = { version = "1.52.3", features = ["full"] }
+
+# Serialization
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.150"
+
+# Logging
+tracing = "0.1.44"
+tracing-subscriber = "0.3.23"
+
+# Frontend
+tao = "0.35.3"
+wry = "0.55.1"
+mime_guess = "2.0.5"
+rust-embed = { version = "8.11.0", features = ["interpolate-folder-path"] }
+
+# Other
+url = "2.5.8"
+
+[build-dependencies]
+winresource = "0.1.30"

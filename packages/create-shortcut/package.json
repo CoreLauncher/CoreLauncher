@@ -1,7 +1,0 @@
-{
-	"name": "@corelauncher/create-shortcut",
-	"main": "./index.ts",
-	"dependencies": {
-		"temp-dir": "^3.0.0"
-	}
-}

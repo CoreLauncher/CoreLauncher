@@ -1,0 +1,52 @@
+@import "@fontsource/inter";
+@import "@fontsource-variable/rubik";
+
+:root {
+	--color-background: hsl(0, 0%, 0%);
+	--color-block: hsl(0, 0%, 5%);
+	--color-accent: hsl(0, 0%, 15%);
+	--color-text: hsl(0, 0%, 100%);
+	--color-text-muted: hsl(0, 0%, 50%);
+	--color-scrollbar: hsl(0, 0%, 20%);
+
+	--padding-normal: 8px;
+	--gap-small: 4px;
+	--gap-normal: 8px;
+	--border-small: 4px;
+	--border-normal: 8px;
+}
+
+html,
+body,
+#root {
+	width: 100%;
+	height: 100%;
+	background-color: var(--color-background);
+	border-radius: 8px;
+}
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+
+	font-family: "Inter", sans-serif;
+	color: var(--color-text);
+
+	scrollbar-color: var(--cl-color-scrollbar) var(--cl-color-block);
+	scrollbar-width: thin;
+}
+
+*:not(h1, h2, h3, h4, h5, h6) {
+	font-size: 1em;
+}
+
+button {
+	cursor: pointer;
+	background: none;
+	border: none;
+}

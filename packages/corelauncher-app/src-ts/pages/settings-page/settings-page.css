@@ -1,0 +1,117 @@
+.SettingsPage {
+	display: flex;
+	flex-direction: row;
+	gap: var(--gap-normal);
+
+	.tabs {
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap-normal);
+		width: 400px;
+
+		padding: var(--padding-normal);
+
+		.tab {
+			padding: var(--padding-normal);
+			background-color: var(--color-accent);
+			border-radius: var(--border-normal);
+		}
+
+		.tab.active {
+			font-weight: bold;
+		}
+	}
+
+	.page {
+		width: 100%;
+
+		&.accounts {
+			.account-providers {
+				display: flex;
+				flex-direction: column;
+				gap: var(--gap-normal);
+				padding: var(--padding-normal);
+
+				.items {
+					display: flex;
+					flex-direction: row;
+					gap: var(--gap-normal);
+
+					.account-provider {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						padding: var(--padding-normal);
+						border-radius: var(--border-normal);
+
+						img {
+							width: 32px;
+							height: 32px;
+						}
+					}
+				}
+			}
+
+			.account-instances {
+				display: flex;
+				flex-direction: column;
+				gap: var(--gap-normal);
+				margin-top: var(--gap-normal);
+
+				.account-instance {
+					display: flex;
+					gap: var(--gap-normal);
+					align-items: center;
+					padding: var(--padding-normal);
+
+					img {
+						width: 32px;
+						height: 32px;
+						border-radius: var(--border-normal);
+					}
+
+					.avatar-placeholder {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						width: 32px;
+						height: 32px;
+						font-weight: bold;
+						background-color: var(--color-accent);
+						border-radius: var(--border-normal);
+					}
+
+					.account-info {
+						display: flex;
+						flex: 1;
+						flex-direction: column;
+
+						.account-provider {
+							font-size: 0.8em;
+							opacity: 0.7;
+						}
+					}
+
+					.delete-button {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						width: 32px;
+						height: 32px;
+						padding: var(--padding-normal);
+						background-color: var(--color-accent);
+						border-radius: var(--border-normal);
+
+						svg {
+							fill: var(--color-text-muted);
+						}
+
+						&:hover svg {
+							fill: var(--color-text);
+						}
+					}
+				}
+			}
+		}
+	}
+}

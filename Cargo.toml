@@ -1,0 +1,25 @@
+[workspace]
+resolver = "3"
+members = [
+    "packages/corekit",
+    "packages/corelauncher-app",
+    "packages/corelauncher-plugin-minecraft",
+    "packages/corelauncher-plugin-steam",
+    "packages/corelauncher-types",
+    "packages/database",
+    "packages/minecraft",
+    "packages/rust-embed-addon",
+    "packages/singleinstancelock",
+    "packages/steam-client",
+]
+default-members = ["packages/corelauncher-app"]
+
+[workspace.dependencies]
+corelauncher-plugin-minecraft = { path = "packages/corelauncher-plugin-minecraft" }
+corelauncher-plugin-steam = { path = "packages/corelauncher-plugin-steam" }
+corelauncher-types = { path = "packages/corelauncher-types" }
+database = { path = "packages/database" }
+minecraft = { path = "packages/minecraft" }
+rust-embed-addon = { path = "packages/rust-embed-addon" }
+singleinstancelock = { path = "packages/singleinstancelock" }
+steam-client = { path = "packages/steam-client" }

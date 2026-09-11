@@ -1,24 +1,11 @@
 # Secrets
 .env
-.env.app
-.env.updates
 
 # Dependencies
 /node_modules
 
-# Data
+# App Data
 /.corelauncher
 
-# Compiled output
-/.bundle
-/.dist-handoff
-
-# Binaries
-/corelauncher
-/corelauncher.exe
-
-/corelauncher.old
-/corelauncher.old.exe
-
-/corelauncher.update
-/corelauncher.update.exe
+# Rust
+/target

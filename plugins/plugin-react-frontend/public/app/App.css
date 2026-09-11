@@ -1,7 +1,0 @@
-.App {
-	height: 100%;
-
-	main {
-		height: calc(100% - 50px - 8px);
-	}
-}

@@ -1,0 +1,13 @@
+.LibraryPage {
+	display: flex;
+	flex-direction: row;
+	gap: var(--gap-normal);
+
+	.library {
+		width: 400px;
+	}
+
+	.game {
+		width: 100%;
+	}
+}

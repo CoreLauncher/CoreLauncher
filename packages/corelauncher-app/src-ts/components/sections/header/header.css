@@ -1,0 +1,28 @@
+.Header {
+	display: flex;
+	flex-direction: row;
+	gap: var(--gap-normal);
+	align-items: center;
+	height: 60px;
+	padding-right: var(--padding-normal);
+	padding-left: var(--padding-normal);
+
+	.tabs {
+		display: flex;
+		flex-direction: row;
+		gap: var(--gap-small);
+
+		button {
+			height: 100%;
+			padding: var(--padding-normal);
+			font-weight: 400;
+			color: var(--color-text-muted);
+			background-color: var(--color-accent);
+			border-radius: var(--border-small);
+
+			&.active {
+				font-weight: 600;
+			}
+		}
+	}
+}
