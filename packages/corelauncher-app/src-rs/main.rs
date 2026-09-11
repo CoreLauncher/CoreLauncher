@@ -236,9 +236,7 @@ async fn main() {
                 let Some(arguments) = lock.incoming() else {
                     continue;
                 };
-                event_proxy
-                    .send_event(UserEvent::SingleInstanceLockEvent(arguments))
-                    .unwrap();
+                let _ = event_proxy.send_event(UserEvent::SingleInstanceLockEvent(arguments));
             }
         });
     }
@@ -253,7 +251,7 @@ async fn main() {
                 if let Ok(event) = plugin_receiver.recv() {
                     event_proxy
                         .send_event(UserEvent::PluginEvent(event))
-                        .unwrap();
+                        .ok();
                 }
             }
         });
@@ -267,7 +265,7 @@ async fn main() {
                 if let Ok(event) = ipc_receiver.recv() {
                     event_proxy
                         .send_event(UserEvent::IPCCommand(event))
-                        .unwrap();
+                        .ok();
                 }
             }
         });
