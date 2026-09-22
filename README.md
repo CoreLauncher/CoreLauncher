@@ -1,4 +1,8 @@
-# CoreLauncher
+<img src="./assets/logos/applet.svg" align="left" width="200"/>
+
+# `CoreLauncher`
+
+CoreLauncher is your universal game launcher. Allowing you to launch games from steam, epic games, and minecraft all in one place.
 
 ## Dependencies
 
