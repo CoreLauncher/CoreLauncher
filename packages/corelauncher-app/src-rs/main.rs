@@ -8,6 +8,8 @@ use tao::{
     event_loop::{ControlFlow, EventLoop, EventLoopBuilder},
     window::WindowBuilder,
 };
+use tray_icon::menu::{Menu, MenuItem, PredefinedMenuItem, accelerator::Accelerator};
+use tray_icon::{TrayIcon, TrayIconBuilder};
 use wry::{WebViewBuilder, http::Response};
 
 mod assets;
@@ -48,6 +50,11 @@ enum UserEvent {
     PluginEvent(PluginEvent),
     /// Emitted when another instance of CoreLauncher forwards its arguments.
     SingleInstanceLockEvent(Vec<String>),
+
+    /// Event that is emitted by the system's tray icon.
+    TrayIconEvent(tray_icon::TrayIconEvent),
+    /// Event that is emitted by the system's tray menu.
+    TrayMenuEvent(tray_icon::menu::MenuEvent),
 }
 
 struct Window {
@@ -146,6 +153,7 @@ impl Window {
 
 struct CoreLauncher {
     main_window: Window,
+    tray_icon: TrayIcon,
     plugin_manager: PluginManager,
 }
 
@@ -160,8 +168,38 @@ impl CoreLauncher {
             Box::new(corelauncher_plugin_minecraft::MinecraftPlugin::new(portal))
         }));
 
+        let main_window = Window::new(&event_loop);
+
+        let tray_icon = {
+            let image = image::load_from_memory_with_format(
+                #[cfg(target_os = "linux")]
+                include_bytes!("../../../assets/logos/logo.png"),
+                #[cfg(not(target_os = "linux"))]
+                include_bytes!("../../../assets/logos/applet.png"),
+                image::ImageFormat::Png,
+            )
+            .expect("Failed to open tray icon image")
+            .into_rgba8();
+            let (width, height) = image.dimensions();
+
+            let icon = tray_icon::Icon::from_rgba(image.into_raw(), width, height)
+                .expect("Failed to create tray icon");
+
+            let tray_menu = Menu::new();
+            let _ = tray_menu.append(&MenuItem::with_id("show", "Show CoreLauncher", true, None));
+            let _ = tray_menu.append(&MenuItem::with_id("quit", "Quit CoreLauncher", true, None));
+
+            TrayIconBuilder::new()
+                .with_icon(icon)
+                .with_tooltip("CoreLauncher")
+                .with_menu(Box::new(tray_menu))
+                .build()
+                .expect("Failed to create tray icon")
+        };
+
         Self {
-            main_window: Window::new(&event_loop),
+            main_window,
+            tray_icon,
             plugin_manager,
         }
     }
@@ -245,7 +283,7 @@ async fn main() {
         thread::spawn(move || {
             loop {
                 if let Ok(event) = plugin_receiver.recv() {
-                    event_proxy.send_event(UserEvent::PluginEvent(event)).ok();
+                    let _ = event_proxy.send_event(UserEvent::PluginEvent(event)).ok();
                 }
             }
         });
@@ -257,10 +295,22 @@ async fn main() {
         thread::spawn(move || {
             loop {
                 if let Ok(event) = ipc_receiver.recv() {
-                    event_proxy.send_event(UserEvent::IPCCommand(event)).ok();
+                    let _ = event_proxy.send_event(UserEvent::IPCCommand(event));
                 }
             }
         });
+    }
+
+    {
+        let proxy = event_loop.create_proxy();
+        tray_icon::TrayIconEvent::set_event_handler(Some(move |event| {
+            let _ = proxy.send_event(UserEvent::TrayIconEvent(event));
+        }));
+
+        let proxy = event_loop.create_proxy();
+        tray_icon::menu::MenuEvent::set_event_handler(Some(move |event| {
+            let _ = proxy.send_event(UserEvent::TrayMenuEvent(event));
+        }));
     }
 
     let handle = tokio::runtime::Handle::current();
@@ -270,7 +320,7 @@ async fn main() {
         match event {
             tao::event::Event::WindowEvent { event, .. } => match event {
                 tao::event::WindowEvent::CloseRequested => {
-                    *control_flow = ControlFlow::Exit;
+                    app.main_window.window.set_visible(false);
                 }
                 _ => {}
             },
@@ -370,6 +420,35 @@ async fn main() {
                                 });
                             }
                         }
+                    }
+                    UserEvent::TrayIconEvent(tray_icon_event) => {
+                        tracing::info!("Received tray icon event: {:#?}", tray_icon_event);
+
+                        match tray_icon_event {
+                            tray_icon::TrayIconEvent::Click {
+                                id: _,
+                                position: _,
+                                rect: _,
+                                button: _,
+                                button_state: _,
+                            } => {
+                                app.main_window.window.set_visible(true);
+                            }
+                            _ => {}
+                        };
+                    }
+                    UserEvent::TrayMenuEvent(tray_menu_event) => {
+                        tracing::info!("Received tray menu event: {:#?}", tray_menu_event);
+
+                        match tray_menu_event.id.0.as_str() {
+                            "show" => {
+                                app.main_window.window.set_visible(true);
+                            }
+                            "quit" => {
+                                *control_flow = ControlFlow::Exit;
+                            }
+                            _ => {}
+                        };
                     }
                 }
             }

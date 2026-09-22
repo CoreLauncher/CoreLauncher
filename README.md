@@ -9,7 +9,10 @@ CoreLauncher is your universal game launcher. Allowing you to launch games from 
 
 ## Dependencies
 
-CoreLauncher uses [wry](https://github.com/tauri-apps/wry) for webview rendering. Platform-specific dependencies may be required to build the project. See [wry's Platform Considerations](https://github.com/tauri-apps/wry#platform-considerations) for full details.
+CoreLauncher uses [wry](https://github.com/tauri-apps/wry) for webview rendering and [tray-icon](https://github.com/tauri-apps/tray-icon) for system tray support. Platform-specific dependencies may be required to build the project.
+
+- See [wry's Platform Considerations](https://github.com/tauri-apps/wry#platform-considerations) for webview dependencies.
+- See [tray-icon's documentation](https://docs.rs/tray-icon/0.25.1/tray_icon/index.html#dependencies-linuxbsd) for Linux/BSD system tray dependencies.
 
 ## Disclaimers
 
