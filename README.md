@@ -4,6 +4,9 @@
 
 CoreLauncher is your universal game launcher. Allowing you to launch games from steam, epic games, and minecraft all in one place.
 
+<br/>
+<br/>
+
 ## Dependencies
 
 CoreLauncher uses [wry](https://github.com/tauri-apps/wry) for webview rendering. Platform-specific dependencies may be required to build the project. See [wry's Platform Considerations](https://github.com/tauri-apps/wry#platform-considerations) for full details.
