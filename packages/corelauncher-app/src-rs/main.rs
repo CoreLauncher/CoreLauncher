@@ -213,13 +213,9 @@ async fn main() {
         let _ = fs::create_dir_all(&icon_dir);
         fs::write(
             icon_dir.join("corelauncher_development.svg"),
-            include_bytes!("../../../assets/logos/logo.svg"),
+            include_bytes!("../../../assets/logos/applet.svg"),
         )
         .expect("Failed to write icon file");
-
-        let _ = std::process::Command::new("update-desktop-database")
-            .arg(&applications_dir)
-            .output();
     }
 
     let event_loop = EventLoopBuilder::with_user_event().build();
@@ -249,9 +245,7 @@ async fn main() {
         thread::spawn(move || {
             loop {
                 if let Ok(event) = plugin_receiver.recv() {
-                    event_proxy
-                        .send_event(UserEvent::PluginEvent(event))
-                        .ok();
+                    event_proxy.send_event(UserEvent::PluginEvent(event)).ok();
                 }
             }
         });
@@ -263,9 +257,7 @@ async fn main() {
         thread::spawn(move || {
             loop {
                 if let Ok(event) = ipc_receiver.recv() {
-                    event_proxy
-                        .send_event(UserEvent::IPCCommand(event))
-                        .ok();
+                    event_proxy.send_event(UserEvent::IPCCommand(event)).ok();
                 }
             }
         });

@@ -29,7 +29,7 @@ fn build_frontend() {
 #[cfg(windows)]
 fn set_icon() {
     let mut res = winresource::WindowsResource::new();
-    res.set_icon("../../assets/logos/logo.ico");
+    res.set_icon("../../assets/logos/applet.ico");
     res.compile().unwrap();
 }
 

@@ -6,6 +6,7 @@ Comment=Game Launcher
 Path={CWD}
 Exec={EXEC} %u
 Icon=corelauncher_development
+StartupWMClass=corelauncher-app
 Terminal=false
 Categories=Game
 MimeType=x-scheme-handler/corelauncher-development;
