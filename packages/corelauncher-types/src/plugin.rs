@@ -14,15 +14,15 @@ pub trait Plugin: Send + Sync {
     /// Called when the user wants to connect an account for this plugin. This is called when the user clicks the "Connect" button in the settings.
     async fn on_connect_account_instance(
         &mut self,
-        account_provider_id: &str,
+        _account_provider_id: &str,
     ) -> Result<(), String> {
         Ok(())
     }
 
     async fn on_disconnect_account_instance(
         &mut self,
-        account_provider_id: &str,
-        account_instance_id: &str,
+        _account_provider_id: &str,
+        _account_instance_id: &str,
     ) -> Result<(), String> {
         Ok(())
     }
