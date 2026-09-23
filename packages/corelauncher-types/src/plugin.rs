@@ -19,6 +19,7 @@ pub trait Plugin: Send + Sync {
         Ok(())
     }
 
+    /// Called when the user wants to disconnect an account provided by this plugin.
     async fn on_disconnect_account_instance(
         &mut self,
         _account_provider_id: &str,
