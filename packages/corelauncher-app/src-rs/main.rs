@@ -8,7 +8,7 @@ use tao::{
     event_loop::{ControlFlow, EventLoop, EventLoopBuilder},
     window::WindowBuilder,
 };
-use tray_icon::menu::{Menu, MenuItem, PredefinedMenuItem, accelerator::Accelerator};
+use tray_icon::menu::{Menu, MenuItem};
 use tray_icon::{TrayIcon, TrayIconBuilder};
 use wry::{WebViewBuilder, http::Response};
 
