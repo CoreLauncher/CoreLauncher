@@ -153,6 +153,8 @@ impl Window {
 
 struct CoreLauncher {
     main_window: Window,
+    // we just need to keep it alive
+    #[allow(dead_code)]
     tray_icon: TrayIcon,
     plugin_manager: PluginManager,
 }
