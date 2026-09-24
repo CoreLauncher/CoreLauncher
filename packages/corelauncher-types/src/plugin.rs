@@ -8,6 +8,10 @@ pub trait Plugin: Send + Sync {
     fn get_account_providers(&self) -> Vec<&dyn crate::AccountProvider>;
     fn get_account_instances(&self) -> Vec<&dyn crate::AccountInstance>;
 
+    fn get_game_providers(&self) -> Vec<&dyn crate::GameProvider>;
+    fn get_game_instances(&self) -> Vec<&dyn crate::GameInstance>;
+    fn get_game_profiles(&self) -> Vec<&dyn crate::GameProfile>;
+
     /// Called when corelauncher is launched via corelauncher:// protocol.
     async fn on_protocol_launched(&mut self, _protocol: &str) {}
 

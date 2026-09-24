@@ -1,7 +1,10 @@
 use std::{borrow::Cow, fs, path::PathBuf, thread};
 
 use crate::{assets::Assets, constants::Constants, plugins::manager::PluginManager};
-use corelauncher_types::{AccountInstanceInfo, AccountProviderInfo, PluginEvent};
+use corelauncher_types::{
+    AccountInstanceInfo, AccountProviderInfo, GameInstanceInfo, GameProfileInfo, GameProviderInfo,
+    PluginEvent,
+};
 use serde::{Deserialize, Serialize};
 use tao::{
     dpi::LogicalSize,
@@ -40,6 +43,10 @@ pub enum IPCCommand {
 pub enum IPCEvent {
     AccountProvidersUpdated(Vec<AccountProviderInfo>),
     AccountInstancesUpdated(Vec<AccountInstanceInfo>),
+
+    GameProvidersUpdated(Vec<GameProviderInfo>),
+    GameInstancesUpdated(Vec<GameInstanceInfo>),
+    GameProfilesUpdated(Vec<GameProfileInfo>),
 }
 
 #[derive(Debug)]

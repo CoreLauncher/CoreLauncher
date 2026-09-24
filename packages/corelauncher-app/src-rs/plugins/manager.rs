@@ -62,6 +62,27 @@ impl PluginManager {
             .collect()
     }
 
+    pub fn get_game_providers(&self) -> Vec<&dyn corelauncher_types::GameProvider> {
+        self.plugins
+            .iter()
+            .flat_map(|p| p.get_game_providers())
+            .collect()
+    }
+
+    pub fn get_game_instances(&self) -> Vec<&dyn corelauncher_types::GameInstance> {
+        self.plugins
+            .iter()
+            .flat_map(|p| p.get_game_instances())
+            .collect()
+    }
+
+    pub fn get_game_profiles(&self) -> Vec<&dyn corelauncher_types::GameProfile> {
+        self.plugins
+            .iter()
+            .flat_map(|p| p.get_game_profiles())
+            .collect()
+    }
+
     /// Notifies all plugins that corelauncher was launched via protocol.
     pub async fn emit_protocol_launched(&mut self, protocol: &str) {
         for plugin in &mut self.plugins {
@@ -115,6 +136,27 @@ impl PluginManager {
 
         events.push(IPCEvent::AccountInstancesUpdated(
             self.get_account_instances()
+                .iter()
+                .map(|p| p.into_info())
+                .collect(),
+        ));
+
+        events.push(IPCEvent::GameProvidersUpdated(
+            self.get_game_providers()
+                .iter()
+                .map(|p| p.into_info())
+                .collect(),
+        ));
+
+        events.push(IPCEvent::GameInstancesUpdated(
+            self.get_game_instances()
+                .iter()
+                .map(|p| p.into_info())
+                .collect(),
+        ));
+
+        events.push(IPCEvent::GameProfilesUpdated(
+            self.get_game_profiles()
                 .iter()
                 .map(|p| p.into_info())
                 .collect(),

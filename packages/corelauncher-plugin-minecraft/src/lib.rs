@@ -1,7 +1,7 @@
 use std::sync::Arc;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use corelauncher_types::{AccountInstance, AccountProvider, Plugin, PluginPortal};
+use corelauncher_types::{AccountInstance, AccountProvider, GameInstance, Plugin, PluginPortal};
 use database::{Database, Migrations, create_database, include_migrations};
 use rusqlite::params;
 
@@ -30,6 +30,8 @@ pub struct MinecraftPlugin {
 
     account_provider: MinecraftAccountProvider,
     account_instances: Vec<MinecraftAccountInstance>,
+
+    game_instance: MinecraftGameInstance,
 }
 
 impl MinecraftPlugin {
@@ -51,6 +53,8 @@ impl MinecraftPlugin {
             handle.block_on(MinecraftAccountInstance::load_all(&database))
         });
 
+        let game_instance = MinecraftGameInstance::new();
+
         Self {
             portal,
 
@@ -59,6 +63,8 @@ impl MinecraftPlugin {
 
             account_provider,
             account_instances,
+
+            game_instance,
         }
     }
 }
@@ -90,6 +96,18 @@ impl Plugin for MinecraftPlugin {
             .iter()
             .map(|instance| instance as &dyn corelauncher_types::AccountInstance)
             .collect()
+    }
+
+    fn get_game_providers(&self) -> Vec<&dyn corelauncher_types::GameProvider> {
+        vec![]
+    }
+
+    fn get_game_instances(&self) -> Vec<&dyn corelauncher_types::GameInstance> {
+        vec![&self.game_instance]
+    }
+
+    fn get_game_profiles(&self) -> Vec<&dyn corelauncher_types::GameProfile> {
+        vec![]
     }
 
     async fn on_protocol_launched(&mut self, url: &str) {
@@ -163,7 +181,7 @@ impl Plugin for MinecraftPlugin {
 
     async fn on_connect_account_instance(
         &mut self,
-        account_provider_id: &str,
+        _account_provider_id: &str,
     ) -> Result<(), String> {
         let authorize_url =
             get_authorize_url(MSA_CLIENT_ID.into(), MSA_SCOPE, MSA_REDIRECT_URI.into());
@@ -179,7 +197,7 @@ impl Plugin for MinecraftPlugin {
 
     async fn on_disconnect_account_instance(
         &mut self,
-        account_provider_id: &str,
+        _account_provider_id: &str,
         account_instance_id: &str,
     ) -> Result<(), String> {
         let raw_id = account_instance_id
@@ -198,7 +216,7 @@ impl Plugin for MinecraftPlugin {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 struct MinecraftAccountProvider;
 
 impl MinecraftAccountProvider {
@@ -229,11 +247,12 @@ impl AccountProvider for MinecraftAccountProvider {
     }
 
     fn icon(&self) -> String {
-        Assets::get_base64_resource("account-icon.svg").expect("Missing minecraft plugin icon")
+        Assets::get_base64_resource("minecraft-account-icon.svg")
+            .expect("Missing minecraft plugin icon")
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 struct MinecraftAccountInstance {
     id: String,
     username: String,
@@ -339,5 +358,46 @@ impl AccountInstance for MinecraftAccountInstance {
     fn avatar(&self) -> Option<String> {
         // Cache this image on device?
         Some(format!("https://api.mineatar.io/face/{}?scale=32", self.id))
+    }
+}
+
+#[derive(Debug)]
+struct MinecraftGameInstance {}
+
+impl MinecraftGameInstance {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+
+impl GameInstance for MinecraftGameInstance {
+    fn id(&self) -> String {
+        "minecraft:minecraft-java".into()
+    }
+
+    fn plugin_id(&self) -> String {
+        PLUGIN_ID.into()
+    }
+
+    fn name(&self) -> String {
+        "Minecraft: Java Edition".into()
+    }
+
+    fn icon(&self) -> Option<String> {
+        Assets::get_base64_resource("minecraft-game-logo.svg")
+            .unwrap()
+            .into()
+    }
+
+    fn capsule(&self) -> Option<String> {
+        Assets::get_base64_resource("minecraft-game-capsule.svg")
+            .unwrap()
+            .into()
+    }
+
+    fn banner(&self) -> Option<String> {
+        Assets::get_base64_resource("minecraft-game-banner.jpg")
+            .unwrap()
+            .into()
     }
 }

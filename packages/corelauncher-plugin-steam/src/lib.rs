@@ -52,6 +52,18 @@ impl Plugin for SteamPlugin {
     fn get_account_instances(&self) -> Vec<&dyn corelauncher_types::AccountInstance> {
         vec![]
     }
+
+    fn get_game_providers(&self) -> Vec<&dyn corelauncher_types::GameProvider> {
+        vec![]
+    }
+
+    fn get_game_instances(&self) -> Vec<&dyn corelauncher_types::GameInstance> {
+        vec![]
+    }
+
+    fn get_game_profiles(&self) -> Vec<&dyn corelauncher_types::GameProfile> {
+        vec![]
+    }
 }
 
 #[derive(Debug, Clone)]

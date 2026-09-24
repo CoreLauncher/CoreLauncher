@@ -9,6 +9,7 @@
 	--color-text-muted: hsl(0, 0%, 50%);
 	--color-scrollbar: hsl(0, 0%, 20%);
 
+	--padding-small: 4px;
 	--padding-normal: 8px;
 	--gap-small: 4px;
 	--gap-normal: 8px;
@@ -29,6 +30,8 @@ body,
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
+
+	position: relative;
 
 	user-select: none;
 	-webkit-user-select: none;
