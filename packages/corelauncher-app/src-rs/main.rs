@@ -80,6 +80,7 @@ impl Window {
         let window = WindowBuilder::new()
             .with_title("CoreLauncher")
             .with_inner_size(LogicalSize::new(1200, 800))
+            .with_min_inner_size(LogicalSize::new(900, 600))
             .with_decorations(false)
             .with_transparent(true)
             .build(event_loop)
