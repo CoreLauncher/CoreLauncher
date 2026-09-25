@@ -52,14 +52,14 @@ export default function Header({
 					type="button"
 					onClick={() => corelauncher.windowMinimize()}
 				>
-					<Dash size={"50%"} />
+					<Dash size={"50%"} color="var(--color-text)" />
 				</button>
 				<button
 					className="close-button"
 					type="button"
 					onClick={() => corelauncher.windowClose()}
 				>
-					<X size={"50%"} />
+					<X size={"50%"} color="var(--color-text)" />
 				</button>
 			</div>
 		</header>
