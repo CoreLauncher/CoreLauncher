@@ -1,6 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import App from "./app/app";
+import enableWindowResize from "./utility/enable-window-resize";
+
+enableWindowResize();
 
 const element = document.getElementById("root")!;
 const app = (

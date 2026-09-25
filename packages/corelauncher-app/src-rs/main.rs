@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 use tao::{
     dpi::LogicalSize,
     event_loop::{ControlFlow, EventLoop, EventLoopBuilder},
-    window::WindowBuilder,
+    window::{ResizeDirection, WindowBuilder},
 };
 use tray_icon::menu::{Menu, MenuItem};
 use tray_icon::{TrayIcon, TrayIconBuilder};
@@ -26,6 +26,9 @@ mod plugins;
 pub enum IPCCommand {
     WebviewInitialized,
     WindowDrag,
+    WindowResize {
+        position: String,
+    },
     AccountConnect {
         plugin_id: String,
         provider_id: String,
@@ -345,6 +348,25 @@ async fn main() {
                         }
                         IPCCommand::WindowDrag => {
                             app.main_window.window.drag_window().unwrap();
+                        }
+                        IPCCommand::WindowResize { position } => {
+                            let direction = match position.as_str() {
+                                "top" => ResizeDirection::North,
+                                "bottom" => ResizeDirection::South,
+                                "left" => ResizeDirection::West,
+                                "right" => ResizeDirection::East,
+                                "top-left" => ResizeDirection::NorthWest,
+                                "top-right" => ResizeDirection::NorthEast,
+                                "bottom-left" => ResizeDirection::SouthWest,
+                                "bottom-right" => ResizeDirection::SouthEast,
+                                _ => {
+                                    tracing::error!("Invalid window resize position: {}", position);
+                                    return;
+                                }
+                            };
+
+                            #[cfg(target_os = "linux")]
+                            let _ = app.main_window.window.drag_resize_window(direction);
                         }
                         IPCCommand::AccountConnect {
                             plugin_id,

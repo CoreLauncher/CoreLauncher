@@ -90,6 +90,20 @@ export default class CoreLauncher extends TypedEmitter<CoreLauncherEvents> {
 		this.sendMessage("window_drag");
 	}
 
+	startWindowResize(
+		position:
+			| "top"
+			| "bottom"
+			| "left"
+			| "right"
+			| "top-left"
+			| "top-right"
+			| "bottom-left"
+			| "bottom-right",
+	) {
+		this.sendMessage("window_resize", { position });
+	}
+
 	connectAccountInstance(provider: AccountProvider) {
 		this.sendMessage("account_connect", {
 			pluginId: provider.pluginId,
