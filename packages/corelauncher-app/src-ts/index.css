@@ -9,6 +9,8 @@
 	--color-text-muted: hsl(0, 0%, 50%);
 	--color-scrollbar: hsl(0, 0%, 20%);
 
+	--color-red: hsl(0, 100%, 40%);
+
 	--padding-small: 4px;
 	--padding-normal: 8px;
 	--gap-small: 4px;

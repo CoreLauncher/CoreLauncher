@@ -25,4 +25,33 @@
 			}
 		}
 	}
+
+	.window-controls {
+		display: flex;
+		flex-direction: row;
+		gap: var(--gap-small);
+		justify-content: flex-end;
+		height: 70%;
+		margin-left: auto;
+
+		button {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			height: 100%;
+			aspect-ratio: 1 / 1;
+			border-radius: var(--border-small);
+
+			transition: background-color 0.1s ease-in-out;
+		}
+
+		.close-button:hover {
+			background-color: var(--color-red);
+		}
+
+		.minimize-button:hover {
+			background-color: var(--color-accent);
+		}
+	}
 }

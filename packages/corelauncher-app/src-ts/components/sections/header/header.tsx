@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import BrandingLogo from "../../branding/branding-logo/branding-logo";
 import "./header.css";
+import { Dash, X } from "react-bootstrap-icons";
 import useCoreLauncher from "../../../hooks/use-corelauncher";
 
 export default function Header({
@@ -45,7 +46,22 @@ export default function Header({
 					</button>
 				))}
 			</div>
-			<p>Header</p>
+			<div className="window-controls">
+				<button
+					className="minimize-button"
+					type="button"
+					onClick={() => corelauncher.windowMinimize()}
+				>
+					<Dash size={"50%"} />
+				</button>
+				<button
+					className="close-button"
+					type="button"
+					onClick={() => corelauncher.windowClose()}
+				>
+					<X size={"50%"} />
+				</button>
+			</div>
 		</header>
 	);
 }

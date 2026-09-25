@@ -29,6 +29,8 @@ pub enum IPCCommand {
     WindowResize {
         position: String,
     },
+    WindowMinimize,
+    WindowClose,
     AccountConnect {
         plugin_id: String,
         provider_id: String,
@@ -368,6 +370,12 @@ async fn main() {
 
                             #[cfg(target_os = "linux")]
                             let _ = app.main_window.window.drag_resize_window(direction);
+                        }
+                        IPCCommand::WindowMinimize => {
+                            app.main_window.window.set_minimized(true);
+                        }
+                        IPCCommand::WindowClose => {
+                            app.main_window.window.set_visible(false);
                         }
                         IPCCommand::AccountConnect {
                             plugin_id,

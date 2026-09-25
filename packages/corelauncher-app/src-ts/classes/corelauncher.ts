@@ -104,6 +104,14 @@ export default class CoreLauncher extends TypedEmitter<CoreLauncherEvents> {
 		this.sendMessage("window_resize", { position });
 	}
 
+	windowClose() {
+		this.sendMessage("window_close");
+	}
+
+	windowMinimize() {
+		this.sendMessage("window_minimize");
+	}
+
 	connectAccountInstance(provider: AccountProvider) {
 		this.sendMessage("account_connect", {
 			pluginId: provider.pluginId,
