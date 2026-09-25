@@ -1,0 +1,17 @@
+.App {
+	display: flex;
+	flex-direction: column;
+
+	height: 100%;
+
+	main {
+		height: 100%;
+		padding: var(--padding-normal);
+		padding-top: 0;
+	}
+
+	main > * {
+		width: 100%;
+		height: 100%;
+	}
+}

@@ -1,9 +1,0 @@
-.cl-brandinglogo {
-	display: flex;
-	flex-direction: row;
-	gap: 4px;
-	align-items: center;
-
-	font-size: calc(var(--size) / 3 * 2);
-	font-weight: 900;
-}

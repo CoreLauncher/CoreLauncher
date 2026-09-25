@@ -1,0 +1,94 @@
+.LibraryPage {
+	display: flex;
+	flex-direction: row;
+	gap: var(--gap-normal);
+
+	.library {
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap-normal);
+
+		width: 400px;
+		padding: var(--padding-normal);
+
+		.overview-button {
+			padding: var(--padding-normal);
+			background-color: var(--color-accent);
+			border-radius: var(--border-normal);
+		}
+
+		.game-list {
+			display: flex;
+			flex-direction: column;
+
+			.game-instance {
+				display: flex;
+				flex-direction: row;
+				gap: var(--gap-normal);
+				align-items: center;
+				padding: var(--padding-small);
+				border-radius: var(--border-normal);
+
+				transition: background-color 0.2s ease-in-out;
+
+				img {
+					height: 20px;
+					border-radius: var(--border-small);
+				}
+			}
+
+			.game-instance:hover,
+			.game-instance.selected {
+				background-color: var(--color-accent);
+			}
+		}
+	}
+
+	.library-overview {
+		display: grid;
+
+		grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+		gap: 16px;
+		align-items: start;
+
+		width: 100%;
+
+		padding: 8px;
+
+		overflow-y: auto;
+
+		.game-capsule {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			aspect-ratio: 2 / 3;
+
+			background-color: var(--color-accent);
+			border: none;
+			border-radius: 8px;
+
+			transition: transform 0.2s ease-in-out;
+
+			.capsule-image {
+				width: 100%;
+				height: 100%;
+
+				border-radius: 8px;
+			}
+
+			p {
+				position: absolute;
+				width: 100%;
+
+				margin: 30px;
+				font-size: 20px;
+				text-align: center;
+			}
+		}
+
+		.game-capsule:hover {
+			transform: scale(1.05);
+		}
+	}
+}

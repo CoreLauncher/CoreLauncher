@@ -1,0 +1,5 @@
+.BrandingStamp {
+	font-family: "Rubik", system-ui;
+	font-size: calc(var(--size) / 3 * 2);
+	font-weight: 900;
+}

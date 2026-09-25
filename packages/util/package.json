@@ -1,5 +1,0 @@
-{
-	"name": "@corelauncher/util",
-	"main": "./index.ts",
-	"dependencies": {}
-}

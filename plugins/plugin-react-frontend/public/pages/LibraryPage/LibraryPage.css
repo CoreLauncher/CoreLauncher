@@ -1,8 +1,0 @@
-.LibraryPage {
-	display: flex;
-	flex-direction: row;
-	gap: 5px;
-
-	padding: 5px;
-	padding-top: 0px;
-}

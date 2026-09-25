@@ -1,0 +1,34 @@
+#[async_trait::async_trait]
+pub trait Plugin: Send + Sync {
+    fn get_id(&self) -> String;
+    fn get_name(&self) -> String;
+    fn get_version(&self) -> String;
+    fn get_description(&self) -> String;
+
+    fn get_account_providers(&self) -> Vec<&dyn crate::AccountProvider>;
+    fn get_account_instances(&self) -> Vec<&dyn crate::AccountInstance>;
+
+    fn get_game_providers(&self) -> Vec<&dyn crate::GameProvider>;
+    fn get_game_instances(&self) -> Vec<&dyn crate::GameInstance>;
+    fn get_game_profiles(&self) -> Vec<&dyn crate::GameProfile>;
+
+    /// Called when corelauncher is launched via corelauncher:// protocol.
+    async fn on_protocol_launched(&mut self, _protocol: &str) {}
+
+    /// Called when the user wants to connect an account for this plugin. This is called when the user clicks the "Connect" button in the settings.
+    async fn on_connect_account_instance(
+        &mut self,
+        _account_provider_id: &str,
+    ) -> Result<(), String> {
+        Ok(())
+    }
+
+    /// Called when the user wants to disconnect an account provided by this plugin.
+    async fn on_disconnect_account_instance(
+        &mut self,
+        _account_provider_id: &str,
+        _account_instance_id: &str,
+    ) -> Result<(), String> {
+        Ok(())
+    }
+}

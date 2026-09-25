@@ -1,6 +1,0 @@
-{
-	"name": "@corelauncher/json-value",
-	"type": "module",
-	"main": "./index.ts",
-	"dependencies": {}
-}

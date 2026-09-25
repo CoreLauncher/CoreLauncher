@@ -1,0 +1,57 @@
+.Header {
+	display: flex;
+	flex-direction: row;
+	gap: var(--gap-normal);
+	align-items: center;
+	height: 60px;
+	padding-right: var(--padding-normal);
+	padding-left: var(--padding-normal);
+
+	.tabs {
+		display: flex;
+		flex-direction: row;
+		gap: var(--gap-small);
+
+		button {
+			height: 100%;
+			padding: var(--padding-normal);
+			font-weight: 400;
+			color: var(--color-text-muted);
+			background-color: var(--color-accent);
+			border-radius: var(--border-small);
+
+			&.active {
+				font-weight: 600;
+			}
+		}
+	}
+
+	.window-controls {
+		display: flex;
+		flex-direction: row;
+		gap: var(--gap-small);
+		justify-content: flex-end;
+		height: 70%;
+		margin-left: auto;
+
+		button {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			height: 100%;
+			aspect-ratio: 1 / 1;
+			border-radius: var(--border-small);
+
+			transition: background-color 0.1s ease-in-out;
+		}
+
+		.close-button:hover {
+			background-color: var(--color-red);
+		}
+
+		.minimize-button:hover {
+			background-color: var(--color-accent);
+		}
+	}
+}

@@ -1,8 +1,0 @@
-{
-	"name": "@corelauncher/corelauncher-updates",
-	"dependencies": {
-		"@octokit/rest": "^22.0.1",
-		"@octokit/plugin-throttling": "^11.0.3"
-	},
-	"devDependencies": {}
-}
